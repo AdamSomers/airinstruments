@@ -250,7 +250,7 @@ void airMotion(float x, float y, float z, float prevX, float PrevY)
         for (int i = 0; i < numStrings; ++i)
         {
             float stringX = g_resources.string_vertex_array[i]->position[0];
-            float t = stringX -.0025;
+            float t = stringX + .05;
             //float fingerX = g_resources.finger_vertex_array->position[0];
             float threshold = (columnWidth * i) + (columnWidth / 2);
             if (((fingerPrevX <= t && fingerX > t) ||
