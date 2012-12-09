@@ -141,7 +141,7 @@ void init_background_mesh(struct string_mesh *out_mesh)
         GROUND_LO[3] = { -0.875f, STRING_SHAFT_BOTTOM, -0.25f },
         GROUND_HI[3] = {  1.875f, STRING_SHAFT_BOTTOM,  .05f },
         WALL_LO[3] = { GROUND_LO[0], STRING_SHAFT_BOTTOM, GROUND_HI[2] },
-        WALL_HI[3] = { GROUND_HI[0], STRING_SHAFT_BOTTOM + 2.0f, GROUND_HI[2] };
+        WALL_HI[3] = { GROUND_HI[0], STRING_SHAFT_BOTTOM + 1.7f, GROUND_HI[2] };
 
     static GLfloat
         TEX_STRING_LO[2] = { 0.0f,    0.0f },

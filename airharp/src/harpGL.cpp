@@ -12,6 +12,8 @@
 #include "gl-util.h"
 #include "vec-util.h"
 #include "meshes.h"
+#include "AudioServer.h"
+#include "Harp.h"
 
 static const int STRING_SHADOWMAP_RESOLUTION = 2048;
 
@@ -534,6 +536,7 @@ static void render()
 
 int main(int argc, char* argv[])
 {
+    RtAudioDriver driver(256);    // init rtaudio
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT);

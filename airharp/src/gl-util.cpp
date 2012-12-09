@@ -46,7 +46,7 @@ void show_info_log(
     char *log;
 
     glGet__iv(object, GL_INFO_LOG_LENGTH, &log_length);
-    log = malloc(log_length);
+    log = (char*)malloc(log_length);
     glGet__InfoLog(object, log_length, NULL, log);
     fprintf(stderr, "%s", log);
     free(log);
@@ -55,7 +55,7 @@ void show_info_log(
 GLuint make_shader(GLenum type, const char *filename)
 {
     GLint length;
-    GLchar *source = file_contents(filename, &length);
+    GLchar *source = (GLchar *)file_contents(filename, &length);
     GLuint shader;
     GLint shader_ok;
 
