@@ -12,8 +12,8 @@
 #include "vec-util.h"
 
 void init_mesh(
-    struct flag_mesh *out_mesh,
-    struct flag_vertex const *vertex_data, GLsizei vertex_count,
+    struct string_mesh *out_mesh,
+    struct string_vertex const *vertex_data, GLsizei vertex_count,
     GLushort const *element_data, GLsizei element_count,
     GLenum hint
 ) {
@@ -24,7 +24,7 @@ void init_mesh(
     glBindBuffer(GL_ARRAY_BUFFER, out_mesh->vertex_buffer);
     glBufferData(
         GL_ARRAY_BUFFER,
-        vertex_count * sizeof(struct flag_vertex),
+        vertex_count * sizeof(struct string_vertex),
         vertex_data,
         hint
     );
@@ -38,8 +38,8 @@ void init_mesh(
     );
 }
 
-static void calculate_flag_vertex(
-    struct flag_vertex *v,
+static void calculate_string_vertex(
+    struct string_vertex *v,
     GLfloat s, GLfloat t, GLfloat time
 ) {
     GLfloat
@@ -67,27 +67,27 @@ static void calculate_flag_vertex(
     v->normal[3] = 0.0f;
 }
 
-#define FLAG_X_RES 100
-#define FLAG_Y_RES 100
-#define FLAG_S_STEP (1.0f/((GLfloat)(FLAG_X_RES - 1)))
-#define FLAG_T_STEP (1.0f/((GLfloat)(FLAG_Y_RES - 1)))
-#define FLAG_VERTEX_COUNT (FLAG_X_RES * FLAG_Y_RES)
+#define string_X_RES 100
+#define string_Y_RES 100
+#define string_S_STEP (1.0f/((GLfloat)(string_X_RES - 1)))
+#define string_T_STEP (1.0f/((GLfloat)(string_Y_RES - 1)))
+#define string_VERTEX_COUNT (string_X_RES * string_Y_RES)
 
-struct flag_vertex *init_flag_mesh(struct flag_mesh *out_mesh)
+struct string_vertex *init_string_mesh(struct string_mesh *out_mesh)
 {
-    struct flag_vertex *vertex_data
-        = (struct flag_vertex*) malloc(FLAG_VERTEX_COUNT * sizeof(struct flag_vertex));
-    GLsizei element_count = 6 * (FLAG_X_RES - 1) * (FLAG_Y_RES - 1);
+    struct string_vertex *vertex_data
+        = (struct string_vertex*) malloc(string_VERTEX_COUNT * sizeof(struct string_vertex));
+    GLsizei element_count = 6 * (string_X_RES - 1) * (string_Y_RES - 1);
     GLushort *element_data
         = (GLushort*) malloc(element_count * sizeof(GLushort));
     GLsizei s, t, i;
     GLushort index;
 
-    for (t = 0, i = 0; t < FLAG_Y_RES; ++t)
-        for (s = 0; s < FLAG_X_RES; ++s, ++i) {
-            GLfloat ss = FLAG_S_STEP * s, tt = FLAG_T_STEP * t;
+    for (t = 0, i = 0; t < string_Y_RES; ++t)
+        for (s = 0; s < string_X_RES; ++s, ++i) {
+            GLfloat ss = string_S_STEP * s, tt = string_T_STEP * t;
 
-            calculate_flag_vertex(&vertex_data[i], ss, tt, 0.0f);
+            calculate_string_vertex(&vertex_data[i], ss, tt, 0.0f);
 
             vertex_data[i].texcoord[0] = ss;
             vertex_data[i].texcoord[1] = tt;
@@ -98,19 +98,19 @@ struct flag_vertex *init_flag_mesh(struct flag_mesh *out_mesh)
             vertex_data[i].specular[3] = 0;
         }
 
-    for (t = 0, i = 0, index = 0; t < FLAG_Y_RES - 1; ++t, ++index)
-        for (s = 0; s < FLAG_X_RES - 1; ++s, ++index) {
+    for (t = 0, i = 0, index = 0; t < string_Y_RES - 1; ++t, ++index)
+        for (s = 0; s < string_X_RES - 1; ++s, ++index) {
             element_data[i++] = index             ;
             element_data[i++] = index           +1;
-            element_data[i++] = index+FLAG_X_RES  ;
+            element_data[i++] = index+string_X_RES  ;
             element_data[i++] = index           +1;
-            element_data[i++] = index+FLAG_X_RES+1;
-            element_data[i++] = index+FLAG_X_RES  ;
+            element_data[i++] = index+string_X_RES+1;
+            element_data[i++] = index+string_X_RES  ;
         }
 
     init_mesh(
         out_mesh,
-        vertex_data, FLAG_VERTEX_COUNT,
+        vertex_data, string_VERTEX_COUNT,
         element_data, element_count,
         GL_STREAM_DRAW
     );
@@ -119,56 +119,56 @@ struct flag_vertex *init_flag_mesh(struct flag_mesh *out_mesh)
     return vertex_data;
 }
 
-#define FLAGPOLE_TRUCK_TOP            0.5f
-#define FLAGPOLE_TRUCK_CROWN          0.41f
-#define FLAGPOLE_TRUCK_BOTTOM         0.38f
-#define FLAGPOLE_SHAFT_TOP            0.3775f
-#define FLAGPOLE_SHAFT_BOTTOM        -1.0f
-#define FLAGPOLE_TRUCK_TOP_RADIUS     0.005f
-#define FLAGPOLE_TRUCK_CROWN_RADIUS   0.020f
-#define FLAGPOLE_TRUCK_BOTTOM_RADIUS  0.015f
-#define FLAGPOLE_SHAFT_RADIUS         0.010f
-#define FLAGPOLE_SHININESS            4.0f
+#define STRING_TRUCK_TOP            0.5f
+#define STRING_TRUCK_CROWN          0.41f
+#define STRING_TRUCK_BOTTOM         0.38f
+#define STRING_SHAFT_TOP            0.3775f
+#define STRING_SHAFT_BOTTOM        -1.0f
+#define STRING_TRUCK_TOP_RADIUS     0.005f
+#define STRING_TRUCK_CROWN_RADIUS   0.020f
+#define STRING_TRUCK_BOTTOM_RADIUS  0.015f
+#define STRING_SHAFT_RADIUS         0.010f
+#define STRING_SHININESS            4.0f
 
-void init_background_mesh(struct flag_mesh *out_mesh)
+void init_background_mesh(struct string_mesh *out_mesh)
 {
-    static const GLsizei FLAGPOLE_RES = 16, FLAGPOLE_SLICE = 6;
-    GLfloat FLAGPOLE_AXIS_XZ[2] = { -FLAGPOLE_SHAFT_RADIUS, 0.0f };
-    static const GLubyte FLAGPOLE_SPECULAR[4] = { 255, 255, 192, 0 };
+    static const GLsizei STRING_RES = 16, STRING_SLICE = 6;
+    GLfloat STRING_AXIS_XZ[2] = { -STRING_SHAFT_RADIUS, 0.0f };
+    static const GLubyte STRING_SPECULAR[4] = { 255, 255, 192, 0 };
 
     GLfloat
-        GROUND_LO[3] = { -0.875f, FLAGPOLE_SHAFT_BOTTOM, -0.25f },
-        GROUND_HI[3] = {  1.875f, FLAGPOLE_SHAFT_BOTTOM,  .05f },
-        WALL_LO[3] = { GROUND_LO[0], FLAGPOLE_SHAFT_BOTTOM, GROUND_HI[2] },
-        WALL_HI[3] = { GROUND_HI[0], FLAGPOLE_SHAFT_BOTTOM + 2.0f, GROUND_HI[2] };
+        GROUND_LO[3] = { -0.875f, STRING_SHAFT_BOTTOM, -0.25f },
+        GROUND_HI[3] = {  1.875f, STRING_SHAFT_BOTTOM,  .05f },
+        WALL_LO[3] = { GROUND_LO[0], STRING_SHAFT_BOTTOM, GROUND_HI[2] },
+        WALL_HI[3] = { GROUND_HI[0], STRING_SHAFT_BOTTOM + 2.0f, GROUND_HI[2] };
 
     static GLfloat
-        TEX_FLAGPOLE_LO[2] = { 0.0f,    0.0f },
-        TEX_FLAGPOLE_HI[2] = { 0.03125f,  1.0f },
+        TEX_STRING_LO[2] = { 0.0f,    0.0f },
+        TEX_STRING_HI[2] = { 0.03125f,  1.0f },
         TEX_GROUND_LO[2]   = { 0.f,  0.f },
         TEX_GROUND_HI[2]   = { 0.99f, 0.9921875f },
         TEX_WALL_LO[2]     = { 0.99f, 0.99f },
         TEX_WALL_HI[2]     = { 0.0f,      0.f };
 
-#define _FLAGPOLE_T(y) \
-    (TEX_FLAGPOLE_LO[1] \
-        + (TEX_FLAGPOLE_HI[1] - TEX_FLAGPOLE_LO[1]) \
-        * ((y) - FLAGPOLE_TRUCK_TOP)/(FLAGPOLE_SHAFT_BOTTOM - FLAGPOLE_TRUCK_TOP) \
+#define _STRING_T(y) \
+    (TEX_STRING_LO[1] \
+        + (TEX_STRING_HI[1] - TEX_STRING_LO[1]) \
+        * ((y) - STRING_TRUCK_TOP)/(STRING_SHAFT_BOTTOM - STRING_TRUCK_TOP) \
     )
 
     GLfloat
-        theta_step = 2.0f * (GLfloat)M_PI / (GLfloat)FLAGPOLE_RES,
-        s_step = (TEX_FLAGPOLE_HI[0] - TEX_FLAGPOLE_LO[0]) / (GLfloat)FLAGPOLE_RES,
-        t_truck_top    = TEX_FLAGPOLE_LO[1],
-        t_truck_crown  = _FLAGPOLE_T(FLAGPOLE_TRUCK_CROWN),
-        t_truck_bottom = _FLAGPOLE_T(FLAGPOLE_TRUCK_BOTTOM),
-        t_shaft_top    = _FLAGPOLE_T(FLAGPOLE_SHAFT_TOP),
-        t_shaft_bottom = _FLAGPOLE_T(FLAGPOLE_SHAFT_BOTTOM);
+        theta_step = 2.0f * (GLfloat)M_PI / (GLfloat)STRING_RES,
+        s_step = (TEX_STRING_HI[0] - TEX_STRING_LO[0]) / (GLfloat)STRING_RES,
+        t_truck_top    = TEX_STRING_LO[1],
+        t_truck_crown  = _STRING_T(STRING_TRUCK_CROWN),
+        t_truck_bottom = _STRING_T(STRING_TRUCK_BOTTOM),
+        t_shaft_top    = _STRING_T(STRING_SHAFT_TOP),
+        t_shaft_bottom = _STRING_T(STRING_SHAFT_BOTTOM);
 
-#undef _FLAGPOLE_T
+#undef _STRING_T
 
     GLsizei
-        flagpole_vertex_count = 2 + FLAGPOLE_RES * FLAGPOLE_SLICE,
+        stringpole_vertex_count = 2 + STRING_RES * STRING_SLICE,
         wall_vertex_count = 4,
         ground_vertex_count = 4,
         vertex_count = wall_vertex_count
@@ -182,8 +182,8 @@ void init_background_mesh(struct flag_mesh *out_mesh)
         element_count = wall_element_count
             + ground_element_count;
 
-    struct flag_vertex *vertex_data
-        = (struct flag_vertex*) malloc(vertex_count * sizeof(struct flag_vertex));
+    struct string_vertex *vertex_data
+        = (struct string_vertex*) malloc(vertex_count * sizeof(struct string_vertex));
 
     GLushort *element_data
         = (GLushort*) malloc(element_count * sizeof(GLushort));
@@ -316,17 +316,17 @@ void init_background_mesh(struct flag_mesh *out_mesh)
     vertex_data[7].specular[2] = 0;
     vertex_data[7].specular[3] = 0;
 
-    vertex_data[8].position[0] = FLAGPOLE_AXIS_XZ[0];
-    vertex_data[8].position[1] = FLAGPOLE_TRUCK_TOP;
-    vertex_data[8].position[2] = FLAGPOLE_AXIS_XZ[1];
+    vertex_data[8].position[0] = STRING_AXIS_XZ[0];
+    vertex_data[8].position[1] = STRING_TRUCK_TOP;
+    vertex_data[8].position[2] = STRING_AXIS_XZ[1];
     vertex_data[8].position[3] = 1.0f;
     vertex_data[8].normal[0]   = 0.0f;
     vertex_data[8].normal[1]   = 1.0f;
     vertex_data[8].normal[2]   = 0.0f;
     vertex_data[8].normal[3]   = 0.0f;
-    vertex_data[8].texcoord[0] = TEX_FLAGPOLE_LO[0];
+    vertex_data[8].texcoord[0] = TEX_STRING_LO[0];
     vertex_data[8].texcoord[1] = t_truck_top;
-    vertex_data[8].shininess   = FLAGPOLE_SHININESS;
+    vertex_data[8].shininess   = STRING_SHININESS;
     vertex_data[8].specular[0] = 0;
     vertex_data[8].specular[1] = 0;
     vertex_data[8].specular[2] = 0;
@@ -364,23 +364,23 @@ void init_background_mesh(struct flag_mesh *out_mesh)
     free(vertex_data);
 }
 
-void update_flag_mesh(
-    struct flag_mesh const *mesh,
-    struct flag_vertex *vertex_data,
+void update_string_mesh(
+    struct string_mesh const *mesh,
+    struct string_vertex *vertex_data,
     GLfloat time
 ) {
     GLsizei s, t, i;
-    for (t = 0, i = 0; t < FLAG_Y_RES; ++t)
-        for (s = 0; s < FLAG_X_RES; ++s, ++i) {
-            GLfloat ss = FLAG_S_STEP * s, tt = FLAG_T_STEP * t;
+    for (t = 0, i = 0; t < string_Y_RES; ++t)
+        for (s = 0; s < string_X_RES; ++s, ++i) {
+            GLfloat ss = string_S_STEP * s, tt = string_T_STEP * t;
 
-            calculate_flag_vertex(&vertex_data[i], ss, tt, time);
+            calculate_string_vertex(&vertex_data[i], ss, tt, time);
         }
 
     glBindBuffer(GL_ARRAY_BUFFER, mesh->vertex_buffer);
     glBufferData(
         GL_ARRAY_BUFFER,
-        FLAG_VERTEX_COUNT * sizeof(struct flag_vertex),
+        string_VERTEX_COUNT * sizeof(struct string_vertex),
         vertex_data,
         GL_STREAM_DRAW
     );

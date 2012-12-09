@@ -13,24 +13,24 @@
 #include "vec-util.h"
 #include "meshes.h"
 
-static const int FLAG_SHADOWMAP_RESOLUTION = 4096;
+static const int STRING_SHADOWMAP_RESOLUTION = 4096;
 
-struct flag_attributes {
+struct string_attributes {
     GLint position, normal, texcoord, shininess, specular;
 };
 
-struct flag_shaders {
-    GLuint vertex_shader, shadowmap_fragment_shader, flag_fragment_shader;
-    GLuint shadowmap_program, flag_program;
+struct string_shaders {
+    GLuint vertex_shader, shadowmap_fragment_shader, string_fragment_shader;
+    GLuint shadowmap_program, string_program;
 };
 
 static struct {
-    struct flag_mesh flag, background;
-    struct flag_vertex *flag_vertex_array;
+    struct string_mesh string, background;
+    struct string_vertex *string_vertex_array;
     GLuint shadowmap_texture;
     GLuint shadowmap_framebuffer;
 
-    struct flag_shaders shaders;
+    struct string_shaders shaders;
 
     struct {
         struct {
@@ -38,15 +38,15 @@ static struct {
             GLint texture, shadowmap, light_direction;
         } uniforms;
 
-        struct flag_attributes attributes;
-    } flag_program;
+        struct string_attributes attributes;
+    } string_program;
 
     struct {
         struct {
             GLint p_matrix, mv_matrix, shadow_matrix;
         } uniforms;
 
-        struct flag_attributes attributes;
+        struct string_attributes attributes;
     } shadowmap_program;
 
     GLfloat p_matrix[16], shadow_matrix[16], mv_matrix[16];
@@ -128,8 +128,8 @@ static void update_mv_matrix(GLfloat *matrix, GLfloat *eye_offset)
 }
 
 static void render_mesh(
-    struct flag_mesh const *mesh,
-    struct flag_attributes const *attributes
+    struct string_mesh const *mesh,
+    struct string_attributes const *attributes
 ) {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, mesh->texture);
@@ -137,28 +137,28 @@ static void render_mesh(
     glBindBuffer(GL_ARRAY_BUFFER, mesh->vertex_buffer);
     glVertexAttribPointer(
         attributes->position,
-        3, GL_FLOAT, GL_FALSE, sizeof(struct flag_vertex),
-        (void*)offsetof(struct flag_vertex, position)
+        3, GL_FLOAT, GL_FALSE, sizeof(struct string_vertex),
+        (void*)offsetof(struct string_vertex, position)
     );
     glVertexAttribPointer(
         attributes->normal,
-        3, GL_FLOAT, GL_FALSE, sizeof(struct flag_vertex),
-        (void*)offsetof(struct flag_vertex, normal)
+        3, GL_FLOAT, GL_FALSE, sizeof(struct string_vertex),
+        (void*)offsetof(struct string_vertex, normal)
     );
     glVertexAttribPointer(
         attributes->texcoord,
-        2, GL_FLOAT, GL_FALSE, sizeof(struct flag_vertex),
-        (void*)offsetof(struct flag_vertex, texcoord)
+        2, GL_FLOAT, GL_FALSE, sizeof(struct string_vertex),
+        (void*)offsetof(struct string_vertex, texcoord)
     );
     glVertexAttribPointer(
         attributes->shininess,
-        1, GL_FLOAT, GL_FALSE, sizeof(struct flag_vertex),
-        (void*)offsetof(struct flag_vertex, shininess)
+        1, GL_FLOAT, GL_FALSE, sizeof(struct string_vertex),
+        (void*)offsetof(struct string_vertex, shininess)
     );
     glVertexAttribPointer(
         attributes->specular,
-        4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(struct flag_vertex),
-        (void*)offsetof(struct flag_vertex, specular)
+        4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(struct string_vertex),
+        (void*)offsetof(struct string_vertex, specular)
     );
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->element_buffer);
@@ -170,7 +170,7 @@ static void render_mesh(
     );
 }
 
-static void enable_mesh_vertex_attributes(struct flag_attributes const *attributes)
+static void enable_mesh_vertex_attributes(struct string_attributes const *attributes)
 {
     glEnableVertexAttribArray(attributes->position);
     glEnableVertexAttribArray(attributes->normal);
@@ -179,7 +179,7 @@ static void enable_mesh_vertex_attributes(struct flag_attributes const *attribut
     glEnableVertexAttribArray(attributes->specular);
 }
 
-static void disable_mesh_vertex_attributes(struct flag_attributes const *attributes)
+static void disable_mesh_vertex_attributes(struct string_attributes const *attributes)
 {
     glDisableVertexAttribArray(attributes->position);
     glDisableVertexAttribArray(attributes->normal);
@@ -191,33 +191,33 @@ static void disable_mesh_vertex_attributes(struct flag_attributes const *attribu
 #define INITIAL_WINDOW_WIDTH  640
 #define INITIAL_WINDOW_HEIGHT 480
 
-static void enact_flag_programs(struct flag_shaders const *shaders)
+static void enact_string_programs(struct string_shaders const *shaders)
 {
     g_resources.shaders = *shaders;
 
-    g_resources.flag_program.uniforms.texture
-        = glGetUniformLocation(shaders->flag_program, "texture");
-    g_resources.flag_program.uniforms.shadowmap
-        = glGetUniformLocation(shaders->flag_program, "shadowmap");
-    g_resources.flag_program.uniforms.p_matrix
-        = glGetUniformLocation(shaders->flag_program, "p_matrix");
-    g_resources.flag_program.uniforms.mv_matrix
-        = glGetUniformLocation(shaders->flag_program, "mv_matrix");
-    g_resources.flag_program.uniforms.shadow_matrix
-        = glGetUniformLocation(shaders->flag_program, "shadow_matrix");
-    g_resources.flag_program.uniforms.light_direction
-        = glGetUniformLocation(shaders->flag_program, "light_direction");
+    g_resources.string_program.uniforms.texture
+        = glGetUniformLocation(shaders->string_program, "texture");
+    g_resources.string_program.uniforms.shadowmap
+        = glGetUniformLocation(shaders->string_program, "shadowmap");
+    g_resources.string_program.uniforms.p_matrix
+        = glGetUniformLocation(shaders->string_program, "p_matrix");
+    g_resources.string_program.uniforms.mv_matrix
+        = glGetUniformLocation(shaders->string_program, "mv_matrix");
+    g_resources.string_program.uniforms.shadow_matrix
+        = glGetUniformLocation(shaders->string_program, "shadow_matrix");
+    g_resources.string_program.uniforms.light_direction
+        = glGetUniformLocation(shaders->string_program, "light_direction");
 
-    g_resources.flag_program.attributes.position
-        = glGetAttribLocation(shaders->flag_program, "position");
-    g_resources.flag_program.attributes.normal
-        = glGetAttribLocation(shaders->flag_program, "normal");
-    g_resources.flag_program.attributes.texcoord
-        = glGetAttribLocation(shaders->flag_program, "texcoord");
-    g_resources.flag_program.attributes.shininess
-        = glGetAttribLocation(shaders->flag_program, "shininess");
-    g_resources.flag_program.attributes.specular
-        = glGetAttribLocation(shaders->flag_program, "specular");
+    g_resources.string_program.attributes.position
+        = glGetAttribLocation(shaders->string_program, "position");
+    g_resources.string_program.attributes.normal
+        = glGetAttribLocation(shaders->string_program, "normal");
+    g_resources.string_program.attributes.texcoord
+        = glGetAttribLocation(shaders->string_program, "texcoord");
+    g_resources.string_program.attributes.shininess
+        = glGetAttribLocation(shaders->string_program, "shininess");
+    g_resources.string_program.attributes.specular
+        = glGetAttribLocation(shaders->string_program, "specular");
 
     g_resources.shadowmap_program.uniforms.p_matrix
         = glGetUniformLocation(shaders->shadowmap_program, "p_matrix");
@@ -238,22 +238,22 @@ static void enact_flag_programs(struct flag_shaders const *shaders)
         = glGetAttribLocation(shaders->shadowmap_program, "specular");
 }
 
-static int make_flag_programs(struct flag_shaders *out_shaders)
+static int make_string_programs(struct string_shaders *out_shaders)
 {
     out_shaders->vertex_shader = make_shader(GL_VERTEX_SHADER, "airharp.v.glsl");
     if (out_shaders->vertex_shader == 0)
         return 0;
-    out_shaders->flag_fragment_shader = make_shader(GL_FRAGMENT_SHADER, "airharp.f.glsl");
-    if (out_shaders->flag_fragment_shader == 0)
+    out_shaders->string_fragment_shader = make_shader(GL_FRAGMENT_SHADER, "airharp.f.glsl");
+    if (out_shaders->string_fragment_shader == 0)
         return 0;
     out_shaders->shadowmap_fragment_shader
         = make_shader(GL_FRAGMENT_SHADER, "airharp-shadow-map.f.glsl");
     if (out_shaders->shadowmap_fragment_shader == 0)
         return 0;
 
-    out_shaders->flag_program
-        = make_program(out_shaders->vertex_shader, out_shaders->flag_fragment_shader);
-    if (out_shaders->flag_program == 0)
+    out_shaders->string_program
+        = make_program(out_shaders->vertex_shader, out_shaders->string_fragment_shader);
+    if (out_shaders->string_program == 0)
         return 0;
 
     out_shaders->shadowmap_program
@@ -264,15 +264,15 @@ static int make_flag_programs(struct flag_shaders *out_shaders)
     return 1;
 }
 
-static void delete_flag_programs(struct flag_shaders const *shaders)
+static void delete_string_programs(struct string_shaders const *shaders)
 {
     glDetachShader(
-        shaders->flag_program,
+        shaders->string_program,
         shaders->vertex_shader
     );
     glDetachShader(
-        shaders->flag_program,
-        shaders->flag_fragment_shader
+        shaders->string_program,
+        shaders->string_fragment_shader
     );
     glDetachShader(
         shaders->shadowmap_program,
@@ -282,21 +282,21 @@ static void delete_flag_programs(struct flag_shaders const *shaders)
         shaders->shadowmap_program,
         shaders->shadowmap_fragment_shader
     );
-    glDeleteProgram(shaders->flag_program);
+    glDeleteProgram(shaders->string_program);
     glDeleteProgram(shaders->shadowmap_program);
     glDeleteShader(shaders->vertex_shader);
-    glDeleteShader(shaders->flag_fragment_shader);
+    glDeleteShader(shaders->string_fragment_shader);
     glDeleteShader(shaders->shadowmap_fragment_shader);
 }
 
-static void update_flag_programs(void)
+static void update_string_programs(void)
 {
     printf("reloading program\n");
-    struct flag_shaders shaders;
+    struct string_shaders shaders;
 
-    if (make_flag_programs(&shaders)) {
-        delete_flag_programs(&g_resources.shaders);
-        enact_flag_programs(&shaders);
+    if (make_string_programs(&shaders)) {
+        delete_string_programs(&g_resources.shaders);
+        enact_string_programs(&shaders);
     }
 }
 
@@ -312,8 +312,8 @@ static int make_shadow_framebuffer(GLuint *out_texture, GLuint *out_framebuffer)
     glTexImage2D(
         GL_TEXTURE_2D, 0,           /* target, level */
         GL_DEPTH_COMPONENT,         /* internal format */
-        FLAG_SHADOWMAP_RESOLUTION,  /* width */
-        FLAG_SHADOWMAP_RESOLUTION,  /* height */
+        STRING_SHADOWMAP_RESOLUTION,  /* width */
+        STRING_SHADOWMAP_RESOLUTION,  /* height */
         0,                          /* border */
         GL_DEPTH_COMPONENT,         /* external format */
         GL_UNSIGNED_BYTE,           /* type */
@@ -340,10 +340,10 @@ static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
 
-    g_resources.flag_vertex_array = init_flag_mesh(&g_resources.flag);
+    g_resources.string_vertex_array = init_string_mesh(&g_resources.string);
     init_background_mesh(&g_resources.background);
 
-    g_resources.flag.texture = make_texture("string.tga");
+    g_resources.string.texture = make_texture("string.tga");
     g_resources.background.texture = make_texture("bluegradient.tga");
 
     if (!make_shadow_framebuffer(
@@ -353,15 +353,15 @@ static int make_resources(void)
         return 0;
     }
 
-    if (g_resources.flag.texture == 0 || g_resources.background.texture == 0)
+    if (g_resources.string.texture == 0 || g_resources.background.texture == 0)
         return 0;
 
-    struct flag_shaders shaders;
+    struct string_shaders shaders;
 
-    if (!make_flag_programs(&shaders))
+    if (!make_string_programs(&shaders))
         return 0;
 
-    enact_flag_programs(&shaders);
+    enact_string_programs(&shaders);
 
     g_resources.eye_offset[0] = 0.0f;
     g_resources.eye_offset[1] = 0.0f;
@@ -388,7 +388,7 @@ static void update(void)
     int milliseconds = glutGet(GLUT_ELAPSED_TIME);
     GLfloat seconds = (GLfloat)milliseconds * (1.0f/1000.0f);
 
-    update_flag_mesh(&g_resources.flag, g_resources.flag_vertex_array, seconds);
+    update_string_mesh(&g_resources.string, g_resources.string_vertex_array, seconds);
     glutPostRedisplay();
     usleep(10000);
 }
@@ -414,7 +414,7 @@ static void mouse(int button, int state, int x, int y)
 static void keyboard(unsigned char key, int x, int y)
 {
     if (key == 'r' || key == 'R') {
-        update_flag_programs();
+        update_string_programs();
     }
 }
 
@@ -425,10 +425,10 @@ static void reshape(int w, int h)
     update_p_matrix(g_resources.p_matrix, w, h);
 }
 
-static void render_scene(struct flag_attributes const *attributes)
+static void render_scene(struct string_attributes const *attributes)
 {
     enable_mesh_vertex_attributes(attributes);
-    render_mesh(&g_resources.flag, attributes);
+    render_mesh(&g_resources.string, attributes);
     render_mesh(&g_resources.background, attributes);
     disable_mesh_vertex_attributes(attributes);
 }
@@ -436,7 +436,7 @@ static void render_scene(struct flag_attributes const *attributes)
 static void render_shadowmap()
 {
     glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, g_resources.shadowmap_framebuffer);
-    glViewport(0, 0, FLAG_SHADOWMAP_RESOLUTION, FLAG_SHADOWMAP_RESOLUTION);
+    glViewport(0, 0, STRING_SHADOWMAP_RESOLUTION, STRING_SHADOWMAP_RESOLUTION);
 
     glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -468,52 +468,52 @@ static void render_shadowmap()
     render_scene(&g_resources.shadowmap_program.attributes);
 }
 
-static void render_flag()
+static void render_string()
 {
     glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
     glViewport(0, 0, g_resources.window_size[0], g_resources.window_size[1]);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glUseProgram(g_resources.shaders.flag_program);
+    glUseProgram(g_resources.shaders.string_program);
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, g_resources.shadowmap_texture);
 
-    glUniform1i(g_resources.flag_program.uniforms.texture, 0);
-    glUniform1i(g_resources.flag_program.uniforms.shadowmap, 1);
+    glUniform1i(g_resources.string_program.uniforms.texture, 0);
+    glUniform1i(g_resources.string_program.uniforms.shadowmap, 1);
 
     glUniformMatrix4fv(
-        g_resources.flag_program.uniforms.p_matrix,
+        g_resources.string_program.uniforms.p_matrix,
         1, GL_FALSE,
         g_resources.p_matrix
     );
 
     glUniformMatrix4fv(
-        g_resources.flag_program.uniforms.mv_matrix,
+        g_resources.string_program.uniforms.mv_matrix,
         1, GL_FALSE,
         g_resources.mv_matrix
     );
 
     glUniformMatrix4fv(
-        g_resources.flag_program.uniforms.shadow_matrix,
+        g_resources.string_program.uniforms.shadow_matrix,
         1, GL_FALSE,
         g_resources.shadow_matrix
     );
 
     glUniform3fv(
-        g_resources.flag_program.uniforms.light_direction,
+        g_resources.string_program.uniforms.light_direction,
         1, 
         g_resources.light_direction
     );
 
-    render_scene(&g_resources.flag_program.attributes);
+    render_scene(&g_resources.string_program.attributes);
 }
 
 static void render()
 {
     render_shadowmap();
-    render_flag();
+    render_string();
 
     glutSwapBuffers();
 }
