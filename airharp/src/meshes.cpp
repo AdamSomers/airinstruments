@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "meshes.h"
 #include "vec-util.h"
+#include "Harp.h"
 
 void init_mesh(
     struct string_mesh *out_mesh,
@@ -40,7 +41,7 @@ void init_mesh(
 
 static void calculate_string_vertex(
     struct string_vertex *v,
-    GLfloat s, GLfloat t, GLfloat time, GLuint stringIndex
+    GLfloat s, GLfloat t, GLfloat time, GLuint stringIndex, GLfloat soundVal
 ) {
     GLfloat
         sgrad[3] = {
@@ -58,7 +59,8 @@ static void calculate_string_vertex(
         };
 
     //v->position[0] = s/45.f;//1.f / stringIndex;
-    v->position[0] = -.5 + stringIndex/((float)MAX_STRINGS/2.f) + s/45.f - (0.0625f+0.13125f*sinf((GLfloat)M_PI*stringIndex*time))*t*(t-1.0f);//*(1.0f - 0.5f*s);
+    //v->position[0] = -.5 + stringIndex/((float)MAX_STRINGS/2.f) + s/45.f - (0.0625f+0.13125f*soundVal)*t*(t-1.0f);//*(1.0f - 0.5f*s);
+    v->position[0] = (-.5 + stringIndex/((float)MAX_STRINGS/2.f) + s/(40.f+stringIndex*2) + (soundVal*t*(t-1.0f))/2.f);//;
     v->position[1] = 1.5*t-1;////0.75f*t - 0.375f;
     v->position[2] = 0;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
     v->position[3] = 0.0f;
@@ -68,8 +70,8 @@ static void calculate_string_vertex(
     v->normal[3] = 0.0f;
 }
 
-#define string_X_RES 30
-#define string_Y_RES 30
+#define string_X_RES 10
+#define string_Y_RES 100
 #define string_S_STEP (1.0f/((GLfloat)(string_X_RES - 1)))
 #define string_T_STEP (1.0f/((GLfloat)(string_Y_RES - 1)))
 #define string_VERTEX_COUNT (string_X_RES * string_Y_RES)
@@ -88,7 +90,7 @@ struct string_vertex *init_string_mesh(struct string_mesh *out_mesh)
         for (s = 0; s < string_X_RES; ++s, ++i) {
             GLfloat ss = string_S_STEP * s, tt = string_T_STEP * t;
 
-            calculate_string_vertex(&vertex_data[i], ss, tt, 0.0f, out_mesh->stringIndex);
+            calculate_string_vertex(&vertex_data[i], ss, tt, 0.0f, out_mesh->stringIndex, 0);
 
             vertex_data[i].texcoord[0] = ss;
             vertex_data[i].texcoord[1] = tt;
@@ -362,7 +364,7 @@ void init_background_mesh(struct string_mesh *out_mesh)
     );
 
     free(element_data);
-    free(vertex_data);
+    //free(vertex_data);
 }
 
 void update_string_mesh(
@@ -371,12 +373,23 @@ void update_string_mesh(
     GLfloat time
 ) {
     GLsizei s, t, i;
-    for (t = 0, i = 0; t < string_Y_RES; ++t)
+    int numStrings = Harp::GetInstance()->GetNumStrings();
+    float columnWidth = 1.f / numStrings;
+    SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at( mesh->stringIndex)->Get();
+    for (t = 0, i = 0; t < string_Y_RES; ++t) {
+        long numPeakBuffers = peakBuffer.size();
+        float x;
+        SampleAccumulator::PeakSample samp(0,0);
+        if (t < numPeakBuffers)
+            samp = peakBuffer.at(t);
+        float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
+        x = (columnWidth * i) + (columnWidth / 2) + val * fmin(columnWidth, .1);
         for (s = 0; s < string_X_RES; ++s, ++i) {
             GLfloat ss = string_S_STEP * s, tt = string_T_STEP * t;
 
-            calculate_string_vertex(&vertex_data[i], ss, tt, time, mesh->stringIndex);
+            calculate_string_vertex(&vertex_data[i], ss, tt, time, mesh->stringIndex,val);
         }
+    }
 
     glBindBuffer(GL_ARRAY_BUFFER, mesh->vertex_buffer);
     glBufferData(

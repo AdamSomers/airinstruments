@@ -8,12 +8,221 @@
 #include <stddef.h>
 #include <math.h>
 #include <stdio.h>
+#include <map>
+#include <mutex>
 #include "file-util.h"
 #include "gl-util.h"
 #include "vec-util.h"
 #include "meshes.h"
 #include "AudioServer.h"
 #include "Harp.h"
+#include "Leap.h"
+
+void airMotion(float x, float y, float z, float prevX, float PrevY);
+
+class Finger
+{
+public:
+    Finger()
+    : invalid(false)
+    , fX(0), fY(0), fZ(0)
+    {}
+    bool invalid;
+    float fX;
+    float fY;
+    float fZ;
+};
+
+std::map<int,Finger> gFingers;
+std::mutex gLock;
+
+class HarpListener : public Leap::Listener {
+public:
+    virtual void onInit(const Leap::Controller&);
+    virtual void onConnect(const Leap::Controller&);
+    virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFrame(const Leap::Controller&);
+};
+
+void HarpListener::onInit(const Leap::Controller& controller) {
+    std::cout << "Initialized" << std::endl;
+}
+
+void HarpListener::onConnect(const Leap::Controller& controller) {
+    std::cout << "Connected" << std::endl;
+}
+
+void HarpListener::onDisconnect(const Leap::Controller& controller) {
+    std::cout << "Disconnected" << std::endl;
+}
+
+void HarpListener::onFrame(const Leap::Controller& controller) {
+    
+    gLock.lock();
+    for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
+    {
+        (*i).second.invalid = true;
+    }
+    gLock.unlock();
+    // Get the most recent frame and report some basic information
+    const Leap::Frame frame = controller.frame();
+    const std::vector<Leap::Hand>& hands = frame.hands();
+    const size_t numHands = hands.size();
+    //    std::cout << "Frame id: " << frame.id()
+    //    << ", timestamp: " << frame.timestamp()
+    //    << ", hands: " << numHands << std::endl;
+    
+    if (numHands >= 1) {
+        // Get the first hand
+        for (size_t h = 0; h < numHands; ++h) {
+            const Leap::Hand& hand = hands[h];
+            
+            
+            // Check if the hand has any fingers
+            const std::vector<Leap::Finger>& fingers = hand.fingers();
+            const size_t numFingers = fingers.size();
+            if (numFingers >= 1) {
+                // Calculate the hand's average finger tip position
+                Leap::Vector pos(0, 0, 0);
+                for (size_t i = 0; i < numFingers; ++i) {
+                    const Leap::Finger& finger = fingers[i];
+                    const Leap::Ray& tip = finger.tip();
+                    pos.x += tip.position.x;
+                    pos.y += tip.position.y;
+                    pos.z += tip.position.z;
+                    
+                    std::map<int, Finger>::iterator iter = gFingers.find(finger.id());
+                    if (iter == gFingers.end())
+                    {
+                        gLock.lock();
+                        iter = gFingers.insert(std::make_pair(finger.id(), Finger())).first;
+                        gLock.unlock();
+                        std::cout << "inserted finger: " << finger.id() << std::endl;
+                    }
+                    else
+                        (*iter).second.invalid = false;
+                    
+                    Finger* f = &(*iter).second;
+                    float newX = ((tip.position.x + 200) / 400.f);
+                    float newY = ((tip.position.y - 150) / 200.f);
+                    float newZ = ((tip.position.z - 150) / 200.f);
+                    float prevX = f->fX;
+                    float prevY = f->fY;
+                    f->fX = newX;
+                    f->fY = newY;
+                    f->fZ = newZ;
+                    //f->scaleFactor = 1 - (tip.position.z / 300.f);
+                    airMotion(newX, newY, tip.position.z, prevX , prevY);
+                    
+                }
+                pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
+            }
+            
+            // Check if the hand has a palm
+            const Leap::Ray* palmRay = hand.palm();
+            if (palmRay != NULL) {
+                // Get the palm position and wrist direction
+                const Leap::Vector palm = palmRay->position;
+                const Leap::Vector wrist = palmRay->direction;
+                //            std::cout << "Palm position: ("
+                //            << palm.x << ", " << palm.y << ", " << palm.z << ")" << std::endl;
+                
+                // Check if the hand has a normal vector
+                const Leap::Vector* normal = hand.normal();
+                if (normal != NULL) {
+                    // Calculate the hand's pitch, roll, and yaw angles
+                    double pitchAngle = -atan2(normal->z, normal->y) * 180/M_PI + 180;
+                    double rollAngle = -atan2(normal->x, normal->y) * 180/M_PI + 180;
+                    double yawAngle = atan2(wrist.z, wrist.x) * 180/M_PI - 90;
+                    // Ensure the angles are between -180 and +180 degrees
+                    if (pitchAngle > 180) pitchAngle -= 360;
+                    if (rollAngle > 180) rollAngle -= 360;
+                    if (yawAngle > 180) yawAngle -= 360;
+                    //                std::cout << "Pitch: " << pitchAngle << " degrees,  "
+                    //                << "roll: " << rollAngle << " degrees,  "
+                    //                << "yaw: " << yawAngle << " degrees" << std::endl;
+                }
+            }
+            
+            // Check if the hand has a ball
+            const Leap::Ball* ball = hand.ball();
+            if (ball != NULL) {
+                //            std::cout << "Hand curvature radius: " << ball->radius << " mm" << std::endl;
+            }
+        }
+    }
+    gLock.lock();
+    std::map<int,Finger>::iterator i = gFingers.begin();
+    while (i != gFingers.end())
+    {
+        if ((*i).second.invalid)
+            gFingers.erase(i++);
+        else
+            i++;
+    }
+    gLock.unlock();
+}
+
+HarpListener listener;
+
+// Pentatonic Major
+const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
+const int gPentatonicMajorIntervals = 5;
+
+// Pentatonic Minor
+const int gPentatonicMinor[] = { 0, 3, 5, 7, 10};
+const int gPentatonicMinorIntervals = 5;
+
+// Whole-tone
+const int gWholeTone[] = { 0, 2, 4, 6, 8, 10};
+const int gWholeToneIntervals = 6;
+
+// Diatonic
+const int gDiatonic[] = { 0, 2, 4, 5, 7, 9, 11};
+const int gDiatonicIntervals = 7;
+
+const int* gScale = gPentatonicMajor;
+int gScaleIntervals = gPentatonicMajorIntervals;
+
+void airMotion(float x, float y, float z, float prevX, float PrevY)
+{
+    if (z < 0)
+    {
+        int numStrings = Harp::GetInstance()->GetNumStrings();
+        float columnWidth = 1.f / numStrings;
+        for (int i = 0; i < numStrings; ++i)
+        {
+            float threshold = (columnWidth * i) + (columnWidth / 2);
+            if (((prevX <= threshold && x > threshold) ||
+                 (prevX > threshold && x <= threshold)) &&
+                fabsf(x - threshold) < columnWidth / 2)
+            {
+                printf("trig\n");
+                int idx = i % gScaleIntervals;
+                int mult = (i / (float)gScaleIntervals);
+                int base = 32 + 12*mult;
+                int note = base + gScale[idx];
+                //Harp::GetInstance()->NoteOn(i, note, 30);
+                int bufferSize = 512;
+                float buffer[bufferSize];
+                memset(buffer, 0, bufferSize);
+                int midpoint = y * bufferSize;
+                //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
+                for (int x = 0; x < bufferSize; ++x)
+                {
+                    if (x < midpoint)
+                        buffer[x] = x / (float)midpoint;
+                    else
+                        buffer[x] = 1.f - (x - midpoint) / (float)(bufferSize - midpoint);
+                    
+                    if (prevX > threshold)
+                        buffer[x] = -buffer[x];
+                }
+                Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
+            }
+        }
+    }
+}
 
 static const int STRING_SHADOWMAP_RESOLUTION = 2048;
 
@@ -343,6 +552,8 @@ static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
     g_resources.background.texture = make_texture("bluegradient.tga");
+    init_background_mesh(&g_resources.background);
+
 
     int i;
     for (i=0;i<MAX_STRINGS;++i)
@@ -356,8 +567,6 @@ static int make_resources(void)
             return 0;
     }
     
-    init_background_mesh(&g_resources.background);
-
     if (!make_shadow_framebuffer(
         &g_resources.shadowmap_texture,
         &g_resources.shadowmap_framebuffer
@@ -536,11 +745,14 @@ static void render()
 
 int main(int argc, char* argv[])
 {
+    Leap::Controller controller(&listener);
     RtAudioDriver driver(256);    // init rtaudio
+    for (int i = 0; i < MAX_STRINGS-1; ++i)
+        Harp::GetInstance()->AddString();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT);
-    glutCreateWindow("Flag");
+    glutCreateWindow("AirHarp");
     glutIdleFunc(&update);
     glutDisplayFunc(&render);
     glutReshapeFunc(&reshape);
