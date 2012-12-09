@@ -28,3 +28,10 @@ void update_string_mesh(
     struct string_vertex *vertex_data,
     GLfloat time
 );
+
+struct string_vertex * init_finger_mesh(struct string_mesh *out_mesh);
+void update_finger_mesh(
+                        struct string_mesh const *mesh,
+                        struct string_vertex *vertex_data,
+                        GLfloat time,GLfloat x,GLfloat y,GLfloat z
+                        );

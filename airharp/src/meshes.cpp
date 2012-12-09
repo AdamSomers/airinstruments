@@ -12,6 +12,18 @@
 #include "vec-util.h"
 #include "Harp.h"
 
+#define string_X_RES 10
+#define string_Y_RES 100
+#define string_S_STEP (1.0f/((GLfloat)(string_X_RES - 1)))
+#define string_T_STEP (1.0f/((GLfloat)(string_Y_RES - 1)))
+#define string_VERTEX_COUNT (string_X_RES * string_Y_RES)
+
+#define finger_X_RES 10
+#define finger_Y_RES 10
+#define finger_S_STEP (1.0f/((GLfloat)(finger_X_RES - 1)))
+#define finger_T_STEP (1.0f/((GLfloat)(finger_Y_RES - 1)))
+#define finger_VERTEX_COUNT (finger_X_RES * string_Y_RES)
+
 void init_mesh(
     struct string_mesh *out_mesh,
     struct string_vertex const *vertex_data, GLsizei vertex_count,
@@ -70,11 +82,49 @@ static void calculate_string_vertex(
     v->normal[3] = 0.0f;
 }
 
-#define string_X_RES 10
-#define string_Y_RES 100
-#define string_S_STEP (1.0f/((GLfloat)(string_X_RES - 1)))
-#define string_T_STEP (1.0f/((GLfloat)(string_Y_RES - 1)))
-#define string_VERTEX_COUNT (string_X_RES * string_Y_RES)
+static void calculate_finger_vertex(struct string_vertex *v,
+                                    GLfloat s, GLfloat t, GLuint fingerIndex, GLfloat x, GLfloat y, GLfloat z) {
+//    GLfloat
+//    sgrad[3] = {
+//        1.0f + 0.5f*(0.0625f+0.03125f*sinf((GLfloat)M_PI*time))*t*(t - 1.0f),
+//        0.0f,
+//        0.125f*(
+//                sinf(1.5f*(GLfloat)M_PI*(time + s))
+//                + s*cosf(1.5f*(GLfloat)M_PI*(time + s))*(1.5f*(GLfloat)M_PI)
+//                )
+//    },
+//    tgrad[3] = {
+//        -(0.0625f+0.03125f*sinf((GLfloat)M_PI*time))*(1.0f - s)*(2.0f*t - 1.0f),
+//        0.75f,
+//        0.0f
+//    };
+    
+    float const R = 1./(float)(10-1);
+    float const S = 1./(float)(10-1);
+    
+    float const yy = sin( -M_PI_2 + M_PI * s * R );
+    float const xx = cos(2*M_PI * t * S) * sin( M_PI * s * R );
+    float const zz = sin(2*M_PI * t * S) * sin( M_PI * s * R );
+    
+    v->normal[0] = xx + x;
+    v->normal[1] = yy + y;////0.75f*t - 0.375f;
+    v->normal[2] = zz + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
+    v->normal[3] = 0.0f;
+    
+    v->position[0] = .02*xx + x*3-.5;
+    v->position[1] = .02*yy + y*2-.5;////0.75f*t - 0.375f;
+    v->position[2] = .02*zz + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
+    v->position[3] = 0.0f;
+    
+//    v->position[0] = cosf(2*M_PI*s/(10.f))*sinf(2*M_PI*t/(10.f)) + x;
+//    v->position[1] = sinf(2*M_PI*s/10.f)*sinf(2*M_PI*t/(10.f)) + y;////0.75f*t - 0.375f;
+//    v->position[2] = cosf(2*M_PI*t/(10.f)) + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
+//    v->position[3] = 0.0f;
+    
+    //vec_cross(v->normal, tgrad, sgrad);
+    vec_normalize(v->normal);
+    //v->normal[3] = 1.0f;
+}
 
 struct string_vertex *init_string_mesh(struct string_mesh *out_mesh)
 {
@@ -118,6 +168,52 @@ struct string_vertex *init_string_mesh(struct string_mesh *out_mesh)
         GL_STREAM_DRAW
     );
 
+    free((void*)element_data);
+    return vertex_data;
+}
+
+struct string_vertex *init_finger_mesh(struct string_mesh *out_mesh)
+{
+    struct string_vertex *vertex_data
+    = (struct string_vertex*) malloc(finger_VERTEX_COUNT * sizeof(struct string_vertex));
+    GLsizei element_count = 6 * (finger_X_RES - 1) * (finger_Y_RES - 1);
+    GLushort *element_data
+    = (GLushort*) malloc(element_count * sizeof(GLushort));
+    GLsizei s, t, i;
+    GLushort index;
+    
+    for (t = 0, i = 0; t < finger_Y_RES; ++t)
+        for (s = 0; s < finger_X_RES; ++s, ++i) {
+            GLfloat ss = finger_S_STEP * s, tt = finger_T_STEP * t;
+            
+            calculate_finger_vertex(&vertex_data[i], ss, tt, 0.0f, 0, 0, 0);
+            
+            vertex_data[i].texcoord[0] = ss;
+            vertex_data[i].texcoord[1] = tt;
+            vertex_data[i].shininess   = 0.0f;
+            vertex_data[i].specular[0] = 0;
+            vertex_data[i].specular[1] = 0;
+            vertex_data[i].specular[2] = 0;
+            vertex_data[i].specular[3] = 0;
+        }
+    
+    for (t = 0, i = 0, index = 0; t < finger_Y_RES - 1; ++t, ++index)
+        for (s = 0; s < finger_X_RES - 1; ++s, ++index) {
+            element_data[i++] = index             ;
+            element_data[i++] = index           +1;
+            element_data[i++] = index+finger_X_RES  ;
+            element_data[i++] = index           +1;
+            element_data[i++] = index+finger_X_RES+1;
+            element_data[i++] = index+finger_X_RES  ;
+        }
+    
+    init_mesh(
+              out_mesh,
+              vertex_data, finger_VERTEX_COUNT,
+              element_data, element_count,
+              GL_STREAM_DRAW
+              );
+    
     free((void*)element_data);
     return vertex_data;
 }
@@ -319,21 +415,21 @@ void init_background_mesh(struct string_mesh *out_mesh)
     vertex_data[7].specular[2] = 0;
     vertex_data[7].specular[3] = 0;
 
-    vertex_data[8].position[0] = STRING_AXIS_XZ[0];
-    vertex_data[8].position[1] = STRING_TRUCK_TOP;
-    vertex_data[8].position[2] = STRING_AXIS_XZ[1];
-    vertex_data[8].position[3] = 1.0f;
-    vertex_data[8].normal[0]   = 0.0f;
-    vertex_data[8].normal[1]   = 1.0f;
-    vertex_data[8].normal[2]   = 0.0f;
-    vertex_data[8].normal[3]   = 0.0f;
-    vertex_data[8].texcoord[0] = TEX_STRING_LO[0];
-    vertex_data[8].texcoord[1] = t_truck_top;
-    vertex_data[8].shininess   = STRING_SHININESS;
-    vertex_data[8].specular[0] = 0;
-    vertex_data[8].specular[1] = 0;
-    vertex_data[8].specular[2] = 0;
-    vertex_data[8].specular[3] = 0;
+//    vertex_data[8].position[0] = STRING_AXIS_XZ[0];
+//    vertex_data[8].position[1] = STRING_TRUCK_TOP;
+//    vertex_data[8].position[2] = STRING_AXIS_XZ[1];
+//    vertex_data[8].position[3] = 1.0f;
+//    vertex_data[8].normal[0]   = 0.0f;
+//    vertex_data[8].normal[1]   = 1.0f;
+//    vertex_data[8].normal[2]   = 0.0f;
+//    vertex_data[8].normal[3]   = 0.0f;
+//    vertex_data[8].texcoord[0] = TEX_STRING_LO[0];
+//    vertex_data[8].texcoord[1] = t_truck_top;
+//    vertex_data[8].shininess   = STRING_SHININESS;
+//    vertex_data[8].specular[0] = 0;
+//    vertex_data[8].specular[1] = 0;
+//    vertex_data[8].specular[2] = 0;
+//    vertex_data[8].specular[3] = 0;
 
 
     element_i = 0;
@@ -398,5 +494,28 @@ void update_string_mesh(
         vertex_data,
         GL_STREAM_DRAW
     );
+}
+
+
+void update_finger_mesh(
+                        struct string_mesh const *mesh,
+                        struct string_vertex *vertex_data,
+                        GLfloat time,GLfloat x,GLfloat y,GLfloat z
+                        ) {
+    GLsizei s, t, i;
+    for (t = 0, i = 0; t < finger_Y_RES; ++t) {
+        for (s = 0; s < finger_X_RES; ++s, ++i) {
+            GLfloat ss = finger_S_STEP * s, tt = finger_T_STEP * t;
+            calculate_finger_vertex(&vertex_data[i], s, t, 0,x,y,z);
+        }
+    }
+    
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vertex_buffer);
+    glBufferData(
+                 GL_ARRAY_BUFFER,
+                 string_VERTEX_COUNT * sizeof(struct string_vertex),
+                 vertex_data,
+                 GL_STREAM_DRAW
+                 );
 }
 

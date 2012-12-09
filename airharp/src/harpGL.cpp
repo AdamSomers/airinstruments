@@ -105,7 +105,7 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     Finger* f = &(*iter).second;
                     float newX = ((tip.position.x + 200) / 400.f);
                     float newY = ((tip.position.y - 150) / 200.f);
-                    float newZ = ((tip.position.z - 150) / 200.f);
+                    float newZ = -(tip.position.z / 200.f);
                     float prevX = f->fX;
                     float prevY = f->fY;
                     f->fX = newX;
@@ -184,46 +184,6 @@ const int gDiatonicIntervals = 7;
 const int* gScale = gPentatonicMajor;
 int gScaleIntervals = gPentatonicMajorIntervals;
 
-void airMotion(float x, float y, float z, float prevX, float PrevY)
-{
-    if (z < 0)
-    {
-        int numStrings = Harp::GetInstance()->GetNumStrings();
-        float columnWidth = 1.f / numStrings;
-        for (int i = 0; i < numStrings; ++i)
-        {
-            float threshold = (columnWidth * i) + (columnWidth / 2);
-            if (((prevX <= threshold && x > threshold) ||
-                 (prevX > threshold && x <= threshold)) &&
-                fabsf(x - threshold) < columnWidth / 2)
-            {
-                printf("trig\n");
-                int idx = i % gScaleIntervals;
-                int mult = (i / (float)gScaleIntervals);
-                int base = 32 + 12*mult;
-                int note = base + gScale[idx];
-                //Harp::GetInstance()->NoteOn(i, note, 30);
-                int bufferSize = 512;
-                float buffer[bufferSize];
-                memset(buffer, 0, bufferSize);
-                int midpoint = y * bufferSize;
-                //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
-                for (int x = 0; x < bufferSize; ++x)
-                {
-                    if (x < midpoint)
-                        buffer[x] = x / (float)midpoint;
-                    else
-                        buffer[x] = 1.f - (x - midpoint) / (float)(bufferSize - midpoint);
-                    
-                    if (prevX > threshold)
-                        buffer[x] = -buffer[x];
-                }
-                Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
-            }
-        }
-    }
-}
-
 static const int STRING_SHADOWMAP_RESOLUTION = 2048;
 
 struct string_attributes {
@@ -238,6 +198,8 @@ struct string_shaders {
 static struct {
     struct string_mesh strings[MAX_STRINGS];
     struct string_mesh background;
+    struct string_mesh finger;
+    struct string_vertex *finger_vertex_array;
     struct string_vertex *string_vertex_array[MAX_STRINGS];
     GLuint shadowmap_texture;
     GLuint shadowmap_framebuffer;
@@ -266,6 +228,62 @@ static struct {
     GLfloat eye_offset[2];
     GLsizei window_size[2];
 } g_resources;
+
+void airMotion(float x, float y, float z, float prevX, float PrevY)
+{
+    
+    float const R = 1./(float)(10-1);
+    float const S = 1./(float)(10-1);
+    
+    //float const yy = sin( -M_PI_2 + M_PI);
+    //float const xx = cos(2*M_PI) * sin( M_PI * s * R );
+    //float const zz = sin(2*M_PI * t * S) * sin( M_PI * s * R );
+        
+    float fingerX = .02 + x*3-.5;
+    float fingerY = .02 + y*2-.5;////0.75f*t - 0.375f;
+    float fingerZ = .02 + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
+
+    //if (z < 0)
+    {
+        int numStrings = Harp::GetInstance()->GetNumStrings();
+        float columnWidth = 1.f / numStrings;
+        for (int i = 0; i < numStrings; ++i)
+        {
+            float stringX = g_resources.string_vertex_array[i]->position[0];
+            //float fingerX = g_resources.finger_vertex_array->position[0];
+            float threshold = (columnWidth * i) + (columnWidth / 2);
+            //if (((prevX <= threshold && x > threshold) ||
+            //     (prevX > threshold && x <= threshold)) &&
+            //    fabsf(x - threshold) < columnWidth / 2)
+            //printf("fingerx:%d stringx:%d\n", fingerX, stringX);
+            if (fingerX > stringX - 0.0015 && fingerX < stringX + 0.015)
+            {
+                //printf("trig\n");
+                int idx = i % gScaleIntervals;
+                int mult = (i / (float)gScaleIntervals);
+                int base = 32 + 12*mult;
+                int note = base + gScale[idx];
+                //Harp::GetInstance()->NoteOn(i, note, 30);
+                int bufferSize = 512;
+                float buffer[bufferSize];
+                memset(buffer, 0, bufferSize);
+                int midpoint = y * bufferSize;
+                //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
+                for (int x = 0; x < bufferSize; ++x)
+                {
+                    if (x < midpoint)
+                        buffer[x] = x / (float)midpoint;
+                    else
+                        buffer[x] = 1.f - (x - midpoint) / (float)(bufferSize - midpoint);
+                    
+                    if (prevX > threshold)
+                        buffer[x] = -buffer[x];
+                }
+                Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
+            }
+        }
+    }
+}
 
 static void init_gl_state(void)
 {
@@ -551,9 +569,12 @@ static int make_shadow_framebuffer(GLuint *out_texture, GLuint *out_framebuffer)
 static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
+    
+    g_resources.finger.texture = make_texture("string.tga");
+    g_resources.finger_vertex_array = init_finger_mesh(&g_resources.finger);
+    
     g_resources.background.texture = make_texture("bluegradient.tga");
     init_background_mesh(&g_resources.background);
-
 
     int i;
     for (i=0;i<MAX_STRINGS;++i)
@@ -610,6 +631,17 @@ static void update(void)
     {
         update_string_mesh(&g_resources.strings[i], g_resources.string_vertex_array[i], seconds);
     }
+    float x = 0.f;
+    float y = 0.f;
+    float z = -.5f;
+    std::map<int,Finger>::iterator f = gFingers.begin();
+    if (f != gFingers.end())
+    {
+        x = (*f).second.fX;
+        y = (*f).second.fY;
+        z = (*f).second.fZ;
+    }
+    update_finger_mesh(&g_resources.finger, g_resources.finger_vertex_array,seconds,x,y,z);
     glutPostRedisplay();
     usleep(10000);
 }
@@ -649,6 +681,7 @@ static void reshape(int w, int h)
 static void render_scene(struct string_attributes const *attributes)
 {
     enable_mesh_vertex_attributes(attributes);
+    render_mesh(&g_resources.finger, attributes);
     int i;
     for (i=0;i<MAX_STRINGS;++i)
     {
