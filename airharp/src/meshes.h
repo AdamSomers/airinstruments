@@ -1,8 +1,10 @@
+#define MAX_STRINGS 15
 
 struct string_mesh {
     GLuint vertex_buffer, element_buffer;
     GLsizei element_count;
     GLuint texture;
+    GLuint stringIndex;
 };
 
 struct string_vertex {

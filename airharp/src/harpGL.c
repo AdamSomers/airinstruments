@@ -13,7 +13,7 @@
 #include "vec-util.h"
 #include "meshes.h"
 
-static const int STRING_SHADOWMAP_RESOLUTION = 4096;
+static const int STRING_SHADOWMAP_RESOLUTION = 2048;
 
 struct string_attributes {
     GLint position, normal, texcoord, shininess, specular;
@@ -25,8 +25,9 @@ struct string_shaders {
 };
 
 static struct {
-    struct string_mesh string, background;
-    struct string_vertex *string_vertex_array;
+    struct string_mesh strings[MAX_STRINGS];
+    struct string_mesh background;
+    struct string_vertex *string_vertex_array[MAX_STRINGS];
     GLuint shadowmap_texture;
     GLuint shadowmap_framebuffer;
 
@@ -339,12 +340,21 @@ static int make_shadow_framebuffer(GLuint *out_texture, GLuint *out_framebuffer)
 static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
-
-    g_resources.string_vertex_array = init_string_mesh(&g_resources.string);
-    init_background_mesh(&g_resources.background);
-
-    g_resources.string.texture = make_texture("string.tga");
     g_resources.background.texture = make_texture("bluegradient.tga");
+
+    int i;
+    for (i=0;i<MAX_STRINGS;++i)
+    {
+        g_resources.string_vertex_array[i] = init_string_mesh(&g_resources.strings[i]);
+        g_resources.strings[i].stringIndex = i;
+
+        g_resources.strings[i].texture = make_texture("string.tga");
+        
+        if (g_resources.strings[i].texture == 0 || g_resources.background.texture == 0)
+            return 0;
+    }
+    
+    init_background_mesh(&g_resources.background);
 
     if (!make_shadow_framebuffer(
         &g_resources.shadowmap_texture,
@@ -352,9 +362,6 @@ static int make_resources(void)
     )) {
         return 0;
     }
-
-    if (g_resources.string.texture == 0 || g_resources.background.texture == 0)
-        return 0;
 
     struct string_shaders shaders;
 
@@ -387,8 +394,11 @@ static void update(void)
 {
     int milliseconds = glutGet(GLUT_ELAPSED_TIME);
     GLfloat seconds = (GLfloat)milliseconds * (1.0f/1000.0f);
-
-    update_string_mesh(&g_resources.string, g_resources.string_vertex_array, seconds);
+    int i;
+    for (i=0;i<MAX_STRINGS;++i)
+    {
+        update_string_mesh(&g_resources.strings[i], g_resources.string_vertex_array[i], seconds);
+    }
     glutPostRedisplay();
     usleep(10000);
 }
@@ -428,7 +438,11 @@ static void reshape(int w, int h)
 static void render_scene(struct string_attributes const *attributes)
 {
     enable_mesh_vertex_attributes(attributes);
-    render_mesh(&g_resources.string, attributes);
+    int i;
+    for (i=0;i<MAX_STRINGS;++i)
+    {
+        render_mesh(&g_resources.strings[i], attributes);
+    }
     render_mesh(&g_resources.background, attributes);
     disable_mesh_vertex_attributes(attributes);
 }

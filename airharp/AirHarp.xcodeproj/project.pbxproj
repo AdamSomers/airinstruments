@@ -27,7 +27,6 @@
 		663730CF1664B0D6008555B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C81664B0D6008555B5 /* Foundation.framework */; };
 		66BD989E167423530056F496 /* file-util.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9895167423530056F496 /* file-util.c */; };
 		66BD989F167423530056F496 /* gl-util.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9897167423530056F496 /* gl-util.c */; };
-		66BD98A0167423530056F496 /* harpGL.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9899167423530056F496 /* harpGL.c */; };
 		66BD98A1167423530056F496 /* meshes.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD989A167423530056F496 /* meshes.c */; };
 		66BD98AC167424880056F496 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD98A9167424850056F496 /* glew.c */; };
 		66BD98AD167424D60056F496 /* airharp-shadow-map.f.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */; };
@@ -35,6 +34,7 @@
 		66BD98AF167424D60056F496 /* airharp.v.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9893167423530056F496 /* airharp.v.glsl */; };
 		66BD98B0167424D60056F496 /* bluegradient.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9894167423530056F496 /* bluegradient.tga */; };
 		66BD98B1167424D60056F496 /* string.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD989C167423530056F496 /* string.tga */; };
+		66BD98B4167432D00056F496 /* harpGL.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9899167423530056F496 /* harpGL.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -354,9 +354,9 @@
 				663544941672FC020050CCDD /* RtMidi.cpp in Sources */,
 				66BD989E167423530056F496 /* file-util.c in Sources */,
 				66BD989F167423530056F496 /* gl-util.c in Sources */,
-				66BD98A0167423530056F496 /* harpGL.c in Sources */,
 				66BD98A1167423530056F496 /* meshes.c in Sources */,
 				66BD98AC167424880056F496 /* glew.c in Sources */,
+				66BD98B4167432D00056F496 /* harpGL.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
