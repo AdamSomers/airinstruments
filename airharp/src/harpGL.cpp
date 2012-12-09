@@ -238,25 +238,26 @@ void airMotion(float x, float y, float z, float prevX, float PrevY)
     //float const yy = sin( -M_PI_2 + M_PI);
     //float const xx = cos(2*M_PI) * sin( M_PI * s * R );
     //float const zz = sin(2*M_PI * t * S) * sin( M_PI * s * R );
-        
-    float fingerX = .02 + x*3-.5;
-    float fingerY = .02 + y*2-.5;////0.75f*t - 0.375f;
-    float fingerZ = .02 + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
-
-    //if (z < 0)
+    float radius = .03;
+    float fingerX = radius + x*3-.5;
+    float fingerY = radius + y*2-.5;////0.75f*t - 0.375f;
+    float fingerZ = radius + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
+    float fingerPrevX = radius + prevX*3-.5;
+    if (z < 70.f)
     {
         int numStrings = Harp::GetInstance()->GetNumStrings();
         float columnWidth = 1.f / numStrings;
         for (int i = 0; i < numStrings; ++i)
         {
             float stringX = g_resources.string_vertex_array[i]->position[0];
+            float t = stringX -.0025;
             //float fingerX = g_resources.finger_vertex_array->position[0];
             float threshold = (columnWidth * i) + (columnWidth / 2);
-            //if (((prevX <= threshold && x > threshold) ||
-            //     (prevX > threshold && x <= threshold)) &&
-            //    fabsf(x - threshold) < columnWidth / 2)
+            if (((fingerPrevX <= t && fingerX > t) ||
+                 (fingerPrevX > t && fingerX <= t)) &&
+                fabsf(fingerX - t) < columnWidth / 2)
             //printf("fingerx:%d stringx:%d\n", fingerX, stringX);
-            if (fingerX > stringX - 0.0015 && fingerX < stringX + 0.015)
+            //if (fingerX > stringX - 0.0015 && fingerX < stringX + 0.015)
             {
                 //printf("trig\n");
                 int idx = i % gScaleIntervals;
@@ -267,16 +268,17 @@ void airMotion(float x, float y, float z, float prevX, float PrevY)
                 int bufferSize = 512;
                 float buffer[bufferSize];
                 memset(buffer, 0, bufferSize);
-                int midpoint = y * bufferSize;
+                printf("y=%f\n",(fingerY / 2.2)+.5);
+                int midpoint = ((fingerY / 2.2)+.5)* bufferSize;
                 //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
                 for (int x = 0; x < bufferSize; ++x)
                 {
                     if (x < midpoint)
-                        buffer[x] = x / (float)midpoint;
+                        buffer[x] = -x / (float)midpoint;
                     else
-                        buffer[x] = 1.f - (x - midpoint) / (float)(bufferSize - midpoint);
+                        buffer[x] = -(1.f - (x - midpoint) / (float)(bufferSize - midpoint));
                     
-                    if (prevX > threshold)
+                    if (fingerPrevX > t)
                         buffer[x] = -buffer[x];
                 }
                 Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
@@ -570,7 +572,7 @@ static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
     
-    g_resources.finger.texture = make_texture("string.tga");
+    g_resources.finger.texture = make_texture("finger.tga");
     g_resources.finger_vertex_array = init_finger_mesh(&g_resources.finger);
     
     g_resources.background.texture = make_texture("bluegradient.tga");
@@ -626,11 +628,7 @@ static void update(void)
 {
     int milliseconds = glutGet(GLUT_ELAPSED_TIME);
     GLfloat seconds = (GLfloat)milliseconds * (1.0f/1000.0f);
-    int i;
-    for (i=0;i<MAX_STRINGS;++i)
-    {
-        update_string_mesh(&g_resources.strings[i], g_resources.string_vertex_array[i], seconds);
-    }
+
     float x = 0.f;
     float y = 0.f;
     float z = -.5f;
@@ -642,7 +640,13 @@ static void update(void)
         z = (*f).second.fZ;
     }
     update_finger_mesh(&g_resources.finger, g_resources.finger_vertex_array,seconds,x,y,z);
-    glutPostRedisplay();
+
+    int i;
+    for (i=0;i<MAX_STRINGS;++i)
+    {
+        update_string_mesh(&g_resources.strings[i], g_resources.string_vertex_array[i], seconds);
+    }
+     glutPostRedisplay();
     usleep(10000);
 }
 

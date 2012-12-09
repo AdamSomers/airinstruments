@@ -84,36 +84,36 @@ static void calculate_string_vertex(
 
 static void calculate_finger_vertex(struct string_vertex *v,
                                     GLfloat s, GLfloat t, GLuint fingerIndex, GLfloat x, GLfloat y, GLfloat z) {
-//    GLfloat
-//    sgrad[3] = {
-//        1.0f + 0.5f*(0.0625f+0.03125f*sinf((GLfloat)M_PI*time))*t*(t - 1.0f),
-//        0.0f,
-//        0.125f*(
-//                sinf(1.5f*(GLfloat)M_PI*(time + s))
-//                + s*cosf(1.5f*(GLfloat)M_PI*(time + s))*(1.5f*(GLfloat)M_PI)
-//                )
-//    },
-//    tgrad[3] = {
-//        -(0.0625f+0.03125f*sinf((GLfloat)M_PI*time))*(1.0f - s)*(2.0f*t - 1.0f),
-//        0.75f,
-//        0.0f
-//    };
-    
     float const R = 1./(float)(10-1);
     float const S = 1./(float)(10-1);
+    GLfloat
+    sgrad[3] = {
+        s*R + z,
+        0.0f,
+        0.125f
+    },
+    tgrad[3] = {
+        t*S+z,
+        0.75f,
+        0.0f
+    };
+    
+
     
     float const yy = sin( -M_PI_2 + M_PI * s * R );
     float const xx = cos(2*M_PI * t * S) * sin( M_PI * s * R );
-    float const zz = sin(2*M_PI * t * S) * sin( M_PI * s * R );
+    float const zz = sin(2*M_PI * t * S) * 5*sin( M_PI * s * R );
+    
+    if(z > -.125) z = -.125f;
     
     v->normal[0] = xx + x;
     v->normal[1] = yy + y;////0.75f*t - 0.375f;
     v->normal[2] = zz + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
     v->normal[3] = 0.0f;
-    
-    v->position[0] = .02*xx + x*3-.5;
-    v->position[1] = .02*yy + y*2-.5;////0.75f*t - 0.375f;
-    v->position[2] = .02*zz + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
+    float radius = .03;
+    v->position[0] = radius*xx + x*3-.5;
+    v->position[1] = radius*yy + y*2-.5;////0.75f*t - 0.375f;
+    v->position[2] = radius*zz + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
     v->position[3] = 0.0f;
     
 //    v->position[0] = cosf(2*M_PI*s/(10.f))*sinf(2*M_PI*t/(10.f)) + x;
@@ -121,7 +121,7 @@ static void calculate_finger_vertex(struct string_vertex *v,
 //    v->position[2] = cosf(2*M_PI*t/(10.f)) + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
 //    v->position[3] = 0.0f;
     
-    //vec_cross(v->normal, tgrad, sgrad);
+    vec_cross(v->normal, tgrad, sgrad);
     vec_normalize(v->normal);
     //v->normal[3] = 1.0f;
 }
