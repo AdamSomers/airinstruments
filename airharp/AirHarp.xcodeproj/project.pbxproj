@@ -25,8 +25,16 @@
 		663730CD1664B0D6008555B5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C61664B0D6008555B5 /* CoreAudio.framework */; };
 		663730CE1664B0D6008555B5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C71664B0D6008555B5 /* CoreFoundation.framework */; };
 		663730CF1664B0D6008555B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C81664B0D6008555B5 /* Foundation.framework */; };
-		667118261665FD27005CBAEE /* GLstuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667118231665FD27005CBAEE /* GLstuff.cpp */; };
-		667118271665FD27005CBAEE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667118251665FD27005CBAEE /* main.cpp */; };
+		66BD989E167423530056F496 /* file-util.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9895167423530056F496 /* file-util.c */; };
+		66BD989F167423530056F496 /* gl-util.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9897167423530056F496 /* gl-util.c */; };
+		66BD98A0167423530056F496 /* harpGL.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9899167423530056F496 /* harpGL.c */; };
+		66BD98A1167423530056F496 /* meshes.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD989A167423530056F496 /* meshes.c */; };
+		66BD98AC167424880056F496 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 66BD98A9167424850056F496 /* glew.c */; };
+		66BD98AD167424D60056F496 /* airharp-shadow-map.f.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */; };
+		66BD98AE167424D60056F496 /* airharp.f.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9892167423530056F496 /* airharp.f.glsl */; };
+		66BD98AF167424D60056F496 /* airharp.v.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9893167423530056F496 /* airharp.v.glsl */; };
+		66BD98B0167424D60056F496 /* bluegradient.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9894167423530056F496 /* bluegradient.tga */; };
+		66BD98B1167424D60056F496 /* string.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD989C167423530056F496 /* string.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +44,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				66BD98AD167424D60056F496 /* airharp-shadow-map.f.glsl in CopyFiles */,
+				66BD98AE167424D60056F496 /* airharp.f.glsl in CopyFiles */,
+				66BD98AF167424D60056F496 /* airharp.v.glsl in CopyFiles */,
+				66BD98B0167424D60056F496 /* bluegradient.tga in CopyFiles */,
+				66BD98B1167424D60056F496 /* string.tga in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +95,25 @@
 		667118231665FD27005CBAEE /* GLstuff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLstuff.cpp; sourceTree = "<group>"; tabWidth = 4; };
 		667118241665FD27005CBAEE /* GLStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = GLStuff.h; sourceTree = "<group>"; tabWidth = 4; };
 		667118251665FD27005CBAEE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "airharp-shadow-map.f.glsl"; sourceTree = "<group>"; };
+		66BD9892167423530056F496 /* airharp.f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = airharp.f.glsl; sourceTree = "<group>"; };
+		66BD9893167423530056F496 /* airharp.v.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = airharp.v.glsl; sourceTree = "<group>"; };
+		66BD9894167423530056F496 /* bluegradient.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluegradient.tga; sourceTree = "<group>"; };
+		66BD9895167423530056F496 /* file-util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "file-util.c"; sourceTree = "<group>"; };
+		66BD9896167423530056F496 /* file-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "file-util.h"; sourceTree = "<group>"; };
+		66BD9897167423530056F496 /* gl-util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "gl-util.c"; sourceTree = "<group>"; };
+		66BD9898167423530056F496 /* gl-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gl-util.h"; sourceTree = "<group>"; };
+		66BD9899167423530056F496 /* harpGL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = harpGL.c; sourceTree = "<group>"; };
+		66BD989A167423530056F496 /* meshes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = meshes.c; sourceTree = "<group>"; };
+		66BD989B167423530056F496 /* meshes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshes.h; sourceTree = "<group>"; };
+		66BD989C167423530056F496 /* string.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = string.tga; sourceTree = "<group>"; };
+		66BD989D167423530056F496 /* vec-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "vec-util.h"; sourceTree = "<group>"; };
+		66BD98A5167424850056F496 /* glew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
+		66BD98A6167424850056F496 /* glxew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
+		66BD98A7167424850056F496 /* wglew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
+		66BD98A9167424850056F496 /* glew.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
+		66BD98AA167424850056F496 /* glewinfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glewinfo.c; sourceTree = "<group>"; };
+		66BD98AB167424850056F496 /* visualinfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = visualinfo.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +196,7 @@
 		663730AA1664B091008555B5 = {
 			isa = PBXGroup;
 			children = (
+				66BD98A2167424720056F496 /* glew */,
 				667118221665FD27005CBAEE /* src */,
 				663544701672FBEE0050CCDD /* MusKit */,
 				662507A91667586200AC797A /* LeapSDK */,
@@ -198,6 +231,19 @@
 		667118221665FD27005CBAEE /* src */ = {
 			isa = PBXGroup;
 			children = (
+				66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */,
+				66BD9892167423530056F496 /* airharp.f.glsl */,
+				66BD9893167423530056F496 /* airharp.v.glsl */,
+				66BD9894167423530056F496 /* bluegradient.tga */,
+				66BD9895167423530056F496 /* file-util.c */,
+				66BD9896167423530056F496 /* file-util.h */,
+				66BD9897167423530056F496 /* gl-util.c */,
+				66BD9898167423530056F496 /* gl-util.h */,
+				66BD9899167423530056F496 /* harpGL.c */,
+				66BD989A167423530056F496 /* meshes.c */,
+				66BD989B167423530056F496 /* meshes.h */,
+				66BD989C167423530056F496 /* string.tga */,
+				66BD989D167423530056F496 /* vec-util.h */,
 				667118231665FD27005CBAEE /* GLstuff.cpp */,
 				667118241665FD27005CBAEE /* GLStuff.h */,
 				667118251665FD27005CBAEE /* main.cpp */,
@@ -205,6 +251,45 @@
 				662507A0166605E200AC797A /* Harp.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		66BD98A2167424720056F496 /* glew */ = {
+			isa = PBXGroup;
+			children = (
+				66BD98A3167424850056F496 /* include */,
+				66BD98A8167424850056F496 /* src */,
+			);
+			name = glew;
+			sourceTree = "<group>";
+		};
+		66BD98A3167424850056F496 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				66BD98A4167424850056F496 /* GL */,
+			);
+			name = include;
+			path = "../../glew-1.9.0/include";
+			sourceTree = "<group>";
+		};
+		66BD98A4167424850056F496 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				66BD98A5167424850056F496 /* glew.h */,
+				66BD98A6167424850056F496 /* glxew.h */,
+				66BD98A7167424850056F496 /* wglew.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		66BD98A8167424850056F496 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				66BD98A9167424850056F496 /* glew.c */,
+				66BD98AA167424850056F496 /* glewinfo.c */,
+				66BD98AB167424850056F496 /* visualinfo.c */,
+			);
+			name = src;
+			path = "../../glew-1.9.0/src";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +342,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				667118261665FD27005CBAEE /* GLstuff.cpp in Sources */,
-				667118271665FD27005CBAEE /* main.cpp in Sources */,
 				662507A1166605E200AC797A /* Harp.cpp in Sources */,
 				6635448C1672FC020050CCDD /* AudioClient.cpp in Sources */,
 				6635448D1672FC020050CCDD /* AudioServer.cpp in Sources */,
@@ -269,6 +352,11 @@
 				663544921672FC020050CCDD /* chuck_fft.c in Sources */,
 				663544931672FC020050CCDD /* RtAudio.cpp in Sources */,
 				663544941672FC020050CCDD /* RtMidi.cpp in Sources */,
+				66BD989E167423530056F496 /* file-util.c in Sources */,
+				66BD989F167423530056F496 /* gl-util.c in Sources */,
+				66BD98A0167423530056F496 /* harpGL.c in Sources */,
+				66BD98A1167423530056F496 /* meshes.c in Sources */,
+				66BD98AC167424880056F496 /* glew.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +427,7 @@
 				HEADER_SEARCH_PATHS = (
 					"~/muskit/ThirdParty/**",
 					"~/Leap_SDK/include",
+					"~/glew-1.9.0/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -359,6 +448,7 @@
 				HEADER_SEARCH_PATHS = (
 					"~/muskit/ThirdParty/**",
 					"~/Leap_SDK/include",
+					"~/glew-1.9.0/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
