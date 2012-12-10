@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <map>
 #include <mutex>
+#include <unistd.h>
 #include "file-util.h"
 #include "gl-util.h"
 #include "vec-util.h"
@@ -17,6 +18,10 @@
 #include "AudioServer.h"
 #include "Harp.h"
 #include "Leap.h"
+
+bool gFullscreen = false;
+int gWidth, gHeight, gLastWidth, gLastHeight;
+
 
 struct string_attributes {
     GLint position, normal, texcoord, shininess, specular;
@@ -31,6 +36,8 @@ static struct {
     struct string_mesh strings[MAX_STRINGS];
     struct string_vertex *string_vertex_array[MAX_STRINGS];
     struct string_mesh background;
+    struct string_mesh bezel;
+    struct string_mesh lowBezel;
     struct string_mesh fingers[MAX_FINGERS];
     struct string_vertex *finger_vertex_array[MAX_FINGERS];
     GLuint shadowmap_texture;
@@ -255,12 +262,10 @@ void airMotion(Finger* f, float prevX, float PrevY, float prevZ)
     float const S = 1./(float)(10-1);
 
     float radius = .03;
-    float fingerX = radius + x*3-.5;
+    float fingerX = radius + x*3-1;
     float fingerY = radius + y*2-.5;////0.75f*t - 0.375f;
     float fingerZ = radius + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
-    float fingerPrevX = radius + prevX*3-.5;
-    printf("z=%f\n",z);
-    
+    float fingerPrevX = radius + prevX*3-1;
     float zThresh = -.35;
 
     if (z >= zThresh)
@@ -272,25 +277,19 @@ void airMotion(Finger* f, float prevX, float PrevY, float prevZ)
         {
             float stringX = g_resources.string_vertex_array[i]->position[0];
             float t = stringX + .05;
-            //float fingerX = g_resources.finger_vertex_array->position[0];
             float threshold = (columnWidth * i) + (columnWidth / 2);
             if (((fingerPrevX <= t && fingerX > t) ||
                  (fingerPrevX > t && fingerX <= t)) &&
                 fabsf(fingerX - t) < columnWidth / 2)
-            //printf("fingerx:%d stringx:%d\n", fingerX, stringX);
-            //if (fingerX > stringX - 0.0015 && fingerX < stringX + 0.015)
             {
-                //printf("trig\n");
                 int idx = i % gScaleIntervals;
                 int mult = (i / (float)gScaleIntervals);
                 int base = 32 + 12*mult;
                 int note = base + gScale[idx];
-                //Harp::GetInstance()->NoteOn(i, note, 30);
                 int bufferSize = 512;
                 float buffer[bufferSize];
                 memset(buffer, 0, bufferSize);
                 int midpoint = ((fingerY / 2.2)+.5)* bufferSize;
-                //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
                 for (int x = 0; x < bufferSize; ++x)
                 {
                     if (x < midpoint)
@@ -597,7 +596,13 @@ static int make_resources(void)
     GLuint vertex_shader, fragment_shader, program;
     g_resources.background.texture = make_texture("bluegradient.tga");
     init_background_mesh(&g_resources.background);
-
+    
+    g_resources.bezel.texture = make_texture("bezel.tga");
+    init_bezel_mesh(&g_resources.bezel);
+    
+    g_resources.lowBezel.texture = make_texture("lowBezel.tga");
+    init_low_bezel_mesh(&g_resources.lowBezel);
+    
     int i;
     for (i=0;i<MAX_FINGERS;++i)
     {
@@ -636,7 +641,7 @@ static int make_resources(void)
     g_resources.window_size[1] = INITIAL_WINDOW_HEIGHT;
 
     g_resources.light_direction[0] =  0.408248;
-    g_resources.light_direction[1] = -0.316497;
+    g_resources.light_direction[1] = -.1f;//-0.316497;
     g_resources.light_direction[2] =  0.408248;
 
     update_p_matrix(
@@ -695,23 +700,102 @@ static void mouse(int button, int state, int x, int y)
     }
 }
 
-static void keyboard(unsigned char key, int x, int y)
-{
-    if (key == 'r' || key == 'R') {
-        update_string_programs();
-    }
-}
-
 static void reshape(int w, int h)
 {
     g_resources.window_size[0] = w;
     g_resources.window_size[1] = h;
+    gWidth = w;
+    gHeight = h;
+    gLastWidth = w;
+    gLastHeight = h;
     update_p_matrix(g_resources.p_matrix, w, h);
+}
+
+static void keyboard(unsigned char key, int x, int y)
+{
+    switch( key )
+    {
+        case 'a':
+            //Harp::GetInstance()->AddString();
+            break;
+        case 'z':
+            //Harp::GetInstance()->RemoveString();
+            break;
+        case 'f':
+        {
+            if( !gFullscreen )
+            {
+                gLastWidth = gWidth;
+                gLastHeight = gHeight;
+                glutFullScreen();
+            }
+            else
+                glutReshapeWindow( gLastWidth, gLastHeight );
+            
+            gFullscreen = !gFullscreen;
+        }
+            break;
+        case 'h':
+            break;
+        case 'w':
+            break;
+            
+        case 's':
+            break;
+            
+        case 'e':
+            break;
+            
+        case 'd':
+            break;
+        case '1':
+        {
+            gScale = gPentatonicMajor;
+            gScaleIntervals = gPentatonicMajorIntervals;
+        }
+            break;
+        case '2':
+        {
+            gScale = gPentatonicMinor;
+            gScaleIntervals = gPentatonicMinorIntervals;
+        }
+            break;
+        case '3':
+        {
+            gScale = gDiatonic;
+            gScaleIntervals = gDiatonicIntervals;
+        }
+            break;
+        case '4':
+        {
+            gScale = gWholeTone;
+            gScaleIntervals = gWholeToneIntervals;
+        }
+            break;
+        case 'r':
+            break;
+        case 'c':
+            break;
+            
+        case 'q':
+        {
+            exit(0);
+        }
+            break;
+        default:
+            break;
+    }
+    
+    // do a reshape since gEyeY might have changed
+    reshape( gWidth, gHeight );
+    glutPostRedisplay( );
 }
 
 static void render_scene(struct string_attributes const *attributes)
 {
     enable_mesh_vertex_attributes(attributes);
+    render_mesh(&g_resources.bezel, attributes);
+    render_mesh(&g_resources.lowBezel, attributes);
     gLock.lock();
     for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
     {

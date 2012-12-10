@@ -18,8 +18,8 @@
 #define string_T_STEP (1.0f/((GLfloat)(string_Y_RES - 1)))
 #define string_VERTEX_COUNT (string_X_RES * string_Y_RES)
 
-#define finger_X_RES 10
-#define finger_Y_RES 10
+#define finger_X_RES 5
+#define finger_Y_RES 5
 #define finger_S_STEP (1.0f/((GLfloat)(finger_X_RES - 1)))
 #define finger_T_STEP (1.0f/((GLfloat)(finger_Y_RES - 1)))
 #define finger_VERTEX_COUNT (finger_X_RES * string_Y_RES)
@@ -84,8 +84,8 @@ static void calculate_string_vertex(
 
 static void calculate_finger_vertex(struct string_vertex *v,
                                     GLfloat s, GLfloat t, GLuint fingerIndex, GLfloat x, GLfloat y, GLfloat z) {
-    float const R = 1./(float)(10-1);
-    float const S = 1./(float)(10-1);
+    float const R = 1./(float)(finger_X_RES-1);
+    float const S = 1./(float)(finger_Y_RES-1);
     GLfloat
     sgrad[3] = {
         s*R + z,
@@ -112,7 +112,7 @@ static void calculate_finger_vertex(struct string_vertex *v,
     float const xx = cos(2*M_PI * t * S) * sin( M_PI * s * R );
     float const zz = sin(2*M_PI * t * S) * 5*sin( M_PI * s * R );
     
-    v->position[0] = radius*xx + x*3-.5;
+    v->position[0] = radius*xx + x*3-1;
     v->position[1] = radius*yy + y*2-.5;
     v->position[2] = radius*zz + z;
     v->position[3] = 0.0f;
@@ -234,51 +234,238 @@ struct string_vertex *init_finger_mesh(struct string_mesh *out_mesh)
 #define STRING_SHAFT_RADIUS         0.010f
 #define STRING_SHININESS            4.0f
 
-void init_background_mesh(struct string_mesh *out_mesh)
+void init_bezel_mesh(struct string_mesh *out_mesh)
 {
-    static const GLsizei STRING_RES = 16, STRING_SLICE = 6;
-    GLfloat STRING_AXIS_XZ[2] = { -STRING_SHAFT_RADIUS, 0.0f };
-    static const GLubyte STRING_SPECULAR[4] = { 255, 255, 192, 0 };
+    GLfloat aspectRatio = 39.f / 1000.f;
+    GLfloat w = 2.75;
+    GLfloat h = w*aspectRatio;
+    
+    GLfloat BEZEL_LO[3] = { -.88f, .41f, -.0001 };
+    GLfloat BEZEL_HI[3] = { -.88f+w, .41f+h , -.0001 };
+    
+    static GLfloat
+    TEX_BEZEL_LO[2]     = { 0.f, 0.f },
+    TEX_BEZEL_HI[2]     = { 1.f, 1.f };
+    
+    GLsizei vertex_count = 4;
+    GLsizei element_count = 6;
+    
+    GLsizei element_i = 0;
+    
+    struct string_vertex *vertex_data = (struct string_vertex*) malloc(vertex_count * sizeof(struct string_vertex));
+    
+    GLushort *element_data = (GLushort*) malloc(element_count * sizeof(GLushort));
+    
+    vertex_data[0].position[0] = BEZEL_LO[0];
+    vertex_data[0].position[1] = BEZEL_LO[1];
+    vertex_data[0].position[2] = BEZEL_LO[2];
+    vertex_data[0].position[3] = 1.0f;
+    vertex_data[0].normal[0]   = 0.0f;
+    vertex_data[0].normal[1]   = 0.0f;
+    vertex_data[0].normal[2]   = -1.0f;
+    vertex_data[0].normal[3]   = 0.0f;
+    vertex_data[0].texcoord[0] = TEX_BEZEL_LO[0];
+    vertex_data[0].texcoord[1] = TEX_BEZEL_LO[1];
+    vertex_data[0].shininess   = 0.0f;
+    vertex_data[0].specular[0] = 0;
+    vertex_data[0].specular[1] = 0;
+    vertex_data[0].specular[2] = 0;
+    vertex_data[0].specular[3] = 0;
+    
+    vertex_data[1].position[0] = BEZEL_HI[0];
+    vertex_data[1].position[1] = BEZEL_LO[1];
+    vertex_data[1].position[2] = BEZEL_LO[2];
+    vertex_data[1].position[3] = 1.0f;
+    vertex_data[1].normal[0]   = 0.0f;
+    vertex_data[1].normal[1]   = 0.0f;
+    vertex_data[1].normal[2]   = -1.0f;
+    vertex_data[1].normal[3]   = 0.0f;
+    vertex_data[1].texcoord[0] = TEX_BEZEL_HI[0];
+    vertex_data[1].texcoord[1] = TEX_BEZEL_LO[1];
+    vertex_data[1].shininess   = 0.0f;
+    vertex_data[1].specular[0] = 0;
+    vertex_data[1].specular[1] = 0;
+    vertex_data[1].specular[2] = 0;
+    vertex_data[1].specular[3] = 0;
+    
+    vertex_data[2].position[0] = BEZEL_HI[0];
+    vertex_data[2].position[1] = BEZEL_HI[1];
+    vertex_data[2].position[2] = BEZEL_LO[2];
+    vertex_data[2].position[3] = 1.0f;
+    vertex_data[2].normal[0]   = 0.0f;
+    vertex_data[2].normal[1]   = 0.0f;
+    vertex_data[2].normal[2]   = -1.0f;
+    vertex_data[2].normal[3]   = 0.0f;
+    vertex_data[2].texcoord[0] = TEX_BEZEL_HI[0];
+    vertex_data[2].texcoord[1] = TEX_BEZEL_HI[1];
+    vertex_data[2].shininess   = 0.0f;
+    vertex_data[2].specular[0] = 0;
+    vertex_data[2].specular[1] = 0;
+    vertex_data[2].specular[2] = 0;
+    vertex_data[2].specular[3] = 0;
+    
+    vertex_data[3].position[0] = BEZEL_LO[0];
+    vertex_data[3].position[1] = BEZEL_HI[1];
+    vertex_data[3].position[2] = BEZEL_LO[2];
+    vertex_data[3].position[3] = 1.0f;
+    vertex_data[3].normal[0]   = 0.0f;
+    vertex_data[3].normal[1]   = 0.0f;
+    vertex_data[3].normal[2]   = -1.0f;
+    vertex_data[3].normal[3]   = 0.0f;
+    vertex_data[3].texcoord[0] = TEX_BEZEL_LO[0];
+    vertex_data[3].texcoord[1] = TEX_BEZEL_HI[1];
+    vertex_data[3].shininess   = 0.0f;
+    vertex_data[3].specular[0] = 0;
+    vertex_data[3].specular[1] = 0;
+    vertex_data[3].specular[2] = 0;
+    vertex_data[3].specular[3] = 0;
+    
+    element_data[element_i++] = 0;
+    element_data[element_i++] = 1;
+    element_data[element_i++] = 2;
+    
+    element_data[element_i++] = 0;
+    element_data[element_i++] = 2;
+    element_data[element_i++] = 3;
+    
+    init_mesh(
+              out_mesh,
+              vertex_data, vertex_count,
+              element_data, element_count,
+              GL_STATIC_DRAW
+              );
+    
+    free(element_data);
+    free(vertex_data);
 
+}
+
+void init_low_bezel_mesh(struct string_mesh *out_mesh)
+{
+    GLfloat w = 2.75;
+    GLfloat h = .05;
+    
+    GLfloat BEZEL_LO[3] = { -.88f, -1.02f, -.0001 };
+    GLfloat BEZEL_HI[3] = { -.88f+w, -1.02f+h , -.0001 };
+    
+    static GLfloat
+    TEX_BEZEL_LO[2]     = { 0.f, 0.f },
+    TEX_BEZEL_HI[2]     = { 1.f, .9f };
+    
+    GLsizei vertex_count = 4;
+    GLsizei element_count = 6;
+    
+    GLsizei element_i = 0;
+    
+    struct string_vertex *vertex_data = (struct string_vertex*) malloc(vertex_count * sizeof(struct string_vertex));
+    
+    GLushort *element_data = (GLushort*) malloc(element_count * sizeof(GLushort));
+    
+    vertex_data[0].position[0] = BEZEL_LO[0];
+    vertex_data[0].position[1] = BEZEL_LO[1];
+    vertex_data[0].position[2] = BEZEL_LO[2];
+    vertex_data[0].position[3] = 1.0f;
+    vertex_data[0].normal[0]   = 0.0f;
+    vertex_data[0].normal[1]   = 0.0f;
+    vertex_data[0].normal[2]   = -1.0f;
+    vertex_data[0].normal[3]   = 0.0f;
+    vertex_data[0].texcoord[0] = TEX_BEZEL_LO[0];
+    vertex_data[0].texcoord[1] = TEX_BEZEL_LO[1];
+    vertex_data[0].shininess   = 0.0f;
+    vertex_data[0].specular[0] = 0;
+    vertex_data[0].specular[1] = 0;
+    vertex_data[0].specular[2] = 0;
+    vertex_data[0].specular[3] = 0;
+    
+    vertex_data[1].position[0] = BEZEL_HI[0];
+    vertex_data[1].position[1] = BEZEL_LO[1];
+    vertex_data[1].position[2] = BEZEL_LO[2];
+    vertex_data[1].position[3] = 1.0f;
+    vertex_data[1].normal[0]   = 0.0f;
+    vertex_data[1].normal[1]   = 0.0f;
+    vertex_data[1].normal[2]   = -1.0f;
+    vertex_data[1].normal[3]   = 0.0f;
+    vertex_data[1].texcoord[0] = TEX_BEZEL_HI[0];
+    vertex_data[1].texcoord[1] = TEX_BEZEL_LO[1];
+    vertex_data[1].shininess   = 0.0f;
+    vertex_data[1].specular[0] = 0;
+    vertex_data[1].specular[1] = 0;
+    vertex_data[1].specular[2] = 0;
+    vertex_data[1].specular[3] = 0;
+    
+    vertex_data[2].position[0] = BEZEL_HI[0];
+    vertex_data[2].position[1] = BEZEL_HI[1];
+    vertex_data[2].position[2] = BEZEL_LO[2];
+    vertex_data[2].position[3] = 1.0f;
+    vertex_data[2].normal[0]   = 0.0f;
+    vertex_data[2].normal[1]   = 0.0f;
+    vertex_data[2].normal[2]   = -1.0f;
+    vertex_data[2].normal[3]   = 0.0f;
+    vertex_data[2].texcoord[0] = TEX_BEZEL_HI[0];
+    vertex_data[2].texcoord[1] = TEX_BEZEL_HI[1];
+    vertex_data[2].shininess   = 0.0f;
+    vertex_data[2].specular[0] = 0;
+    vertex_data[2].specular[1] = 0;
+    vertex_data[2].specular[2] = 0;
+    vertex_data[2].specular[3] = 0;
+    
+    vertex_data[3].position[0] = BEZEL_LO[0];
+    vertex_data[3].position[1] = BEZEL_HI[1];
+    vertex_data[3].position[2] = BEZEL_LO[2];
+    vertex_data[3].position[3] = 1.0f;
+    vertex_data[3].normal[0]   = 0.0f;
+    vertex_data[3].normal[1]   = 0.0f;
+    vertex_data[3].normal[2]   = -1.0f;
+    vertex_data[3].normal[3]   = 0.0f;
+    vertex_data[3].texcoord[0] = TEX_BEZEL_LO[0];
+    vertex_data[3].texcoord[1] = TEX_BEZEL_HI[1];
+    vertex_data[3].shininess   = 0.0f;
+    vertex_data[3].specular[0] = 0;
+    vertex_data[3].specular[1] = 0;
+    vertex_data[3].specular[2] = 0;
+    vertex_data[3].specular[3] = 0;
+    
+    element_data[element_i++] = 0;
+    element_data[element_i++] = 1;
+    element_data[element_i++] = 2;
+    
+    element_data[element_i++] = 0;
+    element_data[element_i++] = 2;
+    element_data[element_i++] = 3;
+    
+    init_mesh(
+              out_mesh,
+              vertex_data, vertex_count,
+              element_data, element_count,
+              GL_STATIC_DRAW
+              );
+    
+    free(element_data);
+    free(vertex_data);
+    
+}
+
+void init_background_mesh(struct string_mesh *out_mesh)
+{    
     GLfloat
-        GROUND_LO[3] = { -0.875f, STRING_SHAFT_BOTTOM, -0.25f },
-        GROUND_HI[3] = {  1.875f, STRING_SHAFT_BOTTOM,  .05f },
+        GROUND_LO[3] = { -0.875f, STRING_SHAFT_BOTTOM, -0.0f },
+        GROUND_HI[3] = {  1.875f, STRING_SHAFT_BOTTOM,  .04f },
         WALL_LO[3] = { GROUND_LO[0], STRING_SHAFT_BOTTOM, GROUND_HI[2] },
         WALL_HI[3] = { GROUND_HI[0], STRING_SHAFT_BOTTOM + 1.7f, GROUND_HI[2] };
 
     static GLfloat
-        TEX_STRING_LO[2] = { 0.0f,    0.0f },
-        TEX_STRING_HI[2] = { 0.03125f,  1.0f },
         TEX_GROUND_LO[2]   = { 0.f,  0.f },
         TEX_GROUND_HI[2]   = { 0.99f, 0.9921875f },
         TEX_WALL_LO[2]     = { 0.99f, 0.99f },
         TEX_WALL_HI[2]     = { 0.0f,      0.f };
 
-#define _STRING_T(y) \
-    (TEX_STRING_LO[1] \
-        + (TEX_STRING_HI[1] - TEX_STRING_LO[1]) \
-        * ((y) - STRING_TRUCK_TOP)/(STRING_SHAFT_BOTTOM - STRING_TRUCK_TOP) \
-    )
-
-    GLfloat
-        theta_step = 2.0f * (GLfloat)M_PI / (GLfloat)STRING_RES,
-        s_step = (TEX_STRING_HI[0] - TEX_STRING_LO[0]) / (GLfloat)STRING_RES,
-        t_truck_top    = TEX_STRING_LO[1],
-        t_truck_crown  = _STRING_T(STRING_TRUCK_CROWN),
-        t_truck_bottom = _STRING_T(STRING_TRUCK_BOTTOM),
-        t_shaft_top    = _STRING_T(STRING_SHAFT_TOP),
-        t_shaft_bottom = _STRING_T(STRING_SHAFT_BOTTOM);
-
-#undef _STRING_T
-
     GLsizei
-        stringpole_vertex_count = 2 + STRING_RES * STRING_SLICE,
         wall_vertex_count = 4,
         ground_vertex_count = 4,
         vertex_count = wall_vertex_count
             + ground_vertex_count;
 
-    GLsizei vertex_i = 0, element_i, i;
+    GLsizei element_i;
 
     GLsizei
         wall_element_count = 6,
@@ -420,6 +607,7 @@ void init_background_mesh(struct string_mesh *out_mesh)
     vertex_data[7].specular[2] = 0;
     vertex_data[7].specular[3] = 0;
 
+    
 //    vertex_data[8].position[0] = STRING_AXIS_XZ[0];
 //    vertex_data[8].position[1] = STRING_TRUCK_TOP;
 //    vertex_data[8].position[2] = STRING_AXIS_XZ[1];
@@ -453,9 +641,7 @@ void init_background_mesh(struct string_mesh *out_mesh)
 
     element_data[element_i++] = 4;
     element_data[element_i++] = 6;
-    element_data[element_i++] = 7;
-
- 
+    element_data[element_i++] = 7; 
 
     init_mesh(
         out_mesh,
@@ -465,7 +651,7 @@ void init_background_mesh(struct string_mesh *out_mesh)
     );
 
     free(element_data);
-    //free(vertex_data);
+    free(vertex_data);
 }
 
 void update_string_mesh(

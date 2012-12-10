@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		662507A1166605E200AC797A /* Harp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625079F166605E200AC797A /* Harp.cpp */; };
+		662FFFC81675C5130030D6FB /* lowBezel.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 662FFFC71675C5040030D6FB /* lowBezel.tga */; };
 		6635448C1672FC020050CCDD /* AudioClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663544721672FC020050CCDD /* AudioClient.cpp */; };
 		6635448D1672FC020050CCDD /* AudioServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663544741672FC020050CCDD /* AudioServer.cpp */; };
 		6635448E1672FC020050CCDD /* Interpolators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663544761672FC020050CCDD /* Interpolators.cpp */; };
@@ -16,7 +17,6 @@
 		663544911672FC020050CCDD /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663544821672FC020050CCDD /* WindowFunction.cpp */; };
 		663544921672FC020050CCDD /* chuck_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 663544851672FC020050CCDD /* chuck_fft.c */; };
 		663544931672FC020050CCDD /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663544871672FC020050CCDD /* RtAudio.cpp */; };
-		663544941672FC020050CCDD /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6635448A1672FC020050CCDD /* RtMidi.cpp */; };
 		663544951672FCAF0050CCDD /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662507AB1667620200AC797A /* libLeap.dylib */; };
 		663730C91664B0D6008555B5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C21664B0D6008555B5 /* OpenGL.framework */; };
 		663730CA1664B0D6008555B5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C31664B0D6008555B5 /* GLUT.framework */; };
@@ -37,6 +37,7 @@
 		66BD98B4167432D00056F496 /* harpGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9899167423530056F496 /* harpGL.cpp */; };
 		66BD98B616752A910056F496 /* finger.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B516752A8A0056F496 /* finger.tga */; };
 		66BD98B8167571A50056F496 /* finger_red.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B71675719C0056F496 /* finger_red.tga */; };
+		66BD98BA16758AAA0056F496 /* bezel.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B916758AA00056F496 /* bezel.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				662FFFC81675C5130030D6FB /* lowBezel.tga in CopyFiles */,
 				66BD98AD167424D60056F496 /* airharp-shadow-map.f.glsl in CopyFiles */,
 				66BD98AE167424D60056F496 /* airharp.f.glsl in CopyFiles */,
 				66BD98AF167424D60056F496 /* airharp.v.glsl in CopyFiles */,
@@ -53,6 +55,7 @@
 				66BD98B1167424D60056F496 /* string.tga in CopyFiles */,
 				66BD98B616752A910056F496 /* finger.tga in CopyFiles */,
 				66BD98B8167571A50056F496 /* finger_red.tga in CopyFiles */,
+				66BD98BA16758AAA0056F496 /* bezel.tga in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +66,7 @@
 		662507A0166605E200AC797A /* Harp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harp.h; sourceTree = "<group>"; };
 		662507AA1667586F00AC797A /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Leap.h; path = ../../Leap_SDK/include/Leap.h; sourceTree = "<group>"; };
 		662507AB1667620200AC797A /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = ../../Leap_SDK/lib/libLeap.dylib; sourceTree = "<group>"; };
+		662FFFC71675C5040030D6FB /* lowBezel.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = lowBezel.tga; sourceTree = "<group>"; };
 		663544721672FC020050CCDD /* AudioClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioClient.cpp; sourceTree = "<group>"; };
 		663544731672FC020050CCDD /* AudioClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioClient.h; sourceTree = "<group>"; };
 		663544741672FC020050CCDD /* AudioServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioServer.cpp; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 		66BD98AB167424850056F496 /* visualinfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = visualinfo.c; sourceTree = "<group>"; };
 		66BD98B516752A8A0056F496 /* finger.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = finger.tga; sourceTree = "<group>"; };
 		66BD98B71675719C0056F496 /* finger_red.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = finger_red.tga; sourceTree = "<group>"; };
+		66BD98B916758AA00056F496 /* bezel.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = bezel.tga; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,11 +242,13 @@
 		667118221665FD27005CBAEE /* src */ = {
 			isa = PBXGroup;
 			children = (
+				66BD98B916758AA00056F496 /* bezel.tga */,
 				66BD98B516752A8A0056F496 /* finger.tga */,
 				66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */,
 				66BD9892167423530056F496 /* airharp.f.glsl */,
 				66BD9893167423530056F496 /* airharp.v.glsl */,
 				66BD98B71675719C0056F496 /* finger_red.tga */,
+				662FFFC71675C5040030D6FB /* lowBezel.tga */,
 				66BD9894167423530056F496 /* bluegradient.tga */,
 				66BD9895167423530056F496 /* file-util.cpp */,
 				66BD9896167423530056F496 /* file-util.h */,
@@ -359,7 +366,6 @@
 				663544911672FC020050CCDD /* WindowFunction.cpp in Sources */,
 				663544921672FC020050CCDD /* chuck_fft.c in Sources */,
 				663544931672FC020050CCDD /* RtAudio.cpp in Sources */,
-				663544941672FC020050CCDD /* RtMidi.cpp in Sources */,
 				66BD989E167423530056F496 /* file-util.cpp in Sources */,
 				66BD989F167423530056F496 /* gl-util.cpp in Sources */,
 				66BD98A1167423530056F496 /* meshes.cpp in Sources */,
@@ -375,7 +381,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -396,7 +402,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -404,7 +410,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -419,13 +425,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
 		663730C01664B091008555B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -442,7 +449,7 @@
 					"\"/Users/adam/Leap_SDK/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = "";
@@ -452,6 +459,7 @@
 		663730C11664B091008555B5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				HEADER_SEARCH_PATHS = (
 					"~/muskit/ThirdParty/**",
@@ -463,7 +471,7 @@
 					"\"/Users/adam/Leap_SDK/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = "";

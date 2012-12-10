@@ -27,6 +27,8 @@ void init_mesh(
 );
 struct string_vertex *init_string_mesh(struct string_mesh *out_mesh);
 void init_background_mesh(struct string_mesh *out_mesh);
+void init_bezel_mesh(struct string_mesh *out_mesh);
+void init_low_bezel_mesh(struct string_mesh *out_mesh);
 void update_string_mesh(
     struct string_mesh const *mesh,
     struct string_vertex *vertex_data,
