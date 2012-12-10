@@ -18,9 +18,6 @@
 #include "Harp.h"
 #include "Leap.h"
 
-void airMotion(float x, float y, float z, float prevX, float PrevY);
-
-
 struct string_attributes {
     GLint position, normal, texcoord, shininess, specular;
 };
@@ -69,7 +66,7 @@ class Finger
 public:
     Finger()
     : invalid(false)
-    , fX(0), fY(0), fZ(0), finger(NULL), finger_vertex_array(NULL)
+    , fX(-1), fY(-1), fZ(-1), finger(NULL), finger_vertex_array(NULL)
     {}
     bool invalid;
     float fX;
@@ -79,6 +76,8 @@ public:
     string_vertex *finger_vertex_array;
 
 };
+
+void airMotion(Finger* f, float prevX, float PrevY, float prevZ);
 
 std::map<int,Finger> gFingers;
 std::mutex gLock;
@@ -164,11 +163,11 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     float newZ = -(tip.position.z / 200.f);
                     float prevX = f->fX;
                     float prevY = f->fY;
+                    float prevZ = f->fZ;
                     f->fX = newX;
                     f->fY = newY;
                     f->fZ = newZ;
-                    //f->scaleFactor = 1 - (tip.position.z / 300.f);
-                    airMotion(newX, newY, tip.position.z, prevX , prevY);
+                    airMotion(f, prevX , prevY, prevZ);
                     
                 }
                 pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
@@ -245,22 +244,28 @@ int gScaleIntervals = gPentatonicMajorIntervals;
 
 static const int STRING_SHADOWMAP_RESOLUTION = 2048;
 
-void airMotion(float x, float y, float z, float prevX, float PrevY)
+void airMotion(Finger* f, float prevX, float PrevY, float prevZ)
 {
+    
+    float x = f->fX;
+    float y = f->fY;
+    float z = f->fZ;
     
     float const R = 1./(float)(10-1);
     float const S = 1./(float)(10-1);
-    
-    //float const yy = sin( -M_PI_2 + M_PI);
-    //float const xx = cos(2*M_PI) * sin( M_PI * s * R );
-    //float const zz = sin(2*M_PI * t * S) * sin( M_PI * s * R );
+
     float radius = .03;
     float fingerX = radius + x*3-.5;
     float fingerY = radius + y*2-.5;////0.75f*t - 0.375f;
     float fingerZ = radius + z;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
     float fingerPrevX = radius + prevX*3-.5;
-    if (z < 70.f)
+    printf("z=%f\n",z);
+    
+    float zThresh = -.35;
+
+    if (z >= zThresh)
     {
+        f->finger->texture = f->finger->textureOn;
         int numStrings = Harp::GetInstance()->GetNumStrings();
         float columnWidth = 1.f / numStrings;
         for (int i = 0; i < numStrings; ++i)
@@ -284,7 +289,6 @@ void airMotion(float x, float y, float z, float prevX, float PrevY)
                 int bufferSize = 512;
                 float buffer[bufferSize];
                 memset(buffer, 0, bufferSize);
-                printf("y=%f\n",(fingerY / 2.2)+.5);
                 int midpoint = ((fingerY / 2.2)+.5)* bufferSize;
                 //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
                 for (int x = 0; x < bufferSize; ++x)
@@ -300,6 +304,10 @@ void airMotion(float x, float y, float z, float prevX, float PrevY)
                 Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
             }
         }
+    }
+    else
+    {
+        f->finger->texture = f->finger->textureOff;
     }
 }
 
@@ -593,7 +601,9 @@ static int make_resources(void)
     int i;
     for (i=0;i<MAX_FINGERS;++i)
     {
-        g_resources.fingers[i].texture = make_texture("finger.tga");
+        g_resources.fingers[i].textureOff = make_texture("finger.tga");
+        g_resources.fingers[i].textureOn = make_texture("finger_red.tga");
+        g_resources.fingers[i].texture = g_resources.fingers[i].textureOff;
         g_resources.finger_vertex_array[i] = init_finger_mesh(&g_resources.fingers[i]);
         g_resources.strings[i].inUse = 0;
     }

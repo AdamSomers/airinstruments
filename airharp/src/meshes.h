@@ -1,10 +1,12 @@
-#define MAX_STRINGS 15
+#define MAX_STRINGS 20
 #define MAX_FINGERS 20
 
 struct string_mesh {
     GLuint vertex_buffer, element_buffer;
     GLsizei element_count;
     GLuint texture;
+    GLuint textureOn;
+    GLuint textureOff;
     GLuint stringIndex;
     GLboolean inUse;
 };

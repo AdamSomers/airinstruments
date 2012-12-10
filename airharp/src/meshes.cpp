@@ -98,17 +98,16 @@ static void calculate_finger_vertex(struct string_vertex *v,
         0.0f
     };
     
-
-    
     z+= .2;
+    if(z > -.2) v->shininess = 1.f;
     if(z > -.125) z = -.125f;
+    else v->shininess = 0.f;
     float radius = .03;
 
     if (t > finger_X_RES/2) {
         t = finger_X_RES/2;
     }
-    
-    
+
     float const yy = sin( -M_PI_2 + M_PI * s * R );
     float const xx = cos(2*M_PI * t * S) * sin( M_PI * s * R );
     float const zz = sin(2*M_PI * t * S) * 5*sin( M_PI * s * R );

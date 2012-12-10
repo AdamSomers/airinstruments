@@ -36,6 +36,7 @@
 		66BD98B1167424D60056F496 /* string.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD989C167423530056F496 /* string.tga */; };
 		66BD98B4167432D00056F496 /* harpGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9899167423530056F496 /* harpGL.cpp */; };
 		66BD98B616752A910056F496 /* finger.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B516752A8A0056F496 /* finger.tga */; };
+		66BD98B8167571A50056F496 /* finger_red.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B71675719C0056F496 /* finger_red.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +52,7 @@
 				66BD98B0167424D60056F496 /* bluegradient.tga in CopyFiles */,
 				66BD98B1167424D60056F496 /* string.tga in CopyFiles */,
 				66BD98B616752A910056F496 /* finger.tga in CopyFiles */,
+				66BD98B8167571A50056F496 /* finger_red.tga in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +119,7 @@
 		66BD98AA167424850056F496 /* glewinfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glewinfo.c; sourceTree = "<group>"; };
 		66BD98AB167424850056F496 /* visualinfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = visualinfo.c; sourceTree = "<group>"; };
 		66BD98B516752A8A0056F496 /* finger.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = finger.tga; sourceTree = "<group>"; };
+		66BD98B71675719C0056F496 /* finger_red.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = finger_red.tga; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +241,7 @@
 				66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */,
 				66BD9892167423530056F496 /* airharp.f.glsl */,
 				66BD9893167423530056F496 /* airharp.v.glsl */,
+				66BD98B71675719C0056F496 /* finger_red.tga */,
 				66BD9894167423530056F496 /* bluegradient.tga */,
 				66BD9895167423530056F496 /* file-util.cpp */,
 				66BD9896167423530056F496 /* file-util.h */,

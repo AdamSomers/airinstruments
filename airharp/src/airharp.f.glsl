@@ -2,7 +2,7 @@
 
 uniform mat4 p_matrix, mv_matrix, shadow_matrix;
 uniform vec3 light_direction;
-uniform sampler2D texture, shadowmap;
+uniform sampler2D texture, shadowmap, texture2;
 
 varying vec3 frag_position, frag_normal;
 varying vec2 frag_texcoord;
@@ -11,7 +11,7 @@ varying vec4 frag_specular;
 varying vec4 frag_shadow_position;
 
 const vec4 light_diffuse = vec4(0.8, 0.8, 0.8, 0.0);
-const vec4 light_ambient = vec4(0.2, 0.2, 0.2, 1.0);
+const vec4 light_ambient = vec4(0.5, 0.5, 0.5, 1.0);
 const vec4 light_specular = vec4(1.0, 1.0, 1.0, 1.0);
 
 const float SHADOW_EPSILON = 0.01;
