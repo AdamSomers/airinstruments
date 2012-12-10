@@ -13,7 +13,7 @@
 #include "Harp.h"
 
 #define string_X_RES 10
-#define string_Y_RES 100
+#define string_Y_RES 50
 #define string_S_STEP (1.0f/((GLfloat)(string_X_RES - 1)))
 #define string_T_STEP (1.0f/((GLfloat)(string_Y_RES - 1)))
 #define string_VERTEX_COUNT (string_X_RES * string_Y_RES)
