@@ -20,17 +20,64 @@
 
 void airMotion(float x, float y, float z, float prevX, float PrevY);
 
+
+struct string_attributes {
+    GLint position, normal, texcoord, shininess, specular;
+};
+
+struct string_shaders {
+    GLuint vertex_shader, shadowmap_fragment_shader, string_fragment_shader;
+    GLuint shadowmap_program, string_program;
+};
+
+static struct {
+    struct string_mesh strings[MAX_STRINGS];
+    struct string_vertex *string_vertex_array[MAX_STRINGS];
+    struct string_mesh background;
+    struct string_mesh fingers[MAX_FINGERS];
+    struct string_vertex *finger_vertex_array[MAX_FINGERS];
+    GLuint shadowmap_texture;
+    GLuint shadowmap_framebuffer;
+    
+    struct string_shaders shaders;
+    
+    struct {
+        struct {
+            GLint p_matrix, mv_matrix, shadow_matrix;
+            GLint texture, shadowmap, light_direction;
+        } uniforms;
+        
+        struct string_attributes attributes;
+    } string_program;
+    
+    struct {
+        struct {
+            GLint p_matrix, mv_matrix, shadow_matrix;
+        } uniforms;
+        
+        struct string_attributes attributes;
+    } shadowmap_program;
+    
+    GLfloat p_matrix[16], shadow_matrix[16], mv_matrix[16];
+    GLfloat light_direction[3];
+    GLfloat eye_offset[2];
+    GLsizei window_size[2];
+} g_resources;
+
 class Finger
 {
 public:
     Finger()
     : invalid(false)
-    , fX(0), fY(0), fZ(0)
+    , fX(0), fY(0), fZ(0), finger(NULL), finger_vertex_array(NULL)
     {}
     bool invalid;
     float fX;
     float fY;
     float fZ;
+    string_mesh *finger;
+    string_vertex *finger_vertex_array;
+
 };
 
 std::map<int,Finger> gFingers;
@@ -96,6 +143,15 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     {
                         gLock.lock();
                         iter = gFingers.insert(std::make_pair(finger.id(), Finger())).first;
+                        for (int i = 0; i < MAX_FINGERS; ++i)
+                        {
+                            if (!g_resources.fingers[i].inUse) {
+                                (*iter).second.finger = &g_resources.fingers[i];
+                                (*iter).second.finger->inUse = 1;
+                                (*iter).second.finger_vertex_array = g_resources.finger_vertex_array[i];
+                                break;
+                            }
+                        }
                         gLock.unlock();
                         std::cout << "inserted finger: " << finger.id() << std::endl;
                     }
@@ -155,8 +211,11 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
     std::map<int,Finger>::iterator i = gFingers.begin();
     while (i != gFingers.end())
     {
-        if ((*i).second.invalid)
+        if ((*i).second.invalid) {
+            if ((*i).second.finger)
+                (*i).second.finger->inUse = 0;
             gFingers.erase(i++);
+        }
         else
             i++;
     }
@@ -185,49 +244,6 @@ const int* gScale = gPentatonicMajor;
 int gScaleIntervals = gPentatonicMajorIntervals;
 
 static const int STRING_SHADOWMAP_RESOLUTION = 2048;
-
-struct string_attributes {
-    GLint position, normal, texcoord, shininess, specular;
-};
-
-struct string_shaders {
-    GLuint vertex_shader, shadowmap_fragment_shader, string_fragment_shader;
-    GLuint shadowmap_program, string_program;
-};
-
-static struct {
-    struct string_mesh strings[MAX_STRINGS];
-    struct string_mesh background;
-    struct string_mesh finger;
-    struct string_vertex *finger_vertex_array;
-    struct string_vertex *string_vertex_array[MAX_STRINGS];
-    GLuint shadowmap_texture;
-    GLuint shadowmap_framebuffer;
-
-    struct string_shaders shaders;
-
-    struct {
-        struct {
-            GLint p_matrix, mv_matrix, shadow_matrix;
-            GLint texture, shadowmap, light_direction;
-        } uniforms;
-
-        struct string_attributes attributes;
-    } string_program;
-
-    struct {
-        struct {
-            GLint p_matrix, mv_matrix, shadow_matrix;
-        } uniforms;
-
-        struct string_attributes attributes;
-    } shadowmap_program;
-
-    GLfloat p_matrix[16], shadow_matrix[16], mv_matrix[16];
-    GLfloat light_direction[3];
-    GLfloat eye_offset[2];
-    GLsizei window_size[2];
-} g_resources;
 
 void airMotion(float x, float y, float z, float prevX, float PrevY)
 {
@@ -571,23 +587,23 @@ static int make_shadow_framebuffer(GLuint *out_texture, GLuint *out_framebuffer)
 static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
-    
-    g_resources.finger.texture = make_texture("finger.tga");
-    g_resources.finger_vertex_array = init_finger_mesh(&g_resources.finger);
-    
     g_resources.background.texture = make_texture("bluegradient.tga");
     init_background_mesh(&g_resources.background);
 
     int i;
+    for (i=0;i<MAX_FINGERS;++i)
+    {
+        g_resources.fingers[i].texture = make_texture("finger.tga");
+        g_resources.finger_vertex_array[i] = init_finger_mesh(&g_resources.fingers[i]);
+        g_resources.strings[i].inUse = 0;
+    }
+    
+
     for (i=0;i<MAX_STRINGS;++i)
     {
         g_resources.string_vertex_array[i] = init_string_mesh(&g_resources.strings[i]);
         g_resources.strings[i].stringIndex = i;
-
         g_resources.strings[i].texture = make_texture("string.tga");
-        
-        if (g_resources.strings[i].texture == 0 || g_resources.background.texture == 0)
-            return 0;
     }
     
     if (!make_shadow_framebuffer(
@@ -632,21 +648,22 @@ static void update(void)
     float x = 0.f;
     float y = 0.f;
     float z = -.5f;
-    std::map<int,Finger>::iterator f = gFingers.begin();
-    if (f != gFingers.end())
+    gLock.lock();
+    for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
     {
-        x = (*f).second.fX;
-        y = (*f).second.fY;
-        z = (*f).second.fZ;
+        x = (*i).second.fX;
+        y = (*i).second.fY;
+        z = (*i).second.fZ;
+        if((*i).second.finger)
+            update_finger_mesh((*i).second.finger, (*i).second.finger_vertex_array,seconds,x,y,z);
     }
-    update_finger_mesh(&g_resources.finger, g_resources.finger_vertex_array,seconds,x,y,z);
-
+    gLock.unlock();
     int i;
     for (i=0;i<MAX_STRINGS;++i)
     {
         update_string_mesh(&g_resources.strings[i], g_resources.string_vertex_array[i], seconds);
     }
-     glutPostRedisplay();
+    glutPostRedisplay();
     usleep(10000);
 }
 
@@ -685,7 +702,13 @@ static void reshape(int w, int h)
 static void render_scene(struct string_attributes const *attributes)
 {
     enable_mesh_vertex_attributes(attributes);
-    render_mesh(&g_resources.finger, attributes);
+    gLock.lock();
+    for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
+    {
+        if ((*i).second.finger)
+            render_mesh((*i).second.finger, attributes);
+    }
+    gLock.unlock();
     int i;
     for (i=0;i<MAX_STRINGS;++i)
     {
