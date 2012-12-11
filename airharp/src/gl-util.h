@@ -1,4 +1,5 @@
 GLuint make_texture(const char *filename);
+GLuint make_texture_png(const char *filename);
 
 void show_info_log(
     GLuint object,

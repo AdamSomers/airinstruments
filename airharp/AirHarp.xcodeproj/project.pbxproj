@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		661672901676D07800AD0ECE /* bluegradient.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6616728F1676D06700AD0ECE /* bluegradient.png */; };
+		661672931676E58F00AD0ECE /* lodepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 661672911676E58F00AD0ECE /* lodepng.cpp */; };
+		661672951676EB8F00AD0ECE /* bezel.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 661672941676EB8700AD0ECE /* bezel.png */; };
 		662507A1166605E200AC797A /* Harp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625079F166605E200AC797A /* Harp.cpp */; };
 		662FFFC81675C5130030D6FB /* lowBezel.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 662FFFC71675C5040030D6FB /* lowBezel.tga */; };
 		6635448C1672FC020050CCDD /* AudioClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663544721672FC020050CCDD /* AudioClient.cpp */; };
@@ -32,12 +35,10 @@
 		66BD98AD167424D60056F496 /* airharp-shadow-map.f.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */; };
 		66BD98AE167424D60056F496 /* airharp.f.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9892167423530056F496 /* airharp.f.glsl */; };
 		66BD98AF167424D60056F496 /* airharp.v.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9893167423530056F496 /* airharp.v.glsl */; };
-		66BD98B0167424D60056F496 /* bluegradient.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD9894167423530056F496 /* bluegradient.tga */; };
 		66BD98B1167424D60056F496 /* string.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD989C167423530056F496 /* string.tga */; };
 		66BD98B4167432D00056F496 /* harpGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66BD9899167423530056F496 /* harpGL.cpp */; };
 		66BD98B616752A910056F496 /* finger.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B516752A8A0056F496 /* finger.tga */; };
 		66BD98B8167571A50056F496 /* finger_red.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B71675719C0056F496 /* finger_red.tga */; };
-		66BD98BA16758AAA0056F496 /* bezel.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66BD98B916758AA00056F496 /* bezel.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,17 +52,21 @@
 				66BD98AD167424D60056F496 /* airharp-shadow-map.f.glsl in CopyFiles */,
 				66BD98AE167424D60056F496 /* airharp.f.glsl in CopyFiles */,
 				66BD98AF167424D60056F496 /* airharp.v.glsl in CopyFiles */,
-				66BD98B0167424D60056F496 /* bluegradient.tga in CopyFiles */,
+				661672901676D07800AD0ECE /* bluegradient.png in CopyFiles */,
 				66BD98B1167424D60056F496 /* string.tga in CopyFiles */,
 				66BD98B616752A910056F496 /* finger.tga in CopyFiles */,
 				66BD98B8167571A50056F496 /* finger_red.tga in CopyFiles */,
-				66BD98BA16758AAA0056F496 /* bezel.tga in CopyFiles */,
+				661672951676EB8F00AD0ECE /* bezel.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6616728F1676D06700AD0ECE /* bluegradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluegradient.png; sourceTree = "<group>"; };
+		661672911676E58F00AD0ECE /* lodepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lodepng.cpp; sourceTree = "<group>"; };
+		661672921676E58F00AD0ECE /* lodepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lodepng.h; sourceTree = "<group>"; };
+		661672941676EB8700AD0ECE /* bezel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bezel.png; sourceTree = "<group>"; };
 		6625079F166605E200AC797A /* Harp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harp.cpp; sourceTree = "<group>"; };
 		662507A0166605E200AC797A /* Harp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harp.h; sourceTree = "<group>"; };
 		662507AA1667586F00AC797A /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Leap.h; path = ../../Leap_SDK/include/Leap.h; sourceTree = "<group>"; };
@@ -106,7 +111,6 @@
 		66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "airharp-shadow-map.f.glsl"; sourceTree = "<group>"; };
 		66BD9892167423530056F496 /* airharp.f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = airharp.f.glsl; sourceTree = "<group>"; };
 		66BD9893167423530056F496 /* airharp.v.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = airharp.v.glsl; sourceTree = "<group>"; };
-		66BD9894167423530056F496 /* bluegradient.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluegradient.tga; sourceTree = "<group>"; };
 		66BD9895167423530056F496 /* file-util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "file-util.cpp"; sourceTree = "<group>"; };
 		66BD9896167423530056F496 /* file-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "file-util.h"; sourceTree = "<group>"; };
 		66BD9897167423530056F496 /* gl-util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gl-util.cpp"; sourceTree = "<group>"; };
@@ -124,7 +128,6 @@
 		66BD98AB167424850056F496 /* visualinfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = visualinfo.c; sourceTree = "<group>"; };
 		66BD98B516752A8A0056F496 /* finger.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = finger.tga; sourceTree = "<group>"; };
 		66BD98B71675719C0056F496 /* finger_red.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = finger_red.tga; sourceTree = "<group>"; };
-		66BD98B916758AA00056F496 /* bezel.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = bezel.tga; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,14 +245,16 @@
 		667118221665FD27005CBAEE /* src */ = {
 			isa = PBXGroup;
 			children = (
-				66BD98B916758AA00056F496 /* bezel.tga */,
+				661672941676EB8700AD0ECE /* bezel.png */,
+				661672911676E58F00AD0ECE /* lodepng.cpp */,
+				661672921676E58F00AD0ECE /* lodepng.h */,
 				66BD98B516752A8A0056F496 /* finger.tga */,
 				66BD9891167423530056F496 /* airharp-shadow-map.f.glsl */,
 				66BD9892167423530056F496 /* airharp.f.glsl */,
 				66BD9893167423530056F496 /* airharp.v.glsl */,
 				66BD98B71675719C0056F496 /* finger_red.tga */,
 				662FFFC71675C5040030D6FB /* lowBezel.tga */,
-				66BD9894167423530056F496 /* bluegradient.tga */,
+				6616728F1676D06700AD0ECE /* bluegradient.png */,
 				66BD9895167423530056F496 /* file-util.cpp */,
 				66BD9896167423530056F496 /* file-util.h */,
 				66BD9897167423530056F496 /* gl-util.cpp */,
@@ -371,6 +376,7 @@
 				66BD98A1167423530056F496 /* meshes.cpp in Sources */,
 				66BD98AC167424880056F496 /* glew.c in Sources */,
 				66BD98B4167432D00056F496 /* harpGL.cpp in Sources */,
+				661672931676E58F00AD0ECE /* lodepng.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

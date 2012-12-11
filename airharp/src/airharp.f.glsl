@@ -11,7 +11,7 @@ varying vec4 frag_specular;
 varying vec4 frag_shadow_position;
 
 const vec4 light_diffuse = vec4(0.8, 0.8, 0.8, 0.0);
-const vec4 light_ambient = vec4(0.5, 0.5, 0.5, 1.0);
+const vec4 light_ambient = vec4(0.8, 0.8, 0.8, 1.0);
 const vec4 light_specular = vec4(1.0, 1.0, 1.0, 1.0);
 
 const float SHADOW_EPSILON = 0.01;

@@ -594,10 +594,10 @@ static int make_shadow_framebuffer(GLuint *out_texture, GLuint *out_framebuffer)
 static int make_resources(void)
 {
     GLuint vertex_shader, fragment_shader, program;
-    g_resources.background.texture = make_texture("bluegradient.tga");
+    g_resources.background.texture = make_texture_png("bluegradient.png");
     init_background_mesh(&g_resources.background);
     
-    g_resources.bezel.texture = make_texture("bezel.tga");
+    g_resources.bezel.texture = make_texture_png("bezel.png");
     init_bezel_mesh(&g_resources.bezel);
     
     g_resources.lowBezel.texture = make_texture("lowBezel.tga");

@@ -236,7 +236,7 @@ struct string_vertex *init_finger_mesh(struct string_mesh *out_mesh)
 
 void init_bezel_mesh(struct string_mesh *out_mesh)
 {
-    GLfloat aspectRatio = 39.f / 1000.f;
+    GLfloat aspectRatio = 75.f / 1800.f;
     GLfloat w = 2.75;
     GLfloat h = w*aspectRatio;
     
@@ -244,8 +244,8 @@ void init_bezel_mesh(struct string_mesh *out_mesh)
     GLfloat BEZEL_HI[3] = { -.88f+w, .41f+h , -.0001 };
     
     static GLfloat
-    TEX_BEZEL_LO[2]     = { 0.f, 0.f },
-    TEX_BEZEL_HI[2]     = { 1.f, 1.f };
+    TEX_BEZEL_LO[2]     = { 0.f, 1.f },
+    TEX_BEZEL_HI[2]     = { 1.f, 0.f };
     
     GLsizei vertex_count = 4;
     GLsizei element_count = 6;
@@ -456,8 +456,8 @@ void init_background_mesh(struct string_mesh *out_mesh)
     static GLfloat
         TEX_GROUND_LO[2]   = { 0.f,  0.f },
         TEX_GROUND_HI[2]   = { 0.99f, 0.9921875f },
-        TEX_WALL_LO[2]     = { 0.99f, 0.99f },
-        TEX_WALL_HI[2]     = { 0.0f,      0.f };
+        TEX_WALL_LO[2]     = { 1, 0 },
+        TEX_WALL_HI[2]     = { 0, 1 };
 
     GLsizei
         wall_vertex_count = 4,

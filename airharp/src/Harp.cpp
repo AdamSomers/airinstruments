@@ -38,7 +38,7 @@ void Harp::Init()
     
     outputGain = new Multiplier;
     outputGain->SetA(mixer);
-    outputGain->SetVal(1/12.f);
+    outputGain->SetVal(1/4.f);
     
     AudioServer::GetInstance()->AddClient(outputGain, 0);
     AudioServer::GetInstance()->AddClient(outputGain, 1);

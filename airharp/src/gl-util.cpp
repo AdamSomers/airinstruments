@@ -8,17 +8,26 @@
 #include <stddef.h>
 #include <math.h>
 #include <stdio.h>
+#include <iostream>
 #include "file-util.h"
+#include "lodepng.h"
 
-GLuint make_texture(const char *filename)
+GLuint make_texture_png(const char* filename)
 {
-    int width, height;
-    void *pixels = read_tga(filename, &width, &height);
-    GLuint texture;
+    std::vector<unsigned char> image;
+    unsigned width, height;
+    unsigned error = lodepng::decode(image, width, height, filename);
+    if(error != 0)
+    {
+        std::cout << "error " << error << ": " << lodepng_error_text(error) << std::endl;
+        return 0;
+    }
 
+    void* pixels = (void*)image.data();
     if (!pixels)
         return 0;
-
+    
+    GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -26,12 +35,37 @@ GLuint make_texture(const char *filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
     glTexImage2D(
-        GL_TEXTURE_2D, 0,           /* target, level */
-        GL_RGB8,                    /* internal format */
-        width, height, 0,           /* width, height, border */
-        GL_BGR, GL_UNSIGNED_BYTE,   /* external format, type */
-        pixels                      /* pixels */
-    );
+                 GL_TEXTURE_2D, 0,           /* target, level */
+                 GL_RGBA,                    /* internal format */
+                 width, height, 0,           /* width, height, border */
+                 GL_RGBA, GL_UNSIGNED_BYTE,   /* external format, type */
+                 pixels                      /* pixels */
+                 );
+    return texture;
+}
+
+GLuint make_texture(const char *filename)
+{
+    int width, height;
+    void *pixels = read_tga(filename, &width, &height);
+    if (!pixels)
+        return 0;
+    
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
+    glTexImage2D(
+                 GL_TEXTURE_2D, 0,           /* target, level */
+                 GL_RGB8,                    /* internal format */
+                 width, height, 0,           /* width, height, border */
+                 GL_BGR, GL_UNSIGNED_BYTE,   /* external format, type */
+                 pixels                      /* pixels */
+                 );
+
     free(pixels);
     return texture;
 }
