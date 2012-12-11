@@ -4,6 +4,8 @@ Harp* Harp::sInstance = NULL;
 
 #define MAX_STRINGS 30
 #define SAMPS_PER_PIXEL 6
+#define FILTER_FREQ 150.f
+#define FILTER_RES 0.f
 
 Harp::Harp()
 : numStrings(1)
@@ -24,8 +26,13 @@ void Harp::Init()
     for (int i = 0; i < numStrings; ++i)
     {
         strings.push_back(new Karplus(0.009));
+        filters.push_back(new StateVariable);
+        filters.back()->SetInput(strings.back());
+        filters.back()->setType(StateVariable::kHighpass);
+        filters.back()->setFreq(FILTER_FREQ);
+        filters.back()->setRes(FILTER_RES);
         accumulators.push_back(new SampleAccumulator());
-        accumulators.back()->SetInput(strings.back());
+        accumulators.back()->SetInput(filters.back());
         accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     }
     
@@ -35,10 +42,10 @@ void Harp::Init()
     {
         mixer->AddInput(accumulators.at(i));
     }
-    
+        
     outputGain = new Multiplier;
     outputGain->SetA(mixer);
-    outputGain->SetVal(1/4.f);
+    outputGain->SetVal(.707f);
     
     AudioServer::GetInstance()->AddClient(outputGain, 0);
     AudioServer::GetInstance()->AddClient(outputGain, 1);
@@ -50,10 +57,11 @@ void Harp::Cleanup()
     for (int i = 0; i < strings.size(); ++i)
     {
         AudioServer::GetInstance()->EnterLock();
-        mixer->RemoveInput(accumulators.at(i));
+        mixer->RemoveInput(filters.at(i));
         AudioServer::GetInstance()->ExitLock();
-        delete strings.at(i);
+        delete filters.at(i);
         delete accumulators.at(i);
+        delete strings.at(i);
     }
     if (outputGain) {
         delete outputGain;
@@ -65,6 +73,7 @@ void Harp::Cleanup()
 
     strings.clear();
     accumulators.clear();
+    filters.clear();
 }
 
 void Harp::AddString()
@@ -73,8 +82,13 @@ void Harp::AddString()
         return;
     
     strings.push_back(new Karplus(0.009));
+    filters.push_back(new StateVariable);
+    filters.back()->SetInput(strings.back());
+    filters.back()->setType(StateVariable::kHighpass);
+    filters.back()->setFreq(FILTER_FREQ);
+    filters.back()->setRes(FILTER_RES);
     accumulators.push_back(new SampleAccumulator());
-    accumulators.back()->SetInput(strings.back());
+    accumulators.back()->SetInput(filters.back());
     accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     AudioServer::GetInstance()->EnterLock();
     mixer->AddInput(accumulators.back());
@@ -88,8 +102,11 @@ void Harp::RemoveString()
     if (numStrings == 1)
         return;
     AudioServer::GetInstance()->EnterLock();
-    mixer->RemoveInput(accumulators.back());
+    mixer->RemoveInput(filters.back());
     AudioServer::GetInstance()->ExitLock();
+    
+    delete filters.back();
+    filters.pop_back();
     delete accumulators.back();
     accumulators.pop_back();
     delete strings.back();
