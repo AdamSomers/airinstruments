@@ -589,6 +589,8 @@ static int make_shadow_framebuffer(GLuint *out_texture, GLuint *out_framebuffer)
 
     glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
     glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, 0);
+    
+    return 1;
 }
 
 static int make_resources(void)
@@ -625,6 +627,7 @@ static int make_resources(void)
         &g_resources.shadowmap_texture,
         &g_resources.shadowmap_framebuffer
     )) {
+        printf("make_shadow_framebuffer failed\n");
         return 0;
     }
 
