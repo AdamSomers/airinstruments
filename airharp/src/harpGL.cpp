@@ -443,8 +443,8 @@ static void disable_mesh_vertex_attributes(struct string_attributes const *attri
     glDisableVertexAttribArray(attributes->specular);
 }
 
-#define INITIAL_WINDOW_WIDTH  640
-#define INITIAL_WINDOW_HEIGHT 480
+#define INITIAL_WINDOW_WIDTH  1200
+#define INITIAL_WINDOW_HEIGHT 800
 
 static void enact_string_programs(struct string_shaders const *shaders)
 {
@@ -618,7 +618,7 @@ static int make_resources(void)
     {
         g_resources.string_vertex_array[i] = init_string_mesh(&g_resources.strings[i]);
         g_resources.strings[i].stringIndex = i;
-        g_resources.strings[i].texture = make_texture("string.tga");
+        g_resources.strings[i].texture = make_texture_png("string.png");
     }
     
     if (!make_shadow_framebuffer(
@@ -904,7 +904,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < MAX_STRINGS-1; ++i)
         Harp::GetInstance()->AddString();
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT);
     glutCreateWindow("AirHarp");
     glutIdleFunc(&update);
@@ -913,6 +913,8 @@ int main(int argc, char* argv[])
     glutMotionFunc(&drag);
     glutMouseFunc(&mouse);
     glutKeyboardFunc(&keyboard);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glewInit();
     if (!GLEW_VERSION_2_0) {

@@ -57,22 +57,22 @@ static void calculate_string_vertex(
 ) {
     GLfloat
         sgrad[3] = {
-            1.0f + 0.5f*(0.0625f+0.03125f*sinf((GLfloat)M_PI*time))*t*(t - 1.0f),
+            1.0f + 0.5f*(0.0625f+0.03125f*sinf((GLfloat)M_PI*.5))*t*(t - 1.0f),
             0.0f,
             0.125f*(
                 sinf(1.5f*(GLfloat)M_PI*(time + s)) 
-                + s*cosf(1.5f*(GLfloat)M_PI*(time + s))*(1.5f*(GLfloat)M_PI)
+                + s*cosf(1.5f*(GLfloat)M_PI*(.5 + s))*(1.5f*(GLfloat)M_PI)
             )
         },
         tgrad[3] = {
-            -(0.0625f+0.03125f*sinf((GLfloat)M_PI*time))*(1.0f - s)*(2.0f*t - 1.0f),
+            -(0.0625f+0.03125f*sinf((GLfloat)M_PI*.5))*(1.0f - s)*(2.0f*t - 1.0f),
             0.75f,
             0.0f
         };
 
     //v->position[0] = s/45.f;//1.f / stringIndex;
     //v->position[0] = -.5 + stringIndex/((float)MAX_STRINGS/2.f) + s/45.f - (0.0625f+0.13125f*soundVal)*t*(t-1.0f);//*(1.0f - 0.5f*s);
-    v->position[0] = (-.5 + stringIndex/((float)MAX_STRINGS/2.f) + s/(40.f+stringIndex*2) + (soundVal*t*(t-1.0f))/2.f);//;
+    v->position[0] = (-.5 + stringIndex/((float)MAX_STRINGS/2.f) + s/(80.f+stringIndex*2) + (soundVal*t*(t-1.0f))/2.f);//;
     v->position[1] = 1.5*t-1;////0.75f*t - 0.375f;
     v->position[2] = 0;//0.125f*(s*sinf(1.5f*(GLfloat)M_PI*(time + s)));
     v->position[3] = 0.0f;
