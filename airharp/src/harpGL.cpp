@@ -73,18 +73,31 @@ class Finger
 public:
     Finger()
     : invalid(false)
-    , fX(-1), fY(-1), fZ(-1), finger(NULL), finger_vertex_array(NULL)
+    , fingerMesh(NULL), finger_vertex_array(NULL)
     {}
+    
+    float normalizedX()
+    {
+        return ((finger.tipPosition().x + 200) / 400.f);
+    }
+    
+    float normalizedY()
+    {
+        return ((finger.tipPosition().y - 150) / 200.f);
+    }
+    
+    float normalizedZ()
+    {
+        return -(finger.tipPosition().z / 100.f);
+    }
+    
     bool invalid;
-    float fX;
-    float fY;
-    float fZ;
-    string_mesh *finger;
+    Leap::Finger finger;
+    string_mesh *fingerMesh;
     string_vertex *finger_vertex_array;
-
 };
 
-void airMotion(Finger* f, float prevX, float PrevY, float prevZ);
+void airMotion(Finger* f, float prevX, float prevY, float prevZ);
 
 std::map<int,Finger> gFingers;
 std::mutex gLock;
@@ -119,31 +132,27 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
     gLock.unlock();
     // Get the most recent frame and report some basic information
     const Leap::Frame frame = controller.frame();
-    const std::vector<Leap::Hand>& hands = frame.hands();
-    const size_t numHands = hands.size();
+    const Leap::HandList& hands = frame.hands();
+    const size_t numHands = hands.count();
     //    std::cout << "Frame id: " << frame.id()
     //    << ", timestamp: " << frame.timestamp()
     //    << ", hands: " << numHands << std::endl;
     
     if (numHands >= 1) {
         // Get the first hand
-        for (size_t h = 0; h < numHands; ++h) {
+        for (int h = 0; h < numHands; ++h) {
             const Leap::Hand& hand = hands[h];
             
             
             // Check if the hand has any fingers
-            const std::vector<Leap::Finger>& fingers = hand.fingers();
-            const size_t numFingers = fingers.size();
+            const Leap::FingerList& fingers = hand.fingers();
+            const size_t numFingers = fingers.count();
             if (numFingers >= 1) {
                 // Calculate the hand's average finger tip position
                 Leap::Vector pos(0, 0, 0);
-                for (size_t i = 0; i < numFingers; ++i) {
+                for (int i = 0; i < numFingers; ++i) {
                     const Leap::Finger& finger = fingers[i];
-                    const Leap::Ray& tip = finger.tip();
-                    pos.x += tip.position.x;
-                    pos.y += tip.position.y;
-                    pos.z += tip.position.z;
-                    
+
                     std::map<int, Finger>::iterator iter = gFingers.find(finger.id());
                     if (iter == gFingers.end())
                     {
@@ -152,8 +161,8 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                         for (int i = 0; i < MAX_FINGERS; ++i)
                         {
                             if (!g_resources.fingers[i].inUse) {
-                                (*iter).second.finger = &g_resources.fingers[i];
-                                (*iter).second.finger->inUse = 1;
+                                (*iter).second.fingerMesh = &g_resources.fingers[i];
+                                (*iter).second.fingerMesh->inUse = 1;
                                 (*iter).second.finger_vertex_array = g_resources.finger_vertex_array[i];
                                 break;
                             }
@@ -165,51 +174,14 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                         (*iter).second.invalid = false;
                     
                     Finger* f = &(*iter).second;
-                    float newX = ((tip.position.x + 200) / 400.f);
-                    float newY = ((tip.position.y - 150) / 200.f);
-                    float newZ = -(tip.position.z / 200.f);
-                    float prevX = f->fX;
-                    float prevY = f->fY;
-                    float prevZ = f->fZ;
-                    f->fX = newX;
-                    f->fY = newY;
-                    f->fZ = newZ;
+                    
+                    float prevX = f->normalizedX();
+                    float prevY = f->normalizedY();
+                    float prevZ = f->normalizedZ();
+                    f->finger = finger;
                     airMotion(f, prevX , prevY, prevZ);
                     
                 }
-                pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
-            }
-            
-            // Check if the hand has a palm
-            const Leap::Ray* palmRay = hand.palm();
-            if (palmRay != NULL) {
-                // Get the palm position and wrist direction
-                const Leap::Vector palm = palmRay->position;
-                const Leap::Vector wrist = palmRay->direction;
-                //            std::cout << "Palm position: ("
-                //            << palm.x << ", " << palm.y << ", " << palm.z << ")" << std::endl;
-                
-                // Check if the hand has a normal vector
-                const Leap::Vector* normal = hand.normal();
-                if (normal != NULL) {
-                    // Calculate the hand's pitch, roll, and yaw angles
-                    double pitchAngle = -atan2(normal->z, normal->y) * 180/M_PI + 180;
-                    double rollAngle = -atan2(normal->x, normal->y) * 180/M_PI + 180;
-                    double yawAngle = atan2(wrist.z, wrist.x) * 180/M_PI - 90;
-                    // Ensure the angles are between -180 and +180 degrees
-                    if (pitchAngle > 180) pitchAngle -= 360;
-                    if (rollAngle > 180) rollAngle -= 360;
-                    if (yawAngle > 180) yawAngle -= 360;
-                    //                std::cout << "Pitch: " << pitchAngle << " degrees,  "
-                    //                << "roll: " << rollAngle << " degrees,  "
-                    //                << "yaw: " << yawAngle << " degrees" << std::endl;
-                }
-            }
-            
-            // Check if the hand has a ball
-            const Leap::Ball* ball = hand.ball();
-            if (ball != NULL) {
-                //            std::cout << "Hand curvature radius: " << ball->radius << " mm" << std::endl;
             }
         }
     }
@@ -218,8 +190,8 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
     while (i != gFingers.end())
     {
         if ((*i).second.invalid) {
-            if ((*i).second.finger)
-                (*i).second.finger->inUse = 0;
+            if ((*i).second.fingerMesh)
+                (*i).second.fingerMesh->inUse = 0;
             gFingers.erase(i++);
         }
         else
@@ -251,15 +223,13 @@ int gScaleIntervals = gPentatonicMajorIntervals;
 
 static const int STRING_SHADOWMAP_RESOLUTION = 2048;
 
-void airMotion(Finger* f, float prevX, float PrevY, float prevZ)
+void airMotion(Finger* f, float prevX, float prevY, float prevZ)
 {
+    float x = f->normalizedX();
+    float y = f->normalizedY();
+    float z = f->normalizedZ();
     
-    float x = f->fX;
-    float y = f->fY;
-    float z = f->fZ;
-    
-    float const R = 1./(float)(10-1);
-    float const S = 1./(float)(10-1);
+//    printf("AirMotion: %f %f %f %f %f %f", x, y, z, prevX, prevY, prevZ);
 
     float radius = .03;
     float fingerX = radius + x*3-1;
@@ -270,7 +240,7 @@ void airMotion(Finger* f, float prevX, float PrevY, float prevZ)
 
     if (z >= zThresh)
     {
-        f->finger->texture = f->finger->textureOn;
+        f->fingerMesh->texture = f->fingerMesh->textureOn;
         int numStrings = Harp::GetInstance()->GetNumStrings();
         float columnWidth = 1.f / numStrings;
         for (int i = 0; i < numStrings; ++i)
@@ -306,7 +276,7 @@ void airMotion(Finger* f, float prevX, float PrevY, float prevZ)
     }
     else
     {
-        f->finger->texture = f->finger->textureOff;
+        f->fingerMesh->texture = f->fingerMesh->textureOff;
     }
 }
 
@@ -669,11 +639,13 @@ static void update(void)
     gLock.lock();
     for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
     {
-        x = (*i).second.fX;
-        y = (*i).second.fY;
-        z = (*i).second.fZ;
-        if((*i).second.finger)
-            update_finger_mesh((*i).second.finger, (*i).second.finger_vertex_array,seconds,x,y,z);
+        Finger finger = (*i).second;
+
+        x = finger.normalizedX();
+        y = finger.normalizedY();
+        z = finger.normalizedZ();
+        if((*i).second.fingerMesh)
+            update_finger_mesh((*i).second.fingerMesh, (*i).second.finger_vertex_array,seconds,x,y,z);
     }
     gLock.unlock();
     int i;
@@ -802,8 +774,8 @@ static void render_scene(struct string_attributes const *attributes)
     gLock.lock();
     for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
     {
-        if ((*i).second.finger)
-            render_mesh((*i).second.finger, attributes);
+        if ((*i).second.fingerMesh)
+            render_mesh((*i).second.fingerMesh, attributes);
     }
     gLock.unlock();
     int i;
@@ -902,10 +874,16 @@ static void render()
 
 int main(int argc, char* argv[])
 {
-    Leap::Controller controller(&listener);
+    Leap::Controller controller;
+    controller.addListener(listener);
     RtAudioDriver driver(256);    // init rtaudio
     for (int i = 0; i < MAX_STRINGS-1; ++i)
         Harp::GetInstance()->AddString();
+    
+    // Need to figure out how to enable vsync
+    // can be done manually with:
+    // defaults write com.apple.glut GLUTSyncToVBLKey 1
+    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT);
