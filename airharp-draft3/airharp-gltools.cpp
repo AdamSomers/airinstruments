@@ -25,6 +25,8 @@
 #include "HUD.h"
 #include "Environment.h"
 
+#include "AudioServer.h"
+#include "Harp.h"
 
 // Array of small stars
 #define SMALL_STARS     100
@@ -794,6 +796,10 @@ void SpecialKeys(int key, int x, int y)
 
 int main(int argc, char* argv[])
 {
+    RtAudioDriver driver(256);
+    for (int i = 0; i < NUM_STRINGS-1; ++i)
+        Harp::GetInstance()->AddString();
+    
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENCIL);
 	glutInitWindowSize(800, 600);

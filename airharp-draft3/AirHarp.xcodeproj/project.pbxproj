@@ -9,10 +9,27 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		395BE54C110E0C230025C266 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 395BE54B110E0C230025C266 /* OpenGL.framework */; };
-		395BE55C110E0DAC0025C266 /* libGLTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 395BE55B110E0DAC0025C266 /* libGLTools.a */; };
 		395BE56A110E12690025C266 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 395BE569110E12690025C266 /* GLUT.framework */; };
 		661445041693FE6900587C2D /* airharp-gltools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 661445031693FE6900587C2D /* airharp-gltools.cpp */; };
 		661445051693FEFC00587C2D /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66A42593168E4F2E009F3909 /* libLeap.dylib */; };
+		6614451E169402F900587C2D /* GLBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66144518169402F900587C2D /* GLBatch.cpp */; };
+		6614451F169402F900587C2D /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 66144519169402F900587C2D /* glew.c */; };
+		66144520169402F900587C2D /* GLShaderManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614451A169402F900587C2D /* GLShaderManager.cpp */; };
+		66144521169402F900587C2D /* GLTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614451B169402F900587C2D /* GLTools.cpp */; };
+		66144522169402F900587C2D /* GLTriangleBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614451C169402F900587C2D /* GLTriangleBatch.cpp */; };
+		66144523169402F900587C2D /* math3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614451D169402F900587C2D /* math3d.cpp */; };
+		661445441694037200587C2D /* AudioClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614452A1694037200587C2D /* AudioClient.cpp */; };
+		661445451694037200587C2D /* AudioServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614452C1694037200587C2D /* AudioServer.cpp */; };
+		661445461694037200587C2D /* Interpolators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614452E1694037200587C2D /* Interpolators.cpp */; };
+		661445471694037200587C2D /* ParameterAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 661445321694037200587C2D /* ParameterAPI.cpp */; };
+		661445481694037200587C2D /* Waveshaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 661445381694037200587C2D /* Waveshaper.cpp */; };
+		661445491694037200587C2D /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614453A1694037200587C2D /* WindowFunction.cpp */; };
+		6614454A1694037200587C2D /* chuck_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 6614453D1694037200587C2D /* chuck_fft.c */; };
+		6614454B1694037200587C2D /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6614453F1694037200587C2D /* RtAudio.cpp */; };
+		66144552169406A700587C2D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66144551169406A700587C2D /* CoreAudio.framework */; };
+		66144555169406D500587C2D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66144553169406D500587C2D /* CoreMIDI.framework */; };
+		66144556169406D500587C2D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66144554169406D500587C2D /* CoreFoundation.framework */; };
+		66144559169407A800587C2D /* Harp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66144557169407A800587C2D /* Harp.cpp */; };
 		665ABD92168F79CB00F4EBDC /* HUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665ABD90168F79CB00F4EBDC /* HUD.cpp */; };
 		665ABD96168F7B3100F4EBDC /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665ABD94168F7B3100F4EBDC /* Environment.cpp */; };
 		66A42594168E4F2E009F3909 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A42593168E4F2E009F3909 /* libLeap.dylib */; };
@@ -42,9 +59,58 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		395BE54B110E0C230025C266 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		395BE55B110E0DAC0025C266 /* libGLTools.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLTools.a; path = "../../oglsuperbible5-read-only/XCode/GLTools/libGLTools.a"; sourceTree = SOURCE_ROOT; };
 		395BE569110E12690025C266 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		661445031693FE6900587C2D /* airharp-gltools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "airharp-gltools.cpp"; sourceTree = "<group>"; };
+		66144509169402F900587C2D /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
+		6614450A169402F900587C2D /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
+		6614450B169402F900587C2D /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
+		6614450C169402F900587C2D /* GLBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLBatch.h; sourceTree = "<group>"; };
+		6614450D169402F900587C2D /* GLBatchBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLBatchBase.h; sourceTree = "<group>"; };
+		6614450E169402F900587C2D /* GLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFrame.h; sourceTree = "<group>"; };
+		6614450F169402F900587C2D /* GLFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFrustum.h; sourceTree = "<group>"; };
+		66144510169402F900587C2D /* GLGeometryTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLGeometryTransform.h; sourceTree = "<group>"; };
+		66144511169402F900587C2D /* GLMatrixStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLMatrixStack.h; sourceTree = "<group>"; };
+		66144512169402F900587C2D /* GLShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShaderManager.h; sourceTree = "<group>"; };
+		66144513169402F900587C2D /* GLTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTools.h; sourceTree = "<group>"; };
+		66144514169402F900587C2D /* GLTriangleBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTriangleBatch.h; sourceTree = "<group>"; };
+		66144515169402F900587C2D /* math3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math3d.h; sourceTree = "<group>"; };
+		66144516169402F900587C2D /* StopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopWatch.h; sourceTree = "<group>"; };
+		66144518169402F900587C2D /* GLBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLBatch.cpp; sourceTree = "<group>"; };
+		66144519169402F900587C2D /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
+		6614451A169402F900587C2D /* GLShaderManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLShaderManager.cpp; sourceTree = "<group>"; };
+		6614451B169402F900587C2D /* GLTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLTools.cpp; sourceTree = "<group>"; };
+		6614451C169402F900587C2D /* GLTriangleBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLTriangleBatch.cpp; sourceTree = "<group>"; };
+		6614451D169402F900587C2D /* math3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = math3d.cpp; sourceTree = "<group>"; };
+		6614452A1694037200587C2D /* AudioClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioClient.cpp; sourceTree = "<group>"; };
+		6614452B1694037200587C2D /* AudioClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioClient.h; sourceTree = "<group>"; };
+		6614452C1694037200587C2D /* AudioServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioServer.cpp; sourceTree = "<group>"; };
+		6614452D1694037200587C2D /* AudioServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioServer.h; sourceTree = "<group>"; };
+		6614452E1694037200587C2D /* Interpolators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interpolators.cpp; sourceTree = "<group>"; };
+		6614452F1694037200587C2D /* Interpolators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interpolators.h; sourceTree = "<group>"; };
+		661445301694037200587C2D /* MathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathHelpers.h; sourceTree = "<group>"; };
+		661445311694037200587C2D /* MidiServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiServer.h; sourceTree = "<group>"; };
+		661445321694037200587C2D /* ParameterAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterAPI.cpp; sourceTree = "<group>"; };
+		661445331694037200587C2D /* ParameterAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterAPI.h; sourceTree = "<group>"; };
+		661445341694037200587C2D /* Poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Poly.h; sourceTree = "<group>"; };
+		661445351694037200587C2D /* SignalGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalGenerators.h; sourceTree = "<group>"; };
+		661445361694037200587C2D /* TypingKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypingKeyboard.h; sourceTree = "<group>"; };
+		661445371694037200587C2D /* Voices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voices.h; sourceTree = "<group>"; };
+		661445381694037200587C2D /* Waveshaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Waveshaper.cpp; sourceTree = "<group>"; };
+		661445391694037200587C2D /* Waveshaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waveshaper.h; sourceTree = "<group>"; };
+		6614453A1694037200587C2D /* WindowFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowFunction.cpp; sourceTree = "<group>"; };
+		6614453B1694037200587C2D /* WindowFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowFunction.h; sourceTree = "<group>"; };
+		6614453D1694037200587C2D /* chuck_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chuck_fft.c; sourceTree = "<group>"; };
+		6614453E1694037200587C2D /* chuck_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chuck_fft.h; sourceTree = "<group>"; };
+		6614453F1694037200587C2D /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtAudio.cpp; sourceTree = "<group>"; };
+		661445401694037200587C2D /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtAudio.h; sourceTree = "<group>"; };
+		661445411694037200587C2D /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtError.h; sourceTree = "<group>"; };
+		661445421694037200587C2D /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtMidi.cpp; sourceTree = "<group>"; };
+		661445431694037200587C2D /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtMidi.h; sourceTree = "<group>"; };
+		66144551169406A700587C2D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
+		66144553169406D500587C2D /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreMIDI.framework; sourceTree = DEVELOPER_DIR; };
+		66144554169406D500587C2D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		66144557169407A800587C2D /* Harp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harp.cpp; sourceTree = "<group>"; };
+		66144558169407A800587C2D /* Harp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harp.h; sourceTree = "<group>"; };
 		665ABD90168F79CB00F4EBDC /* HUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HUD.cpp; sourceTree = "<group>"; };
 		665ABD91168F79CB00F4EBDC /* HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUD.h; sourceTree = "<group>"; };
 		665ABD94168F7B3100F4EBDC /* Environment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Environment.cpp; sourceTree = "<group>"; };
@@ -62,8 +128,10 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				66A42594168E4F2E009F3909 /* libLeap.dylib in Frameworks */,
 				395BE54C110E0C230025C266 /* OpenGL.framework in Frameworks */,
-				395BE55C110E0DAC0025C266 /* libGLTools.a in Frameworks */,
 				395BE56A110E12690025C266 /* GLUT.framework in Frameworks */,
+				66144552169406A700587C2D /* CoreAudio.framework in Frameworks */,
+				66144555169406D500587C2D /* CoreMIDI.framework in Frameworks */,
+				66144556169406D500587C2D /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +156,9 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66144553169406D500587C2D /* CoreMIDI.framework */,
+				66144554169406D500587C2D /* CoreFoundation.framework */,
+				66144551169406A700587C2D /* CoreAudio.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -106,7 +177,8 @@
 		29B97314FDCFA39411CA2CEA /* Smoother */ = {
 			isa = PBXGroup;
 			children = (
-				66A42593168E4F2E009F3909 /* libLeap.dylib */,
+				661445241694032300587C2D /* muskit */,
+				66144506169402F900587C2D /* GLTools */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -121,6 +193,8 @@
 			children = (
 				661445031693FE6900587C2D /* airharp-gltools.cpp */,
 				256AC3F00F4B6AF500CF3369 /* AirHarp_Prefix.pch */,
+				66144557169407A800587C2D /* Harp.cpp */,
+				66144558169407A800587C2D /* Harp.h */,
 				665ABD90168F79CB00F4EBDC /* HUD.cpp */,
 				665ABD91168F79CB00F4EBDC /* HUD.h */,
 				665ABD94168F7B3100F4EBDC /* Environment.cpp */,
@@ -142,13 +216,115 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				395BE55B110E0DAC0025C266 /* libGLTools.a */,
+				66A42593168E4F2E009F3909 /* libLeap.dylib */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 				395BE54B110E0C230025C266 /* OpenGL.framework */,
 				395BE569110E12690025C266 /* GLUT.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		66144506169402F900587C2D /* GLTools */ = {
+			isa = PBXGroup;
+			children = (
+				66144507169402F900587C2D /* include */,
+				66144517169402F900587C2D /* src */,
+			);
+			name = GLTools;
+			path = "../../oglsuperbible5-read-only/Src/GLTools";
+			sourceTree = "<group>";
+		};
+		66144507169402F900587C2D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				66144508169402F900587C2D /* GL */,
+				6614450C169402F900587C2D /* GLBatch.h */,
+				6614450D169402F900587C2D /* GLBatchBase.h */,
+				6614450E169402F900587C2D /* GLFrame.h */,
+				6614450F169402F900587C2D /* GLFrustum.h */,
+				66144510169402F900587C2D /* GLGeometryTransform.h */,
+				66144511169402F900587C2D /* GLMatrixStack.h */,
+				66144512169402F900587C2D /* GLShaderManager.h */,
+				66144513169402F900587C2D /* GLTools.h */,
+				66144514169402F900587C2D /* GLTriangleBatch.h */,
+				66144515169402F900587C2D /* math3d.h */,
+				66144516169402F900587C2D /* StopWatch.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		66144508169402F900587C2D /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				66144509169402F900587C2D /* glew.h */,
+				6614450A169402F900587C2D /* glxew.h */,
+				6614450B169402F900587C2D /* wglew.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		66144517169402F900587C2D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				66144518169402F900587C2D /* GLBatch.cpp */,
+				66144519169402F900587C2D /* glew.c */,
+				6614451A169402F900587C2D /* GLShaderManager.cpp */,
+				6614451B169402F900587C2D /* GLTools.cpp */,
+				6614451C169402F900587C2D /* GLTriangleBatch.cpp */,
+				6614451D169402F900587C2D /* math3d.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		661445241694032300587C2D /* muskit */ = {
+			isa = PBXGroup;
+			children = (
+				661445291694037200587C2D /* src */,
+				6614453C1694037200587C2D /* ThirdParty */,
+			);
+			name = muskit;
+			sourceTree = "<group>";
+		};
+		661445291694037200587C2D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6614452A1694037200587C2D /* AudioClient.cpp */,
+				6614452B1694037200587C2D /* AudioClient.h */,
+				6614452C1694037200587C2D /* AudioServer.cpp */,
+				6614452D1694037200587C2D /* AudioServer.h */,
+				6614452E1694037200587C2D /* Interpolators.cpp */,
+				6614452F1694037200587C2D /* Interpolators.h */,
+				661445301694037200587C2D /* MathHelpers.h */,
+				661445311694037200587C2D /* MidiServer.h */,
+				661445321694037200587C2D /* ParameterAPI.cpp */,
+				661445331694037200587C2D /* ParameterAPI.h */,
+				661445341694037200587C2D /* Poly.h */,
+				661445351694037200587C2D /* SignalGenerators.h */,
+				661445361694037200587C2D /* TypingKeyboard.h */,
+				661445371694037200587C2D /* Voices.h */,
+				661445381694037200587C2D /* Waveshaper.cpp */,
+				661445391694037200587C2D /* Waveshaper.h */,
+				6614453A1694037200587C2D /* WindowFunction.cpp */,
+				6614453B1694037200587C2D /* WindowFunction.h */,
+			);
+			name = src;
+			path = ../../muskit/src;
+			sourceTree = "<group>";
+		};
+		6614453C1694037200587C2D /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				6614453D1694037200587C2D /* chuck_fft.c */,
+				6614453E1694037200587C2D /* chuck_fft.h */,
+				6614453F1694037200587C2D /* RtAudio.cpp */,
+				661445401694037200587C2D /* RtAudio.h */,
+				661445411694037200587C2D /* RtError.h */,
+				661445421694037200587C2D /* RtMidi.cpp */,
+				661445431694037200587C2D /* RtMidi.h */,
+			);
+			name = ThirdParty;
+			path = ../../muskit/ThirdParty;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +390,21 @@
 				665ABD92168F79CB00F4EBDC /* HUD.cpp in Sources */,
 				665ABD96168F7B3100F4EBDC /* Environment.cpp in Sources */,
 				661445041693FE6900587C2D /* airharp-gltools.cpp in Sources */,
+				6614451E169402F900587C2D /* GLBatch.cpp in Sources */,
+				6614451F169402F900587C2D /* glew.c in Sources */,
+				66144520169402F900587C2D /* GLShaderManager.cpp in Sources */,
+				66144521169402F900587C2D /* GLTools.cpp in Sources */,
+				66144522169402F900587C2D /* GLTriangleBatch.cpp in Sources */,
+				66144523169402F900587C2D /* math3d.cpp in Sources */,
+				661445441694037200587C2D /* AudioClient.cpp in Sources */,
+				661445451694037200587C2D /* AudioServer.cpp in Sources */,
+				661445461694037200587C2D /* Interpolators.cpp in Sources */,
+				661445471694037200587C2D /* ParameterAPI.cpp in Sources */,
+				661445481694037200587C2D /* Waveshaper.cpp in Sources */,
+				661445491694037200587C2D /* WindowFunction.cpp in Sources */,
+				6614454A1694037200587C2D /* chuck_fft.c in Sources */,
+				6614454B1694037200587C2D /* RtAudio.cpp in Sources */,
+				66144559169407A800587C2D /* Harp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,15 +437,21 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AirHarp_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
 				HEADER_SEARCH_PATHS = (
 					"~/oglsuperbible5-read-only/Src/GLTools/include",
 					"~/Leap_SDK/include",
+					"~/muskit/src",
 				);
 				INFOPLIST_FILE = "AirHarp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -264,7 +461,7 @@
 					"\"$(SRCROOT)/../../Leap_SDK/lib\"",
 				);
 				PRODUCT_NAME = AirHarp;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -275,12 +472,18 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AirHarp_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = __MACOSX_CORE__;
 				HEADER_SEARCH_PATHS = (
 					"~/oglsuperbible5-read-only/Src/GLTools/include",
 					"~/Leap_SDK/include",
+					"~/muskit/src",
 				);
 				INFOPLIST_FILE = "AirHarp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -290,7 +493,7 @@
 					"\"$(SRCROOT)/../../Leap_SDK/lib\"",
 				);
 				PRODUCT_NAME = AirHarp;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
