@@ -55,6 +55,25 @@ GLFrame moonFrame;
 GLFrame	cameraFrame;
 GLTriangleBatch sphereBatch;
 
+// Pentatonic Major
+const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
+const int gPentatonicMajorIntervals = 5;
+
+// Pentatonic Minor
+const int gPentatonicMinor[] = { 0, 3, 5, 7, 10};
+const int gPentatonicMinorIntervals = 5;
+
+// Whole-tone
+const int gWholeTone[] = { 0, 2, 4, 6, 8, 10};
+const int gWholeToneIntervals = 6;
+
+// Diatonic
+const int gDiatonic[] = { 0, 2, 4, 5, 7, 9, 11};
+const int gDiatonicIntervals = 7;
+
+const int* gScale = gPentatonicMajor;
+int gScaleIntervals = gPentatonicMajorIntervals;
+
 // Ray-plane collision
 void collide(M3DVector3f rOrigin, M3DVector3f rNormal, M3DVector3f pOrigin, M3DVector3f pNormal, M3DVector3f outCollisionPoint)
 {    
@@ -144,7 +163,11 @@ private:
 class StringView
 {
 public:
-    StringView() : pointed(false)
+    StringView()
+    : pointed(false)
+    , stringNum(0)
+    , lastPointer(NULL)
+    , invalid(false)
     {}
     void setup()
     {
@@ -211,13 +234,13 @@ public:
         Environment::instance().modelViewMatrix.PopMatrix();
     }
     
-    void updatePointedState(GLFrame& inFrame)
+    void updatePointedState(FingerView* inFingerView)
     {
         M3DVector3f point;
         M3DVector3f ray;
         M3DVector3f center;
-        inFrame.GetOrigin(point);
-        inFrame.GetForwardVector(ray);
+        inFingerView->objectFrame.GetOrigin(point);
+        inFingerView->objectFrame.GetForwardVector(ray);
         objectFrame.GetOrigin(center);
 
         M3DVector3f collisionPoint;
@@ -228,13 +251,57 @@ public:
 
         if (fabsf(collisionPoint[0] - center[0]) < gStringWidth / 2.f)
         {
-            pointed = true;
+            if (lastPointer != inFingerView)
+            {
+                pluck(0.5);
+                lastPointer = inFingerView;
+                pointed = true;
+            }
+            invalid = false;
         }
-        else
+        else if (lastPointer == inFingerView)
+        {
             pointed = false;
+            lastPointer = NULL;
+            invalid = false;
+        }
+    }
+    
+    void pluck(float position)
+    {
+        int idx = stringNum % gScaleIntervals;
+        int mult = (stringNum / (float)gScaleIntervals);
+        int base = 32 + 12*mult;
+        int note = base + gScale[idx];
+        int bufferSize = 512;
+        float buffer[bufferSize];
+        memset(buffer, 0, bufferSize);
+        int midpoint = position * bufferSize;
+        for (int x = 0; x < bufferSize; ++x)
+        {
+            if (x < midpoint)
+                buffer[x] = -x / (float)midpoint;
+            else
+                buffer[x] = -(1.f - (x - midpoint) / (float)(bufferSize - midpoint));
+            
+            //if (fingerPrevX > t)
+            //    buffer[x] = -buffer[x];
+        }
+        Harp::GetInstance()->ExciteString(stringNum, note, 127, buffer, bufferSize);
+    }
+    
+    void reset()
+    {
+        pointed = false;
+        lastPointer = NULL;
+        invalid = false;
     }
     
     GLFrame objectFrame;
+    int stringNum;
+    FingerView* lastPointer;
+    bool invalid;
+
 private:
     GLBatch     bgBatch;
     GLBatch     stringBatch;
@@ -274,8 +341,13 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
     {
         i.second->inUse = false;
     }
-
     gLock.unlock();
+    
+    for (StringView* sv : gStrings)
+    {
+        sv->invalid = true;
+    }
+    
     // Get the most recent frame and report some basic information
     const Leap::Frame frame = controller.frame();
     const Leap::HandList& hands = frame.hands();
@@ -344,12 +416,17 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     
                     for (StringView* sv : gStrings)
                     {
-                        sv->updatePointedState(fv->objectFrame);
+                        sv->updatePointedState(fv);
                     }
                     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
                 }
             }
         }
+    }
+    for (StringView* sv : gStrings)
+    {
+        if (sv->invalid)
+            sv->reset();
     }
 }
 
@@ -606,16 +683,14 @@ void SetupRC()
     }
     
     gStringWidth = 2.f / NUM_STRINGS;
-    float totalWidth = gStringWidth * NUM_STRINGS;
-    //float xtra = 2.f - totalWidth;
-    //float pad = xtra / (float)NUM_STRINGS;
     float step = gStringWidth;
-    float pos = -1 + (gStringWidth);
+    float pos = -1.f + gStringWidth;
     for (int i = 0; i < NUM_STRINGS; ++i)
     {
         StringView* sv = new StringView;
         sv->setup();
         sv->objectFrame.TranslateWorld(pos, 0, - 10);
+        sv->stringNum = i;
         gStrings.push_back(sv);
         pos += step;
     }
@@ -623,8 +698,7 @@ void SetupRC()
     for (auto iter : gFingers)
         iter.second->setup();
 
-//    viewFrame.RotateWorld(m3dDegToRad(180.f), 0.0f, 1.0f, 0.0f);
-    M3DVector3f vVerts[SMALL_STARS];       // SMALL_STARS is the largest batch we are going to need
+    M3DVector3f vVerts[SMALL_STARS]; // SMALL_STARS is the largest batch we are going to need
     int i;
     
     glEnable(GL_DEPTH_TEST);
