@@ -10,6 +10,9 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		395BE54C110E0C230025C266 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 395BE54B110E0C230025C266 /* OpenGL.framework */; };
 		395BE56A110E12690025C266 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 395BE569110E12690025C266 /* GLUT.framework */; };
+		6600F6D5169689C900E2A391 /* HarpHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6600F6D3169689C900E2A391 /* HarpHUD.cpp */; };
+		6600F6DF16968D2000E2A391 /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6600F6DB16968D2000E2A391 /* Environment.cpp */; };
+		6600F6E016968D2000E2A391 /* HUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6600F6DD16968D2000E2A391 /* HUD.cpp */; };
 		661445041693FE6900587C2D /* airharp-gltools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 661445031693FE6900587C2D /* airharp-gltools.cpp */; };
 		661445051693FEFC00587C2D /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 66A42593168E4F2E009F3909 /* libLeap.dylib */; };
 		6614451E169402F900587C2D /* GLBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66144518169402F900587C2D /* GLBatch.cpp */; };
@@ -30,8 +33,6 @@
 		66144555169406D500587C2D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66144553169406D500587C2D /* CoreMIDI.framework */; };
 		66144556169406D500587C2D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66144554169406D500587C2D /* CoreFoundation.framework */; };
 		66144559169407A800587C2D /* Harp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66144557169407A800587C2D /* Harp.cpp */; };
-		665ABD92168F79CB00F4EBDC /* HUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665ABD90168F79CB00F4EBDC /* HUD.cpp */; };
-		665ABD96168F7B3100F4EBDC /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665ABD94168F7B3100F4EBDC /* Environment.cpp */; };
 		66A42594168E4F2E009F3909 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A42593168E4F2E009F3909 /* libLeap.dylib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -60,6 +61,12 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		395BE54B110E0C230025C266 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		395BE569110E12690025C266 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		6600F6D3169689C900E2A391 /* HarpHUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HarpHUD.cpp; sourceTree = "<group>"; };
+		6600F6D4169689C900E2A391 /* HarpHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarpHUD.h; sourceTree = "<group>"; };
+		6600F6DB16968D2000E2A391 /* Environment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Environment.cpp; path = ../common/Environment.cpp; sourceTree = "<group>"; };
+		6600F6DC16968D2000E2A391 /* Environment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Environment.h; path = ../common/Environment.h; sourceTree = "<group>"; };
+		6600F6DD16968D2000E2A391 /* HUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HUD.cpp; path = ../common/HUD.cpp; sourceTree = "<group>"; };
+		6600F6DE16968D2000E2A391 /* HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HUD.h; path = ../common/HUD.h; sourceTree = "<group>"; };
 		661445031693FE6900587C2D /* airharp-gltools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "airharp-gltools.cpp"; sourceTree = "<group>"; };
 		66144509169402F900587C2D /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		6614450A169402F900587C2D /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
@@ -111,10 +118,6 @@
 		66144554169406D500587C2D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		66144557169407A800587C2D /* Harp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harp.cpp; sourceTree = "<group>"; };
 		66144558169407A800587C2D /* Harp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harp.h; sourceTree = "<group>"; };
-		665ABD90168F79CB00F4EBDC /* HUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HUD.cpp; sourceTree = "<group>"; };
-		665ABD91168F79CB00F4EBDC /* HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUD.h; sourceTree = "<group>"; };
-		665ABD94168F7B3100F4EBDC /* Environment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Environment.cpp; sourceTree = "<group>"; };
-		665ABD95168F7B3100F4EBDC /* Environment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Environment.h; sourceTree = "<group>"; };
 		66A42593168E4F2E009F3909 /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = ../../Leap_SDK/lib/libLeap.dylib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* AirHarp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AirHarp-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* AirHarp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHarp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,14 +194,16 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6600F6DB16968D2000E2A391 /* Environment.cpp */,
+				6600F6DC16968D2000E2A391 /* Environment.h */,
+				6600F6DD16968D2000E2A391 /* HUD.cpp */,
+				6600F6DE16968D2000E2A391 /* HUD.h */,
 				661445031693FE6900587C2D /* airharp-gltools.cpp */,
 				256AC3F00F4B6AF500CF3369 /* AirHarp_Prefix.pch */,
 				66144557169407A800587C2D /* Harp.cpp */,
 				66144558169407A800587C2D /* Harp.h */,
-				665ABD90168F79CB00F4EBDC /* HUD.cpp */,
-				665ABD91168F79CB00F4EBDC /* HUD.h */,
-				665ABD94168F7B3100F4EBDC /* Environment.cpp */,
-				665ABD95168F7B3100F4EBDC /* Environment.h */,
+				6600F6D3169689C900E2A391 /* HarpHUD.cpp */,
+				6600F6D4169689C900E2A391 /* HarpHUD.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -387,8 +392,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				665ABD92168F79CB00F4EBDC /* HUD.cpp in Sources */,
-				665ABD96168F7B3100F4EBDC /* Environment.cpp in Sources */,
 				661445041693FE6900587C2D /* airharp-gltools.cpp in Sources */,
 				6614451E169402F900587C2D /* GLBatch.cpp in Sources */,
 				6614451F169402F900587C2D /* glew.c in Sources */,
@@ -405,6 +408,9 @@
 				6614454A1694037200587C2D /* chuck_fft.c in Sources */,
 				6614454B1694037200587C2D /* RtAudio.cpp in Sources */,
 				66144559169407A800587C2D /* Harp.cpp in Sources */,
+				6600F6D5169689C900E2A391 /* HarpHUD.cpp in Sources */,
+				6600F6DF16968D2000E2A391 /* Environment.cpp in Sources */,
+				6600F6E016968D2000E2A391 /* HUD.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

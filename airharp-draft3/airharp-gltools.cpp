@@ -23,6 +23,7 @@
 #include "Leap.h"
 
 #include "HUD.h"
+#include "HarpHUD.h"
 #include "Environment.h"
 
 #include "AudioServer.h"
