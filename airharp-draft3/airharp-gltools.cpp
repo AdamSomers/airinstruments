@@ -169,7 +169,10 @@ public:
     , stringNum(0)
     , lastPointer(NULL)
     , invalid(false)
-    {}
+    , numSamples(256)
+    {
+        numSampleVerts = numSamples*2;
+    }
     void setup()
     {
         M3DVector3f verts[4] = {
@@ -180,10 +183,10 @@ public:
         };
         
         M3DVector3f normals[4] = {
-            0.0f, 0.f, -1.f,
-            0.0f, 0.f, -1.f,
-            0.0f, 0.f, -1.f,
-            0.0f, 0.f, -1.f
+            0.0f, 0.0f, -1.0f,
+            0.0f, 0.0f, -1.0f,
+            0.0f, 0.0f, -1.0f,
+            0.0f, 0.0f, -1.0f
         };
         
         bgBatch.Begin(GL_TRIANGLE_STRIP, 4);
@@ -193,17 +196,63 @@ public:
         
         float w = 0.01;
         
-        M3DVector3f stringVerts[4] = {
-            gStringWidth/2.f - w/2, -.8f, 0.0f,
-            gStringWidth/2.f + w/2, -.8f, 0.0f,
-            gStringWidth/2.f - w/2, .8, 0.0f,
-            gStringWidth/2.f + w/2, .8, 0.0f
-        };
+        sampleVerts = new M3DVector3f[numSampleVerts];
+        M3DVector3f stringNormals[numSampleVerts];
+        float yMin = -0.8;
+        float yMax = 0.8;
+        float step = (yMax - yMin) / ((float)numSampleVerts / 2.f);
+        float y = -.8f;
+        float x = gStringWidth/2.f - w/2;
+        float z = 0.f;
+        for (int i = 0; i < numSampleVerts; ++i)
+        {
+            if (i % 2 == 0) {
+                x = gStringWidth/2.f + w/2;
+            }
+            else
+                x = gStringWidth/2.f - w/2;
+            
+            sampleVerts[i][0] = x;
+            sampleVerts[i][1] = y;
+            sampleVerts[i][2] = z;
+            
+            stringNormals[i][0] = 0.f;
+            stringNormals[i][1] = 0.f;
+            stringNormals[i][2] = -1.f;
+            
+            if (i % 2 == 1) {
+                y += step;
+            }
+        }
         
-        stringBatch.Begin(GL_TRIANGLE_STRIP, 4);
-        stringBatch.CopyVertexData3f(stringVerts);
-        stringBatch.CopyNormalDataf(normals);
+        stringBatch.Begin(GL_TRIANGLE_STRIP, numSampleVerts);
+        stringBatch.CopyVertexData3f(sampleVerts);
+        stringBatch.CopyNormalDataf(stringNormals);
         stringBatch.End();
+    }
+    
+    void update()
+    {
+        float x;
+        float w = 0.005;
+        float sampleValue = (rand() % RAND_MAX) / (float)RAND_MAX - 0.5f;
+        sampleValue*=0.01;
+        for (int i = 0; i < numSampleVerts; ++i)
+        {
+            if (i % 2 == 0) {
+                x = gStringWidth/2.f + w/2 + sampleValue;
+            }
+            else
+                x = gStringWidth/2.f - w/2 + sampleValue;
+            
+            sampleVerts[i][0] = x;
+            
+            if (i % 2 == 1) {
+                sampleValue = (rand() % RAND_MAX) / (float)RAND_MAX - 0.5f;
+                sampleValue*=0.01;
+            }
+        }
+        stringBatch.CopyVertexData3f(sampleVerts);
     }
     
     void draw()
@@ -217,6 +266,7 @@ public:
         Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
         
         GLfloat white [] = { 1, 1, 1, 1 };
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), white);
         stringBatch.Draw();
 
@@ -307,6 +357,9 @@ private:
     GLBatch     bgBatch;
     GLBatch     stringBatch;
     bool pointed;
+    int numSamples;
+    int numSampleVerts;
+    M3DVector3f* sampleVerts;
 };
 
 std::map<int,FingerView*> gFingers;
@@ -667,7 +720,6 @@ void RenderScene(void)
 
     // Swap buffers
     glutSwapBuffers();
-    glutPostRedisplay();
 }
 
 
@@ -869,6 +921,15 @@ void SpecialKeys(int key, int x, int y)
 	glutPostRedisplay();
 }
 
+static void idle(void)
+{
+    
+    for (StringView* sv : gStrings)
+        sv->update();
+    glutPostRedisplay();
+    usleep(10000);
+}
+
 int main(int argc, char* argv[])
 {
     RtAudioDriver driver(256);
@@ -885,7 +946,7 @@ int main(int argc, char* argv[])
 	glutAddMenuEntry("Antialiased Rendering",1);
 	glutAddMenuEntry("Normal Rendering",2);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
-	
+	glutIdleFunc(&idle);
 	glutReshapeFunc(ChangeSize);
 	glutDisplayFunc(RenderScene);
     glutMouseFunc(Mouse);
