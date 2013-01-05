@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/193/trunk/Src/GLTools/include
+END
+GLGeometryTransform.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/64/trunk/Src/GLTools/include/GLGeometryTransform.h
+END
+GLTriangleBatch.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/96/trunk/Src/GLTools/include/GLTriangleBatch.h
+END
+StopWatch.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/Src/GLTools/include/StopWatch.h
+END
+GLFrame.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/163/trunk/Src/GLTools/include/GLFrame.h
+END
+GLMatrixStack.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/190/trunk/Src/GLTools/include/GLMatrixStack.h
+END
+GLBatchBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/10/trunk/Src/GLTools/include/GLBatchBase.h
+END
+math3d.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/125/trunk/Src/GLTools/include/math3d.h
+END
+GLTools.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/193/trunk/Src/GLTools/include/GLTools.h
+END
+GLShaderManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/138/trunk/Src/GLTools/include/GLShaderManager.h
+END
+GLBatch.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/96/trunk/Src/GLTools/include/GLBatch.h
+END
+GLFrustum.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/64/trunk/Src/GLTools/include/GLFrustum.h
+END

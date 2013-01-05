@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/193/trunk/Src/GLTools/src
+END
+glew.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/179/trunk/Src/GLTools/src/glew.c
+END
+math3d.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/191/trunk/Src/GLTools/src/math3d.cpp
+END
+GLTools.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/193/trunk/Src/GLTools/src/GLTools.cpp
+END
+GLBatch.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/138/trunk/Src/GLTools/src/GLBatch.cpp
+END
+GLShaderManager.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/99/trunk/Src/GLTools/src/GLShaderManager.cpp
+END
+GLTriangleBatch.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/165/trunk/Src/GLTools/src/GLTriangleBatch.cpp
+END
