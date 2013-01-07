@@ -49,15 +49,7 @@ GLMatrixStack projectionMatrix;
 
 
 GLFrustum viewFrustum;
-GLBatch smallStarBatch;
-GLBatch mediumStarBatch;
-GLBatch largeStarBatch;
-GLBatch mountainRangeBatch;
-GLBatch moonBatch;
-GLFrame moonFrame;
-
 GLFrame	cameraFrame;
-GLTriangleBatch sphereBatch;
 
 // Pentatonic Major
 const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
@@ -476,14 +468,6 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                         }
                     }
                     gLock.unlock();
-    
-//                    Finger* f = &(*iter).second;
-//                    
-//                    float prevX = f->normalizedX();
-//                    float prevY = f->normalizedY();
-//                    float prevZ = f->normalizedZ();
-//                    f->finger = finger;
-//                    airMotion(f, prevX , prevY, prevZ);
 
                     float x = fv->normalizedX();
                     float y = fv->normalizedY();
@@ -671,67 +655,6 @@ void RenderScene(void)
             v->passiveMotion(win[0], win[1]);
     }
     
-    
-//    Environment::instance().modelViewMatrix.PushMatrix();
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//    squareBatch.Draw();
-//    Environment::instance().modelViewMatrix.PopMatrix();
-#if 0
-    M3DMatrix44f mScreenSpace;
-    m3dMakeOrthographicMatrix(mScreenSpace, 0.0f, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 0.0f, 1.0f);
-    GLfloat vRed [] = { 1.f, 0.f, 0.f, 0.f };
-    M3DMatrix44f m;
-    m3dCopyMatrix44(m, Environment::instance().modelViewMatrix.GetMatrix());
-    M3DMatrix44f m2;
-    m3dMatrixMultiply44(m2, m, mScreenSpace);
-    Environment::instance().modelViewMatrix.PushMatrix(m2);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), vRed);
-    
-    // Everything is white
-    GLfloat vWhite [] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), vWhite);
-
-    
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    
-    // Draw small stars
-    glPointSize(1.0f);
-    smallStarBatch.Draw();
-    
-    // Draw medium sized stars
-    glPointSize(4.0f);
-    mediumStarBatch.Draw();
-    
-    // Draw largest stars
-    glPointSize(8.0f);
-    largeStarBatch.Draw();
-    
-   Environment::instance().modelViewMatrix.PushMatrix();
-   M3DMatrix44f mMoon;
-   moonFrame.GetMatrix(mMoon);
-   Environment::instance().modelViewMatrix.MultMatrix(mMoon);
-   Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), vRed);
-    moonBatch.Draw();
-    Environment::instance().modelViewMatrix.PopMatrix();
-
-    // Draw the "moon"
-    
-    // Draw distant horizon
-    glLineWidth(3.5);
-    mountainRangeBatch.Draw();
-    
-    //moonBatch.Draw();
-    
-    GLfloat vBlue [] = { 0.5f, 0.5f, 1.0f, 1.0f };
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, viewFrustum.GetProjectionMatrix(), vBlue);
-    
-    
-//    glDisable(GL_DEPTH_TEST);
-
-    
-    Environment::instance().modelViewMatrix.PopMatrix();
-#endif
-    
     glDisable(GL_DEPTH_TEST);
     
 //    Environment::instance().modelViewMatrix.PushMatrix();
@@ -744,8 +667,6 @@ void RenderScene(void)
         v->draw();
     
 //    Environment::instance().modelViewMatrix.PopMatrix();
-
-
 
     glEnable(GL_DEPTH_TEST);
 
@@ -789,117 +710,8 @@ void SetupRC()
     for (auto iter : gFingers)
         iter.second->setup();
 
-    M3DVector3f vVerts[SMALL_STARS]; // SMALL_STARS is the largest batch we are going to need
-    int i;
-    
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
-    
-    // Populate star list
-    smallStarBatch.Begin(GL_POINTS, SMALL_STARS);
-    for(i = 0; i < SMALL_STARS; i++)
-    {
-        vVerts[i][0] = (GLfloat)(rand() % SCREEN_X);
-        vVerts[i][1] = (GLfloat)(rand() % (SCREEN_Y - 100)) + 100.0f;
-        vVerts[i][2] = 0.0f;
-    }
-    smallStarBatch.CopyVertexData3f(vVerts);
-    smallStarBatch.End();
-    
-    // Populate star list
-    mediumStarBatch.Begin(GL_POINTS, MEDIUM_STARS);
-    for(i = 0; i < MEDIUM_STARS; i++)
-    {
-        vVerts[i][0] = (GLfloat)(rand() % SCREEN_X);
-        vVerts[i][1] = (GLfloat)(rand() % (SCREEN_Y - 100)) + 100.0f;
-        vVerts[i][2] = 0.0f;
-    }
-    mediumStarBatch.CopyVertexData3f(vVerts);
-    mediumStarBatch.End();
-    
-    // Populate star list
-    largeStarBatch.Begin(GL_POINTS, LARGE_STARS);
-    for(i = 0; i < LARGE_STARS; i++)
-    {
-        vVerts[i][0] = (GLfloat)(rand() % SCREEN_X);
-        vVerts[i][1] = (GLfloat)(rand() % (SCREEN_Y - 100)) + 100.0f;
-        vVerts[i][2] = 0.0f;
-    }
-    largeStarBatch.CopyVertexData3f(vVerts);
-    largeStarBatch.End();
-    
-    M3DVector3f vMountains[4] = {
-        0.0f, 25.0f, 0.0f,
-        50.0f, 100.0f, 0.0f,
-        100.0f, 25.0f, 0.0f,
-        225.0f, 125.0f, 0.0f };
-//        300.0f, 50.0f, 0.0f,
-//        375.0f, 100.0f, 0.0f,
-//        460.0f, 25.0f, 0.0f,
-//        525.0f, 100.0f, 0.0f,
-//        600.0f, 20.0f, 0.0f,
-//        675.0f, 70.0f, 0.0f,
-//        750.0f, 25.0f, 0.0f,
-//        800.0f, 90.0f, 0.0f };
-    
-    M3DVector3f normals[4] = {
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f };
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f,
-//        0.0f, 0.0f, -1.0f };
-    
-    M3DVector4f colors[4] = {
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f };
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f };
-    
-    mountainRangeBatch.Begin(GL_LINE_STRIP, 4);
-    mountainRangeBatch.CopyVertexData3f(vMountains);
-    mountainRangeBatch.CopyNormalDataf(normals);
-    mountainRangeBatch.CopyColorData4f(colors);
-    mountainRangeBatch.End();
-    
-    // The Moon
-    GLfloat x = 0.0f;     // Location and radius of moon
-    GLfloat y = 0.0f;
-    GLfloat r = 10.0f;
-    GLfloat angle = 0.0f;   // Another looping variable
-    
-    moonBatch.Begin(GL_TRIANGLE_FAN, 34);
-    int nVerts = 0;
-    vVerts[nVerts][0] = x;
-    vVerts[nVerts][1] = y;
-    vVerts[nVerts][2] = 0.0f;
-    for(angle = 0; angle < 2.0f * 3.141592f; angle += 0.2f) {
-        nVerts++;
-        vVerts[nVerts][0] = x + float(cos(angle)) * r;
-        vVerts[nVerts][1] = y + float(sin(angle)) * r;
-        vVerts[nVerts][2] = 0.0f;
-    }
-    nVerts++;
-    
-    vVerts[nVerts][0] = x + r;;
-    vVerts[nVerts][1] = y;
-    vVerts[nVerts][2] = 0.0f;
-    moonBatch.CopyVertexData3f(vVerts);
-    moonBatch.End();
     
     Toolbar* tb = new Toolbar;
 //    tb->setBounds(HUDRect(0,500,800,100));
