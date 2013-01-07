@@ -37,8 +37,11 @@
 #define SCREEN_X        800
 #define SCREEN_Y        600
 
+#define NUM_SAMPLES 128
+#define BUFFER_SIZE 512
 #define NUM_STRINGS 20
 float gStringWidth = 0.06;
+float gStringLineWidth = 0.01;
 
 GLFrame viewFrame;
 
@@ -153,6 +156,7 @@ public:
     }
 
     GLFrame             objectFrame;
+    GLFrame             prevFrame;
     Leap::Finger finger;
     bool inUse;
     int id;
@@ -169,7 +173,7 @@ public:
     , stringNum(0)
     , lastPointer(NULL)
     , invalid(false)
-    , numSamples(256)
+    , numSamples(NUM_SAMPLES)
     {
         numSampleVerts = numSamples*2;
     }
@@ -194,7 +198,7 @@ public:
         bgBatch.CopyNormalDataf(normals);
         bgBatch.End();
         
-        float w = 0.01;
+        float w = gStringLineWidth;
         
         sampleVerts = new M3DVector3f[numSampleVerts];
         M3DVector3f stringNormals[numSampleVerts];
@@ -233,25 +237,30 @@ public:
     
     void update()
     {
-        float x;
-        float w = 0.005;
-        float sampleValue = (rand() % RAND_MAX) / (float)RAND_MAX - 0.5f;
-        sampleValue*=0.01;
-        for (int i = 0; i < numSampleVerts; ++i)
+        float w = gStringLineWidth;
+        float scale = 0.1f;
+        
+        // skip this frame if not enough samples accumulated
+        if (Harp::GetInstance()->GetBuffers().at(stringNum)->GetSize() < NUM_SAMPLES)
+           return;
+        
+        // pop the sample data from audio buffer and display along string
+        SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(stringNum)->Get();
+        for (int i = 0; i < numSampleVerts / 2; ++i)
         {
-            if (i % 2 == 0) {
-                x = gStringWidth/2.f + w/2 + sampleValue;
-            }
-            else
-                x = gStringWidth/2.f - w/2 + sampleValue;
-            
-            sampleVerts[i][0] = x;
-            
-            if (i % 2 == 1) {
-                sampleValue = (rand() % RAND_MAX) / (float)RAND_MAX - 0.5f;
-                sampleValue*=0.01;
-            }
+            long numPeakBuffers = peakBuffer.size();
+            SampleAccumulator::PeakSample samp(0,0);
+            if (i < numPeakBuffers)
+                samp = peakBuffer.at(i);
+            float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
+            val *= scale;
+            float x1 = gStringWidth/2.f + w/2 + fabsf(val);
+            float x2 = gStringWidth/2.f - w/2 - fabsf(val);
+            sampleVerts[i * 2][0] = x1;
+            sampleVerts[i * 2 + 1][0] = x2;
         }
+        
+        // update the vertex buffer (sends data to gpu)
         stringBatch.CopyVertexData3f(sampleVerts);
     }
     
@@ -294,17 +303,18 @@ public:
         inFingerView->objectFrame.GetForwardVector(ray);
         objectFrame.GetOrigin(center);
 
+        // Calculate collision distance of finger ray with string rect
         M3DVector3f collisionPoint;
         M3DVector3f pNormal = { 0.f, 0.f, -1.f };
-        //m3dNormalizeVector3(pNormal);
         m3dNormalizeVector3(ray);
+        center[0] -= gStringWidth / 2.f;
         collide(point, ray, center, pNormal, collisionPoint);
-
-        if (fabsf(collisionPoint[0] - center[0]) < gStringWidth / 2.f)
+        float distance = fabsf(collisionPoint[0] - center[0]);
+        // Ray intersecting rect = pointing at string
+        if (distance < gStringWidth / 2.f)
         {
             if (lastPointer != inFingerView)
             {
-                pluck(0.5);
                 lastPointer = inFingerView;
                 pointed = true;
             }
@@ -315,6 +325,28 @@ public:
             pointed = false;
             lastPointer = NULL;
             invalid = false;
+        }
+        
+        // When finger is on string plane, we can strum
+        if (point[2] <= center[2])
+        {
+            // calculate collidion distance of previous finger ray with string
+            M3DVector3f prevPoint;
+            M3DVector3f prevRay;
+            inFingerView->prevFrame.GetOrigin(prevPoint);
+            inFingerView->prevFrame.GetForwardVector(prevRay);
+            distance = collisionPoint[0] - center[0];
+            M3DVector3f prevCollisionPoint;
+            collide(prevPoint, prevRay, center, pNormal, prevCollisionPoint);
+            float prevDistance = prevCollisionPoint[0] - center[0];
+            // String's center line was crossed = pluck
+            if ((distance < 0 &&
+                 prevDistance >= 0) ||
+                (distance >= 0 &&
+                 prevDistance < 0))
+            {
+                pluck(0.5);
+            }
         }
     }
     
@@ -460,6 +492,12 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     float dirX = f.direction().x;
                     float dirY = f.direction().y;
                     float dirZ = f.direction().z;
+                    
+                    M3DVector3f prev;
+                    fv->objectFrame.GetForwardVector(prev);
+                    fv->prevFrame.SetForwardVector(prev);
+                    fv->objectFrame.GetOrigin(prev);
+                    fv->prevFrame.SetOrigin(prev);
                     
                     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
                     float scaledX = x*2;
@@ -932,14 +970,14 @@ static void idle(void)
 
 int main(int argc, char* argv[])
 {
-    RtAudioDriver driver(256);
+    RtAudioDriver driver(BUFFER_SIZE);
     for (int i = 0; i < NUM_STRINGS-1; ++i)
         Harp::GetInstance()->AddString();
     
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENCIL);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Smoothing Out The Jaggies");
+	glutCreateWindow("AirHarp");
 	
 	// Create the Menu
 	glutCreateMenu(ProcessMenu);

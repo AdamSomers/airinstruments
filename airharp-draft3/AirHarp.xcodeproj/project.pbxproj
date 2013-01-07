@@ -99,7 +99,7 @@
 		661445321694037200587C2D /* ParameterAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterAPI.cpp; sourceTree = "<group>"; };
 		661445331694037200587C2D /* ParameterAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterAPI.h; sourceTree = "<group>"; };
 		661445341694037200587C2D /* Poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Poly.h; sourceTree = "<group>"; };
-		661445351694037200587C2D /* SignalGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalGenerators.h; sourceTree = "<group>"; };
+		661445351694037200587C2D /* SignalGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.c.h; path = SignalGenerators.h; sourceTree = "<group>"; tabWidth = 3; };
 		661445361694037200587C2D /* TypingKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypingKeyboard.h; sourceTree = "<group>"; };
 		661445371694037200587C2D /* Voices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voices.h; sourceTree = "<group>"; };
 		661445381694037200587C2D /* Waveshaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Waveshaper.cpp; sourceTree = "<group>"; };
