@@ -107,7 +107,10 @@ void DrawWireFramedBatch(GLTriangleBatch* pBatch);
 class FingerView
 {
 public:
-    FingerView() : inUse(false), id(-1)
+    FingerView()
+    : inUse(false)
+    , id(-1)
+    , invalid(false)
     {}
     void setup()
     {
@@ -152,6 +155,7 @@ public:
     Leap::Finger finger;
     bool inUse;
     int id;
+    bool invalid;
 private:
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
@@ -417,7 +421,7 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
     gLock.lock();
     for (auto i : gFingers)
     {
-        i.second->inUse = false;
+        i.second->invalid = true;
     }
     gLock.unlock();
     
@@ -448,7 +452,8 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                 // Calculate the hand's average finger tip position
                 Leap::Vector pos(0, 0, 0);
                 for (int i = 0; i < numFingers; ++i)
-                { 
+                {
+                    bool inserted = false;
                     const Leap::Finger& f = fingers[i];
                     gLock.lock();
                     FingerView* fv = NULL;
@@ -462,10 +467,13 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     else
                     {
                         fv = (*iter).second;
+                        fv->finger = f;
                         if (!fv->inUse) {
-                            fv->finger = f;
                             fv->inUse = true;
+                            inserted = true;
+                            printf("Inserted finger %d\n", fv->id);
                         }
+                        fv->invalid = false;
                     }
                     gLock.unlock();
 
@@ -490,6 +498,11 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     float scaledZ = z*5-10;
                     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
                     
+                    if (inserted) {
+                        fv->prevFrame.SetForwardVector(dirX,dirY,dirZ);
+                        fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
+                    }
+                    
                     for (StringView* sv : gStrings)
                     {
                         sv->updatePointedState(fv);
@@ -499,10 +512,21 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
             }
         }
     }
+    
     for (StringView* sv : gStrings)
     {
-        if (sv->invalid)
+        if (sv->invalid) {
             sv->reset();
+        }
+    }
+    
+    for (auto iter : gFingers)
+    {
+        FingerView* fv = iter.second;
+        if (fv->invalid && fv->inUse) {
+            fv->inUse = false;
+            printf("Removed finger %d\n", fv->id);
+        }
     }
 }
 
@@ -690,8 +714,9 @@ void SetupRC()
     
     for (int i = 0; i < 50; ++i)
     {
-        gFingers.insert(std::make_pair(i, new
-                                       FingerView()));
+        FingerView* fv = new FingerView;
+        gFingers.insert(std::make_pair(i, fv));
+        fv->id = i;
     }
     
     gStringWidth = 2.f / NUM_STRINGS;
