@@ -39,7 +39,7 @@
 
 #define NUM_SAMPLES 128
 #define BUFFER_SIZE 512
-#define NUM_STRINGS 20
+#define NUM_STRINGS 24
 float gStringWidth = 0.06;
 float gStringLineWidth = 0.01;
 
@@ -258,6 +258,18 @@ public:
         
         // update the vertex buffer (sends data to gpu)
         stringBatch.CopyVertexData3f(sampleVerts);
+    }
+    
+    void updateStringBg()
+    {
+        M3DVector3f verts[4] = {
+            0.0f, -.8f, 0.0f,
+            gStringWidth, -.8f, 0.0f,
+            0.f, .8, 0.0f,
+            gStringWidth, .8, 0.0f
+        };
+        
+        bgBatch.CopyVertexData3f(verts);
     }
     
     void draw()
@@ -492,10 +504,10 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     fv->prevFrame.SetOrigin(prev);
                     
                     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
-                    float scaledX = x*2;
+                    float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
                     float scaledY = (y-.5)*2;
                     if (z < 0) z = 0;
-                    float scaledZ = z*5-10;
+                    float scaledZ = z*5-12;
                     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
                     
                     if (inserted) {
@@ -705,6 +717,19 @@ void RenderScene(void)
     glutSwapBuffers();
 }
 
+void layoutStrings()
+{
+    float aspectRatio = Environment::screenW / (float)Environment::screenH;
+    gStringWidth = (2.f * aspectRatio) / (float)NUM_STRINGS;
+    float pos = -aspectRatio + gStringWidth;
+    float step = gStringWidth;
+    for (StringView* sv : gStrings)
+    {
+        sv->objectFrame.SetOrigin(pos, 0, -12);
+        pos += step;
+        sv->updateStringBg();
+    }
+}
 
 // This function does any needed initialization on the rendering
 // context.
@@ -721,12 +746,13 @@ void SetupRC()
     
     gStringWidth = 2.f / NUM_STRINGS;
     float step = gStringWidth;
-    float pos = -1.f + gStringWidth;
+    float aspectRatio = Environment::screenW / (float)Environment::screenH;
+    float pos = -1 + gStringWidth;
     for (int i = 0; i < NUM_STRINGS; ++i)
     {
         StringView* sv = new StringView;
         sv->setup();
-        sv->objectFrame.TranslateWorld(pos, 0, - 10);
+        sv->objectFrame.TranslateWorld(pos, 0, -12);
         sv->stringNum = i;
         gStrings.push_back(sv);
         pos += step;
@@ -765,6 +791,8 @@ void ChangeSize(int w, int h)
     Environment::instance().screenH = h;
     
     gToolbar->setBounds(HUDRect(-1,.8,2,.2));
+    
+    layoutStrings();
     
     // Establish clipping volume (left, right, bottom, top, near, far)
 //    viewFrustum.SetOrthographic(0, w, 0.0f, h, 800.0f, -800.0f);
