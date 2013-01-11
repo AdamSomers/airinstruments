@@ -22,7 +22,13 @@ public:
     class Listener
     {
     public:
+        Listener();
         virtual void updatePointedState(FingerView* fv) = 0;
+        void reset();
+        bool needsReset;
+        bool pointed;
+        FingerView* lastPointer;
+    protected:
     private:
     };
     

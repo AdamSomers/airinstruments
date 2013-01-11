@@ -7,6 +7,9 @@ Harp* Harp::sInstance = NULL;
 #define FILTER_FREQ 150.f
 #define FILTER_RES 0.f
 
+const int* Harp::gScale = gPentatonicMajor;
+int Harp::gScaleIntervals = gPentatonicMajorIntervals;
+
 Harp::Harp()
 : numStrings(1)
 , mixer(NULL)

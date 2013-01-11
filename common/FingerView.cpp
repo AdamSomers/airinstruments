@@ -45,3 +45,17 @@ float FingerView::normalizedZ()
 {
     return finger.tipPosition().z / 250.f;
 }
+
+FingerView::Listener::Listener()
+: needsReset(false)
+, pointed(false)
+, lastPointer(NULL)
+{
+}
+
+void FingerView::Listener::reset()
+{
+    pointed = false;
+    lastPointer = NULL;
+    needsReset = false;
+}

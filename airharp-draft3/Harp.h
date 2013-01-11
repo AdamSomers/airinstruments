@@ -7,6 +7,22 @@
 #include "Voices.h"
 #include "SignalGenerators.h"
 
+// Pentatonic Major
+const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
+const int gPentatonicMajorIntervals = 5;
+
+// Pentatonic Minor
+const int gPentatonicMinor[] = { 0, 3, 5, 7, 10};
+const int gPentatonicMinorIntervals = 5;
+
+// Whole-tone
+const int gWholeTone[] = { 0, 2, 4, 6, 8, 10};
+const int gWholeToneIntervals = 6;
+
+// Diatonic
+const int gDiatonic[] = { 0, 2, 4, 5, 7, 9, 11};
+const int gDiatonicIntervals = 7;
+
 class Harp
 {
 public:
@@ -21,6 +37,8 @@ public:
     std::vector<SampleAccumulator*>& GetBuffers() { return accumulators; }
     std::vector<Karplus*>& GetStrings() { return strings; }
     
+    static const int* gScale;
+    static int gScaleIntervals;
 private:
     void Cleanup();
     void Init();
