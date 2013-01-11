@@ -36,6 +36,7 @@
 		66A11BC2169FC2B1004C521E /* FingerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66A11BC0169FC2B1004C521E /* FingerView.cpp */; };
 		66A11BC6169FCB6C004C521E /* GfxTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66A11BC4169FCB6C004C521E /* GfxTools.cpp */; };
 		66A11BC9169FCF05004C521E /* StringView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66A11BC7169FCF05004C521E /* StringView.cpp */; };
+		66A11BCC169FF150004C521E /* MotionServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66A11BCA169FF150004C521E /* MotionServer.cpp */; };
 		66A42594168E4F2E009F3909 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A42593168E4F2E009F3909 /* libLeap.dylib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -127,6 +128,8 @@
 		66A11BC5169FCB6C004C521E /* GfxTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GfxTools.h; path = ../common/GfxTools.h; sourceTree = "<group>"; };
 		66A11BC7169FCF05004C521E /* StringView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringView.cpp; sourceTree = "<group>"; };
 		66A11BC8169FCF05004C521E /* StringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringView.h; sourceTree = "<group>"; };
+		66A11BCA169FF150004C521E /* MotionServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MotionServer.cpp; path = ../common/MotionServer.cpp; sourceTree = "<group>"; };
+		66A11BCB169FF150004C521E /* MotionServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MotionServer.h; path = ../common/MotionServer.h; sourceTree = "<group>"; };
 		66A42593168E4F2E009F3909 /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = ../../Leap_SDK/lib/libLeap.dylib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* AirHarp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AirHarp-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* AirHarp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHarp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +244,8 @@
 				66A11BC1169FC2B1004C521E /* FingerView.h */,
 				66A11BC4169FCB6C004C521E /* GfxTools.cpp */,
 				66A11BC5169FCB6C004C521E /* GfxTools.h */,
+				66A11BCA169FF150004C521E /* MotionServer.cpp */,
+				66A11BCB169FF150004C521E /* MotionServer.h */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 				66A11BC2169FC2B1004C521E /* FingerView.cpp in Sources */,
 				66A11BC6169FCB6C004C521E /* GfxTools.cpp in Sources */,
 				66A11BC9169FCF05004C521E /* StringView.cpp in Sources */,
+				66A11BCC169FF150004C521E /* MotionServer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

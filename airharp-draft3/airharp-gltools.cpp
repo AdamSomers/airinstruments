@@ -16,7 +16,7 @@
 #include <mutex>
 #include <cmath>
 
-#include "Leap.h"
+#include "MotionServer.h"
 
 #include "HUD.h"
 #include "HarpHUD.h"
@@ -34,147 +34,8 @@
 #define BUFFER_SIZE 512
 #define NUM_STRINGS 24
 
-std::map<int,FingerView*> gFingers;
 std::vector<StringView*> gStrings;
 
-std::mutex gLock;
-float fingerX, fingerY, fingerZ = 0;
-
-class HarpListener : public Leap::Listener {
-public:
-    virtual void onInit(const Leap::Controller&);
-    virtual void onConnect(const Leap::Controller&);
-    virtual void onDisconnect(const Leap::Controller&);
-    virtual void onFrame(const Leap::Controller&);
-};
-
-void HarpListener::onInit(const Leap::Controller& controller) {
-    std::cout << "Initialized" << std::endl;
-}
-
-void HarpListener::onConnect(const Leap::Controller& controller) {
-    std::cout << "Connected" << std::endl;
-}
-
-void HarpListener::onDisconnect(const Leap::Controller& controller) {
-    std::cout << "Disconnected" << std::endl;
-}
-
-void HarpListener::onFrame(const Leap::Controller& controller) {
-
-    gLock.lock();
-    for (auto i : gFingers)
-    {
-        i.second->invalid = true;
-    }
-    gLock.unlock();
-    
-    for (FingerView::Listener* listener : gStrings)
-    {
-        listener->needsReset = true;
-    }
-    
-    // Get the most recent frame and report some basic information
-    const Leap::Frame frame = controller.frame();
-    const Leap::HandList& hands = frame.hands();
-    const size_t numHands = hands.count();
-    //    std::cout << "Frame id: " << frame.id()
-    //    << ", timestamp: " << frame.timestamp()
-    //    << ", hands: " << numHands << std::endl;
-    
-    if (numHands >= 1) {
-        // Get the first hand
-        for (int h = 0; h < numHands; ++h) {
-            const Leap::Hand& hand = hands[h];
-            
-            
-            // Check if the hand has any fingers
-            const Leap::FingerList& fingers = hand.fingers();
-            const size_t numFingers = fingers.count();
-            if (numFingers >= 1)
-            {
-                // Calculate the hand's average finger tip position
-                Leap::Vector pos(0, 0, 0);
-                for (int i = 0; i < numFingers; ++i)
-                {
-                    bool inserted = false;
-                    const Leap::Finger& f = fingers[i];
-                    gLock.lock();
-                    FingerView* fv = NULL;
-                    auto iter = gFingers.find(f.id());
-                    if (iter == gFingers.end())
-                    {
-                        // Finger map is pre-allocated, if we don't find one too bad!
-                        printf("Error! No finger in map for id %d\n", f.id());
-                        continue;
-                    }
-                    else
-                    {
-                        fv = (*iter).second;
-                        fv->finger = f;
-                        if (!fv->inUse) {
-                            fv->inUse = true;
-                            inserted = true;
-                            printf("Inserted finger %d\n", fv->id);
-                        }
-                        fv->invalid = false;
-                    }
-                    gLock.unlock();
-
-                    float x = fv->normalizedX();
-                    float y = fv->normalizedY();
-                    float z = fv->normalizedZ();
-
-                    float dirX = f.direction().x;
-                    float dirY = f.direction().y;
-                    float dirZ = f.direction().z;
-                    
-                    M3DVector3f prev;
-                    fv->objectFrame.GetForwardVector(prev);
-                    fv->prevFrame.SetForwardVector(prev);
-                    fv->objectFrame.GetOrigin(prev);
-                    fv->prevFrame.SetOrigin(prev);
-                    
-                    fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
-                    float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-                    float scaledY = (y-.5)*2;
-                    if (z < 0) z = 0;
-                    float scaledZ = z*5-12;
-                    fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
-                    
-                    if (inserted) {
-                        fv->prevFrame.SetForwardVector(dirX,dirY,dirZ);
-                        fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
-                    }
-                    
-                    for (FingerView::Listener* listener : gStrings)
-                    {
-                        listener->updatePointedState(fv);
-                    }
-                    //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
-                }
-            }
-        }
-    }
-    
-    for (FingerView::Listener* listener : gStrings)
-    {
-        if (listener->needsReset) {
-            listener->reset();
-        }
-    }
-    
-    for (auto iter : gFingers)
-    {
-        FingerView* fv = iter.second;
-        if (fv->invalid && fv->inUse) {
-            fv->inUse = false;
-            printf("Removed finger %d\n", fv->id);
-        }
-    }
-}
-
-HarpListener listener;
 std::vector<HUDView*> gViews;
 Toolbar* gToolbar = NULL;
 
@@ -271,7 +132,7 @@ void RenderScene(void)
     viewport[2] = (GLint) dviewport[2];
     viewport[3] = (GLint) dviewport[3];
     FingerView* fv = NULL;
-    for (auto iter : gFingers)
+    for (auto iter : MotionDispatcher::instance().fingerViews)
     {
         fv = iter.second;
         if (fv->inUse)
@@ -308,7 +169,7 @@ void RenderScene(void)
 
     glEnable(GL_DEPTH_TEST);
 
-    for (auto iter : gFingers)
+    for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
     
@@ -338,14 +199,7 @@ void layoutStrings()
 void SetupRC()
 {
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
-    
-    for (int i = 0; i < 50; ++i)
-    {
-        FingerView* fv = new FingerView;
-        gFingers.insert(std::make_pair(i, fv));
-        fv->id = i;
-    }
-    
+
     gStringWidth = 2.f / NUM_STRINGS;
     float step = gStringWidth;
     float aspectRatio = Environment::screenW / (float)Environment::screenH;
@@ -356,12 +210,12 @@ void SetupRC()
         sv->setup();
         sv->objectFrame.TranslateWorld(pos, 0, -12);
         sv->stringNum = i;
+        MotionDispatcher::instance().fingerViewListeners.push_back(sv);
         gStrings.push_back(sv);
         pos += step;
     }
     
-    for (auto iter : gFingers)
-        iter.second->setup();
+    
 
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
@@ -432,7 +286,7 @@ static void idle(void)
     for (StringView* sv : gStrings)
         sv->update();
     glutPostRedisplay();
-    usleep(10000);
+    usleep(30000);
 }
 
 int main(int argc, char* argv[])
@@ -466,9 +320,6 @@ int main(int argc, char* argv[])
     }
     
 	SetupRC();
-    
-    Leap::Controller controller;
-    controller.addListener(listener);
     
 	glutMainLoop();
     
