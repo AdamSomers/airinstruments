@@ -1,8 +1,4 @@
-// Smoother.cpp
-// OpenGL SuperBible
-// Demonstrates point and line antialiasing
-// Program by Richard S. Wright Jr.
-#include <GLTools.h>	// OpenGL toolkit
+#include <GLTools.h>
 #include <GLFrustum.h>
 #include <GLMatrixStack.h>
 #include <GLGeometryTransform.h>
@@ -28,6 +24,8 @@
 
 #include "AudioServer.h"
 #include "Harp.h"
+#include "FingerView.h"
+#include "GfxTools.h"
 
 // Array of small stars
 #define SMALL_STARS     100
@@ -42,14 +40,6 @@
 #define NUM_STRINGS 24
 float gStringWidth = 0.06;
 float gStringLineWidth = 0.01;
-
-GLFrame viewFrame;
-
-GLMatrixStack projectionMatrix;
-
-
-GLFrustum viewFrustum;
-GLFrame	cameraFrame;
 
 // Pentatonic Major
 const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
@@ -70,98 +60,7 @@ const int gDiatonicIntervals = 7;
 const int* gScale = gPentatonicMajor;
 int gScaleIntervals = gPentatonicMajorIntervals;
 
-// Ray-plane collision
-void collide(M3DVector3f rOrigin, M3DVector3f rNormal, M3DVector3f pOrigin, M3DVector3f pNormal, M3DVector3f outCollisionPoint)
-{    
-    // point on plane
-    float px = pOrigin[0];
-    float py = pOrigin[1];
-    float pz = pOrigin[2];
-    
-    // origin of ray
-    float ox = rOrigin[0];
-    float oy = rOrigin[1];
-    float oz = rOrigin[2];
-    
-    // line vector
-    float dx = rNormal[0];
-    float dy = rNormal[1];
-    float dz = rNormal[2];
-    
-     // t = -((rOrigin - pOrigin) . pNormal)/(rNormal . pNormal)
-     // <pntx,pnty,pntz> = rOrigin + t*rNormal
-    
-    M3DVector3f v1 = {ox-px,oy-py,oz-pz};
-    float t = -(m3dDotProduct3(v1,pNormal)/m3dDotProduct3(
-                                              rNormal,pNormal));
-    float  pX = ox + t*dx;
-    float  pY = oy + t*dy;
-    float  pZ = oz + t*dz;
-    outCollisionPoint[0] = pX;
-    outCollisionPoint[1] = pY;
-    outCollisionPoint[2] = pZ;
-}
-
-void DrawWireFramedBatch(GLTriangleBatch* pBatch);
-
-class FingerView
-{
-public:
-    FingerView()
-    : inUse(false)
-    , id(-1)
-    , invalid(false)
-    {}
-    void setup()
-    {
-        gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
-        gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
-    }
-    
-    void draw()
-    {
-        Environment::instance().modelViewMatrix.PushMatrix();
-        M3DMatrix44f mCamera;
-        cameraFrame.GetCameraMatrix(mCamera);
-        Environment::instance().modelViewMatrix.MultMatrix(mCamera);
-        M3DMatrix44f mObjectFrame;
-        objectFrame.GetMatrix(mObjectFrame);
-        Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
-        GLfloat vBlack [] = { 0.f, 0.f, 0.f, 1.f };
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), vBlack);
-        DrawWireFramedBatch(&cylinderBatch);
-        DrawWireFramedBatch(&coneBatch);
-        
-        Environment::instance().modelViewMatrix.PopMatrix();
-    }
-    
-    float normalizedX()
-    {
-        return (finger.tipPosition().x / 400.f);
-    }
-    
-    float normalizedY()
-    {
-        return (finger.tipPosition().y / 500.f);
-    }
-    
-    float normalizedZ()
-    {
-        return finger.tipPosition().z / 250.f;
-    }
-
-    GLFrame             objectFrame;
-    GLFrame             prevFrame;
-    Leap::Finger finger;
-    bool inUse;
-    int id;
-    bool invalid;
-private:
-    GLTriangleBatch     coneBatch;
-    GLTriangleBatch     cylinderBatch;
-};
-
-class StringView
+class StringView : public FingerView::Listener
 {
 public:
     StringView()
@@ -276,7 +175,7 @@ public:
     {
         Environment::instance().modelViewMatrix.PushMatrix();
         M3DMatrix44f mCamera;
-        cameraFrame.GetCameraMatrix(mCamera);
+        Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
         Environment::instance().modelViewMatrix.MultMatrix(mCamera);
         M3DMatrix44f mObjectFrame;
         objectFrame.GetMatrix(mObjectFrame);
@@ -316,7 +215,7 @@ public:
         M3DVector3f pNormal = { 0.f, 0.f, -1.f };
         m3dNormalizeVector3(ray);
         center[0] -= gStringWidth / 2.f;
-        collide(point, ray, center, pNormal, collisionPoint);
+        GfxTools::collide(point, ray, center, pNormal, collisionPoint);
         float distance = fabsf(collisionPoint[0] - center[0]);
         // Ray intersecting rect = pointing at string
         if (distance < gStringWidth / 2.f)
@@ -345,7 +244,7 @@ public:
             inFingerView->prevFrame.GetForwardVector(prevRay);
             distance = collisionPoint[0] - center[0];
             M3DVector3f prevCollisionPoint;
-            collide(prevPoint, prevRay, center, pNormal, prevCollisionPoint);
+            GfxTools::collide(prevPoint, prevRay, center, pNormal, prevCollisionPoint);
             float prevDistance = prevCollisionPoint[0] - center[0];
             // String's center line was crossed = pluck
             if ((distance < 0 &&
@@ -515,9 +414,9 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                         fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
                     }
                     
-                    for (StringView* sv : gStrings)
+                    for (FingerView::Listener* listener : gStrings)
                     {
-                        sv->updatePointedState(fv);
+                        listener->updatePointedState(fv);
                     }
                     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
                 }
@@ -623,36 +522,6 @@ void ProcessMenu(int value)
     glutPostRedisplay();
 }
 
-void DrawWireFramedBatch(GLTriangleBatch* pBatch)
-{
-    
-    GLfloat vGreen [] = { 0.f, 1.f, 0.f, 1.f };
-    //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), vGreen);
-    glDisable(GL_CULL_FACE);
-    //glDisable(GL_DEPTH_TEST);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), vGreen);
-    pBatch->Draw();
-//    // Draw black outline
-//    glPolygonOffset(-1.0f, -1.0f);
-//    glEnable(GL_LINE_SMOOTH);
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//    glEnable(GL_POLYGON_OFFSET_LINE);
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//    glLineWidth(1.f);
-//    GLfloat vBlue [] = { 0.f, 0.f, 1.f, 1.f };
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), vBlue);
-//    pBatch->Draw();
-    
-    // Restore polygon mode and depht testing
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glDisable(GL_POLYGON_OFFSET_LINE);
-    glLineWidth(1.0f);
-    glDisable(GL_BLEND);
-    glDisable(GL_LINE_SMOOTH);
-}
-
-
 ///////////////////////////////////////////////////
 // Called to draw scene
 void RenderScene(void)
@@ -695,7 +564,7 @@ void RenderScene(void)
     
 //    Environment::instance().modelViewMatrix.PushMatrix();
 //    M3DMatrix44f mCamera;
-//    cameraFrame.GetCameraMatrix(mCamera);
+//    Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
 //    Environment::instance().modelViewMatrix.MultMatrix(mCamera);
 
 
@@ -735,7 +604,7 @@ void layoutStrings()
 // context.
 void SetupRC()
 {
-    //cameraFrame.MoveForward(-15.0f);
+    //Environment::instance().cameraFrame.MoveForward(-15.0f);
     
     for (int i = 0; i < 50; ++i)
     {
@@ -799,9 +668,9 @@ void ChangeSize(int w, int h)
 //    projectionMatrix.LoadMatrix(viewFrustum.GetProjectionMatrix());
 //    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, projectionMatrix);
 
-    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, projectionMatrix);
-	viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
-	projectionMatrix.LoadMatrix(viewFrustum.GetProjectionMatrix());
+    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
+	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
 //	Environment::instance().modelViewMatrix.LoadIdentity();
 }
 
@@ -809,10 +678,10 @@ void SpecialKeys(int key, int x, int y)
 {
     if(key == GLUT_KEY_UP)
 		//objectFrame.RotateWorld(m3dDegToRad(-5.0f), 1.0f, 0.0f, 0.0f);
-        cameraFrame.TranslateWorld(0, 0, .1);
+        Environment::instance().cameraFrame.TranslateWorld(0, 0, .1);
 	if(key == GLUT_KEY_DOWN)
 		//objectFrame.RotateWorld(m3dDegToRad(5.0f), 1.0f, 0.0f, 0.0f);
-        cameraFrame.TranslateWorld(0, 0, -.1);
+        Environment::instance().cameraFrame.TranslateWorld(0, 0, -.1);
 	
 //	if(key == GLUT_KEY_LEFT)
 //		objectFrame.RotateWorld(m3dDegToRad(-5.0f), 0.0f, 1.0f, 0.0f);

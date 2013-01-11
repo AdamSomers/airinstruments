@@ -18,8 +18,12 @@ public:
     }
     
     static GLMatrixStack modelViewMatrix;
+    static GLMatrixStack projectionMatrix;
     static GLShaderManager shaderManager;
     static GLGeometryTransform transformPipeline;
+    static GLFrustum viewFrustum;
+    static GLFrame	cameraFrame;
+
     static int screenW;
     static int screenH;
 private:
