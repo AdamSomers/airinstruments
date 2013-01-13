@@ -12,20 +12,18 @@
 #endif
 
 #include <vector>
-#include <map>
-#include <mutex>
 #include <cmath>
-
-#include "MotionServer.h"
 
 #include "HUD.h"
 #include "HarpHUD.h"
 #include "Environment.h"
+#include "GfxTools.h"
 
 #include "AudioServer.h"
 #include "Harp.h"
+
+#include "MotionServer.h"
 #include "FingerView.h"
-#include "GfxTools.h"
 #include "StringView.h"
 
 #define SCREEN_X        800
@@ -35,7 +33,6 @@
 #define NUM_STRINGS 24
 
 std::vector<StringView*> gStrings;
-
 std::vector<HUDView*> gViews;
 Toolbar* gToolbar = NULL;
 
@@ -61,25 +58,25 @@ void UnProject(GLint x, GLint y, GLint z, GLdouble* pos3D_x, GLdouble* pos3D_y, 
 void Mouse(int button, int state, int x, int y)
 {
     GLdouble pos3D_x, pos3D_y, pos3D_z;
-    UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
+    //UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
     for (HUDView* v : gViews)
-        v->mouse(button, state, pos3D_x, pos3D_y);
+        v->mouse(button, state, x, y);
 }
 
 void Motion(int x, int y)
 {
     GLdouble pos3D_x, pos3D_y, pos3D_z;
-    UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
+    //UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
     for (HUDView* v : gViews)
-        v->motion(pos3D_x, pos3D_y);
+        v->motion(x, y);
 }
 
 void PassiveMotion(int x, int y)
 {
     GLdouble pos3D_x, pos3D_y, pos3D_z;
-    UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
+    //UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
     for (HUDView* v : gViews)
-        v->passiveMotion(pos3D_x, pos3D_y);
+        v->passiveMotion(x, y);
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -151,7 +148,7 @@ void RenderScene(void)
                  origin);
         //printf("win %f %f\n", win[0], win[1]);
         for (HUDView* v : gViews)
-            v->passiveMotion(win[0], win[1]);
+            ;//v->passiveMotion(win[0], win[1]);
     }
     
     glDisable(GL_DEPTH_TEST);
@@ -161,9 +158,15 @@ void RenderScene(void)
 //    Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
 //    Environment::instance().modelViewMatrix.MultMatrix(mCamera);
 
+	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
 
     for (HUDView* v : gViews)
         v->draw();
+    
+	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    Environment::instance().modelViewMatrix.LoadIdentity();
     
 //    Environment::instance().modelViewMatrix.PopMatrix();
 
@@ -246,7 +249,8 @@ void ChangeSize(int w, int h)
     Environment::instance().screenW = w;
     Environment::instance().screenH = h;
     
-    gToolbar->setBounds(HUDRect(-1,.8,2,.2));
+    //gToolbar->setBounds(HUDRect(-1,.8,2,.2));
+    gToolbar->setBounds(HUDRect(0,h-50,w,50));
     
     layoutStrings();
     
@@ -258,7 +262,7 @@ void ChangeSize(int w, int h)
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-//	Environment::instance().modelViewMatrix.LoadIdentity();
+	Environment::instance().modelViewMatrix.LoadIdentity();
 }
 
 void SpecialKeys(int key, int x, int y)

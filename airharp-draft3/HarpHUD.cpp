@@ -3,15 +3,20 @@
 
 Toolbar::Toolbar()
 {
-    addChild(&b1);
-    addChild(&b2);
-    addChild(&b3);
-    addChild(&b4);
-    b1.setBounds(HUDRect(.02,.02,.08,.08));
-    b2.setBounds(HUDRect(.104,.02,.1,.08));
-    b3.setBounds(HUDRect(.02,.106,.07,.07));
-    b4.setBounds(HUDRect(.102,.106,.05,.05));
+    for (int i = 0; i < 7; ++i)
+    {
+        HUDButton* b = new HUDButton;
+        buttons.push_back(b);
+        addChild(b);
+    }
 }
+
+Toolbar::~Toolbar()
+{
+    for (HUDButton* b : buttons)
+        delete b;
+}
+
 // HUDView overrides
 void Toolbar::setup()
 {
@@ -27,6 +32,30 @@ void Toolbar::setup()
     batch.Begin(GL_TRIANGLE_STRIP, 4);
     batch.CopyVertexData3f(verts);
     batch.End();
+    
+    layoutControls();
+}
+
+void Toolbar::layoutControls()
+{
+    int numButtons = buttons.size();
+    float buttonWidth = 25;
+    float buttonHeight = 25;
+    float xmin = 50;
+    float xmax = bounds.w - 50;
+    float totalButtonWidth = numButtons * buttonWidth;
+    float emptySpace = (xmax - xmin) - totalButtonWidth;
+    float step = (emptySpace / (numButtons-1)) + buttonWidth;
+    if (step < buttonWidth + 1)
+        step = buttonWidth + 1;
+    float y = bounds.h / 2.f - buttonHeight / 2.f;
+    HUDRect r(xmin, y, buttonWidth, buttonHeight);
+    for (HUDButton* b : buttons)
+    {
+        b->setBounds(r);
+        r.x += step;
+    }
+    
 }
 
 void Toolbar::draw()

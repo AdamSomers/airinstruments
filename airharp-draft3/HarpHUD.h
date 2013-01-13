@@ -8,15 +8,15 @@ class Toolbar : public HUDView
 {
 public:
     Toolbar();
+    ~Toolbar();
     // HUDView overrides
     void setup();
     void draw();
     
+    void layoutControls();
+    
 private:
-    HUDButton b1;
-    HUDButton b2;
-    HUDButton b3;
-    HUDButton b4;
+    std::vector<HUDButton*> buttons;
     //    HUDSlider s1;
     //    HUDSlider s2;
     //    HUDSwitch sw1;

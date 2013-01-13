@@ -70,12 +70,12 @@ void HUDView::boundsChanged()
 
 void HUDView::mouse(int button, int state, float x, float y)
 {
-    y = - y;
+    y = Environment::instance().screenH - y;
     for (HUDView* child : children)
     {
         float localX = x - bounds.x;
         float localY = y - bounds.y;
-        //printf("%d %d %d %d %f %f\n", x, y, localX, localY, child->bounds.x,child->bounds.y);
+        //printf("%f %f %f %f %f %f\n", x, y, localX, localY, child->bounds.x,child->bounds.y);
         if (child->bounds.contains(localX,localY) || child->trackingMouse) {
             child->mouse(button, state, localX, localY);
         }
@@ -84,7 +84,7 @@ void HUDView::mouse(int button, int state, float x, float y)
 
 void HUDView::motion(float x, float y)
 {
-    y = - y;
+    y = Environment::instance().screenH - y;
     for (HUDView* child : children)
     {
         float localX = x - bounds.x;
@@ -96,7 +96,7 @@ void HUDView::motion(float x, float y)
 
 void HUDView::passiveMotion(float x, float y)
 {
-    y = - y;
+    y = Environment::instance().screenH - y;
     for (HUDView* child : children)
     {
         float localX = x - bounds.x;
