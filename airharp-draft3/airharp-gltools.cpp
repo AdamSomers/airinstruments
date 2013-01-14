@@ -170,6 +170,8 @@ void layoutStrings()
 // context.
 void SetupRC()
 {
+    glEnable(GL_MULTISAMPLE);
+
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
 
     gStringWidth = 2.f / NUM_STRINGS;
@@ -265,7 +267,7 @@ int main(int argc, char* argv[])
         Harp::GetInstance()->AddString();
     
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_STENCIL);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowSize(800, 600);
 	glutCreateWindow("AirHarp");
 	
