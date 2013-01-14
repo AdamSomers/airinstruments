@@ -5,6 +5,7 @@
 #include "HUD.h"
 
 class Toolbar : public HUDView
+              , public HUDButton::Listener
 {
 public:
     Toolbar();
@@ -14,6 +15,9 @@ public:
     void draw();
     
     void layoutControls();
+    
+    // HUDButton::Listener override
+    void buttonStateChanged(HUDButton* b);
     
 private:
     std::vector<HUDButton*> buttons;

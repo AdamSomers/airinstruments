@@ -70,17 +70,30 @@ public:
     void draw();
     void setup();
     void mouse(int button, int state, float x, float y);
+    void setState(bool state, bool broadcast = false);
+    bool getState() const { return state; }
+    
+    class Listener
+    {
+    public:
+        virtual void buttonStateChanged(HUDButton* b) = 0;
+    };
+
+    void addListener(Listener* l);
+    void removeListener(Listener* l);
     
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
+    
 private:
+    bool state = false;
+    std::vector<Listener*> listeners;
     GLfloat offColor[4];
     GLfloat onColor[4];
     GLfloat hoverOffColor[4];
     GLfloat hoverOnColor[4];
-    bool state;
     GLBatch batch;
-    int prevNumPointers;
+    int prevNumPointers = 0;
 };
 
 #endif

@@ -6,6 +6,7 @@ Toolbar::Toolbar()
     for (int i = 0; i < 7; ++i)
     {
         HUDButton* b = new HUDButton;
+        b->addListener(this);
         buttons.push_back(b);
         addChild(b);
     }
@@ -42,7 +43,7 @@ void Toolbar::layoutControls()
     float buttonWidth = 25;
     float buttonHeight = 25;
     float xmin = 50;
-    float xmax = bounds.w - 50;
+    float xmax = 400;
     float totalButtonWidth = numButtons * buttonWidth;
     float emptySpace = (xmax - xmin) - totalButtonWidth;
     float step = (emptySpace / (numButtons-1)) + buttonWidth;
@@ -60,10 +61,24 @@ void Toolbar::layoutControls()
 
 void Toolbar::draw()
 {
-    GLfloat vRed [] = { 1.f, 0.f, 0.f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), vRed);
+    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
     glLineWidth(1.f);
     batch.Draw();
     HUDView::draw();
-    
+}
+
+void Toolbar::buttonStateChanged(HUDButton* b)
+{
+    bool state = b->getState();
+    if (state)
+    {
+        for (HUDButton* button : buttons)
+        {
+            if (button != b)
+                button->setState(false, false);
+        }
+    }
+    else
+        b->setState(true, false);
 }

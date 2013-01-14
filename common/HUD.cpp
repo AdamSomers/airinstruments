@@ -149,9 +149,31 @@ void HUDView::updatePointedState(FingerView* fv)
 }
 
 HUDButton::HUDButton()
-: state(false)
-, prevNumPointers(0)
 {
+}
+
+void HUDButton::setState(bool inState, bool broadcast)
+{
+    state = inState;
+    if (broadcast)
+    {
+        for (Listener* l : listeners)
+            l->buttonStateChanged(this);
+    }
+}
+
+void HUDButton::addListener(HUDButton::Listener* l)
+{
+    auto iter = std::find(listeners.begin(), listeners.end(), l);
+    if (iter == listeners.end())
+        listeners.push_back(l);
+}
+
+void HUDButton::removeListener(HUDButton::Listener* l)
+{
+    auto iter = std::find(listeners.begin(), listeners.end(), l);
+    if (iter != listeners.end())
+        listeners.erase(iter);
 }
 
 void HUDButton::draw()
@@ -215,7 +237,7 @@ void HUDButton::mouse(int button, int state, float x, float y)
     {
         if(GLUT_DOWN == state)
         {
-            this->state = !this->state;
+            setState(!state, true);
             glutPostRedisplay();
         }
     }
@@ -224,7 +246,7 @@ void HUDButton::mouse(int button, int state, float x, float y)
 void HUDButton::updatePointedState(FingerView* fv)
 {
     if (prevNumPointers == 0 && pointers.size() > 0)
-        state = !state;
+        setState(!state, true);
 
     prevNumPointers = pointers.size();
 }
