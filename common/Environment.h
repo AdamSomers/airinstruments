@@ -26,6 +26,7 @@ public:
 
     static int screenW;
     static int screenH;
+    static bool ready;
 private:
 };
 

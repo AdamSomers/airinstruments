@@ -1,5 +1,6 @@
 #include "FingerView.h"
 #include "GfxTools.h"
+#include "MotionServer.h"
 
 FingerView::FingerView()
 : inUse(false)
@@ -46,16 +47,54 @@ float FingerView::normalizedZ()
     return finger.tipPosition().z / 250.f;
 }
 
+void FingerView::getScreenPos(M3DVector2f& inVec)
+{
+    GLint viewport[4];
+    viewport[0] = 0;
+    viewport[1] = 0;
+    viewport[2] = Environment::instance().screenW;
+    viewport[3] = Environment::instance().screenH;
+    
+    M3DVector2f win;
+    M3DVector3f origin;
+    objectFrame.GetOrigin(origin);
+    m3dProjectXY(win,
+                 Environment::instance().transformPipeline.GetModelViewMatrix(),
+                 Environment::instance().transformPipeline.GetProjectionMatrix(),
+                 viewport,
+                 origin);
+    //printf("win %f %f\n", win[0], win[1]);
+    inVec[0] = win[0];
+    inVec[1] = Environment::instance().screenH - win[1];
+}
+
 FingerView::Listener::Listener()
 : needsReset(false)
-, pointed(false)
-, lastPointer(NULL)
 {
+    MotionDispatcher::instance().fingerViewListeners.push_back(this);
 }
 
 void FingerView::Listener::reset()
 {
-    pointed = false;
-    lastPointer = NULL;
+    pointers.clear();
     needsReset = false;
+}
+
+void FingerView::Listener::fingerPointing(FingerView* fv)
+{
+    auto iter = std::find(pointers.begin(), pointers.end(), fv);
+    if (iter == pointers.end())
+    {
+        pointers.push_back(fv);
+    }
+    needsReset = false;
+}
+
+void FingerView::Listener::fingerNotPointing(FingerView* fv)
+{
+    auto iter = std::find(pointers.begin(), pointers.end(), fv);
+    if (iter != pointers.end() && (*iter) == fv) {
+        pointers.erase(iter);
+        needsReset = false;
+    }
 }

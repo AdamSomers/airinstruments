@@ -18,6 +18,7 @@ public:
     float normalizedX();
     float normalizedY();
     float normalizedZ();
+    void getScreenPos(M3DVector2f& inVec);
     
     class Listener
     {
@@ -26,9 +27,10 @@ public:
         virtual void updatePointedState(FingerView* fv) = 0;
         void reset();
         bool needsReset;
-        bool pointed;
-        FingerView* lastPointer;
+        std::vector<FingerView*> pointers;
     protected:
+        void fingerPointing(FingerView* fv);
+        void fingerNotPointing(FingerView* fv);
     private:
     };
     

@@ -138,7 +138,7 @@ public:
         stringBatch.Draw();
         
         GLfloat color [] = { 0.6f, 0.6f, .6f, .0f };
-        if (pointed) {
+        if (pointers.size() > 0) {
             color[0] = .7f;
             color[1] = .7f;
             color[2] = 1.f;
@@ -171,16 +171,11 @@ public:
         // Ray intersecting rect = pointing at string
         if (distance < gStringWidth / 2.f)
         {
-            if (lastPointer != inFingerView)
-            {
-                lastPointer = inFingerView;
-                pointed = true;
-            }
-            needsReset = false;
+            fingerPointing(inFingerView);
         }
-        else if (lastPointer == inFingerView)
+        else 
         {
-            reset();
+            fingerNotPointing(inFingerView);
         }
         
         // When finger is on string plane, we can strum

@@ -9,3 +9,5 @@ GLFrame	Environment::cameraFrame;
 
 int Environment::screenW = 0;
 int Environment::screenH = 0;
+
+bool Environment::ready = false;

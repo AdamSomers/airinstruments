@@ -107,7 +107,6 @@ void HUDView::passiveMotion(float x, float y)
             if (!child->hover) {
                 child->hover = true;
                 printf("hover\n");
-                glutPostRedisplay();
             }
             child->passiveMotion(localX, localY);
         }
@@ -115,7 +114,6 @@ void HUDView::passiveMotion(float x, float y)
             if (child->hover) {
                 child->hover = false;
                 printf("un-hover\n");
-                glutPostRedisplay();
             }
         }
     }
@@ -127,8 +125,32 @@ void HUDView::setBounds(const HUDRect& b)
     boundsChanged();
 }
 
+void HUDView::updatePointedState(FingerView* fv)
+{
+    M3DVector2f screenPos;
+    fv->getScreenPos(screenPos);
+    float x = screenPos[0];
+    float y = screenPos[1];
+    y = Environment::instance().screenH - y;
+    for (HUDView* child : children)
+    {
+        float localX = x - bounds.x;
+        float localY = y - bounds.y;
+        //printf("%f %f %f %f\n",x, y, localX,localY);
+        if (child->bounds.contains(localX,localY))
+        {
+            child->fingerPointing(fv);
+        }
+        else
+        {
+            child->fingerNotPointing(fv);
+        }
+    }
+}
+
 HUDButton::HUDButton()
 : state(false)
+, prevNumPointers(0)
 {
 }
 
@@ -137,14 +159,14 @@ void HUDButton::draw()
     GLfloat* color;
     if (state)
     {
-        if (hover)
+        if (hover || pointers.size() > 0)
             color = hoverOnColor;
         else
             color = onColor;
     }
     else
     {
-        if (hover)
+        if (hover || pointers.size() > 0)
             color = hoverOffColor;
         else
             color = offColor;
@@ -199,12 +221,10 @@ void HUDButton::mouse(int button, int state, float x, float y)
     }
 }
 
-void HUDButton::motion(float x, float y)
+void HUDButton::updatePointedState(FingerView* fv)
 {
-    
-}
+    if (prevNumPointers == 0 && pointers.size() > 0)
+        state = !state;
 
-void HUDButton::passiveMotion(float x, float y)
-{
-    
+    prevNumPointers = pointers.size();
 }

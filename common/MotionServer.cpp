@@ -38,7 +38,10 @@ void MotionDispatcher::onDisconnect(const Leap::Controller& controller)
 }
 
 void MotionDispatcher::onFrame(const Leap::Controller& controller)
-{    
+{
+    if (!Environment::instance().ready)
+        return;
+    
     for (auto i : fingerViews)
     {
         i.second->invalid = true;
@@ -110,7 +113,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                     
                     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
                     float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-                    float scaledY = (y-.5)*2;
+                    float scaledY = (y-.5)*4;
                     if (z < 0) z = 0;
                     float scaledZ = z*5-12;
                     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
@@ -119,7 +122,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                         fv->prevFrame.SetForwardVector(dirX,dirY,dirZ);
                         fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
                     }
-                    
+
                     for (FingerView::Listener* listener : fingerViewListeners)
                     {
                         listener->updatePointedState(fv);

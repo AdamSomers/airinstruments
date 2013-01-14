@@ -119,38 +119,7 @@ void RenderScene(void)
 {
     // Clear the window
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
 
-    double dviewport[4];
-    glGetDoublev(GL_VIEWPORT, dviewport);
-    GLint viewport[4];
-    viewport[0] = (GLint) dviewport[0];
-    viewport[1] = (GLint) dviewport[1];
-    viewport[2] = (GLint) dviewport[2];
-    viewport[3] = (GLint) dviewport[3];
-    FingerView* fv = NULL;
-    for (auto iter : MotionDispatcher::instance().fingerViews)
-    {
-        fv = iter.second;
-        if (fv->inUse)
-            break;
-    }
-    
-    if (fv)
-    {
-        M3DVector2f win;
-        M3DVector3f origin;
-        fv->objectFrame.GetOrigin(origin);
-        m3dProjectXY(win,
-                 Environment::instance().transformPipeline.GetModelViewMatrix(),
-                 Environment::instance().transformPipeline.GetProjectionMatrix(),
-                 viewport,
-                 origin);
-        //printf("win %f %f\n", win[0], win[1]);
-        for (HUDView* v : gViews)
-            ;//v->passiveMotion(win[0], win[1]);
-    }
-    
     glDisable(GL_DEPTH_TEST);
     
 //    Environment::instance().modelViewMatrix.PushMatrix();
@@ -213,7 +182,6 @@ void SetupRC()
         sv->setup();
         sv->objectFrame.TranslateWorld(pos, 0, -12);
         sv->stringNum = i;
-        MotionDispatcher::instance().fingerViewListeners.push_back(sv);
         gStrings.push_back(sv);
         pos += step;
     }
@@ -253,16 +221,13 @@ void ChangeSize(int w, int h)
     gToolbar->setBounds(HUDRect(0,h-50,w,50));
     
     layoutStrings();
-    
-    // Establish clipping volume (left, right, bottom, top, near, far)
-//    viewFrustum.SetOrthographic(0, w, 0.0f, h, 800.0f, -800.0f);
-//    projectionMatrix.LoadMatrix(viewFrustum.GetProjectionMatrix());
-//    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, projectionMatrix);
 
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
 	Environment::instance().modelViewMatrix.LoadIdentity();
+    
+    Environment::instance().ready = true;
 }
 
 void SpecialKeys(int key, int x, int y)

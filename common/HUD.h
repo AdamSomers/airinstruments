@@ -18,6 +18,7 @@
 #include <vector>
 
 #include "Environment.h"
+#include "FingerView.h"
 
 struct HUDRect {
     HUDRect() : x(0.f), y(0.f), w(0.f), h(0.f) {}
@@ -32,7 +33,7 @@ struct HUDRect {
     GLfloat x, y, w , h;
 };
 
-class HUDView
+class HUDView : public FingerView::Listener
 {
 public:
     HUDView();
@@ -44,10 +45,12 @@ public:
     virtual void setup();
     virtual void boundsChanged();
     virtual void mouse(int button, int state, float x, float y);
-    void motion(float x, float y);
-    void passiveMotion(float x, float y);
-    void setBounds(const HUDRect& b);
+    virtual void motion(float x, float y);
+    virtual void passiveMotion(float x, float y);
+    virtual void setBounds(const HUDRect& b);
     
+    // FingerView::Listener override
+    virtual void updatePointedState(FingerView* fv);
 protected:
     bool trackingMouse;
     HUDRect bounds;
@@ -57,6 +60,7 @@ private:
     std::vector<HUDView*> children;
     HUDView* parent;
     GLBatch defaultBatch;
+    std::vector<FingerView*> fingers;
 };
 
 class HUDButton : public HUDView
@@ -66,9 +70,9 @@ public:
     void draw();
     void setup();
     void mouse(int button, int state, float x, float y);
-    void motion(float x, float y);
-    void passiveMotion(float x, float y);
     
+    // FingerView::Listener override
+    virtual void updatePointedState(FingerView* fv);
 private:
     GLfloat offColor[4];
     GLfloat onColor[4];
@@ -76,6 +80,7 @@ private:
     GLfloat hoverOnColor[4];
     bool state;
     GLBatch batch;
+    int prevNumPointers;
 };
 
 #endif
