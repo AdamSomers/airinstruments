@@ -1,11 +1,11 @@
 #include "HarpHUD.h"
-
+#include "Harp.h"
 
 Toolbar::Toolbar()
 {
     for (int i = 0; i < 7; ++i)
     {
-        HUDButton* b = new HUDButton;
+        HUDButton* b = new HUDButton(i);
         b->addListener(this);
         buttons.push_back(b);
         addChild(b);
@@ -81,4 +81,6 @@ void Toolbar::buttonStateChanged(HUDButton* b)
     }
     else
         b->setState(true, false);
+    
+    Harp::GetInstance()->SetScale(b->getId());
 }

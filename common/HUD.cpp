@@ -148,7 +148,8 @@ void HUDView::updatePointedState(FingerView* fv)
     }
 }
 
-HUDButton::HUDButton()
+HUDButton::HUDButton(int id)
+: buttonId(id)
 {
 }
 

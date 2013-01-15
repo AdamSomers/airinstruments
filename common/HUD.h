@@ -66,12 +66,13 @@ private:
 class HUDButton : public HUDView
 {
 public:
-    HUDButton();
+    HUDButton(int id);
     void draw();
     void setup();
     void mouse(int button, int state, float x, float y);
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
+    int getId() const { return buttonId; }
     
     class Listener
     {
@@ -94,6 +95,7 @@ private:
     GLfloat hoverOnColor[4];
     GLBatch batch;
     int prevNumPointers = 0;
+    int buttonId;
 };
 
 #endif

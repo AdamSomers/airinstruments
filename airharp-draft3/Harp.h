@@ -36,6 +36,7 @@ public:
     static Harp* GetInstance();
     std::vector<SampleAccumulator*>& GetBuffers() { return accumulators; }
     std::vector<Karplus*>& GetStrings() { return strings; }
+    void SetScale(int scaleIndex);
     
     static const int* gScale;
     static int gScaleIntervals;

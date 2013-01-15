@@ -128,6 +128,31 @@ void Harp::ExciteString(int num, int note, int velocity, float* buff, int buffer
     strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
 }
 
+void Harp::SetScale(int scaleIndex)
+{
+    switch (scaleIndex) {
+        case 0:
+            gScale = gPentatonicMajor;
+            gScaleIntervals = gPentatonicMajorIntervals;
+            break;
+        case 1:
+            gScale = gPentatonicMinor;
+            gScaleIntervals = gPentatonicMinorIntervals;
+            break;
+        case 2:
+            gScale = gDiatonic;
+            gScaleIntervals = gDiatonicIntervals;
+            break;
+        case 3:
+            gScale = gWholeTone;
+            gScaleIntervals = gWholeToneIntervals;
+            break;
+            
+        default:
+            break;
+    }
+}
+
 Harp* Harp::GetInstance()
 {
     if (!sInstance)
