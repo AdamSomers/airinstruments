@@ -12,6 +12,7 @@
 
 #define NUM_SAMPLES 128
 static float gStringWidth = 0.06;
+static float gStringHeight = 2.f;
 static float gStringLineWidth = 0.01;
 
 class StringView : public FingerView::Listener
@@ -26,10 +27,10 @@ public:
     void setup()
     {
         M3DVector3f verts[4] = {
-            0.0f, -.8f, 0.0f,
-            gStringWidth, -.8f, 0.0f,
-            0.f, .8, 0.0f,
-            gStringWidth, .8, 0.0f
+            0.0f, -gStringHeight / 2.f, 0.0f,
+            gStringWidth, -gStringHeight / 2.f, 0.0f,
+            0.f, gStringHeight / 2.f, 0.0f,
+            gStringWidth, gStringHeight / 2.f, 0.0f
         };
         
         M3DVector3f normals[4] = {
@@ -48,10 +49,10 @@ public:
         
         sampleVerts = new M3DVector3f[numSampleVerts];
         M3DVector3f stringNormals[numSampleVerts];
-        float yMin = -0.8;
-        float yMax = 0.8;
+        float yMin = -gStringHeight / 2.f;
+        float yMax = gStringHeight / 2.f;
         float step = (yMax - yMin) / ((float)numSampleVerts / 2.f);
-        float y = -.8f;
+        float y = yMin;
         float x = gStringWidth/2.f - w/2;
         float z = 0.f;
         for (int i = 0; i < numSampleVerts; ++i)
@@ -113,10 +114,10 @@ public:
     void updateStringBg()
     {
         M3DVector3f verts[4] = {
-            0.0f, -.8f, 0.0f,
-            gStringWidth, -.8f, 0.0f,
-            0.f, .8, 0.0f,
-            gStringWidth, .8, 0.0f
+            0.0f, -gStringHeight / 2.f, 0.0f,
+            gStringWidth, -gStringHeight / 2.f, 0.0f,
+            0.f, gStringHeight / 2.f, 0.0f,
+            gStringWidth, gStringHeight / 2.f, 0.0f
         };
         
         bgBatch.CopyVertexData3f(verts);

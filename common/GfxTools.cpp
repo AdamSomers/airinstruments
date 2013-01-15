@@ -5,10 +5,7 @@ namespace GfxTools
 {
     void drawBatch(GLTriangleBatch* pBatch, bool drawWireFrame)
     {
-        
-        GLfloat vGreen [] = { 0.f, 1.f, 0.f, 1.f };
         glDisable(GL_CULL_FACE);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), vGreen);
         pBatch->Draw();
         
         if (drawWireFrame)

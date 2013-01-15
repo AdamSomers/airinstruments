@@ -119,35 +119,40 @@ void RenderScene(void)
 {
     // Clear the window
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glDisable(GL_DEPTH_TEST);
     
 //    Environment::instance().modelViewMatrix.PushMatrix();
 //    M3DMatrix44f mCamera;
 //    Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
 //    Environment::instance().modelViewMatrix.MultMatrix(mCamera);
+//    Environment::instance().modelViewMatrix.PopMatrix();
 
-	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-
-    for (HUDView* v : gViews)
-        v->draw();
-    
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
-    
-//    Environment::instance().modelViewMatrix.PopMatrix();
 
     glEnable(GL_DEPTH_TEST);
-
-    for (auto iter : MotionDispatcher::instance().fingerViews)
-        if (iter.second->inUse)
-            iter.second->draw();
     
     for (StringView* sv : gStrings)
         sv->draw();
 
+	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    
+    glDisable(GL_DEPTH_TEST);
+    
+    for (HUDView* v : gViews)
+        v->draw();
+    
+    glEnable(GL_DEPTH_TEST);
+    
+    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    Environment::instance().modelViewMatrix.LoadIdentity();
+    
+    for (auto iter : MotionDispatcher::instance().fingerViews)
+        if (iter.second->inUse)
+            iter.second->draw();
+    
     // Swap buffers
     glutSwapBuffers();
 }

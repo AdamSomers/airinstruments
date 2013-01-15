@@ -24,8 +24,8 @@ void FingerView::draw()
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
-    GLfloat vBlack [] = { 0.f, 0.f, 0.f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), vBlack);
+    GLfloat color [] = { 0.f, 1.f, 0.f, 1.f };
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
     GfxTools::drawBatch(&cylinderBatch);
     GfxTools::drawBatch(&coneBatch);
     
