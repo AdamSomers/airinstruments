@@ -35,6 +35,7 @@
 std::vector<StringView*> gStrings;
 std::vector<HUDView*> gViews;
 Toolbar* gToolbar = NULL;
+StatusBar* gStatusBar = NULL;
 
 void UnProject(GLint x, GLint y, GLint z, GLdouble* pos3D_x, GLdouble* pos3D_y, GLdouble* pos3D_z)
 {
@@ -199,9 +200,12 @@ void SetupRC()
     Environment::instance().shaderManager.InitializeStockShaders();
     
     Toolbar* tb = new Toolbar;
-//    tb->setBounds(HUDRect(0,500,800,100));
     gViews.push_back(tb);
     gToolbar = tb;
+    
+    StatusBar* sb = new StatusBar;
+    gViews.push_back(sb);
+    gStatusBar = sb;
     
 //    for (HUDView* v : gViews)
 //        v->setup();
@@ -226,6 +230,7 @@ void ChangeSize(int w, int h)
     
     //gToolbar->setBounds(HUDRect(-1,.8,2,.2));
     gToolbar->setBounds(HUDRect(0,h-50,w,50));
+    gStatusBar->setBounds(HUDRect(0,0,w,20));
     
     layoutStrings();
 

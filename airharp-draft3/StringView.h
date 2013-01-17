@@ -133,9 +133,15 @@ public:
         objectFrame.GetMatrix(mObjectFrame);
         Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
         
-        GLfloat white [] = { 1, 1, 1, 1 };
+        GLfloat stringColor [] = { 1, 1, 1, 1 };
+        if (stringNum % Harp::gScaleIntervals == 0) {
+            stringColor[0] = 1.f;
+            stringColor[1] = 1.f;
+            stringColor[2] = .5f;
+            stringColor[3] = 1.f;
+        }
         //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), white);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
         GLfloat color [] = { 0.6f, 0.6f, .6f, .0f };
@@ -202,7 +208,14 @@ public:
         }
     }
     
-    void pluck(float position)
+    void tap(FingerView* inFingerView, float velocity)
+    {
+        auto iter = std::find(pointers.begin(), pointers.end(), inFingerView);
+        if (iter != pointers.end())
+            pluck(0.5f, velocity);
+    }
+    
+    void pluck(float position, float velocity = 1.f)
     {
         int idx = stringNum % Harp::gScaleIntervals;
         int mult = (stringNum / (float)Harp::gScaleIntervals);
@@ -222,7 +235,7 @@ public:
             //if (fingerPrevX > t)
             //    buffer[x] = -buffer[x];
         }
-        Harp::GetInstance()->ExciteString(stringNum, note, 127, buffer, bufferSize);
+        Harp::GetInstance()->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
     }
     
     GLFrame objectFrame;

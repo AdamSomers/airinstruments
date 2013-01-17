@@ -128,6 +128,22 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                         listener->updatePointedState(fv);
                     }
                     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
+                    
+                    Leap::Finger prevFinger = controller.frame(1).finger(f.id());
+                    if (prevFinger.isValid())
+                    {
+                        float prevVel = prevFinger.tipVelocity().magnitude();
+                        float vel = f.tipVelocity().magnitude() / 1000.f;
+                        float diff = fabsf(vel - prevVel);
+                        float posDiff = prevFinger.tipPosition().distanceTo(f.tipPosition());
+                        if (prevFinger.tipPosition().y > 250.f && f.tipPosition().y < 250.f)
+                        {
+                            for (FingerView::Listener* listener : fingerViewListeners)
+                            {
+                                listener->tap(fv, fminf(vel, 1.f));
+                            }
+                        }
+                    }
                 }
             }
         }
