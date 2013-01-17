@@ -66,7 +66,7 @@ private:
 class HUDButton : public HUDView
 {
 public:
-    HUDButton(int id);
+    HUDButton(int id = -1);
     void draw();
     void setup();
     void mouse(int button, int state, float x, float y);
