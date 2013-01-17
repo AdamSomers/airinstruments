@@ -99,7 +99,7 @@
       <FILE id="KOoxeY" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JeEtSL" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="lNNe7M" name="Main.cpp" compile="0" resource="0" file="Source/Main.cpp"/>
+      <FILE id="lNNe7M" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

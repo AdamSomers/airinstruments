@@ -270,7 +270,7 @@ static void idle(void)
     usleep(30000);
 }
 
-int main(int argc, char* argv[])
+int mainn(int argc, char* argv[])
 {
     RtAudioDriver driver(BUFFER_SIZE);
     for (int i = 0; i < NUM_STRINGS-1; ++i)
@@ -293,12 +293,13 @@ int main(int argc, char* argv[])
     glutMotionFunc(Motion);
     glutPassiveMotionFunc(PassiveMotion);
     glutSpecialFunc(SpecialKeys);
-    
+#if 0
     GLenum err = glewInit();
     if (GLEW_OK != err) {
         fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
         return 1;
     }
+#endif
     
 	SetupRC();
     

@@ -51,7 +51,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 #include <OpenGLES/ES2/glext.h>
 #define OPENGL_ES
 #else
-#include <GL/glew.h>
+//#include <GL/glew.h>
 #include <OpenGL/gl.h>		// Apple OpenGL haders (version depends on OS X SDK version)
 #endif
 #endif
