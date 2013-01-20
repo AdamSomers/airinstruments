@@ -11,8 +11,6 @@
 #include "GfxTools.h"
 
 #define NUM_SAMPLES 128
-static float gStringWidth = 0.06;
-static float gStringHeight = 2.f;
 static float gStringLineWidth = 0.01;
 
 class StringView : public FingerView::Listener
@@ -27,10 +25,10 @@ public:
     void setup()
     {
         M3DVector3f verts[4] = {
-            0.0f, -gStringHeight / 2.f, 0.0f,
-            gStringWidth, -gStringHeight / 2.f, 0.0f,
-            0.f, gStringHeight / 2.f, 0.0f,
-            gStringWidth, gStringHeight / 2.f, 0.0f
+            0.0f, -stringHeight / 2.f, 0.0f,
+            stringWidth, -stringHeight / 2.f, 0.0f,
+            0.f, stringHeight / 2.f, 0.0f,
+            stringWidth, stringHeight / 2.f, 0.0f
         };
         
         M3DVector3f normals[4] = {
@@ -49,19 +47,19 @@ public:
         
         sampleVerts = new M3DVector3f[numSampleVerts];
         M3DVector3f stringNormals[numSampleVerts];
-        float yMin = -gStringHeight / 2.f;
-        float yMax = gStringHeight / 2.f;
+        float yMin = -stringHeight / 2.f;
+        float yMax = stringHeight / 2.f;
         float step = (yMax - yMin) / ((float)numSampleVerts / 2.f);
         float y = yMin;
-        float x = gStringWidth/2.f - w/2;
+        float x = stringWidth/2.f - w/2;
         float z = 0.f;
         for (int i = 0; i < numSampleVerts; ++i)
         {
             if (i % 2 == 0) {
-                x = gStringWidth/2.f + w/2;
+                x = stringWidth/2.f + w/2;
             }
             else
-                x = gStringWidth/2.f - w/2;
+                x = stringWidth/2.f - w/2;
             
             sampleVerts[i][0] = x;
             sampleVerts[i][1] = y;
@@ -101,8 +99,8 @@ public:
                 samp = peakBuffer.at(i);
             float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
             val *= scale;
-            float x1 = gStringWidth/2.f + w/2 + fabsf(val);
-            float x2 = gStringWidth/2.f - w/2 - fabsf(val);
+            float x1 = stringWidth/2.f + w/2 + fabsf(val);
+            float x2 = stringWidth/2.f - w/2 - fabsf(val);
             sampleVerts[i * 2][0] = x1;
             sampleVerts[i * 2 + 1][0] = x2;
         }
@@ -114,10 +112,10 @@ public:
     void updateStringBg()
     {
         M3DVector3f verts[4] = {
-            0.0f, -gStringHeight / 2.f, 0.0f,
-            gStringWidth, -gStringHeight / 2.f, 0.0f,
-            0.f, gStringHeight / 2.f, 0.0f,
-            gStringWidth, gStringHeight / 2.f, 0.0f
+            0.0f, -stringHeight / 2.f, 0.0f,
+            stringWidth, -stringHeight / 2.f, 0.0f,
+            0.f, stringHeight / 2.f, 0.0f,
+            stringWidth, stringHeight / 2.f, 0.0f
         };
         
         bgBatch.CopyVertexData3f(verts);
@@ -172,11 +170,11 @@ public:
         M3DVector3f collisionPoint;
         M3DVector3f pNormal = { 0.f, 0.f, -1.f };
         m3dNormalizeVector3(ray);
-        center[0] -= gStringWidth / 2.f;
+        center[0] -= stringWidth / 2.f;
         GfxTools::collide(point, ray, center, pNormal, collisionPoint);
         float distance = fabsf(collisionPoint[0] - center[0]);
         // Ray intersecting rect = pointing at string
-        if (distance < gStringWidth / 2.f)
+        if (distance < stringWidth / 2.f)
         {
             fingerPointing(inFingerView);
         }
@@ -240,7 +238,8 @@ public:
     
     GLFrame objectFrame;
     int stringNum;
-
+    float stringWidth = 0.06;
+    float stringHeight = 2.f;
     
 private:
     GLBatch     bgBatch;

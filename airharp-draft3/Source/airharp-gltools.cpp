@@ -160,12 +160,14 @@ void RenderScene(void)
 
 void layoutStrings()
 {
+    ;
     float aspectRatio = Environment::screenW / (float)Environment::screenH;
-    gStringWidth = (2.f * aspectRatio) / (float)NUM_STRINGS;
-    float pos = -aspectRatio + gStringWidth;
-    float step = gStringWidth;
+    float stringWidth = (2.f * aspectRatio) / (float)NUM_STRINGS;
+    float pos = -aspectRatio + stringWidth;
+    float step = stringWidth;
     for (StringView* sv : gStrings)
     {
+        sv->stringWidth = stringWidth;
         sv->objectFrame.SetOrigin(pos, 0, -12);
         pos += step;
         sv->updateStringBg();
@@ -180,13 +182,14 @@ void SetupRC()
 
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
 
-    gStringWidth = 2.f / NUM_STRINGS;
-    float step = gStringWidth;
+    float stringWidth = 2.f / NUM_STRINGS;
+    float step = stringWidth;
     float aspectRatio = Environment::screenW / (float)Environment::screenH;
-    float pos = -1 + gStringWidth;
+    float pos = -1 + stringWidth;
     for (int i = 0; i < NUM_STRINGS; ++i)
     {
         StringView* sv = new StringView;
+        sv->stringWidth = stringWidth;
         sv->setup();
         sv->objectFrame.TranslateWorld(pos, 0, -12);
         sv->stringNum = i;

@@ -33,6 +33,7 @@ MainContentComponent::MainContentComponent()
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
     openGLContext.attachTo (*this);
+    //openGLContext.setSwapInterval(2);
     setSize (800, 600);
 }
 
@@ -42,11 +43,11 @@ MainContentComponent::~MainContentComponent()
 
 void MainContentComponent::paint (Graphics& g)
 {
-//    g.fillAll (Colour (0xffeeddff));
-//
-//    g.setFont (Font (16.0f));
-//    g.setColour (Colours::black);
-//    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+    g.fillAll (Colour (0x00000ff));
+
+    g.setFont (Font (16.0f));
+    g.setColour (Colours::black);
+    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
 }
 
 void MainContentComponent::resized()
@@ -83,24 +84,30 @@ void MainContentComponent::resized()
 
 void MainContentComponent::newOpenGLContextCreated()
 {
-    glEnable(GL_MULTISAMPLE);
+    //glEnable(GL_MULTISAMPLE);
+    glEnable(GL_BLEND);
     
+    glEnable(GL_DEPTH_TEST);
+    //glDepthMask(true);
+    //glDepthFunc(GL_LESS);
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    //glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    //glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
-    
-    gStringWidth = 2.f / NUM_STRINGS;
-    float step = gStringWidth;
-    float aspectRatio = Environment::screenW / (float)Environment::screenH;
-    float pos = -1 + gStringWidth;
+
     for (int i = 0; i < NUM_STRINGS; ++i)
     {
         StringView* sv = new StringView;
         sv->setup();
-        sv->objectFrame.TranslateWorld(pos, 0, -12);
         sv->stringNum = i;
         strings.push_back(sv);
-        pos += step;
     }
     
+    layoutStrings();
     
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
@@ -151,7 +158,11 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
-    openGLContext.triggerRepaint();
+    
+    for (StringView* sv : strings)
+        sv->update();
+    
+    //openGLContext.triggerRepaint();
 }
 
 void MainContentComponent::openGLContextClosing()
@@ -162,11 +173,12 @@ void MainContentComponent::openGLContextClosing()
 void MainContentComponent::layoutStrings()
 {
     float aspectRatio = Environment::screenW / (float)Environment::screenH;
-    gStringWidth = (2.f * aspectRatio) / (float)NUM_STRINGS;
-    float pos = -aspectRatio + gStringWidth;
-    float step = gStringWidth;
+    float stringWidth = (2.f * aspectRatio) / (float)NUM_STRINGS;
+    float pos = -aspectRatio + stringWidth;
+    float step = stringWidth;
     for (StringView* sv : strings)
     {
+        sv->stringWidth = stringWidth;
         sv->objectFrame.SetOrigin(pos, 0, -12);
         pos += step;
         sv->updateStringBg();

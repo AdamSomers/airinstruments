@@ -68,6 +68,8 @@ public:
 
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
+            setUsingNativeTitleBar(true);
+            setResizable(true, false);
         }
 
         void closeButtonPressed()
