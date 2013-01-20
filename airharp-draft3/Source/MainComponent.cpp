@@ -23,7 +23,7 @@
 #define BUFFER_SIZE 512
 #define NUM_STRINGS 24
 
-RtAudioDriver driver(BUFFER_SIZE);
+//RtAudioDriver driver(BUFFER_SIZE);
 
 //==============================================================================
 MainContentComponent::MainContentComponent()

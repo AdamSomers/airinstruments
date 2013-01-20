@@ -13,6 +13,7 @@
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
+                          , public AudioIODeviceCallback
 {
 public:
     //==============================================================================
@@ -28,6 +29,18 @@ public:
         // This method is where you should put your application's initialisation code..
 
         mainWindow = new MainWindow();
+        audioDeviceManager.initialise (2, 2, 0, true, String::empty, 0);
+        audioDeviceManager.addAudioCallback(this);
+        Reverb::Parameters params;
+        params.roomSize = .8f;
+        params.wetLevel = .2;
+        params.dryLevel = .5f;
+        params.damping = 1.f;
+        params.width = 1.f;
+        params.freezeMode = 0.f;
+        reverb.setParameters(params);
+        //filterL.makeLowPass(44100.f, 5000.f);
+        //filterR.makeLowPass(44100.f, 5000.f);
     }
 
     void shutdown()
@@ -35,6 +48,7 @@ public:
         // Add your application's shutdown code here..
 
         mainWindow = nullptr; // (deletes our window)
+        audioDeviceManager.removeAudioCallback(this);
     }
 
     //==============================================================================
@@ -45,6 +59,28 @@ public:
         quit();
     }
 
+    void audioDeviceAboutToStart (AudioIODevice* device)
+    {
+        
+    }
+    void audioDeviceStopped()
+    {
+        
+    }
+    void audioDeviceIOCallback (const float** inputChannelData, int numInputChannels,
+                                float** outputChannelData, int numOutputChannels, int numSamples)
+    {
+        AudioServer::GetInstance()->SetInputChannels(numInputChannels);
+        AudioServer::GetInstance()->SetOutputChannels(numOutputChannels);
+        AudioServer::GetInstance()->AudioServerCallback(inputChannelData,
+														outputChannelData,
+														numSamples);
+        filterL.processSamples(outputChannelData[0], numSamples);
+        filterR.processSamples(outputChannelData[1], numSamples);
+        reverb.processStereo(outputChannelData[0], outputChannelData[1], numSamples);
+        
+    }
+    
     void anotherInstanceStarted (const String& commandLine)
     {
         // When another instance of the app is launched while this one is running,
@@ -93,6 +129,10 @@ public:
 
 private:
     ScopedPointer<MainWindow> mainWindow;
+    AudioDeviceManager audioDeviceManager;
+    IIRFilter filterL;
+    IIRFilter filterR;
+    Reverb reverb;
 };
 
 //==============================================================================
