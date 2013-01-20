@@ -112,7 +112,7 @@ void MainContentComponent::newOpenGLContextCreated()
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
 
-    ::Toolbar* tb = new ::Toolbar;
+    HarpToolbar* tb = new HarpToolbar;
     views.push_back(tb);
     toolbar = tb;
     
@@ -183,4 +183,22 @@ void MainContentComponent::layoutStrings()
         pos += step;
         sv->updateStringBg();
     }
+}
+
+void MainContentComponent::mouseMove(const MouseEvent& e)
+{
+    for (HUDView* v : views)
+        v->passiveMotion(e.getPosition().x, e.getPosition().y);
+}
+
+void MainContentComponent::mouseDown(const MouseEvent& e)
+{
+    for (HUDView* v : views)
+        v->mouseDown(e.getPosition().x, e.getPosition().y);
+}
+
+void MainContentComponent::mouseDrag(const MouseEvent& e)
+{
+    for (HUDView* v : views)
+        v->motion(e.getPosition().x, e.getPosition().y);
 }

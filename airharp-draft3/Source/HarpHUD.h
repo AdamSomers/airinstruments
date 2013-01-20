@@ -5,12 +5,12 @@
 #include "HUD.h"
 #include "Leap.h"
 
-class Toolbar : public HUDView
-              , public HUDButton::Listener
+class HarpToolbar : public HUDView
+                  , public HUDButton::Listener
 {
 public:
-    Toolbar();
-    ~Toolbar();
+    HarpToolbar();
+    ~HarpToolbar();
     // HUDView overrides
     void setup();
     void draw();

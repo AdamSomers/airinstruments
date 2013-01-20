@@ -2,7 +2,7 @@
 #include "Harp.h"
 #include "MotionServer.h"
 
-Toolbar::Toolbar()
+HarpToolbar::HarpToolbar()
 {
     for (int i = 0; i < 7; ++i)
     {
@@ -13,14 +13,14 @@ Toolbar::Toolbar()
     }
 }
 
-Toolbar::~Toolbar()
+HarpToolbar::~HarpToolbar()
 {
     for (HUDButton* b : buttons)
         delete b;
 }
 
 // HUDView overrides
-void Toolbar::setup()
+void HarpToolbar::setup()
 {
     HUDView::setup();
     
@@ -38,7 +38,7 @@ void Toolbar::setup()
     layoutControls();
 }
 
-void Toolbar::layoutControls()
+void HarpToolbar::layoutControls()
 {
     int numButtons = buttons.size();
     float buttonWidth = 25;
@@ -60,7 +60,7 @@ void Toolbar::layoutControls()
     
 }
 
-void Toolbar::draw()
+void HarpToolbar::draw()
 {
     GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
@@ -69,7 +69,7 @@ void Toolbar::draw()
     HUDView::draw();
 }
 
-void Toolbar::buttonStateChanged(HUDButton* b)
+void HarpToolbar::buttonStateChanged(HUDButton* b)
 {
     bool state = b->getState();
     if (state)

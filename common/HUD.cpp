@@ -68,7 +68,7 @@ void HUDView::boundsChanged()
     setup();
 }
 
-void HUDView::mouse(int button, int state, float x, float y)
+void HUDView::mouseDown(float x, float y)
 {
     y = Environment::instance().screenH - y;
     for (HUDView* child : children)
@@ -77,7 +77,7 @@ void HUDView::mouse(int button, int state, float x, float y)
         float localY = y - bounds.y;
         //printf("%f %f %f %f %f %f\n", x, y, localX, localY, child->bounds.x,child->bounds.y);
         if (child->bounds.contains(localX,localY) || child->trackingMouse) {
-            child->mouse(button, state, localX, localY);
+            child->mouseDown(localX, localY);
         }
     }
 }
@@ -232,16 +232,9 @@ void HUDButton::setup()
     hoverOnColor[3] = 1.f;
 }
 
-void HUDButton::mouse(int button, int state, float x, float y)
+void HUDButton::mouseDown(float x, float y)
 {
-    if (GLUT_LEFT_BUTTON == button)
-    {
-        if(GLUT_DOWN == state)
-        {
-            setState(!state, true);
-            glutPostRedisplay();
-        }
-    }
+    setState(!state, true);
 }
 
 void HUDButton::updatePointedState(FingerView* fv)

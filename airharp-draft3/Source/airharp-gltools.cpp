@@ -34,7 +34,7 @@
 
 std::vector<StringView*> gStrings;
 std::vector<HUDView*> gViews;
-Toolbar* gToolbar = NULL;
+HarpToolbar* gToolbar = NULL;
 StatusBar* gStatusBar = NULL;
 
 void UnProject(GLint x, GLint y, GLint z, GLdouble* pos3D_x, GLdouble* pos3D_y, GLdouble* pos3D_z)
@@ -61,7 +61,7 @@ void Mouse(int button, int state, int x, int y)
     GLdouble pos3D_x, pos3D_y, pos3D_z;
     //UnProject(x, y, 0.01, &pos3D_x, &pos3D_y, &pos3D_z);
     for (HUDView* v : gViews)
-        v->mouse(button, state, x, y);
+        v->mouseDown(x, y);
 }
 
 void Motion(int x, int y)
@@ -202,7 +202,7 @@ void SetupRC()
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
     
-    Toolbar* tb = new Toolbar;
+    HarpToolbar* tb = new HarpToolbar;
     gViews.push_back(tb);
     gToolbar = tb;
     

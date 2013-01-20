@@ -44,11 +44,11 @@ public:
     virtual void update() {}
     virtual void setup();
     virtual void boundsChanged();
-    virtual void mouse(int button, int state, float x, float y);
+    virtual void mouseDown(float x, float y);
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
     virtual void setBounds(const HUDRect& b);
-    
+
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
 protected:
@@ -69,7 +69,7 @@ public:
     HUDButton(int id = -1);
     void draw();
     void setup();
-    void mouse(int button, int state, float x, float y);
+    void mouseDown(float x, float y);
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }

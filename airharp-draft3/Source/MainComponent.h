@@ -32,7 +32,10 @@ public:
     // component overrides
     void paint (Graphics&);
     void resized();
-
+    void mouseMove(const MouseEvent& e);
+    void mouseDown(const MouseEvent& e);
+    void mouseDrag(const MouseEvent& e);
+    
     // OpenGLRenderer overrides
     void newOpenGLContextCreated();
     void renderOpenGL();
@@ -42,7 +45,7 @@ private:
     void layoutStrings();
     
     OpenGLContext openGLContext;
-    ::Toolbar* toolbar = NULL;
+    HarpToolbar* toolbar = NULL;
     StatusBar* statusBar = NULL;
     std::vector<StringView*> strings;
     std::vector<HUDView*> views;
