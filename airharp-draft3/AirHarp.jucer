@@ -4,6 +4,12 @@
               bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
+    <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="jN4KjJ" name="button_small_off.png" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_off.png"/>
+      <FILE id="vULdED" name="button_small_on.png" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_on.png"/>
+    </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>
       <FILE id="S3Vl7E" name="Environment.h" compile="0" resource="0" file="../common/Environment.h"/>

@@ -48,7 +48,7 @@ public:
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
     virtual void setBounds(const HUDRect& b);
-
+    virtual void loadTextures();
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
 protected:
@@ -73,7 +73,7 @@ public:
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }
-    
+    void loadTextures();
     class Listener
     {
     public:
@@ -96,6 +96,9 @@ private:
     GLBatch batch;
     int prevNumPointers = 0;
     int buttonId;
+    GLuint onTextureID;
+    GLuint offTextureID;
+    float fade = 0.f;
 };
 
 #endif

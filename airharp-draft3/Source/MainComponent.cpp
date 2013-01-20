@@ -120,6 +120,9 @@ void MainContentComponent::newOpenGLContextCreated()
     views.push_back(sb);
     statusBar = sb;
     
+    for (HUDView* v : views)
+        v->loadTextures();
+    
     int w = getWidth();
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,h-50,w,50));
@@ -167,7 +170,6 @@ void MainContentComponent::renderOpenGL()
 
 void MainContentComponent::openGLContextClosing()
 {
-    
 }
 
 void MainContentComponent::layoutStrings()

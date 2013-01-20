@@ -62,4 +62,20 @@ namespace GfxTools
         outCollisionPoint[1] = pY;
         outCollisionPoint[2] = pZ;
     }
+    
+    void loadTextureFromJuceImate(const Image& image)
+    {
+        Image::BitmapData bitmapData(image, 0, 0, image.getWidth(), image.getHeight());
+        GLbyte* bits = (GLbyte*)bitmapData.data;
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, 4, image.getWidth(), image.getHeight(), 0,
+                     GL_BGRA, GL_UNSIGNED_BYTE, bits);
+
+    }
 }
