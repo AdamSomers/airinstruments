@@ -41,8 +41,8 @@ void HarpToolbar::setup()
 void HarpToolbar::layoutControls()
 {
     int numButtons = buttons.size();
-    float buttonWidth = 25;
-    float buttonHeight = 25;
+    float buttonWidth = 30;
+    float buttonHeight = 30;
     float xmin = 50;
     float xmax = 400;
     float totalButtonWidth = numButtons * buttonWidth;

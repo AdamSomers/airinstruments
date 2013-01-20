@@ -142,13 +142,14 @@ public:
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
-        GLfloat color [] = { 0.6f, 0.6f, .6f, .0f };
+        GLfloat color [] = { 0.7f, 0.7f, 1.f, fade * 0.3f };
         if (pointers.size() > 0) {
-            color[0] = .7f;
-            color[1] = .7f;
-            color[2] = 1.f;
-            color[3] = .5f;
+            if (fade < 1.f)
+                fade += 0.3f;
         }
+        else if (fade > 0.f)
+            fade -= 0.1f;
+
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -247,6 +248,7 @@ private:
     int numSamples;
     int numSampleVerts;
     M3DVector3f* sampleVerts;
+    float fade = 0.f;
 };
 
 
