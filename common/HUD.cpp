@@ -1,4 +1,5 @@
 #include "HUD.h"
+#include "GfxTools.h"
 
 HUDView::HUDView()
 : parent(NULL)
@@ -68,7 +69,7 @@ void HUDView::boundsChanged()
     setup();
 }
 
-void HUDView::mouse(int button, int state, float x, float y)
+void HUDView::mouseDown(float x, float y)
 {
     y = Environment::instance().screenH - y;
     for (HUDView* child : children)
@@ -77,7 +78,7 @@ void HUDView::mouse(int button, int state, float x, float y)
         float localY = y - bounds.y;
         //printf("%f %f %f %f %f %f\n", x, y, localX, localY, child->bounds.x,child->bounds.y);
         if (child->bounds.contains(localX,localY) || child->trackingMouse) {
-            child->mouse(button, state, localX, localY);
+            child->mouseDown(localX, localY);
         }
     }
 }
@@ -148,6 +149,14 @@ void HUDView::updatePointedState(FingerView* fv)
     }
 }
 
+void HUDView::loadTextures()
+{
+    for (HUDView* child : children)
+    {
+        child->loadTextures();
+    }
+}
+
 HUDButton::HUDButton(int id)
 : buttonId(id)
 {
@@ -194,9 +203,30 @@ void HUDButton::draw()
         else
             color = offColor;
     }
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
+    //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
+    
+    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
+    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
+    
+    int textureID = state ? onTextureID : offTextureID;
+    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
     batch.Draw();
+    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
+    batch.Draw();
+    
+    if (state && fade < 1.f)
+    {
+        fade += 0.3f;
+        if (fade > 1.f) fade = 1.f;
+    }
+    if (!state && fade > 0.f)
+    {
+        fade -= 0.11f;
+        if (fade < 0.f) fade = 0.f;
+    }
 }
 
 void HUDButton::setup()
@@ -209,8 +239,16 @@ void HUDButton::setup()
         bounds.w, bounds.h, 0.f
     };
     
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
+    M3DVector2f texCoords[4] = {
+        0.f, 0.f,
+        0.f, 1.f,
+        1.f, 0.f,
+        1.f, 1.f
+    };
+    
+    batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
     batch.CopyVertexData3f(verts);
+    batch.CopyTexCoordData2f(texCoords, 0);
     //batch.CopyNormalDataf(normals);
     batch.End();
     
@@ -232,16 +270,9 @@ void HUDButton::setup()
     hoverOnColor[3] = 1.f;
 }
 
-void HUDButton::mouse(int button, int state, float x, float y)
+void HUDButton::mouseDown(float x, float y)
 {
-    if (GLUT_LEFT_BUTTON == button)
-    {
-        if(GLUT_DOWN == state)
-        {
-            setState(!state, true);
-            glutPostRedisplay();
-        }
-    }
+    setState(!state, true);
 }
 
 void HUDButton::updatePointedState(FingerView* fv)
@@ -250,4 +281,14 @@ void HUDButton::updatePointedState(FingerView* fv)
         setState(!state, true);
 
     prevNumPointers = pointers.size();
+}
+
+void HUDButton::loadTextures()
+{
+    glGenTextures(1, &onTextureID);
+    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::button_small_on_png, BinaryData::button_small_on_pngSize));
+    glGenTextures(1, &offTextureID);
+    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::button_small_off_png, BinaryData::button_small_off_pngSize));
 }

@@ -49,6 +49,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get the OpenGL version number
+#if 0
 void gltGetOpenGLVersion(GLint &nMajor, GLint &nMinor)
 	{
     #ifndef OPENGL_ES       
@@ -70,10 +71,11 @@ void gltGetOpenGLVersion(GLint &nMajor, GLint &nMinor)
     nMinor = atoi(strstr(szVersionString, ".")+1);
 	#endif
 	}
-
+#endif
 ///////////////////////////////////////////////////////////////////////////////
 // This function determines if the named OpenGL Extension is supported
 // Returns 1 or 0
+#if 0
 int gltIsExtSupported(const char *extension)
 	{
     #ifndef OPENGL_ES       
@@ -114,7 +116,7 @@ int gltIsExtSupported(const char *extension)
     #endif
 	return 0;
 	}
-
+#endif
 /////////////////////////////////////////////////////////////////////////////////
 // No-op on anything other than the Mac, sets the working directory to 
 // the /Resources folder
@@ -1190,7 +1192,7 @@ GLuint gltLoadShaderTripletWithAttributes(const char *szVertexShader,
         glGetShaderInfoLog(hVertexShader, 1024, NULL, infoLog);
         goto failed;
     }
-
+#if 0
     // Geometry shader is optional
     if (szGeometryShader) {
         hGeometryShader = glCreateShader(GL_GEOMETRY_SHADER);
@@ -1203,7 +1205,7 @@ GLuint gltLoadShaderTripletWithAttributes(const char *szVertexShader,
             goto failed;
         }
     }
-
+#endif
     // Fragment shader is optional (transform feedback only)
     if (szFragmentShader) {
         hFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -1472,11 +1474,13 @@ GLuint gltLoadShaderTripletSrc(const char *szVertexSrc,
     hVertexShader = glCreateShader(GL_VERTEX_SHADER);
     gltLoadShaderSrc(szVertexSrc, hVertexShader);
     glCompileShader(hVertexShader);
+#if 0
     if (szGeometrySrc) {
         hGeometryShader = glCreateShader(GL_GEOMETRY_SHADER);
         gltLoadShaderSrc(szGeometrySrc, hFragmentShader);
         glCompileShader(hGeometryShader);
     }
+#endif
     hFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     gltLoadShaderSrc(szFragmentSrc, hFragmentShader);
     glCompileShader(hFragmentShader);
@@ -1726,12 +1730,14 @@ bool gltCheckErrors(GLuint progName)
 			// Make sure the number of samples for each 
 			// attachment is the same 
             fprintf(stderr, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\n");
-			break; 
-		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-			// Make sure the number of layers for each 
-			// attachment is the same 
-            fprintf(stderr, "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS\n");
 			break;
+//#if 0
+//		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+//			// Make sure the number of layers for each 
+//			// attachment is the same 
+//            fprintf(stderr, "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS\n");
+//			break;
+//#endif
 		}
 	}
 

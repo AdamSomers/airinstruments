@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.4.0"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
+              companyName="Handwavy">
+  <MAINGROUP id="qE7qno" name="AirHarp">
+    <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="jN4KjJ" name="button_small_off.png" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_off.png"/>
+      <FILE id="vULdED" name="button_small_on.png" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_on.png"/>
+    </GROUP>
+    <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>
+      <FILE id="S3Vl7E" name="Environment.h" compile="0" resource="0" file="../common/Environment.h"/>
+      <FILE id="pp8MMQ" name="FingerView.cpp" compile="1" resource="0" file="../common/FingerView.cpp"/>
+      <FILE id="syw8ZU" name="FingerView.h" compile="0" resource="0" file="../common/FingerView.h"/>
+      <FILE id="hFBswi" name="GfxTools.cpp" compile="1" resource="0" file="../common/GfxTools.cpp"/>
+      <FILE id="azv16r" name="GfxTools.h" compile="0" resource="0" file="../common/GfxTools.h"/>
+      <FILE id="sHxVRG" name="HUD.cpp" compile="1" resource="0" file="../common/HUD.cpp"/>
+      <FILE id="htXoJe" name="HUD.h" compile="0" resource="0" file="../common/HUD.h"/>
+      <FILE id="Fqy8p2" name="MotionServer.cpp" compile="1" resource="0"
+            file="../common/MotionServer.cpp"/>
+      <FILE id="uvkMVm" name="MotionServer.h" compile="0" resource="0" file="../common/MotionServer.h"/>
+    </GROUP>
+    <GROUP id="{9ED69939-FCC6-9596-4256-AA83B4D8178A}" name="GLTools">
+      <GROUP id="{63BF3604-9EA2-C52D-4873-BAF2092B480D}" name="include">
+        <GROUP id="{48DB3B19-28B7-09BF-C294-826609DD02B3}" name="GL">
+          <FILE id="wjDvgk" name="glew.h" compile="0" resource="0" file="../GLTools/include/GL/glew.h"/>
+          <FILE id="y3FR9j" name="glxew.h" compile="0" resource="0" file="../GLTools/include/GL/glxew.h"/>
+          <FILE id="nuzt6T" name="wglew.h" compile="0" resource="0" file="../GLTools/include/GL/wglew.h"/>
+        </GROUP>
+        <FILE id="r4rdcC" name="GLBatch.h" compile="0" resource="0" file="../GLTools/include/GLBatch.h"/>
+        <FILE id="YSLvaf" name="GLBatchBase.h" compile="0" resource="0" file="../GLTools/include/GLBatchBase.h"/>
+        <FILE id="TCCDDl" name="GLFrame.h" compile="0" resource="0" file="../GLTools/include/GLFrame.h"/>
+        <FILE id="zQNLIz" name="GLFrustum.h" compile="0" resource="0" file="../GLTools/include/GLFrustum.h"/>
+        <FILE id="EL5LDl" name="GLGeometryTransform.h" compile="0" resource="0"
+              file="../GLTools/include/GLGeometryTransform.h"/>
+        <FILE id="JG7SPJ" name="GLMatrixStack.h" compile="0" resource="0" file="../GLTools/include/GLMatrixStack.h"/>
+        <FILE id="mHWMai" name="GLShaderManager.h" compile="0" resource="0"
+              file="../GLTools/include/GLShaderManager.h"/>
+        <FILE id="BFDAVd" name="GLTools.h" compile="0" resource="0" file="../GLTools/include/GLTools.h"/>
+        <FILE id="o2wkwB" name="GLTriangleBatch.h" compile="0" resource="0"
+              file="../GLTools/include/GLTriangleBatch.h"/>
+        <FILE id="BEiopn" name="math3d.h" compile="0" resource="0" file="../GLTools/include/math3d.h"/>
+        <FILE id="Ht9Ew6" name="StopWatch.h" compile="0" resource="0" file="../GLTools/include/StopWatch.h"/>
+      </GROUP>
+      <GROUP id="{8490750A-92BF-CCEE-2A99-2A240029B772}" name="src">
+        <FILE id="epmx5m" name="GLBatch.cpp" compile="1" resource="0" file="../GLTools/src/GLBatch.cpp"/>
+        <FILE id="fbjbjq" name="glew.c" compile="1" resource="0" file="../GLTools/src/glew.c"/>
+        <FILE id="GhZLPp" name="GLShaderManager.cpp" compile="1" resource="0"
+              file="../GLTools/src/GLShaderManager.cpp"/>
+        <FILE id="ZCGDUw" name="GLTools.cpp" compile="1" resource="0" file="../GLTools/src/GLTools.cpp"/>
+        <FILE id="oFOzxJ" name="GLTriangleBatch.cpp" compile="1" resource="0"
+              file="../GLTools/src/GLTriangleBatch.cpp"/>
+        <FILE id="Zzlqi2" name="math3d.cpp" compile="1" resource="0" file="../GLTools/src/math3d.cpp"/>
+      </GROUP>
+    </GROUP>
+    <GROUP id="{04F588DF-B27F-7686-36D0-BE6311B329AF}" name="muskit">
+      <GROUP id="{D07F539C-5C0D-BEAE-3C01-3DD817497171}" name="src">
+        <FILE id="KUKpSj" name="AudioClient.cpp" compile="1" resource="0" file="../../muskit/src/AudioClient.cpp"/>
+        <FILE id="m9EVm3" name="AudioClient.h" compile="0" resource="0" file="../../muskit/src/AudioClient.h"/>
+        <FILE id="nPV0Ld" name="AudioServer.cpp" compile="1" resource="0" file="../../muskit/src/AudioServer.cpp"/>
+        <FILE id="IZBEEp" name="AudioServer.h" compile="0" resource="0" file="../../muskit/src/AudioServer.h"/>
+        <FILE id="tS7Xgj" name="Interpolators.cpp" compile="1" resource="0"
+              file="../../muskit/src/Interpolators.cpp"/>
+        <FILE id="kncYmg" name="Interpolators.h" compile="0" resource="0" file="../../muskit/src/Interpolators.h"/>
+        <FILE id="mor7ue" name="MathHelpers.h" compile="0" resource="0" file="../../muskit/src/MathHelpers.h"/>
+        <FILE id="rSbZUg" name="MidiServer.h" compile="0" resource="0" file="../../muskit/src/MidiServer.h"/>
+        <FILE id="s6VMl4" name="ParameterAPI.cpp" compile="1" resource="0"
+              file="../../muskit/src/ParameterAPI.cpp"/>
+        <FILE id="vYExmd" name="ParameterAPI.h" compile="0" resource="0" file="../../muskit/src/ParameterAPI.h"/>
+        <FILE id="SNnx4H" name="Poly.h" compile="0" resource="0" file="../../muskit/src/Poly.h"/>
+        <FILE id="zlnqi0" name="SignalGenerators.h" compile="0" resource="0"
+              file="../../muskit/src/SignalGenerators.h"/>
+        <FILE id="MCdXKD" name="TypingKeyboard.h" compile="0" resource="0"
+              file="../../muskit/src/TypingKeyboard.h"/>
+        <FILE id="MfWtGT" name="Voices.h" compile="0" resource="0" file="../../muskit/src/Voices.h"/>
+        <FILE id="BeFVCi" name="Waveshaper.cpp" compile="1" resource="0" file="../../muskit/src/Waveshaper.cpp"/>
+        <FILE id="NIMpEO" name="Waveshaper.h" compile="0" resource="0" file="../../muskit/src/Waveshaper.h"/>
+        <FILE id="CAAssq" name="WindowFunction.cpp" compile="1" resource="0"
+              file="../../muskit/src/WindowFunction.cpp"/>
+        <FILE id="AXmaIV" name="WindowFunction.h" compile="0" resource="0"
+              file="../../muskit/src/WindowFunction.h"/>
+      </GROUP>
+      <GROUP id="{1BFC90E5-FFB9-E7CA-9392-618CAA532F25}" name="ThirdParty">
+        <FILE id="cieQrz" name="chuck_fft.c" compile="1" resource="0" file="../../muskit/ThirdParty/chuck_fft.c"/>
+        <FILE id="GEZT4t" name="chuck_fft.h" compile="0" resource="0" file="../../muskit/ThirdParty/chuck_fft.h"/>
+        <FILE id="SkYPFp" name="RtAudio.cpp" compile="1" resource="0" file="../../muskit/ThirdParty/RtAudio.cpp"/>
+        <FILE id="gJsWvM" name="RtAudio.h" compile="0" resource="0" file="../../muskit/ThirdParty/RtAudio.h"/>
+        <FILE id="pvl9pv" name="RtError.h" compile="0" resource="0" file="../../muskit/ThirdParty/RtError.h"/>
+        <FILE id="jc9fq2" name="RtMidi.cpp" compile="1" resource="0" file="../../muskit/ThirdParty/RtMidi.cpp"/>
+        <FILE id="qAVIrU" name="RtMidi.h" compile="0" resource="0" file="../../muskit/ThirdParty/RtMidi.h"/>
+      </GROUP>
+    </GROUP>
+    <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
+      <FILE id="scaKFY" name="airharp-gltools.cpp" compile="1" resource="0"
+            file="Source/airharp-gltools.cpp"/>
+      <FILE id="QyjiF3" name="Harp.cpp" compile="1" resource="0" file="Source/Harp.cpp"/>
+      <FILE id="B3eka9" name="Harp.h" compile="0" resource="0" file="Source/Harp.h"/>
+      <FILE id="NjKuIx" name="HarpHUD.cpp" compile="1" resource="0" file="Source/HarpHUD.cpp"/>
+      <FILE id="sN5gM8" name="HarpHUD.h" compile="0" resource="0" file="Source/HarpHUD.h"/>
+      <FILE id="frej1K" name="StringView.cpp" compile="1" resource="0" file="Source/StringView.cpp"/>
+      <FILE id="ZMsN1N" name="StringView.h" compile="0" resource="0" file="Source/StringView.h"/>
+      <FILE id="KOoxeY" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="JeEtSL" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="lNNe7M" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_audio" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
+               externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
+               postbuildCommand="cp ../../../../Leap_SDK/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR"
+               extraCompilerFlags="">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="1" optimisation="1" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
+                       cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="0" optimisation="2" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
+                       cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
+      </CONFIGURATIONS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
