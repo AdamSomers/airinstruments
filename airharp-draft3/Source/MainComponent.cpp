@@ -28,8 +28,6 @@
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
-    for (int i = 0; i < NUM_STRINGS-1; ++i)
-        Harp::GetInstance()->AddString();
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
     openGLContext.attachTo (*this);
@@ -127,6 +125,9 @@ void MainContentComponent::newOpenGLContextCreated()
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,h-50,w,50));
     statusBar->setBounds(HUDRect(0,0,w,20));
+    
+    for (int i = 0; i < NUM_STRINGS-1; ++i)
+        Harp::instance().AddString();
     
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }

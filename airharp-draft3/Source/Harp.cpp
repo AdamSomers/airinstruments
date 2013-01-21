@@ -1,6 +1,6 @@
 #include "Harp.h"
+#include "MotionServer.h"
 
-Harp* Harp::sInstance = NULL;
 
 #define MAX_STRINGS 30
 #define SAMPS_PER_PIXEL 6
@@ -14,6 +14,13 @@ Harp::Harp()
 : numStrings(1)
 , mixer(NULL)
 , outputGain(NULL)
+, reverb(NULL)
+, filter(NULL)
+, reverbGain(NULL)
+, dryGain(NULL)
+, wetDryMix(NULL)
+, wetLevel(0.3f)
+, dryLevel(0.7f)
 {
     Init();
 }
@@ -45,13 +52,35 @@ void Harp::Init()
     {
         mixer->AddInput(accumulators.at(i));
     }
-        
+    
+    filter = new StateVariable;
+    filter->SetInput(mixer);
+    filter->setFreq(1000);
+    filter->setType(StateVariable::kLowpass);
+    
+    reverbGain = new Multiplier;
+    reverbGain->SetA(filter);
+    reverbGain->SetVal(wetLevel);
+    
+    reverb = new JuceReverbAudioClient;
+    reverb->AddInput(filter);
+    
+    dryGain = new Multiplier;
+    dryGain->SetA(mixer);
+    dryGain->SetVal(0.8f);
+    
+    wetDryMix = new Adder;
+    wetDryMix->AddInput(reverb);
+    wetDryMix->AddInput(dryGain);
+    
     outputGain = new Multiplier;
-    outputGain->SetA(mixer);
-    outputGain->SetVal(.707f);
+    outputGain->SetA(wetDryMix);
+    outputGain->SetVal(dryLevel);
     
     AudioServer::GetInstance()->AddClient(outputGain, 0);
     AudioServer::GetInstance()->AddClient(outputGain, 1);
+    
+    MotionDispatcher::instance().controller.addListener(*this);
 
 }
 
@@ -71,9 +100,24 @@ void Harp::Cleanup()
         AudioServer::GetInstance()->RemoveClient(outputGain, 0);
         AudioServer::GetInstance()->RemoveClient(outputGain, 1);
     }
+    if (filter)
+        delete filter;
+    
+    if (reverb)
+        delete reverb;
+    
+    if (dryGain)
+        delete dryGain;
+    
+    if (reverbGain)
+        delete reverbGain;
+    
+    if (wetDryMix)
+        delete wetDryMix;
+        
     if (mixer)
         delete mixer;
-
+    
     strings.clear();
     accumulators.clear();
     filters.clear();
@@ -153,11 +197,40 @@ void Harp::SetScale(int scaleIndex)
     }
 }
 
-Harp* Harp::GetInstance()
+void Harp::setWetLevel(float val)
 {
-    if (!sInstance)
-    {
-        sInstance = new Harp;
-    }
-    return sInstance;
+    reverbGain->SetVal(val);
 }
+
+void Harp::setDryLevel(float val)
+{
+    dryGain->SetVal(val);
+}
+
+void Harp::onFrame(const Leap::Controller& controller)
+{
+    const Leap::HandList& hands = controller.frame().hands();
+    if (hands.count() > 0)
+    {
+        float zAvg = 0.f;
+        for (int i = 0; i < hands.count(); ++i)
+        {
+            const Leap::Hand& h = hands[i];
+            zAvg += h.palmPosition().z;
+        }
+        zAvg /= (float) hands.count();
+        float mix = 0.5f;
+        if (zAvg < 0.f)
+        {
+            mix = -zAvg / 100.f;
+        }
+        else
+            mix = zAvg / 250.f;
+        if (mix > 1.f) mix = 1.f;
+        if (mix < 0.f) mix = 0.f;
+        setWetLevel(mix);
+        setDryLevel(1-mix);
+    }
+    
+}
+

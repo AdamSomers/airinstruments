@@ -6,6 +6,8 @@
 //#include "MidiServer.h"
 #include "Voices.h"
 #include "SignalGenerators.h"
+#include "JuceReverbAudioClient.h"
+#include "Leap.h"
 
 // Pentatonic Major
 const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
@@ -23,7 +25,7 @@ const int gWholeToneIntervals = 6;
 const int gDiatonic[] = { 0, 2, 4, 5, 7, 9, 11};
 const int gDiatonicIntervals = 7;
 
-class Harp
+class Harp : public Leap::Listener
 {
 public:
     Harp();
@@ -33,7 +35,20 @@ public:
     void AddString();
     void RemoveString();
     int GetNumStrings() const { return numStrings; }
-    static Harp* GetInstance();
+    float getWetLevel() const { return wetLevel; }
+    float getDryLevel() const { return dryLevel; }
+    void setWetLevel(float val);
+    void setDryLevel(float val);
+    
+    // Leap Listener override
+    void onFrame(const Leap::Controller&);
+    
+    static Harp& instance( void )
+    {
+        static Harp s_instance;
+        return s_instance;
+    }
+    
     std::vector<SampleAccumulator*>& GetBuffers() { return accumulators; }
     std::vector<Karplus*>& GetStrings() { return strings; }
     void SetScale(int scaleIndex);
@@ -44,13 +59,19 @@ private:
     void Cleanup();
     void Init();
     
-    static Harp* sInstance;
     std::vector<SampleAccumulator*> accumulators;
     std::vector<StateVariable*> filters;
     std::vector<Karplus*> strings;
     Adder* mixer;
     Multiplier* outputGain;
+    JuceReverbAudioClient* reverb;
+    Multiplier* reverbGain;
+    Multiplier* dryGain;
+    Adder* wetDryMix;
+    StateVariable* filter;
     int numStrings;
+    float wetLevel;
+    float dryLevel;
 };
 
 #endif /* defined(__AirHarp__Harp__) */

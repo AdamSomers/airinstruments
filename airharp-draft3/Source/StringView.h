@@ -86,11 +86,11 @@ public:
         float scale = 0.1f;
         
         // skip this frame if not enough samples accumulated
-        if (Harp::GetInstance()->GetBuffers().at(stringNum)->GetSize() < NUM_SAMPLES)
+        if (Harp::instance().GetBuffers().at(stringNum)->GetSize() < NUM_SAMPLES)
             return;
         
         // pop the sample data from audio buffer and display along string
-        SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(stringNum)->Get();
+        SampleAccumulator::PeakBuffer peakBuffer = Harp::instance().GetBuffers().at(stringNum)->Get();
         for (int i = 0; i < numSampleVerts / 2; ++i)
         {
             long numPeakBuffers = peakBuffer.size();
@@ -209,6 +209,14 @@ public:
     
     void tap(FingerView* inFingerView, float velocity)
     {
+        M3DVector3f point;
+        M3DVector3f center;
+        inFingerView->objectFrame.GetOrigin(point);
+        objectFrame.GetOrigin(center);
+        if (point[2] <= center[2])
+        {
+            return;
+        }
         auto iter = std::find(pointers.begin(), pointers.end(), inFingerView);
         if (iter != pointers.end())
             pluck(0.5f, velocity);
@@ -234,7 +242,7 @@ public:
             //if (fingerPrevX > t)
             //    buffer[x] = -buffer[x];
         }
-        Harp::GetInstance()->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
+        Harp::instance().ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
     }
     
     GLFrame objectFrame;

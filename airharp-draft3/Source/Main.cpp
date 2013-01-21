@@ -31,16 +31,6 @@ public:
         mainWindow = new MainWindow();
         audioDeviceManager.initialise (2, 2, 0, true, String::empty, 0);
         audioDeviceManager.addAudioCallback(this);
-        Reverb::Parameters params;
-        params.roomSize = .8f;
-        params.wetLevel = .2;
-        params.dryLevel = .5f;
-        params.damping = 1.f;
-        params.width = 1.f;
-        params.freezeMode = 0.f;
-        reverb.setParameters(params);
-        //filterL.makeLowPass(44100.f, 5000.f);
-        //filterR.makeLowPass(44100.f, 5000.f);
     }
 
     void shutdown()
@@ -75,10 +65,6 @@ public:
         AudioServer::GetInstance()->AudioServerCallback(inputChannelData,
 														outputChannelData,
 														numSamples);
-        filterL.processSamples(outputChannelData[0], numSamples);
-        filterR.processSamples(outputChannelData[1], numSamples);
-        reverb.processStereo(outputChannelData[0], outputChannelData[1], numSamples);
-        
     }
     
     void anotherInstanceStarted (const String& commandLine)
@@ -130,9 +116,6 @@ public:
 private:
     ScopedPointer<MainWindow> mainWindow;
     AudioDeviceManager audioDeviceManager;
-    IIRFilter filterL;
-    IIRFilter filterR;
-    Reverb reverb;
 };
 
 //==============================================================================
