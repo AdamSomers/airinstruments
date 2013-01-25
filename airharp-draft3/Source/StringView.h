@@ -202,7 +202,12 @@ public:
                 (distance >= 0 &&
                  prevDistance < 0))
             {
-                pluck(0.5);
+                float pos = point[1];
+                pos += 1.f;
+                pos /= 2.f;
+                
+                printf("%f\n", pos);
+                pluck(pos);
             }
         }
     }
