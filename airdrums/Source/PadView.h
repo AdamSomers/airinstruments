@@ -28,7 +28,11 @@ public:
     float padWidth = 0.1;
     float padHeight = 0.1;
     
+    static GLFrame padSurfaceFrame;
+    
 private:
+    static const int numVerts = 36;
+    void makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
     GLBatch     padBatch;
     float fade = 1.f;
     float padDepth = 0.025;

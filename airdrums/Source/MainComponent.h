@@ -47,7 +47,9 @@ private:
     StatusBar* statusBar = NULL;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
-    GLFrame	padSurfaceFrame;
+    
+    float prevMouseY = 0.f;
+    float prevMouseX = 0.f;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

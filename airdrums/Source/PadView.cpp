@@ -1,5 +1,7 @@
 #include "PadView.h"
 
+GLFrame PadView::padSurfaceFrame;
+
 PadView::PadView()
 {
 }
@@ -8,23 +10,132 @@ PadView::~PadView()
 {
 }
 
+void PadView::makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
+{
+    float top = padHeight / 2.f;
+    float bottom = -padHeight / 2.f;
+    float left = -padWidth / 2.f;
+    float right = padWidth / 2.f;
+    float depth = 0.1f;
+    float front = -depth / 2.f;
+    float back = depth / 2.f;
+    M3DVector3f verts[numVerts] = {
+        // bottom
+        left, bottom, front,
+        right, bottom, front,
+        right, bottom, back,
+        
+        right, bottom, back,
+        left, bottom, back,
+        left, bottom, front,
+
+        // front face
+        left, bottom, front,
+        left, top, front,
+        right, bottom, front,
+        
+        right, bottom, front,
+        left, top, front,
+        right, top, front,
+
+        // rear face
+        left, bottom, back,
+        right, bottom, back,
+        left, top, back,
+        
+        right, bottom, back,
+        right, top, back,
+        left, top, back,
+
+        // left side
+        left, bottom, front,
+        left, top, back,
+        left, top, front,
+        
+        left, top, back,
+        left, bottom, front,
+        left, bottom, back,
+        
+        
+        // right side
+        right, bottom, front,
+        right, top, front,
+        right, top, back,
+        
+        right, top, back,
+        right, bottom, back,
+        right, bottom, front,
+
+        // top
+        left, top, front,
+        right, top, back,
+        right, top, front,
+        
+        right, top, back,
+        left, top, front,
+        left, top, back,
+        
+    };
+    
+    M3DVector3f normals[numVerts] = {
+        // bottom
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        // front face
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        
+        // rear face
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        
+        // left side
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        
+        // right side
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+
+        // top
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f
+    };
+    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+}
+
 void PadView::setup()
 {
-    M3DVector3f verts[4] = {
-        0.0f, -padHeight / 2.f, 0.0f,
-        padWidth, -padHeight / 2.f, 0.0f,
-        0.f, padHeight / 2.f, 0.0f,
-        padWidth, padHeight / 2.f, 0.0f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f
-    };
-    
-    padBatch.Begin(GL_TRIANGLE_STRIP, 4);
+ 
+    M3DVector3f verts[numVerts];
+    M3DVector3f normals[numVerts];
+    makeMesh(verts, normals);
+    padBatch.Begin(GL_TRIANGLES, numVerts);
     padBatch.CopyVertexData3f(verts);
     padBatch.CopyNormalDataf(normals);
     padBatch.End();
@@ -32,13 +143,11 @@ void PadView::setup()
 
 void PadView::update()
 {
-    M3DVector3f verts[4] = {
-        0.0f, -padHeight / 2.f, 0.0f,
-        padWidth, -padHeight / 2.f, 0.0f,
-        0.f, padHeight / 2.f, 0.0f,
-        padWidth, padHeight / 2.f, 0.0f
-    };
+    M3DVector3f verts[numVerts];
+    M3DVector3f normals[numVerts];
+    makeMesh(verts, normals);
     padBatch.CopyVertexData3f(verts);
+    padBatch.CopyNormalDataf(normals);
 }
 
 void PadView::draw()
@@ -56,10 +165,9 @@ void PadView::draw()
     else if (fade > 0.f)
         fade -= 0.05f;
     
+    
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), padColor);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
     padBatch.Draw();
     Environment::instance().modelViewMatrix.PopMatrix();
 }
@@ -72,6 +180,10 @@ void PadView::updatePointedState(FingerView* inFingerView)
     inFingerView->objectFrame.GetOrigin(point);
     inFingerView->objectFrame.GetForwardVector(ray);
     objectFrame.GetOrigin(center);
+    M3DVector3f transformedCenter;
+    M3DMatrix44f planeMatrix;
+    padSurfaceFrame.GetMatrix(planeMatrix);
+    m3dTransformVector3(transformedCenter, center, planeMatrix);
     
     for (int i = 0; i < 6; ++i)
     {
@@ -98,9 +210,17 @@ void PadView::updatePointedState(FingerView* inFingerView)
 #endif
     }
     
-#if 0
     // When finger passes through pad volume, play the note
-    // TODO
+    if (point[0] > transformedCenter[0] - padWidth / 2.f &&
+        point[0] < transformedCenter[0] + padWidth / 2.f &&
+        point[1] > transformedCenter[1] - padHeight / 2.f &&
+        point[1] < transformedCenter[1] + padHeight / 2.f &&
+        point[2] <= transformedCenter[2] + padDepth / 2.f)
+    {
+        fade = 1.f;
+        printf("trigger %d\n", padNum);
+    }
+#if 0
     Drums::instance().noteOn ...
 #endif
 }

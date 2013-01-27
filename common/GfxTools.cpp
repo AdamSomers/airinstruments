@@ -5,7 +5,6 @@ namespace GfxTools
 {
     void drawBatch(GLTriangleBatch* pBatch, bool drawWireFrame)
     {
-        glDisable(GL_CULL_FACE);
         pBatch->Draw();
         
         if (drawWireFrame)
@@ -22,13 +21,6 @@ namespace GfxTools
             Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), vBlue);
             pBatch->Draw();
         }
-        
-        // Restore polygon mode and depht testing
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glDisable(GL_POLYGON_OFFSET_LINE);
-        glLineWidth(1.0f);
-        glDisable(GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
     }
     
     // Ray-plane collision

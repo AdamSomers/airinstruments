@@ -83,8 +83,8 @@ void MainContentComponent::newOpenGLContextCreated()
     glEnable(GL_BLEND);
     
     glEnable(GL_DEPTH_TEST);
-    //glDepthMask(true);
-    //glDepthFunc(GL_LESS);
+    glDepthMask(true);
+    glDepthFunc(GL_LESS);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
@@ -123,31 +123,64 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,h-50,w,50));
     statusBar->setBounds(HUDRect(0,0,w,20));
 
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor(0.f, 0.f, 0.f, 1.0f );
 }
 
 void MainContentComponent::renderOpenGL()
 {
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
     
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     
-//    Environment::instance().modelViewMatrix.PushMatrix();
-//    M3DMatrix44f mCamera;
-//    Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
-//    Environment::instance().modelViewMatrix.MultMatrix(mCamera);
-    Environment::instance().modelViewMatrix.PushMatrix(padSurfaceFrame);
+    Environment::instance().modelViewMatrix.PushMatrix();
+    M3DMatrix44f mCamera;
+    Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
+    Environment::instance().modelViewMatrix.MultMatrix(mCamera);
+
+    Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
+    // Objects must be drawn from front to back to ensure proper visibility.
+    std::vector<PadView*> sortedPads;
     for (PadView* pv : pads)
-        pv->draw();
+        sortedPads.push_back(pv);
+    std::sort(sortedPads.begin(),
+              sortedPads.end(),
+              [](PadView* p1, PadView* p2) ->
+                  bool
+                  {
+                      // compare z values post pad-plane transform
+                      M3DVector3f p1center;
+                      M3DVector3f p2center;
+                      p1->objectFrame.GetOrigin(p1center);
+                      p2->objectFrame.GetOrigin(p2center);
+                      M3DVector3f transformedCenter1;
+                      M3DVector3f transformedCenter2;
+                      M3DMatrix44f planeMatrix;
+                      PadView::padSurfaceFrame.GetMatrix(planeMatrix);
+                      m3dTransformVector3(transformedCenter1, p1center, planeMatrix);
+                      m3dTransformVector3(transformedCenter2, p2center, planeMatrix);
+                      return (transformedCenter1[2] < transformedCenter2[2]);
+                  }
+              );
+
+    // We sorted back-to-front, so draw in reverse for front-to-back
+    for (int i = sortedPads.size() - 1; i >= 0; --i)
+        sortedPads[i]->draw();
+
+    Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
+
+    Environment::instance().modelViewMatrix.PopMatrix(); // camera
     
-    Environment::instance().modelViewMatrix.PopMatrix();
-//    Environment::instance().modelViewMatrix.PopMatrix();
-    
+    // go 2d
 	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     
@@ -157,7 +190,8 @@ void MainContentComponent::renderOpenGL()
         v->draw();
     
     glEnable(GL_DEPTH_TEST);
-    
+
+    // go 3d
     Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
@@ -165,7 +199,7 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
-    
+
     for (PadView* pv : pads)
         pv->update();
     
@@ -189,24 +223,23 @@ void MainContentComponent::layoutPads()
     float height = top - bottom;
     float padWidth = width / 4.f;
     float padHeight = height / 4.f;
-    float initialX = left + padWidth;
+    float initialX = left + padWidth / 2.f;
     float initialY = top;
-    for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < NUM_PADS; ++i)
     {
         int padInRow = i % 4;
         int row = i / 4;
         float xpos = padWidth * padInRow + initialX;
         float ypos = -padHeight * row + initialY;
         pads.at(i)->objectFrame.SetOrigin(xpos, ypos, 0);
-        pads.at(i)->padWidth = padWidth-0.01;
-        pads.at(i)->padHeight = padHeight-0.01;
+        pads.at(i)->padWidth = padWidth-0.05;
+        pads.at(i)->padHeight = padHeight-0.05;
         pads.at(i)->update();
-//        pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(15), 1, 0, 0);
     }
-    padSurfaceFrame.SetOrigin(0,0,-12);
-    padSurfaceFrame.SetForwardVector(0, 0, 1);
-    padSurfaceFrame.RotateWorld(m3dDegToRad(-45), 1, 0, 0);
-    //Environment::instance().cameraFrame.TranslateWorld(0, 0, -2);
+    // Move the pads back -12
+    PadView::padSurfaceFrame.SetOrigin(0,0,-12);
+    // Tilt the pad plane back 
+    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-30), 1, 0, 0);
 }
 
 void MainContentComponent::mouseMove(const MouseEvent& e)
@@ -214,26 +247,34 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
     for (HUDView* v : views)
         v->passiveMotion(e.getPosition().x, e.getPosition().y);
     
-    float normPos = e.getPosition().y / (float)Environment::instance().screenH;
-    float angle = M_PI * 2 * normPos;
-    printf("%f %f\n", sin(angle), cos(angle));
     if (pads.size() == 0)
         return;
-    padSurfaceFrame.RotateWorld(m3dDegToRad(-.5), 1, 0, 0);
-    for (int i = 0; i < 16; ++i)
-    {
-        //pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(-0.5), 1, 0, 0);
-    }
 }
 
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
     for (HUDView* v : views)
         v->mouseDown(e.getPosition().x, e.getPosition().y);
+    
+    prevMouseY = e.getPosition().y;
+    prevMouseX = e.getPosition().x;
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
 {
     for (HUDView* v : views)
         v->motion(e.getPosition().x, e.getPosition().y);
+    
+    float normPosY = (e.getPosition().y - prevMouseY) / (float)Environment::instance().screenH;
+    float normPosX = (e.getPosition().x - prevMouseX) / (float)Environment::instance().screenW;
+    float angle = M_PI * 2 * normPosY;
+    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosY*720), 1, 0, 0);
+    angle = M_PI * 2 * normPosX;
+    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosX*720), 0, 1, 0);
+    for (int i = 0; i < 16; ++i)
+    {
+        //pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(-0.5), 1, 0, 0);
+    }
+    prevMouseY = e.getPosition().y;
+    prevMouseX = e.getPosition().x;
 }
