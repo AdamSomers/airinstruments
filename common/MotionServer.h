@@ -24,6 +24,7 @@ public:
     static std::map<int,FingerView*> fingerViews;
     static std::vector<FingerView::Listener*> fingerViewListeners;
     Leap::Controller controller;
+    static float zLimit;
 };
 
 #endif // h_MotionDispatcher

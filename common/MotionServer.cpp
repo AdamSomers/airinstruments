@@ -2,6 +2,7 @@
 
 std::map<int,FingerView*> MotionDispatcher::fingerViews;
 std::vector<FingerView::Listener*> MotionDispatcher::fingerViewListeners;
+float MotionDispatcher::zLimit = 0;
 
 MotionDispatcher::MotionDispatcher()
 {
@@ -114,7 +115,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
                     float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
                     float scaledY = (y-.5)*4;
-                    if (z < 0) z = 0;
+                    if (z < zLimit) z = 0;
                     float scaledZ = z*5-12;
                     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
                     

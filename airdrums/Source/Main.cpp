@@ -13,7 +13,7 @@
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
-                          , public AudioIODeviceCallback
+                          //, public AudioIODeviceCallback
 {
 public:
     //==============================================================================
@@ -30,7 +30,10 @@ public:
 
         mainWindow = new MainWindow();
         audioDeviceManager.initialise (2, 2, 0, true, String::empty, 0);
-        audioDeviceManager.addAudioCallback(this);
+        //audioDeviceManager.addAudioCallback(this);
+        audioSourcePlayer.setSource (&Drums::instance());
+        audioDeviceManager.addAudioCallback (&audioSourcePlayer);
+        Logger::outputDebugString(audioDeviceManager.getCurrentAudioDevice()->getName());
     }
 
     void shutdown()
@@ -38,7 +41,7 @@ public:
         // Add your application's shutdown code here..
 
         mainWindow = nullptr; // (deletes our window)
-        audioDeviceManager.removeAudioCallback(this);
+        //audioDeviceManager.removeAudioCallback(this);
     }
 
     //==============================================================================
@@ -111,6 +114,7 @@ public:
 private:
     ScopedPointer<MainWindow> mainWindow;
     AudioDeviceManager audioDeviceManager;
+    AudioSourcePlayer audioSourcePlayer;
 };
 
 //==============================================================================

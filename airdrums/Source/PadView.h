@@ -31,6 +31,8 @@ public:
     static GLFrame padSurfaceFrame;
     
 private:
+    bool hitTest(const M3DVector3f& point);
+    
     static const int numVerts = 36;
     void makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
     GLBatch     padBatch;

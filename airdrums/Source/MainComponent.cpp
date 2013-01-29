@@ -30,6 +30,7 @@ MainContentComponent::MainContentComponent()
     openGLContext.attachTo (*this);
     openGLContext.setSwapInterval(1);
     setSize (800, 600);
+    MotionDispatcher::zLimit = -100;
 }
 
 MainContentComponent::~MainContentComponent()

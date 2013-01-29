@@ -172,19 +172,35 @@ void PadView::draw()
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
-void PadView::updatePointedState(FingerView* inFingerView)
+bool PadView::hitTest(const M3DVector3f& point)
 {
-    M3DVector3f point;
-    M3DVector3f ray;
     M3DVector3f center;
-    inFingerView->objectFrame.GetOrigin(point);
-    inFingerView->objectFrame.GetForwardVector(ray);
     objectFrame.GetOrigin(center);
     M3DVector3f transformedCenter;
     M3DMatrix44f planeMatrix;
     padSurfaceFrame.GetMatrix(planeMatrix);
     m3dTransformVector3(transformedCenter, center, planeMatrix);
     
+    if (point[0] > transformedCenter[0] - padWidth / 2.f &&
+        point[0] < transformedCenter[0] + padWidth / 2.f &&
+        point[1] > transformedCenter[1] - padHeight / 2.f &&
+        point[1] < transformedCenter[1] + padHeight / 2.f &&
+        point[2] <= transformedCenter[2])
+        return true;
+    else
+        return false;
+}
+
+void PadView::updatePointedState(FingerView* inFingerView)
+{
+    M3DVector3f point;
+    M3DVector3f ray;
+    inFingerView->objectFrame.GetOrigin(point);
+    inFingerView->objectFrame.GetForwardVector(ray);
+    
+    M3DVector3f prevPoint;
+    inFingerView->prevFrame.GetOrigin(prevPoint);
+
     for (int i = 0; i < 6; ++i)
     {
         // TODO
@@ -211,14 +227,12 @@ void PadView::updatePointedState(FingerView* inFingerView)
     }
     
     // When finger passes through pad volume, play the note
-    if (point[0] > transformedCenter[0] - padWidth / 2.f &&
-        point[0] < transformedCenter[0] + padWidth / 2.f &&
-        point[1] > transformedCenter[1] - padHeight / 2.f &&
-        point[1] < transformedCenter[1] + padHeight / 2.f &&
-        point[2] <= transformedCenter[2] + padDepth / 2.f)
+    if (hitTest(point) && !hitTest(prevPoint) &&
+        prevPoint[1] > point[1])
     {
         fade = 1.f;
         printf("trigger %d\n", padNum);
+        Drums::instance().NoteOn(padNum,1.f);
     }
 #if 0
     Drums::instance().noteOn ...
