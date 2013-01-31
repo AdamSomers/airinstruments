@@ -34,6 +34,7 @@ public:
     void mouseMove(const MouseEvent& e);
     void mouseDown(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);
+    bool keyPressed(const KeyPress& kp);
     
     // OpenGLRenderer overrides
     void newOpenGLContextCreated();

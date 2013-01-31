@@ -2,7 +2,6 @@
 
 Drums::Drums()
 {
-    float tempo = 110;
     float bps = tempo / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
@@ -145,14 +144,46 @@ Drums::~Drums()
 
 void Drums::NoteOn(int note, float velocity)
 {
-    
+    midiBufferLock.enter();
     if (recording) {
+        float bps = tempo / 60.f;
+        float sixteenthsPerSecond = bps * 4;
+        int samplesPerSixteenth = 44100.f / sixteenthsPerSecond;
+        float sixteenthsIntoPattern = sampleCounter / (float)samplesPerSixteenth;
+        int quantizedPosition = (int)sixteenthsIntoPattern * samplesPerSixteenth;
+        float diff = sixteenthsIntoPattern - (int)sixteenthsIntoPattern;
+        Logger::outputDebugString(String::formatted("%f\n", diff));
+        if (diff > 0.5) {
+            quantizedPosition += samplesPerSixteenth;
+            if (quantizedPosition > maxRecordSamples)
+                quantizedPosition = 0;
+        }
+        
         MidiMessage m = MidiMessage::noteOn(1, note, velocity);
-        m.setTimeStamp(sampleCounter);
-        recordBuffer.addEvent(m, sampleCounter);
+        m.setTimeStamp(quantizedPosition);
+        MidiBuffer::Iterator i(recordBuffer);
+        i.setNextSamplePosition(quantizedPosition);
+        int position;
+        MidiMessage existingMessage;
+        bool found = i.getNextEvent(existingMessage, position);
+        if (!found || position != quantizedPosition || existingMessage.getNoteNumber() != note)
+            recordBuffer.addEvent(m, quantizedPosition);
+        
+        if (diff < 0.5) {
+            keyboardState.noteOn(1,note,velocity);
+            playbackState.noteOn(1,note,velocity);
+        }
     }
     else
         keyboardState.noteOn(1,note,velocity);
+    midiBufferLock.exit();
+}
+
+void Drums::clear()
+{
+    midiBufferLock.enter();
+    recordBuffer.clear();
+    midiBufferLock.exit();
 }
 
 void Drums::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
@@ -168,22 +199,24 @@ void Drums::releaseResources()
 
 void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
+    midiBufferLock.enter();
     bufferToFill.clearActiveBufferRegion();
     
     MidiBuffer incomingMidi;
     midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
     
     if (recording) {
-        keyboardState.reset();
+        playbackState.reset();
+        keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
         MidiBuffer::Iterator i(recordBuffer);
         int samplePos = sampleCounter;
         MidiMessage message;
         i.setNextSamplePosition(sampleCounter);
-        while (i.getNextEvent(message, samplePos) && samplePos == sampleCounter)
+        while (i.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
         {
-            Logger::outputDebugString(String::formatted("%d\n", samplePos));
-            incomingMidi.addEvent(message, 0);
-            keyboardState.noteOn(1, message.getNoteNumber(),1);
+            //Logger::outputDebugString(String::formatted("%d\n", samplePos));
+            incomingMidi.addEvent(message, samplePos - sampleCounter);
+            playbackState.noteOn(1, message.getNoteNumber(),1);
         }
         
         if (metronomeOn) {
@@ -191,7 +224,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
             metronomeIterator.setNextSamplePosition(sampleCounter);
             while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
             {
-                Logger::outputDebugString(String::formatted("%d\n", samplePos));
+                //Logger::outputDebugString(String::formatted("%d\n", samplePos));
                 incomingMidi.addEvent(message, 0);
             }
         }
@@ -199,9 +232,11 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     }
     else
         keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+    
     synth.renderNextBlock (*bufferToFill.buffer, incomingMidi, 0, bufferToFill.numSamples);
     
     sampleCounter += bufferToFill.numSamples;
     if (sampleCounter > maxRecordSamples)
         sampleCounter = 0;
+    midiBufferLock.exit();
 }

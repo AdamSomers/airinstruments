@@ -31,7 +31,8 @@ MainContentComponent::MainContentComponent()
     openGLContext.setSwapInterval(1);
     setSize (800, 600);
     MotionDispatcher::zLimit = -100;
-    Drums::instance().keyboardState.addListener(this);
+    Drums::instance().playbackState.addListener(this);
+    setWantsKeyboardFocus(true);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -279,6 +280,24 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
     }
     prevMouseY = e.getPosition().y;
     prevMouseX = e.getPosition().x;
+}
+
+bool MainContentComponent::keyPressed(const KeyPress& kp)
+{
+    bool ret = false;
+    if (kp.getTextCharacter() == 'm') {
+        Drums::instance().metronomeOn = !Drums::instance().metronomeOn;
+        ret = true;
+    }
+    else if (kp.getKeyCode() == KeyPress::spaceKey) {
+        Drums::instance().recording = !Drums::instance().recording;
+        ret = true;
+    }
+    if (kp.getTextCharacter() == 'c') {
+        Drums::instance().clear();
+        ret = true;
+    }
+    return ret;
 }
 
 void MainContentComponent::handleNoteOn(MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity)

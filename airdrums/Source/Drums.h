@@ -11,6 +11,7 @@ public:
     Drums();
     ~Drums();
     void NoteOn(int note, float velocity);
+    void clear();
     
     // AudioSoure overrides
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate);
@@ -23,17 +24,20 @@ public:
         return s_instance;
     }
     
-    MidiKeyboardState keyboardState;
+    MidiKeyboardState playbackState;
     bool recording = true;
     bool metronomeOn = true;
     
 private:
+    MidiKeyboardState keyboardState;
     Synthesiser synth;
     MidiMessageCollector midiCollector;
     MidiBuffer recordBuffer;
     MidiBuffer metronomeBuffer;
     long sampleCounter = 0;
     long maxRecordSamples = 0;
+    float tempo = 110;
+    CriticalSection midiBufferLock;
 };
 
 #endif
