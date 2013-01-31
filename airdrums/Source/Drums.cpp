@@ -7,37 +7,119 @@ Drums::Drums()
     WavAudioFormat wavFormat;
     AiffAudioFormat aiffFormat;
     
-    ScopedPointer<AudioFormatReader> audioReader8 (wavFormat.createReaderFor (new MemoryInputStream (BinaryData::JAZ_Rhabdedlumrlr_wav,
-                                                                                                    BinaryData::JAZ_Rhabdedlumrlr_wavSize,
+    ScopedPointer<AudioFormatReader> deepKick (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_BKICK_aif,
+                                                                                                    BinaryData::TMD_CHIL_BKICK_aifSize,
                                                                                                     false),
                                                                              true));
-    ScopedPointer<AudioFormatReader> audioReader15 (wavFormat.createReaderFor (new MemoryInputStream (BinaryData::MeanBeat_HH_Closed_Pop_wav,
-                                                                                                     BinaryData::MeanBeat_HH_Closed_Pop_wavSize,
+    ScopedPointer<AudioFormatReader> chh (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_CHH_aif,
+                                                                                                     BinaryData::TMD_CHIL_CHH_aifSize,
                                                                                                      false),
                                                                               true));
-    ScopedPointer<AudioFormatReader> audioReader14 (wavFormat.createReaderFor (new MemoryInputStream (BinaryData::MeanBeat_HH_Open_Pure_wav,
-                                                                                                     BinaryData::MeanBeat_HH_Open_Pure_wavSize,
+    ScopedPointer<AudioFormatReader> clap (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_CLAP_aif,
+                                                                                                     BinaryData::TMD_CHIL_CLAP_aifSize,
                                                                                                      false),
                                                                               true));
-    ScopedPointer<AudioFormatReader> audioReader12 (wavFormat.createReaderFor (new MemoryInputStream (BinaryData::FD27_DRM_WAV,
-                                                                                                     BinaryData::FD27_DRM_WAVSize,
+    ScopedPointer<AudioFormatReader> clv (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_CLV_aif,
+                                                                                                     BinaryData::TMD_CHIL_CLV_aifSize,
                                                                                                      false),
                                                                               true));
-    ScopedPointer<AudioFormatReader> audioReader13 (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::_15GKIT02E_aif,
-                                                                                                     BinaryData::_15GKIT02E_aifSize,
+    ScopedPointer<AudioFormatReader> cym (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_CYM_aif,
+                                                                                                     BinaryData::TMD_CHIL_CYM_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> htom (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_HTOM_aif,
+                                                                                                     BinaryData::TMD_CHIL_HTOM_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> kick (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_KICK_aif,
+                                                                                                     BinaryData::TMD_CHIL_KICK_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> ltom (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_LTOM_aif,
+                                                                                                     BinaryData::TMD_CHIL_LTOM_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> mtom (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_MTOM_aif,
+                                                                                                     BinaryData::TMD_CHIL_MTOM_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> ohh (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_OHH_aif,
+                                                                                                     BinaryData::TMD_CHIL_OHH_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> pad (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_PAD_aif,
+                                                                                                     BinaryData::TMD_CHIL_PAD_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> phh (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_PHH_aif,
+                                                                                                     BinaryData::TMD_CHIL_PHH_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> ride (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_RIDE_aif,
+                                                                                                     BinaryData::TMD_CHIL_RIDE_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> sfx (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_SFX_aif,
+                                                                                                     BinaryData::TMD_CHIL_SFX_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> sn (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_SN_1_aif,
+                                                                                                     BinaryData::TMD_CHIL_SN_1_aifSize,
+                                                                                                     false),
+                                                                              true));
+    ScopedPointer<AudioFormatReader> verb (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_VERB_aif,
+                                                                                                     BinaryData::TMD_CHIL_VERB_aifSize,
                                                                                                      false),
                                                                               true));
     BigInteger notes;
+    notes.setRange (0, 1, true);
+    synth.addSound (new SamplerSound ("", *pad, notes, 0, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (1, 1, true);
+    synth.addSound (new SamplerSound ("", *sfx, notes, 1, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (2, 1, true);
+    synth.addSound (new SamplerSound ("", *verb, notes, 2, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (3, 1, true);
+    synth.addSound (new SamplerSound ("", *deepKick, notes, 3, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (4, 1, true);
+    synth.addSound (new SamplerSound ("", *ltom, notes, 4, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (5, 1, true);
+    synth.addSound (new SamplerSound ("", *mtom, notes, 5, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (6, 1, true);
+    synth.addSound (new SamplerSound ("", *htom, notes, 6, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (7, 1, true);
+    synth.addSound (new SamplerSound ("", *clv, notes, 7, 0.0, 0.1, 10.0));
+    notes.clear();
     notes.setRange (8, 1, true);
-    synth.addSound (new SamplerSound ("", *audioReader8, notes, 8, 0.1, 0.1, 10.0));
+    synth.addSound (new SamplerSound ("", *cym, notes, 8, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (9, 1, true);
+    synth.addSound (new SamplerSound ("", *clap, notes, 9, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (10, 1, true);
+    synth.addSound (new SamplerSound ("", *ohh, notes, 10, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (11, 1, true);
+    synth.addSound (new SamplerSound ("", *ride, notes, 11, 0.0, 0.1, 10.0));
+    notes.clear();
     notes.setRange (12, 1, true);
-    synth.addSound (new SamplerSound ("", *audioReader12, notes, 12, 0.1, 0.1, 10.0));
+    synth.addSound (new SamplerSound ("", *kick, notes, 12, 0.0, 0.1, 10.0));
+    notes.clear();
     notes.setRange (13, 1, true);
-    synth.addSound (new SamplerSound ("", *audioReader13, notes, 13, 0.1, 0.1, 10.0));
+    synth.addSound (new SamplerSound ("", *sn, notes, 13, 0.0, 0.1, 10.0));
+    notes.clear();
     notes.setRange (14, 1, true);
-    synth.addSound (new SamplerSound ("", *audioReader14, notes, 14, 0.1, 0.1, 10.0));
+    synth.addSound (new SamplerSound ("", *phh, notes, 14, 0.0, 0.1, 10.0));
+    notes.clear();
     notes.setRange (15, 1, true);
-    synth.addSound (new SamplerSound ("", *audioReader15, notes, 15, 0.1, 0.1, 10.0));
+    synth.addSound (new SamplerSound ("", *chh, notes, 15, 0.0, 0.1, 10.0));
+
     synth.setNoteStealingEnabled(false);
 }
 

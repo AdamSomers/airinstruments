@@ -104,6 +104,8 @@ void MainContentComponent::newOpenGLContextCreated()
     }
     
     layoutPads();
+    // Tilt the pad plane back
+    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-30), 1, 0, 0);
     
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
@@ -219,9 +221,9 @@ void MainContentComponent::layoutPads()
     float left = -1.f;
     float top = .8;
     float right = 1.f;
-    float bottom = -1.f;
+    float bottom = -1.2f;
     float width = right - left;
-    float height = top - bottom;
+    float height = top - bottom - .2;
     float padWidth = width / 4.f;
     float padHeight = height / 4.f;
     float initialX = left + padWidth / 2.f;
@@ -239,8 +241,6 @@ void MainContentComponent::layoutPads()
     }
     // Move the pads back -12
     PadView::padSurfaceFrame.SetOrigin(0,0,-12);
-    // Tilt the pad plane back 
-    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-30), 1, 0, 0);
 }
 
 void MainContentComponent::mouseMove(const MouseEvent& e)

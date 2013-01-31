@@ -5,26 +5,38 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
-      <FILE id="Tkukor" name="15A-BDE043.aif" compile="0" resource="1" file="/Volumes/Data/Dropbox/AirDrums Assets/15A-BDE043.aif"/>
-      <FILE id="UkSZD5" name="15G-KIT02E.aif" compile="0" resource="1" file="/Volumes/Data/Dropbox/AirDrums Assets/15G-KIT02E.aif"/>
-      <FILE id="nFUnLI" name="1002__R8.WAV" compile="0" resource="1" file="/Volumes/Data/Dropbox/AirDrums Assets/1002__R8.WAV"/>
-      <FILE id="XJhWUF" name="FD25_DRM.WAV" compile="0" resource="1" file="/Volumes/Data/Dropbox/AirDrums Assets/FD25_DRM.WAV"/>
-      <FILE id="TJAoGw" name="FD27_DRM.WAV" compile="0" resource="1" file="/Volumes/Data/Dropbox/AirDrums Assets/FD27_DRM.WAV"/>
-      <FILE id="DGRfuM" name="FX001_HPHOP_90_X_SC3.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/FX001_HPHOP_90_X_SC3.wav"/>
-      <FILE id="BIdTdD" name="FX002_HPHOP_90_X_SC3.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/FX002_HPHOP_90_X_SC3.wav"/>
-      <FILE id="YbNEId" name="JAZ_Rhabdedlumrlr.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/JAZ_Rhabdedlumrlr.wav"/>
-      <FILE id="cQINGz" name="MeanBeat BD Room 2.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/MeanBeat BD Room 2.wav"/>
-      <FILE id="jtAv9E" name="MeanBeat HH Closed Pop.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/MeanBeat HH Closed Pop.wav"/>
-      <FILE id="PccRw1" name="MeanBeat HH Open Pure.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/MeanBeat HH Open Pure.wav"/>
-      <FILE id="rcmu4G" name="MeanBeat HH Open Tight.wav" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/MeanBeat HH Open Tight.wav"/>
-      <FILE id="u2ZHCI" name="synstab4.wav" compile="0" resource="1" file="/Volumes/Data/Dropbox/AirDrums Assets/synstab4.wav"/>
+      <FILE id="flUJWR" name="TMD CHIL BKICK.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL BKICK.aif"/>
+      <FILE id="cKK1O5" name="TMD CHIL CHH.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CHH.aif"/>
+      <FILE id="KdOSvs" name="TMD CHIL CLAP.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CLAP.aif"/>
+      <FILE id="TauNaf" name="TMD CHIL CLV.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CLV.aif"/>
+      <FILE id="eiI0ru" name="TMD CHIL CYM.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CYM.aif"/>
+      <FILE id="xkfiWM" name="TMD CHIL HTOM.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL HTOM.aif"/>
+      <FILE id="ebdd9G" name="TMD CHIL KICK.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL KICK.aif"/>
+      <FILE id="XF7ZKQ" name="TMD CHIL LTOM.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL LTOM.aif"/>
+      <FILE id="BRJzj3" name="TMD CHIL MTOM.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL MTOM.aif"/>
+      <FILE id="Z33giP" name="TMD CHIL OHH.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL OHH.aif"/>
+      <FILE id="gg3t0I" name="TMD CHIL PAD.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL PAD.aif"/>
+      <FILE id="v0UVBl" name="TMD CHIL PHH.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL PHH.aif"/>
+      <FILE id="UEtH4d" name="TMD CHIL RIDE.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL RIDE.aif"/>
+      <FILE id="qIliRY" name="TMD CHIL SFX.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL SFX.aif"/>
+      <FILE id="tOCZJq" name="TMD CHIL SN 1.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL SN 1.aif"/>
+      <FILE id="VVYGDm" name="TMD CHIL VERB.aif" compile="0" resource="1"
+            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL VERB.aif"/>
       <FILE id="jN4KjJ" name="button_small_off.png" compile="0" resource="1"
             file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_off.png"/>
       <FILE id="vULdED" name="button_small_on.png" compile="0" resource="1"
