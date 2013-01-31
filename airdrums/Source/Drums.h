@@ -22,11 +22,18 @@ public:
         static Drums s_instance;
         return s_instance;
     }
-
+    
+    MidiKeyboardState keyboardState;
+    bool recording = true;
+    bool metronomeOn = true;
+    
 private:
     Synthesiser synth;
     MidiMessageCollector midiCollector;
-    MidiKeyboardState keyboardState;
+    MidiBuffer recordBuffer;
+    MidiBuffer metronomeBuffer;
+    long sampleCounter = 0;
+    long maxRecordSamples = 0;
 };
 
 #endif

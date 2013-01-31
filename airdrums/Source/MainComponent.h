@@ -20,7 +20,8 @@
     your controls and content.
 */
 class MainContentComponent   : public Component,
-                               public OpenGLRenderer
+                               public OpenGLRenderer,
+                               public MidiKeyboardStateListener
 {
 public:
     //==============================================================================
@@ -38,6 +39,10 @@ public:
     void newOpenGLContextCreated();
     void renderOpenGL();
     void openGLContextClosing();
+    
+    // MidiKeyboardStateListener overrides
+    void handleNoteOn (MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity);
+    void handleNoteOff (MidiKeyboardState* source, int midiChannel, int midiNoteNumber) {}
     
 private:
     void layoutPads();

@@ -172,6 +172,11 @@ void PadView::draw()
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
+void PadView::triggerDisplay()
+{
+    fade = 1.f;
+}
+
 bool PadView::hitTest(const M3DVector3f& point)
 {
     M3DVector3f center;
@@ -230,7 +235,7 @@ void PadView::updatePointedState(FingerView* inFingerView)
     if (hitTest(point) && !hitTest(prevPoint) &&
         prevPoint[1] > point[1])
     {
-        fade = 1.f;
+        //fade = 1.f;
         printf("trigger %d\n", padNum);
         Drums::instance().NoteOn(padNum,1.f);
     }

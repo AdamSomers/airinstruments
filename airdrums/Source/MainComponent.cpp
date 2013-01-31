@@ -31,6 +31,7 @@ MainContentComponent::MainContentComponent()
     openGLContext.setSwapInterval(1);
     setSize (800, 600);
     MotionDispatcher::zLimit = -100;
+    Drums::instance().keyboardState.addListener(this);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -278,4 +279,12 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
     }
     prevMouseY = e.getPosition().y;
     prevMouseX = e.getPosition().x;
+}
+
+void MainContentComponent::handleNoteOn(MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity)
+{
+    if (midiNoteNumber < pads.size())
+    {
+        pads.at(midiNoteNumber)->triggerDisplay();
+    }
 }

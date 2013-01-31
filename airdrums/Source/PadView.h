@@ -18,6 +18,7 @@ public:
     void setup();
     void update();
     void draw();
+    void triggerDisplay();
     
     // FingerView::Listener overrides
     void updatePointedState(FingerView* inFingerView);

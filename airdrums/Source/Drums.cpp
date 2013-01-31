@@ -2,6 +2,19 @@
 
 Drums::Drums()
 {
+    float tempo = 110;
+    float bps = tempo / 60.f;
+    int numBeats = 8;
+    float seconds = numBeats / bps;
+    float samples = 44100 * seconds;
+    maxRecordSamples = samples;
+    
+    long metronomePos = 0.f;
+    for (int i = 0; i < numBeats; ++i) {
+        metronomeBuffer.addEvent(MidiMessage::noteOn(1, 16, 1.f), metronomePos);
+        metronomePos += (long)(samples / numBeats);
+    }
+    
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
     WavAudioFormat wavFormat;
@@ -119,6 +132,9 @@ Drums::Drums()
     notes.clear();
     notes.setRange (15, 1, true);
     synth.addSound (new SamplerSound ("", *chh, notes, 15, 0.0, 0.1, 10.0));
+    notes.clear();
+    notes.setRange (16, 1, true);
+    synth.addSound (new SamplerSound ("", *clv, notes, 16, 0.0, 0.1, 10.0));
 
     synth.setNoteStealingEnabled(false);
 }
@@ -129,7 +145,14 @@ Drums::~Drums()
 
 void Drums::NoteOn(int note, float velocity)
 {
-    keyboardState.noteOn(1,note,velocity);
+    
+    if (recording) {
+        MidiMessage m = MidiMessage::noteOn(1, note, velocity);
+        m.setTimeStamp(sampleCounter);
+        recordBuffer.addEvent(m, sampleCounter);
+    }
+    else
+        keyboardState.noteOn(1,note,velocity);
 }
 
 void Drums::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
@@ -149,6 +172,36 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     
     MidiBuffer incomingMidi;
     midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
-    keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+    
+    if (recording) {
+        keyboardState.reset();
+        MidiBuffer::Iterator i(recordBuffer);
+        int samplePos = sampleCounter;
+        MidiMessage message;
+        i.setNextSamplePosition(sampleCounter);
+        while (i.getNextEvent(message, samplePos) && samplePos == sampleCounter)
+        {
+            Logger::outputDebugString(String::formatted("%d\n", samplePos));
+            incomingMidi.addEvent(message, 0);
+            keyboardState.noteOn(1, message.getNoteNumber(),1);
+        }
+        
+        if (metronomeOn) {
+            MidiBuffer::Iterator metronomeIterator(metronomeBuffer);
+            metronomeIterator.setNextSamplePosition(sampleCounter);
+            while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
+            {
+                Logger::outputDebugString(String::formatted("%d\n", samplePos));
+                incomingMidi.addEvent(message, 0);
+            }
+        }
+        
+    }
+    else
+        keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
     synth.renderNextBlock (*bufferToFill.buffer, incomingMidi, 0, bufferToFill.numSamples);
+    
+    sampleCounter += bufferToFill.numSamples;
+    if (sampleCounter > maxRecordSamples)
+        sampleCounter = 0;
 }
