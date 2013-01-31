@@ -174,8 +174,10 @@ void Drums::NoteOn(int note, float velocity)
             playbackState.noteOn(1,note,velocity);
         }
     }
-    else
+    else {
         keyboardState.noteOn(1,note,velocity);
+        playbackState.noteOn(1,note,velocity);
+    }
     midiBufferLock.exit();
 }
 
