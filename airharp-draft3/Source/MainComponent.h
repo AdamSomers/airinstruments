@@ -44,7 +44,6 @@ public:
 private:
     void layoutStrings();
     
-    OpenGLContext openGLContext;
     HarpToolbar* toolbar = NULL;
     StatusBar* statusBar = NULL;
     std::vector<StringView*> strings;

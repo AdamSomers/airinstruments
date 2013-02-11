@@ -8,6 +8,8 @@
 #include <GLMatrixStack.h>
 #include <GLGeometryTransform.h>
 
+#include "../JuceLibraryCode/JuceHeader.h"
+
 class Environment
 {
 public:
@@ -23,6 +25,8 @@ public:
     static GLGeometryTransform transformPipeline;
     static GLFrustum viewFrustum;
     static GLFrame	cameraFrame;
+    
+    static OpenGLContext openGLContext;
 
     static int screenW;
     static int screenH;

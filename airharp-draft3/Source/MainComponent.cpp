@@ -28,15 +28,16 @@
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
-    openGLContext.setRenderer (this);
-    openGLContext.setComponentPaintingEnabled (true);
-    openGLContext.attachTo (*this);
+    Environment::openGLContext.setRenderer (this);
+    Environment::openGLContext.setComponentPaintingEnabled (true);
+    Environment::openGLContext.attachTo (*this);
     //openGLContext.setSwapInterval(2);
     setSize (800, 600);
 }
 
 MainContentComponent::~MainContentComponent()
 {
+    Environment::openGLContext.detach();
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -134,6 +135,12 @@ void MainContentComponent::newOpenGLContextCreated()
 
 void MainContentComponent::renderOpenGL()
 {
+    //OpenGLShaderProgram shaderProgram(Environment::openGLContext);
+    //shaderProgram.addShader(BinaryData::testShader_vs, GL_VERTEX_SHADER);
+    //shaderProgram.addShader(BinaryData::testShader_fs, GL_FRAGMENT_SHADER);
+    //shaderProgram.link();
+    //shaderProgram.use();
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
@@ -159,9 +166,15 @@ void MainContentComponent::renderOpenGL()
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
     
+    //shaderProgram.use();
+    
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
+    
+    for (auto iter : MotionDispatcher::instance().handViews)
+        if (iter.second->inUse)
+            ;//iter.second->draw();
     
     for (StringView* sv : strings)
         sv->update();

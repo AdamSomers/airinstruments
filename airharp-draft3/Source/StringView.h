@@ -139,6 +139,9 @@ public:
             stringColor[3] = 1.f;
         }
         //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glEnable(GL_MULTISAMPLE);
+        glEnable(GL_BLEND);
+        glEnable(GL_POLYGON_SMOOTH);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         

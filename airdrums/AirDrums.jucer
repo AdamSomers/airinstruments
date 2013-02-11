@@ -5,6 +5,8 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
+      <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
       <FILE id="flUJWR" name="TMD CHIL BKICK.aif" compile="0" resource="1"
             file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL BKICK.aif"/>
       <FILE id="cKK1O5" name="TMD CHIL CHH.aif" compile="0" resource="1"
@@ -43,6 +45,8 @@
             file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_on.png"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
+      <FILE id="whjiPC" name="HandView.h" compile="0" resource="0" file="../common/HandView.h"/>
       <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>
       <FILE id="S3Vl7E" name="Environment.h" compile="0" resource="0" file="../common/Environment.h"/>
       <FILE id="pp8MMQ" name="FingerView.cpp" compile="1" resource="0" file="../common/FingerView.cpp"/>

@@ -3,6 +3,7 @@
 
 #include "Leap.h"
 #include "FingerView.h"
+#include "HandView.h"
 #include <map>
 #include <vector>
 
@@ -22,7 +23,9 @@ public:
     virtual void onFrame(const Leap::Controller&);
 
     static std::map<int,FingerView*> fingerViews;
+    static std::map<int,HandView*> handViews;
     static std::vector<FingerView::Listener*> fingerViewListeners;
+    static std::vector<HandView::Listener*> handViewListeners;
     Leap::Controller controller;
     static float zLimit;
 };

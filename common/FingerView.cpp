@@ -13,10 +13,20 @@ void FingerView::setup()
 {
     gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
     gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
+    
+    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
+    File vsFile = appDataFile.getChildFile("testShader.vs");
+    File fsFile = appDataFile.getChildFile("testShader.fs");
+    
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+                                                                                            GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
 }
 
 void FingerView::draw()
 {
+    if (shaderId == -1)
+        return;
+    
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mCamera;
     Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
@@ -25,7 +35,19 @@ void FingerView::draw()
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     GLfloat color [] = { 0.f, 1.f, 0.f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
+    
+    glEnable(GL_DEPTH_TEST);
+    glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    
+    glUseProgram((GLuint)shaderId);
+    GLint iModelViewMatrix = glGetUniformLocation(shaderId, "mvMatrix");
+    glUniformMatrix4fv(iModelViewMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetModelViewMatrix());
+    GLint iProjMatrix = glGetUniformLocation(shaderId, "pMatrix");
+    glUniformMatrix4fv(iProjMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetProjectionMatrix());
+    GLint iColor = glGetUniformLocation(shaderId, "vColor");
+    glUniform4fv(iColor, 1, color);
+//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
     GfxTools::drawBatch(&cylinderBatch);
     GfxTools::drawBatch(&coneBatch);
     

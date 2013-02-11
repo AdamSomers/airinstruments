@@ -5,6 +5,8 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
+      <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
       <FILE id="jN4KjJ" name="button_small_off.png" compile="0" resource="1"
             file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_off.png"/>
       <FILE id="vULdED" name="button_small_on.png" compile="0" resource="1"
@@ -15,6 +17,8 @@
       <FILE id="S3Vl7E" name="Environment.h" compile="0" resource="0" file="../common/Environment.h"/>
       <FILE id="pp8MMQ" name="FingerView.cpp" compile="1" resource="0" file="../common/FingerView.cpp"/>
       <FILE id="syw8ZU" name="FingerView.h" compile="0" resource="0" file="../common/FingerView.h"/>
+      <FILE id="h3qr7m" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
+      <FILE id="aavAv2" name="HandView.h" compile="0" resource="0" file="../common/HandView.h"/>
       <FILE id="hFBswi" name="GfxTools.cpp" compile="1" resource="0" file="../common/GfxTools.cpp"/>
       <FILE id="azv16r" name="GfxTools.h" compile="0" resource="0" file="../common/GfxTools.h"/>
       <FILE id="sHxVRG" name="HUD.cpp" compile="1" resource="0" file="../common/HUD.cpp"/>
@@ -131,7 +135,7 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../../Leap_SDK/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR"
+               postbuildCommand="cp ../../../../Leap_SDK/lib/libLeap.dylib $TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH"
                extraCompilerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"

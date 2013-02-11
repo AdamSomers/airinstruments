@@ -1,5 +1,5 @@
-#ifndef h_FingerView
-#define h_FingerView
+#ifndef h_HandView
+#define h_HandView
 
 #include <GLTools.h>	// OpenGL toolkit
 #include <GLFrustum.h>
@@ -9,10 +9,10 @@
 #include "Environment.h"
 #include "Leap.h"
 
-class FingerView
+class HandView
 {
 public:
-    FingerView();
+    HandView();
     void setup();
     void draw();
     float normalizedX();
@@ -24,27 +24,25 @@ public:
     {
     public:
         Listener();
-        virtual void updatePointedState(FingerView* fv) = 0;
-        virtual void tap(FingerView* fv, float velocity) {};
+        virtual ~Listener();
+        virtual void updatePointedState(HandView* fv) = 0;
         void reset();
         bool needsReset;
-        std::vector<FingerView*> pointers;
+        std::vector<HandView*> pointers;
     protected:
-        void fingerPointing(FingerView* fv);
-        void fingerNotPointing(FingerView* fv);
+        void handPointing(HandView* fv);
+        void handNotPointing(HandView* fv);
     private:
     };
     
     GLFrame objectFrame;
     GLFrame prevFrame;
-    Leap::Finger finger;
+    Leap::Hand hand;
     bool inUse;
     int id;
     bool invalid;
 private:
-    GLTriangleBatch     coneBatch;
-    GLTriangleBatch     cylinderBatch;
-    int shaderId = -1;
+    GLTriangleBatch     batch;
 };
 
-#endif // h_FingerView
+#endif // h_HandView
