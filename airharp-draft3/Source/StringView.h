@@ -142,6 +142,9 @@ public:
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_BLEND);
         glEnable(GL_POLYGON_SMOOTH);
+
+        glDisable(GL_CULL_FACE);
+        
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
