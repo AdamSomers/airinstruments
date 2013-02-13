@@ -207,15 +207,14 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                     Leap::Finger prevFinger = controller.frame(1).finger(f.id());
                     if (prevFinger.isValid())
                     {
-                        float prevVel = prevFinger.tipVelocity().magnitude();
-                        float vel = f.tipVelocity().magnitude() / 1000.f;
+                        float prevVel = prevFinger.tipVelocity().y / 1000.f;
+                        float vel = f.tipVelocity().y / 1000.f;
                         float diff = fabsf(vel - prevVel);
-                        float posDiff = prevFinger.tipPosition().distanceTo(f.tipPosition());
-                        if (prevFinger.tipPosition().y > 250.f && f.tipPosition().y < 250.f)
+                        if (vel < -.3 && prevVel > -.3)
                         {
                             for (FingerView::Listener* listener : fingerViewListeners)
                             {
-                                listener->tap(fv, fminf(vel, 1.f));
+                                listener->tap(fv, fminf((fabsf(vel) - fabsf(prevVel)) * 3.f + 0.5, 1.f));
                             }
                         }
                     }
