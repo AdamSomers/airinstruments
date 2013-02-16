@@ -5,6 +5,7 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="UVBlTH" name="icon.icns" compile="0" resource="0" file="/Volumes/Data/Dropbox/Air Harp Gfx/icon.icns"/>
       <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
       <FILE id="flUJWR" name="TMD CHIL BKICK.aif" compile="0" resource="1"

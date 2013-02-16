@@ -11,7 +11,7 @@ void main(void) {
      mNormalMatrix[1] = mvMatrix[1].xyz;
      mNormalMatrix[2] = mvMatrix[2].xyz;
      vec3 vNorm = normalize(mNormalMatrix * vNormal);
-     vec3 vLightDir = vec3(0.0, -0.5, 1.0);
+     vec3 vLightDir = vec3(0.2, -0.5, 1.0);
      float fDot = max(0.0, dot(vNorm, vLightDir)); 
      vFragColor.rgb = vColor.rgb * fDot;
      vFragColor.a = vColor.a;
