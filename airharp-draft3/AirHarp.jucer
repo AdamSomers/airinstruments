@@ -91,6 +91,9 @@
               file="../../muskit/src/WindowFunction.cpp"/>
         <FILE id="AXmaIV" name="WindowFunction.h" compile="0" resource="0"
               file="../../muskit/src/WindowFunction.h"/>
+        <FILE id="fKErCt" name="ScaleDegrees.cpp" compile="1" resource="0"
+              file="../../muskit/src/ScaleDegrees.cpp"/>
+        <FILE id="BV33nm" name="ScaleDegrees.h" compile="0" resource="0" file="../../muskit/src/ScaleDegrees.h"/>
       </GROUP>
       <GROUP id="{1BFC90E5-FFB9-E7CA-9392-618CAA532F25}" name="ThirdParty">
         <FILE id="cieQrz" name="chuck_fft.c" compile="1" resource="0" file="../../muskit/ThirdParty/chuck_fft.c"/>
@@ -137,7 +140,7 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
                postbuildCommand="cp ../../../../Leap_SDK/lib/libLeap.dylib $TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH"
-               extraCompilerFlags="">
+               extraCompilerFlags="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
                        isDebug="1" optimisation="1" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"

@@ -10,32 +10,25 @@
 #include "Leap.h"
 
 // Pentatonic Major
-const int gPentatonicMajor[] = { 0, 2, 5, 7, 9 };
-const int gPentatonicMajorIntervals = 5;
+const std::vector<std::string> gPentatonicMajor = { "1", "2", "4", "5", "6" };
 
 // Pentatonic Minor
-const int gPentatonicMinor[] = { 0, 3, 5, 7, 10 };
-const int gPentatonicMinorIntervals = 5;
+const std::vector<std::string> gPentatonicMinor = {"1", "b3", "4", "5", "b7" };
 
 // Whole-tone
-const int gWholeTone[] = { 0, 2, 4, 6, 8, 10 };
-const int gWholeToneIntervals = 6;
+const std::vector<std::string> gWholeTone = { "1", "2", "3", "#4", "#5", "#6" };
 
 // Diatonic
-const int gDiatonic[] = { 0, 2, 4, 5, 7, 9, 11 };
-const int gDiatonicIntervals = 7;
+const std::vector<std::string> gDiatonic = { "1", "2", "3", "4", "5", "6", "7" };
 
 // Minor
-const int gMinor[] = { 0, 2, 3, 5, 7, 8, 10 };
-const int gMinorIntervals = 7;
+const std::vector<std::string> gMinor = { "1", "2", "b3", "4", "5", "b6", "b7" };
 
 // Slendro
-const int gExotic1[] = { 0, 4, 5, 7, 11 };
-const int gExotic1Intervals = 5;
+const std::vector<std::string> gExotic1 = { "1", "3", "4", "5", "7"};
 
-// Enigmatic
-const int gExotic2[] = { 0, 4, 6, 7, 11 };
-const int gExotic2Intervals = 5;
+// Chinese mystery
+const std::vector<std::string> gExotic2 = { "1", "3", "#4", "5", "7" };
 
 class Harp : public Leap::Listener
 {
@@ -65,8 +58,7 @@ public:
     std::vector<Karplus*>& GetStrings() { return strings; }
     void SetScale(int scaleIndex);
     
-    static const int* gScale;
-    static int gScaleIntervals;
+    static std::vector<std::string> gScale;
 private:
     void Cleanup();
     void Init();

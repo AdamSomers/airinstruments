@@ -7,8 +7,7 @@
 #define FILTER_FREQ 150.f
 #define FILTER_RES 0.f
 
-const int* Harp::gScale = gPentatonicMajor;
-int Harp::gScaleIntervals = gPentatonicMajorIntervals;
+std::vector<std::string> Harp::gScale = gPentatonicMajor;
 
 Harp::Harp()
 : numStrings(1)
@@ -177,31 +176,24 @@ void Harp::SetScale(int scaleIndex)
     switch (scaleIndex) {
         case 0:
             gScale = gDiatonic;
-            gScaleIntervals = gDiatonicIntervals;
             break;
         case 1:
             gScale = gMinor;
-            gScaleIntervals = gMinorIntervals;
             break;
         case 2:
             gScale = gPentatonicMajor;
-            gScaleIntervals = gPentatonicMajorIntervals;
             break;
         case 3:
             gScale = gPentatonicMinor;
-            gScaleIntervals = gPentatonicMinorIntervals;
             break;
         case 4:
             gScale = gWholeTone;
-            gScaleIntervals = gWholeToneIntervals;
             break;
         case 5:
             gScale = gExotic1;
-            gScaleIntervals = gExotic1Intervals;
             break;
         case 6:
             gScale = gExotic2;
-            gScaleIntervals = gExotic2Intervals;
             break;
         default:
             break;

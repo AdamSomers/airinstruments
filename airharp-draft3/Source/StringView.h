@@ -8,6 +8,7 @@
 
 #include "FingerView.h"
 #include "Harp.h"
+#include "ScaleDegrees.h"
 #include "GfxTools.h"
 
 #define NUM_SAMPLES 128
@@ -132,7 +133,7 @@ public:
         Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
         
         GLfloat stringColor [] = { 1, 1, 1, 1 };
-        if (stringNum % Harp::gScaleIntervals == 0) {
+        if (stringNum % Harp::gScale.size() == 0) {
             stringColor[0] = 1.f;
             stringColor[1] = 1.f;
             stringColor[2] = .5f;
@@ -235,10 +236,10 @@ public:
     
     void pluck(float position, float velocity = 1.f)
     {
-        int idx = stringNum % Harp::gScaleIntervals;
-        int mult = (stringNum / (float)Harp::gScaleIntervals);
+        int idx = stringNum % Harp::gScale.size();
+        int mult = (stringNum / (float)Harp::gScale.size());
         int base = 32 + 12*mult;
-        int note = base + Harp::gScale[idx];
+        int note = base + ScaleDegrees::getChromatic(Harp::gScale.at(idx));
         int bufferSize = 512;
         float buffer[bufferSize];
         memset(buffer, 0, bufferSize);
