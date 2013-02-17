@@ -9,26 +9,33 @@
 #include "JuceReverbAudioClient.h"
 #include "Leap.h"
 
-// Pentatonic Major
 const std::vector<std::string> gPentatonicMajor = { "1", "2", "4", "5", "6" };
-
-// Pentatonic Minor
 const std::vector<std::string> gPentatonicMinor = {"1", "b3", "4", "5", "b7" };
-
-// Whole-tone
 const std::vector<std::string> gWholeTone = { "1", "2", "3", "#4", "#5", "#6" };
-
-// Diatonic
-const std::vector<std::string> gDiatonic = { "1", "2", "3", "4", "5", "6", "7" };
-
-// Minor
+const std::vector<std::string> gDiatonic = { "1", "2", "3", "4", "5", "6", "7"};
 const std::vector<std::string> gMinor = { "1", "2", "b3", "4", "5", "b6", "b7" };
-
-// Slendro
+// Slendro?
 const std::vector<std::string> gExotic1 = { "1", "3", "4", "5", "7"};
-
 // Chinese mystery
 const std::vector<std::string> gExotic2 = { "1", "3", "#4", "5", "7" };
+
+const std::vector<std::string> I     = { "1", "5", "8" };
+const std::vector<std::string> ii    = { "2", "4", "6" };
+const std::vector<std::string> iii   = { "3", "5", "7" };
+const std::vector<std::string> IV    = { "1", "4", "6" };
+const std::vector<std::string> V     = { "2", "5", "7" };
+const std::vector<std::string> vi    = { "1", "3", "6" };
+const std::vector<std::string> VII   = { "2", "4", "b7" };
+const std::vector<std::string> vii_d = { "2", "4", "7" };
+
+const std::vector<std::string> i     = { "1", "b3", "5" };
+const std::vector<std::string> ii_d  = { "2", "4", "b6" };
+const std::vector<std::string> III   = { "b3", "5", "b7" };
+const std::vector<std::string> iv    = { "1", "4", "b6" };
+const std::vector<std::string> v     = { "2", "5", "b7" };
+const std::vector<std::string> VI    = { "1", "b3", "b6" };
+
+const std::vector<std::string> gDiminishedChord = { "1", "b3", "b5" };
 
 class Harp : public Leap::Listener
 {
@@ -76,6 +83,8 @@ private:
     int numStrings;
     float wetLevel;
     float dryLevel;
+    
+    bool chordMode = true;
 };
 
 #endif /* defined(__AirHarp__Harp__) */

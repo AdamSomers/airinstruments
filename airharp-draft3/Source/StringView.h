@@ -238,7 +238,8 @@ public:
     {
         int idx = stringNum % Harp::gScale.size();
         int mult = (stringNum / (float)Harp::gScale.size());
-        int base = 32 + 12*mult;
+        int octaveSpan = (ScaleDegrees::getChromatic(Harp::gScale.at(Harp::gScale.size()-1)) / 12) + 1;
+        int base = 32 + 12*octaveSpan*mult;
         int note = base + ScaleDegrees::getChromatic(Harp::gScale.at(idx));
         int bufferSize = 512;
         float buffer[bufferSize];

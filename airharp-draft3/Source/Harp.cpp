@@ -173,30 +173,62 @@ void Harp::ExciteString(int num, int note, int velocity, float* buff, int buffer
 
 void Harp::SetScale(int scaleIndex)
 {
-    switch (scaleIndex) {
-        case 0:
-            gScale = gDiatonic;
-            break;
-        case 1:
-            gScale = gMinor;
-            break;
-        case 2:
-            gScale = gPentatonicMajor;
-            break;
-        case 3:
-            gScale = gPentatonicMinor;
-            break;
-        case 4:
-            gScale = gWholeTone;
-            break;
-        case 5:
-            gScale = gExotic1;
-            break;
-        case 6:
-            gScale = gExotic2;
-            break;
-        default:
-            break;
+    if (!chordMode)
+    {
+        switch (scaleIndex) {
+            case 0:
+                gScale = gDiatonic;
+                break;
+            case 1:
+                gScale = gMinor;
+                break;
+            case 2:
+                gScale = gPentatonicMajor;
+                break;
+            case 3:
+                gScale = gPentatonicMinor;
+                break;
+            case 4:
+                gScale = gWholeTone;
+                break;
+            case 5:
+                gScale = gExotic1;
+                break;
+            case 6:
+                gScale = gExotic2;
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        bool minor = false;
+        switch (scaleIndex) {
+            case 0:
+                gScale = minor ? i : I;
+                break;
+            case 1:
+                gScale = minor ? ii_d : ii;
+                break;
+            case 2:
+                gScale = minor ? III : iii;
+                break;
+            case 3:
+                gScale = minor ? iv : IV;
+                break;
+            case 4:
+                gScale = minor ? v : V;
+                break;
+            case 5:
+                gScale = minor ? VI : vi;
+                break;
+            case 6:
+                gScale = minor ? VII : vii_d;
+                break;
+            default:
+                break;
+        }
     }
 }
 
