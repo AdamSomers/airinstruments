@@ -96,6 +96,13 @@ FingerView::Listener::Listener()
     MotionDispatcher::instance().fingerViewListeners.push_back(this);
 }
 
+FingerView::Listener::~Listener()
+{
+    auto i = std::find(MotionDispatcher::instance().fingerViewListeners.begin(), MotionDispatcher::instance().fingerViewListeners.end(), this);
+    if (i != MotionDispatcher::instance().fingerViewListeners.end())
+        MotionDispatcher::instance().fingerViewListeners.erase(i);
+}
+
 void FingerView::Listener::reset()
 {
     pointers.clear();

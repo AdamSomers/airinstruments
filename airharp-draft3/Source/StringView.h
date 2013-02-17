@@ -83,6 +83,8 @@ public:
     
     void update()
     {
+        Harp::Lock l;
+        
         float w = gStringLineWidth;
         float scale = 0.1f;
         

@@ -24,6 +24,7 @@ public:
     {
     public:
         Listener();
+        ~Listener();
         virtual void updatePointedState(FingerView* fv) = 0;
         virtual void tap(FingerView* fv, float velocity) {};
         void reset();

@@ -124,6 +124,8 @@ void Harp::Cleanup()
 
 void Harp::AddString()
 {
+    Lock l;
+    
     if (numStrings == MAX_STRINGS )
         return;
     
@@ -145,10 +147,12 @@ void Harp::AddString()
 
 void Harp::RemoveString()
 {
+    Lock l;
+    
     if (numStrings == 1)
         return;
     AudioServer::GetInstance()->EnterLock();
-    mixer->RemoveInput(filters.back());
+    mixer->RemoveInput(accumulators.back());
     AudioServer::GetInstance()->ExitLock();
     
     delete filters.back();
@@ -163,11 +167,15 @@ void Harp::RemoveString()
 
 void Harp::NoteOn(int num, int note, int velocity)
 {
+    Lock l;
+    
     strings.at(num)->NoteOn(note, velocity);
 }
 
 void Harp::ExciteString(int num, int note, int velocity, float* buff, int bufferSize)
 {
+    Lock l;
+    
     strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
 }
 

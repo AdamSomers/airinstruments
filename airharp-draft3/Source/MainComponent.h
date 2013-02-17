@@ -35,6 +35,7 @@ public:
     void mouseMove(const MouseEvent& e);
     void mouseDown(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);
+    bool keyPressed(const KeyPress& kp);
     
     // OpenGLRenderer overrides
     void newOpenGLContextCreated();
@@ -46,7 +47,9 @@ private:
     
     HarpToolbar* toolbar = NULL;
     StatusBar* statusBar = NULL;
+    std::mutex stringLock;
     std::vector<StringView*> strings;
+    std::vector<StringView*> inactiveStrings;
     std::vector<HUDView*> views;
 
     //==============================================================================

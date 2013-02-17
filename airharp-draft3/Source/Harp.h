@@ -19,7 +19,7 @@ const std::vector<std::string> gExotic1 = { "1", "3", "4", "5", "7"};
 // Chinese mystery
 const std::vector<std::string> gExotic2 = { "1", "3", "#4", "5", "7" };
 
-const std::vector<std::string> I     = { "1", "5", "8" };
+const std::vector<std::string> I     = { "1", "3", "5" };
 const std::vector<std::string> ii    = { "2", "4", "6" };
 const std::vector<std::string> iii   = { "3", "5", "7" };
 const std::vector<std::string> IV    = { "1", "4", "6" };
@@ -66,6 +66,16 @@ public:
     void SetScale(int scaleIndex);
     
     static std::vector<std::string> gScale;
+    
+    class Lock
+    {
+    public:
+        Lock() { lock.enter(); }
+        ~Lock() { lock.exit(); }
+    private:
+        CriticalSection lock;
+    };
+    
 private:
     void Cleanup();
     void Init();
@@ -83,7 +93,6 @@ private:
     int numStrings;
     float wetLevel;
     float dryLevel;
-    
     bool chordMode = true;
 };
 

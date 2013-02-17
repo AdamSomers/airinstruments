@@ -33,6 +33,7 @@ MainContentComponent::MainContentComponent()
     Environment::openGLContext.attachTo (*this);
     //openGLContext.setSwapInterval(2);
     setSize (800, 600);
+    setWantsKeyboardFocus(true);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -149,8 +150,10 @@ void MainContentComponent::renderOpenGL()
     
     glEnable(GL_DEPTH_TEST);
     
+    stringLock.lock();
     for (StringView* sv : strings)
         sv->draw();
+    stringLock.unlock();
     
 	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
@@ -176,8 +179,10 @@ void MainContentComponent::renderOpenGL()
         if (iter.second->inUse)
             ;//iter.second->draw();
     
+    stringLock.lock();
     for (StringView* sv : strings)
         sv->update();
+    stringLock.unlock();
     
     //openGLContext.triggerRepaint();
 }
@@ -188,8 +193,9 @@ void MainContentComponent::openGLContextClosing()
 
 void MainContentComponent::layoutStrings()
 {
+    stringLock.lock();
     float aspectRatio = Environment::screenW / (float)Environment::screenH;
-    float stringWidth = (2.f * aspectRatio) / (float)NUM_STRINGS;
+    float stringWidth = (2.f * aspectRatio) / (float)strings.size();
     float pos = -aspectRatio + stringWidth;
     float step = stringWidth;
     for (StringView* sv : strings)
@@ -199,6 +205,7 @@ void MainContentComponent::layoutStrings()
         pos += step;
         sv->updateStringBg();
     }
+    stringLock.unlock();
 }
 
 void MainContentComponent::mouseMove(const MouseEvent& e)
@@ -217,4 +224,42 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
 {
     for (HUDView* v : views)
         v->motion(e.getPosition().x, e.getPosition().y);
+}
+
+bool MainContentComponent::keyPressed(const KeyPress& kp)
+{
+    bool ret = false;
+    
+    if (kp.getTextCharacter() == 'a') {
+        if (strings.size() >= NUM_STRINGS)
+            return true;
+        
+        Environment::openGLContext.deactivateCurrentContext();
+        StringView* sv = inactiveStrings.back();
+        inactiveStrings.pop_back();
+        //sv->setup();
+        sv->stringNum = strings.back()->stringNum + 1;
+        strings.push_back(sv);
+        Harp::instance().AddString();
+        layoutStrings();
+        Environment::openGLContext.makeActive();
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'z') {
+        if (strings.size() <= 1)
+            return true;
+        
+        Environment::openGLContext.deactivateCurrentContext();
+        stringLock.lock();
+        StringView* sv = strings.back();
+        strings.pop_back();
+        inactiveStrings.push_back(sv);
+        Harp::instance().RemoveString();
+        stringLock.unlock();
+        layoutStrings();
+        Environment::openGLContext.makeActive();
+        ret = true;
+    }
+
+    return ret;
 }
