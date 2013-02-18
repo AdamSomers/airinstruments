@@ -277,7 +277,7 @@ int mainn(int argc, char* argv[])
 {
     RtAudioDriver driver(BUFFER_SIZE);
     for (int i = 0; i < NUM_STRINGS-1; ++i)
-        Harp::instance().AddString();
+        ;//Harp::instance().AddString();
     
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);

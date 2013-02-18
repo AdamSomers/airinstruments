@@ -21,7 +21,6 @@
 #include "MainComponent.h"
 
 #define BUFFER_SIZE 512
-#define NUM_STRINGS 24
 
 //RtAudioDriver driver(BUFFER_SIZE);
 
@@ -99,12 +98,11 @@ void MainContentComponent::newOpenGLContextCreated()
 
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
 
-    for (int i = 0; i < NUM_STRINGS; ++i)
+    for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
-        StringView* sv = new StringView;
-        sv->setup();
-        sv->stringNum = i;
-        strings.push_back(sv);
+        HarpView* hv = new HarpView(i);
+        hv->numHarps = HarpManager::instance().getNumHarps();
+        harps.push_back(hv);
     }
     
     layoutStrings();
@@ -127,10 +125,7 @@ void MainContentComponent::newOpenGLContextCreated()
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,h-50,w,50));
     statusBar->setBounds(HUDRect(0,0,w,20));
-    
-    for (int i = 0; i < NUM_STRINGS-1; ++i)
-        Harp::instance().AddString();
-    
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
 
@@ -150,10 +145,8 @@ void MainContentComponent::renderOpenGL()
     
     glEnable(GL_DEPTH_TEST);
     
-    stringLock.lock();
-    for (StringView* sv : strings)
-        sv->draw();
-    stringLock.unlock();
+    for (HarpView* hv : harps)
+        hv->draw();
     
 	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
@@ -179,10 +172,8 @@ void MainContentComponent::renderOpenGL()
         if (iter.second->inUse)
             ;//iter.second->draw();
     
-    stringLock.lock();
-    for (StringView* sv : strings)
-        sv->update();
-    stringLock.unlock();
+    for (HarpView* hv : harps)
+        hv->update();
     
     //openGLContext.triggerRepaint();
 }
@@ -193,19 +184,11 @@ void MainContentComponent::openGLContextClosing()
 
 void MainContentComponent::layoutStrings()
 {
-    stringLock.lock();
-    float aspectRatio = Environment::screenW / (float)Environment::screenH;
-    float stringWidth = (2.f * aspectRatio) / (float)strings.size();
-    float pos = -aspectRatio + stringWidth;
-    float step = stringWidth;
-    for (StringView* sv : strings)
+    for (HarpView* hv : harps)
     {
-        sv->stringWidth = stringWidth;
-        sv->objectFrame.SetOrigin(pos, 0, -12);
-        pos += step;
-        sv->updateStringBg();
+        hv->height = 2.f / harps.size();
+        hv->layoutStrings();
     }
-    stringLock.unlock();
 }
 
 void MainContentComponent::mouseMove(const MouseEvent& e)
@@ -230,36 +213,29 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 {
     bool ret = false;
     
-    if (kp.getTextCharacter() == 'a') {
-        if (strings.size() >= NUM_STRINGS)
-            return true;
-        
-        Environment::openGLContext.deactivateCurrentContext();
-        StringView* sv = inactiveStrings.back();
-        inactiveStrings.pop_back();
-        //sv->setup();
-        sv->stringNum = strings.back()->stringNum + 1;
-        strings.push_back(sv);
-        Harp::instance().AddString();
-        layoutStrings();
-        Environment::openGLContext.makeActive();
+    if (kp.getTextCharacter() == 'a')
+    {
+        for (HarpView* hv : harps)
+        {
+            hv->addString();
+        }
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'z') {
-        if (strings.size() <= 1)
-            return true;
-        
-        Environment::openGLContext.deactivateCurrentContext();
-        stringLock.lock();
-        StringView* sv = strings.back();
-        strings.pop_back();
-        inactiveStrings.push_back(sv);
-        Harp::instance().RemoveString();
-        stringLock.unlock();
-        layoutStrings();
-        Environment::openGLContext.makeActive();
+    else if (kp.getTextCharacter() == 'z')
+    {
+        for (HarpView* hv : harps)
+        {
+            hv->removeString();
+        }
         ret = true;
     }
+    else if (kp.getTextCharacter() == 'c')
+    {
+        HarpManager::instance().getHarp(0)->setChordMode(!HarpManager::instance().getHarp(0)->getChordMode());
+        
+        ret = true;
+    }
+
 
     return ret;
 }

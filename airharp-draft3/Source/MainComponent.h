@@ -11,6 +11,7 @@
 
 #include "HarpHUD.h"
 #include "StringView.h"
+#include "HarpView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -47,9 +48,8 @@ private:
     
     HarpToolbar* toolbar = NULL;
     StatusBar* statusBar = NULL;
-    std::mutex stringLock;
-    std::vector<StringView*> strings;
-    std::vector<StringView*> inactiveStrings;
+    std::vector<HarpView*> harps;
+    std::vector<HarpView*> inactiveHarps;
     std::vector<HUDView*> views;
 
     //==============================================================================

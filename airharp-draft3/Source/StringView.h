@@ -83,17 +83,20 @@ public:
     
     void update()
     {
-        Harp::Lock l;
+        ScopedLock sl(HarpManager::instance().getHarp(harpNum)->lock);
         
         float w = gStringLineWidth;
         float scale = 0.1f;
         
+        if (HarpManager::instance().getHarp(harpNum)->GetBuffers().size() < stringNum+1)
+            return;
+        
         // skip this frame if not enough samples accumulated
-        if (Harp::instance().GetBuffers().at(stringNum)->GetSize() < NUM_SAMPLES)
+        if (HarpManager::instance().getHarp(harpNum)->GetBuffers().at(stringNum)->GetSize() < NUM_SAMPLES)
             return;
         
         // pop the sample data from audio buffer and display along string
-        SampleAccumulator::PeakBuffer peakBuffer = Harp::instance().GetBuffers().at(stringNum)->Get();
+        SampleAccumulator::PeakBuffer peakBuffer = HarpManager::instance().getHarp(harpNum)->GetBuffers().at(stringNum)->Get();
         for (int i = 0; i < numSampleVerts / 2; ++i)
         {
             long numPeakBuffers = peakBuffer.size();
@@ -133,6 +136,9 @@ public:
         M3DMatrix44f mObjectFrame;
         objectFrame.GetMatrix(mObjectFrame);
         Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
+        M3DMatrix44f mScale;
+        m3dScaleMatrix44(mScale, 1.f, yScale, 1.f);
+        Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
         GLfloat stringColor [] = { 1, 1, 1, 1 };
         if (stringNum % Harp::gScale.size() == 0) {
@@ -169,6 +175,7 @@ public:
     
     void updatePointedState(FingerView* inFingerView)
     {
+        int numHarps = HarpManager::instance().getNumActiveHarps();
         M3DVector3f point;
         M3DVector3f ray;
         M3DVector3f center;
@@ -182,9 +189,11 @@ public:
         m3dNormalizeVector3(ray);
         center[0] -= stringWidth / 2.f;
         GfxTools::collide(point, ray, center, pNormal, collisionPoint);
-        float distance = fabsf(collisionPoint[0] - center[0]);
+        float distanceX = fabsf(collisionPoint[0] - center[0]);
+        float distanceY = fabsf(collisionPoint[1] - center[1]);
         // Ray intersecting rect = pointing at string
-        if (distance < stringWidth / 2.f)
+        if (distanceX < stringWidth / 2.f &&
+            distanceY < stringHeight * (1.f / (float)numHarps) / 2.f)
         {
             fingerPointing(inFingerView);
         }
@@ -201,15 +210,18 @@ public:
             M3DVector3f prevRay;
             inFingerView->prevFrame.GetOrigin(prevPoint);
             inFingerView->prevFrame.GetForwardVector(prevRay);
-            distance = collisionPoint[0] - center[0];
+            float distanceX = collisionPoint[0] - center[0];
+            float distanceY = fabsf(collisionPoint[1] - center[1]);
             M3DVector3f prevCollisionPoint;
             GfxTools::collide(prevPoint, prevRay, center, pNormal, prevCollisionPoint);
-            float prevDistance = prevCollisionPoint[0] - center[0];
+            float prevDistanceX = prevCollisionPoint[0] - center[0];
+            float prevDistanceY = prevCollisionPoint[1] - center[1];
             // String's center line was crossed = pluck
-            if ((distance < 0 &&
-                 prevDistance >= 0) ||
-                (distance >= 0 &&
-                 prevDistance < 0))
+            if (((distanceX < 0 &&
+                 prevDistanceX >= 0) ||
+                (distanceX >= 0 &&
+                 prevDistanceX < 0)) &&
+                distanceY < stringHeight * (1.f / (float)numHarps) / 2.f)
             {
                 float pos = point[1];
                 pos += 1.f;
@@ -257,13 +269,16 @@ public:
             //if (fingerPrevX > t)
             //    buffer[x] = -buffer[x];
         }
-        Harp::instance().ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
+        HarpManager::instance().getHarp(harpNum)->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
+        //HarpManager::instance().getHarp(harpNum)->NoteOn(stringNum, note, 127.f * velocity);
     }
     
     GLFrame objectFrame;
     int stringNum;
+    int harpNum = 0;
     float stringWidth = 0.06;
     float stringHeight = 2.f;
+    float yScale = 1;
     
 private:
     GLBatch     bgBatch;

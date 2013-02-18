@@ -83,7 +83,7 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
     else
         b->setState(true, false);
     
-    Harp::instance().SetScale(b->getId());
+    HarpManager::instance().getHarp(0)->SetScale(b->getId());
 }
 
 StatusBar::StatusBar()

@@ -124,7 +124,7 @@ void Harp::Cleanup()
 
 void Harp::AddString()
 {
-    Lock l;
+    ScopedLock sl(lock);
     
     if (numStrings == MAX_STRINGS )
         return;
@@ -147,7 +147,7 @@ void Harp::AddString()
 
 void Harp::RemoveString()
 {
-    Lock l;
+    ScopedLock sl(lock);
     
     if (numStrings == 1)
         return;
@@ -167,14 +167,14 @@ void Harp::RemoveString()
 
 void Harp::NoteOn(int num, int note, int velocity)
 {
-    Lock l;
+    ScopedLock sl(lock);
     
     strings.at(num)->NoteOn(note, velocity);
 }
 
 void Harp::ExciteString(int num, int note, int velocity, float* buff, int bufferSize)
 {
-    Lock l;
+    ScopedLock sl(lock);
     
     strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
 }
@@ -250,6 +250,31 @@ void Harp::setDryLevel(float val)
     dryGain->SetVal(val);
 }
 
+void Harp::selectChord(int chordIndex)
+{
+    selectedChords.insert(chordIndex);
+}
+
+void Harp::deSelectChord(int chordIndex)
+{
+    selectedChords.erase(chordIndex);
+}
+
+bool Harp::isChordSelected(int chordIndex) const
+{
+    return selectedChords.find(chordIndex) != selectedChords.end();
+}
+
+void Harp::setChordMode(bool shouldBeChordMode)
+{
+    chordMode = shouldBeChordMode;
+}
+
+int Harp::getNumSelectedChords() const
+{
+    return selectedChords.size();
+}
+
 void Harp::onFrame(const Leap::Controller& controller)
 {
     const Leap::HandList& hands = controller.frame().hands();
@@ -275,5 +300,66 @@ void Harp::onFrame(const Leap::Controller& controller)
         setDryLevel(1-mix);
     }
     
+}
+
+void Harp::setActive(bool shouldBeActive)
+{
+    active = shouldBeActive;
+    if (shouldBeActive)
+    {
+        AudioServer::GetInstance()->AddClient(outputGain, 0);
+        AudioServer::GetInstance()->AddClient(outputGain, 1);
+    }
+    else
+    {
+        AudioServer::GetInstance()->RemoveClient(outputGain, 0);
+        AudioServer::GetInstance()->RemoveClient(outputGain, 1);
+    }
+}
+
+HarpManager::HarpManager()
+{
+    for (int i = 0; i < numHarps; ++i) {
+        harps.push_back(new Harp);
+        harps.back()->SetScale(i);
+    }
+}
+
+HarpManager::~HarpManager()
+{
+    for (Harp* h : harps)
+        delete h;
+}
+
+void HarpManager::activateHarp(int harpIndex)
+{
+    jassert(harpIndex < numHarps);
+    Harp* h = harps.at(harpIndex);
+    h->setActive(true);
+}
+
+void HarpManager::deActivateHarp(int harpIndex)
+{
+    jassert(harpIndex < numHarps);
+    Harp* h = harps.at(harpIndex);
+    h->setActive(false);
+}
+
+int HarpManager::getNumActiveHarps()
+{
+    int num = 0;
+    for (Harp* h : harps)
+    {
+        if(h->isActive())
+            ++num;
+    }
+
+    return num;
+}
+
+Harp* HarpManager::getHarp(int harpIndex)
+{
+    jassert(harpIndex < harps.size());
+    return harps.at(harpIndex);
 }
 

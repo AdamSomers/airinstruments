@@ -2,6 +2,7 @@
 #define __AirHarp__Harp__
 
 #include <iostream>
+#include <set>
 
 //#include "MidiServer.h"
 #include "Voices.h"
@@ -51,15 +52,17 @@ public:
     float getDryLevel() const { return dryLevel; }
     void setWetLevel(float val);
     void setDryLevel(float val);
+    bool isActive() const { return active; }
+    void setActive(bool shouldBeActive);
+    void setChordMode(bool shouldBeChordMode);
+    bool getChordMode() const { return chordMode; }
+    void selectChord(int chordIndex);
+    void deSelectChord(int chordIndex);
+    bool isChordSelected(int chordIndex) const;
+    int getNumSelectedChords() const;
     
     // Leap Listener override
     void onFrame(const Leap::Controller&);
-    
-    static Harp& instance( void )
-    {
-        static Harp s_instance;
-        return s_instance;
-    }
     
     std::vector<SampleAccumulator*>& GetBuffers() { return accumulators; }
     std::vector<Karplus*>& GetStrings() { return strings; }
@@ -67,15 +70,8 @@ public:
     
     static std::vector<std::string> gScale;
     
-    class Lock
-    {
-    public:
-        Lock() { lock.enter(); }
-        ~Lock() { lock.exit(); }
-    private:
-        CriticalSection lock;
-    };
-    
+    CriticalSection lock;
+
 private:
     void Cleanup();
     void Init();
@@ -93,7 +89,35 @@ private:
     int numStrings;
     float wetLevel;
     float dryLevel;
-    bool chordMode = true;
+    bool active = false;
+    bool chordMode = false;
+    std::set<int> selectedChords;
+};
+
+class HarpManager
+{
+public:
+    
+    HarpManager();
+    ~HarpManager();
+
+    static HarpManager& instance( void )
+    {
+        static HarpManager s_instance;
+        return s_instance;
+    }
+    
+    int getNumHarps() const { return harps.size(); }
+    int getNumActiveHarps();
+    Harp* getHarp(int harpIndex);
+    
+private:
+    void activateHarp(int harpIndex);
+    void deActivateHarp(int harpIndex);
+    
+    std::vector<Harp*> harps;
+    const int numHarps = 1;
+
 };
 
 #endif /* defined(__AirHarp__Harp__) */
