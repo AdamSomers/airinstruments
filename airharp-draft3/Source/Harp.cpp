@@ -80,8 +80,9 @@ void Harp::Init()
     AudioServer::GetInstance()->AddClient(outputGain, 1);
     
     MotionDispatcher::instance().controller.addListener(*this);
-
-    selectChord(0);
+    
+    for (int i = 0; i < 7; ++i)
+        selectChord(i);
 }
 
 void Harp::Cleanup()
@@ -275,6 +276,10 @@ bool Harp::isChordSelected(int chordIndex) const
 void Harp::setChordMode(bool shouldBeChordMode)
 {
     chordMode = shouldBeChordMode;
+    if (chordMode)
+        SetScale(0);
+    else
+        SetScale(getSelectedScale());
 }
 
 int Harp::getNumSelectedChords() const
@@ -284,7 +289,7 @@ int Harp::getNumSelectedChords() const
 
 void Harp::setChord(int chordIndex)
 {
-    jassert(chordIndex < selectedChords.size());
+    //jassert(chordIndex < selectedChords.size());
     int chordNumber = *(selectedChords.begin() + chordIndex);
     SetScale(chordNumber);
 }

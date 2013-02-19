@@ -23,7 +23,8 @@
     your controls and content.
 */
 class MainContentComponent   : public Component,
-                               public OpenGLRenderer
+                               public OpenGLRenderer,
+                               public ChangeListener
 {
 public:
     //==============================================================================
@@ -43,11 +44,17 @@ public:
     void renderOpenGL();
     void openGLContextClosing();
     
+    // ChangeListener override
+    void changeListenerCallback (ChangeBroadcaster* source);
+    
 private:
     void layoutStrings();
+    void layoutChordRegions();
+    bool chordRegionsNeedUpdate = false;
     
     HarpToolbar* toolbar = NULL;
     StatusBar* statusBar = NULL;
+    std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
     std::vector<HUDView*> views;

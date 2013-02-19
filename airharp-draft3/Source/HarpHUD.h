@@ -7,6 +7,8 @@
 
 class HarpToolbar : public HUDView
                   , public HUDButton::Listener
+                  , public ChangeBroadcaster
+
 {
 public:
     HarpToolbar();
@@ -49,6 +51,27 @@ public:
 private:
     HUDButton indicator;
     GLBatch batch;
+};
+
+class ChordRegion : public HUDView
+{
+public:
+    ChordRegion();
+    ~ChordRegion();
+    // HUDView overrides
+    void setup();
+    void draw();
+    void loadTextures();
+    void setId(int inId) { id = inId; }
+    int getId() const { return id; }
+    void setActive(bool shouldBeActive);
+private:
+    GLBatch batch;
+    GLBatch imageBatch;
+    GLuint textureID;
+    int id = 0;
+    bool isActive = false;
+    float fade = 0.f;
 };
 
 #endif /* defined(__AirHarp__HarpHUD__) */

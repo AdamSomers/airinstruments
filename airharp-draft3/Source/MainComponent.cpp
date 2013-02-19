@@ -20,6 +20,8 @@
 
 #include "MainComponent.h"
 
+#include <algorithm>
+
 #define BUFFER_SIZE 512
 
 //RtAudioDriver driver(BUFFER_SIZE);
@@ -38,6 +40,8 @@ MainContentComponent::MainContentComponent()
 MainContentComponent::~MainContentComponent()
 {
     Environment::openGLContext.detach();
+    delete toolbar;
+    delete statusBar;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -72,6 +76,7 @@ void MainContentComponent::resized()
         statusBar->setBounds(HUDRect(0,0,w,20));
     
     layoutStrings();
+    chordRegionsNeedUpdate = true;
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
@@ -92,10 +97,13 @@ void MainContentComponent::newOpenGLContextCreated()
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    //glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-    //glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    //glEnable(GL_MULTISAMPLE);
+    
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
 
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
@@ -113,10 +121,24 @@ void MainContentComponent::newOpenGLContextCreated()
     HarpToolbar* tb = new HarpToolbar;
     views.push_back(tb);
     toolbar = tb;
+    toolbar->updateButtons();
+    
+    {
+    MessageManagerLock mml;
+    toolbar->addChangeListener(this);
+    }
     
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
+    
+    for (int i = 0; i < 7; ++i)
+    {
+        ChordRegion* cr = new ChordRegion;
+        cr->setId(i);
+        chordRegions.push_back(cr);
+        cr->loadTextures();
+    }
     
     for (HUDView* v : views)
         v->loadTextures();
@@ -125,20 +147,29 @@ void MainContentComponent::newOpenGLContextCreated()
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,h-50,w,50));
     statusBar->setBounds(HUDRect(0,0,w,20));
+    
+    int yPos = 0;
+    int height = h/7;
+    for (ChordRegion* cr : chordRegions)
+    {
+        cr->setBounds(HUDRect(0,yPos, w, height));
+        yPos += height;
+    }
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
 
 void MainContentComponent::renderOpenGL()
 {
-    //OpenGLShaderProgram shaderProgram(Environment::openGLContext);
-    //shaderProgram.addShader(BinaryData::testShader_vs, GL_VERTEX_SHADER);
-    //shaderProgram.addShader(BinaryData::testShader_fs, GL_FRAGMENT_SHADER);
-    //shaderProgram.link();
-    //shaderProgram.use();
+    if (chordRegionsNeedUpdate) {
+        layoutChordRegions();
+        chordRegionsNeedUpdate = false;
+    }
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
@@ -161,9 +192,7 @@ void MainContentComponent::renderOpenGL()
     Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
-    
-    //shaderProgram.use();
-    
+
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
@@ -171,9 +200,17 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().handViews)
         if (iter.second->inUse)
             ;//iter.second->draw();
-    
+
     for (HarpView* hv : harps)
         hv->update();
+    
+    glDisable(GL_DEPTH_TEST);
+    
+    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    
+    for (ChordRegion* cr : chordRegions)
+        cr->draw();
     
     //openGLContext.triggerRepaint();
 }
@@ -189,6 +226,35 @@ void MainContentComponent::layoutStrings()
         hv->height = 2.f / harps.size();
         hv->layoutStrings();
     }
+}
+
+void MainContentComponent::layoutChordRegions()
+{
+    if (!Environment::instance().ready)
+        return;
+    
+    Harp* h = HarpManager::instance().getHarp(0);
+    if (!h->getChordMode())
+        return;
+    std::vector<ChordRegion*> activeChordRegions;
+    for (ChordRegion* cr : chordRegions)
+    {
+        if (h->isChordSelected(cr->getId())) {
+            activeChordRegions.push_back(cr);
+            cr->setActive(true);
+        }
+        else
+            cr->setActive(false);
+    }
+    int numActiveChords = std::max<int>(1, activeChordRegions.size());
+    int height = getHeight() / numActiveChords;
+    int yPos = 0;
+    for (ChordRegion* cr : activeChordRegions)
+    {
+        cr->setBounds(HUDRect(0,yPos, getWidth(), height));
+        yPos += height;
+    }
+    
 }
 
 void MainContentComponent::mouseMove(const MouseEvent& e)
@@ -231,12 +297,24 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     }
     else if (kp.getTextCharacter() == 'c')
     {
-        HarpManager::instance().getHarp(0)->setChordMode(!HarpManager::instance().getHarp(0)->getChordMode());
+        Harp* h = HarpManager::instance().getHarp(0);
+        h->setChordMode(!h->getChordMode());
         toolbar->updateButtons();
+        if (h->getChordMode()) {
+            chordRegionsNeedUpdate = true;
+        }
+        else {
+            for (ChordRegion* cr : chordRegions)
+                cr->setActive(false);
+        }
+        
         
         ret = true;
     }
-
-
     return ret;
+}
+
+void MainContentComponent::changeListenerCallback (ChangeBroadcaster* source)
+{
+    chordRegionsNeedUpdate = true;
 }

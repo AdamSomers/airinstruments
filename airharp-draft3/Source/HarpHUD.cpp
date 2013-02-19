@@ -1,6 +1,7 @@
 #include "HarpHUD.h"
 #include "Harp.h"
 #include "MotionServer.h"
+#include "GfxTools.h"
 
 HarpToolbar::HarpToolbar()
 {
@@ -95,7 +96,8 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
             b->setState(true, false);
         
         h->SetScale(b->getId());
-    }    
+    }
+    sendChangeMessage();
 }
 
 void HarpToolbar::updateButtons()
@@ -187,4 +189,115 @@ void StatusBar::onConnect(const Leap::Controller& controller)
 void StatusBar::onDisconnect(const Leap::Controller& controller)
 {
     indicator.setState(false);
+}
+
+ChordRegion::ChordRegion()
+{
+    
+}
+
+ChordRegion::~ChordRegion()
+{
+    
+}
+
+void ChordRegion::setup()
+{
+    HUDView::setup();
+    
+    M3DVector3f verts[4] = {
+        bounds.x, bounds.y, 0.f,
+        bounds.x + bounds.w, bounds.y, 0.f,
+        bounds.x, bounds.y + bounds.h, 0.f,
+        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
+    };
+    
+    batch.Begin(GL_TRIANGLE_STRIP, 4);
+    batch.CopyVertexData3f(verts);
+    batch.End();
+    
+    M3DVector3f imageVerts[4] = {
+        0, bounds.y, 0.f,
+        bounds.h, bounds.y, 0.f,
+        0, bounds.y + bounds.h, 0.f,
+        bounds.h, bounds.y + bounds.h, 0.f
+    };
+    
+    M3DVector2f texCoords[4] = {
+        0.f, 1.f,
+        1.f, 1.f,
+        0.f, 0.f,
+        1.f, 0.f
+    };
+    
+    imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    imageBatch.CopyVertexData3f(imageVerts);
+    imageBatch.CopyTexCoordData2f(texCoords, 0);
+    imageBatch.End();
+}
+
+void ChordRegion::draw()
+{
+    GLfloat texColor[4] = { 1.f, 1.f, 1.f, fade };
+    
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glEnable(GL_BLEND);
+
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
+    glLineWidth(1.f);
+    imageBatch.Draw();
+    
+    GLfloat color [] = { 0.0f, 0.0f, 0.0f, 1.f };
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
+    //batch.Draw();
+    
+    //HUDView::draw();
+    
+    if (isActive && fade < 1.f)
+    {
+        fade += 0.3f;
+        if (fade > .4f) fade = .4f;
+    }
+    if (!isActive && fade > 0.f)
+    {
+        fade -= 0.11f;
+        if (fade < 0.f) fade = 0.f;
+    }
+}
+
+void ChordRegion::loadTextures()
+{
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    
+    switch (id) {
+        case 0:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_1_png, BinaryData::_1_pngSize));
+            break;
+        case 1:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_2_png, BinaryData::_2_pngSize));
+            break;
+        case 2:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_3_png, BinaryData::_3_pngSize));
+            break;
+        case 3:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_4_png, BinaryData::_4_pngSize));
+            break;
+        case 4:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_5_png, BinaryData::_5_pngSize));
+            break;
+        case 5:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_6_png, BinaryData::_6_pngSize));
+            break;
+        case 6:
+            GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::_7_png, BinaryData::_7_pngSize));
+            break;
+        default:
+            break;
+    }
+}
+
+void ChordRegion::setActive(bool shouldBeActive)
+{
+    isActive = shouldBeActive;
 }

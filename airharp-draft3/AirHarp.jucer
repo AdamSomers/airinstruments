@@ -5,6 +5,13 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="SvKaAi" name="1.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/1.png"/>
+      <FILE id="RqcMy4" name="2.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/2.png"/>
+      <FILE id="Fg9m7x" name="3.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/3.png"/>
+      <FILE id="ya25mq" name="4.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/4.png"/>
+      <FILE id="Evd1zt" name="5.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/5.png"/>
+      <FILE id="Llh660" name="6.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/6.png"/>
+      <FILE id="y2nz3R" name="7.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/7.png"/>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
       <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
