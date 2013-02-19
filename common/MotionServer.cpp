@@ -104,7 +104,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                 if (!hv->inUse) {
                     hv->inUse = true;
                     inserted = true;
-                    printf("Inserted hand %d\n", hv->id);
+                    //printf("Inserted hand %d\n", hv->id);
                 }
                 hv->invalid = false;
             }
@@ -167,7 +167,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                         if (!fv->inUse) {
                             fv->inUse = true;
                             inserted = true;
-                            printf("Inserted finger %d\n", fv->id);
+                            //printf("Inserted finger %d\n", fv->id);
                         }
                         fv->invalid = false;
                     }
@@ -242,7 +242,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         FingerView* fv = iter.second;
         if (fv->invalid && fv->inUse) {
             fv->inUse = false;
-            printf("Removed finger %d\n", fv->id);
+            //printf("Removed finger %d\n", fv->id);
         }
     }
     
@@ -251,7 +251,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         HandView* hv = iter.second;
         if (hv->invalid && hv->inUse) {
             hv->inUse = false;
-            printf("Removed hand %d\n", hv->id);
+            //printf("Removed hand %d\n", hv->id);
         }
     }
 }

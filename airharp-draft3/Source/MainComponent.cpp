@@ -232,6 +232,7 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     else if (kp.getTextCharacter() == 'c')
     {
         HarpManager::instance().getHarp(0)->setChordMode(!HarpManager::instance().getHarp(0)->getChordMode());
+        toolbar->updateButtons();
         
         ret = true;
     }

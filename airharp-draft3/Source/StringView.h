@@ -175,7 +175,7 @@ public:
     
     void updatePointedState(FingerView* inFingerView)
     {
-        int numHarps = HarpManager::instance().getNumActiveHarps();
+        int numChords = HarpManager::instance().getHarp(0)->getNumSelectedChords();
         M3DVector3f point;
         M3DVector3f ray;
         M3DVector3f center;
@@ -192,8 +192,8 @@ public:
         float distanceX = fabsf(collisionPoint[0] - center[0]);
         float distanceY = fabsf(collisionPoint[1] - center[1]);
         // Ray intersecting rect = pointing at string
-        if (distanceX < stringWidth / 2.f &&
-            distanceY < stringHeight * (1.f / (float)numHarps) / 2.f)
+        if (distanceX < stringWidth / 2.f)// &&
+            //distanceY < stringHeight * (1.f / (float)numChords) / 2.f)
         {
             fingerPointing(inFingerView);
         }
@@ -220,14 +220,19 @@ public:
             if (((distanceX < 0 &&
                  prevDistanceX >= 0) ||
                 (distanceX >= 0 &&
-                 prevDistanceX < 0)) &&
-                distanceY < stringHeight * (1.f / (float)numHarps) / 2.f)
+                 prevDistanceX < 0))) //&&
+                //distanceY < stringHeight * (1.f / (float)numChords) / 2.f)
             {
                 float pos = point[1];
                 pos += 1.f;
                 pos /= 2.f;
                 
-                printf("%f\n", pos);
+                Harp* h = HarpManager::instance().getHarp(harpNum);
+                if (h->getChordMode()) {
+                    int chordNum = pos * h->getNumSelectedChords();                    
+                    h->setChord(chordNum);
+                    pos = 0.5;
+                }
                 pluck(pos);
             }
         }

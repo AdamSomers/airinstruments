@@ -14,6 +14,7 @@ public:
     // HUDView overrides
     void setup();
     void draw();
+    void updateButtons();
     
     void layoutControls();
     

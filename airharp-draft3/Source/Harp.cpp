@@ -81,6 +81,7 @@ void Harp::Init()
     
     MotionDispatcher::instance().controller.addListener(*this);
 
+    selectChord(0);
 }
 
 void Harp::Cleanup()
@@ -183,6 +184,7 @@ void Harp::SetScale(int scaleIndex)
 {
     if (!chordMode)
     {
+        selectedScale  = scaleIndex;
         switch (scaleIndex) {
             case 0:
                 gScale = gDiatonic;
@@ -252,17 +254,22 @@ void Harp::setDryLevel(float val)
 
 void Harp::selectChord(int chordIndex)
 {
-    selectedChords.insert(chordIndex);
+    auto iter = std::find(selectedChords.begin(), selectedChords.end(), chordIndex);
+    if (iter == selectedChords.end())
+        selectedChords.push_back(chordIndex);
+    std::sort(selectedChords.begin(), selectedChords.end());
 }
 
 void Harp::deSelectChord(int chordIndex)
 {
-    selectedChords.erase(chordIndex);
+    auto iter = std::find(selectedChords.begin(), selectedChords.end(), chordIndex);
+    if (iter != selectedChords.end())
+        selectedChords.erase(iter);
 }
 
 bool Harp::isChordSelected(int chordIndex) const
 {
-    return selectedChords.find(chordIndex) != selectedChords.end();
+    return std::find(selectedChords.begin(), selectedChords.end(), chordIndex) != selectedChords.end();
 }
 
 void Harp::setChordMode(bool shouldBeChordMode)
@@ -273,6 +280,13 @@ void Harp::setChordMode(bool shouldBeChordMode)
 int Harp::getNumSelectedChords() const
 {
     return selectedChords.size();
+}
+
+void Harp::setChord(int chordIndex)
+{
+    jassert(chordIndex < selectedChords.size());
+    int chordNumber = *(selectedChords.begin() + chordIndex);
+    SetScale(chordNumber);
 }
 
 void Harp::onFrame(const Leap::Controller& controller)

@@ -72,18 +72,56 @@ void HarpToolbar::draw()
 void HarpToolbar::buttonStateChanged(HUDButton* b)
 {
     bool state = b->getState();
-    if (state)
+    Harp* h = HarpManager::instance().getHarp(0);
+    
+    if (h->getChordMode())
     {
-        for (HUDButton* button : buttons)
+        if (state)
+            h->selectChord(b->getId());
+        else if (h->getNumSelectedChords() > 1)
+            h->deSelectChord(b->getId());
+    }
+    else
+    {
+        if (state)
         {
-            if (button != b)
-                button->setState(false, false);
+            for (HUDButton* button : buttons)
+            {
+                if (button != b)
+                    button->setState(false, false);
+            }
+        }
+        else
+            b->setState(true, false);
+        
+        h->SetScale(b->getId());
+    }    
+}
+
+void HarpToolbar::updateButtons()
+{
+    Harp* h = HarpManager::instance().getHarp(0);
+    
+    if (h->getChordMode())
+    {
+        for (HUDButton* b : buttons)
+        {
+            if (h->isChordSelected(b->getId()))
+                b->setState(true);
+            else
+                b->setState(false);
         }
     }
     else
-        b->setState(true, false);
-    
-    HarpManager::instance().getHarp(0)->SetScale(b->getId());
+    {
+        for (HUDButton* b : buttons)
+        {
+            if (h->getSelectedScale() == b->getId())
+                b->setState(true);
+            else
+                b->setState(false);
+        }
+    }
 }
 
 StatusBar::StatusBar()
