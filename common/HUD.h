@@ -73,6 +73,7 @@ public:
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }
+    void setTextures(GLuint on, GLuint off);
     void loadTextures();
     class Listener
     {

@@ -19,6 +19,7 @@ public:
     void loadTextures();
     
     void updateButtons();
+    void setButtonTextures(GLuint on, GLuint off);
     
     void layoutControls();
     
@@ -45,9 +46,9 @@ public:
     // HUDView overrides
     void setup();
     void draw();
-    void loadTextures();
     
     void layoutControls();
+    void setIndicatorTextures(GLuint on, GLuint off);
     
     // Leap overrides
     void onInit(const Leap::Controller& controller);

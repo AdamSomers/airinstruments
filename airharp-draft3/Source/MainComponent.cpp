@@ -17,6 +17,7 @@
 #include "Harp.h"
 #include "MotionServer.h"
 #include "FingerView.h"
+#include "SkinManager.h"
 
 #include "MainComponent.h"
 
@@ -180,14 +181,10 @@ void MainContentComponent::newOpenGLContextCreated()
     
     setupBackground();
     
-    glGenTextures(1, &backgroundTextureId);
-    glBindTexture(GL_TEXTURE_2D, backgroundTextureId);
+    SkinManager::instance().getSkin();
+    toolbar->setButtonTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
+    statusBar->setIndicatorTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
     
-    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
-    File imageFile = appDataFile.getChildFile("background0.png");
-    
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
 
@@ -205,7 +202,7 @@ void MainContentComponent::renderOpenGL()
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     
-    glBindTexture(GL_TEXTURE_2D, backgroundTextureId);
+    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().background);
     GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
     glEnable(GL_BLEND);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
@@ -328,6 +325,8 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 {
     bool ret = false;
     
+    printf("%d\n", kp.getTextDescription().getIntValue());
+
     if (kp.getTextCharacter() == 'a')
     {
         for (HarpView* hv : harps)
@@ -360,6 +359,14 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         
         ret = true;
     }
+    else if (kp.getTextDescription().getIntValue() > 0)
+    {
+        SkinManager::instance().setSkinIndex(kp.getTextDescription().getIntValue()-1);
+        toolbar->setButtonTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
+        statusBar->setIndicatorTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
+        ret = true;
+    }
+
     return ret;
 }
 

@@ -2,6 +2,7 @@
 #include "Harp.h"
 #include "MotionServer.h"
 #include "GfxTools.h"
+#include "SkinManager.h"
 
 HarpToolbar::HarpToolbar()
 {
@@ -84,7 +85,7 @@ void HarpToolbar::draw()
 {
     GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
     
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().bezelTop);
     glEnable(GL_BLEND);
     
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
@@ -100,15 +101,13 @@ void HarpToolbar::draw()
 
 void HarpToolbar::loadTextures()
 {
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    
-    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
-    File imageFile = appDataFile.getChildFile("bezel_top0.png");
-    
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-    
     HUDView::loadTextures();
+}
+
+void HarpToolbar::setButtonTextures(GLuint on, GLuint off)
+{
+    for (HUDButton* b : buttons)
+        b->setTextures(on, off);
 }
 
 void HarpToolbar::buttonStateChanged(HUDButton* b)
@@ -228,11 +227,16 @@ void StatusBar::layoutControls()
     indicator.setBounds(r);
 }
 
+void StatusBar::setIndicatorTextures(GLuint on, GLuint off)
+{
+    indicator.setTextures(on, off);
+}
+
 void StatusBar::draw()
 {
     GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
     
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().bezelBottom);
     glEnable(GL_BLEND);
     
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
@@ -244,20 +248,6 @@ void StatusBar::draw()
 //    glLineWidth(1.f);
 //    batch.Draw();
     HUDView::draw();
-}
-
-void StatusBar::loadTextures()
-{
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    
-    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
-    File imageFile = appDataFile.getChildFile("bezel_bottom0.png");
-    
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-    
-    HUDView::loadTextures();
-    
 }
 
 void StatusBar::onInit(const Leap::Controller& controller)

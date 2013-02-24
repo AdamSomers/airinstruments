@@ -10,6 +10,7 @@
 #include "Harp.h"
 #include "ScaleDegrees.h"
 #include "GfxTools.h"
+#include "SkinManager.h"
 
 #define NUM_SAMPLES 128
 static float gStringLineWidth = 0.015;
@@ -189,40 +190,23 @@ public:
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
          
-        glBindTexture(GL_TEXTURE_2D, stringTextureID);
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().string);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
-        glBindTexture(GL_TEXTURE_2D, stringBgTextureID);
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().stringBackground);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), color, 0);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
 
         bgBatch.Draw();
         
-
-        
-
         Environment::instance().modelViewMatrix.PopMatrix();
     }
     
     void loadTextures()
     {
-        glGenTextures(1, &stringTextureID);
-        glBindTexture(GL_TEXTURE_2D, stringTextureID);
-        
-        File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
-        File imageFile = appDataFile.getChildFile("string0.png");
-        
-        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-        
-        glGenTextures(1, &stringBgTextureID);
-        glBindTexture(GL_TEXTURE_2D, stringBgTextureID);
-
-        imageFile = appDataFile.getChildFile("stringBg0.png");
-        
-        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
     }
     
     void updatePointedState(FingerView* inFingerView)

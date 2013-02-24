@@ -285,25 +285,16 @@ void HUDButton::updatePointedState(FingerView* fv)
 
 void HUDButton::loadTextures()
 {
-    glGenTextures(1, &onTextureID);
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
-    
-    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
-    File imageFile = appDataFile.getChildFile("button_on0.png");
-    
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-
-    glGenTextures(1, &offTextureID);
-    glBindTexture(GL_TEXTURE_2D, offTextureID);
-
-    imageFile = appDataFile.getChildFile("button_off0.png");
-    
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-    
 //    glGenTextures(1, &onTextureID);
 //    glBindTexture(GL_TEXTURE_2D, onTextureID);
 //    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::button_small_on_png, BinaryData::button_small_on_pngSize));
 //    glGenTextures(1, &offTextureID);
 //    glBindTexture(GL_TEXTURE_2D, offTextureID);
 //    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::button_small_off_png, BinaryData::button_small_off_pngSize));
+}
+
+void HUDButton::setTextures(GLuint on, GLuint off)
+{
+    onTextureID = on;
+    offTextureID = off;
 }
