@@ -150,74 +150,8 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                 Leap::Vector pos(0, 0, 0);
                 for (int i = 0; i < numFingers; ++i)
                 {
-                    bool inserted = false;
                     const Leap::Finger& f = fingers[i];
-                    FingerView* fv = NULL;
-                    auto iter = fingerViews.find(f.id());
-                    if (iter == fingerViews.end())
-                    {
-                        // Finger map is pre-allocated, if we don't find one too bad!
-                        printf("Error! No finger in map for id %d\n", f.id());
-                        continue;
-                    }
-                    else
-                    {
-                        fv = (*iter).second;
-                        fv->finger = f;
-                        if (!fv->inUse) {
-                            fv->inUse = true;
-                            inserted = true;
-                            //printf("Inserted finger %d\n", fv->id);
-                        }
-                        fv->invalid = false;
-                    }
-                    
-                    float x = fv->normalizedX();
-                    float y = fv->normalizedY();
-                    float z = fv->normalizedZ();
-                    
-                    float dirX = f.direction().x;
-                    float dirY = f.direction().y;
-                    float dirZ = f.direction().z;
-                    
-                    M3DVector3f prev;
-                    fv->objectFrame.GetForwardVector(prev);
-                    fv->prevFrame.SetForwardVector(prev);
-                    fv->objectFrame.GetOrigin(prev);
-                    fv->prevFrame.SetOrigin(prev);
-                    
-                    fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
-                    float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-                    float scaledY = (y-.5)*4;
-                    if (z < zLimit) z = 0;
-                    float scaledZ = z*5-12;
-                    fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
-                    
-                    if (inserted) {
-                        fv->prevFrame.SetForwardVector(dirX,dirY,dirZ);
-                        fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
-                    }
-
-                    for (FingerView::Listener* listener : fingerViewListeners)
-                    {
-                        listener->updatePointedState(fv);
-                    }
-                    //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
-                    
-                    Leap::Finger prevFinger = controller.frame(1).finger(f.id());
-                    if (prevFinger.isValid())
-                    {
-                        float prevVel = prevFinger.tipVelocity().y / 1000.f;
-                        float vel = f.tipVelocity().y / 1000.f;
-                        float diff = fabsf(vel - prevVel);
-                        if (vel < -.3 && prevVel > -.3)
-                        {
-                            for (FingerView::Listener* listener : fingerViewListeners)
-                            {
-                                listener->tap(fv, fminf((fabsf(vel) - fabsf(prevVel)) * 3.f + 0.5, 1.f));
-                            }
-                        }
-                    }
+                    processFinger(f);
                 }
             }
         }
@@ -254,4 +188,167 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             //printf("Removed hand %d\n", hv->id);
         }
     }
+}
+
+void MotionDispatcher::processFinger(const Leap::Finger& f)
+{
+    bool inserted = false;
+    FingerView* fv = NULL;
+    auto iter = fingerViews.find(f.id());
+    if (iter == fingerViews.end())
+    {
+        // Finger map is pre-allocated, if we don't find one too bad!
+        printf("Error! No finger in map for id %d\n", f.id());
+        return;
+    }
+    else
+    {
+        fv = (*iter).second;
+        fv->finger = f;
+        if (!fv->inUse) {
+            fv->inUse = true;
+            inserted = true;
+            //printf("Inserted finger %d\n", fv->id);
+        }
+        fv->invalid = false;
+    }
+    
+    float x = normalizedX(f.tipPosition().x);
+    float y = normalizedY(f.tipPosition().y);
+    float z = normalizedZ(f.tipPosition().z);
+    
+    float dirX = f.direction().x;
+    float dirY = f.direction().y;
+    float dirZ = f.direction().z;
+    
+    M3DVector3f prev;
+    fv->objectFrame.GetForwardVector(prev);
+    fv->prevFrame.SetForwardVector(prev);
+    fv->objectFrame.GetOrigin(prev);
+    fv->prevFrame.SetOrigin(prev);
+    
+    fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
+    float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
+    float scaledY = (y-.5)*4;
+    if (z < zLimit) z = 0;
+    float scaledZ = z*5-12;
+    fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
+    
+    if (inserted) {
+        fv->prevFrame.SetForwardVector(dirX,dirY,dirZ);
+        fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
+    }
+    
+    for (FingerView::Listener* listener : fingerViewListeners)
+    {
+        listener->updatePointedState(fv);
+    }
+    //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
+    
+    Leap::Finger prevFinger = controller.frame(1).finger(f.id());
+    if (prevFinger.isValid())
+    {
+        float prevVel = prevFinger.tipVelocity().y / 1000.f;
+        float vel = f.tipVelocity().y / 1000.f;
+        float diff = fabsf(vel - prevVel);
+        if (vel < -.3 && prevVel > -.3)
+        {
+            for (FingerView::Listener* listener : fingerViewListeners)
+            {
+                listener->tap(fv, fminf((fabsf(vel) - fabsf(prevVel)) * 3.f + 0.5, 1.f));
+            }
+        }
+    }
+}
+
+void MotionDispatcher::spoof(float inX, float inY, float inZ)
+{
+    printf("%1.2f %1.2f %1.2f\n", inX,inY,inZ);
+    bool inserted = false;
+    FingerView* fv = NULL;
+    int fakeId = 0;
+    Leap::Finger fakeFinger;
+    float fakeDir[3] = { 0, 0, -1 };
+    auto iter = fingerViews.find(fakeId);
+    if (iter == fingerViews.end())
+    {
+        // Finger map is pre-allocated, if we don't find one too bad!
+        printf("Error! No finger in map for id %d\n", fakeId);
+        return;
+    }
+    else
+    {
+        fv = (*iter).second;
+        fv->finger = fakeFinger;
+        if (!fv->inUse) {
+            fv->inUse = true;
+            inserted = true;
+            printf("Inserted finger %d\n", fv->id);
+        }
+        fv->invalid = false;
+    }
+    
+    float x = normalizedX(inX);
+    float y = normalizedY(inY);
+    float z = normalizedZ(inZ);
+    
+    float dirX = fakeDir[0];
+    float dirY = fakeDir[1];
+    float dirZ = fakeDir[2];
+    
+    M3DVector3f prev;
+    fv->objectFrame.GetForwardVector(prev);
+    fv->prevFrame.SetForwardVector(prev);
+    fv->objectFrame.GetOrigin(prev);
+    fv->prevFrame.SetOrigin(prev);
+    
+    fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
+    float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
+    float scaledY = (y-.5)*4;
+    if (z < zLimit) z = 0;
+    float scaledZ = z*5-12;
+    fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
+    
+    if (inserted) {
+        fv->prevFrame.SetForwardVector(dirX,dirY,dirZ);
+        fv->prevFrame.SetOrigin(scaledX,scaledY,scaledZ);
+    }
+    
+    for (FingerView::Listener* listener : fingerViewListeners)
+    {
+        listener->updatePointedState(fv);
+    }
+    //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
+    
+//    Leap::Finger prevFinger = controller.frame(1).finger(f.id());
+//    if (prevFinger.isValid())
+//    {
+//        float prevVel = prevFinger.tipVelocity().y / 1000.f;
+//        float vel = f.tipVelocity().y / 1000.f;
+//        float diff = fabsf(vel - prevVel);
+//        if (vel < -.3 && prevVel > -.3)
+//        {
+//            for (FingerView::Listener* listener : fingerViewListeners)
+//            {
+//                listener->tap(fv, fminf((fabsf(vel) - fabsf(prevVel)) * 3.f + 0.5, 1.f));
+//            }
+//        }
+//    }
+
+    for (FingerView::Listener* listener : fingerViewListeners)
+    {
+        if (listener->needsReset) {
+            listener->reset();
+        }
+    }
+    
+    for (auto iter : fingerViews)
+    {
+        FingerView* fv = iter.second;
+        if (fv->invalid && fv->inUse) {
+            fv->inUse = false;
+            printf("Removed finger %d\n", fv->id);
+        }
+    }
+    
 }

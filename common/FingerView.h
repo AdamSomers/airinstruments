@@ -15,9 +15,6 @@ public:
     FingerView();
     void setup();
     void draw();
-    float normalizedX();
-    float normalizedY();
-    float normalizedZ();
     void getScreenPos(M3DVector2f& inVec);
     
     class Listener

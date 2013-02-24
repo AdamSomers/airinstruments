@@ -13,6 +13,7 @@ public:
     void layoutStrings();
     void addString();
     void removeString();
+    void loadTextures();
     
     float height = 2.f;
     int numHarps = 1;

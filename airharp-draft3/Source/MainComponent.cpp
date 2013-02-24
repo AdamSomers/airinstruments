@@ -71,19 +71,40 @@ void MainContentComponent::resized()
     Environment::instance().screenH = h;
     
     if (toolbar)
-        toolbar->setBounds(HUDRect(0,h-50,w,50));
+        toolbar->setBounds(HUDRect(0,h-70,w,70));
     if (statusBar)
-        statusBar->setBounds(HUDRect(0,0,w,20));
+        statusBar->setBounds(HUDRect(0,0,w,35));
     
     layoutStrings();
     chordRegionsNeedUpdate = true;
     
-    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
-	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-	Environment::instance().modelViewMatrix.LoadIdentity();
+    if (Environment::instance().ready)
+        setupBackground();
     
+    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);    
     Environment::instance().ready = true;
+}
+
+void MainContentComponent::setupBackground()
+{
+    M3DVector3f verts[4] = {
+        0, 0, 0.f,
+        (float)Environment::instance().screenW, 0.f, 0.f,
+        0.f, (float)Environment::instance().screenH, 0.f,
+        (float)Environment::instance().screenW, (float)Environment::instance().screenH, 0.f
+    };
+    
+    M3DVector2f texCoords[4] = {
+        0.f, 1.f,
+        1.f, 1.f,
+        0.f, 0.f,
+        1.f, 0.f
+    };
+    
+    backgroundBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    backgroundBatch.CopyVertexData3f(verts);
+    backgroundBatch.CopyTexCoordData2f(texCoords, 0);
+    backgroundBatch.End();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
@@ -109,6 +130,7 @@ void MainContentComponent::newOpenGLContextCreated()
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
         HarpView* hv = new HarpView(i);
+        hv->loadTextures();
         hv->numHarps = HarpManager::instance().getNumHarps();
         harps.push_back(hv);
     }
@@ -145,8 +167,8 @@ void MainContentComponent::newOpenGLContextCreated()
     
     int w = getWidth();
     int h = getHeight();
-    toolbar->setBounds(HUDRect(0,h-50,w,50));
-    statusBar->setBounds(HUDRect(0,0,w,20));
+    toolbar->setBounds(HUDRect(0,h-70,w,70));
+    statusBar->setBounds(HUDRect(0,0,w,35));
     
     int yPos = 0;
     int height = h/7;
@@ -155,6 +177,16 @@ void MainContentComponent::newOpenGLContextCreated()
         cr->setBounds(HUDRect(0,yPos, w, height));
         yPos += height;
     }
+    
+    setupBackground();
+    
+    glGenTextures(1, &backgroundTextureId);
+    glBindTexture(GL_TEXTURE_2D, backgroundTextureId);
+    
+    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
+    File imageFile = appDataFile.getChildFile("background0.png");
+    
+    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
@@ -168,7 +200,16 @@ void MainContentComponent::renderOpenGL()
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
+    
+    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    
+    glBindTexture(GL_TEXTURE_2D, backgroundTextureId);
+    GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
+    glEnable(GL_BLEND);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
+    backgroundBatch.Draw();
     
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
@@ -261,6 +302,14 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 {
     for (HUDView* v : views)
         v->passiveMotion(e.getPosition().x, e.getPosition().y);
+    
+    float leapSpaceX = e.getPosition().x / (float)Environment::instance().screenW;
+    leapSpaceX *= 400;
+    leapSpaceX -= 200;
+    float leapSpaceY = 1 - (e.getPosition().y / (float)Environment::instance().screenH);
+    leapSpaceY *= 300;
+    leapSpaceY += 100;
+    MotionDispatcher::instance().spoof(leapSpaceX, leapSpaceY, -5);
 }
 
 void MainContentComponent::mouseDown(const MouseEvent& e)

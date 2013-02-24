@@ -48,6 +48,9 @@ public:
     void changeListenerCallback (ChangeBroadcaster* source);
     
 private:
+    void go2d();
+    void go3d();
+    void setupBackground();
     void layoutStrings();
     void layoutChordRegions();
     bool chordRegionsNeedUpdate = false;
@@ -58,6 +61,9 @@ private:
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
     std::vector<HUDView*> views;
+    
+    GLuint backgroundTextureId;
+    GLBatch backgroundBatch;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -5,20 +5,26 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
-      <FILE id="SvKaAi" name="1.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/1.png"/>
-      <FILE id="RqcMy4" name="2.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/2.png"/>
-      <FILE id="Fg9m7x" name="3.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/3.png"/>
-      <FILE id="ya25mq" name="4.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/4.png"/>
-      <FILE id="Evd1zt" name="5.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/5.png"/>
-      <FILE id="Llh660" name="6.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/6.png"/>
-      <FILE id="y2nz3R" name="7.png" compile="0" resource="1" file="/Volumes/Data/Dropbox/Air Harp Gfx/numbers/7.png"/>
+      <GROUP id="{E13753B2-2DE5-FF85-0EAC-7C1902F6CBD1}" name="skin0">
+        <FILE id="EF5JZa" name="1.png" compile="0" resource="1" file="Resources/skin0/1.png"/>
+        <FILE id="thlqg6" name="2.png" compile="0" resource="1" file="Resources/skin0/2.png"/>
+        <FILE id="odoAHn" name="3.png" compile="0" resource="1" file="Resources/skin0/3.png"/>
+        <FILE id="ViFVzV" name="4.png" compile="0" resource="1" file="Resources/skin0/4.png"/>
+        <FILE id="aGLGha" name="5.png" compile="0" resource="1" file="Resources/skin0/5.png"/>
+        <FILE id="sMyQiH" name="6.png" compile="0" resource="1" file="Resources/skin0/6.png"/>
+        <FILE id="WgG9zT" name="7.png" compile="0" resource="1" file="Resources/skin0/7.png"/>
+        <FILE id="pzJy3s" name="background0.png" compile="0" resource="0" file="Resources/skin0/background0.png"/>
+        <FILE id="Yv0x5G" name="bezel_bottom0.png" compile="0" resource="0"
+              file="Resources/skin0/bezel_bottom0.png"/>
+        <FILE id="K4GshE" name="bezel_top0.png" compile="0" resource="0" file="Resources/skin0/bezel_top0.png"/>
+        <FILE id="yT805i" name="button_off0.png" compile="0" resource="0" file="Resources/skin0/button_off0.png"/>
+        <FILE id="B0F7o7" name="button_on0.png" compile="0" resource="0" file="Resources/skin0/button_on0.png"/>
+        <FILE id="QpgVEA" name="string0.png" compile="0" resource="0" file="Resources/skin0/string0.png"/>
+        <FILE id="AcCvP2" name="stringBg0.png" compile="0" resource="0" file="Resources/skin0/stringBg0.png"/>
+      </GROUP>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
       <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
-      <FILE id="jN4KjJ" name="button_small_off.png" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_off.png"/>
-      <FILE id="vULdED" name="button_small_on.png" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_on.png"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>

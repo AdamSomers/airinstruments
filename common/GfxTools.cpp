@@ -55,7 +55,7 @@ namespace GfxTools
         outCollisionPoint[2] = pZ;
     }
     
-    void loadTextureFromJuceImate(const Image& image)
+    void loadTextureFromJuceImage(const Image& image)
     {
         Image::BitmapData bitmapData(image, 0, 0, image.getWidth(), image.getHeight());
         GLbyte* bits = (GLbyte*)bitmapData.data;

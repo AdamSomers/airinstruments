@@ -16,6 +16,8 @@ public:
     // HUDView overrides
     void setup();
     void draw();
+    void loadTextures();
+    
     void updateButtons();
     
     void layoutControls();
@@ -30,6 +32,8 @@ private:
     //    HUDSwitch sw1;
     //    HUDSwitch sw2;
     GLBatch batch;
+    GLBatch imageBatch;
+    GLuint textureID;
 };
 
 class StatusBar : public HUDView
@@ -41,6 +45,7 @@ public:
     // HUDView overrides
     void setup();
     void draw();
+    void loadTextures();
     
     void layoutControls();
     
@@ -51,6 +56,8 @@ public:
 private:
     HUDButton indicator;
     GLBatch batch;
+    GLBatch imageBatch;
+    GLuint textureID;
 };
 
 class ChordRegion : public HUDView

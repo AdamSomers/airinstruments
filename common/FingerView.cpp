@@ -54,21 +54,6 @@ void FingerView::draw()
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
-float FingerView::normalizedX()
-{
-    return (finger.tipPosition().x / 400.f);
-}
-
-float FingerView::normalizedY()
-{
-    return (finger.tipPosition().y / 500.f);
-}
-
-float FingerView::normalizedZ()
-{
-    return finger.tipPosition().z / 250.f;
-}
-
 void FingerView::getScreenPos(M3DVector2f& inVec)
 {
     GLint viewport[4];

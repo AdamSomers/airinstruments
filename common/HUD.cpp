@@ -240,10 +240,10 @@ void HUDButton::setup()
     };
     
     M3DVector2f texCoords[4] = {
-        0.f, 0.f,
         0.f, 1.f,
-        1.f, 0.f,
-        1.f, 1.f
+        1.f, 1.f,
+        0.f, 0.f,
+        1.f, 0.f
     };
     
     batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
@@ -287,8 +287,23 @@ void HUDButton::loadTextures()
 {
     glGenTextures(1, &onTextureID);
     glBindTexture(GL_TEXTURE_2D, onTextureID);
-    GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::button_small_on_png, BinaryData::button_small_on_pngSize));
+    
+    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
+    File imageFile = appDataFile.getChildFile("button_on0.png");
+    
+    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
+
     glGenTextures(1, &offTextureID);
     glBindTexture(GL_TEXTURE_2D, offTextureID);
-    GfxTools::loadTextureFromJuceImate(ImageFileFormat::loadFrom (BinaryData::button_small_off_png, BinaryData::button_small_off_pngSize));
+
+    imageFile = appDataFile.getChildFile("button_off0.png");
+    
+    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
+    
+//    glGenTextures(1, &onTextureID);
+//    glBindTexture(GL_TEXTURE_2D, onTextureID);
+//    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::button_small_on_png, BinaryData::button_small_on_pngSize));
+//    glGenTextures(1, &offTextureID);
+//    glBindTexture(GL_TEXTURE_2D, offTextureID);
+//    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::button_small_off_png, BinaryData::button_small_off_pngSize));
 }

@@ -12,7 +12,7 @@
 #include "GfxTools.h"
 
 #define NUM_SAMPLES 128
-static float gStringLineWidth = 0.01;
+static float gStringLineWidth = 0.015;
 
 class StringView : public FingerView::Listener
 {
@@ -39,19 +39,30 @@ public:
             0.0f, 0.0f, -1.0f
         };
         
-        bgBatch.Begin(GL_TRIANGLE_STRIP, 4);
+        M3DVector2f texCoords[4] = {
+            0.f, 1.f,
+            1.f, 1.f,
+            0.f, 0.f,
+            1.f, 0.f
+        };
+        
+        bgBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
         bgBatch.CopyVertexData3f(verts);
         bgBatch.CopyNormalDataf(normals);
+        bgBatch.CopyTexCoordData2f(texCoords, 0);
         bgBatch.End();
         
         float w = gStringLineWidth;
         
         sampleVerts = new M3DVector3f[numSampleVerts];
         M3DVector3f stringNormals[numSampleVerts];
+        M3DVector2f stringTexCoords[numSampleVerts];
         float yMin = -stringHeight / 2.f;
         float yMax = stringHeight / 2.f;
         float step = (yMax - yMin) / ((float)numSampleVerts / 2.f);
         float y = yMin;
+        float texStep = 1.f / (float)(numSampleVerts / 2.f);
+        float texY = 0.f;
         float x = stringWidth/2.f - w/2;
         float z = 0.f;
         for (int i = 0; i < numSampleVerts; ++i)
@@ -70,12 +81,24 @@ public:
             stringNormals[i][1] = 0.f;
             stringNormals[i][2] = -1.f;
             
+            stringTexCoords[i][0] = (i % 2 == 0) ? 0.f : 1.f;
+            stringTexCoords[i][1] = 1.f - texY;
+
             if (i % 2 == 1) {
                 y += step;
+                texY += texStep;
             }
         }
         
-        stringBatch.Begin(GL_TRIANGLE_STRIP, numSampleVerts);
+//        M3DVector2f texCoords[4] = {
+//            0.f, 1.f,
+//            1.f, 1.f,
+//            0.f, 0.f,
+//            1.f, 0.f
+//        };
+        
+        stringBatch.Begin(GL_TRIANGLE_STRIP, numSampleVerts, 1);
+        stringBatch.CopyTexCoordData2f(stringTexCoords, 0);
         stringBatch.CopyVertexData3f(sampleVerts);
         stringBatch.CopyNormalDataf(stringNormals);
         stringBatch.End();
@@ -138,39 +161,68 @@ public:
         Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
         M3DMatrix44f mScale;
         m3dScaleMatrix44(mScale, 1.f, yScale, 1.f);
-        Environment::instance().modelViewMatrix.MultMatrix(mScale);
+        //Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
-        GLfloat stringColor [] = { 1, 1, 1, 1 };
+        GLfloat stringColor [] = { 1.f, 1.f, 1.f, 1.f };
         if (stringNum % Harp::gScale.size() == 0) {
             stringColor[0] = 1.f;
             stringColor[1] = 1.f;
             stringColor[2] = .5f;
             stringColor[3] = 1.f;
         }
-        //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_BLEND);
         glEnable(GL_POLYGON_SMOOTH);
 
         glDisable(GL_CULL_FACE);
         
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
-        stringBatch.Draw();
-        
-        GLfloat color [] = { 0.7f, 0.7f, 1.f, fade * 0.3f };
+        GLfloat color [] = { 1.0f, 1.f, 1.f, fade };
         if (pointers.size() > 0) {
             if (fade < 1.f)
                 fade += 0.3f;
         }
         else if (fade > 0.f)
             fade -= 0.1f;
-
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+         
+        glBindTexture(GL_TEXTURE_2D, stringTextureID);
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
+        stringBatch.Draw();
+        
+        glBindTexture(GL_TEXTURE_2D, stringBgTextureID);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), color, 0);
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
+
         bgBatch.Draw();
+        
+
+        
+
         Environment::instance().modelViewMatrix.PopMatrix();
+    }
+    
+    void loadTextures()
+    {
+        glGenTextures(1, &stringTextureID);
+        glBindTexture(GL_TEXTURE_2D, stringTextureID);
+        
+        File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
+        File imageFile = appDataFile.getChildFile("string0.png");
+        
+        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
+        
+        glGenTextures(1, &stringBgTextureID);
+        glBindTexture(GL_TEXTURE_2D, stringBgTextureID);
+
+        imageFile = appDataFile.getChildFile("stringBg0.png");
+        
+        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
     }
     
     void updatePointedState(FingerView* inFingerView)
@@ -288,6 +340,8 @@ public:
 private:
     GLBatch     bgBatch;
     GLBatch     stringBatch;
+    GLuint      stringBgTextureID;
+    GLuint      stringTextureID;
     int numSamples;
     int numSampleVerts;
     M3DVector3f* sampleVerts;

@@ -85,3 +85,9 @@ void HarpView::removeString()
     layoutStrings();
     Environment::openGLContext.makeActive();
 }
+
+void HarpView::loadTextures()
+{
+    for (StringView* sv : strings)
+        sv->loadTextures();
+}
