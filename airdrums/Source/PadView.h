@@ -18,11 +18,11 @@ public:
     void setup();
     void update();
     void draw();
-    void triggerDisplay();
+    void triggerDisplay(float amount = 1.f);
     
     // FingerView::Listener overrides
     void updatePointedState(FingerView* inFingerView);
-    void tap(FingerView* fv, float velocity) {};
+    void tap(float velocity);
 
     GLFrame objectFrame;
     int padNum= 0;

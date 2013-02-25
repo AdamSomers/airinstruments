@@ -274,19 +274,9 @@ public:
         }
     }
     
-    void tap(FingerView* inFingerView, float velocity)
+    void tap(float velocity)
     {
-        M3DVector3f point;
-        M3DVector3f center;
-        inFingerView->objectFrame.GetOrigin(point);
-        objectFrame.GetOrigin(center);
-        if (point[2] <= center[2])
-        {
-            return;
-        }
-        auto iter = std::find(pointers.begin(), pointers.end(), inFingerView);
-        if (iter != pointers.end())
-            pluck(0.5f, velocity);
+        pluck(0.5f, velocity);
     }
     
     void pluck(float position, float velocity = 1.f)

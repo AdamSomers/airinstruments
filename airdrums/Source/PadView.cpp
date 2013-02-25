@@ -172,9 +172,9 @@ void PadView::draw()
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
-void PadView::triggerDisplay()
+void PadView::triggerDisplay(float amount)
 {
-    fade = 1.f;
+    fade = amount;
 }
 
 bool PadView::hitTest(const M3DVector3f& point)
@@ -182,9 +182,9 @@ bool PadView::hitTest(const M3DVector3f& point)
     M3DVector3f center;
     objectFrame.GetOrigin(center);
     M3DVector3f transformedCenter;
-    M3DMatrix44f planeMatrix;
-    padSurfaceFrame.GetMatrix(planeMatrix);
-    m3dTransformVector3(transformedCenter, center, planeMatrix);
+    M3DMatrix44f cameraMatrix;
+    Environment::instance().cameraFrame.GetMatrix(cameraMatrix);
+    m3dTransformVector3(transformedCenter, center, cameraMatrix);
     
     if (point[0] > transformedCenter[0] - padWidth / 2.f &&
         point[0] < transformedCenter[0] + padWidth / 2.f &&
@@ -194,6 +194,11 @@ bool PadView::hitTest(const M3DVector3f& point)
         return true;
     else
         return false;
+}
+
+void PadView::tap(float velocity)
+{
+    Drums::instance().NoteOn(padNum,velocity);
 }
 
 void PadView::updatePointedState(FingerView* inFingerView)
@@ -206,6 +211,21 @@ void PadView::updatePointedState(FingerView* inFingerView)
     M3DVector3f prevPoint;
     inFingerView->prevFrame.GetOrigin(prevPoint);
 
+    M3DVector3f center;
+    objectFrame.GetOrigin(center);
+    M3DVector3f transformedCenter;
+    M3DMatrix44f cameraMatrix;
+    Environment::instance().cameraFrame.GetMatrix(cameraMatrix);
+    m3dTransformVector3(transformedCenter, center, cameraMatrix);
+
+    if (fabsf(point[0] - transformedCenter[0]) < padWidth / 2.f ) {
+        fingerPointing(inFingerView);
+        //triggerDisplay(0.5f);
+    }
+    else
+        fingerNotPointing(inFingerView);
+    
+    
     for (int i = 0; i < 6; ++i)
     {
         // TODO
@@ -216,13 +236,14 @@ void PadView::updatePointedState(FingerView* inFingerView)
         M3DVector3f collisionPoint;
         M3DVector3f pNormal = { 0.f, 0.f, -1.f };
         m3dNormalizeVector3(ray);
-        center[0] -= surfaceWidth / 2.f;
-        GfxTools::collide(point, ray, center, pNormal, collisionPoint);
-        float distance = fabsf(collisionPoint[0] - center[0]);
+        transformedCenter[0] -= padWidth / 2.f;
+        GfxTools::collide(point, ray, transformedCenter, pNormal, collisionPoint);
+        float distance = fabsf(collisionPoint[0] - transformedCenter[0]);
         // check that distance is within rect
-        if (distance < stringWidth / 2.f)
+        if (distance < padWidth / 2.f)
         {
             fingerPointing(inFingerView);
+            triggerDisplay();
         }
         else
         {
@@ -230,7 +251,8 @@ void PadView::updatePointedState(FingerView* inFingerView)
         }
 #endif
     }
-    
+
+#if 0
     // When finger passes through pad volume, play the note
     if (hitTest(point) && !hitTest(prevPoint) &&
         prevPoint[1] > point[1])
@@ -239,7 +261,6 @@ void PadView::updatePointedState(FingerView* inFingerView)
         printf("trigger %d\n", padNum);
         Drums::instance().NoteOn(padNum,1.f);
     }
-#if 0
-    Drums::instance().noteOn ...
+    
 #endif
 }

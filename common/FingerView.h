@@ -23,7 +23,8 @@ public:
         Listener();
         ~Listener();
         virtual void updatePointedState(FingerView* fv) = 0;
-        virtual void tap(FingerView* fv, float velocity) {};
+        void tap(FingerView* fv, float velocity);
+        virtual void tap(float velocity) {}
         void reset();
         bool needsReset;
         std::vector<FingerView*> pointers;

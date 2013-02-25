@@ -11,6 +11,7 @@
 
 #include "DrumsHUD.h"
 #include "PadView.h"
+#include "Leap.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -21,7 +22,8 @@
 */
 class MainContentComponent   : public Component,
                                public OpenGLRenderer,
-                               public MidiKeyboardStateListener
+                               public MidiKeyboardStateListener,
+                               public Leap::Listener
 {
 public:
     //==============================================================================
@@ -34,6 +36,7 @@ public:
     void mouseMove(const MouseEvent& e);
     void mouseDown(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);
+    void mouseWheelMove (const MouseEvent& e, const MouseWheelDetails& wheel);
     bool keyPressed(const KeyPress& kp);
     
     // OpenGLRenderer overrides
@@ -45,8 +48,10 @@ public:
     void handleNoteOn (MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity);
     void handleNoteOff (MidiKeyboardState* source, int midiChannel, int midiNoteNumber) {}
     
+    virtual void onFrame(const Leap::Controller&);
 private:
-    void layoutPads();
+    void layoutPadsGrid();
+    void layoutPadsLinear();
     
     OpenGLContext openGLContext;
     DrumsToolbar* toolbar = NULL;

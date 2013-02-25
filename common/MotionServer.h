@@ -33,7 +33,7 @@ public:
     Leap::Controller controller;
     static float zLimit;
 private:
-    void processFinger(const Leap::Finger& finger);
+    void processFinger(const Leap::Finger& finger, const Leap::Frame& frame);
     void processFinger(const Leap::Finger& finger, float x, float y, float z);
     inline float normalizedX(float x)
     {

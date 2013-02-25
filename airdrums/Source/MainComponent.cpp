@@ -70,7 +70,7 @@ void MainContentComponent::resized()
     if (statusBar)
         statusBar->setBounds(HUDRect(0,0,w,20));
     
-    layoutPads();
+    layoutPadsLinear();
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
@@ -105,9 +105,10 @@ void MainContentComponent::newOpenGLContextCreated()
         pads.push_back(pv);
     }
     
-    layoutPads();
-    // Tilt the pad plane back
-    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-30), 1, 0, 0);
+    layoutPadsLinear();
+    Environment::instance().cameraFrame.TranslateWorld(0, -.75, 0);
+    Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
+    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-50), 1, 0, 0);
     
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
@@ -128,6 +129,9 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,h-50,w,50));
     statusBar->setBounds(HUDRect(0,0,w,20));
 
+    MotionDispatcher::instance().controller.addListener(*this);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
+    
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 }
 
@@ -140,12 +144,14 @@ void MainContentComponent::renderOpenGL()
     
     //glEnable(GL_DEPTH_TEST);
     
+
+    Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
+    
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mCamera;
     Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
     Environment::instance().modelViewMatrix.MultMatrix(mCamera);
 
-    Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glCullFace(GL_BACK);
@@ -215,7 +221,7 @@ void MainContentComponent::openGLContextClosing()
 {
 }
 
-void MainContentComponent::layoutPads()
+void MainContentComponent::layoutPadsGrid()
 {
     if (pads.size() == 0)
         return;
@@ -236,6 +242,35 @@ void MainContentComponent::layoutPads()
         int row = i / 4;
         float xpos = padWidth * padInRow + initialX;
         float ypos = -padHeight * row + initialY;
+        pads.at(i)->objectFrame.SetOrigin(xpos, ypos, 0);
+        pads.at(i)->padWidth = padWidth-0.05;
+        pads.at(i)->padHeight = padHeight-0.05;
+        pads.at(i)->update();
+    }
+    // Move the pads back -12
+    PadView::padSurfaceFrame.SetOrigin(0,0,-12);
+}
+
+void MainContentComponent::layoutPadsLinear()
+{
+    if (pads.size() == 0)
+        return;
+    float aspectRatio = Environment::screenW / (float)Environment::screenH;
+    float left = -1.f;
+    float top = .8;
+    float right = 1.f;
+    float bottom = -1.2f;
+    float width = right - left;
+    float height = top - bottom - .2;
+    float padWidth = width / 4.f;
+    float padHeight = height;
+    float initialX = left + padWidth / 2.f;
+    float initialY = top;
+    for (int i = 0; i < NUM_PADS; ++i)
+    {
+        int padInRow = i;
+        float xpos = padWidth * padInRow + initialX;
+        float ypos = -padHeight + initialY;
         pads.at(i)->objectFrame.SetOrigin(xpos, ypos, 0);
         pads.at(i)->padWidth = padWidth-0.05;
         pads.at(i)->padHeight = padHeight-0.05;
@@ -270,16 +305,26 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
     
     float normPosY = (e.getPosition().y - prevMouseY) / (float)Environment::instance().screenH;
     float normPosX = (e.getPosition().x - prevMouseX) / (float)Environment::instance().screenW;
-    float angle = M_PI * 2 * normPosY;
-    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosY*720), 1, 0, 0);
-    angle = M_PI * 2 * normPosX;
-    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosX*720), 0, 1, 0);
-    for (int i = 0; i < 16; ++i)
-    {
-        //pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(-0.5), 1, 0, 0);
-    }
+    
+    Environment::instance().cameraFrame.TranslateWorld(normPosX*2, 0, 0);
+    Environment::instance().cameraFrame.TranslateWorld(0, 0,-normPosY*2);
+    
+//    float angle = M_PI * 2 * normPosY;
+//    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosY*720), 1, 0, 0);
+//    angle = M_PI * 2 * normPosX;
+//    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosX*720), 0, 1, 0);
+//    for (int i = 0; i < 16; ++i)
+//    {
+//        //pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(-0.5), 1, 0, 0);
+//    }
+    
     prevMouseY = e.getPosition().y;
     prevMouseX = e.getPosition().x;
+}
+
+void MainContentComponent::mouseWheelMove (const MouseEvent& e, const MouseWheelDetails& wheel)
+{
+    Environment::instance().cameraFrame.TranslateWorld(0, wheel.deltaY*4,wheel.deltaY*4);
 }
 
 bool MainContentComponent::keyPressed(const KeyPress& kp)
@@ -305,5 +350,33 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* source, int midiChann
     if (midiNoteNumber < pads.size())
     {
         pads.at(midiNoteNumber)->triggerDisplay();
+    }
+}
+
+void MainContentComponent::onFrame(const Leap::Controller& controller)
+{
+    if (!Environment::instance().ready)
+        return;
+    
+    const Leap::Frame frame = controller.frame();
+    const Leap::GestureList& gestures = frame.gestures();
+    Leap::GestureList::const_iterator i = gestures.begin();
+    Leap::GestureList::const_iterator end = gestures.end();
+    for ( ; i != end; ++i)
+    {
+        const Leap::Gesture& g = *i;
+        switch (g.type())
+        {
+            case Leap::Gesture::TYPE_SWIPE:
+            {
+                Leap::SwipeGesture swipe(g);
+                Environment::instance().cameraFrame.TranslateWorld((swipe.direction().x * swipe.speed()) * .00002, 0, 0);
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
 }

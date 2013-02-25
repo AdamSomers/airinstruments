@@ -28,9 +28,6 @@ void FingerView::draw()
         return;
     
     Environment::instance().modelViewMatrix.PushMatrix();
-    M3DMatrix44f mCamera;
-    Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
-    Environment::instance().modelViewMatrix.MultMatrix(mCamera);
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
@@ -111,4 +108,11 @@ void FingerView::Listener::fingerNotPointing(FingerView* fv)
         pointers.erase(iter);
         needsReset = false;
     }
+}
+
+void FingerView::Listener::tap(FingerView* fv, float velocity)
+{
+    auto iter = std::find(pointers.begin(), pointers.end(), fv);
+    if (iter != pointers.end())
+        this->tap(velocity);
 }

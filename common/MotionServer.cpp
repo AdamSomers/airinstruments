@@ -9,6 +9,8 @@ float MotionDispatcher::zLimit = 0;
 MotionDispatcher::MotionDispatcher()
 {
     controller.addListener(*this);
+    controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
+    controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     
     for (int i = 0; i < 50; ++i)
     {
@@ -151,7 +153,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
                 for (int i = 0; i < numFingers; ++i)
                 {
                     const Leap::Finger& f = fingers[i];
-                    processFinger(f);
+                    processFinger(f, frame);
                 }
             }
         }
@@ -190,7 +192,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     }
 }
 
-void MotionDispatcher::processFinger(const Leap::Finger& f)
+void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)
 {
     bool inserted = false;
     FingerView* fv = NULL;
@@ -245,6 +247,9 @@ void MotionDispatcher::processFinger(const Leap::Finger& f)
     }
     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
     
+    
+#if 0
+    // This was my home-spun tapping gesture before Leap provided Gesture API
     Leap::Finger prevFinger = controller.frame(1).finger(f.id());
     if (prevFinger.isValid())
     {
@@ -259,6 +264,46 @@ void MotionDispatcher::processFinger(const Leap::Finger& f)
             }
         }
     }
+#endif
+    
+    const Leap::GestureList& gestures = frame.gestures();
+    Leap::GestureList::const_iterator i = gestures.begin();
+    Leap::GestureList::const_iterator end = gestures.end();
+    for ( ; i != end; ++i)
+    {
+        const Leap::Gesture& g = *i;
+        switch (g.type())
+        {
+            case Leap::Gesture::TYPE_KEY_TAP:
+            case Leap::Gesture::TYPE_SCREEN_TAP:
+            {
+                Leap::KeyTapGesture tap(g);
+                
+                // Need to make sure current finger is associated with the gesture
+                const Leap::PointableList& pointables = tap.pointables();
+                Leap::PointableList::const_iterator pIter = pointables.begin();
+                Leap::PointableList::const_iterator pIterEnd = pointables.end();
+                for ( ; pIter != pIterEnd; ++pIter)
+                {
+                    const Leap::Pointable& p = *pIter;
+                    if (p.id() == f.id())
+                    {
+                        // Current finger applies to this gesture, broadcast to listeners
+                        // Those being pointed to by current finger view should handle the tap
+                        for (FingerView::Listener* listener : fingerViewListeners)
+                        {
+                            listener->tap(fv, 1.f);
+                        }
+                    }
+                }
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
 }
 
 void MotionDispatcher::spoof(float inX, float inY, float inZ)
