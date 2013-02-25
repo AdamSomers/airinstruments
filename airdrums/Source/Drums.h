@@ -12,6 +12,7 @@ public:
     ~Drums();
     void NoteOn(int note, float velocity);
     void clear();
+    void clearTrack(int note);
     
     // AudioSoure overrides
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate);

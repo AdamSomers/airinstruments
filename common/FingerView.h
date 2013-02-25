@@ -25,6 +25,8 @@ public:
         virtual void updatePointedState(FingerView* fv) = 0;
         void tap(FingerView* fv, float velocity);
         virtual void tap(float velocity) {}
+        void circleBack(FingerView* fv);
+        virtual void circleBack() {}
         void reset();
         bool needsReset;
         std::vector<FingerView*> pointers;

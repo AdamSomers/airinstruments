@@ -23,6 +23,7 @@ public:
     // FingerView::Listener overrides
     void updatePointedState(FingerView* inFingerView);
     void tap(float velocity);
+    void circleBack();
 
     GLFrame objectFrame;
     int padNum= 0;
@@ -38,6 +39,7 @@ private:
     void makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
     GLBatch     padBatch;
     float fade = 1.f;
+    float redFade = 0.f;
     float padDepth = 0.025;
 };
 

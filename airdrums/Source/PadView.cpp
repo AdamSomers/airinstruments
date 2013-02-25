@@ -157,13 +157,16 @@ void PadView::draw()
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     
-    GLfloat padColor [] = { 0.7f, 0.7f, 1.f, 0.3f + fade * 0.5f };
+    GLfloat padColor [] = { 0.7f + redFade, 0.7f, 1.f, 0.3f + fade * 0.5f };
     if (pointers.size() > 0) {
         if (fade < 1.f)
             fade += 0.3f;
     }
     else if (fade > 0.f)
         fade -= 0.05f;
+    
+    if (redFade > 0.f)
+        redFade -= 0.05f;
     
     
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), padColor);
@@ -199,6 +202,12 @@ bool PadView::hitTest(const M3DVector3f& point)
 void PadView::tap(float velocity)
 {
     Drums::instance().NoteOn(padNum,velocity);
+}
+
+void PadView::circleBack()
+{
+    redFade = 1.f;
+    Drums::instance().clearTrack(padNum);
 }
 
 void PadView::updatePointedState(FingerView* inFingerView)

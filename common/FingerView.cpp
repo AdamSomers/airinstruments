@@ -116,3 +116,10 @@ void FingerView::Listener::tap(FingerView* fv, float velocity)
     if (iter != pointers.end())
         this->tap(velocity);
 }
+
+void FingerView::Listener::circleBack(FingerView* fv)
+{
+    auto iter = std::find(pointers.begin(), pointers.end(), fv);
+    if (iter != pointers.end())
+        this->circleBack();
+}

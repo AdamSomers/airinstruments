@@ -188,6 +188,22 @@ void Drums::clear()
     midiBufferLock.exit();
 }
 
+void Drums::clearTrack(int note)
+{
+    midiBufferLock.enter();
+    MidiBuffer::Iterator i(recordBuffer);
+    int samplePos = 0;
+    MidiMessage message;
+    MidiBuffer newBuffer;
+    while (i.getNextEvent(message, samplePos))
+    {
+        if (message.getNoteNumber() != note)
+            newBuffer.addEvent(message, samplePos);
+    }
+    recordBuffer = newBuffer;
+    midiBufferLock.exit();
+}
+
 void Drums::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     midiCollector.reset (sampleRate);

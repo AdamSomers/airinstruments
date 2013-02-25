@@ -11,6 +11,7 @@ MotionDispatcher::MotionDispatcher()
     controller.addListener(*this);
     controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
+    controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
     
     for (int i = 0; i < 50; ++i)
     {
@@ -272,22 +273,23 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     for ( ; i != end; ++i)
     {
         const Leap::Gesture& g = *i;
-        switch (g.type())
+        
+        // Need to make sure current finger is associated with the gesture
+        const Leap::PointableList& pointables = g.pointables();
+        Leap::PointableList::const_iterator pIter = pointables.begin();
+        Leap::PointableList::const_iterator pIterEnd = pointables.end();
+        for ( ; pIter != pIterEnd; ++pIter)
         {
-            case Leap::Gesture::TYPE_KEY_TAP:
-            case Leap::Gesture::TYPE_SCREEN_TAP:
+            const Leap::Pointable& p = *pIter;
+            if (p.id() == f.id())
             {
-                Leap::KeyTapGesture tap(g);
-                
-                // Need to make sure current finger is associated with the gesture
-                const Leap::PointableList& pointables = tap.pointables();
-                Leap::PointableList::const_iterator pIter = pointables.begin();
-                Leap::PointableList::const_iterator pIterEnd = pointables.end();
-                for ( ; pIter != pIterEnd; ++pIter)
+                switch (g.type())
                 {
-                    const Leap::Pointable& p = *pIter;
-                    if (p.id() == f.id())
+                    case Leap::Gesture::TYPE_KEY_TAP:
+                    case Leap::Gesture::TYPE_SCREEN_TAP:
                     {
+                        Leap::KeyTapGesture tap(g);
+                        
                         // Current finger applies to this gesture, broadcast to listeners
                         // Those being pointed to by current finger view should handle the tap
                         for (FingerView::Listener* listener : fingerViewListeners)
@@ -295,12 +297,23 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
                             listener->tap(fv, 1.f);
                         }
                     }
+                        break;
+                    case Leap::Gesture::TYPE_CIRCLE:
+                    {
+                        Leap::CircleGesture circle(g);
+                        if (circle.normal().z > 0) // z-direction of circle's normal vector indicates angular direction
+                        {
+                            for (FingerView::Listener* listener : fingerViewListeners)
+                            {
+                                listener->circleBack(fv);
+                            }
+                        }
+                    }
+                        
+                    default:
+                        break;
                 }
             }
-                break;
-                
-            default:
-                break;
         }
     }
     
