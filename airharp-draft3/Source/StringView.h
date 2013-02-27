@@ -22,7 +22,7 @@ public:
     : stringNum(0)
     , numSamples(NUM_SAMPLES)
     {
-        numSampleVerts = numSamples*2;
+        numSampleVerts = 1800;//numSamples*2;
     }
     void setup()
     {
@@ -121,13 +121,23 @@ public:
         
         // pop the sample data from audio buffer and display along string
         SampleAccumulator::PeakBuffer peakBuffer = HarpManager::instance().getHarp(harpNum)->GetBuffers().at(stringNum)->Get();
+        int numPeakBuffers = peakBuffer.size();
         for (int i = 0; i < numSampleVerts / 2; ++i)
         {
-            long numPeakBuffers = peakBuffer.size();
+            float progress = (float)i / (float)(numSampleVerts / 2);
+            float fSampleIndex = progress * numPeakBuffers;
+            int iSampleIndex = (int)fSampleIndex;
+            
             SampleAccumulator::PeakSample samp(0,0);
-            if (i < numPeakBuffers)
-                samp = peakBuffer.at(i);
+            if (iSampleIndex < numPeakBuffers) {
+                samp = peakBuffer.at(iSampleIndex);
+                prevSamp = iSampleIndex > 0 ? peakBuffer.at(iSampleIndex - 1) : prevSamp;
+            }
+            
             float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
+            float prevVal = fabsf(prevSamp.first) > fabsf(prevSamp.second) ? prevSamp.first : prevSamp.second;
+            val = linterp(prevVal, val, fSampleIndex - iSampleIndex);
+
             val *= scale;
             float x1 = stringWidth/2.f + w/2 + fabsf(val);
             float x2 = stringWidth/2.f - w/2 - fabsf(val);
@@ -172,13 +182,6 @@ public:
             stringColor[3] = 1.f;
         }
         
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glEnable(GL_MULTISAMPLE);
-        glEnable(GL_BLEND);
-        glEnable(GL_POLYGON_SMOOTH);
-
-        glDisable(GL_CULL_FACE);
-        
         GLfloat color [] = { 1.0f, 1.f, 1.f, fade };
         if (pointers.size() > 0) {
             if (fade < 1.f)
@@ -186,21 +189,24 @@ public:
         }
         else if (fade > 0.f)
             fade -= 0.1f;
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-         
+
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().stringBackground);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), color, 0);
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
+        
+        bgBatch.Draw();
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDisable(GL_DEPTH_TEST);
+        glLineWidth(1.f);
+        
         glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().string);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
-        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().stringBackground);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), color, 0);
-        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
-
-        bgBatch.Draw();
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         
         Environment::instance().modelViewMatrix.PopMatrix();
     }
@@ -312,6 +318,8 @@ public:
     float yScale = 1;
     
 private:
+    inline float linterp(float v0,float v1,float t) { return v0+(v1-v0)*t; }
+
     GLBatch     bgBatch;
     GLBatch     stringBatch;
     GLuint      stringBgTextureID;
@@ -319,6 +327,8 @@ private:
     int numSamples;
     int numSampleVerts;
     M3DVector3f* sampleVerts;
+    SampleAccumulator::PeakSample prevSamp;
+
     float fade = 0.f;
 };
 

@@ -162,7 +162,7 @@
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
                        isDebug="1" optimisation="1" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
                        cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
-        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+        <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
                        isDebug="0" optimisation="2" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
                        cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
       </CONFIGURATIONS>
