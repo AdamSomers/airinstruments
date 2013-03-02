@@ -5,45 +5,41 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
-      <FILE id="UVBlTH" name="icon.icns" compile="0" resource="0" file="/Volumes/Data/Dropbox/Air Harp Gfx/icon.icns"/>
+      <FILE id="rDq8NU" name="icon.icns" compile="0" resource="0" file="../../Dropbox/Air Harp Gfx/icon.icns"/>
       <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
-      <FILE id="flUJWR" name="TMD CHIL BKICK.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL BKICK.aif"/>
-      <FILE id="cKK1O5" name="TMD CHIL CHH.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CHH.aif"/>
-      <FILE id="KdOSvs" name="TMD CHIL CLAP.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CLAP.aif"/>
-      <FILE id="TauNaf" name="TMD CHIL CLV.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CLV.aif"/>
-      <FILE id="eiI0ru" name="TMD CHIL CYM.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL CYM.aif"/>
-      <FILE id="xkfiWM" name="TMD CHIL HTOM.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL HTOM.aif"/>
-      <FILE id="ebdd9G" name="TMD CHIL KICK.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL KICK.aif"/>
-      <FILE id="XF7ZKQ" name="TMD CHIL LTOM.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL LTOM.aif"/>
-      <FILE id="BRJzj3" name="TMD CHIL MTOM.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL MTOM.aif"/>
-      <FILE id="Z33giP" name="TMD CHIL OHH.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL OHH.aif"/>
-      <FILE id="gg3t0I" name="TMD CHIL PAD.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL PAD.aif"/>
-      <FILE id="v0UVBl" name="TMD CHIL PHH.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL PHH.aif"/>
-      <FILE id="UEtH4d" name="TMD CHIL RIDE.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL RIDE.aif"/>
-      <FILE id="qIliRY" name="TMD CHIL SFX.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL SFX.aif"/>
-      <FILE id="tOCZJq" name="TMD CHIL SN 1.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL SN 1.aif"/>
-      <FILE id="VVYGDm" name="TMD CHIL VERB.aif" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/AirDrums Assets/TMD CHIL VERB.aif"/>
-      <FILE id="jN4KjJ" name="button_small_off.png" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_off.png"/>
-      <FILE id="vULdED" name="button_small_on.png" compile="0" resource="1"
-            file="/Volumes/Data/Dropbox/Air Harp Gfx/button_small_on.png"/>
+      <FILE id="w6skav" name="TMD CHIL BKICK.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL BKICK.aif"/>
+      <FILE id="vYusN3" name="TMD CHIL CHH.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL CHH.aif"/>
+      <FILE id="F9xcrd" name="TMD CHIL CLAP.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL CLAP.aif"/>
+      <FILE id="fcBWFT" name="TMD CHIL CLV.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL CLV.aif"/>
+      <FILE id="Ltufgj" name="TMD CHIL CYM.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL CYM.aif"/>
+      <FILE id="TGNRGs" name="TMD CHIL HTOM.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL HTOM.aif"/>
+      <FILE id="IWe1Mw" name="TMD CHIL KICK.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL KICK.aif"/>
+      <FILE id="PM6eDK" name="TMD CHIL LTOM.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL LTOM.aif"/>
+      <FILE id="t5eE1I" name="TMD CHIL MTOM.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL MTOM.aif"/>
+      <FILE id="MUxuVp" name="TMD CHIL OHH.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL OHH.aif"/>
+      <FILE id="ErXJZ2" name="TMD CHIL PAD.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL PAD.aif"/>
+      <FILE id="LqafWL" name="TMD CHIL PHH.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL PHH.aif"/>
+      <FILE id="xMCi99" name="TMD CHIL RIDE.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL RIDE.aif"/>
+      <FILE id="gtUVp4" name="TMD CHIL SFX.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL SFX.aif"/>
+      <FILE id="Y4Muwk" name="TMD CHIL SN 1.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL SN 1.aif"/>
+      <FILE id="KZ9rYT" name="TMD CHIL VERB.aif" compile="0" resource="1"
+            file="../../Dropbox/AirDrums Assets/TMD CHIL VERB.aif"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
