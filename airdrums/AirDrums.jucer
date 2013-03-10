@@ -55,10 +55,6 @@
       <FILE id="Fqy8p2" name="MotionServer.cpp" compile="1" resource="0"
             file="../common/MotionServer.cpp"/>
       <FILE id="uvkMVm" name="MotionServer.h" compile="0" resource="0" file="../common/MotionServer.h"/>
-      <FILE id="qJe6y0" name="JuceReverbAudioClient.cpp" compile="1" resource="0"
-            file="../common/JuceReverbAudioClient.cpp"/>
-      <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
-            file="../common/JuceReverbAudioClient.h"/>
     </GROUP>
     <GROUP id="{9ED69939-FCC6-9596-4256-AA83B4D8178A}" name="GLTools">
       <GROUP id="{63BF3604-9EA2-C52D-4873-BAF2092B480D}" name="include">
@@ -91,43 +87,6 @@
         <FILE id="oFOzxJ" name="GLTriangleBatch.cpp" compile="1" resource="0"
               file="../GLTools/src/GLTriangleBatch.cpp"/>
         <FILE id="Zzlqi2" name="math3d.cpp" compile="1" resource="0" file="../GLTools/src/math3d.cpp"/>
-      </GROUP>
-    </GROUP>
-    <GROUP id="{04F588DF-B27F-7686-36D0-BE6311B329AF}" name="muskit">
-      <GROUP id="{D07F539C-5C0D-BEAE-3C01-3DD817497171}" name="src">
-        <FILE id="KUKpSj" name="AudioClient.cpp" compile="1" resource="0" file="../../muskit/src/AudioClient.cpp"/>
-        <FILE id="m9EVm3" name="AudioClient.h" compile="0" resource="0" file="../../muskit/src/AudioClient.h"/>
-        <FILE id="nPV0Ld" name="AudioServer.cpp" compile="1" resource="0" file="../../muskit/src/AudioServer.cpp"/>
-        <FILE id="IZBEEp" name="AudioServer.h" compile="0" resource="0" file="../../muskit/src/AudioServer.h"/>
-        <FILE id="tS7Xgj" name="Interpolators.cpp" compile="1" resource="0"
-              file="../../muskit/src/Interpolators.cpp"/>
-        <FILE id="kncYmg" name="Interpolators.h" compile="0" resource="0" file="../../muskit/src/Interpolators.h"/>
-        <FILE id="mor7ue" name="MathHelpers.h" compile="0" resource="0" file="../../muskit/src/MathHelpers.h"/>
-        <FILE id="rSbZUg" name="MidiServer.h" compile="0" resource="0" file="../../muskit/src/MidiServer.h"/>
-        <FILE id="s6VMl4" name="ParameterAPI.cpp" compile="1" resource="0"
-              file="../../muskit/src/ParameterAPI.cpp"/>
-        <FILE id="vYExmd" name="ParameterAPI.h" compile="0" resource="0" file="../../muskit/src/ParameterAPI.h"/>
-        <FILE id="SNnx4H" name="Poly.h" compile="0" resource="0" file="../../muskit/src/Poly.h"/>
-        <FILE id="zlnqi0" name="SignalGenerators.h" compile="0" resource="0"
-              file="../../muskit/src/SignalGenerators.h"/>
-        <FILE id="MCdXKD" name="TypingKeyboard.h" compile="0" resource="0"
-              file="../../muskit/src/TypingKeyboard.h"/>
-        <FILE id="MfWtGT" name="Voices.h" compile="0" resource="0" file="../../muskit/src/Voices.h"/>
-        <FILE id="BeFVCi" name="Waveshaper.cpp" compile="1" resource="0" file="../../muskit/src/Waveshaper.cpp"/>
-        <FILE id="NIMpEO" name="Waveshaper.h" compile="0" resource="0" file="../../muskit/src/Waveshaper.h"/>
-        <FILE id="CAAssq" name="WindowFunction.cpp" compile="1" resource="0"
-              file="../../muskit/src/WindowFunction.cpp"/>
-        <FILE id="AXmaIV" name="WindowFunction.h" compile="0" resource="0"
-              file="../../muskit/src/WindowFunction.h"/>
-      </GROUP>
-      <GROUP id="{1BFC90E5-FFB9-E7CA-9392-618CAA532F25}" name="ThirdParty">
-        <FILE id="cieQrz" name="chuck_fft.c" compile="1" resource="0" file="../../muskit/ThirdParty/chuck_fft.c"/>
-        <FILE id="GEZT4t" name="chuck_fft.h" compile="0" resource="0" file="../../muskit/ThirdParty/chuck_fft.h"/>
-        <FILE id="SkYPFp" name="RtAudio.cpp" compile="1" resource="0" file="../../muskit/ThirdParty/RtAudio.cpp"/>
-        <FILE id="gJsWvM" name="RtAudio.h" compile="0" resource="0" file="../../muskit/ThirdParty/RtAudio.h"/>
-        <FILE id="pvl9pv" name="RtError.h" compile="0" resource="0" file="../../muskit/ThirdParty/RtError.h"/>
-        <FILE id="jc9fq2" name="RtMidi.cpp" compile="1" resource="0" file="../../muskit/ThirdParty/RtMidi.cpp"/>
-        <FILE id="qAVIrU" name="RtMidi.h" compile="0" resource="0" file="../../muskit/ThirdParty/RtMidi.h"/>
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
@@ -167,10 +126,10 @@
                extraCompilerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="AirDrums" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
+                       isDebug="1" optimisation="1" targetName="AirDrums" headerPath="../../../GLTools/include ../../../../Leap_SDK/include"
                        cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
         <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="2" targetName="AirDrums" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
+                       isDebug="0" optimisation="2" targetName="AirDrums" headerPath="../../../GLTools/include ../../../../Leap_SDK/include"
                        cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
       </CONFIGURATIONS>
     </XCODE_MAC>

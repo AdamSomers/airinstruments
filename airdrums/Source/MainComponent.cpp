@@ -13,7 +13,6 @@
 
 #include "Environment.h"
 #include "GfxTools.h"
-#include "AudioServer.h"
 #include "Drums.h"
 #include "MotionServer.h"
 #include "FingerView.h"
