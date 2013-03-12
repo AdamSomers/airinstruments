@@ -1512,14 +1512,15 @@ class Screen : public Interface {
 template<typename L, typename T>
 class ConstListIterator {
   public:
-    ConstListIterator<L,T>(const L& list, int index) : m_list(list), m_index(index) {}
+    ConstListIterator<L,T>() : m_list(nullptr), m_index(-1) {}
+    ConstListIterator<L,T>(const L& list, int index) : m_list(&list), m_index(index) {}
 
-    const T operator*() const { return m_list[m_index]; }
+    const T operator*() const { return (*m_list)[m_index]; }
     const ConstListIterator<L,T>& operator++() { ++m_index; return *this; }
-    bool operator!=(const ConstListIterator<L,T>& rhs) const { return m_index != rhs.m_index; }
+    bool operator!=(const ConstListIterator<L,T>& rhs) const { return (m_list != rhs.m_list) || (m_index != rhs.m_index); }
 
   private:
-    const L& m_list;
+    L const * m_list;
     int m_index;
 };
 
