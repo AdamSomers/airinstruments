@@ -213,6 +213,14 @@ public:
         return true;
     }
 
+    void setRepresentedFile (const File& file)
+    {
+        if (! isSharedWindow)
+            [window setRepresentedFilename: juceStringToNS (file != File::nonexistent
+                                                                ? file.getFullPathName()
+                                                                : String::empty)];
+    }
+
     void setPosition (int x, int y)
     {
         setBounds (x, y, component.getWidth(), component.getHeight(), false);
@@ -1811,9 +1819,15 @@ void ModifierKeys::updateCurrentModifiers() noexcept
 
 
 //==============================================================================
-void Desktop::createMouseInputSources()
+bool Desktop::addMouseInputSource()
 {
-    mouseSources.add (new MouseInputSource (0, true));
+    if (mouseSources.size() == 0)
+    {
+        mouseSources.add (new MouseInputSource (0, true));
+        return true;
+    }
+
+    return false;
 }
 
 //==============================================================================
@@ -1856,6 +1870,8 @@ void Desktop::setKioskComponent (Component* kioskComp, bool enableOrDisable, boo
         }
     }
    #elif JUCE_SUPPORT_CARBON
+    (void) kioskComp; (void) enableOrDisable; (void) allowMenusAndBars;
+
     if (enableOrDisable)
     {
         SetSystemUIMode (kUIModeAllSuppressed, allowMenusAndBars ? kUIOptionAutoShowMenuBar : 0);
@@ -1866,6 +1882,8 @@ void Desktop::setKioskComponent (Component* kioskComp, bool enableOrDisable, boo
         SetSystemUIMode (kUIModeNormal, 0);
     }
    #else
+    (void) kioskComp; (void) enableOrDisable; (void) allowMenusAndBars;
+
     // If you're targeting OSes earlier than 10.6 and want to use this feature,
     // you'll need to enable JUCE_SUPPORT_CARBON.
     jassertfalse;

@@ -156,15 +156,15 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../../Leap_SDK/lib/libLeap.dylib $TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH"
+               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH"
                extraCompilerFlags="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
-                       cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
+                       isDebug="1" optimisation="1" targetName="AirHarp" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include ../../../../muskit/src"
+                       cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
         <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="2" targetName="AirHarp" headerPath="../../../GLTools/include ../../../../Leap_SDK/include ../../../../muskit/src"
-                       cppLibType="libc++" libraryPath="../../../../Leap_SDK/lib"/>
+                       isDebug="0" optimisation="2" targetName="AirHarp" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include ../../../../muskit/src"
+                       cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
       </CONFIGURATIONS>
     </XCODE_MAC>
   </EXPORTFORMATS>

@@ -64,6 +64,8 @@ private:
     
     GLuint backgroundTextureId;
     GLBatch backgroundBatch;
+    
+    bool sizeChanged = false;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

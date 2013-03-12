@@ -1562,7 +1562,8 @@ struct MP3Stream
 
             if (result < 0)
                 return false;
-            else if (result > 0)
+
+            if (result > 0)
                 break;
         }
 
@@ -3002,7 +3003,7 @@ public:
         {
             if (decodedEnd <= decodedStart && ! readNextBlock())
             {
-                for (int i = 2; --i >= 0;)
+                for (int i = numDestChannels; --i >= 0;)
                     if (destSamples[i] != nullptr)
                         zeromem (destSamples[i] + startOffsetInDestBuffer, sizeof (float) * numSamples);
 
@@ -3013,7 +3014,7 @@ public:
             float* const* const dst = reinterpret_cast <float**> (destSamples);
             memcpy (dst[0] + startOffsetInDestBuffer, decoded0 + decodedStart, sizeof (float) * numToCopy);
 
-            if (dst[1] != nullptr)
+            if (numDestChannels > 1 && dst[1] != nullptr)
                 memcpy (dst[1] + startOffsetInDestBuffer, (numChannels < 2 ? decoded0 : decoded1) + decodedStart, sizeof (float) * numToCopy);
 
             startOffsetInDestBuffer += numToCopy;
@@ -3052,7 +3053,8 @@ private:
                 createEmptyDecodedData();
                 return true;
             }
-            else if (result <= 0)
+
+            if (result <= 0)
             {
                 decodedStart = 0;
                 decodedEnd = samplesDone;

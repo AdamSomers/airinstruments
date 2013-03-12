@@ -71,19 +71,7 @@ void MainContentComponent::resized()
     Environment::instance().screenW = w;
     Environment::instance().screenH = h;
     
-    if (toolbar)
-        toolbar->setBounds(HUDRect(0,h-70,w,70));
-    if (statusBar)
-        statusBar->setBounds(HUDRect(0,0,w,35));
-    
-    layoutStrings();
-    chordRegionsNeedUpdate = true;
-    
-    if (Environment::instance().ready)
-        setupBackground();
-    
-    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);    
-    Environment::instance().ready = true;
+    sizeChanged = true;
 }
 
 void MainContentComponent::setupBackground()
@@ -185,11 +173,27 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setButtonTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
     statusBar->setIndicatorTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
     
+    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
+    Environment::instance().ready = true;
+    
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
 
 void MainContentComponent::renderOpenGL()
 {
+    if (sizeChanged)
+    {
+        if (toolbar)
+            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-70,Environment::instance().screenW,70));
+        if (statusBar)
+            statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,35));
+        
+        layoutStrings();
+        chordRegionsNeedUpdate = true;
+        
+        if (Environment::instance().ready)
+            setupBackground();
+    }
     if (chordRegionsNeedUpdate) {
         layoutChordRegions();
         chordRegionsNeedUpdate = false;
