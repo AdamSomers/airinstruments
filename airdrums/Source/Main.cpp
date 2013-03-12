@@ -8,7 +8,10 @@
   ==============================================================================
 */
 
-#include "../JuceLibraryCode/JuceHeader.h"
+//#include "../JuceLibraryCode/JuceHeader.h"	// Not necessary to include this here
+												// It's included indirectly by the other header(s) below
+												// If this is included here, it causes an error in Windows builds
+												// #error :  gl.h included before glew.h
 #include "MainComponent.h"
 
 //==============================================================================
@@ -24,7 +27,7 @@ public:
     bool moreThanOneInstanceAllowed()       { return true; }
 
     //==============================================================================
-    void initialise (const String& commandLine)
+    void initialise (const String& /*commandLine*/)
     {
         // This method is where you should put your application's initialisation code..
 
@@ -52,7 +55,7 @@ public:
         quit();
     }
 
-    void audioDeviceAboutToStart (AudioIODevice* device)
+    void audioDeviceAboutToStart (AudioIODevice* /*device*/)
     {
         
     }
@@ -60,12 +63,12 @@ public:
     {
         
     }
-    void audioDeviceIOCallback (const float** inputChannelData, int numInputChannels,
-                                float** outputChannelData, int numOutputChannels, int numSamples)
+    void audioDeviceIOCallback (const float** /*inputChannelData*/, int /*numInputChannels*/,
+                                float** /*outputChannelData*/, int /*numOutputChannels*/, int /*numSamples*/)
     {
     }
     
-    void anotherInstanceStarted (const String& commandLine)
+    void anotherInstanceStarted (const String& /*commandLine*/)
     {
         // When another instance of the app is launched while this one is running,
         // this method is invoked, and the commandLine parameter tells you what

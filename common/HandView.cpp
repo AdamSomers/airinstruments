@@ -11,7 +11,7 @@ HandView::HandView()
 
 void HandView::setup()
 {
-    gltMakeDisk(batch, .02, .2, 20, 2);
+    gltMakeDisk(batch, .02f, .2f, 20, 2);
 }
 
 void HandView::draw()

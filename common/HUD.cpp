@@ -159,6 +159,9 @@ void HUDView::loadTextures()
 
 HUDButton::HUDButton(int id)
 : buttonId(id)
+, state(false)
+, prevNumPointers(0)
+, fade(0.f)
 {
 }
 
@@ -208,7 +211,7 @@ void HUDButton::draw()
     GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
     GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
     
-    int textureID = state ? onTextureID : offTextureID;
+    //int textureID = state ? onTextureID : offTextureID;	// Unused variable
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
@@ -270,12 +273,12 @@ void HUDButton::setup()
     hoverOnColor[3] = 1.f;
 }
 
-void HUDButton::mouseDown(float x, float y)
+void HUDButton::mouseDown(float /*x*/, float /*y*/)
 {
     setState(!state, true);
 }
 
-void HUDButton::updatePointedState(FingerView* fv)
+void HUDButton::updatePointedState(FingerView* /*fv*/)
 {
     if (prevNumPointers == 0 && pointers.size() > 0)
         setState(!state, true);

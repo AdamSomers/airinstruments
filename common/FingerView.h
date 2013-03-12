@@ -24,7 +24,7 @@ public:
         ~Listener();
         virtual void updatePointedState(FingerView* fv) = 0;
         void tap(FingerView* fv, float velocity);
-        virtual void tap(float velocity) {}
+        virtual void tap(float /*velocity*/) {}
         void circleBack(FingerView* fv);
         virtual void circleBack() {}
         void reset();
@@ -45,7 +45,7 @@ public:
 private:
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
-    int shaderId = -1;
+    int shaderId;
 };
 
 #endif // h_FingerView

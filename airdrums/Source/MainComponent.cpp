@@ -22,7 +22,12 @@
 #define NUM_PADS 16
 
 //==============================================================================
-MainContentComponent::MainContentComponent()
+MainContentComponent::MainContentComponent() :
+  toolbar(NULL)
+, statusBar(NULL)
+, prevMouseY(0.f)
+, prevMouseX(0.f)
+, sizeChanged(false)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -99,7 +104,7 @@ void MainContentComponent::newOpenGLContextCreated()
     
     Environment::instance().cameraFrame.TranslateWorld(0, -.75, 0);
     Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
-    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-50), 1, 0, 0);
+    PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-50), 1, 0, 0);
     
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
@@ -117,8 +122,8 @@ void MainContentComponent::newOpenGLContextCreated()
     
     int w = getWidth();
     int h = getHeight();
-    toolbar->setBounds(HUDRect(0,h-50,w,50));
-    statusBar->setBounds(HUDRect(0,0,w,20));
+    toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
+    statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
 
     MotionDispatcher::instance().controller.addListener(*this);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
@@ -136,9 +141,9 @@ void MainContentComponent::renderOpenGL()
     if (sizeChanged)
     {
         if (toolbar)
-            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-50,Environment::instance().screenW,50));
+            toolbar->setBounds(HUDRect(0,(GLfloat) Environment::instance().screenH-50,(GLfloat) Environment::instance().screenW,50));
         if (statusBar)
-            statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,20));
+            statusBar->setBounds(HUDRect(0,0,(GLfloat) Environment::instance().screenW,20));
         
         layoutPadsLinear();
         sizeChanged = false;
@@ -193,7 +198,7 @@ void MainContentComponent::renderOpenGL()
 #endif
     
     // go 2d
-	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().viewFrustum.SetOrthographic(0, (GLfloat) Environment::instance().screenW, 0.0f, (GLfloat) Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     
     glDisable(GL_DEPTH_TEST);
@@ -226,13 +231,13 @@ void MainContentComponent::layoutPadsGrid()
 {
     if (pads.size() == 0)
         return;
-    float aspectRatio = Environment::screenW / (float)Environment::screenH;
+    //float aspectRatio = Environment::screenW / (float)Environment::screenH;	// Unused variable
     float left = -1.f;
-    float top = .8;
+    float top = .8f;
     float right = 1.f;
     float bottom = -1.2f;
     float width = right - left;
-    float height = top - bottom - .2;
+    float height = top - bottom - .2f;
     float padWidth = width / 4.f;
     float padHeight = height / 4.f;
     float initialX = left + padWidth / 2.f;
@@ -244,8 +249,8 @@ void MainContentComponent::layoutPadsGrid()
         float xpos = padWidth * padInRow + initialX;
         float ypos = -padHeight * row + initialY;
         pads.at(i)->objectFrame.SetOrigin(xpos, ypos, 0);
-        pads.at(i)->padWidth = padWidth-0.05;
-        pads.at(i)->padHeight = padHeight-0.05;
+        pads.at(i)->padWidth = padWidth-0.05f;
+        pads.at(i)->padHeight = padHeight-0.05f;
         pads.at(i)->update();
     }
     // Move the pads back -12
@@ -256,13 +261,13 @@ void MainContentComponent::layoutPadsLinear()
 {
     if (pads.size() == 0)
         return;
-    float aspectRatio = Environment::screenW / (float)Environment::screenH;
+    //float aspectRatio = Environment::screenW / (float)Environment::screenH;	// Unused variable
     float left = -1.f;
-    float top = .8;
+    float top = .8f;
     float right = 1.f;
     float bottom = -1.2f;
     float width = right - left;
-    float height = top - bottom - .2;
+    float height = top - bottom - .2f;
     float padWidth = width / 4.f;
     float padHeight = height;
     float initialX = left + padWidth / 2.f;
@@ -273,8 +278,8 @@ void MainContentComponent::layoutPadsLinear()
         float xpos = padWidth * padInRow + initialX;
         float ypos = -padHeight + initialY;
         pads.at(i)->objectFrame.SetOrigin(xpos, ypos, 0);
-        pads.at(i)->padWidth = padWidth-0.05;
-        pads.at(i)->padHeight = padHeight-0.05;
+        pads.at(i)->padWidth = padWidth-0.05f;
+        pads.at(i)->padHeight = padHeight-0.05f;
         pads.at(i)->update();
     }
     // Move the pads back -12
@@ -284,7 +289,7 @@ void MainContentComponent::layoutPadsLinear()
 void MainContentComponent::mouseMove(const MouseEvent& e)
 {
     for (HUDView* v : views)
-        v->passiveMotion(e.getPosition().x, e.getPosition().y);
+        v->passiveMotion((float) e.getPosition().x, (float) e.getPosition().y);
     
     if (pads.size() == 0)
         return;
@@ -293,16 +298,16 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
     for (HUDView* v : views)
-        v->mouseDown(e.getPosition().x, e.getPosition().y);
+        v->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
     
-    prevMouseY = e.getPosition().y;
-    prevMouseX = e.getPosition().x;
+    prevMouseY = (float) e.getPosition().y;
+    prevMouseX = (float) e.getPosition().x;
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
 {
     for (HUDView* v : views)
-        v->motion(e.getPosition().x, e.getPosition().y);
+        v->motion((float) e.getPosition().x, (float) e.getPosition().y);
     
     float normPosY = (e.getPosition().y - prevMouseY) / (float)Environment::instance().screenH;
     float normPosX = (e.getPosition().x - prevMouseX) / (float)Environment::instance().screenW;
@@ -319,11 +324,11 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
 //        //pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(-0.5), 1, 0, 0);
 //    }
     
-    prevMouseY = e.getPosition().y;
-    prevMouseX = e.getPosition().x;
+    prevMouseY = (float) e.getPosition().y;
+    prevMouseX = (float) e.getPosition().x;
 }
 
-void MainContentComponent::mouseWheelMove (const MouseEvent& e, const MouseWheelDetails& wheel)
+void MainContentComponent::mouseWheelMove (const MouseEvent& /*e*/, const MouseWheelDetails& wheel)
 {
     Environment::instance().cameraFrame.TranslateWorld(0, wheel.deltaY*4,wheel.deltaY*4);
 }
@@ -346,9 +351,9 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     return ret;
 }
 
-void MainContentComponent::handleNoteOn(MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity)
+void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)
 {
-    if (midiNoteNumber < pads.size())
+    if ((unsigned int) midiNoteNumber < pads.size())
     {
         pads.at(midiNoteNumber)->triggerDisplay();
     }
@@ -371,7 +376,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             case Leap::Gesture::TYPE_SWIPE:
             {
                 Leap::SwipeGesture swipe(g);
-                Environment::instance().cameraFrame.TranslateWorld((swipe.direction().x * swipe.speed()) * .00002, 0, 0);
+                Environment::instance().cameraFrame.TranslateWorld((swipe.direction().x * swipe.speed()) * .00002f, 0, 0);
                 
             }
                 break;

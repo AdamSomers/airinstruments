@@ -10,7 +10,7 @@
 #include <glut/glut.h>
 #include <OpenGL/OpenGL.h>
 #else
-#define FREEGLUT_STATIC
+//#define FREEGLUT_STATIC	// I think we need to use dynamic libs throughout, unfortunately
 #include <GL/glut.h>
 #endif
 
@@ -88,18 +88,18 @@ public:
     virtual void updatePointedState(FingerView* fv);
     
 private:
-    bool state = false;
+    bool state;
     std::vector<Listener*> listeners;
     GLfloat offColor[4];
     GLfloat onColor[4];
     GLfloat hoverOffColor[4];
     GLfloat hoverOnColor[4];
     GLBatch batch;
-    int prevNumPointers = 0;
+    int prevNumPointers;
     int buttonId;
     GLuint onTextureID;
     GLuint offTextureID;
-    float fade = 0.f;
+    float fade;
 };
 
 #endif

@@ -38,17 +38,17 @@ MotionDispatcher::~MotionDispatcher()
 {
 }
 
-void MotionDispatcher::onInit(const Leap::Controller& controller)
+void MotionDispatcher::onInit(const Leap::Controller& /*controller*/)
 {
     std::cout << "Initialized" << std::endl;
 }
 
-void MotionDispatcher::onConnect(const Leap::Controller& controller)
+void MotionDispatcher::onConnect(const Leap::Controller& /*controller*/)
 {
     std::cout << "Connected" << std::endl;
 }
 
-void MotionDispatcher::onDisconnect(const Leap::Controller& controller)
+void MotionDispatcher::onDisconnect(const Leap::Controller& /*controller*/)
 {
     std::cout << "Disconnected" << std::endl;
 }
@@ -88,7 +88,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     
     if (numHands >= 1) {
         // Get the first hand
-        for (int h = 0; h < numHands; ++h) {
+        for (unsigned int h = 0; h < numHands; ++h) {
             const Leap::Hand& hand = hands[h];
             
             bool inserted = false;
@@ -128,7 +128,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             
             hv->objectFrame.SetForwardVector(dirX,dirY,-dirZ);
             float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-            float scaledY = (y-.5)*4;
+            float scaledY = (y-.5f)*4;
             if (z < zLimit) z = 0;
             float scaledZ = z*5-12;
             hv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
@@ -151,7 +151,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             {
                 // Calculate the hand's average finger tip position
                 Leap::Vector pos(0, 0, 0);
-                for (int i = 0; i < numFingers; ++i)
+                for (unsigned int i = 0; i < numFingers; ++i)
                 {
                     const Leap::Finger& f = fingers[i];
                     processFinger(f, frame);
@@ -232,7 +232,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     
     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
     float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-    float scaledY = (y-.5)*4;
+    float scaledY = (y-.5f)*4;
     if (z < zLimit) z = 0;
     float scaledZ = z*5-12;
     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
@@ -362,7 +362,7 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
     
     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
     float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-    float scaledY = (y-.5)*4;
+    float scaledY = (y-.5f)*4;
     if (z < zLimit) z = 0;
     float scaledZ = z*5-12;
     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);

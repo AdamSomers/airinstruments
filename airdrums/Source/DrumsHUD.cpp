@@ -137,16 +137,16 @@ void StatusBar::draw()
     HUDView::draw();
 }
 
-void StatusBar::onInit(const Leap::Controller& controller)
+void StatusBar::onInit(const Leap::Controller& /*controller*/)
 {
 }
 
-void StatusBar::onConnect(const Leap::Controller& controller)
+void StatusBar::onConnect(const Leap::Controller& /*controller*/)
 {
     indicator.setState(true);
 }
 
-void StatusBar::onDisconnect(const Leap::Controller& controller)
+void StatusBar::onDisconnect(const Leap::Controller& /*controller*/)
 {
     indicator.setState(false);
 }

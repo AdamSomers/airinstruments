@@ -2,7 +2,13 @@
 
 GLFrame PadView::padSurfaceFrame;
 
-PadView::PadView()
+PadView::PadView() :
+  padNum(0)
+, padWidth(0.1f)
+, padHeight(0.1f)
+, fade(1.f)
+, redFade(0.f)
+, padDepth(0.025f)
 {
 }
 

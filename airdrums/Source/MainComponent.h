@@ -46,7 +46,7 @@ public:
     
     // MidiKeyboardStateListener overrides
     void handleNoteOn (MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity);
-    void handleNoteOff (MidiKeyboardState* source, int midiChannel, int midiNoteNumber) {}
+    void handleNoteOff (MidiKeyboardState* /*source*/, int /*midiChannel*/, int /*midiNoteNumber*/) {}
     
     virtual void onFrame(const Leap::Controller&);
 private:
@@ -54,15 +54,15 @@ private:
     void layoutPadsLinear();
     
     OpenGLContext openGLContext;
-    DrumsToolbar* toolbar = NULL;
-    StatusBar* statusBar = NULL;
+    DrumsToolbar* toolbar;
+    StatusBar* statusBar;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
     
-    float prevMouseY = 0.f;
-    float prevMouseX = 0.f;
+    float prevMouseY;
+    float prevMouseX;
     
-    bool sizeChanged = false;
+    bool sizeChanged;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

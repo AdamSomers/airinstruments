@@ -1,14 +1,19 @@
 #include "Drums.h"
 
-Drums::Drums()
+Drums::Drums() :
+    recording(true),
+    metronomeOn(true),
+    sampleCounter(0),
+    maxRecordSamples(0),
+    tempo(110)
 {
     float bps = tempo / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
     float samples = 44100 * seconds;
-    maxRecordSamples = samples;
+    maxRecordSamples = (long) samples;
     
-    long metronomePos = 0.f;
+    long metronomePos = 0;
     for (int i = 0; i < numBeats; ++i) {
         metronomeBuffer.addEvent(MidiMessage::noteOn(1, 16, 1.f), metronomePos);
         metronomePos += (long)(samples / numBeats);
@@ -148,7 +153,7 @@ void Drums::NoteOn(int note, float velocity)
     if (recording) {
         float bps = tempo / 60.f;
         float sixteenthsPerSecond = bps * 4;
-        int samplesPerSixteenth = 44100.f / sixteenthsPerSecond;
+        int samplesPerSixteenth = (int) (44100.f / sixteenthsPerSecond);
         float sixteenthsIntoPattern = sampleCounter / (float)samplesPerSixteenth;
         int quantizedPosition = (int)sixteenthsIntoPattern * samplesPerSixteenth;
         float diff = sixteenthsIntoPattern - (int)sixteenthsIntoPattern;
@@ -204,7 +209,7 @@ void Drums::clearTrack(int note)
     midiBufferLock.exit();
 }
 
-void Drums::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
+void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double sampleRate)
 {
     midiCollector.reset (sampleRate);
     synth.setCurrentPlaybackSampleRate(sampleRate);

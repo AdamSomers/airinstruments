@@ -26,8 +26,8 @@ public:
     }
     
     MidiKeyboardState playbackState;
-    bool recording = true;
-    bool metronomeOn = true;
+    bool recording;
+    bool metronomeOn;
     
 private:
     MidiKeyboardState keyboardState;
@@ -35,9 +35,9 @@ private:
     MidiMessageCollector midiCollector;
     MidiBuffer recordBuffer;
     MidiBuffer metronomeBuffer;
-    long sampleCounter = 0;
-    long maxRecordSamples = 0;
-    float tempo = 110;
+    long sampleCounter;
+    long maxRecordSamples;
+    float tempo;
     CriticalSection midiBufferLock;
 };
 

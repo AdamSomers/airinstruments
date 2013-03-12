@@ -6,6 +6,7 @@ FingerView::FingerView()
 : inUse(false)
 , id(-1)
 , invalid(false)
+, shaderId(-1)
 {
 }
 

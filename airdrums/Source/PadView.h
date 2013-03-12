@@ -26,9 +26,9 @@ public:
     void circleBack();
 
     GLFrame objectFrame;
-    int padNum= 0;
-    float padWidth = 0.1;
-    float padHeight = 0.1;
+    int padNum;
+    float padWidth;
+    float padHeight;
     
     static GLFrame padSurfaceFrame;
     
@@ -38,9 +38,9 @@ private:
     static const int numVerts = 36;
     void makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
     GLBatch     padBatch;
-    float fade = 1.f;
-    float redFade = 0.f;
-    float padDepth = 0.025;
+    float fade;
+    float redFade;
+    float padDepth;
 };
 
 #endif // h_PadView
