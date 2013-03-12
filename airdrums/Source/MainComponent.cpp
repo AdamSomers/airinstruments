@@ -86,6 +86,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
 
+#if 0
     for (int i = 0; i < NUM_PADS; ++i)
     {
         PadView* pv = new PadView;
@@ -93,8 +94,9 @@ void MainContentComponent::newOpenGLContextCreated()
         pv->padNum = i;
         pads.push_back(pv);
     }
-    
     layoutPadsLinear();
+#endif
+    
     Environment::instance().cameraFrame.TranslateWorld(0, -.75, 0);
     Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
     PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(-50), 1, 0, 0);
@@ -120,6 +122,9 @@ void MainContentComponent::newOpenGLContextCreated()
 
     MotionDispatcher::instance().controller.addListener(*this);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     
@@ -128,7 +133,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
 void MainContentComponent::renderOpenGL()
 {
-    if (0)
+    if (sizeChanged)
     {
         if (toolbar)
             toolbar->setBounds(HUDRect(0,Environment::instance().screenH-50,Environment::instance().screenW,50));
@@ -146,21 +151,17 @@ void MainContentComponent::renderOpenGL()
     
     //glEnable(GL_DEPTH_TEST);
     
-
+#if 0
     Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
-    
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mCamera;
     Environment::instance().cameraFrame.GetCameraMatrix(mCamera);
     Environment::instance().modelViewMatrix.MultMatrix(mCamera);
-
-
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
     // Objects must be drawn from front to back to ensure proper visibility.
     std::vector<PadView*> sortedPads;
     for (PadView* pv : pads)
@@ -184,14 +185,12 @@ void MainContentComponent::renderOpenGL()
                       return (transformedCenter1[2] < transformedCenter2[2]);
                   }
               );
-
     // We sorted back-to-front, so draw in reverse for front-to-back
     for (int i = sortedPads.size() - 1; i >= 0; --i)
         sortedPads[i]->draw();
-
     Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
-
     Environment::instance().modelViewMatrix.PopMatrix(); // camera
+#endif
     
     // go 2d
 	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
@@ -374,6 +373,25 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 Leap::SwipeGesture swipe(g);
                 Environment::instance().cameraFrame.TranslateWorld((swipe.direction().x * swipe.speed()) * .00002, 0, 0);
                 
+            }
+                break;
+            
+            case Leap::Gesture::TYPE_KEY_TAP:
+            {
+                const Leap::KeyTapGesture keyTap(g);
+                if (keyTap.pointable().tipPosition().x < 0)
+                    Drums::instance().NoteOn(13, 1.f);
+                else
+                    Drums::instance().NoteOn(12, 1.f);
+            }
+                break;
+            case Leap::Gesture::TYPE_SCREEN_TAP:
+            {
+                const Leap::ScreenTapGesture screenTap(g);
+                if (screenTap.pointable().tipPosition().x < 0)
+                    Drums::instance().NoteOn(13, 1.f);
+                else
+                    Drums::instance().NoteOn(12, 1.f);
             }
                 break;
                 
