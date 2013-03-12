@@ -144,9 +144,11 @@ void gltSetWorkingDirectory(const char *szArgv)
 	///////////////////////////////////////////////////////////////////////////   
 	// Change to Resources directory. Any data files need to be placed there 
 	chdir(szParentDirectory);
-#ifndef OPENGL_ES
-	chdir("../Resources");
-#endif
+		#ifndef OPENGL_ES
+			chdir("../Resources");
+		#endif
+	#elif defined(_WINDOWS)
+	(void) szArgv;	// Silence unused variable warning
 	#endif
 	}
 
@@ -841,8 +843,8 @@ GLint gltGrabScreenTGA(const char *szFileName)
     tgaHeader.colorMapBits = 0;
     tgaHeader.xstart = 0;
     tgaHeader.ystart = 0;
-    tgaHeader.width = iViewport[2];
-    tgaHeader.height = iViewport[3];
+    tgaHeader.width = (unsigned short) iViewport[2];
+    tgaHeader.height = (unsigned short) iViewport[3];
     tgaHeader.bits = 24;
     tgaHeader.descriptor = 0;
     

@@ -150,7 +150,7 @@ void GLTriangleBatch::AddTriangle(M3DVector3f verts[3], M3DVector3f vNorms[3], M
                 m3dCloseEnough(pTexCoords[iMatch][1], vTexCoords[iVertex][1], e))
                 {
                 // Then add the index only
-                pIndexes[nNumIndexes] = iMatch;
+                pIndexes[nNumIndexes] = (GLushort) iMatch;
                 nNumIndexes++;
                 break;
                 }
@@ -162,7 +162,7 @@ void GLTriangleBatch::AddTriangle(M3DVector3f verts[3], M3DVector3f vNorms[3], M
             memcpy(pVerts[nNumVerts], verts[iVertex], sizeof(M3DVector3f));
             memcpy(pNorms[nNumVerts], vNorms[iVertex], sizeof(M3DVector3f));
             memcpy(pTexCoords[nNumVerts], vTexCoords[iVertex], sizeof(M3DVector2f));
-            pIndexes[nNumIndexes] = nNumVerts;
+            pIndexes[nNumIndexes] = (GLushort) nNumVerts;
             nNumIndexes++; 
             nNumVerts++;
             }   

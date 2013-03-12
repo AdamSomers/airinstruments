@@ -11347,6 +11347,12 @@ extern GLenum wglewContextInit (void);
 extern GLenum glxewContextInit (void);
 #endif /* _WIN32 */
 
+#if defined(_WIN32)
+	// Suppress warning C4706: assignment within conditional expression
+	#pragma warning(push)
+	#pragma warning(disable : 4706)
+#endif
+
 GLenum glewInit ()
 {
   GLenum r;
@@ -11359,6 +11365,10 @@ GLenum glewInit ()
   return r;
 #endif /* _WIN32 */
 }
+
+#if defined(_WIN32)
+	#pragma warning(pop)
+#endif
 
 #endif /* !GLEW_MX */
 #ifdef GLEW_MX

@@ -503,7 +503,7 @@ GLuint GLShaderManager::GetStockShader(GLT_STOCK_SHADER nShaderID)
 ///////////////////////////////////////////////////////////////////////////////
 // Lookup a previously loaded shader. If szFragProg == NULL, it is assumed to be
 // the same name as szVertexProg
-GLuint GLShaderManager::LookupShader(const char *szVertexProg, const char *szFragProg)
+GLuint GLShaderManager::LookupShader(const char * /*szVertexProg*/, const char * /*szFragProg*/)
 	{
 	// Linear Search... this isn't supposed to be relied on all the time
 /*	for(unsigned int i = 0; i < shaderTable.size(); i++)
