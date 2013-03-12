@@ -64,17 +64,7 @@ void MainContentComponent::resized()
     Environment::instance().screenW = w;
     Environment::instance().screenH = h;
     
-    if (toolbar)
-        toolbar->setBounds(HUDRect(0,h-50,w,50));
-    if (statusBar)
-        statusBar->setBounds(HUDRect(0,0,w,20));
-    
-    layoutPadsLinear();
-    
-    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
-	Environment::instance().viewFrustum.SetPerspective(10.0f, float(w)/float(h), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-	Environment::instance().modelViewMatrix.LoadIdentity();
+    sizeChanged = true;
     
     Environment::instance().ready = true;
 }
@@ -131,11 +121,24 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.addListener(*this);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     
+    Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
+    
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 }
 
 void MainContentComponent::renderOpenGL()
 {
+    if (0)
+    {
+        if (toolbar)
+            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-50,Environment::instance().screenW,50));
+        if (statusBar)
+            statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,20));
+        
+        layoutPadsLinear();
+        sizeChanged = false;
+    }
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());

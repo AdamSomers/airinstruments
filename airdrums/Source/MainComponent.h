@@ -61,6 +61,8 @@ private:
     
     float prevMouseY = 0.f;
     float prevMouseX = 0.f;
+    
+    bool sizeChanged = false;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

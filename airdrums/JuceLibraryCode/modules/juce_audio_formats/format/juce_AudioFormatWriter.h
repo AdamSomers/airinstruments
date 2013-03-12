@@ -130,6 +130,9 @@ public:
     bool writeFromAudioSampleBuffer (const AudioSampleBuffer& source,
                                      int startSample, int numSamples);
 
+    /** Writes some samples from a set of float data channels. */
+    bool writeFromFloatArrays (const float** channels, int numChannels, int numSamples);
+
     //==============================================================================
     /** Returns the sample rate being used. */
     double getSampleRate() const noexcept       { return sampleRate; }
@@ -219,7 +222,7 @@ protected:
     /** True if it's a floating-point format, false if it's fixed-point. */
     bool usesFloatingPointData;
 
-    /** The output stream for Use by subclasses. */
+    /** The output stream for use by subclasses. */
     OutputStream* output;
 
     /** Used by AudioFormatWriter subclasses to copy data to different formats. */
