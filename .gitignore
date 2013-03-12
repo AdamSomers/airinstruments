@@ -2,18 +2,34 @@
 *.slo
 *.lo
 *.o
+*.obj
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
+*.dll
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
+*.lib
 
 # MacOS
 .DS_Store
 
 # xcuserinterface files
 *.xcworkspace
+
+# Visual Studio
+*.sdf
+*.suo
+*.user
+*.lastbuildstate
+*.unsuccessfulbuild
+*.tlog
+*.idb
+*.pdb
+*.res
+*.exp
+*.ilk
