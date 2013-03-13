@@ -5,7 +5,7 @@ Drums::Drums() :
     metronomeOn(true),
     sampleCounter(0),
     maxRecordSamples(0),
-    tempo(110)
+    tempo(118)
 {
     float bps = tempo / 60.f;
     int numBeats = 8;
