@@ -7,8 +7,6 @@
 #include <GLGeometryTransform.h>
 
 #ifdef __APPLE__
-#include <glut/glut.h>
-#include <OpenGL/OpenGL.h>
 #else
 //#define FREEGLUT_STATIC	// I think we need to use dynamic libs throughout, unfortunately
 #include <GL/glut.h>

@@ -121,7 +121,7 @@
   </MODULES>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
-               externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
+               externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
                postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR"
                extraCompilerFlags="">
       <CONFIGURATIONS>
