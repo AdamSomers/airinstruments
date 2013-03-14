@@ -12,6 +12,7 @@
 #include "DrumsHUD.h"
 #include "PadView.h"
 #include "Leap.h"
+#include "PlayArea.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -53,9 +54,13 @@ private:
     void layoutPadsGrid();
     void layoutPadsLinear();
     
+    void handleTapGesture(const Leap::Pointable& p);
+    
     OpenGLContext openGLContext;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
+    PlayArea* playAreaLeft;
+    PlayArea* playAreaRight;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
     

@@ -58,8 +58,16 @@ void HUDView::setup()
         0.f, 0.f, 1.f
     };
     
-    defaultBatch.Begin(GL_TRIANGLE_STRIP, 4);
+    M3DVector2f texCoords[4] = {
+        0.f, 1.f,
+        1.f, 1.f,
+        0.f, 0.f,
+        1.f, 0.f
+    };
+    
+    defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
     defaultBatch.CopyVertexData3f(verts);
+    defaultBatch.CopyTexCoordData2f(texCoords, 0);
     defaultBatch.CopyNormalDataf(normals);
     defaultBatch.End();
 }

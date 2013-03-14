@@ -28,6 +28,8 @@ MainContentComponent::MainContentComponent() :
 , prevMouseY(0.f)
 , prevMouseX(0.f)
 , sizeChanged(false)
+, playAreaLeft(NULL)
+, playAreaRight(NULL)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -117,6 +119,11 @@ void MainContentComponent::newOpenGLContextCreated()
     views.push_back(sb);
     statusBar = sb;
     
+    playAreaLeft = new PlayArea;
+    playAreaRight = new PlayArea;
+    views.push_back(playAreaLeft);
+    views.push_back(playAreaRight);
+    
     for (HUDView* v : views)
         v->loadTextures();
     
@@ -140,22 +147,56 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
+        const int toobarHeight = 50;
+        const int statusBarHeight = 20;
+        const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - 10;
+        const int playAreaWidth = Environment::instance().screenW / 2 - 10;
+        
         if (toolbar)
-            toolbar->setBounds(HUDRect(0,(GLfloat) Environment::instance().screenH-50,(GLfloat) Environment::instance().screenW,50));
+            toolbar->setBounds(HUDRect(0,
+                                       (GLfloat) Environment::instance().screenH-toobarHeight,
+                                       (GLfloat) Environment::instance().screenW,
+                                       toobarHeight));
+        
         if (statusBar)
-            statusBar->setBounds(HUDRect(0,0,(GLfloat) Environment::instance().screenW,20));
+            statusBar->setBounds(HUDRect(0,
+                                         0,
+                                         (GLfloat) Environment::instance().screenW,
+                                         statusBarHeight));
+        
+        if (playAreaLeft)
+            playAreaLeft->setBounds(HUDRect(5,
+                                            (GLfloat) statusBarHeight + 5,
+                                            (GLfloat) playAreaWidth,
+                                            playAreaHeight));
+                                    
+        if (playAreaRight)
+            playAreaRight->setBounds(HUDRect(Environment::instance().screenW / 2 + 5,
+                                            (GLfloat) statusBarHeight + 5,
+                                            (GLfloat) playAreaWidth,
+                                            playAreaHeight));
         
         layoutPadsLinear();
         sizeChanged = false;
     }
     
+    glEnable(GL_MULTISAMPLE);
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
-    
-    //glEnable(GL_DEPTH_TEST);
-    
+
 #if 0
     Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
     Environment::instance().modelViewMatrix.PushMatrix();
@@ -200,9 +241,7 @@ void MainContentComponent::renderOpenGL()
     // go 2d
 	Environment::instance().viewFrustum.SetOrthographic(0, (GLfloat) Environment::instance().screenW, 0.0f, (GLfloat) Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    
-    glDisable(GL_DEPTH_TEST);
-    
+
     for (HUDView* v : views)
         v->draw();
     
@@ -219,8 +258,6 @@ void MainContentComponent::renderOpenGL()
 
     for (PadView* pv : pads)
         pv->update();
-    
-    //openGLContext.triggerRepaint();
 }
 
 void MainContentComponent::openGLContextClosing()
@@ -357,6 +394,15 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
     {
         pads.at(midiNoteNumber)->triggerDisplay();
     }
+    
+    if (midiNoteNumber == 12)
+    {
+        playAreaRight->tap();
+    }
+    if (midiNoteNumber == 13)
+    {
+        playAreaLeft->tap();
+    }
 }
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
@@ -384,24 +430,33 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             case Leap::Gesture::TYPE_KEY_TAP:
             {
                 const Leap::KeyTapGesture keyTap(g);
-                if (keyTap.pointable().tipPosition().x < 0)
-                    Drums::instance().NoteOn(13, 1.f);
-                else
-                    Drums::instance().NoteOn(12, 1.f);
+                handleTapGesture(keyTap.pointable());
             }
                 break;
+                
             case Leap::Gesture::TYPE_SCREEN_TAP:
             {
                 const Leap::ScreenTapGesture screenTap(g);
-                if (screenTap.pointable().tipPosition().x < 0)
-                    Drums::instance().NoteOn(13, 1.f);
-                else
-                    Drums::instance().NoteOn(12, 1.f);
+                handleTapGesture(screenTap.pointable());
             }
                 break;
                 
             default:
                 break;
         }
+    }
+}
+
+void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
+{
+    if (p.tipPosition().x < 0)
+    {
+        Drums::instance().NoteOn(13, 1.f);
+        playAreaLeft->tap();
+    }
+    else
+    {
+        Drums::instance().NoteOn(12, 1.f);
+        playAreaRight->tap();
     }
 }
