@@ -19,6 +19,8 @@ public:
     void releaseResources();
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill);
     
+    const int getNumNotes() const { return numNotes; }
+    
     static Drums& instance(void)
     {
         static Drums s_instance;
@@ -38,6 +40,7 @@ private:
     long sampleCounter;
     long maxRecordSamples;
     float tempo;
+    int numNotes;
     CriticalSection midiBufferLock;
 };
 

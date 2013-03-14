@@ -13,14 +13,17 @@ public:
     void setup();
     void draw();
     
-    void tap();
+    void tap(int midiNote);
+    
+    const int getSelectedMidiNote() const { return selectedMidiNote; }
+    void setSelectedMidiNote(int note);
     
 private:
     GLBatch batch;
     GLuint onTextureID;
     GLuint offTextureID;
     float fade;
-    bool hovering;
+    int selectedMidiNote;
     
     GLfloat offColor[4];
     GLfloat onColor[4];

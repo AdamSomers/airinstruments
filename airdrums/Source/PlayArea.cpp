@@ -7,11 +7,13 @@
 //
 
 #include "PlayArea.h"
+#include "Drums.h"
 
 PlayArea::PlayArea()
 : onTextureID(-1)
 , offTextureID(-1)
 , fade(0.f)
+, selectedMidiNote(0)
 {
     offColor[0] = .3f;
     offColor[1] = .3f;
@@ -95,7 +97,17 @@ void PlayArea::draw()
     }
 }
 
-void PlayArea::tap()
+void PlayArea::tap(int midiNote)
 {
-    fade = 1.f;
+    if (midiNote == selectedMidiNote)
+        fade = 1.f;
+}
+
+void PlayArea::setSelectedMidiNote(int note)
+{
+    if (note >= Drums::instance().getNumNotes())
+        note = 0;
+    else if (note < 0)
+        note = Drums::instance().getNumNotes() - 1;
+    selectedMidiNote = note;
 }

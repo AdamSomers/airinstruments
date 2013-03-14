@@ -5,7 +5,8 @@ Drums::Drums() :
     metronomeOn(true),
     sampleCounter(0),
     maxRecordSamples(0),
-    tempo(118)
+    tempo(118),
+    numNotes(0)
 {
     float bps = tempo / 60.f;
     int numBeats = 8;
@@ -140,6 +141,8 @@ Drums::Drums() :
     notes.setRange (16, 1, true);
     synth.addSound (new SamplerSound ("", *clv, notes, 16, 0.0, 0.1, 10.0));
 
+    numNotes = 15;
+    
     synth.setNoteStealingEnabled(false);
 }
 

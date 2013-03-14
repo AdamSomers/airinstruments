@@ -39,6 +39,17 @@ MainContentComponent::MainContentComponent() :
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
+    
+    PropertiesFile::Options options;
+    options.applicationName = "AirBeats";
+    options.filenameSuffix = ".settings";
+    options.folderName = "AirBeats";
+    options.osxLibrarySubFolder = "Application Support";
+    options.commonToAllUsers = "false";
+    options.ignoreCaseOfKeyNames = true;
+    options.millisecondsBeforeSaving = 0;
+    options.storageFormat = PropertiesFile::storeAsXML;
+    properties.setStorageParameters(options);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -51,7 +62,7 @@ void MainContentComponent::paint (Graphics& g)
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::black);
-    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+    //g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
 }
 
 void MainContentComponent::resized()
@@ -120,7 +131,11 @@ void MainContentComponent::newOpenGLContextCreated()
     statusBar = sb;
     
     playAreaLeft = new PlayArea;
+    int note = properties.getUserSettings()->getIntValue("selectedNoteLeft", 13);
+    playAreaLeft->setSelectedMidiNote(note);
     playAreaRight = new PlayArea;
+    note = properties.getUserSettings()->getIntValue("selectedNoteRight", 12);
+    playAreaRight->setSelectedMidiNote(note);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);
     
@@ -381,10 +396,28 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         Drums::instance().recording = !Drums::instance().recording;
         ret = true;
     }
-    if (kp.getTextCharacter() == 'c') {
+    else if (kp.getTextCharacter() == 'c') {
         Drums::instance().clear();
         ret = true;
     }
+    else if (kp.getTextCharacter() == 'q') {
+        playAreaLeft->setSelectedMidiNote(playAreaLeft->getSelectedMidiNote() - 1);
+        properties.getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
+    }
+    else if (kp.getTextCharacter() == 'w') {
+        playAreaLeft->setSelectedMidiNote(playAreaLeft->getSelectedMidiNote() + 1);
+        properties.getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
+    }
+    else if (kp.getTextCharacter() == 'a') {
+        playAreaRight->setSelectedMidiNote(playAreaRight->getSelectedMidiNote() - 1);
+        properties.getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
+    }
+    else if (kp.getTextCharacter() == 's') {
+        playAreaRight->setSelectedMidiNote(playAreaRight->getSelectedMidiNote() + 1);
+        properties.getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
+    }
+    
+    properties.saveIfNeeded();
     return ret;
 }
 
@@ -394,15 +427,9 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
     {
         pads.at(midiNoteNumber)->triggerDisplay();
     }
-    
-    if (midiNoteNumber == 12)
-    {
-        playAreaRight->tap();
-    }
-    if (midiNoteNumber == 13)
-    {
-        playAreaLeft->tap();
-    }
+
+    playAreaLeft->tap(midiNoteNumber);
+    playAreaRight->tap(midiNoteNumber);
 }
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
@@ -451,12 +478,12 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 {
     if (p.tipPosition().x < 0)
     {
-        Drums::instance().NoteOn(13, 1.f);
-        playAreaLeft->tap();
+        Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
+        playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
     else
     {
-        Drums::instance().NoteOn(12, 1.f);
-        playAreaRight->tap();
+        Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
+        playAreaRight->tap(playAreaRight->getSelectedMidiNote());
     }
 }
