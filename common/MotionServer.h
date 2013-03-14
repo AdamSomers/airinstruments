@@ -16,9 +16,18 @@ public:
     ~MotionDispatcher();
     static MotionDispatcher& instance( void )
     {
-        static MotionDispatcher s_instance;
-        return s_instance;
+		if (s_instance == nullptr)
+	        s_instance = new MotionDispatcher;
+        return *s_instance;
     }
+	static void destruct( void )
+	{
+		if (s_instance != nullptr)
+		{
+			delete s_instance;
+			s_instance = nullptr;
+		}
+	}
     virtual void onInit(const Leap::Controller&);
     virtual void onConnect(const Leap::Controller&);
     virtual void onDisconnect(const Leap::Controller&);
@@ -49,6 +58,8 @@ private:
     {
         return z / 250.f;
     }
+
+	static MotionDispatcher* s_instance;
 };
 
 #endif // h_MotionDispatcher

@@ -13,6 +13,7 @@
 												// If this is included here, it causes an error in Windows builds
 												// #error :  gl.h included before glew.h
 #include "MainComponent.h"
+#include "MotionServer.h"
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
@@ -42,6 +43,9 @@ public:
     void shutdown()
     {
         // Add your application's shutdown code here..
+
+        audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
+		MotionDispatcher::destruct();
 
         mainWindow = nullptr; // (deletes our window)
         //audioDeviceManager.removeAudioCallback(this);

@@ -54,6 +54,7 @@ MainContentComponent::MainContentComponent() :
 
 MainContentComponent::~MainContentComponent()
 {
+	openGLContext.detach();
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -118,7 +119,11 @@ void MainContentComponent::newOpenGLContextCreated()
     Environment::instance().cameraFrame.TranslateWorld(0, -.75, 0);
     Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
     PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-50), 1, 0, 0);
-    
+
+#ifdef _WIN32
+	glewInit();		// Not sure if this is in the right place, but it seems to work for now.
+#endif // _WIN32
+
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
 

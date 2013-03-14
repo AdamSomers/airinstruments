@@ -5,6 +5,7 @@ std::map<int,HandView*> MotionDispatcher::handViews;
 std::vector<FingerView::Listener*> MotionDispatcher::fingerViewListeners;
 std::vector<HandView::Listener*> MotionDispatcher::handViewListeners;
 float MotionDispatcher::zLimit = 0;
+MotionDispatcher* MotionDispatcher::s_instance = nullptr;
 
 MotionDispatcher::MotionDispatcher()
 {
@@ -36,6 +37,7 @@ MotionDispatcher::MotionDispatcher()
 
 MotionDispatcher::~MotionDispatcher()
 {
+    controller.removeListener(*this);
 }
 
 void MotionDispatcher::onInit(const Leap::Controller& /*controller*/)
