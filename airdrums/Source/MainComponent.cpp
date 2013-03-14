@@ -354,6 +354,17 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
+    
+    if (e.getPosition().x < Environment::instance().screenW / 2)
+    {
+        Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
+        playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
+    }
+    else
+    {
+        Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
+        playAreaRight->tap(playAreaRight->getSelectedMidiNote());
+    }
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
