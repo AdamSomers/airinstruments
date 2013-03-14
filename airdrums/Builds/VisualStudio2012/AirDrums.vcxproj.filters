@@ -376,6 +376,9 @@
     <ClCompile Include="..\..\Source\PadView.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PlayArea.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
     </ClCompile>
@@ -1630,6 +1633,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PlayArea.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
@@ -2924,6 +2930,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\icon.png">
+      <Filter>AirDrums\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\icon.icns">
+      <Filter>AirDrums\resources</Filter>
+    </None>
+    <None Include="..\..\..\common\testShader.fs">
+      <Filter>AirDrums\resources</Filter>
+    </None>
+    <None Include="..\..\..\common\testShader.vs">
+      <Filter>AirDrums\resources</Filter>
+    </None>
     <None Include="..\..\Resources\TestKit\TMD CHIL BKICK.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
@@ -2972,15 +2990,6 @@
     <None Include="..\..\Resources\TestKit\TMD CHIL VERB.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\icon.icns">
-      <Filter>AirDrums\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\testShader.fs">
-      <Filter>AirDrums\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\testShader.vs">
-      <Filter>AirDrums\resources</Filter>
-    </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">
       <Filter>Juce Modules\juce_audio_basics</Filter>
     </None>
@@ -3022,6 +3031,9 @@
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_video\juce_module_info">
       <Filter>Juce Modules\juce_video</Filter>
+    </None>
+    <None Include=".\icon.ico">
+      <Filter>Juce Library Code</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

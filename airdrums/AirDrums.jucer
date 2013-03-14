@@ -5,6 +5,10 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
+      <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
+      <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
+      <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
       <FILE id="PCNgqL" name="TMD CHIL BKICK.aif" compile="0" resource="1"
             file="Resources/TestKit/TMD CHIL BKICK.aif"/>
       <FILE id="caRogU" name="TMD CHIL CHH.aif" compile="0" resource="1"
@@ -37,9 +41,6 @@
             file="Resources/TestKit/TMD CHIL SN 1.aif"/>
       <FILE id="lm5Cko" name="TMD CHIL VERB.aif" compile="0" resource="1"
             file="Resources/TestKit/TMD CHIL VERB.aif"/>
-      <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
-      <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
-      <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
@@ -136,7 +137,7 @@
       </CONFIGURATIONS>
     </XCODE_MAC>
     <VS2012 targetFolder="Builds/VisualStudio2012" libraryType="1" juceFolder="../../juce/modules"
-            externalLibraries="Leap.lib&#10;">
+            externalLibraries="Leap.lib&#10;" smallIcon="" bigIcon="Ig1XGD">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="AirDrums" useRuntimeLibDLL="1"

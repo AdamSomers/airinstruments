@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\PadView.cpp"/>
+    <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1254,6 +1255,7 @@
     <ClInclude Include="..\..\Source\DrumsHUD.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\PadView.h"/>
+    <ClInclude Include="..\..\Source\PlayArea.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.h"/>
@@ -1686,6 +1688,10 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\icon.png"/>
+    <None Include="..\..\Resources\icon.icns"/>
+    <None Include="..\..\..\common\testShader.fs"/>
+    <None Include="..\..\..\common\testShader.vs"/>
     <None Include="..\..\Resources\TestKit\TMD CHIL BKICK.aif"/>
     <None Include="..\..\Resources\TestKit\TMD CHIL CHH.aif"/>
     <None Include="..\..\Resources\TestKit\TMD CHIL CLAP.aif"/>
@@ -1702,9 +1708,6 @@
     <None Include="..\..\Resources\TestKit\TMD CHIL SFX.aif"/>
     <None Include="..\..\Resources\TestKit\TMD CHIL SN 1.aif"/>
     <None Include="..\..\Resources\TestKit\TMD CHIL VERB.aif"/>
-    <None Include="..\..\Resources\icon.icns"/>
-    <None Include="..\..\..\common\testShader.fs"/>
-    <None Include="..\..\..\common\testShader.vs"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_module_info"/>
@@ -1719,6 +1722,7 @@
     <None Include="..\..\JuceLibraryCode\modules\juce_gui_extra\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_opengl\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_video\juce_module_info"/>
+    <None Include=".\icon.ico"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>
