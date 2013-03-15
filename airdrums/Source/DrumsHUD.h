@@ -6,7 +6,6 @@
 #include "Leap.h"
 
 class DrumsToolbar : public HUDView
-                   , public HUDButton::Listener
 {
 public:
     DrumsToolbar();
@@ -17,15 +16,7 @@ public:
     
     void layoutControls();
     
-    // HUDButton::Listener override
-    void buttonStateChanged(HUDButton* b);
-    
 private:
-    std::vector<HUDButton*> buttons;
-    //    HUDSlider s1;
-    //    HUDSlider s2;
-    //    HUDSwitch sw1;
-    //    HUDSwitch sw2;
     GLBatch batch;
 };
 

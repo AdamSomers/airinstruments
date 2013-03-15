@@ -70,6 +70,9 @@ void HUDView::setup()
     defaultBatch.CopyTexCoordData2f(texCoords, 0);
     defaultBatch.CopyNormalDataf(normals);
     defaultBatch.End();
+    
+    for (HUDView* v : children)
+        v->setup();
 }
 
 void HUDView::boundsChanged()

@@ -1,11 +1,3 @@
-//
-//  PlayArea.cpp
-//  AirDrums
-//
-//  Created by Adam Somers on 3/13/13.
-//
-//
-
 #include "PlayArea.h"
 #include "Drums.h"
 #include "GfxTools.h"

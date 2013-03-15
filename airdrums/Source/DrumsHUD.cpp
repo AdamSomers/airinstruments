@@ -4,19 +4,10 @@
 
 DrumsToolbar::DrumsToolbar()
 {
-    for (int i = 0; i < 7; ++i)
-    {
-        HUDButton* b = new HUDButton(i);
-        b->addListener(this);
-        buttons.push_back(b);
-        addChild(b);
-    }
 }
 
 DrumsToolbar::~DrumsToolbar()
 {
-    for (HUDButton* b : buttons)
-        delete b;
 }
 
 // HUDView overrides
@@ -39,25 +30,7 @@ void DrumsToolbar::setup()
 }
 
 void DrumsToolbar::layoutControls()
-{
-    int numButtons = buttons.size();
-    float buttonWidth = 30;
-    float buttonHeight = 30;
-    float xmin = 50;
-    float xmax = 400;
-    float totalButtonWidth = numButtons * buttonWidth;
-    float emptySpace = (xmax - xmin) - totalButtonWidth;
-    float step = (emptySpace / (numButtons-1)) + buttonWidth;
-    if (step < buttonWidth + 1)
-        step = buttonWidth + 1;
-    float y = bounds.h / 2.f - buttonHeight / 2.f;
-    HUDRect r(xmin, y, buttonWidth, buttonHeight);
-    for (HUDButton* b : buttons)
-    {
-        b->setBounds(r);
-        r.x += step;
-    }
-    
+{    
 }
 
 void DrumsToolbar::draw()
@@ -67,23 +40,6 @@ void DrumsToolbar::draw()
     glLineWidth(1.f);
     batch.Draw();
     HUDView::draw();
-}
-
-void DrumsToolbar::buttonStateChanged(HUDButton* b)
-{
-    bool state = b->getState();
-    if (state)
-    {
-        for (HUDButton* button : buttons)
-        {
-            if (button != b)
-                button->setState(false, false);
-        }
-    }
-    else
-        b->setState(true, false);
-    
-    //Drums::instance().SetKitNumber(b->getId());
 }
 
 StatusBar::StatusBar()

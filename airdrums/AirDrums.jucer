@@ -5,6 +5,8 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="IlooW4" name="led1_off.png" compile="0" resource="1" file="Resources/led1_off.png"/>
+      <FILE id="LQnpwb" name="led1_on.png" compile="0" resource="1" file="Resources/led1_on.png"/>
       <FILE id="jDR8Ks" name="pad1_on.png" compile="0" resource="1" file="Resources/pad1_on.png"/>
       <FILE id="IpITcF" name="pad1_off.png" compile="0" resource="1" file="Resources/pad1_off.png"/>
       <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
@@ -105,6 +107,8 @@
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
       <FILE id="cY2YSL" name="PlayArea.cpp" compile="1" resource="0" file="Source/PlayArea.cpp"/>
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
+      <FILE id="NWbMPc" name="TrigView.cpp" compile="1" resource="0" file="Source/TrigView.cpp"/>
+      <FILE id="ubxFLq" name="TrigView.h" compile="0" resource="0" file="Source/TrigView.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

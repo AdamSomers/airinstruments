@@ -30,6 +30,7 @@ MainContentComponent::MainContentComponent() :
 , sizeChanged(false)
 , playAreaLeft(NULL)
 , playAreaRight(NULL)
+, trigViewBank(NULL)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -143,6 +144,8 @@ void MainContentComponent::newOpenGLContextCreated()
     playAreaRight->setSelectedMidiNote(note);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);
+    trigViewBank = new TrigViewBank;
+    views.push_back(trigViewBank);
     
     for (HUDView* v : views)
         v->loadTextures();
@@ -195,6 +198,11 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) statusBarHeight + 5,
                                             (GLfloat) playAreaWidth,
                                             playAreaHeight));
+        if (trigViewBank)
+            trigViewBank->setBounds(HUDRect(0,
+                                            (GLfloat) Environment::instance().screenH-toobarHeight,
+                                            (GLfloat) Environment::instance().screenW / 4,
+                                            toobarHeight));
         
         layoutPadsLinear();
         sizeChanged = false;
@@ -446,6 +454,8 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
 
     playAreaLeft->tap(midiNoteNumber);
     playAreaRight->tap(midiNoteNumber);
+    
+    trigViewBank->trigger(midiNoteNumber);
 }
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
