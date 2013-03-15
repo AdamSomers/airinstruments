@@ -379,6 +379,9 @@
     <ClCompile Include="..\..\Source\PlayArea.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\TrigView.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
     </ClCompile>
@@ -1636,6 +1639,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlayArea.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TrigView.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
@@ -2930,6 +2936,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\led1_off.png">
+      <Filter>AirDrums\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\led1_on.png">
+      <Filter>AirDrums\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\pad1_on.png">
+      <Filter>AirDrums\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\pad1_off.png">
+      <Filter>AirDrums\resources</Filter>
+    </None>
     <None Include="..\..\Resources\icon.png">
       <Filter>AirDrums\resources</Filter>
     </None>

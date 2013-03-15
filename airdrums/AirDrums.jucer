@@ -147,14 +147,12 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="AirDrums" useRuntimeLibDLL="1"
-                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../freeglut/include&#10;../../../common&#10;"
-                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;GLUT_DISABLE_ATEXIT_HACK&#10;"
-                       libraryPath="../../../freeglut/lib/x86/Debug&#10;../../../LeapSDK/win/lib/x86&#10;"/>
+                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;"
+                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="AirDrums" useRuntimeLibDLL="1"
-                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../freeglut/include&#10;../../../common&#10;"
-                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;GLUT_DISABLE_ATEXIT_HACK&#10;"
-                       libraryPath="../../../freeglut/lib/x86/Release&#10;../../../LeapSDK/win/lib/x86&#10;"/>
+                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;"
+                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"/>
       </CONFIGURATIONS>
     </VS2012>
   </EXPORTFORMATS>

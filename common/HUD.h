@@ -6,12 +6,6 @@
 #include <GLMatrixStack.h>
 #include <GLGeometryTransform.h>
 
-#ifdef __APPLE__
-#else
-//#define FREEGLUT_STATIC	// I think we need to use dynamic libs throughout, unfortunately
-#include <GL/glut.h>
-#endif
-
 #include <iostream>
 #include <vector>
 
