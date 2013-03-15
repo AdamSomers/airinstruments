@@ -363,12 +363,12 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     if (e.getPosition().x < Environment::instance().screenW / 2)
     {
         Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
-        playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
+        //playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
     else
     {
         Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
-        playAreaRight->tap(playAreaRight->getSelectedMidiNote());
+        //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
     }
 }
 
@@ -495,11 +495,11 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
     if (p.tipPosition().x < 0)
     {
         Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
-        playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
+        //playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
     else
     {
         Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
-        playAreaRight->tap(playAreaRight->getSelectedMidiNote());
+        //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
     }
 }

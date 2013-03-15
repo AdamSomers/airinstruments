@@ -12,6 +12,7 @@ public:
     // HUDView overrides
     void setup();
     void draw();
+    void loadTextures();
     
     void tap(int midiNote);
     

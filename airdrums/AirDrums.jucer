@@ -5,6 +5,8 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="jDR8Ks" name="pad1_on.png" compile="0" resource="1" file="Resources/pad1_on.png"/>
+      <FILE id="IpITcF" name="pad1_off.png" compile="0" resource="1" file="Resources/pad1_off.png"/>
       <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
       <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>

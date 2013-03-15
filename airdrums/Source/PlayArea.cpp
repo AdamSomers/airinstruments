@@ -8,6 +8,7 @@
 
 #include "PlayArea.h"
 #include "Drums.h"
+#include "GfxTools.h"
 
 PlayArea::PlayArea()
 : onTextureID(-1)
@@ -70,19 +71,19 @@ void PlayArea::draw()
                           (onColor[2] * fade) + (offColor[2] * (1.f-fade)),
                           (onColor[3] * fade) + (offColor[3] * (1.f-fade)) };
     
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
+//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
+//    batch.Draw();
+    
+    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
+    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
+    
+    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
+    glLineWidth(1.f);
     batch.Draw();
-    
-//    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
-//    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
-    
-//    glBindTexture(GL_TEXTURE_2D, onTextureID);
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
-//    glLineWidth(1.f);
-//    batch.Draw();
-//    glBindTexture(GL_TEXTURE_2D, offTextureID);
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
-//    batch.Draw();
+    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
+    batch.Draw();
     
 //    if (fade < 1.f)
 //    {
@@ -110,4 +111,14 @@ void PlayArea::setSelectedMidiNote(int note)
     else if (note < 0)
         note = Drums::instance().getNumNotes() - 1;
     selectedMidiNote = note;
+}
+
+void PlayArea::loadTextures()
+{
+        glGenTextures(1, &onTextureID);
+        glBindTexture(GL_TEXTURE_2D, onTextureID);
+        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::pad1_on_png, BinaryData::pad1_on_pngSize));
+        glGenTextures(1, &offTextureID);
+        glBindTexture(GL_TEXTURE_2D, offTextureID);
+        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::pad1_off_png, BinaryData::pad1_off_pngSize));
 }

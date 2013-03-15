@@ -6,6 +6,12 @@
 
 namespace BinaryData
 {
+    extern const char*   pad1_on_png;
+    const int            pad1_on_pngSize = 877978;
+
+    extern const char*   pad1_off_png;
+    const int            pad1_off_pngSize = 631071;
+
     extern const char*   TMD_CHIL_BKICK_aif;
     const int            TMD_CHIL_BKICK_aifSize = 157402;
 

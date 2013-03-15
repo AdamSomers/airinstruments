@@ -1,7 +1,7 @@
 #include "Drums.h"
 
 Drums::Drums() :
-    recording(true),
+    recording(false),
     metronomeOn(true),
     sampleCounter(0),
     maxRecordSamples(0),
