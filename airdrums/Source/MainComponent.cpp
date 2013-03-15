@@ -176,33 +176,33 @@ void MainContentComponent::renderOpenGL()
         const int playAreaWidth = Environment::instance().screenW / 2 - 10;
         
         if (toolbar)
-            toolbar->setBounds(HUDRect(0,
+            toolbar->setBounds(HUDRect(0.0f,
                                        (GLfloat) Environment::instance().screenH-toobarHeight,
                                        (GLfloat) Environment::instance().screenW,
-                                       toobarHeight));
+                                       (GLfloat) toobarHeight));
         
         if (statusBar)
-            statusBar->setBounds(HUDRect(0,
-                                         0,
+            statusBar->setBounds(HUDRect(0.0f,
+                                         0.0f,
                                          (GLfloat) Environment::instance().screenW,
-                                         statusBarHeight));
+                                         (GLfloat) statusBarHeight));
         
         if (playAreaLeft)
-            playAreaLeft->setBounds(HUDRect(5,
+            playAreaLeft->setBounds(HUDRect(5.0f,
                                             (GLfloat) statusBarHeight + 5,
                                             (GLfloat) playAreaWidth,
-                                            playAreaHeight));
+                                            (GLfloat) playAreaHeight));
                                     
         if (playAreaRight)
-            playAreaRight->setBounds(HUDRect(Environment::instance().screenW / 2 + 5,
+            playAreaRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
                                             (GLfloat) statusBarHeight + 5,
                                             (GLfloat) playAreaWidth,
-                                            playAreaHeight));
+                                            (GLfloat) playAreaHeight));
         if (trigViewBank)
-            trigViewBank->setBounds(HUDRect(0,
+            trigViewBank->setBounds(HUDRect(0.0f,
                                             (GLfloat) Environment::instance().screenH-toobarHeight,
                                             (GLfloat) Environment::instance().screenW / 4,
-                                            toobarHeight));
+                                            (GLfloat) toobarHeight));
         
         layoutPadsLinear();
         sizeChanged = false;

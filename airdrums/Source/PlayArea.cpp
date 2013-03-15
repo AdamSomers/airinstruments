@@ -3,8 +3,8 @@
 #include "GfxTools.h"
 
 PlayArea::PlayArea()
-: onTextureID(-1)
-, offTextureID(-1)
+: onTextureID((GLuint) -1)
+, offTextureID((GLuint) -1)
 , fade(0.f)
 , selectedMidiNote(0)
 {
@@ -58,10 +58,12 @@ void PlayArea::setup()
 
 void PlayArea::draw()
 {
+	/*	unused variable
     GLfloat color[4] =  { (onColor[0] * fade) + (offColor[0] * (1.f-fade)),
                           (onColor[1] * fade) + (offColor[1] * (1.f-fade)),
                           (onColor[2] * fade) + (offColor[2] * (1.f-fade)),
                           (onColor[3] * fade) + (offColor[3] * (1.f-fade)) };
+	*/
     
 //    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
 //    batch.Draw();

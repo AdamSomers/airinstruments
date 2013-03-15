@@ -2,8 +2,8 @@
 #include "GfxTools.h"
 
 TrigView::TrigView()
-: onTextureID(-1)
-, offTextureID(-1)
+: onTextureID((GLuint) -1)
+, offTextureID((GLuint) -1)
 , fade(0.f)
 {
 }
@@ -80,7 +80,7 @@ void TrigView::trigger()
 }
 
 TrigViewBank::TrigViewBank()
-: textureID(-1)
+: textureID((GLuint) -1)
 {
     for (int i = 0; i < 16; ++i) {
         TrigView* tv = new TrigView;
@@ -103,11 +103,11 @@ void TrigViewBank::setBounds(const HUDRect& b)
 {
     HUDView::setBounds(b);
     int trigWidth = 20;
-    int step = b.w / trigViews.size();
+    int step = (int) (b.w / trigViews.size());
     int x = 0;
     int y = 0;
-    for (int i = 0; i < trigViews.size(); ++i) {
-        trigViews.at(i)->setBounds(HUDRect(x, y, trigWidth, trigWidth));
+    for (unsigned int i = 0; i < trigViews.size(); ++i) {
+        trigViews.at(i)->setBounds(HUDRect((GLfloat) x, (GLfloat) y, (GLfloat) trigWidth, (GLfloat) trigWidth));
         x += step;
         if (i == 7) {
             y = 10;
@@ -128,6 +128,6 @@ void TrigViewBank::loadTextures()
 
 void TrigViewBank::trigger(int midiNote)
 {
-    if (midiNote < trigViews.size())
+    if (midiNote < (int) trigViews.size())
         trigViews.at(midiNote)->trigger();
 }
