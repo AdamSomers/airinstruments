@@ -10,6 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"
+#include "MotionServer.h"
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
@@ -39,6 +40,7 @@ public:
 
         mainWindow = nullptr; // (deletes our window)
         audioDeviceManager.removeAudioCallback(this);
+        MotionDispatcher::destruct();
     }
 
     //==============================================================================
