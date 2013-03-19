@@ -150,6 +150,7 @@
     <ClCompile Include="..\..\..\GLTools\src\GLTools.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
+    <ClCompile Include="..\..\Source\MainMenu.cpp"/>
     <ClCompile Include="..\..\Source\Drums.cpp"/>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
@@ -1252,6 +1253,7 @@
     <ClInclude Include="..\..\..\GLTools\include\GLTriangleBatch.h"/>
     <ClInclude Include="..\..\..\GLTools\include\math3d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
+    <ClInclude Include="..\..\Source\MainMenu.h"/>
     <ClInclude Include="..\..\Source\Drums.h"/>
     <ClInclude Include="..\..\Source\DrumsHUD.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>

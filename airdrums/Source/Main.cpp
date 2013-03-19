@@ -14,6 +14,7 @@
 												// #error :  gl.h included before glew.h
 #include "MainComponent.h"
 #include "MotionServer.h"
+#include "MainMenu.h"
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
@@ -33,7 +34,9 @@ public:
         // This method is where you should put your application's initialisation code..
 
         mainWindow = new MainWindow();
-        audioDeviceManager.initialise (2, 2, 0, true, String::empty, 0);
+		mainWindow->setMenuBar(&mainMenu);
+
+        audioDeviceManager.initialise (0, 2, 0, true, String::empty, 0);
         //audioDeviceManager.addAudioCallback(this);
         audioSourcePlayer.setSource (&Drums::instance());
         audioDeviceManager.addAudioCallback (&audioSourcePlayer);
@@ -122,6 +125,37 @@ private:
     ScopedPointer<MainWindow> mainWindow;
     AudioDeviceManager audioDeviceManager;
     AudioSourcePlayer audioSourcePlayer;
+	ApplicationCommandManager commandManager;
+	MainMenu mainMenu;
+
+	bool perform (const InvocationInfo &info)
+	{
+		switch(info.commandID)
+		{
+			default :
+				jassert(false);
+				break;
+			case 1 :
+			{
+				AudioDeviceSelectorComponent selector(audioDeviceManager, 0, 0, 2, 2, false, false, true, true);
+				selector.setSize (500, 450);
+
+				DialogWindow::LaunchOptions dialog;
+				dialog.content.setNonOwned (&selector);
+				dialog.dialogTitle                   = "Audio Settings";
+				dialog.componentToCentreAround       = mainWindow;
+				dialog.dialogBackgroundColour        = Colours::azure;
+				dialog.escapeKeyTriggersCloseButton  = true;
+				dialog.useNativeTitleBar             = true;
+				dialog.resizable                     = false;
+				dialog.runModal();
+
+				break;
+			}
+		}
+
+		return true;
+	}
 };
 
 //==============================================================================
