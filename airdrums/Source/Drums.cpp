@@ -6,20 +6,10 @@ Drums::Drums() :
     sampleCounter(0),
     maxRecordSamples(0),
     tempo(118),
-    numNotes(0)
+    numNotes(0),
+    sampleRate(44100)
 {
-    float bps = tempo / 60.f;
-    int numBeats = 8;
-    float seconds = numBeats / bps;
-    float samples = 44100 * seconds;
-    maxRecordSamples = (long) samples;
-    
-    long metronomePos = 0;
-    for (int i = 0; i < numBeats; ++i) {
-        metronomeBuffer.addEvent(MidiMessage::noteOn(1, 16, 1.f), metronomePos);
-        metronomePos += (long)(samples / numBeats);
-    }
-    
+   
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
     WavAudioFormat wavFormat;
@@ -156,7 +146,7 @@ void Drums::NoteOn(int note, float velocity)
     if (recording) {
         float bps = tempo / 60.f;
         float sixteenthsPerSecond = bps * 4;
-        int samplesPerSixteenth = (int) (44100.f / sixteenthsPerSecond);
+        int samplesPerSixteenth = (int) (sampleRate / sixteenthsPerSecond);
         float sixteenthsIntoPattern = sampleCounter / (float)samplesPerSixteenth;
         int quantizedPosition = (int)sixteenthsIntoPattern * samplesPerSixteenth;
         float diff = sixteenthsIntoPattern - (int)sixteenthsIntoPattern;
@@ -212,10 +202,43 @@ void Drums::clearTrack(int note)
     midiBufferLock.exit();
 }
 
-void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double sampleRate)
+void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 {
+    sampleRate = inSampleRate;
     midiCollector.reset (sampleRate);
     synth.setCurrentPlaybackSampleRate(sampleRate);
+    
+    float bps = tempo / 60.f;
+    int numBeats = 8;
+    float seconds = numBeats / bps;
+    float samples = sampleRate * seconds;
+    long oldMaxRecordSample = maxRecordSamples;
+    maxRecordSamples = (long) samples;
+    long metronomePos = 0;
+    
+    // Adjust the metronome buffer
+    metronomeBuffer.clear();
+    for (int i = 0; i < numBeats; ++i) {
+        metronomeBuffer.addEvent(MidiMessage::noteOn(1, 16, 1.f), metronomePos);
+        metronomePos += (long)(samples / numBeats);
+    }
+    
+    // Adjust sample positions of all events in record buffer 
+    midiBufferLock.enter();
+    MidiBuffer::Iterator i(recordBuffer);
+    int samplePos = 0;
+    MidiMessage message;
+    MidiBuffer newBuffer;
+    while (i.getNextEvent(message, samplePos))
+    {
+        double positionRatio = samplePos / (double)oldMaxRecordSample;
+        long newPos = (long)(positionRatio * (double)maxRecordSamples);
+        newBuffer.addEvent(message, newPos);
+    }
+    recordBuffer = newBuffer;
+    midiBufferLock.exit();
+    
+    
 }
 
 void Drums::releaseResources()

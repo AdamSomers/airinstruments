@@ -41,6 +41,7 @@ private:
     long maxRecordSamples;
     float tempo;
     int numNotes;
+    double sampleRate;
     CriticalSection midiBufferLock;
 };
 
