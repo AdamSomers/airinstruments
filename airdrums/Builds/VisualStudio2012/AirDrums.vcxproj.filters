@@ -361,9 +361,6 @@
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp">
       <Filter>AirDrums\GLTools\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MainMenu.cpp">
-      <Filter>AirDrums\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Drums.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
@@ -374,6 +371,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainMenu.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PadView.cpp">
@@ -1629,16 +1629,19 @@
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h">
       <Filter>AirDrums\GLTools\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\MainMenu.h">
-      <Filter>AirDrums\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Drums.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumsHUD.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Main.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainMenu.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">

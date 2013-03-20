@@ -95,16 +95,17 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
-      <FILE id="Z24b7x" name="MainMenu.cpp" compile="1" resource="0" file="Source/MainMenu.cpp"/>
-      <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
       <FILE id="xr5HgS" name="Drums.cpp" compile="1" resource="0" file="Source/Drums.cpp"/>
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
       <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="ynO4Iz" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="vAgls0" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JWGoNP" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="Z24b7x" name="MainMenu.cpp" compile="1" resource="0" file="Source/MainMenu.cpp"/>
+      <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
       <FILE id="njk3KC" name="PadView.cpp" compile="1" resource="0" file="Source/PadView.cpp"/>
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
       <FILE id="cY2YSL" name="PlayArea.cpp" compile="1" resource="0" file="Source/PlayArea.cpp"/>

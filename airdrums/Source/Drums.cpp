@@ -211,7 +211,7 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
     float bps = tempo / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
-    float samples = sampleRate * seconds;
+    float samples = (float) (sampleRate * seconds);
     long oldMaxRecordSample = maxRecordSamples;
     maxRecordSamples = (long) samples;
     long metronomePos = 0;

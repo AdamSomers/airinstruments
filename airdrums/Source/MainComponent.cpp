@@ -11,6 +11,7 @@
 #include <GLGeometryTransform.h>
 #include "HUD.h"
 
+#include "Main.h"
 #include "Environment.h"
 #include "GfxTools.h"
 #include "Drums.h"
@@ -40,17 +41,6 @@ MainContentComponent::MainContentComponent() :
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
-    
-    PropertiesFile::Options options;
-    options.applicationName = "AirBeats";
-    options.filenameSuffix = ".settings";
-    options.folderName = "AirBeats";
-    options.osxLibrarySubFolder = "Application Support";
-    options.commonToAllUsers = "false";
-    options.ignoreCaseOfKeyNames = true;
-    options.millisecondsBeforeSaving = 0;
-    options.storageFormat = PropertiesFile::storeAsXML;
-    properties.setStorageParameters(options);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -137,10 +127,10 @@ void MainContentComponent::newOpenGLContextCreated()
     statusBar = sb;
     
     playAreaLeft = new PlayArea;
-    int note = properties.getUserSettings()->getIntValue("selectedNoteLeft", 13);
+    int note = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft", 13);
     playAreaLeft->setSelectedMidiNote(note);
     playAreaRight = new PlayArea;
-    note = properties.getUserSettings()->getIntValue("selectedNoteRight", 12);
+    note = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight", 12);
     playAreaRight->setSelectedMidiNote(note);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);
@@ -426,22 +416,22 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     }
     else if (kp.getTextCharacter() == 'q') {
         playAreaLeft->setSelectedMidiNote(playAreaLeft->getSelectedMidiNote() - 1);
-        properties.getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
     }
     else if (kp.getTextCharacter() == 'w') {
         playAreaLeft->setSelectedMidiNote(playAreaLeft->getSelectedMidiNote() + 1);
-        properties.getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
     }
     else if (kp.getTextCharacter() == 'a') {
         playAreaRight->setSelectedMidiNote(playAreaRight->getSelectedMidiNote() - 1);
-        properties.getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
     }
     else if (kp.getTextCharacter() == 's') {
         playAreaRight->setSelectedMidiNote(playAreaRight->getSelectedMidiNote() + 1);
-        properties.getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
     }
     
-    properties.saveIfNeeded();
+    AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
     return ret;
 }
 

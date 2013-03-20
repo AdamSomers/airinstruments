@@ -40,8 +40,11 @@ void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 	switch (menuItemID)
 	{
 		default :
-			jassert(false);
+		{
+			bool x = false;
+			jassert(x);
 			break;
+		}
 
 		case 1 :
 		{
