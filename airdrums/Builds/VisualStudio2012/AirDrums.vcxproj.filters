@@ -361,6 +361,9 @@
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp">
       <Filter>AirDrums\GLTools\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Drums.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
@@ -1628,6 +1631,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h">
       <Filter>AirDrums\GLTools\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
+      <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Drums.h">
       <Filter>AirDrums\Source</Filter>

@@ -95,6 +95,10 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
+      <FILE id="E3neZk" name="AudioSettingsDialog.cpp" compile="1" resource="0"
+            file="Source/AudioSettingsDialog.cpp"/>
+      <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
+            file="Source/AudioSettingsDialog.h"/>
       <FILE id="xr5HgS" name="Drums.cpp" compile="1" resource="0" file="Source/Drums.cpp"/>
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>

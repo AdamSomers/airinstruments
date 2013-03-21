@@ -11,6 +11,11 @@
 
 #include "Main.h"
 
+AirHarpApplication::AirHarpApplication()
+{
+}
+
+
 void AirHarpApplication::initialise (const String& /*commandLine*/)
 {
     // This method is where you should put your application's initialisation code..
@@ -33,7 +38,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 		MenuBarModel::setMacMainMenu(&mainMenu);
 	#endif
 
-	XmlElement* audioState = properties.getUserSettings()->getXmlValue("audioDeviceManager");
+	XmlElement* audioState = properties.getUserSettings()->getXmlValue(AudioSettingsDialog::getPropertiesName());
     audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
 	if (audioState != nullptr)
 		delete audioState;
@@ -46,6 +51,9 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 void AirHarpApplication::shutdown()
 {
     // Add your application's shutdown code here..
+
+	if (settingsDialog != nullptr)
+		delete settingsDialog;
 
     audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
 	MotionDispatcher::destruct();
@@ -98,23 +106,10 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 
 		case 1 :
 		{
-			AudioDeviceSelectorComponent selector(audioDeviceManager, 0, 0, 2, 2, false, false, true, true);
-			selector.setSize (500, 450);
+			if (settingsDialog != nullptr)
+				break;
 
-			DialogWindow::LaunchOptions dialog;
-			dialog.content.setNonOwned (&selector);
-			dialog.dialogTitle                   = "Audio Settings";
-			dialog.componentToCentreAround       = mainWindow;
-			dialog.dialogBackgroundColour        = Colours::azure;
-			dialog.escapeKeyTriggersCloseButton  = true;
-			dialog.useNativeTitleBar             = true;
-			dialog.resizable                     = false;
-			dialog.runModal();
-
-			XmlElement* audioState = audioDeviceManager.createStateXml();
-			properties.getUserSettings()->setValue("audioDeviceManager", audioState);
-			if (audioState != nullptr)
-				delete audioState;
+			settingsDialog = new AudioSettingsDialog(mainWindow, audioDeviceManager, properties);
 
 			break;
 		}

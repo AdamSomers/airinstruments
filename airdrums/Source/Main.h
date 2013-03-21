@@ -4,6 +4,7 @@
 #include "MainComponent.h"
 #include "MotionServer.h"
 #include "MainMenu.h"
+#include "AudioSettingsDialog.h"
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
@@ -11,7 +12,7 @@ class AirHarpApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    AirHarpApplication() {}
+    AirHarpApplication();
 
     const String getApplicationName()			{ return ProjectInfo::projectName; }
     const String getApplicationVersion()		{ return ProjectInfo::versionString; }
@@ -65,6 +66,7 @@ private:
     AudioSourcePlayer audioSourcePlayer;
     ApplicationProperties properties;
 	MainMenu mainMenu;
+	WeakReference<AudioSettingsDialog> settingsDialog;
 };
 
 #endif
