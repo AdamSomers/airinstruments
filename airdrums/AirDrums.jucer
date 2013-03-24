@@ -116,6 +116,9 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="NWbMPc" name="TrigView.cpp" compile="1" resource="0" file="Source/TrigView.cpp"/>
       <FILE id="ubxFLq" name="TrigView.h" compile="0" resource="0" file="Source/TrigView.h"/>
+      <FILE id="ijoGls" name="DrumSelector.cpp" compile="1" resource="0"
+            file="Source/DrumSelector.cpp"/>
+      <FILE id="A3bBUh" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
