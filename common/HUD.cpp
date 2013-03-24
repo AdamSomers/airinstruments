@@ -5,6 +5,7 @@ HUDView::HUDView()
 : parent(NULL)
 , trackingMouse(false)
 , hover(false)
+, didSetup(false)
 {
 }
 
@@ -36,7 +37,7 @@ void HUDView::draw()
     for (HUDView* v : children)
     {
         Environment::instance().modelViewMatrix.PushMatrix();
-        Environment::instance().modelViewMatrix.Translate(bounds.x + v->bounds.x, bounds.y + v->bounds.y, 0);
+        Environment::instance().modelViewMatrix.Translate(bounds.x, bounds.y, 0);
         v->draw();
         Environment::instance().modelViewMatrix.PopMatrix();
     }
@@ -65,11 +66,15 @@ void HUDView::setup()
         1.f, 0.f
     };
     
-    defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    if (!didSetup)
+        defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
     defaultBatch.CopyVertexData3f(verts);
     defaultBatch.CopyTexCoordData2f(texCoords, 0);
     defaultBatch.CopyNormalDataf(normals);
-    defaultBatch.End();
+    if (!didSetup)
+        defaultBatch.End();
+    
+    didSetup = true;
     
     for (HUDView* v : children)
         v->setup();

@@ -14,6 +14,7 @@
 #include "Leap.h"
 #include "PlayArea.h"
 #include "TrigView.h"
+#include "DrumSelector.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -62,6 +63,8 @@ private:
     StatusBar* statusBar;
     PlayArea* playAreaLeft;
     PlayArea* playAreaRight;
+    DrumSelector* drumSelectorLeft;
+    DrumSelector* drumSelectorRight;
     TrigViewBank* trigViewBank;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
