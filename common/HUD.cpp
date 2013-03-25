@@ -149,6 +149,27 @@ void HUDView::updatePointedState(FingerView* fv)
     float x = screenPos[0];
     float y = screenPos[1];
     y = Environment::instance().screenH - y;
+
+    if (bounds.contains(x, y))
+    {
+        auto iter = std::find(hoveringFingers.begin(), hoveringFingers.end(), fv);
+        if (iter == hoveringFingers.end())
+        {
+            fingerEntered(x, y, fv);
+            hoveringFingers.push_back(fv);
+        }
+        fingerMotion(x, y, fv);
+    }
+    else
+    {
+        auto iter = std::find(hoveringFingers.begin(), hoveringFingers.end(), fv);
+        if (iter != hoveringFingers.end())
+        {
+            fingerExited(x, y, fv);
+            hoveringFingers.erase(iter);
+        }
+    }
+
     for (HUDView* child : children)
     {
         float localX = x - bounds.x;

@@ -56,6 +56,13 @@ public:
     virtual void mouseDown(float x, float y);
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
+
+    // Multi-finger interaction methods in screen coords.
+    // x, y are FingerView position cooreds projected to screen plane 
+    virtual void fingerMotion(float x, float y, FingerView* fv) {}
+    virtual void fingerEntered(float x, float y, FingerView* fv) {}
+    virtual void fingerExited(float x, float y, FingerView* fv) {}
+
     virtual void setBounds(const HUDRect& b);
     const HUDRect& getBounds() const { return bounds; }
     virtual void loadTextures();
@@ -71,7 +78,7 @@ private:
     std::vector<HUDView*> children;
     HUDView* parent;
     GLBatch defaultBatch;
-    std::vector<FingerView*> fingers;
+    std::vector<FingerView*> hoveringFingers;
 };
 
 class HUDButton : public HUDView
