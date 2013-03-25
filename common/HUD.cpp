@@ -252,10 +252,10 @@ void HUDButton::setup()
 {
     HUDView::setup();
     M3DVector3f verts[4] = {
-        0, 0, 0.f,
-        bounds.w, 0, 0.f,
-        0, bounds.h, 0.f,
-        bounds.w, bounds.h, 0.f
+        bounds.x, bounds.y, 0.f,
+        bounds.x + bounds.w, bounds.y, 0.f,
+        bounds.x, bounds.y + bounds.h, 0.f,
+        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
     };
     
     M3DVector2f texCoords[4] = {
