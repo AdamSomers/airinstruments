@@ -26,7 +26,8 @@
 class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
-                               public Leap::Listener
+                               public Leap::Listener,
+                               public DrumSelector::Listener
 {
 public:
     //==============================================================================
@@ -51,6 +52,9 @@ public:
     void handleNoteOn (MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity);
     void handleNoteOff (MidiKeyboardState* /*source*/, int /*midiChannel*/, int /*midiNoteNumber*/) {}
     
+    // DrumSelector::Listener override
+    void drumSelectorChanged(DrumSelector* selector);
+
     virtual void onFrame(const Leap::Controller&);
 private:
     void layoutPadsGrid();

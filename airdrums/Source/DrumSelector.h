@@ -45,7 +45,17 @@ public:
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
     };
+
+    class Listener
+    {
+    public:
+        virtual ~Listener() {}
+        virtual void drumSelectorChanged(DrumSelector* selector) = 0;
+    };
     
+    void addListener(Listener* listener);
+    void removeListener(Listener* listener);
+
 private:
     void layoutIcons();
 
@@ -57,6 +67,7 @@ private:
     float prevFingerX;
     float prevFingerY;
     FingerView* trackedFinger;
+    std::vector<Listener*> listeners;
 };
 
 #endif // h_DrumSelector

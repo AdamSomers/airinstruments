@@ -138,6 +138,8 @@ void DrumSelector::fingerMotion(float x, float y, FingerView* fv)
 
     if (inc != 0 && !isTimerRunning()) {
         setSelection(selection + inc);
+        for (Listener* l : listeners)
+            l->drumSelectorChanged(this);
         startTimer(100);
     }
 
@@ -170,6 +172,20 @@ void DrumSelector::fingerExited(float x, float y, FingerView* fv)
 void DrumSelector::timerCallback()
 {
     stopTimer();
+}
+
+void DrumSelector::addListener(DrumSelector::Listener *listener)
+{
+    auto iter = std::find(listeners.begin(), listeners.end(), listener);
+    if (iter == listeners.end())
+        listeners.push_back(listener);
+}
+
+void DrumSelector::removeListener(DrumSelector::Listener *listener)
+{
+    auto iter = std::find(listeners.begin(), listeners.end(), listener);
+    if (iter != listeners.end())
+        listeners.erase(iter);
 }
 
 DrumSelector::Icon::Icon(int inId)

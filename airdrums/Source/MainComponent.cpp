@@ -138,6 +138,8 @@ void MainContentComponent::newOpenGLContextCreated()
     drumSelectorRight = new DrumSelector;
     drumSelectorLeft->setSelection(noteLeft);
     drumSelectorRight->setSelection(noteRight);
+    drumSelectorLeft->addListener(this);
+    drumSelectorRight->addListener(this);
     views.push_back(drumSelectorLeft);
     views.push_back(drumSelectorRight);
     trigViewBank = new TrigViewBank;
@@ -458,6 +460,20 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
     return ret;
+}
+
+void MainContentComponent::drumSelectorChanged(DrumSelector* selector)
+{
+    if (selector == drumSelectorLeft)
+    {
+        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+    }
+    else if (selector == drumSelectorRight)
+    {
+        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+    }
 }
 
 void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)
