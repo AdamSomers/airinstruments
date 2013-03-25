@@ -5,6 +5,7 @@
 
 
 class DrumSelector : public HUDView
+                   , public Timer
 {
 public:
     DrumSelector();
@@ -15,7 +16,13 @@ public:
     void draw();
     void loadTextures();
     void setBounds(const HUDRect& b);
-    
+    void fingerMotion(float x, float y, FingerView* fv);
+    void fingerEntered(float x, float y, FingerView* fv);
+    void fingerExited(float x, float y, FingerView* fv);
+
+    // Juce::Timer override
+    void timerCallback();
+
     void setSelection(int sel);
     int getSelection() const { return selection; }
 
@@ -47,6 +54,9 @@ private:
     std::vector<Icon*> icons;
     int selection;
     bool needsLayout;
+    float prevFingerX;
+    float prevFingerY;
+    FingerView* trackedFinger;
 };
 
 #endif // h_DrumSelector

@@ -6,6 +6,7 @@ DrumSelector::DrumSelector()
 : textureID((GLuint) -1)
 , selection(0)
 , needsLayout(false)
+, trackedFinger(nullptr)
 {
     for (int i = 0; i < 16; ++i)
     {
@@ -122,6 +123,53 @@ void DrumSelector::setSelection(int sel)
     if (sel >= icons.size()) sel = 0;
     selection = sel;
     needsLayout = true;
+}
+
+void DrumSelector::fingerMotion(float x, float y, FingerView* fv)
+{
+    if (fv != trackedFinger)
+        return;
+
+    int inc = 0;
+    if (x - prevFingerX < -2)
+        inc = 1;
+    else if (x - prevFingerX > 2)
+        inc = -1;
+
+    if (inc != 0 && !isTimerRunning()) {
+        setSelection(selection + inc);
+        startTimer(100);
+    }
+
+    prevFingerX = x;
+    prevFingerY = y;
+}
+
+void DrumSelector::fingerEntered(float x, float y, FingerView* fv)
+{
+    if (!trackedFinger)
+        trackedFinger = fv;
+
+    if (fv == trackedFinger)
+    {
+        prevFingerX = x;
+        prevFingerY = y;
+    }
+}
+
+void DrumSelector::fingerExited(float x, float y, FingerView* fv)
+{
+    if (fv == trackedFinger)
+    {
+        trackedFinger = NULL;
+        prevFingerX = x;
+        prevFingerY = y;
+    }
+}
+
+void DrumSelector::timerCallback()
+{
+    stopTimer();
 }
 
 DrumSelector::Icon::Icon(int inId)
