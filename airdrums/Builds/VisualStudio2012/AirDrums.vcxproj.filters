@@ -364,10 +364,19 @@
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DrumKit.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Drums.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DrumSample.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\KitManager.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
@@ -593,6 +602,9 @@
       <Filter>Juce Modules\juce_audio_processors\format</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.mm">
+      <Filter>Juce Modules\juce_audio_processors\format_types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.cpp">
       <Filter>Juce Modules\juce_audio_processors\format_types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.cpp">
@@ -1635,10 +1647,19 @@
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\DrumKit.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Drums.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\DrumSample.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\DrumsHUD.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\KitManager.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Main.h">
@@ -1657,6 +1678,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TrigView.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Types.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">

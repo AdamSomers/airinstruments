@@ -99,10 +99,16 @@
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
             file="Source/AudioSettingsDialog.h"/>
+      <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
+      <FILE id="K27Jhn" name="DrumKit.h" compile="0" resource="0" file="Source/DrumKit.h"/>
       <FILE id="xr5HgS" name="Drums.cpp" compile="1" resource="0" file="Source/Drums.cpp"/>
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
+      <FILE id="l6SKgC" name="DrumSample.cpp" compile="1" resource="0" file="Source/DrumSample.cpp"/>
+      <FILE id="So6Uef" name="DrumSample.h" compile="0" resource="0" file="Source/DrumSample.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
       <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
+      <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
+      <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="ynO4Iz" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="vAgls0" name="MainComponent.cpp" compile="1" resource="0"
@@ -116,6 +122,7 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="NWbMPc" name="TrigView.cpp" compile="1" resource="0" file="Source/TrigView.cpp"/>
       <FILE id="ubxFLq" name="TrigView.h" compile="0" resource="0" file="Source/TrigView.h"/>
+      <FILE id="IUKWVp" name="Types.h" compile="0" resource="0" file="Source/Types.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

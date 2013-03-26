@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kit name="Default kit" image="default.png">
+	<sample note="0" category="PAD" image="pad.png" file="TMD CHIL PAD.aif" />
+	<sample note="1" category="SFX" image="sfx.png" file="TMD CHIL SFX.aif" />
+	<sample note="2" category="SFX" image="sfx.png" file="TMD CHIL VERB.aif" />
+	<sample note="3" category="KICK" image="kick.png" file="TMD CHIL BKICK.aif" />
+	<sample note="4" category="LTOM" image="ltom.png" file="TMD CHIL LTOM.aif" />
+	<sample note="5" category="MTOM" image="mtom.png" file="TMD CHIL MTOM.aif" />
+	<sample note="6" category="HTOM" image="htom.png" file="TMD CHIL HTOM.aif" />
+	<sample note="7" category="HPRC" image="hprc.png" file="TMD CHIL CLV.aif" />
+	<sample note="8" category="CRSH" image="crsh.png" file="TMD CHIL CYM.aif" />
+	<sample note="9" category="CLAP" image="clap.png" file="TMD CHIL CLAP.aif" />
+	<sample note="10" category="OHAT" image="ohat.png" file="TMD CHIL OHH.aif" />
+	<sample note="11" category="RIDE" image="ride.png" file="TMD CHIL RIDE.aif" />
+	<sample note="12" category="KICK" image="kick.png" file="TMD CHIL KICK.aif" />
+	<sample note="13" category="SNR" image="snr.png" file="TMD CHIL SN 1.aif" />
+	<sample note="14" category="PHAT" image="phat.png" file="TMD CHIL PHH.aif" />
+	<sample note="15" category="CHAT" image="chat.png" file="TMD CHIL CHH.aif" />
+</kit>
