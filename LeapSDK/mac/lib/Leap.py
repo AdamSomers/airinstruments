@@ -842,6 +842,7 @@ class Screen(Interface):
         try: self.this.append(this)
         except: self.this = this
     def intersect(self, *args): return LeapPython.Screen_intersect(self, *args)
+    def project(self, *args): return LeapPython.Screen_project(self, *args)
     def normal(self): return LeapPython.Screen_normal(self)
     def distance_to_point(self, *args): return LeapPython.Screen_distance_to_point(self, *args)
     def __eq__(self, *args): return LeapPython.Screen___eq__(self, *args)
@@ -1022,6 +1023,7 @@ class ScreenList(Interface):
     def __len__(self): return LeapPython.ScreenList___len__(self)
     def __getitem__(self, *args): return LeapPython.ScreenList___getitem__(self, *args)
     def closest_screen_hit(self, *args): return LeapPython.ScreenList_closest_screen_hit(self, *args)
+    def closest_screen(self, *args): return LeapPython.ScreenList_closest_screen(self, *args)
     __swig_getmethods__["empty"] = LeapPython.ScreenList_empty_get
     if _newclass:empty = _swig_property(LeapPython.ScreenList_empty_get)
     def __iter__(self):
