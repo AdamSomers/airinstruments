@@ -23,19 +23,23 @@ DrumKit::~DrumKit()
 
 DrumKit::Status DrumKit::LoadFromXml(XmlElement* element, File& directory)
 {
+	Status status = DrumItem::LoadFromXml(element);
+	if (status != kNoError)
+		return status;
+
 	XmlElement* child = element->getChildByName("sample");
 	while (child != nullptr)
 	{
 		SharedPtr<DrumSample> sample(new DrumSample);
 		DrumSample::Status status = sample->LoadFromXml(child, directory);
 		if (status != DrumSample::kNoError)
-			return kSampleLoadError;
+			return kItemLoadError;
 		mSamples.push_back(sample);
 		child = child->getNextElementWithTagName("sample");
 	}
 
 	if (GetSampleCount() == 0)
-		return kNoSamplesError;
+		return kItemEmptyError;
 	return kNoError;
 }
 
@@ -55,7 +59,7 @@ int DrumKit::GetSampleCount(void)
 }
 
 
-String& DrumKit::GetName(void)
+DrumKit::Status DrumKit::SaveToXml(String /*fileName*/, File& /*directory*/)
 {
-	return mName;
+	return kItemSaveError;
 }

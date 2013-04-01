@@ -8,6 +8,20 @@
 class MainMenu : public MenuBarModel
 {
 public:
+	enum Command
+	{
+		kAudioSettingsCmd = 1,
+		kSavePatternAsCmd = 2,
+		kLoadPatternCmd = 3
+	};
+	enum TopLevelMenu
+	{
+		kFileMenu = 0,
+		kOptionsMenu = 1,
+
+		kLastMenu = kOptionsMenu
+	};
+
     MainMenu();
     virtual ~MainMenu();
 

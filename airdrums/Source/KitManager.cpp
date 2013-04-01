@@ -10,8 +10,6 @@
 
 #include "KitManager.h"
 
-KitManager*	KitManager::mSelf = nullptr;
-
 
 KitManager::KitManager()
 {
@@ -30,69 +28,7 @@ KitManager::~KitManager()
 }
 
 
-KitManager& KitManager::GetInstance(void)
+KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*= true*/)
 {
-	if (mSelf == nullptr)
-		mSelf = new KitManager;
-	return *mSelf;
-}
-
-
-void KitManager::Destruct(void)
-{
-	if (mSelf != nullptr)
-	{
-		delete mSelf;
-		mSelf = nullptr;
-	}
-}
-
-
-int KitManager::GetKitCount(void)
-{
-	return mKits.size();
-}
-
-
-SharedPtr<DrumKit> KitManager::GetKit(int index)
-{
-	jassert(index < (int) mKits.size());
-	jassert(index >= 0);
-
-	return mKits.at(index);
-}
-
-
-KitManager::Status KitManager::BuildKitList(String path /* = ""*/)
-{
-	if (path == "")
-		path = mDefaultPath;
-
-	File directory(path);
-
-	if (!directory.isDirectory())
-		return kPathNotFoundError;
-
-	DirectoryIterator it(directory, true, "*.xml");
-	while (it.next())
-	{
-		File file(it.getFile());
-		UniquePtr<XmlElement> document(XmlDocument::parse(file));
-		if (document == nullptr)
-			return kXmlParseError;
-		if (!document->hasTagName("kit"))
-			return kXmlParseError;
-
-		SharedPtr<DrumKit> kit(new DrumKit);
-		File folder = file.getParentDirectory();
-		DrumKit::Status status = kit->LoadFromXml(document.get(), folder);
-		if (status != DrumKit::kNoError)
-			return kKitLoadError;
-
-		mKits.push_back(kit);
-	}
-
-	if (GetKitCount() == 0)
-		return kNoKitsError;
-	return kNoError;
+	return ItemManager<KitManager, DrumKit>::BuildItemList("*.xml", "kit", path, clear);
 }

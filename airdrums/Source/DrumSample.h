@@ -36,13 +36,12 @@ public:
 
 	Status	LoadFromXml(XmlElement* element, File& directory);
 
-	SynthesiserSound::Ptr	GetSound(void);
-
 	// Other accessors
 
 	int		GetNoteNumber(void);
 	String&	GetCategory(void);
 	//Image	GetImage(void);
+	SynthesiserSound::Ptr	GetSound(void);
 
 private:
 	int		mNoteNumber;

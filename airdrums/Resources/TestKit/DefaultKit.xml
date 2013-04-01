@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<kit name="Default kit" image="default.png">
+<kit name="Default kit" image="default.png" uuid="e51731d89dabb6779132dfe184ab7323">
 	<sample note="0" category="PAD" image="pad.png" file="TMD CHIL PAD.aif" />
 	<sample note="1" category="SFX" image="sfx.png" file="TMD CHIL SFX.aif" />
 	<sample note="2" category="SFX" image="sfx.png" file="TMD CHIL VERB.aif" />

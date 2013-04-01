@@ -364,7 +364,13 @@
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DrumItem.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DrumKit.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DrumPattern.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Drums.cpp">
@@ -374,6 +380,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ItemManager.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp">
@@ -389,6 +398,12 @@
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PadView.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PatternManager.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PatternSaveDialog.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PlayArea.cpp">
@@ -1647,7 +1662,13 @@
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\DrumItem.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\DrumKit.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DrumPattern.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Drums.h">
@@ -1657,6 +1678,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumsHUD.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ItemManager.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\KitManager.h">
@@ -1672,6 +1696,12 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PatternManager.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PatternSaveDialog.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlayArea.h">

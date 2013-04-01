@@ -15,6 +15,7 @@ StringArray  MainMenu::getMenuBarNames ()
 {
 	StringArray	menuBarNames;
 
+	menuBarNames.add("File");
 	menuBarNames.add("Options");
 
 	return menuBarNames;
@@ -23,11 +24,26 @@ StringArray  MainMenu::getMenuBarNames ()
 
 PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*menuName*/)
 {
-	jassert(topLevelMenuIndex == 0);	// We only have one main menu option currently
-
 	PopupMenu menu;
 
-	menu.addItem(1, "Audio Settings");
+	switch (topLevelMenuIndex)
+	{
+		default :
+		{
+			bool x = false;
+			jassert(x);
+			break;
+		}
+
+		case kFileMenu :
+			menu.addItem(kLoadPatternCmd, "Load Pattern...");
+			menu.addItem(kSavePatternAsCmd, "Save Pattern As...");
+			break;
+		case kOptionsMenu :
+			menu.addItem(kAudioSettingsCmd, "Audio Settings...");
+			break;
+	}
+
 
 	return menu;
 }
@@ -35,7 +51,8 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 
 void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 {
-	jassert(topLevelMenuIndex == 0);	// We only have one main menu option currently
+	jassert(topLevelMenuIndex <= kLastMenu);
+	jassert(topLevelMenuIndex >= 0);
 
 	switch (menuItemID)
 	{
@@ -46,7 +63,9 @@ void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 			break;
 		}
 
-		case 1 :
+		case kAudioSettingsCmd :
+		case kSavePatternAsCmd :
+		case kLoadPatternCmd :
 		{
 			ApplicationCommandTarget::InvocationInfo info(menuItemID);
 			info.commandFlags = 0;

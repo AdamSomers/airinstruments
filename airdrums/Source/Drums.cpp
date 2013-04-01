@@ -1,5 +1,6 @@
 #include "Drums.h"
 #include "KitManager.h"
+#include "PatternManager.h"
 
 
 Drums::Drums() :
@@ -9,19 +10,19 @@ Drums::Drums() :
     maxRecordSamples(0),
     tempo(118),
     numNotes(0),
-    sampleRate(44100)
+    sampleRate(44100),
+	pattern(new DrumPattern)	// Create a default empty pattern for now; later this will be set with the return from PatternManager
 {
-   
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
     
 	// Try new spiffy kit manager first
-	KitManager& mgr = KitManager::GetInstance();
-	KitManager::Status status = mgr.BuildKitList();
-	int count = mgr.GetKitCount();
-	if ((status == KitManager::kNoError) && (count > 0))
+	KitManager& kmgr = KitManager::GetInstance();
+	KitManager::Status kstatus = kmgr.BuildKitList();
+	int count = kmgr.GetItemCount();
+	if ((kstatus == KitManager::kNoError) && (count > 0))
 	{
-		SharedPtr<DrumKit> kit = mgr.GetKit(0);	// Use first kit for now
+		kit = kmgr.GetItem(0);	// Use first kit for now
 		count = kit->GetSampleCount();
 		numNotes = count;
 		for (int i = 0; i < count; ++i)
@@ -165,6 +166,9 @@ Drums::Drums() :
 		numNotes = 16;
 	}
 
+	PatternManager& pmgr = PatternManager::GetInstance();
+	/*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
+
     synth.setNoteStealingEnabled(false);
 }
 
@@ -191,6 +195,7 @@ void Drums::NoteOn(int note, float velocity)
         
         MidiMessage m = MidiMessage::noteOn(1, note, velocity);
         m.setTimeStamp(quantizedPosition);
+		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
         i.setNextSamplePosition(quantizedPosition);
         int position;
@@ -214,6 +219,7 @@ void Drums::NoteOn(int note, float velocity)
 void Drums::clear()
 {
     midiBufferLock.enter();
+	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     recordBuffer.clear();
     midiBufferLock.exit();
 }
@@ -221,6 +227,7 @@ void Drums::clear()
 void Drums::clearTrack(int note)
 {
     midiBufferLock.enter();
+	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     MidiBuffer::Iterator i(recordBuffer);
     int samplePos = 0;
     MidiMessage message;
@@ -257,6 +264,7 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
     
     // Adjust sample positions of all events in record buffer 
     midiBufferLock.enter();
+	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     MidiBuffer::Iterator i(recordBuffer);
     int samplePos = 0;
     MidiMessage message;
@@ -275,7 +283,6 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 
 void Drums::releaseResources()
 {
-    
 }
 
 void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
@@ -289,6 +296,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     if (recording) {
         playbackState.reset();
         keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
         int samplePos = sampleCounter;
         MidiMessage message;

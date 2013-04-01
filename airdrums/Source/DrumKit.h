@@ -17,24 +17,19 @@
 
 #include "Types.h"
 #include "DrumSample.h"
+#include "DrumItem.h"
 
 
-class DrumKit
+class DrumKit : public DrumItem
 {
 public:
-	enum Status
-	{
-		kNoError = 0,
-		kSampleLoadError = 1,
-		kNoSamplesError = 2
-	};
-
 	DrumKit();
 	~DrumKit();
 
 	// Initialization
 
 	Status	LoadFromXml(XmlElement* element, File& directory);
+	Status	SaveToXml(String fileName, File& directory);
 
 	// Access to the kit's samples for playback
 
@@ -44,13 +39,7 @@ public:
 
 	int	GetSampleCount(void);
 
-	String&	GetName(void);
-	//Image	GetImage(void);
-
 private:
-	String	mName;
-	//Image	mImage;
-
 	typedef	SharedPtr<DrumSample>	Item;
 	typedef	std::vector<Item>		Container;
 	typedef	Container::iterator		Iterator;

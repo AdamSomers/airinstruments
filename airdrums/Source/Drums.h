@@ -5,6 +5,10 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "DrumPattern.h"
+#include "DrumKit.h"
+
+
 class Drums : public AudioSource
 {
 public:
@@ -14,12 +18,15 @@ public:
     void clear();
     void clearTrack(int note);
     
-    // AudioSoure overrides
+    // AudioSource overrides
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate);
     void releaseResources();
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill);
     
     const int getNumNotes() const { return numNotes; }
+	double getSampleRate() const { return sampleRate; }
+	SharedPtr<DrumKit> getDrumKit() const { return kit; }
+	SharedPtr<DrumPattern> getPattern() const { return pattern; }
     
     static Drums& instance(void)
     {
@@ -35,7 +42,7 @@ private:
     MidiKeyboardState keyboardState;
     Synthesiser synth;
     MidiMessageCollector midiCollector;
-    MidiBuffer recordBuffer;
+    SharedPtr<DrumPattern> pattern;
     MidiBuffer metronomeBuffer;
     long sampleCounter;
     long maxRecordSamples;
@@ -43,6 +50,7 @@ private:
     int numNotes;
     double sampleRate;
     CriticalSection midiBufferLock;
+	SharedPtr<DrumKit> kit;
 };
 
 #endif
