@@ -73,7 +73,7 @@ KitManager::Status KitManager::BuildKitList(String path /* = ""*/)
 	if (!directory.isDirectory())
 		return kPathNotFoundError;
 
-	DirectoryIterator it(directory, false, "*.xml");
+	DirectoryIterator it(directory, true, "*.xml");
 	while (it.next())
 	{
 		File file(it.getFile());
@@ -84,7 +84,8 @@ KitManager::Status KitManager::BuildKitList(String path /* = ""*/)
 			return kXmlParseError;
 
 		SharedPtr<DrumKit> kit(new DrumKit);
-		DrumKit::Status status = kit->LoadFromXml(document.get(), directory);
+		File folder = file.getParentDirectory();
+		DrumKit::Status status = kit->LoadFromXml(document.get(), folder);
 		if (status != DrumKit::kNoError)
 			return kKitLoadError;
 
