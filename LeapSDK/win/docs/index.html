@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script language="javascript">
+		var shown = "cplusplus";
+		 
+        function show(divName){
+
+        //hide old
+        if(shown != undefined){
+            var oldDiv = document.getElementById(shown); 
+            oldDiv.style.display = 'none'; 
+        }
+
+        //show div
+            var tempDiv = document.getElementById(divName); 
+            tempDiv.style.display = 'block';              
+
+        //save div ID
+		shown = divName;
+
+        }
+	</script>
+	<style type="text/css">
+		div.menu{
+			font-family: "Open Sans",Helvetica,Arial,sans-serif;
+			font-size: 15px;
+			line-height: 20px;
+			color: #555;
+			margin-bottom: 20px;
+			background-color: #efefef;
+			padding: 10px 19px;
+			border: none;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			-moz-background-clip: padding;
+			-webkit-background-clip: padding-box;
+			background-clip: padding-box;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>Leap Motion API Library</h1>
+	<div id="langmenu" class="menu" style="float:right; padding 30px;">
+		<h2>Language Menu</h2>
+		<ul>
+			<li><a href="#cplusplus" onClick="show('cplusplus'); return false;">C++</a></li>
+			<li><a href="#csharp" onClick="show('csharp'); return false;">C# and Unity</a></li>
+			<li><a href="#java" onClick="show('java'); return false;">Java</a></li>
+			<li><a href="#python" onClick="show('python'); return false;">Python</a></li>
+			<li><a href="#objectivec" onClick="show('objectivec'); return false;">Objective C</a></li>
+			<li><a href="#javascript" onClick="show('javascript'); return false;">JavaScript</a></li>
+		</ul>
+	</div>
+	<div id="cplusplus">
+		<h2>C++ Documentation</h2><a name="cplusplus"></a>
+		<ul>
+			<li><a href="C++/Leap_Overview.html">Overview</a></li>
+			<li><a href="C++/API_Reference/index.html">API Reference</a></li>
+			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
+			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
+			<li><a href="C++/Leap_Screen_Location.html">Leap Screen Location</a></li>
+			<li><a href="C++/Sample_C++_Tutorial.html">Hello World</a></li>
+		</ul>
+	</div>
+	<div id="csharp" style="display:none">
+		<h2>C# and Unity Documentation</h2><a name="csharp"></a>
+		<ul>
+			<li><a href="CSharpandUnity/Leap_Overview.html">Overview</a></li>
+			<li><a href="CSharpandUnity/API_Reference/index.html">API Reference</a></li>
+			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
+			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
+			<li><a href="CSharpandUnity/Sample_Csharp_Tutorial.html">Hello World</a></li>
+			<li><a href="CSharpandUnity/Setup_Unity.html">Setting up a Unity project</a></li>
+		</ul>
+		
+	</div>
+	<div id="java" style="display:none">
+		<h2>Java Documentation</h2><a name="java"></a>
+		<ul>
+			<li><a href="java/Leap_Overview.html">Overview</a></li>
+			<li><a href="java/API_Reference/index.html">API Reference</a></li>
+			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
+			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
+			<li><a href="java/Sample_Java_Tutorial.html">Hello World</a></li>
+			<li><a href="java/Setup_Java.html">Setting up a Java project</a></li>
+		</ul>
+		
+		
+	</div>
+	<div id="python" style="display:none">
+		<h2>Python Documentation</h2><a name="python"></a>
+		<ul>
+			<li><a href="python/Leap_Overview.html">Overview</a></li>
+			<li><a href="python/Leap.html">API Reference</a></li>
+			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
+			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
+			<li><a href="python/Sample_Python_Tutorial.html">Hello World</a></li>
+		</ul>
+		
+	</div>
+	<div id="objectivec" style="display:none">
+		<h2>Objective C Documentation</h2><a name="objectivec"></a>
+		<ul>
+			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Overview.html">Overview</a></li>
+			<li><a href="ObjectiveC/html/index.html">API Reference</a></li>
+			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
+			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
+			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Visualizer.html">Leap Visualizer</a></li>
+			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Application.html">Leap Application</a></li>
+			<li><a href="ObjectiveC/html/docs/objCdocset/Sample_ObjectiveC_Tutorial.html">Hello World</a></li>
+		</ul>
+		
+	</div>
+	<div id="javascript" style="display:none">
+		<h2>JavaScript Documentation</h2><a name="javascript"></a>
+		<ul>
+			<li><a href="javascript/Leap_Overview.html">Overview</a></li>
+			<li><a href="javascript/API_Reference/index.html">API Reference</a></li>
+			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
+			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
+			<li><a href="javascript/Sample_javaScript_Tutorial.html">Hello World</a></li>
+		</ul>
+		
+	</div>
+	
+</body>
+</html>

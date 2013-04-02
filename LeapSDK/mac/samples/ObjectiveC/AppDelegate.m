@@ -11,13 +11,14 @@
 
 @implementation AppDelegate
 
-// Xcode 4.2 warns if we do not explicitly synthesize window
+// Xcode 4.2 warns if we do not explicitly synthesize
 @synthesize window = _window;
+@synthesize sample = _sample; // must retain for notifications
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    Sample *sample = [[Sample alloc]init];
-    [sample run];
+    _sample = [[Sample alloc]init];
+    [_sample run];
 }
 
 @end

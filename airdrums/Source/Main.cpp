@@ -10,6 +10,8 @@
 */
 
 #include "Main.h"
+#include "KitManager.h"
+
 
 AirHarpApplication::AirHarpApplication()
 {
@@ -57,6 +59,7 @@ void AirHarpApplication::shutdown()
 
     audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
 	MotionDispatcher::destruct();
+	KitManager::Destruct();
 	#if JUCE_MAC
 		MenuBarModel::setMacMainMenu(nullptr);
 	#endif

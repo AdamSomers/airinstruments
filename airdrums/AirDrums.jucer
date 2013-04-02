@@ -99,10 +99,19 @@
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
             file="Source/AudioSettingsDialog.h"/>
+      <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
+      <FILE id="K27Jhn" name="DrumKit.h" compile="0" resource="0" file="Source/DrumKit.h"/>
       <FILE id="xr5HgS" name="Drums.cpp" compile="1" resource="0" file="Source/Drums.cpp"/>
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
+      <FILE id="l6SKgC" name="DrumSample.cpp" compile="1" resource="0" file="Source/DrumSample.cpp"/>
+      <FILE id="So6Uef" name="DrumSample.h" compile="0" resource="0" file="Source/DrumSample.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
       <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
+      <FILE id="VPGoah" name="DrumSelector.cpp" compile="1" resource="0"
+            file="Source/DrumSelector.cpp"/>
+      <FILE id="FoDZug" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
+      <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
+      <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="ynO4Iz" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="vAgls0" name="MainComponent.cpp" compile="1" resource="0"
@@ -116,9 +125,7 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="NWbMPc" name="TrigView.cpp" compile="1" resource="0" file="Source/TrigView.cpp"/>
       <FILE id="ubxFLq" name="TrigView.h" compile="0" resource="0" file="Source/TrigView.h"/>
-      <FILE id="ijoGls" name="DrumSelector.cpp" compile="1" resource="0"
-            file="Source/DrumSelector.cpp"/>
-      <FILE id="A3bBUh" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
+      <FILE id="IUKWVp" name="Types.h" compile="0" resource="0" file="Source/Types.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
@@ -157,14 +164,14 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="AirDrums" useRuntimeLibDLL="1"
-                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;"
+                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
                        defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="AirDrums" useRuntimeLibDLL="1"
-                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;"
+                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
                        defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"/>
       </CONFIGURATIONS>
     </VS2012>
   </EXPORTFORMATS>
-  <JUCEOPTIONS/>
+  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_DIRECTSOUND="enabled"/>
 </JUCERPROJECT>

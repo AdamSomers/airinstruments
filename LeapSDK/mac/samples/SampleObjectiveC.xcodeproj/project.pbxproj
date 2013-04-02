@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		015FEFC91682E49B00DEEFA0 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 015FEFC81682E49B00DEEFA0 /* LeapObjectiveC.mm */; };
 		015FEFCB1682E4DF00DEEFA0 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 015FEFCA1682E4DF00DEEFA0 /* libLeap.dylib */; };
-		015FEFCC1682E4F100DEEFA0 /* libLeap.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 015FEFCA1682E4DF00DEEFA0 /* libLeap.dylib */; };
+		73BF4B1316F7B3DE00DE8B54 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 015FEFCA1682E4DF00DEEFA0 /* libLeap.dylib */; };
 		B599FCC81656F5020092AFFD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B599FCC71656F5020092AFFD /* Cocoa.framework */; };
 		B599FCD21656F5020092AFFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B599FCD01656F5020092AFFD /* InfoPlist.strings */; };
 		B599FCD41656F5020092AFFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B599FCD31656F5020092AFFD /* main.m */; };
@@ -18,6 +18,19 @@
 		B599FCDE1656F5020092AFFD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B599FCDC1656F5020092AFFD /* MainMenu.xib */; };
 		B599FCE91656F6D30092AFFD /* Sample.m in Sources */ = {isa = PBXBuildFile; fileRef = B599FCE81656F6D30092AFFD /* Sample.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		73BF4B1216F7B3CB00DE8B54 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				73BF4B1316F7B3DE00DE8B54 /* libLeap.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		015FEFBD1682E45E00DEEFA0 /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Leap.h; path = ../../include/Leap.h; sourceTree = "<group>"; };
@@ -140,7 +153,7 @@
 				B599FCBF1656F5020092AFFD /* Sources */,
 				B599FCC01656F5020092AFFD /* Frameworks */,
 				B599FCC11656F5020092AFFD /* Resources */,
-				015FEFBC1682E25600DEEFA0 /* ShellScript */,
+				73BF4B1216F7B3CB00DE8B54 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -182,7 +195,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				015FEFCC1682E4F100DEEFA0 /* libLeap.dylib in Resources */,
 				B599FCD21656F5020092AFFD /* InfoPlist.strings in Resources */,
 				B599FCD81656F5020092AFFD /* Credits.rtf in Resources */,
 				B599FCDE1656F5020092AFFD /* MainMenu.xib in Resources */,
@@ -190,22 +202,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		015FEFBC1682E25600DEEFA0 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# print some debug information\necho TARGET_BUILD_DIR=${TARGET_BUILD_DIR}\necho TARGET_NAME=${TARGET_NAME}\ncd ${TARGET_BUILD_DIR}/${TARGET_NAME}.app/Contents/MacOS\nls -la\n# then remap the loader path\ninstall_name_tool -change @loader_path/libLeap.dylib @executable_path/../Resources/libLeap.dylib ${TARGET_NAME}";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B599FCBF1656F5020092AFFD /* Sources */ = {
