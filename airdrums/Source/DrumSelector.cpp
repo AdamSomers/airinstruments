@@ -241,7 +241,7 @@ void DrumSelector::Icon::draw()
     
     HUDView::draw();
     
-    GLfloat color[4] = { 1.f, 1.f, 1.f, id / 5.f + .2f };
+    GLfloat color[4] = { 1.f, 1.f, 1.f, 1.f };
     
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
     GLint polygonMode;
