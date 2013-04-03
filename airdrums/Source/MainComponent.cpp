@@ -81,6 +81,10 @@ void MainContentComponent::resized()
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    SkinManager::instance().loadResources();
+    String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
+    SkinManager::instance().setSelectedSkin(skinSetting);
+    
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     

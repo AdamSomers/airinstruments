@@ -1,6 +1,8 @@
 #include "DrumSelector.h"
 #include "Drums.h"
 #include "GfxTools.h"
+#include "KitManager.h"
+#include "SkinManager.h"
 
 DrumSelector::DrumSelector()
 : textureID((GLuint) -1)
@@ -91,9 +93,7 @@ void DrumSelector::draw()
         layoutIcons();
         needsLayout = false;
     }
-   
-    HUDView::draw();
-    
+
     GLfloat color[4] = { 1.f, 1.f, 1.f, 1.f };
 
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
@@ -101,9 +101,11 @@ void DrumSelector::draw()
     glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(1.f);
-    batch.Draw();
+    //batch.Draw();
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
     
+    HUDView::draw();
+
 //    glBindTexture(GL_TEXTURE_2D, textureID);
 //    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
 //    batch.Draw();
@@ -112,9 +114,6 @@ void DrumSelector::draw()
 
 void DrumSelector::loadTextures()
 {
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::pad1_on_png, BinaryData::pad1_on_pngSize));
 }
 
 void DrumSelector::setSelection(int sel)
@@ -249,12 +248,15 @@ void DrumSelector::Icon::draw()
     glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(1.f);
-    batch.Draw();
+    //batch.Draw();
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
     
-    //    glBindTexture(GL_TEXTURE_2D, textureID);
-    //    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
-    //    batch.Draw();
+    String category = KitManager::GetInstance().GetKit(0)->GetSample(id)->GetCategory();
+    GLuint textureID = SkinManager::instance().getSelectedSkin().getTexture(category);
+    
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
+    batch.Draw();
 }
 
 void DrumSelector::Icon::setBounds(const HUDRect &b)
@@ -297,7 +299,4 @@ void DrumSelector::Icon::updateBounds()
 
 void DrumSelector::Icon::loadTextures()
 {
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::pad1_on_png, BinaryData::pad1_on_pngSize));
 }

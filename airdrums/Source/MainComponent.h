@@ -15,6 +15,7 @@
 #include "PlayArea.h"
 #include "TrigView.h"
 #include "DrumSelector.h"
+#include "SkinManager.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 

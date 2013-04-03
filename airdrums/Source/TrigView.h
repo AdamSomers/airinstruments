@@ -18,8 +18,6 @@ public:
     
 private:
     GLBatch batch;
-    GLuint onTextureID;
-    GLuint offTextureID;
     float fade;
 };
 

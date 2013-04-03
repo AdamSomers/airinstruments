@@ -39,7 +39,6 @@ public:
         void updateBounds();
         
         GLBatch batch;
-        GLuint textureID;
         int id;
         HUDRect targetBounds;
         HUDRect tempBounds;
