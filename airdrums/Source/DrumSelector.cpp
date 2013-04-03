@@ -5,8 +5,7 @@
 #include "SkinManager.h"
 
 DrumSelector::DrumSelector()
-: textureID((GLuint) -1)
-, selection(0)
+: selection(0)
 , needsLayout(false)
 , trackedFinger(nullptr)
 {
@@ -44,11 +43,11 @@ void DrumSelector::layoutIcons()
         
         Icon* icon = icons.at(i);
         if (count < N/2)
-            icon->setBounds(HUDRect(iconWidth*count, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
+            icon->setBounds(HUDRect(iconWidth*count + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
         else if (count > N/2)
-            icon->setBounds(HUDRect(iconWidth*(count-1) + selectedIconWidth, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
+            icon->setBounds(HUDRect(iconWidth*(count-1) + selectedIconWidth + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
         else
-            icon->setBounds(HUDRect(getBounds().w / 2 - selectedIconWidth  / 2, getBounds().h / 2 - selectedIconHeight / 2, selectedIconWidth, selectedIconHeight));
+            icon->setBounds(HUDRect(getBounds().w / 2 - selectedIconWidth  / 2 + 10, getBounds().h / 2 - selectedIconHeight / 2, selectedIconWidth, selectedIconHeight));
         i = (i+1) % N;
     }
 }
@@ -103,12 +102,14 @@ void DrumSelector::draw()
     glLineWidth(1.f);
     //batch.Draw();
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
+
+    GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
+    batch.Draw();
     
     HUDView::draw();
 
-//    glBindTexture(GL_TEXTURE_2D, textureID);
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
-//    batch.Draw();
 }
 
 

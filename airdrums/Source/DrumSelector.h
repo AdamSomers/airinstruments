@@ -59,7 +59,6 @@ private:
     void layoutIcons();
 
     GLBatch batch;
-    GLuint textureID;
     std::vector<Icon*> icons;
     int selection;
     bool needsLayout;
