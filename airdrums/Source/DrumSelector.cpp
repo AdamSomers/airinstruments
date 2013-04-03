@@ -105,7 +105,7 @@ void DrumSelector::draw()
 
     GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
     glBindTexture(GL_TEXTURE_2D, textureId);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
     batch.Draw();
     
     HUDView::draw();
@@ -256,7 +256,7 @@ void DrumSelector::Icon::draw()
     GLuint textureID = SkinManager::instance().getSelectedSkin().getTexture(category);
     
     glBindTexture(GL_TEXTURE_2D, textureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
     batch.Draw();
 }
 
