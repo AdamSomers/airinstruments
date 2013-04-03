@@ -1,11 +1,10 @@
 #include "PlayArea.h"
 #include "Drums.h"
 #include "GfxTools.h"
+#include "SkinManager.h"
 
 PlayArea::PlayArea()
-: onTextureID((GLuint) -1)
-, offTextureID((GLuint) -1)
-, fade(0.f)
+: fade(0.f)
 , selectedMidiNote(0)
 {
     offColor[0] = .3f;
@@ -71,6 +70,9 @@ void PlayArea::draw()
     GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
     GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
     
+    GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
+    GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
+
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
@@ -109,10 +111,4 @@ void PlayArea::setSelectedMidiNote(int note)
 
 void PlayArea::loadTextures()
 {
-        glGenTextures(1, &onTextureID);
-        glBindTexture(GL_TEXTURE_2D, onTextureID);
-        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::pad1_on_png, BinaryData::pad1_on_pngSize));
-        glGenTextures(1, &offTextureID);
-        glBindTexture(GL_TEXTURE_2D, offTextureID);
-        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::pad1_off_png, BinaryData::pad1_off_pngSize));
 }

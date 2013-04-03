@@ -81,6 +81,10 @@ void MainContentComponent::resized()
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    SkinManager::instance().loadResources();
+    String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
+    SkinManager::instance().setSelectedSkin(skinSetting);
+    
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     
@@ -127,13 +131,21 @@ void MainContentComponent::newOpenGLContextCreated()
     statusBar = sb;
     
     playAreaLeft = new PlayArea;
-    int note = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft", 13);
-    playAreaLeft->setSelectedMidiNote(note);
+    int noteLeft = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft", 13);
+    playAreaLeft->setSelectedMidiNote(noteLeft);
     playAreaRight = new PlayArea;
-    note = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight", 12);
-    playAreaRight->setSelectedMidiNote(note);
+    int noteRight = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight", 12);
+    playAreaRight->setSelectedMidiNote(noteRight);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);
+    drumSelectorLeft = new DrumSelector;
+    drumSelectorRight = new DrumSelector;
+    drumSelectorLeft->setSelection(noteLeft);
+    drumSelectorRight->setSelection(noteRight);
+    drumSelectorLeft->addListener(this);
+    drumSelectorRight->addListener(this);
+    views.push_back(drumSelectorLeft);
+    views.push_back(drumSelectorRight);
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
@@ -162,7 +174,8 @@ void MainContentComponent::renderOpenGL()
     {
         const int toobarHeight = 50;
         const int statusBarHeight = 20;
-        const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - 10;
+        const int drumSelectorHeight = 100;
+        const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - drumSelectorHeight - 10;
         const int playAreaWidth = Environment::instance().screenW / 2 - 10;
         
         if (toolbar)
@@ -177,17 +190,31 @@ void MainContentComponent::renderOpenGL()
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat) statusBarHeight));
         
+        if (drumSelectorLeft)
+            drumSelectorLeft->setBounds(HUDRect((GLfloat) 5.0f,
+                                                (GLfloat) toolbar->getBounds().y - drumSelectorHeight,
+                                                (GLfloat) playAreaWidth,
+                                                (GLfloat) drumSelectorHeight - 5));
+        
+        if (drumSelectorRight)
+            drumSelectorRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
+                                                (GLfloat) toolbar->getBounds().y - drumSelectorHeight,
+                                                (GLfloat) playAreaWidth,
+                                                (GLfloat) drumSelectorHeight - 5));
+        
         if (playAreaLeft)
             playAreaLeft->setBounds(HUDRect(5.0f,
-                                            (GLfloat) statusBarHeight + 5,
+                                            (GLfloat) statusBar->getBounds().top() + 5,
                                             (GLfloat) playAreaWidth,
                                             (GLfloat) playAreaHeight));
                                     
         if (playAreaRight)
             playAreaRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
-                                            (GLfloat) statusBarHeight + 5,
+                                            (GLfloat) statusBar->getBounds().top() + 5,
                                             (GLfloat) playAreaWidth,
                                             (GLfloat) playAreaHeight));
+        
+
         if (trigViewBank)
             trigViewBank->setBounds(HUDRect(0.0f,
                                             (GLfloat) Environment::instance().screenH-toobarHeight,
@@ -208,7 +235,7 @@ void MainContentComponent::renderOpenGL()
     glDisable(GL_CULL_FACE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
@@ -415,24 +442,42 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         ret = true;
     }
     else if (kp.getTextCharacter() == 'q') {
-        playAreaLeft->setSelectedMidiNote(playAreaLeft->getSelectedMidiNote() - 1);
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
+        drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() - 1);
+        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
     }
     else if (kp.getTextCharacter() == 'w') {
-        playAreaLeft->setSelectedMidiNote(playAreaLeft->getSelectedMidiNote() + 1);
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", playAreaLeft->getSelectedMidiNote());
+        drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() + 1);
+        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
     }
     else if (kp.getTextCharacter() == 'a') {
-        playAreaRight->setSelectedMidiNote(playAreaRight->getSelectedMidiNote() - 1);
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
+        drumSelectorRight->setSelection(drumSelectorRight->getSelection() - 1);
+        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
     }
     else if (kp.getTextCharacter() == 's') {
-        playAreaRight->setSelectedMidiNote(playAreaRight->getSelectedMidiNote() + 1);
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", playAreaRight->getSelectedMidiNote());
+        drumSelectorRight->setSelection(drumSelectorRight->getSelection() + 1);
+        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
     }
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
     return ret;
+}
+
+void MainContentComponent::drumSelectorChanged(DrumSelector* selector)
+{
+    if (selector == drumSelectorLeft)
+    {
+        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+    }
+    else if (selector == drumSelectorRight)
+    {
+        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+    }
 }
 
 void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)

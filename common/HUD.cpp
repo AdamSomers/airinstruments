@@ -5,6 +5,7 @@ HUDView::HUDView()
 : parent(NULL)
 , trackingMouse(false)
 , hover(false)
+, didSetup(false)
 {
 }
 
@@ -36,7 +37,7 @@ void HUDView::draw()
     for (HUDView* v : children)
     {
         Environment::instance().modelViewMatrix.PushMatrix();
-        Environment::instance().modelViewMatrix.Translate(bounds.x + v->bounds.x, bounds.y + v->bounds.y, 0);
+        Environment::instance().modelViewMatrix.Translate(bounds.x, bounds.y, 0);
         v->draw();
         Environment::instance().modelViewMatrix.PopMatrix();
     }
@@ -65,11 +66,15 @@ void HUDView::setup()
         1.f, 0.f
     };
     
-    defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    if (!didSetup)
+        defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
     defaultBatch.CopyVertexData3f(verts);
     defaultBatch.CopyTexCoordData2f(texCoords, 0);
     defaultBatch.CopyNormalDataf(normals);
-    defaultBatch.End();
+    if (!didSetup)
+        defaultBatch.End();
+    
+    didSetup = true;
     
     for (HUDView* v : children)
         v->setup();
@@ -144,6 +149,27 @@ void HUDView::updatePointedState(FingerView* fv)
     float x = screenPos[0];
     float y = screenPos[1];
     y = Environment::instance().screenH - y;
+
+    if (bounds.contains(x, y))
+    {
+        auto iter = std::find(hoveringFingers.begin(), hoveringFingers.end(), fv);
+        if (iter == hoveringFingers.end())
+        {
+            fingerEntered(x, y, fv);
+            hoveringFingers.push_back(fv);
+        }
+        fingerMotion(x, y, fv);
+    }
+    else
+    {
+        auto iter = std::find(hoveringFingers.begin(), hoveringFingers.end(), fv);
+        if (iter != hoveringFingers.end())
+        {
+            fingerExited(x, y, fv);
+            hoveringFingers.erase(iter);
+        }
+    }
+
     for (HUDView* child : children)
     {
         float localX = x - bounds.x;
@@ -247,10 +273,10 @@ void HUDButton::setup()
 {
     HUDView::setup();
     M3DVector3f verts[4] = {
-        0, 0, 0.f,
-        bounds.w, 0, 0.f,
-        0, bounds.h, 0.f,
-        bounds.w, bounds.h, 0.f
+        bounds.x, bounds.y, 0.f,
+        bounds.x + bounds.w, bounds.y, 0.f,
+        bounds.x, bounds.y + bounds.h, 0.f,
+        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
     };
     
     M3DVector2f texCoords[4] = {

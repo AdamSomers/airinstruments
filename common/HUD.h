@@ -14,14 +14,31 @@
 
 struct HUDRect {
     HUDRect() : x(0.f), y(0.f), w(0.f), h(0.f) {}
+    
     HUDRect(GLfloat _x, GLfloat _y, GLfloat _w, GLfloat _h)
     {
         x = _x; y = _y; w = _w; h = _h;
     }
+    
     bool contains(GLfloat _x, GLfloat _y)
     {
         return _x > x && _y > y && _x < x+w && _y < y+h;
     }
+    
+    bool operator==(const HUDRect& other) const
+    {
+        return x == other.x &&
+               y == other.y &&
+               w == other.w &&
+               h == other.h;
+    }
+    
+    bool operator!=(const HUDRect &other) const
+    {
+        return !(*this == other);
+    }
+    
+    GLfloat top() const { return y + h; }
     GLfloat x, y, w , h;
 };
 
@@ -39,7 +56,15 @@ public:
     virtual void mouseDown(float x, float y);
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
+
+    // Multi-finger interaction methods in screen coords.
+    // x, y are FingerView position cooreds projected to screen plane 
+    virtual void fingerMotion(float x, float y, FingerView* fv) {}
+    virtual void fingerEntered(float x, float y, FingerView* fv) {}
+    virtual void fingerExited(float x, float y, FingerView* fv) {}
+
     virtual void setBounds(const HUDRect& b);
+    const HUDRect& getBounds() const { return bounds; }
     virtual void loadTextures();
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
@@ -47,12 +72,13 @@ protected:
     bool trackingMouse;
     HUDRect bounds;
     bool hover;
+    bool didSetup;
     
 private:
     std::vector<HUDView*> children;
     HUDView* parent;
     GLBatch defaultBatch;
-    std::vector<FingerView*> fingers;
+    std::vector<FingerView*> hoveringFingers;
 };
 
 class HUDButton : public HUDView
