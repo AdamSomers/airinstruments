@@ -25,7 +25,11 @@ public:
 		kItemEmptyError = 2,
 		kItemSaveError = 3,
 		kItemNameError = 4,
-		kItemUuidError = 5
+		kItemUuidError = 5,
+		kNoKitError = 6,
+		kSampleRateError = 7,
+		kSamplePositionError = 8,
+		kMidiDataError = 9
 	};
 
 	~DrumItem();

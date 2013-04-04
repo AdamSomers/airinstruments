@@ -30,8 +30,7 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 	{
 		default :
 		{
-			bool x = false;
-			jassert(x);
+			jassertfalse;
 			break;
 		}
 
@@ -58,8 +57,7 @@ void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 	{
 		default :
 		{
-			bool x = false;
-			jassert(x);
+			jassertfalse;
 			break;
 		}
 

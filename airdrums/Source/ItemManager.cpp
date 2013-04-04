@@ -63,6 +63,21 @@ SharedPtr<Managed> ItemManager<Manager, Managed>::GetItem(int index)
 
 
 template <typename Manager, typename Managed>
+SharedPtr<Managed> ItemManager<Manager, Managed>::GetItem(Uuid& uuid)
+{
+	// Linear search, should be Ok since we don't expect large numbers of items
+	for (int i = 0; i < (int) mItems.size(); ++i)
+	{
+		SharedPtr<Managed> item = mItems.at(i);
+		if (item->GetUuid() == uuid)
+			return item;
+	}
+
+	return SharedPtr<Managed>();
+}
+
+
+template <typename Manager, typename Managed>
 String& ItemManager<Manager, Managed>::GetDefaultPath(void)
 {
 	return mDefaultPath;

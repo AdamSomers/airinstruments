@@ -124,6 +124,10 @@
       <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
       <FILE id="njk3KC" name="PadView.cpp" compile="1" resource="0" file="Source/PadView.cpp"/>
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
+      <FILE id="Z4tGU6" name="PatternLoadDialog.cpp" compile="1" resource="0"
+            file="Source/PatternLoadDialog.cpp"/>
+      <FILE id="SsNNkT" name="PatternLoadDialog.h" compile="0" resource="0"
+            file="Source/PatternLoadDialog.h"/>
       <FILE id="BAewia" name="PatternManager.cpp" compile="1" resource="0"
             file="Source/PatternManager.cpp"/>
       <FILE id="I1XJ2x" name="PatternManager.h" compile="0" resource="0"

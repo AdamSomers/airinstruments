@@ -165,6 +165,7 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainMenu.cpp"/>
     <ClCompile Include="..\..\Source\PadView.cpp"/>
+    <ClCompile Include="..\..\Source\PatternLoadDialog.cpp"/>
     <ClCompile Include="..\..\Source\PatternManager.cpp"/>
     <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
@@ -1280,6 +1281,7 @@
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainMenu.h"/>
     <ClInclude Include="..\..\Source\PadView.h"/>
+    <ClInclude Include="..\..\Source\PatternLoadDialog.h"/>
     <ClInclude Include="..\..\Source\PatternManager.h"/>
     <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>

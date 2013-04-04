@@ -15,6 +15,7 @@
 
 #include "Types.h"
 #include "DrumItem.h"
+#include "DrumKit.h"
 
 
 class DrumPattern : public DrumItem
@@ -31,9 +32,11 @@ public:
 	// This pattern object owns and manages the lifetime of the returned buffer object.
 	// The caller should not store this reference, but use it only for the duration of the function in which it is obtained.
 	MidiBuffer&	GetMidiBuffer(void);
+	SharedPtr<DrumKit> GetDrumKit(void);
 
 private:
 	UniquePtr<MidiBuffer>	mMidiBuffer;
+	SharedPtr<DrumKit>		mDrumKit;
 };
 
 #endif  // __DRUMPATTERN_H_2DCA5AE9__

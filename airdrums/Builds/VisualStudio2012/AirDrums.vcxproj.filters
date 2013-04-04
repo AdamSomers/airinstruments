@@ -400,6 +400,9 @@
     <ClCompile Include="..\..\Source\PadView.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PatternLoadDialog.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PatternManager.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
@@ -1696,6 +1699,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PatternLoadDialog.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PatternManager.h">

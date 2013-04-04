@@ -25,7 +25,7 @@ PatternSaveDialog::PatternSaveDialog(DocumentWindow* window)
     centreAroundComponent (window, getWidth(), getHeight());
     setResizable (false, false);
 
-	mEditor.setSize(300, 30);
+	mEditor.setSize(300, 30);	// Some line above is changing the size, need to reset it again here
 }
 
 

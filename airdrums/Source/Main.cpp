@@ -13,6 +13,7 @@
 #include "KitManager.h"
 #include "PatternManager.h"
 #include "PatternSaveDialog.h"
+#include "PatternLoadDialog.h"
 
 
 AirHarpApplication::AirHarpApplication()
@@ -105,8 +106,7 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 	{
 		default :
 		{
-			bool x = false;
-			jassert(x);
+			jassertfalse;
 			break;
 		}
 
@@ -135,6 +135,22 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			SharedPtr<DrumPattern> pattern = drums.getPattern();
 			jassert(pattern.get() != nullptr);
 			pattern->SaveToXml(fileName, directory);
+			break;
+		}
+		case MainMenu::kLoadPatternCmd :
+		{
+			PatternManager& mgr = PatternManager::GetInstance();
+			mgr.BuildPatternList();	// Refresh list to find new content, etc.
+			UniquePtr<PatternLoadDialog> dlg(new PatternLoadDialog(mainWindow));
+			int status = dlg->runModalLoop();
+			if (status == 0)
+				break;
+			int index = dlg->GetSelection();
+			if (index < 0)
+				break;
+			SharedPtr<DrumPattern> pattern = mgr.GetItem(index);
+			Drums& drums = Drums::instance();
+			drums.setPattern(pattern);
 			break;
 		}
 	}

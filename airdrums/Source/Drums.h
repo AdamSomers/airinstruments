@@ -27,6 +27,8 @@ public:
 	double getSampleRate() const { return sampleRate; }
 	SharedPtr<DrumKit> getDrumKit() const { return kit; }
 	SharedPtr<DrumPattern> getPattern() const { return pattern; }
+	void setDrumKit(SharedPtr<DrumKit> aKit, bool doLock = true);
+	void setPattern(SharedPtr<DrumPattern> aPattern);
     
     static Drums& instance(void)
     {

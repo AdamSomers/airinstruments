@@ -39,6 +39,7 @@ public:
 	int		GetItemCount(void);
 
 	SharedPtr<Managed>	GetItem(int index);
+	SharedPtr<Managed>	GetItem(Uuid& uuid);
 
 	//void	SetPathToItemFolder(String path);
 
