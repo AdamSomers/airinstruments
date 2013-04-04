@@ -131,16 +131,16 @@ void DrumSelector::fingerMotion(float x, float y, FingerView* fv)
         return;
 
     int inc = 0;
-    if (x - prevFingerX < -2)
+    if (x - prevFingerX < -3)
         inc = 1;
-    else if (x - prevFingerX > 2)
+    else if (x - prevFingerX > 3)
         inc = -1;
 
     if (inc != 0 && !isTimerRunning()) {
         setSelection(selection + inc);
         for (Listener* l : listeners)
             l->drumSelectorChanged(this);
-        startTimer(100);
+        startTimer(250);
     }
 
     prevFingerX = x;
