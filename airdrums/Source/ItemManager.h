@@ -49,14 +49,14 @@ protected:
 	Status	BuildItemList(String fileExtension, String xmlTag, String path = "", bool clear = true);
 
 private:
-	friend typename Manager;
+	friend Manager;
 	ItemManager();
 	~ItemManager();
 
 	static Manager*	mSelf;
 
-	typedef	SharedPtr<typename Managed>		Item;
-	typedef	std::vector<typename Item>		Container;
+	typedef	SharedPtr<Managed>		Item;
+	typedef	std::vector<Item>		Container;
 	typedef	typename Container::iterator	Iterator;
 
 	Container	mItems;

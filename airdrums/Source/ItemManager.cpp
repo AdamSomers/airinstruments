@@ -110,7 +110,7 @@ typename ItemManager<Manager, Managed>::Status ItemManager<Manager, Managed>::Bu
 
 		SharedPtr<Managed> item(new Managed);
 		File folder = file.getParentDirectory();
-		Managed::Status status = item->LoadFromXml(document.get(), folder);
+		typename Managed::Status status = item->LoadFromXml(document.get(), folder);
 		if (status != Managed::kNoError)
 			return kItemLoadError;
 
