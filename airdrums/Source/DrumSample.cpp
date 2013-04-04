@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-#include "DrumSample.h"
-#include "SkinManager.h"
 #include "GfxTools.h"
+#include "SkinManager.h"
+#include "DrumSample.h"
 
 DrumSample::DrumSample()
 : mTextureId(0)

@@ -1,5 +1,5 @@
-#include "SkinManager.h"
 #include "GfxTools.h"
+#include "SkinManager.h"
 
 Skin::Skin(String skinName)
 : name(skinName)
@@ -17,7 +17,7 @@ const GLuint Skin::getTexture(String name) const
     try {
         tex = textures.at(name);
     }
-    catch (const std::out_of_range& oor) {
+    catch (const std::out_of_range& /*oor*/) {
         Logger::outputDebugString("No texture for " + name);
     }
     return tex;
@@ -79,7 +79,7 @@ const Skin& SkinManager::getSkin(String name) const
     try {
         return skins.at(name);
     }
-    catch (const std::out_of_range& oor) {
+    catch (const std::out_of_range& /*oor*/) {
         Logger::outputDebugString("No skin named " + name);
         return skins.begin()->second;
     }

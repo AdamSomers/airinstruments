@@ -31,8 +31,8 @@ void DrumSelector::layoutIcons()
 {
     int N = icons.size();
 
-    const int selectedIconWidth = getBounds().h;
-    const int selectedIconHeight = getBounds().h;
+    const int selectedIconWidth = (int) getBounds().h;
+    const int selectedIconHeight = (int) getBounds().h;
     const float iconWidth = (getBounds().w-selectedIconWidth) / (float)(N - (N%2));
     const float iconHeight = iconWidth;
 
@@ -47,7 +47,7 @@ void DrumSelector::layoutIcons()
         else if (count > N/2)
             icon->setBounds(HUDRect(iconWidth*(count-1) + selectedIconWidth + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
         else
-            icon->setBounds(HUDRect(getBounds().w / 2 - selectedIconWidth  / 2 + 10, getBounds().h / 2 - selectedIconHeight / 2, selectedIconWidth, selectedIconHeight));
+            icon->setBounds(HUDRect(getBounds().w / 2 - selectedIconWidth  / 2 + 10, getBounds().h / 2 - selectedIconHeight / 2, (GLfloat) selectedIconWidth, (GLfloat) selectedIconHeight));
         i = (i+1) % N;
     }
 }
@@ -120,7 +120,7 @@ void DrumSelector::loadTextures()
 void DrumSelector::setSelection(int sel)
 {
     if (sel < 0) sel = icons.size() - 1;
-    if (sel >= icons.size()) sel = 0;
+    if (sel >= (int) icons.size()) sel = 0;
     selection = sel;
     needsLayout = true;
 }
