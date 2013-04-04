@@ -95,8 +95,12 @@
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
             file="Source/AudioSettingsDialog.h"/>
+      <FILE id="JSRMF6" name="DrumItem.cpp" compile="1" resource="0" file="Source/DrumItem.cpp"/>
+      <FILE id="PzAZWh" name="DrumItem.h" compile="0" resource="0" file="Source/DrumItem.h"/>
       <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
       <FILE id="K27Jhn" name="DrumKit.h" compile="0" resource="0" file="Source/DrumKit.h"/>
+      <FILE id="a5i2yA" name="DrumPattern.cpp" compile="1" resource="0" file="Source/DrumPattern.cpp"/>
+      <FILE id="UjZYSK" name="DrumPattern.h" compile="0" resource="0" file="Source/DrumPattern.h"/>
       <FILE id="xr5HgS" name="Drums.cpp" compile="1" resource="0" file="Source/Drums.cpp"/>
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
       <FILE id="l6SKgC" name="DrumSample.cpp" compile="1" resource="0" file="Source/DrumSample.cpp"/>
@@ -106,6 +110,8 @@
       <FILE id="VPGoah" name="DrumSelector.cpp" compile="1" resource="0"
             file="Source/DrumSelector.cpp"/>
       <FILE id="FoDZug" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
+      <FILE id="apTSIi" name="ItemManager.cpp" compile="0" resource="0" file="Source/ItemManager.cpp"/>
+      <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
       <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
@@ -117,6 +123,18 @@
       <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
       <FILE id="njk3KC" name="PadView.cpp" compile="1" resource="0" file="Source/PadView.cpp"/>
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
+      <FILE id="Z4tGU6" name="PatternLoadDialog.cpp" compile="1" resource="0"
+            file="Source/PatternLoadDialog.cpp"/>
+      <FILE id="SsNNkT" name="PatternLoadDialog.h" compile="0" resource="0"
+            file="Source/PatternLoadDialog.h"/>
+      <FILE id="BAewia" name="PatternManager.cpp" compile="1" resource="0"
+            file="Source/PatternManager.cpp"/>
+      <FILE id="I1XJ2x" name="PatternManager.h" compile="0" resource="0"
+            file="Source/PatternManager.h"/>
+      <FILE id="V9aFOY" name="PatternSaveDialog.cpp" compile="1" resource="0"
+            file="Source/PatternSaveDialog.cpp"/>
+      <FILE id="fCpD82" name="PatternSaveDialog.h" compile="0" resource="0"
+            file="Source/PatternSaveDialog.h"/>
       <FILE id="cY2YSL" name="PlayArea.cpp" compile="1" resource="0" file="Source/PlayArea.cpp"/>
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="uZdbZi" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>

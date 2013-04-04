@@ -11,6 +11,9 @@
 
 #include "Main.h"
 #include "KitManager.h"
+#include "PatternManager.h"
+#include "PatternSaveDialog.h"
+#include "PatternLoadDialog.h"
 
 
 AirHarpApplication::AirHarpApplication()
@@ -59,6 +62,8 @@ void AirHarpApplication::shutdown()
 
     audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
 	MotionDispatcher::destruct();
+
+	PatternManager::Destruct();
 	#if JUCE_MAC
 		MenuBarModel::setMacMainMenu(nullptr);
 	#endif
@@ -102,18 +107,51 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 	{
 		default :
 		{
-			bool x = false;
-			jassert(x);
+			jassertfalse;
 			break;
 		}
 
-		case 1 :
+		case MainMenu::kAudioSettingsCmd :
 		{
 			if (settingsDialog != nullptr)
 				break;
 
 			settingsDialog = new AudioSettingsDialog(mainWindow, audioDeviceManager, properties);
 
+			break;
+		}
+		case MainMenu::kSavePatternAsCmd :
+		{
+			UniquePtr<PatternSaveDialog> dlg(new PatternSaveDialog(mainWindow));
+			int status = dlg->runModalLoop();
+			if (status == 0)
+				break;
+			String fileName = dlg->GetFileName();
+			fileName = File::createLegalFileName(fileName);
+			// For now, use the default path
+			PatternManager& mgr = PatternManager::GetInstance();
+			File directory = mgr.GetDefaultPath();
+
+			Drums& drums = Drums::instance();
+			SharedPtr<DrumPattern> pattern = drums.getPattern();
+			jassert(pattern.get() != nullptr);
+			pattern->SaveToXml(fileName, directory);
+			break;
+		}
+		case MainMenu::kLoadPatternCmd :
+		{
+			PatternManager& mgr = PatternManager::GetInstance();
+			mgr.BuildPatternList();	// Refresh list to find new content, etc.
+			UniquePtr<PatternLoadDialog> dlg(new PatternLoadDialog(mainWindow));
+			int status = dlg->runModalLoop();
+			if (status == 0)
+				break;
+			int index = dlg->GetSelection();
+			if (index < 0)
+				break;
+			SharedPtr<DrumPattern> pattern = mgr.GetItem(index);
+			Drums& drums = Drums::instance();
+			drums.setPattern(pattern);
 			break;
 		}
 	}

@@ -39,14 +39,13 @@ public:
     // This must only be called from the OpenGL thread
     void LoadTextures();
 
-	SynthesiserSound::Ptr	GetSound(void);
-
 	// Other accessors
 
 	int		GetNoteNumber(void);
 	String&	GetCategory(void);
 	//Image	GetImage(void);
     GLuint GetTexture() const;
+	SynthesiserSound::Ptr	GetSound(void);
 
 private:
 	int		mNoteNumber;

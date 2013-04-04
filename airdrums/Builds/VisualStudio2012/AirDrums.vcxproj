@@ -151,16 +151,25 @@
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
+    <ClCompile Include="..\..\Source\DrumItem.cpp"/>
     <ClCompile Include="..\..\Source\DrumKit.cpp"/>
+    <ClCompile Include="..\..\Source\DrumPattern.cpp"/>
     <ClCompile Include="..\..\Source\Drums.cpp"/>
     <ClCompile Include="..\..\Source\DrumSample.cpp"/>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
+
     <ClCompile Include="..\..\Source\DrumSelector.cpp"/>
+    <ClCompile Include="..\..\Source\ItemManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainMenu.cpp"/>
     <ClCompile Include="..\..\Source\PadView.cpp"/>
+    <ClCompile Include="..\..\Source\PatternLoadDialog.cpp"/>
+    <ClCompile Include="..\..\Source\PatternManager.cpp"/>
+    <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\Source\SkinManager.cpp"/>
     <ClCompile Include="..\..\Source\TrigView.cpp"/>
@@ -1263,16 +1272,23 @@
     <ClInclude Include="..\..\..\GLTools\include\math3d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
+    <ClInclude Include="..\..\Source\DrumItem.h"/>
     <ClInclude Include="..\..\Source\DrumKit.h"/>
+    <ClInclude Include="..\..\Source\DrumPattern.h"/>
     <ClInclude Include="..\..\Source\Drums.h"/>
     <ClInclude Include="..\..\Source\DrumSample.h"/>
     <ClInclude Include="..\..\Source\DrumsHUD.h"/>
+
     <ClInclude Include="..\..\Source\DrumSelector.h"/>
+    <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainMenu.h"/>
     <ClInclude Include="..\..\Source\PadView.h"/>
+    <ClInclude Include="..\..\Source\PatternLoadDialog.h"/>
+    <ClInclude Include="..\..\Source\PatternManager.h"/>
+    <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>
     <ClInclude Include="..\..\Source\SkinManager.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>
