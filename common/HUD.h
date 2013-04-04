@@ -59,9 +59,9 @@ public:
 
     // Multi-finger interaction methods in screen coords.
     // x, y are FingerView position cooreds projected to screen plane 
-    virtual void fingerMotion(float x, float y, FingerView* fv) {}
-    virtual void fingerEntered(float x, float y, FingerView* fv) {}
-    virtual void fingerExited(float x, float y, FingerView* fv) {}
+    virtual void fingerMotion(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
+    virtual void fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
+    virtual void fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
 
     virtual void setBounds(const HUDRect& b);
     const HUDRect& getBounds() const { return bounds; }
