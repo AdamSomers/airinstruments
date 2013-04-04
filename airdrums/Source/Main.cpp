@@ -59,13 +59,13 @@ void AirHarpApplication::shutdown()
 
     audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
 	MotionDispatcher::destruct();
-	KitManager::Destruct();
 	#if JUCE_MAC
 		MenuBarModel::setMacMainMenu(nullptr);
 	#endif
 
     mainWindow = nullptr; // (deletes our window)
     //audioDeviceManager.removeAudioCallback(this);
+	KitManager::Destruct();
 }
 
 //==============================================================================
