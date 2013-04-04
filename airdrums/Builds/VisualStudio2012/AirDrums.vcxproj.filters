@@ -376,6 +376,9 @@
     <ClCompile Include="..\..\Source\DrumsHUD.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DrumSelector.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
@@ -392,6 +395,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PlayArea.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SkinManager.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TrigView.cpp">
@@ -1659,6 +1665,9 @@
     <ClInclude Include="..\..\Source\DrumsHUD.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\DrumSelector.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\KitManager.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
@@ -1675,6 +1684,9 @@
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlayArea.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SkinManager.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TrigView.h">
@@ -2975,18 +2987,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\led1_off.png">
-      <Filter>AirDrums\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\led1_on.png">
-      <Filter>AirDrums\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\pad1_on.png">
-      <Filter>AirDrums\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\pad1_off.png">
-      <Filter>AirDrums\resources</Filter>
-    </None>
     <None Include="..\..\Resources\icon.png">
       <Filter>AirDrums\resources</Filter>
     </None>
@@ -2999,52 +2999,52 @@
     <None Include="..\..\..\common\testShader.vs">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL BKICK.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL BKICK.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CHH.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CHH.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CLAP.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLAP.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CLV.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLV.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CYM.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CYM.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL HTOM.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL HTOM.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL KICK.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL KICK.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL LTOM.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL LTOM.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL MTOM.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL MTOM.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL OHH.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL OHH.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL PAD.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PAD.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL PHH.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PHH.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL RIDE.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL RIDE.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL SFX.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SFX.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL SN 1.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SN 1.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
-    <None Include="..\..\Resources\TestKit\TMD CHIL VERB.aif">
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL VERB.aif">
       <Filter>AirDrums\resources</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">
