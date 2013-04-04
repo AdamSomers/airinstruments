@@ -13,6 +13,7 @@ public:
     void NoteOn(int note, float velocity);
     void clear();
     void clearTrack(int note);
+    void resetToZero();
     
     // AudioSoure overrides
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate);
@@ -28,10 +29,32 @@ public:
     }
     
     MidiKeyboardState playbackState;
-    bool recording;
-    bool metronomeOn;
+
+    class TransportState : public ChangeBroadcaster
+    {
+    public:
+        TransportState(bool record, bool play, bool metronome);
+    
+        void play();
+        void pause();
+        void record(bool state);
+        void metronome(bool state);
+
+        void toggleRecording();
+        void togglePlayback();
+        void toggleMetronome();
+
+        bool recording;
+        bool playing;
+        bool metronomeOn;
+    };
+
+    void addTransportListener(ChangeListener* listener);
+    void removeTransportListener(ChangeListener* listener);
+    TransportState& getTransportState() { return transportState; }
     
 private:
+    TransportState transportState;
     MidiKeyboardState keyboardState;
     Synthesiser synth;
     MidiMessageCollector midiCollector;

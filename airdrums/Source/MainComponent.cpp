@@ -33,12 +33,13 @@ MainContentComponent::MainContentComponent() :
 , playAreaLeft(NULL)
 , playAreaRight(NULL)
 , trigViewBank(NULL)
+, lastCircleId(0)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
     openGLContext.attachTo (*this);
     openGLContext.setSwapInterval(1);
-    setSize (800, 600);
+    setSize (1200, 850);
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
@@ -174,7 +175,7 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
-        const int toobarHeight = 50;
+        const int toobarHeight = 75;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
         const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - drumSelectorHeight - 10;
@@ -387,12 +388,12 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
     
-    if (e.getPosition().x < Environment::instance().screenW / 2)
+    if (playAreaLeft->getBounds().contains(e.getPosition().x, (float)Environment::instance().screenH - e.getPosition().y))
     {
         Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
         //playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
-    else
+    else if (playAreaRight->getBounds().contains(e.getPosition().x, (float)Environment::instance().screenH - e.getPosition().y))
     {
         Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
         //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
@@ -432,11 +433,11 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 {
     bool ret = false;
     if (kp.getTextCharacter() == 'm') {
-        Drums::instance().metronomeOn = !Drums::instance().metronomeOn;
+        Drums::instance().getTransportState().toggleMetronome();
         ret = true;
     }
     else if (kp.getKeyCode() == KeyPress::spaceKey) {
-        Drums::instance().recording = !Drums::instance().recording;
+        Drums::instance().getTransportState().togglePlayback();
         ret = true;
     }
     else if (kp.getTextCharacter() == 'c') {
@@ -531,6 +532,42 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             }
                 break;
                 
+            case Leap::Gesture::TYPE_CIRCLE:
+            {
+                const Leap::CircleGesture circle(g);
+                
+                bool isClockwise = circle.normal().z < 0;
+                
+                //if (!isClockwise)
+                //    printf("Circle CCW - id %d - progress %f\n", circle.id(), circle.progress());
+                //else
+                //    printf("Circle CW - id %d - progress %f\n", circle.id(), circle.progress());
+                
+                if (circle.progress() >= 1.f && circle.progress() < 2.f && isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                    Drums::instance().getTransportState().play();
+                    lastCircleId = circle.id();
+                }
+                else if (circle.progress() >= 2.f && circle.progress() < 3.f&& isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                    Drums::instance().getTransportState().toggleRecording();
+                    lastCircleId = circle.id();
+                }
+                else if (circle.progress() >= 3.f && isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                    Drums::instance().getTransportState().toggleMetronome();
+                    lastCircleId = circle.id();
+                }
+                else if (circle.progress() >= 1.f && circle.progress() < 2.f && !isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                    Drums::instance().getTransportState().pause();
+                    lastCircleId = circle.id();
+                }
+                else if (circle.progress() >= 2.f && circle.progress() < 3.f && !isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                    Drums::instance().resetToZero();
+                }
+                else if (circle.progress() >= 3.f && !isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                    Drums::instance().clear();
+                }
+            }
+                break;
+
             default:
                 break;
         }
