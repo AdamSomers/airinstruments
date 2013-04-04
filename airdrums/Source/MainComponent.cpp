@@ -388,12 +388,12 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
     
-    if (playAreaLeft->getBounds().contains(e.getPosition().x, (float)Environment::instance().screenH - e.getPosition().y))
+    if (playAreaLeft->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
     {
         Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
         //playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
-    else if (playAreaRight->getBounds().contains(e.getPosition().x, (float)Environment::instance().screenH - e.getPosition().y))
+    else if (playAreaRight->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
     {
         Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
         //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
