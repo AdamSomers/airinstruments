@@ -6,6 +6,9 @@
 #include "Leap.h"
 
 class DrumsToolbar : public HUDView
+                   , public ChangeListener
+                   , public HUDButton::Listener
+                   , public Timer
 {
 public:
     DrumsToolbar();
@@ -14,9 +17,22 @@ public:
     void setup();
     void draw();
     
+    // ChangeListener overrides
+    void changeListenerCallback(ChangeBroadcaster* source);
+
+    // HUDButton::Listener overrides
+    void buttonStateChanged(HUDButton* b);
+
+    // Timer overrides
+    void timerCallback();
+
     void layoutControls();
     
 private:
+    HUDButton resetButton;
+    HUDButton playButton;
+    HUDButton recordButton;
+    HUDButton metronomeButton;
     GLBatch batch;
 };
 

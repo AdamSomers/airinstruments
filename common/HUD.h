@@ -20,7 +20,7 @@ struct HUDRect {
         x = _x; y = _y; w = _w; h = _h;
     }
     
-    bool contains(GLfloat _x, GLfloat _y)
+    bool contains(GLfloat _x, GLfloat _y) const
     {
         return _x > x && _y > y && _x < x+w && _y < y+h;
     }

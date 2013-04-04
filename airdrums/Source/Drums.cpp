@@ -4,8 +4,7 @@
 
 
 Drums::Drums() :
-    recording(false),
-    metronomeOn(true),
+    transportState(false,false,true),
     sampleCounter(0),
     maxRecordSamples(0),
     tempo(118),
@@ -162,7 +161,7 @@ Drums::~Drums()
 void Drums::NoteOn(int note, float velocity)
 {
     midiBufferLock.enter();
-    if (recording) {
+    if (transportState.recording && transportState.playing) {
         float bps = tempo / 60.f;
         float sixteenthsPerSecond = bps * 4;
         int samplesPerSixteenth = (int) (sampleRate / sixteenthsPerSecond);
@@ -224,6 +223,11 @@ void Drums::clearTrack(int note)
     midiBufferLock.exit();
 }
 
+void Drums::resetToZero()
+{
+    sampleCounter = 0;
+}
+
 void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 {
     sampleRate = inSampleRate;
@@ -276,7 +280,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     MidiBuffer incomingMidi;
     midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
     
-    if (recording) {
+    if (transportState.playing) {
         playbackState.reset();
         keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
 		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
@@ -291,7 +295,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
             playbackState.noteOn(1, message.getNoteNumber(),1);
         }
         
-        if (metronomeOn) {
+        if (transportState.metronomeOn) {
             MidiBuffer::Iterator metronomeIterator(metronomeBuffer);
             metronomeIterator.setNextSamplePosition(sampleCounter);
             while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
@@ -354,4 +358,66 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 	setDrumKit(pattern->GetDrumKit(), false);
 
     midiBufferLock.exit();
+}
+
+
+Drums::TransportState::TransportState(bool record, bool play, bool metronome)
+: recording(record)
+, playing(play)
+, metronomeOn(metronome)
+{
+}
+
+void Drums::TransportState::play()
+{
+    playing = true;
+    sendChangeMessage();
+}
+
+void Drums::TransportState::pause()
+{
+    playing = false;
+    recording = false;
+    sendChangeMessage();
+}
+
+void Drums::TransportState::record(bool state)
+{
+    recording = state;
+    if (recording && !playing)
+        playing = true;
+    sendChangeMessage();
+}
+
+void Drums::TransportState::metronome(bool state)
+{
+    metronomeOn = state;
+    sendChangeMessage();
+}
+
+void Drums::TransportState::toggleRecording()
+{
+    record(!recording);
+}
+
+void Drums::TransportState::togglePlayback()
+{
+    playing ? pause() : play();
+}
+
+void Drums::TransportState::toggleMetronome()
+{
+    metronome(!metronomeOn);
+}
+
+void Drums::addTransportListener(ChangeListener* listener)
+{
+    MessageManagerLock mml;
+    transportState.addChangeListener(listener);
+}
+
+void Drums::removeTransportListener(ChangeListener* listener)
+{
+    MessageManagerLock mml;
+    transportState.removeChangeListener(listener);
 }
