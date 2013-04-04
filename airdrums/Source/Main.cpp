@@ -51,6 +51,9 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     audioSourcePlayer.setSource (&Drums::instance());
     audioDeviceManager.addAudioCallback (&audioSourcePlayer);
     Logger::outputDebugString(audioDeviceManager.getCurrentAudioDevice()->getName());
+    
+    PatternManager& pmgr = PatternManager::GetInstance();
+	/*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
 }
 
 void AirHarpApplication::shutdown()

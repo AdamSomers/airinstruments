@@ -148,9 +148,6 @@ Drums::Drums() :
 		numNotes = 16;
 	}
 
-	PatternManager& pmgr = PatternManager::GetInstance();
-	/*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
-
     synth.setNoteStealingEnabled(false);
 }
 
