@@ -35,6 +35,9 @@ public:
 	// Initialization
 
 	Status	LoadFromXml(XmlElement* element, File& directory);
+    
+    // This must only be called from the OpenGL thread
+    void LoadTextures();
 
 	SynthesiserSound::Ptr	GetSound(void);
 
@@ -43,11 +46,13 @@ public:
 	int		GetNoteNumber(void);
 	String&	GetCategory(void);
 	//Image	GetImage(void);
+    GLuint GetTexture() const;
 
 private:
 	int		mNoteNumber;
 	String	mCategory;
-	//Image	mImage;
+	Image	mImage;
+    GLuint  mTextureId;
 
 	SynthesiserSound::Ptr	mSound;
 };

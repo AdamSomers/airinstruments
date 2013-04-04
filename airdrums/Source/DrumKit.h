@@ -46,6 +46,8 @@ public:
 
 	String&	GetName(void);
 	//Image	GetImage(void);
+    
+    void LoadTextures();
 
 private:
 	String	mName;

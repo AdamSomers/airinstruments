@@ -17,6 +17,7 @@
 #include "Drums.h"
 #include "MotionServer.h"
 #include "FingerView.h"
+#include "KitManager.h"
 
 #include "MainComponent.h"
 
@@ -82,6 +83,7 @@ void MainContentComponent::resized()
 void MainContentComponent::newOpenGLContextCreated()
 {
     SkinManager::instance().loadResources();
+    KitManager::GetInstance().LoadTextures();
     String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
     SkinManager::instance().setSelectedSkin(skinSetting);
     

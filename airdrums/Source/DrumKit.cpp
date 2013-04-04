@@ -59,3 +59,11 @@ String& DrumKit::GetName(void)
 {
 	return mName;
 }
+
+void DrumKit::LoadTextures()
+{
+    for (Item drumSample : mSamples)
+    {
+        drumSample->LoadTextures();
+    }
+}

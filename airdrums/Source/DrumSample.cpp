@@ -9,9 +9,11 @@
 */
 
 #include "DrumSample.h"
-
+#include "SkinManager.h"
+#include "GfxTools.h"
 
 DrumSample::DrumSample()
+: mTextureId(0)
 {
 }
 
@@ -29,6 +31,15 @@ DrumSample::Status DrumSample::LoadFromXml(XmlElement* element, File& directory)
 	String category = element->getStringAttribute("category", "");
 	if (category == "")
 		return kCategoryError;
+    String imageFilename = element->getStringAttribute("image", "");
+    if (imageFilename != "")
+    {
+        File imageFile = directory.getChildFile(imageFilename);
+        if (imageFile.existsAsFile())
+            mImage = ImageFileFormat::loadFrom(imageFile);
+        else
+            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+    }
 	String filename = element->getStringAttribute("file", "");
 	if (filename == "")
 		return kFilenameError;
@@ -68,4 +79,23 @@ int DrumSample::GetNoteNumber(void)
 String& DrumSample::GetCategory(void)
 {
 	return mCategory;
+}
+
+GLuint DrumSample::GetTexture() const
+{
+    if (mImage.isValid())
+        return mTextureId;
+    else
+        return SkinManager::instance().getSelectedSkin().getTexture(mCategory);;
+        
+}
+
+void DrumSample::LoadTextures()
+{
+    if (mImage.isValid())
+    {
+        glGenTextures(1, &mTextureId);
+        glBindTexture(GL_TEXTURE_2D, mTextureId);
+        GfxTools::loadTextureFromJuceImage(mImage);
+    }
 }

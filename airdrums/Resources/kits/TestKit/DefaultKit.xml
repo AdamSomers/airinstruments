@@ -3,7 +3,7 @@
 	<sample note="0" category="Pad" image="" file="TMD CHIL PAD.aif" />
 	<sample note="1" category="FX" image="" file="TMD CHIL SFX.aif" />
 	<sample note="2" category="FX" image="" file="TMD CHIL VERB.aif" />
-	<sample note="3" category="BassDrum" image="" file="TMD CHIL BKICK.aif" />
+	<sample note="3" category="BassDrum" image="DeepBass.png" file="TMD CHIL BKICK.aif" />
 	<sample note="4" category="LowTom" image="" file="TMD CHIL LTOM.aif" />
 	<sample note="5" category="MidTom" image="" file="TMD CHIL MTOM.aif" />
 	<sample note="6" category="HiTom" image="" file="TMD CHIL HTOM.aif" />
@@ -12,7 +12,7 @@
 	<sample note="9" category="Clap" image="" file="TMD CHIL CLAP.aif" />
 	<sample note="10" category="OpenHiHat" image="" file="TMD CHIL OHH.aif" />
 	<sample note="11" category="Ride" image="" file="TMD CHIL RIDE.aif" />
-	<sample note="12" category="BassDrum" image="DeepBass.png" file="TMD CHIL KICK.aif" />
+	<sample note="12" category="BassDrum" image="" file="TMD CHIL KICK.aif" />
 	<sample note="13" category="Snare" image="" file="TMD CHIL SN 1.aif" />
 	<sample note="14" category="PedalHiHat" image="" file="TMD CHIL PHH.aif" />
 	<sample note="15" category="ClosedHiHat" image="" file="TMD CHIL CHH.aif" />

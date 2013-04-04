@@ -96,3 +96,11 @@ KitManager::Status KitManager::BuildKitList(String path /* = ""*/)
 		return kNoKitsError;
 	return kNoError;
 }
+
+void KitManager::LoadTextures()
+{
+    for (Item kit : mKits)
+    {
+        kit->LoadTextures();
+    }
+}

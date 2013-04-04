@@ -42,6 +42,9 @@ public:
 
 	//void	SetPathToKitFolder(String path);
 	Status	BuildKitList(String path = "");
+    
+    // call me from OpenGL thread only!
+    void LoadTextures();
 
 private:
 	KitManager();
