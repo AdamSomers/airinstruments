@@ -253,7 +253,7 @@ void DrumSelector::Icon::draw()
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
     
     
-    GLuint textureID = KitManager::GetInstance().GetKit(0)->GetSample(id)->GetTexture();
+    GLuint textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture();
     
     glBindTexture(GL_TEXTURE_2D, textureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);

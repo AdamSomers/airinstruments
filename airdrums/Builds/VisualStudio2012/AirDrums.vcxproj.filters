@@ -382,8 +382,9 @@
     <ClCompile Include="..\..\Source\DrumsHUD.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
-
     <ClCompile Include="..\..\Source\DrumSelector.cpp">
+      <Filter>AirDrums\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <Filter>AirDrums\Source</Filter>
     </ClCompile>
@@ -1688,8 +1689,9 @@
     <ClInclude Include="..\..\Source\DrumsHUD.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>
-
     <ClInclude Include="..\..\Source\DrumSelector.h">
+      <Filter>AirDrums\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ItemManager.h">
       <Filter>AirDrums\Source</Filter>
     </ClInclude>

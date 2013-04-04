@@ -33,10 +33,13 @@ KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*
 	return ItemManager<KitManager, DrumKit>::BuildItemList("*.xml", "kit", path, clear);
 }
 
+
 void KitManager::LoadTextures()
 {
-    for (Item kit : mKits)
+	int count = GetItemCount();
+    for (int i = 0; i < count; ++i)
     {
+		SharedPtr<DrumKit> kit = GetItem(i);
         kit->LoadTextures();
     }
 }
