@@ -54,6 +54,10 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     
     PatternManager& pmgr = PatternManager::GetInstance();
 	/*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
+    
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    if (kitUuidString == "Default")
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedKitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
 }
 
 void AirHarpApplication::shutdown()

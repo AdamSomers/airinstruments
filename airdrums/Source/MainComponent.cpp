@@ -134,10 +134,15 @@ void MainContentComponent::newOpenGLContextCreated()
     statusBar = sb;
     
     playAreaLeft = new PlayArea;
-    int noteLeft = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft", 13);
+    
+    int noteLeft = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft", 1);
     playAreaLeft->setSelectedMidiNote(noteLeft);
     playAreaRight = new PlayArea;
-    int noteRight = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight", 12);
+    int noteRight = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight", 0);
+
+    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", noteLeft);
+    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", noteRight);
+
     playAreaRight->setSelectedMidiNote(noteRight);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);

@@ -3,6 +3,7 @@
 #include "GfxTools.h"
 #include "KitManager.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 DrumSelector::DrumSelector()
 : selection(0)
@@ -252,8 +253,14 @@ void DrumSelector::Icon::draw()
     //batch.Draw();
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
     
-    
-    GLuint textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture();
+    GLuint textureID = 0;
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    if (kitUuidString != "Default") {
+        Uuid kitUuid(kitUuidString);
+        textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture();
+    }
+    else
+        textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture();
     
     glBindTexture(GL_TEXTURE_2D, textureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);

@@ -85,7 +85,15 @@ void TrigView::draw()
         if (fade < 0.f) fade = 0.f;
     }
     
-    String category = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetCategory();
+    String category = "BassDrum";
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    if (kitUuidString != "Default") {
+        Uuid kitUuid(kitUuidString);
+        category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetCategory();
+    }
+    else
+        category = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetCategory();
+
     GLuint categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
     glBindTexture(GL_TEXTURE_2D, categoryTextureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
