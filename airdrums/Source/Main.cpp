@@ -54,9 +54,16 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 	#endif
 
 	XmlElement* audioState = properties.getUserSettings()->getXmlValue(AudioSettingsDialog::getPropertiesName());
-    audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
+    String audioStatus = audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
 	if (audioState != nullptr)
 		delete audioState;
+	if (audioStatus != "")
+    {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Audio device error", audioStatus);
+        quit();
+        return;
+    }
+
     //audioDeviceManager.addAudioCallback(this);
     audioSourcePlayer.setSource (&Drums::instance());
     audioDeviceManager.addAudioCallback (&audioSourcePlayer);
