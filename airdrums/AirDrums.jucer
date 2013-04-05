@@ -165,7 +165,7 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
                postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/Resources"
-               extraCompilerFlags="" smallIcon="" bigIcon="">
+               extraCompilerFlags="" smallIcon="" bigIcon="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
                        isDebug="1" optimisation="1" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
