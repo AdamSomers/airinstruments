@@ -25,6 +25,16 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 {
     // This method is where you should put your application's initialisation code..
     
+    Time t = Time::getCurrentTime();
+    Time thresh(2013, 5, 1, 0, 0);
+    
+    if (t > thresh)
+    {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v0.0.1 Expired", "Thank you for testing this build");
+        quit();
+        return;
+    }
+    
 	PropertiesFile::Options options;
 	options.applicationName = "AirBeats";
 	options.filenameSuffix = ".settings";
@@ -168,7 +178,7 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 
 //==============================================================================
 AirHarpApplication::MainWindow::MainWindow()  :
-								DocumentWindow ("MainWindow",
+								DocumentWindow ("AirBeats",
                                 Colours::lightgrey,
                                 DocumentWindow::allButtons)
 {
