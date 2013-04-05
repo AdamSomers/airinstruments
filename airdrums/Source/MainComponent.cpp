@@ -39,7 +39,7 @@ MainContentComponent::MainContentComponent() :
     openGLContext.setComponentPaintingEnabled (true);
     openGLContext.attachTo (*this);
     openGLContext.setSwapInterval(1);
-    setSize (1200, 850);
+    setSize (1200, 750);
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
