@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2012
-Project("{0B0AF4B7-89E3-A41C-16F2-366E50479092}") = "AirDrums", "AirDrums.vcxproj", "{A5E45DF5-47A7-75FD-22C4-D4DBFC303CC7}"
+Project("{5B2EC10E-A147-E043-C9BA-1A769FA3861B}") = "AirBeats", "AirBeats.vcxproj", "{A5E45DF5-47A7-75FD-22C4-D4DBFC303CC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

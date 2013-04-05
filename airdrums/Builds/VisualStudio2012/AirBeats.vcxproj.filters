@@ -2,29 +2,29 @@
 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="AirDrums">
-      <UniqueIdentifier>{8A3AD336-0E32-FA5E-4EF7-435451BA35B9}</UniqueIdentifier>
+    <Filter Include="AirBeats">
+      <UniqueIdentifier>{F78D80E6-67F8-78D1-BA5E-C4CECC696823}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\resources">
-      <UniqueIdentifier>{855F4A6B-B712-37E6-0DA2-DE9202EFC884}</UniqueIdentifier>
+    <Filter Include="AirBeats\resources">
+      <UniqueIdentifier>{F49E2910-015C-E3D0-1E57-3C6A19AFD99C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\common">
-      <UniqueIdentifier>{BEBA6EBE-B1C1-68E5-95B7-15DA9EE0BB4E}</UniqueIdentifier>
+    <Filter Include="AirBeats\common">
+      <UniqueIdentifier>{2D5A4F22-5F49-45FD-D4C5-2FEBE24B49C7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\GLTools">
-      <UniqueIdentifier>{412D3F4E-1A71-79C1-8E95-489A51C4A5D6}</UniqueIdentifier>
+    <Filter Include="AirBeats\GLTools">
+      <UniqueIdentifier>{46EA97D6-D111-90B6-361E-E3E2C92C29E2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\GLTools\include">
-      <UniqueIdentifier>{622FD9B4-4F05-DCDD-12FC-CDC3A611413F}</UniqueIdentifier>
+    <Filter Include="AirBeats\GLTools\include">
+      <UniqueIdentifier>{9D349C3C-F51E-B883-AA34-516D2CC7F711}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\GLTools\include\GL">
-      <UniqueIdentifier>{38C1019A-AC60-DA9F-DF60-DE151B222EAA}</UniqueIdentifier>
+    <Filter Include="AirBeats\GLTools\include\GL">
+      <UniqueIdentifier>{3831FC02-5F12-F5AD-ABD1-E730E104CEAA}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\GLTools\src">
-      <UniqueIdentifier>{027E9003-1E29-B989-0F9C-732DC202B4F8}</UniqueIdentifier>
+    <Filter Include="AirBeats\GLTools\src">
+      <UniqueIdentifier>{41223012-BC8E-1617-007F-29CA833451FF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AirDrums\Source">
-      <UniqueIdentifier>{6C4DA3E9-058E-B0FE-8C77-BC00BAA5B8C3}</UniqueIdentifier>
+    <Filter Include="AirBeats\Source">
+      <UniqueIdentifier>{A94BE864-58E8-31A3-F988-BC7CCFADA5D9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
@@ -326,100 +326,100 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\common\HandView.cpp">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\Environment.cpp">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\FingerView.cpp">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\GfxTools.cpp">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\HUD.cpp">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\MotionServer.cpp">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\GLBatch.cpp">
-      <Filter>AirDrums\GLTools\src</Filter>
+      <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\glew.c">
-      <Filter>AirDrums\GLTools\src</Filter>
+      <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\GLShaderManager.cpp">
-      <Filter>AirDrums\GLTools\src</Filter>
+      <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\GLTools.cpp">
-      <Filter>AirDrums\GLTools\src</Filter>
+      <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp">
-      <Filter>AirDrums\GLTools\src</Filter>
+      <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp">
-      <Filter>AirDrums\GLTools\src</Filter>
+      <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumItem.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumKit.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumPattern.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Drums.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumSample.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumSelector.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainMenu.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PadView.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PatternLoadDialog.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PatternManager.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PatternSaveDialog.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PlayArea.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SkinManager.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TrigView.cpp">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -626,9 +626,6 @@
       <Filter>Juce Modules\juce_audio_processors\format</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.mm">
-      <Filter>Juce Modules\juce_audio_processors\format_types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.cpp">
       <Filter>Juce Modules\juce_audio_processors\format_types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.cpp">
@@ -1609,127 +1606,127 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\common\HandView.h">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\Environment.h">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\FingerView.h">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\GfxTools.h">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\HUD.h">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\MotionServer.h">
-      <Filter>AirDrums\common</Filter>
+      <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h">
-      <Filter>AirDrums\GLTools\include\GL</Filter>
+      <Filter>AirBeats\GLTools\include\GL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GL\glxew.h">
-      <Filter>AirDrums\GLTools\include\GL</Filter>
+      <Filter>AirBeats\GLTools\include\GL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GL\wglew.h">
-      <Filter>AirDrums\GLTools\include\GL</Filter>
+      <Filter>AirBeats\GLTools\include\GL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLBatch.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLBatchBase.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLFrame.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLFrustum.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLGeometryTransform.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLMatrixStack.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLShaderManager.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLTools.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GLTriangleBatch.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\math3d.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h">
-      <Filter>AirDrums\GLTools\include</Filter>
+      <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumItem.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumKit.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumPattern.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Drums.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumSample.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumsHUD.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumSelector.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ItemManager.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\KitManager.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Main.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainMenu.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PatternLoadDialog.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PatternManager.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PatternSaveDialog.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlayArea.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SkinManager.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TrigView.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Types.h">
-      <Filter>AirDrums\Source</Filter>
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
       <Filter>Juce Modules\juce_audio_basics\buffers</Filter>
@@ -3024,64 +3021,64 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\icon.png">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\icon.icns">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\..\common\testShader.fs">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\..\common\testShader.vs">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL BKICK.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL CHH.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLAP.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLV.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL CYM.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL HTOM.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL KICK.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL LTOM.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL MTOM.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL OHH.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL PAD.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL PHH.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL RIDE.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL SFX.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL SN 1.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\Resources\kits\TestKit\TMD CHIL VERB.aif">
-      <Filter>AirDrums\resources</Filter>
+      <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">
       <Filter>Juce Modules\juce_audio_basics</Filter>
