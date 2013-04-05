@@ -957,7 +957,7 @@
 		F32C2D8E822B6185759C5664 = { isa = PBXFileReference; lastKnownFileType = file; name = "juce_module_info"; path = "../../JuceLibraryCode/modules/juce_audio_basics/juce_module_info"; sourceTree = "SOURCE_ROOT"; };
 		F51BF045B37DFAB32E1BA82C = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_AudioProcessorGraph.cpp"; path = "../../JuceLibraryCode/modules/juce_audio_processors/processors/juce_AudioProcessorGraph.cpp"; sourceTree = "SOURCE_ROOT"; };
 		F752939851CE9C78A030ED27 = { isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
-		DE4259D2359C81036D6EE3F9 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirDrums.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
+		DE4259D2359C81036D6EE3F9 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirBeats.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
 		EEDFDC6C51A82D100A6744AA = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_DynamicObject.cpp"; path = "../../JuceLibraryCode/modules/juce_core/containers/juce_DynamicObject.cpp"; sourceTree = "SOURCE_ROOT"; };
 		EF017B0834F79A3CD9E30277 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayArea.h; path = ../../Source/PlayArea.h; sourceTree = "SOURCE_ROOT"; };
 		EF93F30A688EADFB358474EF = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_TableListBox.h"; path = "../../JuceLibraryCode/modules/juce_gui_basics/widgets/juce_TableListBox.h"; sourceTree = "SOURCE_ROOT"; };
@@ -2248,7 +2248,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				ZERO_LINK = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
-				PRODUCT_NAME = "AirDrums"; }; name = Debug; };
+				PRODUCT_NAME = "AirBeats"; }; name = Debug; };
 		86BA0B5783FB741673A940CE = { isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2263,7 +2263,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				ZERO_LINK = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
-				PRODUCT_NAME = "AirDrums"; }; name = Release; };
+				PRODUCT_NAME = "AirBeats"; }; name = Release; };
 		E80842573BA9709D724F4EA2 = { isa = XCConfigurationList; buildConfigurations = (
 				6BAC05C050D957FFAC75A840,
 				86BA0B5783FB741673A940CE ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
@@ -2339,7 +2339,7 @@
 				C35D985ADF11065A4803C1FC,
 				F763EC654E374FBB4249B9FD,
 				CFE1EE4402DE7327B3375F15 ); runOnlyForDeploymentPostprocessing = 0; };
-		02F0EE1B19BD4579F9DD526C = { isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirDrums.app/Contents/MacOS;\ncp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirDrums.app/Contents/Resources"; };
+		02F0EE1B19BD4579F9DD526C = { isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/MacOS;\ncp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/Resources"; };
 		E6EFC6DCAAB7441250DD0451 = { isa = PBXNativeTarget; buildConfigurationList = C88FAB169C9E8C378A8FAFA4; buildPhases = (
 				96BCA203FE507FF0C89E5220,
 				C43C33FE1C13953BEB80DE16,

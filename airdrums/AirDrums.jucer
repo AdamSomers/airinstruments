@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="LSBnFZ" name="AirDrums" projectType="guiapp" version="0.0.1"
-              bundleIdentifier="com.handwavy.AirDrums" jucerVersion="3.0.0"
+              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
@@ -164,14 +164,14 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirDrums.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirDrums.app/Contents/Resources"
-               extraCompilerFlags="">
+               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/Resources"
+               extraCompilerFlags="" smallIcon="" bigIcon="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="AirDrums" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
+                       isDebug="1" optimisation="1" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
         <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="2" targetName="AirDrums" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
+                       isDebug="0" optimisation="2" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
       </CONFIGURATIONS>
     </XCODE_MAC>
