@@ -157,7 +157,6 @@
     <ClCompile Include="..\..\Source\Drums.cpp"/>
     <ClCompile Include="..\..\Source\DrumSample.cpp"/>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
-
     <ClCompile Include="..\..\Source\DrumSelector.cpp"/>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -1278,7 +1277,6 @@
     <ClInclude Include="..\..\Source\Drums.h"/>
     <ClInclude Include="..\..\Source\DrumSample.h"/>
     <ClInclude Include="..\..\Source\DrumsHUD.h"/>
-
     <ClInclude Include="..\..\Source\DrumSelector.h"/>
     <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
