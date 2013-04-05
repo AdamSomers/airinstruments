@@ -492,8 +492,6 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
 
     playAreaLeft->tap(midiNoteNumber);
     playAreaRight->tap(midiNoteNumber);
-    
-    trigViewBank->trigger(midiNoteNumber);
 }
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)

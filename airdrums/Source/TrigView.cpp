@@ -1,9 +1,13 @@
 #include "TrigView.h"
 #include "GfxTools.h"
 #include "SkinManager.h"
+#include "Drums.h"
+#include "KitManager.h"
+#include "Main.h"
 
-TrigView::TrigView()
+TrigView::TrigView(int inId)
 : fade(0.f)
+, id(inId)
 {
 }
 
@@ -36,11 +40,23 @@ void TrigView::setup()
         1.f, 0.f
     };
     
-    batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    batch.CopyVertexData3f(verts);
-    batch.CopyTexCoordData2f(texCoords, 0);
-    batch.CopyNormalDataf(normals);
-    batch.End();
+    ledBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    ledBatch.CopyVertexData3f(verts);
+    ledBatch.CopyTexCoordData2f(texCoords, 0);
+    ledBatch.CopyNormalDataf(normals);
+    ledBatch.End();
+    
+    LRBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    LRBatch.CopyVertexData3f(verts);
+    LRBatch.CopyTexCoordData2f(texCoords, 0);
+    LRBatch.CopyNormalDataf(normals);
+    LRBatch.End();
+    
+    categoryBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    categoryBatch.CopyVertexData3f(verts);
+    categoryBatch.CopyTexCoordData2f(texCoords, 0);
+    categoryBatch.CopyNormalDataf(normals);
+    categoryBatch.End();
 }
 
 void TrigView::loadTextures()
@@ -58,15 +74,39 @@ void TrigView::draw()
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
-    batch.Draw();
+    ledBatch.Draw();
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
-    batch.Draw();
+    ledBatch.Draw();
     
     if (fade > 0.f)
     {
         fade -= 0.11f;
         if (fade < 0.f) fade = 0.f;
+    }
+    
+    String category = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetCategory();
+    GLuint categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
+    glBindTexture(GL_TEXTURE_2D, categoryTextureId);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
+    categoryBatch.Draw();
+    
+    int left = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft");
+    int right = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight");
+    if (left == id)
+    {
+        GLuint LTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_L");
+        glBindTexture(GL_TEXTURE_2D, LTextureId);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
+        LRBatch.Draw();
+        
+    }
+    if (right == id)
+    {
+        GLuint RTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_R");
+        glBindTexture(GL_TEXTURE_2D, RTextureId);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
+        LRBatch.Draw();
     }
 }
 
@@ -79,10 +119,11 @@ TrigViewBank::TrigViewBank()
 : textureID((GLuint) -1)
 {
     for (int i = 0; i < 16; ++i) {
-        TrigView* tv = new TrigView;
+        TrigView* tv = new TrigView(i);
         trigViews.push_back(tv);
         addChild(tv);
     }
+    Drums::instance().playbackState.addListener(this);
 }
 
 TrigViewBank::~TrigViewBank()
@@ -98,16 +139,17 @@ void TrigViewBank::setup()
 void TrigViewBank::setBounds(const HUDRect& b)
 {
     HUDView::setBounds(b);
-    int trigWidth = 20;
-    int step = (int) (b.w / trigViews.size());
-    int x = 0;
-    int y = 0;
+    int trigWidth = 23;
+    int trigHeight = 32;
+    int step = trigWidth;
+    int x = 15;
+    int y = 40;
     for (unsigned int i = 0; i < trigViews.size(); ++i) {
-        trigViews.at(i)->setBounds(HUDRect((GLfloat) x, (GLfloat) y, (GLfloat) trigWidth, (GLfloat) trigWidth));
+        trigViews.at(i)->setBounds(HUDRect((GLfloat) x, (GLfloat) y, (GLfloat) trigWidth, (GLfloat) trigHeight));
         x += step;
         if (i == 7) {
-            y = 10;
-            x = 0;
+            y -= trigHeight;
+            x = 15;
         }
     }
 }
@@ -126,4 +168,9 @@ void TrigViewBank::trigger(int midiNote)
 {
     if (midiNote < (int) trigViews.size())
         trigViews.at(midiNote)->trigger();
+}
+
+void TrigViewBank::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)
+{
+    trigger(midiNoteNumber);
 }

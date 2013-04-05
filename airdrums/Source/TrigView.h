@@ -6,7 +6,7 @@
 class TrigView : public HUDView
 {
 public:
-    TrigView();
+    TrigView(int inId);
     ~TrigView();
     
     // HUDView overrides
@@ -17,11 +17,15 @@ public:
     void trigger();
     
 private:
-    GLBatch batch;
+    GLBatch ledBatch;
+    GLBatch LRBatch;
+    GLBatch categoryBatch;
     float fade;
+    int id;
 };
 
 class TrigViewBank : public HUDView
+                   , public MidiKeyboardStateListener
 {
 public:
     TrigViewBank();
@@ -32,6 +36,10 @@ public:
     void draw();
     void loadTextures();
     void setBounds(const HUDRect& b);
+    
+    // MidiKeyboardStateListener overrides
+    void handleNoteOn (MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity);
+    void handleNoteOff (MidiKeyboardState* /*source*/, int /*midiChannel*/, int /*midiNoteNumber*/) {}
     
     void trigger(int midiNote);
     
