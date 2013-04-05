@@ -30,7 +30,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     
     if (t > thresh)
     {
-        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v0.0.1 Expired", "Thank you for testing this build");
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v" + String(ProjectInfo::versionString) + " Expired", "Thank you for testing this build");
         quit();
         return;
     }

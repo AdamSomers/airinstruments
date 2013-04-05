@@ -26,7 +26,7 @@ An audio settings dialog is available in the Options menu, in case you need to u
 Patterns can be saved and loaded from the File menu.  These dialogs will be incorporated into the main application UI as side-bars and will be fully motion controlled.
 
 ==================
-v0.0.1 - 4/4/2013
+v0.1 - 4/4/2013
 
 Completed features:
 
