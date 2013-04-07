@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirDrums" projectType="guiapp" version="0.0.1"
-              bundleIdentifier="com.handwavy.AirDrums" jucerVersion="3.0.0"
+<JUCERPROJECT id="LSBnFZ" name="AirDrums" projectType="guiapp" version="0.1"
+              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirDrums">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
-      <FILE id="PCNgqL" name="TMD CHIL BKICK.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL BKICK.aif"/>
-      <FILE id="caRogU" name="TMD CHIL CHH.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL CHH.aif"/>
-      <FILE id="irlN81" name="TMD CHIL CLAP.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL CLAP.aif"/>
-      <FILE id="l71U7C" name="TMD CHIL CLV.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL CLV.aif"/>
-      <FILE id="eB3o7w" name="TMD CHIL CYM.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL CYM.aif"/>
-      <FILE id="P7kQKM" name="TMD CHIL HTOM.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL HTOM.aif"/>
-      <FILE id="kodP90" name="TMD CHIL KICK.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL KICK.aif"/>
-      <FILE id="CF3Frh" name="TMD CHIL LTOM.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL LTOM.aif"/>
-      <FILE id="G0WX4G" name="TMD CHIL MTOM.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL MTOM.aif"/>
-      <FILE id="xT39Ft" name="TMD CHIL OHH.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL OHH.aif"/>
-      <FILE id="QOpZnd" name="TMD CHIL PAD.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL PAD.aif"/>
-      <FILE id="nwmJz7" name="TMD CHIL PHH.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL PHH.aif"/>
-      <FILE id="m03wjy" name="TMD CHIL RIDE.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL RIDE.aif"/>
-      <FILE id="J5B9jc" name="TMD CHIL SFX.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL SFX.aif"/>
-      <FILE id="q6Hrdo" name="TMD CHIL SN 1.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL SN 1.aif"/>
-      <FILE id="lm5Cko" name="TMD CHIL VERB.aif" compile="0" resource="1"
-            file="Resources/TestKit/TMD CHIL VERB.aif"/>
+      <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
       <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
+      <FILE id="i5kYm4" name="TMD CHIL BKICK.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL BKICK.aif"/>
+      <FILE id="vxmCWg" name="TMD CHIL CHH.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL CHH.aif"/>
+      <FILE id="M8BOtc" name="TMD CHIL CLAP.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL CLAP.aif"/>
+      <FILE id="QtfzrB" name="TMD CHIL CLV.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL CLV.aif"/>
+      <FILE id="jie8IM" name="TMD CHIL CYM.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL CYM.aif"/>
+      <FILE id="xnltvK" name="TMD CHIL HTOM.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL HTOM.aif"/>
+      <FILE id="kQN4uA" name="TMD CHIL KICK.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL KICK.aif"/>
+      <FILE id="WmXgHi" name="TMD CHIL LTOM.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL LTOM.aif"/>
+      <FILE id="Gr82Zy" name="TMD CHIL MTOM.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL MTOM.aif"/>
+      <FILE id="sQmP7R" name="TMD CHIL OHH.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL OHH.aif"/>
+      <FILE id="sueEo5" name="TMD CHIL PAD.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL PAD.aif"/>
+      <FILE id="BGF4N7" name="TMD CHIL PHH.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL PHH.aif"/>
+      <FILE id="cD3inG" name="TMD CHIL RIDE.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL RIDE.aif"/>
+      <FILE id="Kiskoh" name="TMD CHIL SFX.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL SFX.aif"/>
+      <FILE id="W9VQMg" name="TMD CHIL SN 1.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL SN 1.aif"/>
+      <FILE id="LrGLUc" name="TMD CHIL VERB.aif" compile="0" resource="1"
+            file="Resources/kits/TestKit/TMD CHIL VERB.aif"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
@@ -90,16 +91,57 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
+      <FILE id="E3neZk" name="AudioSettingsDialog.cpp" compile="1" resource="0"
+            file="Source/AudioSettingsDialog.cpp"/>
+      <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
+            file="Source/AudioSettingsDialog.h"/>
+      <FILE id="JSRMF6" name="DrumItem.cpp" compile="1" resource="0" file="Source/DrumItem.cpp"/>
+      <FILE id="PzAZWh" name="DrumItem.h" compile="0" resource="0" file="Source/DrumItem.h"/>
+      <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
+      <FILE id="K27Jhn" name="DrumKit.h" compile="0" resource="0" file="Source/DrumKit.h"/>
+      <FILE id="a5i2yA" name="DrumPattern.cpp" compile="1" resource="0" file="Source/DrumPattern.cpp"/>
+      <FILE id="UjZYSK" name="DrumPattern.h" compile="0" resource="0" file="Source/DrumPattern.h"/>
       <FILE id="xr5HgS" name="Drums.cpp" compile="1" resource="0" file="Source/Drums.cpp"/>
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
+      <FILE id="l6SKgC" name="DrumSample.cpp" compile="1" resource="0" file="Source/DrumSample.cpp"/>
+      <FILE id="So6Uef" name="DrumSample.h" compile="0" resource="0" file="Source/DrumSample.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
       <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
+      <FILE id="VPGoah" name="DrumSelector.cpp" compile="1" resource="0"
+            file="Source/DrumSelector.cpp"/>
+      <FILE id="FoDZug" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
+      <FILE id="apTSIi" name="ItemManager.cpp" compile="0" resource="0" file="Source/ItemManager.cpp"/>
+      <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
+      <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
+      <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="ynO4Iz" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="vAgls0" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JWGoNP" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="Z24b7x" name="MainMenu.cpp" compile="1" resource="0" file="Source/MainMenu.cpp"/>
+      <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
       <FILE id="njk3KC" name="PadView.cpp" compile="1" resource="0" file="Source/PadView.cpp"/>
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
+      <FILE id="Z4tGU6" name="PatternLoadDialog.cpp" compile="1" resource="0"
+            file="Source/PatternLoadDialog.cpp"/>
+      <FILE id="SsNNkT" name="PatternLoadDialog.h" compile="0" resource="0"
+            file="Source/PatternLoadDialog.h"/>
+      <FILE id="BAewia" name="PatternManager.cpp" compile="1" resource="0"
+            file="Source/PatternManager.cpp"/>
+      <FILE id="I1XJ2x" name="PatternManager.h" compile="0" resource="0"
+            file="Source/PatternManager.h"/>
+      <FILE id="V9aFOY" name="PatternSaveDialog.cpp" compile="1" resource="0"
+            file="Source/PatternSaveDialog.cpp"/>
+      <FILE id="fCpD82" name="PatternSaveDialog.h" compile="0" resource="0"
+            file="Source/PatternSaveDialog.h"/>
+      <FILE id="cY2YSL" name="PlayArea.cpp" compile="1" resource="0" file="Source/PlayArea.cpp"/>
+      <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
+      <FILE id="uZdbZi" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>
+      <FILE id="zf1uwf" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
+      <FILE id="NWbMPc" name="TrigView.cpp" compile="1" resource="0" file="Source/TrigView.cpp"/>
+      <FILE id="ubxFLq" name="TrigView.h" compile="0" resource="0" file="Source/TrigView.h"/>
+      <FILE id="IUKWVp" name="Types.h" compile="0" resource="0" file="Source/Types.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
@@ -122,32 +164,30 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR"
-               extraCompilerFlags="">
+               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/Resources"
+               extraCompilerFlags="" smallIcon="" bigIcon="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="AirDrums" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
+                       isDebug="1" optimisation="1" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
         <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="2" targetName="AirDrums" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
+                       isDebug="0" optimisation="2" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
       </CONFIGURATIONS>
     </XCODE_MAC>
     <VS2012 targetFolder="Builds/VisualStudio2012" libraryType="1" juceFolder="../../juce/modules"
-            externalLibraries="Leap.lib&#10;">
+            externalLibraries="Leap.lib&#10;" smallIcon="" bigIcon="Ig1XGD">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="AirDrums" useRuntimeLibDLL="1"
-                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../freeglut/include&#10;../../../common&#10;"
-                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;GLUT_DISABLE_ATEXIT_HACK&#10;"
-                       libraryPath="../../../freeglut/lib/x86/Debug&#10;../../../LeapSDK/win/lib/x86&#10;"/>
+                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
+                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="AirDrums" useRuntimeLibDLL="1"
-                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../freeglut/include&#10;../../../common&#10;"
-                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;GLUT_DISABLE_ATEXIT_HACK&#10;"
-                       libraryPath="../../../freeglut/lib/x86/Release&#10;../../../LeapSDK/win/lib/x86&#10;"/>
+                       wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
+                       defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"/>
       </CONFIGURATIONS>
     </VS2012>
   </EXPORTFORMATS>
-  <JUCEOPTIONS/>
+  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_DIRECTSOUND="enabled"/>
 </JUCERPROJECT>

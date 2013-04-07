@@ -12,6 +12,10 @@
 #include "DrumsHUD.h"
 #include "PadView.h"
 #include "Leap.h"
+#include "PlayArea.h"
+#include "TrigView.h"
+#include "DrumSelector.h"
+#include "SkinManager.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -23,7 +27,8 @@
 class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
-                               public Leap::Listener
+                               public Leap::Listener,
+                               public DrumSelector::Listener
 {
 public:
     //==============================================================================
@@ -48,14 +53,24 @@ public:
     void handleNoteOn (MidiKeyboardState* source, int midiChannel, int midiNoteNumber, float velocity);
     void handleNoteOff (MidiKeyboardState* /*source*/, int /*midiChannel*/, int /*midiNoteNumber*/) {}
     
+    // DrumSelector::Listener override
+    void drumSelectorChanged(DrumSelector* selector);
+
     virtual void onFrame(const Leap::Controller&);
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
     
+    void handleTapGesture(const Leap::Pointable& p);
+    
     OpenGLContext openGLContext;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
+    PlayArea* playAreaLeft;
+    PlayArea* playAreaRight;
+    DrumSelector* drumSelectorLeft;
+    DrumSelector* drumSelectorRight;
+    TrigViewBank* trigViewBank;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
     
@@ -63,6 +78,9 @@ private:
     float prevMouseX;
     
     bool sizeChanged;
+    
+    int lastCircleId;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

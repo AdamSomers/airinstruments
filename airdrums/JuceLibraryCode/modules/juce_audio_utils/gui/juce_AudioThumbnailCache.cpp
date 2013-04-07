@@ -56,9 +56,9 @@ private:
 };
 
 //==============================================================================
-AudioThumbnailCache::AudioThumbnailCache (const int maxNumThumbsToStore_)
+AudioThumbnailCache::AudioThumbnailCache (const int maxNumThumbs)
     : thread ("thumb cache"),
-      maxNumThumbsToStore (maxNumThumbsToStore_)
+      maxNumThumbsToStore (maxNumThumbs)
 {
     jassert (maxNumThumbsToStore > 0);
     thread.startThread (2);
@@ -128,8 +128,10 @@ void AudioThumbnailCache::storeThumb (const AudioThumbnailBase& thumb,
             thumbs.set (findOldestThumb(), te);
     }
 
-    MemoryOutputStream out (te->data, false);
-    thumb.saveTo (out);
+    {
+        MemoryOutputStream out (te->data, false);
+        thumb.saveTo (out);
+    }
 
     saveNewlyFinishedThumbnail (thumb, hashCode);
 }

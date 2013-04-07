@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class Sample;
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (unsafe_unretained) IBOutlet NSWindow *window;
+@property (nonatomic, strong, readonly)IBOutlet NSWindow *window;
+@property (nonatomic, strong, readonly)Sample *sample;
 
 @end

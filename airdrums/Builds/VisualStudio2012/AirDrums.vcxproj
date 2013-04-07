@@ -42,11 +42,11 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AirDrums</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(LibraryPath);../../../freeglut/lib/x86/Debug;../../../LeapSDK/win/lib/x86</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(LibraryPath);../../../LeapSDK/win/lib/x86</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AirDrums</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LibraryPath);../../../freeglut/lib/x86/Release;../../../LeapSDK/win/lib/x86</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LibraryPath);../../../LeapSDK/win/lib/x86</LibraryPath>
     <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -60,8 +60,8 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;../../../LeapSDK/win/include;../../../GLTools/include;../../../freeglut/include;../../../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;GLUT_DISABLE_ATEXIT_HACK;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;../../../LeapSDK/win/include;../../../GLTools/include;../../../common;../../../asiosdk2.2/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -84,8 +84,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>../../../freeglut/lib/x86/Debug;../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LargeAddressAware>true</LargeAddressAware>
+      <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -103,8 +102,8 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;../../../LeapSDK/win/include;../../../GLTools/include;../../../freeglut/include;../../../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;GLUT_DISABLE_ATEXIT_HACK;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;../../../LeapSDK/win/include;../../../GLTools/include;../../../common;../../../asiosdk2.2/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -128,8 +127,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../../freeglut/lib/x86/Release;../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LargeAddressAware>true</LargeAddressAware>
+      <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -150,11 +148,28 @@
     <ClCompile Include="..\..\..\GLTools\src\GLTools.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
+    <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
+    <ClCompile Include="..\..\Source\DrumItem.cpp"/>
+    <ClCompile Include="..\..\Source\DrumKit.cpp"/>
+    <ClCompile Include="..\..\Source\DrumPattern.cpp"/>
     <ClCompile Include="..\..\Source\Drums.cpp"/>
+    <ClCompile Include="..\..\Source\DrumSample.cpp"/>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
+    <ClCompile Include="..\..\Source\DrumSelector.cpp"/>
+    <ClCompile Include="..\..\Source\ItemManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\KitManager.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
+    <ClCompile Include="..\..\Source\MainMenu.cpp"/>
     <ClCompile Include="..\..\Source\PadView.cpp"/>
+    <ClCompile Include="..\..\Source\PatternLoadDialog.cpp"/>
+    <ClCompile Include="..\..\Source\PatternManager.cpp"/>
+    <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
+    <ClCompile Include="..\..\Source\PlayArea.cpp"/>
+    <ClCompile Include="..\..\Source\SkinManager.cpp"/>
+    <ClCompile Include="..\..\Source\TrigView.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -351,6 +366,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormatManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.cpp">
@@ -1250,10 +1268,27 @@
     <ClInclude Include="..\..\..\GLTools\include\GLTriangleBatch.h"/>
     <ClInclude Include="..\..\..\GLTools\include\math3d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
+    <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
+    <ClInclude Include="..\..\Source\DrumItem.h"/>
+    <ClInclude Include="..\..\Source\DrumKit.h"/>
+    <ClInclude Include="..\..\Source\DrumPattern.h"/>
     <ClInclude Include="..\..\Source\Drums.h"/>
+    <ClInclude Include="..\..\Source\DrumSample.h"/>
     <ClInclude Include="..\..\Source\DrumsHUD.h"/>
+    <ClInclude Include="..\..\Source\DrumSelector.h"/>
+    <ClInclude Include="..\..\Source\ItemManager.h"/>
+    <ClInclude Include="..\..\Source\KitManager.h"/>
+    <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\Source\MainMenu.h"/>
     <ClInclude Include="..\..\Source\PadView.h"/>
+    <ClInclude Include="..\..\Source\PatternLoadDialog.h"/>
+    <ClInclude Include="..\..\Source\PatternManager.h"/>
+    <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
+    <ClInclude Include="..\..\Source\PlayArea.h"/>
+    <ClInclude Include="..\..\Source\SkinManager.h"/>
+    <ClInclude Include="..\..\Source\TrigView.h"/>
+    <ClInclude Include="..\..\Source\Types.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.h"/>
@@ -1319,7 +1354,6 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormatManager.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.h"/>
-    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_DirectXPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTMidiEventList.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.h"/>
@@ -1686,25 +1720,26 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\TestKit\TMD CHIL BKICK.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CHH.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CLAP.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CLV.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL CYM.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL HTOM.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL KICK.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL LTOM.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL MTOM.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL OHH.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL PAD.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL PHH.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL RIDE.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL SFX.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL SN 1.aif"/>
-    <None Include="..\..\Resources\TestKit\TMD CHIL VERB.aif"/>
+    <None Include="..\..\Resources\icon.png"/>
     <None Include="..\..\Resources\icon.icns"/>
     <None Include="..\..\..\common\testShader.fs"/>
     <None Include="..\..\..\common\testShader.vs"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL BKICK.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CHH.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLAP.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLV.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CYM.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL HTOM.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL KICK.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL LTOM.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL MTOM.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL OHH.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PAD.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PHH.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL RIDE.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SFX.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SN 1.aif"/>
+    <None Include="..\..\Resources\kits\TestKit\TMD CHIL VERB.aif"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_module_info"/>
@@ -1719,6 +1754,7 @@
     <None Include="..\..\JuceLibraryCode\modules\juce_gui_extra\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_opengl\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_video\juce_module_info"/>
+    <None Include=".\icon.ico"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>
