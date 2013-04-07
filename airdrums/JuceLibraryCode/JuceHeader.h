@@ -38,7 +38,7 @@
 
 namespace ProjectInfo
 {
-    const char* const  projectName    = "AirDrums";
+    const char* const  projectName    = "AirBeats";
     const char* const  versionString  = "0.1";
     const int          versionNumber  = 0x100;
 }
