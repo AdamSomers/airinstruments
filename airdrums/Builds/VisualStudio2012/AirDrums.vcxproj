@@ -85,7 +85,6 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -129,7 +128,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -1356,7 +1354,6 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormatManager.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.h"/>
-    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_DirectXPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTMidiEventList.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.h"/>
