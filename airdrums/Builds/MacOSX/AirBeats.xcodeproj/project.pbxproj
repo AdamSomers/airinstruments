@@ -614,6 +614,7 @@
 		98CED5D4937922744E93E3B2 = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ImageCache.cpp"; path = "../../JuceLibraryCode/modules/juce_graphics/images/juce_ImageCache.cpp"; sourceTree = "SOURCE_ROOT"; };
 		993866D90AB8078B9C377A5A = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ZipFile.h"; path = "../../JuceLibraryCode/modules/juce_core/zip/juce_ZipFile.h"; sourceTree = "SOURCE_ROOT"; };
 		9978267D98B078F726CDF5CD = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_BubbleComponent.cpp"; path = "../../JuceLibraryCode/modules/juce_gui_basics/misc/juce_BubbleComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
+		99F9D6761B2C7C64069CE110 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_SystemAudioVolume.h"; path = "../../JuceLibraryCode/modules/juce_audio_devices/audio_io/juce_SystemAudioVolume.h"; sourceTree = "SOURCE_ROOT"; };
 		9A17FE79EF683E702D0A725B = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SkinManager.cpp; path = ../../Source/SkinManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		9A5521F2AB961B29EE800017 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_OpenGLImage.h"; path = "../../JuceLibraryCode/modules/juce_opengl/opengl/juce_OpenGLImage.h"; sourceTree = "SOURCE_ROOT"; };
 		9AF007A878BED35CD198BE20 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_MidiMessage.h"; path = "../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiMessage.h"; sourceTree = "SOURCE_ROOT"; };
@@ -1186,7 +1187,8 @@
 				0CE73E31DB5303E5FF77C1A6,
 				800854D428F316C0C5512C9D,
 				365CB75406C3E8564AE21875,
-				0877208ECE206E664E382D66 ); name = "audio_io"; sourceTree = "<group>"; };
+				0877208ECE206E664E382D66,
+				99F9D6761B2C7C64069CE110 ); name = "audio_io"; sourceTree = "<group>"; };
 		9F2127C1B3A97923732CFF8A = { isa = PBXGroup; children = (
 				CD0ACB631F4895A0456F7D55,
 				5571F1A94C58273912F08B7E,
@@ -2196,6 +2198,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				SDKROOT = macosx10.7;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				SDKROOT_ppc = macosx10.5;
@@ -2219,6 +2222,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				SDKROOT = macosx10.7;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				SDKROOT_ppc = macosx10.5;

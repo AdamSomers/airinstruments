@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.1"
-              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
+              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirBeats">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
