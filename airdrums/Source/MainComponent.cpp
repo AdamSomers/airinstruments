@@ -85,12 +85,6 @@ void MainContentComponent::newOpenGLContextCreated()
 {
 #ifdef _WIN32
 	glewInit();		// Not sure if this is in the right place, but it seems to work for now.
-   if (!GLEW_VERSION_3_0)
-   {
-      AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Unsupported GPU", "Your system does not support OpenGL 3.0 :(");
-      AirHarpApplication::getInstance()->quit();
-      return;
-   }
 #endif // _WIN32
 
     SkinManager::instance().loadResources();
