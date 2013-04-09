@@ -38,7 +38,6 @@ public:
     private:
         void updateBounds();
         
-        GLBatch batch;
         int id;
         HUDRect targetBounds;
         HUDRect tempBounds;
@@ -58,7 +57,6 @@ public:
 private:
     void layoutIcons();
 
-    GLBatch batch;
     std::vector<Icon*> icons;
     int selection;
     bool needsLayout;

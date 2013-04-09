@@ -55,35 +55,6 @@ void DrumSelector::layoutIcons()
 
 void DrumSelector::setup()
 {  
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    batch.CopyVertexData3f(verts);
-    batch.CopyTexCoordData2f(texCoords, 0);
-    batch.CopyNormalDataf(normals);
-    if (!didSetup)
-        batch.End();
-
     HUDView::setup();
 }
 
@@ -94,23 +65,10 @@ void DrumSelector::draw()
         needsLayout = false;
     }
 
-    GLfloat color[4] = { 1.f, 1.f, 1.f, 1.f };
-
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    GLint polygonMode;
-    glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(1.f);
-    //batch.Draw();
-    glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
-
     GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-    batch.Draw();
+    setDefaultTexture(textureId);
     
     HUDView::draw();
-
 }
 
 
@@ -199,36 +157,8 @@ DrumSelector::Icon::~Icon()
 }
 
 void DrumSelector::Icon::setup()
-{    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    batch.CopyVertexData3f(verts);
-    batch.CopyTexCoordData2f(texCoords, 0);
-    batch.CopyNormalDataf(normals);
-    if (!didSetup)
-        batch.End();
-    didSetup = true;
+{
+    HUDView::setup();
 }
 
 void DrumSelector::Icon::draw()
@@ -240,19 +170,7 @@ void DrumSelector::Icon::draw()
         updateBounds();
     else if (tempBounds != targetBounds)
         HUDView::setBounds(targetBounds);
-    
-    HUDView::draw();
-    
-    GLfloat color[4] = { 1.f, 1.f, 1.f, 1.f };
-    
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    GLint polygonMode;
-    glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(1.f);
-    //batch.Draw();
-    glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
-    
+
     GLuint textureID = 0;
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
     if (kitUuidString != "Default") {
@@ -262,9 +180,8 @@ void DrumSelector::Icon::draw()
     else
         textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture();
     
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-    batch.Draw();
+    setDefaultTexture(textureID);
+    HUDView::draw();
 }
 
 void DrumSelector::Icon::setBounds(const HUDRect &b)

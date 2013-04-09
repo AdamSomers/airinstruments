@@ -13,10 +13,11 @@ class DrumsToolbar : public HUDView
 public:
     DrumsToolbar();
     ~DrumsToolbar();
+
     // HUDView overrides
     void setup();
     void draw();
-    
+
     // ChangeListener overrides
     void changeListenerCallback(ChangeBroadcaster* source);
 
@@ -33,7 +34,6 @@ private:
     HUDButton playButton;
     HUDButton recordButton;
     HUDButton metronomeButton;
-    GLBatch batch;
 };
 
 class StatusBar : public HUDView
@@ -54,7 +54,6 @@ public:
     void onDisconnect(const Leap::Controller& controller);
 private:
     HUDButton indicator;
-    GLBatch batch;
 };
 
 #endif

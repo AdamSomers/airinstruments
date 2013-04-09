@@ -18,45 +18,6 @@ TrigView::~TrigView()
 void TrigView::setup()
 {
     HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    ledBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    ledBatch.CopyVertexData3f(verts);
-    ledBatch.CopyTexCoordData2f(texCoords, 0);
-    ledBatch.CopyNormalDataf(normals);
-    ledBatch.End();
-    
-    LRBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    LRBatch.CopyVertexData3f(verts);
-    LRBatch.CopyTexCoordData2f(texCoords, 0);
-    LRBatch.CopyNormalDataf(normals);
-    LRBatch.End();
-    
-    categoryBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    categoryBatch.CopyVertexData3f(verts);
-    categoryBatch.CopyTexCoordData2f(texCoords, 0);
-    categoryBatch.CopyNormalDataf(normals);
-    categoryBatch.End();
 }
 
 void TrigView::loadTextures()
@@ -74,10 +35,10 @@ void TrigView::draw()
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
-    ledBatch.Draw();
+    defaultBatch.Draw();
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
-    ledBatch.Draw();
+    defaultBatch.Draw();
     
     if (fade > 0.f)
     {
@@ -97,7 +58,7 @@ void TrigView::draw()
     GLuint categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
     glBindTexture(GL_TEXTURE_2D, categoryTextureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-    categoryBatch.Draw();
+    defaultBatch.Draw();
     
     int left = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft");
     int right = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight");
@@ -106,7 +67,7 @@ void TrigView::draw()
         GLuint LTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_L");
         glBindTexture(GL_TEXTURE_2D, LTextureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-        LRBatch.Draw();
+        defaultBatch.Draw();
         
     }
     if (right == id)
@@ -114,7 +75,7 @@ void TrigView::draw()
         GLuint RTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_R");
         glBindTexture(GL_TEXTURE_2D, RTextureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-        LRBatch.Draw();
+        defaultBatch.Draw();
     }
 }
 
@@ -164,6 +125,8 @@ void TrigViewBank::setBounds(const HUDRect& b)
 
 void TrigViewBank::draw()
 {
+    GLfloat color[] = { .67f, .67f, .67f, 1.f };
+    setDefaultColor(color);
     HUDView::draw();
 }
 

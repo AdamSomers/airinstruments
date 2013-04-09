@@ -42,6 +42,17 @@ struct HUDRect {
     GLfloat x, y, w , h;
 };
 
+// HUDView is hierarchical 2d UI element that has the following properties:
+//
+//  - rectangular mesh contained within the given bounds
+//  - optional default color that, when set, is used to fill the rectangle
+//  - if color is not set, rectangle is drawn in wireframe
+//  - optional texture that, when set, is applied to rectangle (overrides color)
+//
+// Subclasses that need anything different than the above should override setup() and draw().
+//
+// Child HUDView objects can be added and their bounds set relative to the parent.
+//
 class HUDView : public FingerView::Listener
 {
 public:
@@ -49,6 +60,8 @@ public:
     virtual ~HUDView() {}
     void addChild(HUDView* child);
     void setParent(HUDView* p);
+    
+    // The base class implementation of draw() 
     virtual void draw();
     virtual void update() {}
     virtual void setup();
@@ -66,18 +79,26 @@ public:
     virtual void setBounds(const HUDRect& b);
     const HUDRect& getBounds() const { return bounds; }
     virtual void loadTextures();
+
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
+
+    void setDefaultTexture(GLuint texture);
+    void setDefaultColor(GLfloat* color);
+
 protected:
     bool trackingMouse;
     HUDRect bounds;
     bool hover;
     bool didSetup;
+    GLBatch defaultBatch;
     
 private:
     std::vector<HUDView*> children;
     HUDView* parent;
-    GLBatch defaultBatch;
+    GLuint defaultTexture;
+    GLfloat defaultColor[4];
+    bool defaultColorSet;
     std::vector<FingerView*> hoveringFingers;
 };
 
@@ -112,7 +133,6 @@ private:
     GLfloat onColor[4];
     GLfloat hoverOffColor[4];
     GLfloat hoverOnColor[4];
-    GLBatch batch;
     int prevNumPointers;
     int buttonId;
     GLuint onTextureID;

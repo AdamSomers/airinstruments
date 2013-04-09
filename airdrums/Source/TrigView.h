@@ -44,7 +44,6 @@ public:
     void trigger(int midiNote);
     
 private:
-    GLBatch batch;
     GLuint textureID;
     std::vector<TrigView*> trigViews;
 };

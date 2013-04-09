@@ -20,7 +20,6 @@ public:
     void setSelectedMidiNote(int note);
     
 private:
-    GLBatch batch;
     float fade;
     int selectedMidiNote;
     

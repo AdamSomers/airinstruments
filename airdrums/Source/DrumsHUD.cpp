@@ -19,6 +19,9 @@ DrumsToolbar::DrumsToolbar()
 
     Drums::instance().addTransportListener(this);
     Drums::instance().getTransportState().sendChangeMessage();
+
+    GLfloat color[] = { .67f, .67f, .67f, 1.f };
+    setDefaultColor(color);
 }
 
 DrumsToolbar::~DrumsToolbar()
@@ -29,18 +32,6 @@ DrumsToolbar::~DrumsToolbar()
 void DrumsToolbar::setup()
 {
     HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
     layoutControls();
 }
 
@@ -73,10 +64,6 @@ void DrumsToolbar::draw()
     metronomeButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("metronome_on"),
                              SkinManager::instance().getSelectedSkin().getTexture("metronome_off"));
 
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    glLineWidth(1.f);
-    batch.Draw();
     HUDView::draw();
 }
 
@@ -126,6 +113,8 @@ StatusBar::StatusBar()
 {
     //indicator.setEditable(false)
     addChild(&indicator);
+    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    setDefaultColor(color);
 }
 
 StatusBar::~StatusBar()
@@ -136,20 +125,8 @@ StatusBar::~StatusBar()
 void StatusBar::setup()
 {
     HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
     layoutControls();
-    
+
     MotionDispatcher::instance().controller.addListener(*this);
 }
 
@@ -167,10 +144,6 @@ void StatusBar::draw()
 {
     indicator.setTextures(SkinManager::instance().getSelectedSkin().getTexture("leapStatus_on"),
                            SkinManager::instance().getSelectedSkin().getTexture("leapStatus_off"));
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    glLineWidth(1.f);
-    batch.Draw();
     HUDView::draw();
 }
 
