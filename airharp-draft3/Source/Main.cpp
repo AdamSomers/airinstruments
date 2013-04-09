@@ -30,7 +30,13 @@ public:
         // This method is where you should put your application's initialisation code..
 
         mainWindow = new MainWindow();
-        audioDeviceManager.initialise (2, 2, 0, true, String::empty, 0);
+        String audioStatus = audioDeviceManager.initialise (0, 2, 0, true, String::empty, 0);
+        if (audioStatus != "")
+        {
+            AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Audio device error", audioStatus);
+            quit();
+            return;
+        }
         audioDeviceManager.addAudioCallback(this);
     }
 

@@ -320,7 +320,7 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
     float leapSpaceY = 1 - (e.getPosition().y / (float)Environment::instance().screenH);
     leapSpaceY *= 300;
     leapSpaceY += 100;
-    MotionDispatcher::instance().spoof(leapSpaceX, leapSpaceY, -5);
+    //MotionDispatcher::instance().spoof(leapSpaceX, leapSpaceY, -5);
 }
 
 void MainContentComponent::mouseDown(const MouseEvent& e)
