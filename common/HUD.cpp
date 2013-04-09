@@ -36,14 +36,14 @@ void HUDView::draw()
     }
     else
     {
-        GLint polygonMode;
-        glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
+        GLint polygonMode[2];
+        glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
         if (!defaultColorSet)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), defaultColor);
         glLineWidth(1.f);
         defaultBatch.Draw();
-        glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
+        glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
     }
 
     for (HUDView* v : children)
