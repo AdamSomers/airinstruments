@@ -24,38 +24,7 @@ HarpToolbar::~HarpToolbar()
 // HUDView overrides
 void HarpToolbar::setup()
 {
-    HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
-    M3DVector3f imageVerts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    imageBatch.CopyVertexData3f(imageVerts);
-    imageBatch.CopyTexCoordData2f(texCoords, 0);
-    imageBatch.End();
-    
+    HUDView::setup();   
     layoutControls();
 }
 
@@ -83,19 +52,11 @@ void HarpToolbar::layoutControls()
 
 void HarpToolbar::draw()
 {
-    GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
-    
-    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().bezelTop);
-    glEnable(GL_BLEND);
-    
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
-    glLineWidth(1.f);
-    imageBatch.Draw();
-    
-//    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-//    glLineWidth(1.f);
-//    batch.Draw();
+    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+
+    setDefaultColor(color);
+    setDefaultTexture(SkinManager::instance().getSkin().bezelTop);
+
     HUDView::draw();
 }
 
@@ -181,39 +142,7 @@ StatusBar::~StatusBar()
 void StatusBar::setup()
 {
     HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
-    M3DVector3f imageVerts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    imageBatch.CopyVertexData3f(imageVerts);
-    imageBatch.CopyTexCoordData2f(texCoords, 0);
-    imageBatch.End();
-    
     layoutControls();
-    
     MotionDispatcher::instance().controller.addListener(*this);
 }
 
@@ -234,19 +163,10 @@ void StatusBar::setIndicatorTextures(GLuint on, GLuint off)
 
 void StatusBar::draw()
 {
-    GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
-    
-    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().bezelBottom);
-    glEnable(GL_BLEND);
-    
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
-    glLineWidth(1.f);
-    imageBatch.Draw();
-    
-//    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-//    glLineWidth(1.f);
-//    batch.Draw();
+    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    setDefaultColor(color);
+    setDefaultTexture(SkinManager::instance().getSkin().bezelBottom);
+
     HUDView::draw();
 }
 
@@ -275,20 +195,7 @@ ChordRegion::~ChordRegion()
 }
 
 void ChordRegion::setup()
-{
-    HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
+{    
     M3DVector3f imageVerts[4] = {
         0, bounds.y, 0.f,
         bounds.h, bounds.y, 0.f,
@@ -303,10 +210,14 @@ void ChordRegion::setup()
         1.f, 0.f
     };
     
-    imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    if (!didSetup)
+        imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
     imageBatch.CopyVertexData3f(imageVerts);
     imageBatch.CopyTexCoordData2f(texCoords, 0);
-    imageBatch.End();
+    if (!didSetup)
+        imageBatch.End();
+    
+    HUDView::setup();
 }
 
 void ChordRegion::draw()
@@ -319,17 +230,11 @@ void ChordRegion::draw()
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
     glLineWidth(1.f);
     imageBatch.Draw();
-    
-    GLfloat color [] = { 0.0f, 0.0f, 0.0f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    //batch.Draw();
-    
-    //HUDView::draw();
-    
+
     if (isActive && fade < 1.f)
     {
         fade += 0.3f;
-        if (fade > .4f) fade = .4f;
+        if (fade > .7f) fade = .7f;
     }
     if (!isActive && fade > 0.f)
     {

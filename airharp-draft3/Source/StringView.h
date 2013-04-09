@@ -182,7 +182,8 @@ public:
             stringColor[3] = 1.f;
         }
         
-        GLfloat color [] = { 1.0f, 1.f, 1.f, fade };
+        GLfloat bgRectColor [] = {0.7f, 0.7f, 1.f, fade * 0.5f };
+        GLfloat bgTexColor [] = { 1.0f, 1.f, 1.f, fade * 0.25f };
         if (pointers.size() > 0) {
             if (fade < 1.f)
                 fade += 0.3f;
@@ -190,10 +191,10 @@ public:
         else if (fade > 0.f)
             fade -= 0.1f;
 
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), bgRectColor);
+        bgBatch.Draw();
         glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().stringBackground);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), color, 0);
-        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
-        
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgTexColor, 0);
         bgBatch.Draw();
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
