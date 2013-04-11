@@ -278,7 +278,13 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toobarHeight));
         
-        int side = std::min(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
+        int side =
+#if JUCE_MAC
+			fmin		// VS2012 apparently doesn't have std::fmin,
+#elif JUCE_WINDOWS
+			std::min	// and std::min appears to be a Microsoft extension.  Sigh.
+#endif
+			(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
         int hiddenX = (int) (-side * .85);
         int shownX = (int) (-side / 2.f);
         if (kitSelector)
@@ -369,6 +375,8 @@ void MainContentComponent::renderOpenGL()
 
     for (PadView* pv : pads)
         pv->update();
+
+	tempoControl.repaint();
 }
 
 void MainContentComponent::openGLContextClosing()
