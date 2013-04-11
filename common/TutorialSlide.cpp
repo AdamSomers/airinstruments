@@ -41,7 +41,7 @@ void TutorialSlide::draw()
             fadeTarget = 1.f;
         }
     }
-    else
+    else if (fade < fadeTarget)
     {
         fade += 0.05;
         if (fade > 1.f) fade = 1.f;

@@ -56,6 +56,9 @@
       <FILE id="Fqy8p2" name="MotionServer.cpp" compile="1" resource="0"
             file="../common/MotionServer.cpp"/>
       <FILE id="uvkMVm" name="MotionServer.h" compile="0" resource="0" file="../common/MotionServer.h"/>
+      <FILE id="RcloxN" name="TutorialSlide.cpp" compile="1" resource="0"
+            file="../common/TutorialSlide.cpp"/>
+      <FILE id="SKcLcS" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
     </GROUP>
     <GROUP id="{9ED69939-FCC6-9596-4256-AA83B4D8178A}" name="GLTools">
       <GROUP id="{63BF3604-9EA2-C52D-4873-BAF2092B480D}" name="include">

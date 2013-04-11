@@ -144,6 +144,7 @@
     <ClCompile Include="..\..\..\common\GfxTools.cpp"/>
     <ClCompile Include="..\..\..\common\HUD.cpp"/>
     <ClCompile Include="..\..\..\common\MotionServer.cpp"/>
+    <ClCompile Include="..\..\..\common\TutorialSlide.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\glew.c"/>
     <ClCompile Include="..\..\..\GLTools\src\GLShaderManager.cpp"/>
@@ -1257,6 +1258,7 @@
     <ClInclude Include="..\..\..\common\GfxTools.h"/>
     <ClInclude Include="..\..\..\common\HUD.h"/>
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
+    <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glxew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\wglew.h"/>

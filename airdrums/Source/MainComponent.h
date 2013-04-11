@@ -17,6 +17,7 @@
 #include "DrumSelector.h"
 #include "SkinManager.h"
 #include "KitSelector.h"
+#include "TutorialSlide.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -30,7 +31,8 @@ class MainContentComponent   : public Component,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
                                public DrumSelector::Listener,
-                               public KitSelector::Listener
+                               public KitSelector::Listener,
+                               public Timer
 {
 public:
     //==============================================================================
@@ -64,13 +66,18 @@ public:
     void kitSelectorChanged(KitSelector* selector);
 
     virtual void onFrame(const Leap::Controller&);
+    
+    void timerCallback();
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
     
     void handleTapGesture(const Leap::Pointable& p);
     
+    bool checkIdle();
+    
     OpenGLContext openGLContext;
+    TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
     PlayArea* playAreaLeft;
@@ -86,7 +93,9 @@ private:
     float prevMouseX;
     bool sizeChanged;
     int lastCircleId;
+    int64 lastCircleStartTime;
     bool showKitSelector;
+    bool isIdle;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

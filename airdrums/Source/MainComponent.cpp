@@ -22,10 +22,12 @@
 #include "MainComponent.h"
 
 #define NUM_PADS 16
+#define TUTORIAL_TIMEOUT 30000
 
 //==============================================================================
-MainContentComponent::MainContentComponent() :
-  toolbar(NULL)
+MainContentComponent::MainContentComponent()
+: tutorial(NULL)
+, toolbar(NULL)
 , statusBar(NULL)
 , prevMouseY(0.f)
 , prevMouseX(0.f)
@@ -36,6 +38,7 @@ MainContentComponent::MainContentComponent() :
 , kitSelector(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
+, isIdle(true)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -138,7 +141,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
-
+    
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
@@ -194,6 +197,11 @@ void MainContentComponent::newOpenGLContextCreated()
     Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
     kitSelector->setSelection(selectedKitIndex);
     
+    tutorial = new TutorialSlide;
+    views.push_back(tutorial);
+    tutorial->begin();
+    startTimer(TUTORIAL_TIMEOUT);
+    
     for (HUDView* v : views)
         v->loadTextures();
     
@@ -222,6 +230,12 @@ void MainContentComponent::renderOpenGL()
         const int drumSelectorHeight = 100;
         const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - drumSelectorHeight - 10;
         const int playAreaWidth = Environment::instance().screenW / 2 - 10;
+        
+        if (tutorial)
+            tutorial->setBounds(HUDRect(Environment::instance().screenW / 2 - 500 / 2,
+                                     Environment::instance().screenH / 2 - 225 / 2,
+                                     500,
+                                     225));
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,
@@ -483,7 +497,12 @@ void MainContentComponent::mouseWheelMove (const MouseEvent& /*e*/, const MouseW
 bool MainContentComponent::keyPressed(const KeyPress& kp)
 {
     bool ret = false;
-    if (kp.getTextCharacter() == 'm') {
+    if (kp.getTextCharacter() == 'h')
+    {
+        tutorial->begin();
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'm') {
         Drums::instance().getTransportState().toggleMetronome();
         ret = true;
     }
@@ -568,6 +587,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     const Leap::GestureList& gestures = frame.gestures();
     Leap::GestureList::const_iterator i = gestures.begin();
     Leap::GestureList::const_iterator end = gestures.end();
+    if (!gestures.empty())
+        isIdle = false;
     for ( ; i != end; ++i)
     {
         const Leap::Gesture& g = *i;
@@ -577,6 +598,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             {
                 Leap::SwipeGesture swipe(g);
                 if (swipe.direction().x > 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
+                    if (tutorial->getSlideIndex() == 3)
+                        tutorial->next();
                     kitSelector->setEnabled(true);
                     showKitSelector = true;
                     sizeChanged = true;
@@ -610,12 +633,26 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 
                 bool isClockwise = circle.normal().z < 0;
                 
+                if (circle.state() == Leap::Gesture::STATE_START)
+                    lastCircleStartTime = Time::currentTimeMillis();
+                
+                int64 timeDiff = Time::currentTimeMillis() - lastCircleStartTime;
+                
+                if (!tutorial->isDone() && isClockwise && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
+                    tutorial->end();
+                    break;
+                }
+                else if (!tutorial->isDone() && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
+                    tutorial->back();
+                    break;
+                }
+                
                 //if (!isClockwise)
                 //    printf("Circle CCW - id %d - progress %f\n", circle.id(), circle.progress());
                 //else
                 //    printf("Circle CW - id %d - progress %f\n", circle.id(), circle.progress());
-                
-                if (circle.progress() >= 1.f && circle.progress() < 2.f && isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                                
+                if (circle.progress() >= 1.f && circle.progress() < 2.f && isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
                     Drums::instance().getTransportState().play();
                     lastCircleId = circle.id();
                 }
@@ -648,6 +685,9 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 {
+    if (!tutorial->isDone() && tutorial->getSlideIndex() != 3)
+        tutorial->next();
+    
     if (p.tipPosition().x < 0)
     {
         Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
@@ -658,4 +698,21 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
         Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
         //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
     }
+}
+
+void MainContentComponent::timerCallback()
+{
+    if (checkIdle())
+        tutorial->begin();
+    else {
+        stopTimer();
+        startTimer(TUTORIAL_TIMEOUT);
+    }
+}
+
+bool MainContentComponent::checkIdle()
+{
+    bool retVal = isIdle;
+    isIdle = true;
+    return retVal;
 }
