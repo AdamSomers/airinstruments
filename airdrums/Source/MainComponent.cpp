@@ -95,13 +95,13 @@ void MainContentComponent::resized()
     Environment::instance().ready = true;
 }
 
-void MainContentComponent::focusGained(FocusChangeType cause)
+void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
     Logger::outputDebugString("Focus Gained");
     MotionDispatcher::instance().resume();
 }
 
-void MainContentComponent::focusLost(FocusChangeType cause)
+void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
     Logger::outputDebugString("Focus Lost");
     MotionDispatcher::instance().pause();
@@ -278,14 +278,14 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toobarHeight));
         
-        int side = fmin(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
-        int hiddenX = -side * .85;
-        int shownX = -side / 2.f;
+        int side = std::min(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
+        int hiddenX = (int) (-side * .85);
+        int shownX = (int) (-side / 2.f);
         if (kitSelector)
-            kitSelector->setBounds(HUDRect(showKitSelector ? shownX : hiddenX,
-                                           statusBarHeight,
-                                           side,
-                                           side));
+            kitSelector->setBounds(HUDRect(showKitSelector ? (GLfloat) shownX : (GLfloat) hiddenX,
+                                           (GLfloat) statusBarHeight,
+                                           (GLfloat) side,
+                                           (GLfloat) side));
         
         layoutPadsLinear();
         sizeChanged = false;

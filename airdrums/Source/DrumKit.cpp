@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#include "DrumKit.h"
 #include "GfxTools.h"
+#include "DrumKit.h"
 
 DrumKit::DrumKit()
 : mTextureId(0)
