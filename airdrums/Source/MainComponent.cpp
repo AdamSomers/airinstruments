@@ -36,6 +36,7 @@ MainContentComponent::MainContentComponent() :
 , kitSelector(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
+, tempoControl(Slider::LinearHorizontal, Slider::TextBoxBelow)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -45,6 +46,17 @@ MainContentComponent::MainContentComponent() :
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
+
+	tempoControl.setRange(30.0, 300.0, 0.1);
+	tempoControl.setSize(250, 50);
+	addAndMakeVisible(&tempoControl);
+	tempoControl.setCentrePosition(600, 30);
+	AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	float tempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
+	tempoControl.setValue(tempo);
+	tempoControl.addListener(&Drums::instance());
+	Drums::instance().registerTempoSlider(&tempoControl);
 }
 
 MainContentComponent::~MainContentComponent()

@@ -1,8 +1,16 @@
+#include "Main.h"
 #include "MainMenu.h"
+#include "Drums.h"
 
 
 MainMenu::MainMenu()
 {
+	AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	if (props.getUserSettings()->getBoolValue("tempoSource", Drums::kGlobalTempo) != Drums::kGlobalTempo)
+		mUsePatternTempo = true;
+	else
+		mUsePatternTempo = false;
 }
 
 
@@ -39,6 +47,7 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 			menu.addItem(kSavePatternAsCmd, "Save Pattern As...");
 			break;
 		case kOptionsMenu :
+			menu.addItem(kUsePatternTempoCmd, "Use Pattern Tempo", true, mUsePatternTempo);
 			menu.addItem(kAudioSettingsCmd, "Audio Settings...");
 			break;
 	}
@@ -61,6 +70,11 @@ void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 			break;
 		}
 
+		case kUsePatternTempoCmd :
+		{
+			mUsePatternTempo = !mUsePatternTempo;
+			// Fall through
+		}
 		case kAudioSettingsCmd :
 		case kSavePatternAsCmd :
 		case kLoadPatternCmd :
@@ -75,4 +89,10 @@ void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 			break;
 		}
 	}
+}
+
+
+bool MainMenu::GetUsePatternTempo(void)
+{
+	return mUsePatternTempo;
 }
