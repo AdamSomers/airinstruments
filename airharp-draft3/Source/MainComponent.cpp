@@ -24,6 +24,7 @@
 #include <algorithm>
 
 #define BUFFER_SIZE 512
+#define TUTORIAL_TIMEOUT 30000
 
 //RtAudioDriver driver(BUFFER_SIZE);
 
@@ -141,6 +142,11 @@ void MainContentComponent::newOpenGLContextCreated()
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
 
+    slide = new TutorialSlide;
+    views.push_back(slide);
+    slide->begin();
+    startTimer(TUTORIAL_TIMEOUT);
+    
     HarpToolbar* tb = new HarpToolbar;
     views.push_back(tb);
     toolbar = tb;
@@ -187,6 +193,11 @@ void MainContentComponent::newOpenGLContextCreated()
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     Environment::instance().ready = true;
+        
+    MotionDispatcher::instance().addListener(*this);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
+    MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
     
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
@@ -195,6 +206,11 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
+        if (slide)
+            slide->setBounds(HUDRect(Environment::instance().screenW / 2 - 500 / 2,
+                                     Environment::instance().screenH / 2 - 225 / 2,
+                                     500,
+                                     225));
         if (toolbar)
             toolbar->setBounds(HUDRect(0,Environment::instance().screenH-70,Environment::instance().screenW,70));
         if (statusBar)
@@ -210,6 +226,13 @@ void MainContentComponent::renderOpenGL()
         layoutChordRegions();
         chordRegionsNeedUpdate = false;
     }
+    
+    // Hack to move a particular slide.  This should be factored into the TutorialSlide class 
+    if (slide && slide->getSlideIndex() == 3)
+        slide->setBounds(HUDRect(80,
+                                 Environment::instance().screenH-80-225,
+                                 500,
+                                 225));
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
@@ -352,8 +375,12 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     bool ret = false;
     
     printf("%d\n", kp.getTextDescription().getIntValue());
-
-    if (kp.getTextCharacter() == 'a')
+    if (kp.getTextCharacter() == 'h')
+    {
+        slide->begin();
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'a')
     {
         for (HarpView* hv : harps)
         {
@@ -399,4 +426,71 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 void MainContentComponent::changeListenerCallback (ChangeBroadcaster* source)
 {
     chordRegionsNeedUpdate = true;
+}
+
+void MainContentComponent::onFrame(const Leap::Controller& controller)
+{
+    if (!Environment::instance().ready)
+        return;
+    
+    const Leap::Frame frame = controller.frame();
+    const Leap::GestureList& gestures = frame.gestures();
+    Leap::GestureList::const_iterator i = gestures.begin();
+    Leap::GestureList::const_iterator end = gestures.end();
+    for ( ; i != end; ++i)
+    {
+        const Leap::Gesture& g = *i;
+        switch (g.type())
+        {
+            case Leap::Gesture::TYPE_SWIPE:
+                break;
+                
+            case Leap::Gesture::TYPE_KEY_TAP:
+            {
+                const Leap::KeyTapGesture keyTap(g);
+                handleTapGesture(keyTap.pointable());
+            }
+                break;
+                
+            case Leap::Gesture::TYPE_SCREEN_TAP:
+            {
+                const Leap::ScreenTapGesture screenTap(g);
+                handleTapGesture(screenTap.pointable());
+            }
+                break;
+                
+            case Leap::Gesture::TYPE_CIRCLE:
+            {
+                const Leap::CircleGesture circle(g);
+                
+                bool isClockwise = circle.normal().z < 0;
+                
+                if (isClockwise && circle.state() == Leap::Gesture::STATE_STOP)
+                    slide->end();
+                else if (!slide->isDone() && circle.state() == Leap::Gesture::STATE_STOP)
+                    slide->back();
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
+{
+    if (!slide->isDone())
+        slide->next();
+}
+
+void MainContentComponent::timerCallback()
+{
+    Harp* h = HarpManager::instance().getHarp(0);
+    if (h->checkIdle())
+        slide->begin();
+    else {
+        stopTimer();
+        startTimer(TUTORIAL_TIMEOUT);
+    }
 }

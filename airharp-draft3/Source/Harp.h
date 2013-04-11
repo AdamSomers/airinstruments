@@ -62,6 +62,7 @@ public:
     int getNumSelectedChords() const;
     void setChord(int chordIndex);
     int getSelectedScale() const { return selectedScale; }
+    bool checkIdle();
     
     // Leap Listener override
     void onFrame(const Leap::Controller&);
@@ -95,6 +96,7 @@ private:
     bool chordMode = false;
     std::vector<int> selectedChords;
     int selectedScale = 0;
+    bool idle;
 };
 
 class HarpManager
