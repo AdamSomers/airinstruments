@@ -127,7 +127,7 @@ void StatusBar::setup()
     HUDView::setup();
     layoutControls();
 
-    MotionDispatcher::instance().controller.addListener(*this);
+    MotionDispatcher::instance().addListener(*this);
 }
 
 void StatusBar::layoutControls()

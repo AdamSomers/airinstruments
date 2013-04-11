@@ -8,8 +8,9 @@ float MotionDispatcher::zLimit = 0;
 MotionDispatcher* MotionDispatcher::s_instance = nullptr;
 
 MotionDispatcher::MotionDispatcher()
+: paused(false)
 {
-    controller.addListener(*this);
+    addListener(*this);
     controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
@@ -38,6 +39,40 @@ MotionDispatcher::MotionDispatcher()
 MotionDispatcher::~MotionDispatcher()
 {
     controller.removeListener(*this);
+}
+
+void MotionDispatcher::addListener(Leap::Listener& l)
+{
+    controller.addListener(l);
+    listeners.push_back(&l);
+}
+
+void MotionDispatcher::removeListener(Leap::Listener& l)
+{
+    controller.removeListener(l);
+    auto iter = std::find(listeners.begin(), listeners.end(), &l);
+    if (iter != listeners.end())
+        listeners.erase(iter);
+}
+
+void MotionDispatcher::pause()
+{
+    if (!paused)
+    {
+        for (Leap::Listener* l : listeners)
+            controller.removeListener(*l);
+        paused = true;
+    }
+}
+
+void MotionDispatcher::resume()
+{
+    if (paused)
+    {
+        for (Leap::Listener* l : listeners)
+            controller.addListener(*l);
+        paused = false;
+    }
 }
 
 void MotionDispatcher::onInit(const Leap::Controller& /*controller*/)

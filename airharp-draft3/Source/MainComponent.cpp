@@ -74,6 +74,18 @@ void MainContentComponent::resized()
     sizeChanged = true;
 }
 
+void MainContentComponent::focusGained(FocusChangeType cause)
+{
+    Logger::outputDebugString("Focus Gained");
+    MotionDispatcher::instance().resume();
+}
+
+void MainContentComponent::focusLost(FocusChangeType cause)
+{
+    Logger::outputDebugString("Focus Lost");
+    MotionDispatcher::instance().pause();
+}
+
 void MainContentComponent::setupBackground()
 {
     M3DVector3f verts[4] = {

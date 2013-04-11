@@ -90,7 +90,7 @@ public:
     class MainWindow    : public DocumentWindow
     {
     public:
-        MainWindow()  : DocumentWindow ("MainWindow",
+        MainWindow()  : DocumentWindow ("AirHarp",
                                         Colours::lightgrey,
                                         DocumentWindow::allButtons)
         {

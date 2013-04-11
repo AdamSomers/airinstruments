@@ -40,6 +40,8 @@ public:
     // component overrides
     void paint (Graphics&);
     void resized();
+    void focusGained(FocusChangeType cause);
+    void focusLost(FocusChangeType cause);
     void mouseMove(const MouseEvent& e);
     void mouseDown(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);

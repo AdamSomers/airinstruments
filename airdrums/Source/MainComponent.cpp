@@ -83,6 +83,18 @@ void MainContentComponent::resized()
     Environment::instance().ready = true;
 }
 
+void MainContentComponent::focusGained(FocusChangeType cause)
+{
+    Logger::outputDebugString("Focus Gained");
+    MotionDispatcher::instance().resume();
+}
+
+void MainContentComponent::focusLost(FocusChangeType cause)
+{
+    Logger::outputDebugString("Focus Lost");
+    MotionDispatcher::instance().pause();
+}
+
 void MainContentComponent::newOpenGLContextCreated()
 {
 #ifdef _WIN32
@@ -190,7 +202,7 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
 
-    MotionDispatcher::instance().controller.addListener(*this);
+    MotionDispatcher::instance().addListener(*this);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);

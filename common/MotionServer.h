@@ -28,6 +28,12 @@ public:
 			s_instance = nullptr;
 		}
 	}
+    
+    void addListener(Leap::Listener& l);
+    void removeListener(Leap::Listener& l);
+    void pause();
+    void resume();
+    
     virtual void onInit(const Leap::Controller&);
     virtual void onConnect(const Leap::Controller&);
     virtual void onDisconnect(const Leap::Controller&);
@@ -60,6 +66,9 @@ private:
     }
 
 	static MotionDispatcher* s_instance;
+    
+    std::vector<Leap::Listener*> listeners;
+    bool paused;
 };
 
 #endif // h_MotionDispatcher
