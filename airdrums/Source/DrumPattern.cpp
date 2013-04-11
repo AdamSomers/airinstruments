@@ -17,7 +17,13 @@
 
 DrumPattern::DrumPattern() :
 	mMidiBuffer(new MidiBuffer)
+	, mTempo((float) kDefaultTempo)
+	, mConformTempo((float) kDefaultTempo)
+	, mSampleRate((double) kDefaultSampleRate)
 {
+	KitManager& mgr = KitManager::GetInstance();
+	SharedPtr<DrumKit> kit = mgr.GetItem(0);
+	mDrumKit = kit;
 }
 
 
@@ -33,12 +39,14 @@ DrumPattern::Status DrumPattern::LoadFromXml(XmlElement* element, File& /*direct
 	Status status = DrumItem::LoadFromXml(element);
 	if (status != kNoError)
 		return status;
-	double patternRate = element->getDoubleAttribute("sampleRate", 0.0);
-	if (patternRate == 0.0)
+	double rate = element->getDoubleAttribute("sampleRate", 0.0);
+	if (rate == 0.0)
 		return kSampleRateError;
-	Drums& drums = Drums::instance();
-	double sampleRate = drums.getSampleRate();
-	double rateAdj = sampleRate / patternRate;
+	float tempo = (float) element->getDoubleAttribute("tempo", (double) kDefaultTempo);
+
+	mSampleRate = rate;
+	mTempo = tempo;
+	mConformTempo = tempo;
 
 	XmlElement* kitElement = element->getChildByName("kit");
 	if (kitElement == nullptr)
@@ -67,8 +75,6 @@ DrumPattern::Status DrumPattern::LoadFromXml(XmlElement* element, File& /*direct
 			return kMidiDataError;
 		midiLength /= 2;
 
-		samplePosition = (int) (samplePosition * rateAdj);
-
 		UniquePtr<char> midiBytes(new char[midiLength]);
 		for (int i = 0; i < midiLength; ++i)
 		{
@@ -92,20 +98,22 @@ DrumPattern::Status DrumPattern::SaveToXml(String fileName, File& directory)
 {
 	SetName(fileName);
 
-	Drums& drums = Drums::instance();
-	double sampleRate = drums.getSampleRate();
-
 	XmlElement main("pattern");
 	DrumItem::SaveToXml(&main);
-	main.setAttribute("sampleRate", sampleRate);
+	main.setAttribute("sampleRate", mSampleRate);	// On save, pattern will now reference its current sample rate, regardless of what sample rate it had on load
+	main.setAttribute("tempo", (double) mTempo);	// Pattern will use its current local tempo
 
+	Drums& drums = Drums::instance();
 	SharedPtr<DrumKit> kit = drums.getDrumKit();
 	jassert(kit.get() != nullptr);
 	XmlElement* kitElement = main.createNewChildElement("kit");
 	jassert(kitElement != nullptr);
 	kit->DrumItem::SaveToXml(kitElement);
 
-	MidiBuffer::Iterator it(*mMidiBuffer.get());
+	MidiBuffer tempBuffer = GetMidiBuffer();		// Work with a copy of the pattern's buffer
+	Conform(tempBuffer, mTempo, mSampleRate);		// Conform it to the pattern tempo (it might be currently conformed to the global tempo)
+
+	MidiBuffer::Iterator it(tempBuffer);
 	const uint8* eventData;
 	int eventSize;
 	int samplePosition;
@@ -137,4 +145,59 @@ MidiBuffer& DrumPattern::GetMidiBuffer(void)
 SharedPtr<DrumKit> DrumPattern::GetDrumKit(void)
 {
 	return mDrumKit;
+}
+
+
+float DrumPattern::GetTempo(void)
+{
+	return mTempo;
+}
+
+
+void DrumPattern::SetTempo(float tempo)
+{
+	mTempo = tempo;
+	Conform(mTempo, mSampleRate);
+}
+
+
+void DrumPattern::Conform(float tempo, double rate)
+{
+	Conform(GetMidiBuffer(), tempo, rate);
+	mConformTempo = tempo;
+	mSampleRate = rate;
+}
+
+
+void DrumPattern::SetSampleRate(double rate)
+{
+	Conform(mConformTempo, rate);
+}
+
+
+double DrumPattern::GetSampleRate(void)
+{
+	return mSampleRate;
+}
+
+
+void DrumPattern::Conform(MidiBuffer& buffer, float tempo, double rate)
+{
+	double adj = rate / mSampleRate;
+	adj *= (double) (mConformTempo / tempo);
+
+	if (adj == 1.0)
+		return;
+
+    // Adjust sample positions of all events in midi buffer
+	MidiBuffer::Iterator i(buffer);
+	int samplePos = 0;
+	MidiMessage message;
+	MidiBuffer newBuffer;
+	while (i.getNextEvent(message, samplePos))
+	{
+		samplePos = (int) (samplePos * adj);
+		newBuffer.addEvent(message, samplePos);
+	}
+	buffer = newBuffer;
 }

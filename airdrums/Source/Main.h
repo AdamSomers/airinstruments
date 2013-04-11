@@ -65,7 +65,7 @@ private:
     AudioDeviceManager audioDeviceManager;
     AudioSourcePlayer audioSourcePlayer;
     ApplicationProperties properties;
-	MainMenu mainMenu;
+	MainMenu* mainMenu;
 	WeakReference<AudioSettingsDialog> settingsDialog;
 };
 
