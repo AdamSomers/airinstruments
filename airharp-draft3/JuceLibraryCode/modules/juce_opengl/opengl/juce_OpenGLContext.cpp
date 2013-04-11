@@ -303,10 +303,6 @@ public:
 
         initialiseOnThread();
 
-       #if JUCE_USE_OPENGL_SHADERS && ! JUCE_OPENGL_ES
-        shadersAvailable = OpenGLShaderProgram::getLanguageVersion() > 0;
-       #endif
-
         hasInitialised = true;
 
         while (! threadShouldExit())
@@ -324,11 +320,16 @@ public:
         jassert (! cachedImageFrameBuffer.isValid());
 
         context.makeActive();
-        nativeContext->initialiseOnRenderThread();
+        nativeContext->initialiseOnRenderThread (context);
+
         glViewport (0, 0, component.getWidth(), component.getHeight());
 
         context.extensions.initialise();
         nativeContext->setSwapInterval (1);
+
+       #if JUCE_USE_OPENGL_SHADERS && ! JUCE_OPENGL_ES
+        shadersAvailable = OpenGLShaderProgram::getLanguageVersion() > 0;
+       #endif
 
         if (context.renderer != nullptr)
             context.renderer->newOpenGLContextCreated();
@@ -492,6 +493,10 @@ private:
     void detach()
     {
         Component& comp = *getComponent();
+
+       #if JUCE_MAC
+        [[(NSView*) comp.getWindowHandle() window] disableScreenUpdatesUntilFlush];
+       #endif
 
         if (CachedImage* const oldCachedImage = CachedImage::get (comp))
             oldCachedImage->stop(); // (must stop this before detaching it from the component)
