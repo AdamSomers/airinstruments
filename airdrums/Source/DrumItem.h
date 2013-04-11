@@ -37,7 +37,6 @@ public:
 	// Other accessors
 
 	String&	GetName(void);
-	//Image	GetImage(void);
 	Uuid&	GetUuid(void);
 	void	SetName(String& name);
 
@@ -49,7 +48,6 @@ protected:
 
 private:
 	String	mName;
-	//Image	mImage;
 	Uuid	mUuid;
 };
 

@@ -33,7 +33,9 @@ MainContentComponent::MainContentComponent() :
 , playAreaLeft(NULL)
 , playAreaRight(NULL)
 , trigViewBank(NULL)
+, kitSelector(NULL)
 , lastCircleId(0)
+, showKitSelector(false)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -146,6 +148,7 @@ void MainContentComponent::newOpenGLContextCreated()
     playAreaRight->setSelectedMidiNote(noteRight);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);
+    
     drumSelectorLeft = new DrumSelector;
     drumSelectorRight = new DrumSelector;
     drumSelectorLeft->setSelection(noteLeft);
@@ -154,8 +157,30 @@ void MainContentComponent::newOpenGLContextCreated()
     drumSelectorRight->addListener(this);
     views.push_back(drumSelectorLeft);
     views.push_back(drumSelectorRight);
+    
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
+    
+    kitSelector = new KitSelector;
+    kitSelector->addListener(this);
+    views.push_back(kitSelector);
+    
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid");
+    Uuid kitUuid(kitUuidString);
+    String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName");
+    Logger::outputDebugString("Selected kit: " + kitName);
+    int numKits = KitManager::GetInstance().GetItemCount();
+    int selectedKitIndex = 0;
+    for (int i = 0; i < numKits; ++i)
+    {
+        std::shared_ptr<DrumKit> kit = KitManager::GetInstance().GetItem(i);
+        if (kit->GetName() == kitName) {
+            selectedKitIndex = i;
+            break;
+        }
+    }
+    Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
+    kitSelector->setSelection(selectedKitIndex);
     
     for (HUDView* v : views)
         v->loadTextures();
@@ -228,6 +253,15 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenH-toobarHeight,
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toobarHeight));
+        
+        int side = fmin(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
+        int hiddenX = -side * .85;
+        int shownX = -side / 2.f;
+        if (kitSelector)
+            kitSelector->setBounds(HUDRect(showKitSelector ? shownX : hiddenX,
+                                           statusBarHeight,
+                                           side,
+                                           side));
         
         layoutPadsLinear();
         sizeChanged = false;
@@ -488,6 +522,20 @@ void MainContentComponent::drumSelectorChanged(DrumSelector* selector)
     }
 }
 
+void MainContentComponent::kitSelectorChanged(KitSelector* selector)
+{
+    if (selector == kitSelector) {
+        int selection = kitSelector->getSelection();
+        std::shared_ptr<DrumKit> selectedKit = KitManager::GetInstance().GetItem(selection);
+        String name = selectedKit->GetName();
+        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
+        Uuid uuid = selectedKit->GetUuid();
+        String uuidString = uuid.toString();
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", name);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", uuidString);
+    }
+}
+
 void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)
 {
     if ((unsigned int) midiNoteNumber < pads.size())
@@ -516,7 +564,16 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             case Leap::Gesture::TYPE_SWIPE:
             {
                 Leap::SwipeGesture swipe(g);
-                Environment::instance().cameraFrame.TranslateWorld((swipe.direction().x * swipe.speed()) * .00002f, 0, 0);
+                if (swipe.direction().x > 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
+                    kitSelector->setEnabled(true);
+                    showKitSelector = true;
+                    sizeChanged = true;
+                }
+                else if (swipe.direction().x < 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
+                    kitSelector->setEnabled(false);
+                    showKitSelector = false;
+                    sizeChanged = true;
+                }
                 
             }
                 break;

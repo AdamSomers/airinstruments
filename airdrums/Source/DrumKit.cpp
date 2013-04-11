@@ -9,9 +9,10 @@
 */
 
 #include "DrumKit.h"
-
+#include "GfxTools.h"
 
 DrumKit::DrumKit()
+: mTextureId(0)
 {
 }
 
@@ -28,6 +29,16 @@ DrumKit::Status DrumKit::LoadFromXml(XmlElement* element, File& directory)
 	Status status = DrumItem::LoadFromXml(element);
 	if (status != kNoError)
 		return status;
+    
+    String imageFilename = element->getStringAttribute("image", "");
+    if (imageFilename != "")
+    {
+        File imageFile = directory.getChildFile(imageFilename);
+        if (imageFile.existsAsFile())
+            mImage = ImageFileFormat::loadFrom(imageFile);
+        else
+            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+    }
 
 	XmlElement* child = element->getChildByName("sample");
 	while (child != nullptr)
@@ -72,4 +83,21 @@ void DrumKit::LoadTextures()
     {
         drumSample->LoadTextures();
     }
+    
+    if (mImage.isValid())
+    {
+        glGenTextures(1, &mTextureId);
+        glBindTexture(GL_TEXTURE_2D, mTextureId);
+        GfxTools::loadTextureFromJuceImage(mImage);
+    }
+}
+
+GLuint DrumKit::GetTexture() const
+{
+    return mTextureId;
+}
+
+const Image& DrumKit::GetImage() const
+{
+    return mImage;
 }

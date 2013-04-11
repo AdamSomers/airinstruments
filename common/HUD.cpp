@@ -135,14 +135,14 @@ void HUDView::passiveMotion(float x, float y)
         {
             if (!child->hover) {
                 child->hover = true;
-                printf("hover\n");
+                //printf("hover\n");
             }
             child->passiveMotion(localX, localY);
         }
         else {
             if (child->hover) {
                 child->hover = false;
-                printf("un-hover\n");
+                //printf("un-hover\n");
             }
         }
     }

@@ -41,6 +41,8 @@ public:
 
     
     void LoadTextures();
+    GLuint GetTexture() const;
+    const Image& GetImage() const;
 
 private:
 	typedef	SharedPtr<DrumSample>	Item;
@@ -48,6 +50,9 @@ private:
 	typedef	Container::iterator		Iterator;
 
 	Container	mSamples;
+    
+    Image	mImage;
+    GLuint  mTextureId;
 };
 
 #endif  // __DRUMKIT_H_FC36DC2F__

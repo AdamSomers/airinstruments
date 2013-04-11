@@ -162,6 +162,7 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp"/>
+    <ClCompile Include="..\..\Source\KitSelector.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainMenu.cpp"/>
@@ -1280,6 +1281,7 @@
     <ClInclude Include="..\..\Source\DrumSelector.h"/>
     <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
+    <ClInclude Include="..\..\Source\KitSelector.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainMenu.h"/>

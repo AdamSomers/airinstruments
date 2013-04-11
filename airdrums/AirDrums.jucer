@@ -114,6 +114,8 @@
       <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
       <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
+      <FILE id="vSKv5i" name="KitSelector.cpp" compile="1" resource="0" file="Source/KitSelector.cpp"/>
+      <FILE id="itQFuw" name="KitSelector.h" compile="0" resource="0" file="Source/KitSelector.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="ynO4Iz" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="vAgls0" name="MainComponent.cpp" compile="1" resource="0"

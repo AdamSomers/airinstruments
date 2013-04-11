@@ -16,6 +16,7 @@
 #include "TrigView.h"
 #include "DrumSelector.h"
 #include "SkinManager.h"
+#include "KitSelector.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -28,7 +29,8 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
-                               public DrumSelector::Listener
+                               public DrumSelector::Listener,
+                               public KitSelector::Listener
 {
 public:
     //==============================================================================
@@ -55,6 +57,9 @@ public:
     
     // DrumSelector::Listener override
     void drumSelectorChanged(DrumSelector* selector);
+    
+    // KitSelector::Listener override
+    void kitSelectorChanged(KitSelector* selector);
 
     virtual void onFrame(const Leap::Controller&);
 private:
@@ -71,15 +76,15 @@ private:
     DrumSelector* drumSelectorLeft;
     DrumSelector* drumSelectorRight;
     TrigViewBank* trigViewBank;
+    KitSelector* kitSelector;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
     
     float prevMouseY;
     float prevMouseX;
-    
     bool sizeChanged;
-    
     int lastCircleId;
+    bool showKitSelector;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

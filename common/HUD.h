@@ -60,6 +60,7 @@ public:
     virtual ~HUDView() {}
     void addChild(HUDView* child);
     void setParent(HUDView* p);
+    HUDView* const getParent() { return parent; }
     
     // The base class implementation of draw() 
     virtual void draw();
