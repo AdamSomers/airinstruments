@@ -47,7 +47,7 @@ void TrigView::draw()
     }
     
     String category = "BassDrum";
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
         category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetCategory();

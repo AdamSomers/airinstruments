@@ -50,8 +50,9 @@ void KitSelector::setBounds(const HUDRect &b)
         String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
         if (kitUuidString != "Default") {
             Uuid kitUuid(kitUuidString);
-            const Image& image = KitManager::GetInstance().GetItem(kitUuid)->GetImage();
-            aspectRatio = image.getWidth() / (float)image.getHeight();
+            Image image = KitManager::GetInstance().GetItem(kitUuid)->GetImage();
+            if (image.isValid())
+                aspectRatio = image.getWidth() / (float)image.getHeight();
         }
         else {
             const Image& image = KitManager::GetInstance().GetItem(0)->GetImage();

@@ -183,6 +183,7 @@ void MainContentComponent::newOpenGLContextCreated()
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid");
     Uuid kitUuid(kitUuidString);
     String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName");
+    Logger::outputDebugString("Selected kit: " + kitUuidString);
     Logger::outputDebugString("Selected kit: " + kitName);
     int numKits = KitManager::GetInstance().GetItemCount();
     int selectedKitIndex = 0;
@@ -196,6 +197,8 @@ void MainContentComponent::newOpenGLContextCreated()
     }
     Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
     kitSelector->setSelection(selectedKitIndex);
+    
+    Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
     
     tutorial = new TutorialSlide;
     views.push_back(tutorial);
@@ -564,6 +567,7 @@ void MainContentComponent::kitSelectorChanged(KitSelector* selector)
         String uuidString = uuid.toString();
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", name);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", uuidString);
+        Drums::instance().setDrumKit(selectedKit);
     }
 }
 

@@ -172,7 +172,7 @@ void DrumSelector::Icon::draw()
         HUDView::setBounds(targetBounds);
 
     GLuint textureID = 0;
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
         textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture();

@@ -44,8 +44,10 @@ DrumSample::Status DrumSample::LoadFromXml(XmlElement* element, File& directory)
 	if (filename == "")
 		return kFilenameError;
 	File file = directory.getChildFile(filename);
-	if (!file.existsAsFile())
+	if (!file.existsAsFile()) {
+        Logger::outputDebugString("Sample file " + file.getFileName() + " not found");
 		return kFileNotFoundError;
+    }
 
 	FileInputStream* stream(new FileInputStream(file));
     AiffAudioFormat aiffFormat;
@@ -86,7 +88,7 @@ GLuint DrumSample::GetTexture() const
     if (mImage.isValid())
         return mTextureId;
     else
-        return SkinManager::instance().getSelectedSkin().getTexture(mCategory);;
+        return SkinManager::instance().getSelectedSkin().getTexture(mCategory);
         
 }
 
