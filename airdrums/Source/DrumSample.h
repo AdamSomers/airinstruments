@@ -35,6 +35,7 @@ public:
 	// Initialization
 
 	Status	LoadFromXml(XmlElement* element, File& directory);
+	Status	CreateFromMemory(const char* data, int size, int note, String category);
     
     // This must only be called from the OpenGL thread
     void LoadTextures();

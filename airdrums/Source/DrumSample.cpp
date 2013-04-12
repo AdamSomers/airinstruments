@@ -66,6 +66,41 @@ DrumSample::Status DrumSample::LoadFromXml(XmlElement* element, File& directory)
 }
 
 
+DrumSample::Status DrumSample::CreateFromMemory(const char* data, int size, int note, String category)
+{
+	if ((note < 0) || (note > 127))
+		return kNoteNumberError;
+	if (category == "")
+		return kCategoryError;
+
+/*
+	// TODO :  The built-in kit needs images ?  If so, the image data needs to be made binary and passed in to this method.
+    String imageFilename = element->getStringAttribute("image", "");
+    if (imageFilename != "")
+    {
+        File imageFile = directory.getChildFile(imageFilename);
+        if (imageFile.existsAsFile())
+            mImage = ImageFileFormat::loadFrom(imageFile);
+        else
+            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+    }
+*/
+
+	MemoryInputStream* stream(new MemoryInputStream(data, size, false));
+    AiffAudioFormat aiffFormat;
+	ScopedPointer<AudioFormatReader> reader(aiffFormat.createReaderFor(stream, true));
+    BigInteger notes;
+    notes.setRange(note, 1, true);
+	SamplerSound* sound = new SamplerSound("", *reader, notes, note, 0.0, 0.1, 10.0);
+
+	mNoteNumber = note;
+	mCategory = category;
+	mSound = sound;
+
+	return kNoError;
+}
+
+
 SynthesiserSound::Ptr DrumSample::GetSound(void)
 {
 	return mSound;

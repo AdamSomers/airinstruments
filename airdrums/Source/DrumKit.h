@@ -44,6 +44,16 @@ public:
     GLuint GetTexture() const;
     const Image& GetImage() const;
 
+	struct MemorySampleInfo		// Used to describe a memory based audio sample
+	{
+		const char*	data;		// Pointer to the sample data (aiff audio file format in binary form)
+		int			size;		// Size of the data in bytes
+		int			note;		// MIDI note number of this sample in the drum kit
+		const char*	category;	// Category name of this sample in the drum kit
+	};
+
+	Status	CreateFromMemory(std::vector<MemorySampleInfo>& samples, String name, Uuid uuid);
+
 private:
 	typedef	SharedPtr<DrumSample>	Item;
 	typedef	std::vector<Item>		Container;
