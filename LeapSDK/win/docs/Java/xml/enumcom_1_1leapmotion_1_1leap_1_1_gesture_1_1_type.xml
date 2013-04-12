@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type" kind="enum" prot="public">
+    <compoundname>com::leapmotion::leap::Gesture::Type</compoundname>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1_1_swig_next" prot="private">com::leapmotion::leap::Gesture::Type::SwigNext</innerclass>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a5ecd6ab99036c861b6bee53f2b0d1ed3" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.TYPE_CIRCLE</definition>
+        <argsstring></argsstring>
+        <name>TYPE_CIRCLE</name>
+        <initializer>=(4)</initializer>
+        <briefdescription>
+<para>A circular movement by a finger. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="268" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="268" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a8e7a8c0f6324d09dbf9775719e45404c" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.TYPE_INVALID</definition>
+        <argsstring></argsstring>
+        <name>TYPE_INVALID</name>
+        <initializer>=(-1)</initializer>
+        <briefdescription>
+<para>An invalid type. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="262" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="262" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1aabf6a6df531842edc11fde7bf2185bea" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.TYPE_KEY_TAP</definition>
+        <argsstring></argsstring>
+        <name>TYPE_KEY_TAP</name>
+        <initializer>=(6)</initializer>
+        <briefdescription>
+<para>A downward tapping movement by a finger. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="274" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="274" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a9d0f3de6028dd726d787f0ffcb11ebd5" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.TYPE_SCREEN_TAP</definition>
+        <argsstring></argsstring>
+        <name>TYPE_SCREEN_TAP</name>
+        <initializer>=(5)</initializer>
+        <briefdescription>
+<para>A forward tapping movement by a finger. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="271" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="271" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a66de9af854e4538a591b3e88733e3590" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.TYPE_SWIPE</definition>
+        <argsstring></argsstring>
+        <name>TYPE_SWIPE</name>
+        <initializer>=(1)</initializer>
+        <briefdescription>
+<para>A straight line movement by the hand with fingers extended. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="265" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="265" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a65e38174ab7ba9a3937b4a7b41f4a7fc" prot="private" static="no" mutable="no">
+        <type>final int</type>
+        <definition>final int com.leapmotion.leap.Gesture.Type.swigValue</definition>
+        <argsstring></argsstring>
+        <name>swigValue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="308" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="308" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a936d15df200bb91fb3873c205a235328" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>final int</type>
+        <definition>final int com.leapmotion.leap.Gesture.Type.swigValue</definition>
+        <argsstring>()</argsstring>
+        <name>swigValue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="277" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="277" bodyend="279"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a2971e954ff868642b9557ab8618b9bb5" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type" kindref="compound">Type</ref></type>
+        <definition>static Type com.leapmotion.leap.Gesture.Type.swigToEnum</definition>
+        <argsstring>(int swigValue)</argsstring>
+        <name>swigToEnum</name>
+        <param>
+          <type>int</type>
+          <declname>swigValue</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="281" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="281" bodyend="289"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1abef5739cd15d3c1d03f66b3e1119edfa" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.Type</definition>
+        <argsstring>()</argsstring>
+        <name>Type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="292" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="292" bodyend="294"/>
+      </memberdef>
+      <memberdef kind="function" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1adda035a0facdb2abe561348142283a35" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.Type</definition>
+        <argsstring>(int swigValue)</argsstring>
+        <name>Type</name>
+        <param>
+          <type>int</type>
+          <declname>swigValue</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="297" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="297" bodyend="300"/>
+      </memberdef>
+      <memberdef kind="function" id="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a4573dd49f9a822aed0ae2ed806e21e6b" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Gesture.Type.Type</definition>
+        <argsstring>(Type swigEnum)</argsstring>
+        <name>Type</name>
+        <param>
+          <type><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type" kindref="compound">Type</ref></type>
+          <declname>swigEnum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="303" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="303" bodyend="306"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The supported types of gestures. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" line="259" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Gesture.java" bodystart="259" bodyend="313"/>
+    <listofallmembers>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a2971e954ff868642b9557ab8618b9bb5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>swigToEnum</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a65e38174ab7ba9a3937b4a7b41f4a7fc" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>swigValue</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a936d15df200bb91fb3873c205a235328" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>swigValue</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1abef5739cd15d3c1d03f66b3e1119edfa" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>Type</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1adda035a0facdb2abe561348142283a35" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>Type</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a4573dd49f9a822aed0ae2ed806e21e6b" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>Type</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a5ecd6ab99036c861b6bee53f2b0d1ed3" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>TYPE_CIRCLE</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a8e7a8c0f6324d09dbf9775719e45404c" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>TYPE_INVALID</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1aabf6a6df531842edc11fde7bf2185bea" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>TYPE_KEY_TAP</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a9d0f3de6028dd726d787f0ffcb11ebd5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>TYPE_SCREEN_TAP</name></member>
+      <member refid="enumcom_1_1leapmotion_1_1leap_1_1_gesture_1_1_type_1a66de9af854e4538a591b3e88733e3590" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Gesture::Type</scope><name>TYPE_SWIPE</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

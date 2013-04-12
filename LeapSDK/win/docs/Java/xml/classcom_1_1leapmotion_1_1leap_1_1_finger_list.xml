@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::FingerList</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">com.leapmotion.leap.Interface</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">Iterable&lt; Finger &gt;</basecompoundref>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1_1_finger_list_iterator" prot="public">com::leapmotion::leap::FingerList::FingerListIterator</innerclass>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1afd8029aee4c717f519e74736da4bd0e1" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.FingerList.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="18" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a53c22bfdacf7fa16a462dd53c6b162a1" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.FingerList.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="29" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="29" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a1f57d9e48816c106d687cfa5a12630ba" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.FingerList.FingerList</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>FingerList</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="20" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="20" bodyend="23"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1ae2ae6f005f434e9d90d705b4bd0e5533" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.FingerList.getCPtr</definition>
+        <argsstring>(FingerList obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="25" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="25" bodyend="27"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a8e6b14cfb9c11b1c1c7851dcac7e129e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref></type>
+        <definition>FingerList com.leapmotion.leap.FingerList.append</definition>
+        <argsstring>(FingerList other)</argsstring>
+        <name>append</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Appends the members of the specifed <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref> to this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref> object containing <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger" kindref="compound">Finger</ref> objects to append to the end of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref>. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="99" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="99" bodyend="101"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1abcbed77727c5ae54426a6a18553ebcb0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.FingerList.count</definition>
+        <argsstring>()</argsstring>
+        <name>count</name>
+        <briefdescription>
+<para>Returns the number of fingers in this list. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The number of fingers in this list. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="70" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="70" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a4023c6b3f9779b1b573c197a2721a0aa" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.FingerList.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="33" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="33" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a6a6d2ea9901391848a26714f18c4e504" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.FingerList.empty</definition>
+        <argsstring>()</argsstring>
+        <name>empty</name>
+        <briefdescription>
+<para>Reports whether the list is empty. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True, if the list has no members. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="79" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="79" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a0729a37753c58128aadb4366526b23fc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.FingerList.FingerList</definition>
+        <argsstring>()</argsstring>
+        <name>FingerList</name>
+        <briefdescription>
+<para>Constructs an empty list of fingers. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="61" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="61" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a2a191ab810e14b2366160260574090e5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger" kindref="compound">Finger</ref></type>
+        <definition>Finger com.leapmotion.leap.FingerList.get</definition>
+        <argsstring>(int index)</argsstring>
+        <name>get</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>Access a list member by its position in the list. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The zero-based list position index. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger" kindref="compound">Finger</ref> object at the specified index. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="89" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="89" bodyend="91"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a3124cc33510f7436ee21da91e0d82af3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>java.util.Iterator&lt; <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger" kindref="compound">Finger</ref> &gt;</type>
+        <definition>java.util.Iterator&lt;Finger&gt; com.leapmotion.leap.FingerList.iterator</definition>
+        <argsstring>()</argsstring>
+        <name>iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="55" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="55" bodyend="57"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref> class represents a list of <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger" kindref="compound">Finger</ref> objects. </para>    </briefdescription>
+    <detaileddescription>
+<para>Get a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list" kindref="compound">FingerList</ref> object by calling <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame_1a63148fe55813b2c426a711cfa143f801" kindref="member">Frame::fingers()</ref>. </para>    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" line="17" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/FingerList.java" bodystart="17" bodyend="103"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a8e6b14cfb9c11b1c1c7851dcac7e129e" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>append</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1abcbed77727c5ae54426a6a18553ebcb0" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>count</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a4023c6b3f9779b1b573c197a2721a0aa" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a6a6d2ea9901391848a26714f18c4e504" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>empty</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a53c22bfdacf7fa16a462dd53c6b162a1" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a1f57d9e48816c106d687cfa5a12630ba" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>FingerList</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a0729a37753c58128aadb4366526b23fc" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>FingerList</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a2a191ab810e14b2366160260574090e5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>get</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1ae2ae6f005f434e9d90d705b4bd0e5533" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::FingerList</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1a3124cc33510f7436ee21da91e0d82af3" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>iterator</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_finger_list_1afd8029aee4c717f519e74736da4bd0e1" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::FingerList</scope><name>swigCPtr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

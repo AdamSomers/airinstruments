@@ -24,51 +24,58 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/addDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- addDelegate:</option>
-	
-	<option value="//api/name/addListener:">&nbsp;&nbsp;&nbsp;&nbsp;- addListener:</option>
-	
-	<option value="//api/name/calibratedScreens">&nbsp;&nbsp;&nbsp;&nbsp;- calibratedScreens</option>
-	
-	<option value="//api/name/enableGesture:enable:">&nbsp;&nbsp;&nbsp;&nbsp;- enableGesture:enable:</option>
-	
-	<option value="//api/name/frame:">&nbsp;&nbsp;&nbsp;&nbsp;- frame:</option>
-	
-	<option value="//api/name/init">&nbsp;&nbsp;&nbsp;&nbsp;- init</option>
-	
-	<option value="//api/name/initWithDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:</option>
-	
-	<option value="//api/name/initWithListener:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithListener:</option>
-	
-	<option value="//api/name/isConnected">&nbsp;&nbsp;&nbsp;&nbsp;- isConnected</option>
-	
-	<option value="//api/name/isGestureEnabled:">&nbsp;&nbsp;&nbsp;&nbsp;- isGestureEnabled:</option>
-	
-	<option value="//api/name/removeDelegate">&nbsp;&nbsp;&nbsp;&nbsp;- removeDelegate</option>
-	
-	<option value="//api/name/removeListener:">&nbsp;&nbsp;&nbsp;&nbsp;- removeListener:</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+<option value="properties">Properties</option>
+
+<option value="//api/name/calibratedScreens">&nbsp;&nbsp;&nbsp;&nbsp;calibratedScreens</option>
+
+
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/addDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- addDelegate:</option>
+
+<option value="//api/name/addListener:">&nbsp;&nbsp;&nbsp;&nbsp;- addListener:</option>
+
+<option value="//api/name/enableGesture:enable:">&nbsp;&nbsp;&nbsp;&nbsp;- enableGesture:enable:</option>
+
+<option value="//api/name/frame:">&nbsp;&nbsp;&nbsp;&nbsp;- frame:</option>
+
+<option value="//api/name/hasFocus">&nbsp;&nbsp;&nbsp;&nbsp;- hasFocus</option>
+
+<option value="//api/name/init">&nbsp;&nbsp;&nbsp;&nbsp;- init</option>
+
+<option value="//api/name/initWithDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:</option>
+
+<option value="//api/name/initWithListener:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithListener:</option>
+
+<option value="//api/name/isConnected">&nbsp;&nbsp;&nbsp;&nbsp;- isConnected</option>
+
+<option value="//api/name/isGestureEnabled:">&nbsp;&nbsp;&nbsp;&nbsp;- isGestureEnabled:</option>
+
+<option value="//api/name/locatedScreens">&nbsp;&nbsp;&nbsp;&nbsp;- locatedScreens</option>
+
+<option value="//api/name/removeDelegate">&nbsp;&nbsp;&nbsp;&nbsp;- removeDelegate</option>
+
+<option value="//api/name/removeListener:">&nbsp;&nbsp;&nbsp;&nbsp;- removeListener:</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -89,6 +96,12 @@
 
 
 
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/calibratedScreens">calibratedScreens</a></span></li>
+	
+</ul></li>
+
 
 
 
@@ -99,11 +112,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addListener:">addListener:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/calibratedScreens">calibratedScreens</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/enableGesture:enable:">enableGesture:enable:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/frame:">frame:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/hasFocus">hasFocus</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/init">init</a></span></li>
 	
@@ -115,11 +128,15 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isGestureEnabled:">isGestureEnabled:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/locatedScreens">locatedScreens</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeDelegate">removeDelegate</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeListener:">removeListener:</a></span></li>
 	
 </ul></li>
+
+
 
 
 			</ul>
@@ -129,8 +146,8 @@
 				<a title="LeapController Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -142,11 +159,11 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">NSObject</td>
+<td class="specification-title">Inherits from</td>
+<td class="specification-value">NSObject</td>
 </tr><tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -156,7 +173,8 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>The LeapController class is your main interface to the Leap device.</p>
+						<p>The LeapController class is your main interface to the Leap Motion Controller<br/>
+hardware.</p>
 
 <p>Create an instance of this LeapController class to access frames of tracking<br/>
 data and configuration information. Frame data can be polled at any time<br/>
@@ -302,6 +320,13 @@ returns an invalid frame.</p></span>
 	
 </li><li>
 	<span class="tooltip">
+		<code><a href="#//api/name/hasFocus">&ndash;&nbsp;hasFocus</a></code>
+		<span class="tooltip"><p>Reports whether this application is the focused, foreground application.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/enableGesture:enable:">&ndash;&nbsp;enableGesture:enable:</a></code>
 		<span class="tooltip"><p>Enables or disables reporting of a specified gesture type.</p></span>
 	</span>
@@ -316,12 +341,19 @@ returns an invalid frame.</p></span>
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/calibratedScreens">&ndash;&nbsp;calibratedScreens</a></code>
-		<span class="tooltip"><p>The list of <a href="../Classes/LeapScreen.html">LeapScreen</a> objects representing the computer dieplay screens<br/>
-whose positions have been identified by using the Leap application<br/>
+		<code><a href="#//api/name/locatedScreens">&ndash;&nbsp;locatedScreens</a></code>
+		<span class="tooltip"><p>The list of <a href="../Classes/LeapScreen.html">LeapScreen</a> objects representing the computer display screens<br/>
+whose positions have been identified by using the Leap application's<br/>
 Screen Locator utility.</p></span>
 	</span>
 	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/calibratedScreens">&nbsp;&nbsp;calibratedScreens</a></code>
+		<span class="tooltip"><p>Deprecated. Use [LeapController locatedScreens:] instead.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
 	
 </li>
 						</ul>
@@ -331,6 +363,53 @@ Screen Locator utility.</p></span>
 					
 					
 					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/calibratedScreens" title="calibratedScreens"></a>
+	<h3 class="subsubtitle method-title">calibratedScreens</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deprecated. Use [LeapController locatedScreens:] instead.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, getter=locatedScreens, readonly) NSArray *calibratedScreens</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Deprecated. Use [LeapController locatedScreens:] instead.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
 					
 					
 					
@@ -445,81 +524,6 @@ the controller automatically subscribes the listener to NSNotifications<br/>
 dispatched for the Leap events.</p>
 
 <p><em>Note:</em> You cannot add a listener when there is already a delegate assigned.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/calibratedScreens" title="calibratedScreens"></a>
-	<h3 class="subsubtitle method-title">calibratedScreens</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>The list of <a href="../Classes/LeapScreen.html">LeapScreen</a> objects representing the computer dieplay screens<br/>
-whose positions have been identified by using the Leap application<br/>
-Screen Locator utility.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (NSArray *)calibratedScreens</code></div>
-
-    
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>NSArray An array containing the screens whose positions have<br/>
-been registered by the user using the Screen Locator tool.<br/>
-The list always contains at least one entry representing the default<br/>
-monitor. If the user has not run the Screen Locator or has moved the Leap<br/>
-device or screen since running it, the <a href="../Classes/LeapScreen.html">LeapScreen</a> object for this entry<br/>
-only contains default values.</p>
-	</div>
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>The list of <a href="../Classes/LeapScreen.html">LeapScreen</a> objects representing the computer dieplay screens<br/>
-whose positions have been identified by using the Leap application<br/>
-Screen Locator utility.</p>
-
-<p>The list always contains at least one entry representing the default<br/>
-screen. If the user has not registered the location of this default<br/>
-screen, then the coordinates, directions, and other values reported by<br/>
-the functions in its <a href="../Classes/LeapScreen.html">LeapScreen</a> object will not be accurate. Other monitor<br/>
-screens only appear in the list if their positions have been registered<br/>
-using the Leap Screen Locator.</p>
-
-<p>A LeapScreen object represents the position and orientation of a display<br/>
-monitor screen within the Leap coordinate system.<br/>
-For example, if the screen location is known, you can get Leap coordinates<br/>
-for the bottom-left corner of the screen. Registering the screen<br/>
-location also allows the Leap to calculate the point on the screen at<br/>
-which a finger or tool is pointing.</p>
-
-<p>A user can run the Screen Locator tool from the Leap application<br/>
-Settings window. Avoid assuming that a screen location is known or that<br/>
-an existing position is still correct. The registered position is only<br/>
-valid as long as the relative position of the Leap device and the<br/>
-monitor screen remain constant.</p>
 	</div>
 	
 	
@@ -671,6 +675,55 @@ history parameter to specify which frame to retrieve. Call<br/>
 <code>[controller frame:1]</code> to access the previous frame, and so on. If you use a<br/>
 history value greater than the number of stored frames, then the controller<br/>
 returns an invalid frame.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/hasFocus" title="hasFocus"></a>
+	<h3 class="subsubtitle method-title">hasFocus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reports whether this application is the focused, foreground application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)hasFocus</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>True, if application has focus; false otherwise.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Reports whether this application is the focused, foreground application.</p>
+
+<p>Only the foreground application receives tracking information from<br/>
+the Leap Motion Controller.</p>
 	</div>
 	
 	
@@ -970,6 +1023,81 @@ member of the LeapGestureType enumeration:</p>
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/locatedScreens" title="locatedScreens"></a>
+	<h3 class="subsubtitle method-title">locatedScreens</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The list of <a href="../Classes/LeapScreen.html">LeapScreen</a> objects representing the computer display screens<br/>
+whose positions have been identified by using the Leap application's<br/>
+Screen Locator utility.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)locatedScreens</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>NSArray An array containing the screens whose positions have<br/>
+been registered by the user using the Screen Locator tool.<br/>
+The list always contains at least one entry representing the default<br/>
+monitor. If the user has not run the Screen Locator or has moved the Leap<br/>
+device or screen since running it, the <a href="../Classes/LeapScreen.html">LeapScreen</a> object for this entry<br/>
+only contains default values.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The list of <a href="../Classes/LeapScreen.html">LeapScreen</a> objects representing the computer display screens<br/>
+whose positions have been identified by using the Leap application's<br/>
+Screen Locator utility.</p>
+
+<p>The list always contains at least one entry representing the default<br/>
+screen. If the user has not registered the location of this default<br/>
+screen, then the coordinates, directions, and other values reported by<br/>
+the functions in its <a href="../Classes/LeapScreen.html">LeapScreen</a> object will not be accurate. Other monitor<br/>
+screens only appear in the list if their positions have been registered<br/>
+using the Leap Screen Locator.</p>
+
+<p>A LeapScreen object represents the position and orientation of a display<br/>
+monitor screen within the Leap coordinate system.<br/>
+For example, if the screen location is known, you can get Leap coordinates<br/>
+for the bottom-left corner of the screen. Registering the screen<br/>
+location also allows the Leap to calculate the point on the screen at<br/>
+which a finger or tool is pointing.</p>
+
+<p>A user can run the Screen Locator tool from the Leap application<br/>
+Settings window. Avoid assuming that a screen location is known or that<br/>
+an existing position is still correct. The registered position is only<br/>
+valid as long as the relative position of the Leap device and the<br/>
+monitor screen remain constant.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/removeDelegate" title="removeDelegate"></a>
 	<h3 class="subsubtitle method-title">removeDelegate</h3>
 	
@@ -1074,17 +1202,19 @@ member of the LeapGestureType enumeration:</p>
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-04-11)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -1174,6 +1304,7 @@ member of the LeapGestureType enumeration:</p>
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

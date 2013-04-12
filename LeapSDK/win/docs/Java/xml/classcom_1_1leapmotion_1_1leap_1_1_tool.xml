@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_tool" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::Tool</compoundname>
+    <basecompoundref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" prot="public" virt="non-virtual">com.leapmotion.leap.Pointable</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a5db1538bf753569d6d3c79665d0f3366" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.Tool.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="29" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1ac77f424dfa61f620ab659478ac3da7a7" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Tool.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="40" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="40" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a086d8059037c2dbc240f17c5f45a39dc" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Tool.Tool</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>Tool</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="31" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="31" bodyend="34"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1aff9042989dd90c119dd389f0ef7fea61" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.Tool.getCPtr</definition>
+        <argsstring>(Tool obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="36" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="36" bodyend="38"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a089e23a74046d773fd5f089dc0e19564" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.Tool.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="44" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="44" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a2ea8c07bf98de7b35b20ec7ffdec14ae" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Tool.Tool</definition>
+        <argsstring>()</argsstring>
+        <name>Tool</name>
+        <briefdescription>
+<para>Constructs a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>An uninitialized tool is considered invalid. Get valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> objects from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> or a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref> object. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="62" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="62" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a21d35de2bc21f5fadff788052369bc11" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Tool.Tool</definition>
+        <argsstring>(Pointable arg0)</argsstring>
+        <name>Tool</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+          <declname>arg0</declname>
+        </param>
+        <briefdescription>
+<para>If the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object represents a tool, creates a copy of it as a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object; otherwise, creates an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="71" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="71" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a11ad726564106e0db85c2bfafc600139" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>String</type>
+        <definition>String com.leapmotion.leap.Tool.toString</definition>
+        <argsstring>()</argsstring>
+        <name>toString</name>
+        <briefdescription>
+<para>A string containing a brief, human readable description of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A description of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object as a string. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="95" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="95" bodyend="97"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_1a34fc53c5f731139874bf6ca22033d379" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref></type>
+        <definition>static Tool com.leapmotion.leap.Tool.invalid</definition>
+        <argsstring>()</argsstring>
+        <name>invalid</name>
+        <briefdescription>
+<para>Returns an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>You can use the instance returned by this function in comparisons testing whether a given <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> instance is valid or invalid. (You can also use the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" kindref="member">Tool::isValid()</ref> function.)</para><para><simplesect kind="return"><para>The invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> instance. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="85" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="85" bodyend="87"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> class represents a tracked tool. </para>    </briefdescription>
+    <detaileddescription>
+<para>Tools are <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects that the Leap has classified as a tool. Tools are longer, thinner, and straighter than a typical finger. Get valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> objects from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> or a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref> object.</para><para><image type="html" name="Leap_Tool.png"></image>
+</para><para>Note that <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> objects can be invalid, which means that they do not contain valid tracking data and do not correspond to a physical tool. Invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> objects can be the result of asking for a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object using an ID from an earlier frame when no <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> objects with that ID exist in the current frame. A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> object created from the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref> constructor is also invalid. Test for validity with the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" kindref="member">Tool::isValid()</ref> function. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="112">
+        <label>com.leapmotion.leap.Pointable</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_pointable"/>
+      </node>
+      <node id="111">
+        <label>com.leapmotion.leap.Tool</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_tool"/>
+        <childnode refid="112" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="114">
+        <label>com.leapmotion.leap.Pointable</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_pointable"/>
+      </node>
+      <node id="113">
+        <label>com.leapmotion.leap.Tool</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_tool"/>
+        <childnode refid="114" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" line="28" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Tool.java" bodystart="28" bodyend="99"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a089e23a74046d773fd5f089dc0e19564" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1affbc3d564e74967addf273eb7006e7ae" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>direction</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a39b00dc8ec7e54c5e07e591b38db29cf" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1ac77f424dfa61f620ab659478ac3da7a7" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a0fc9745b4aa3f0284880647b4b482612" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>frame</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1aff9042989dd90c119dd389f0ef7fea61" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a7f3051e6807456cb21e23d97543b5181" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Pointable."><scope>com::leapmotion::leap::Tool</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::Tool</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a10e06f1db3177a259a5e0966fb361e7a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>hand</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a46e7a47f1aa97fb073b61bc6eb1b2031" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>id</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a34fc53c5f731139874bf6ca22033d379" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>invalid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af8a0d3d9dc96d7d86545e604f41cb6af" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>isFinger</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a1a939138ab33f2d76e0aebdbdc28861e" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>isTool</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1aa8f442aa58b8694384327f29111a0c41" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>length</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ad5e0cc39f620718a50710fa6c3ab2812" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>Pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af2d1ea38d8b44a706cc86c32769b7cb5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>Pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a5db1538bf753569d6d3c79665d0f3366" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a34729c90d3c4b38a6f5994ae1ad14ee2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>tipPosition</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af7389a76398c7928d339c73f5af02d9e" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>tipVelocity</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a086d8059037c2dbc240f17c5f45a39dc" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>Tool</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a2ea8c07bf98de7b35b20ec7ffdec14ae" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>Tool</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a21d35de2bc21f5fadff788052369bc11" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>Tool</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_1a11ad726564106e0db85c2bfafc600139" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1abba55cfb2de52af88b5a1faec2b1923b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Tool</scope><name>width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -8,5 +8,9 @@ var class_leap_1_1_pointable_list =
     [ "GetEnumerator", "class_leap_1_1_pointable_list.html#a47b187c7dd056b5dc2ac6cd6e42e255c", null ],
     [ "Count", "class_leap_1_1_pointable_list.html#af0b24918f2b85e98e849c3ee7156c189", null ],
     [ "Empty", "class_leap_1_1_pointable_list.html#a483d8debded33c47e77cfddf9ee1b616", null ],
+    [ "Frontmost", "class_leap_1_1_pointable_list.html#a4b22df8e1f3be60cdac69d42cb9b1f2c", null ],
+    [ "IsEmpty", "class_leap_1_1_pointable_list.html#a3e0f54906a464218bcca5a888b33bc76", null ],
+    [ "Leftmost", "class_leap_1_1_pointable_list.html#a08e1619f3226dfa96e933761c0490513", null ],
+    [ "Rightmost", "class_leap_1_1_pointable_list.html#a1d9131e031f46e13eb1be91ebc4e18b6", null ],
     [ "this[int index]", "class_leap_1_1_pointable_list.html#a117677f816a1a15bf264826890090514", null ]
 ];

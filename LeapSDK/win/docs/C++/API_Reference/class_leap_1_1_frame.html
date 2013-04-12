@@ -120,9 +120,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a397f0d748e8ee46ac660bd94e84cf468"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#a397f0d748e8ee46ac660bd94e84cf468">rotationMatrix</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
 <tr class="memdesc:a397f0d748e8ee46ac660bd94e84cf468"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transform matrix expressing the rotation derived from the overall rotational motion between the current frame and the specified frame.  <a href="#a397f0d748e8ee46ac660bd94e84cf468"></a><br/></td></tr>
 <tr class="separator:a397f0d748e8ee46ac660bd94e84cf468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedd6e649655d59e779d39611a9500d20"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#aedd6e649655d59e779d39611a9500d20">rotationProbability</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
+<tr class="memdesc:aedd6e649655d59e779d39611a9500d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated probability that the overall motion between the current frame and the specified frame is intended to be a rotating motion.  <a href="#aedd6e649655d59e779d39611a9500d20"></a><br/></td></tr>
+<tr class="separator:aedd6e649655d59e779d39611a9500d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a266b9763833f29cad764f9f616354fcf"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#a266b9763833f29cad764f9f616354fcf">scaleFactor</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
 <tr class="memdesc:a266b9763833f29cad764f9f616354fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale factor derived from the overall motion between the current frame and the specified frame.  <a href="#a266b9763833f29cad764f9f616354fcf"></a><br/></td></tr>
 <tr class="separator:a266b9763833f29cad764f9f616354fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade5d213d6f3ffedd4ee98825253ee9df"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#ade5d213d6f3ffedd4ee98825253ee9df">scaleProbability</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
+<tr class="memdesc:ade5d213d6f3ffedd4ee98825253ee9df"><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated probability that the overall motion between the current frame and the specified frame is intended to be a scaling motion.  <a href="#ade5d213d6f3ffedd4ee98825253ee9df"></a><br/></td></tr>
+<tr class="separator:ade5d213d6f3ffedd4ee98825253ee9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a183c802da9e3a66ff1102109a3185640"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#a183c802da9e3a66ff1102109a3185640">timestamp</a> () const </td></tr>
 <tr class="memdesc:a183c802da9e3a66ff1102109a3185640"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame capture time in microseconds elapsed since the Leap started.  <a href="#a183c802da9e3a66ff1102109a3185640"></a><br/></td></tr>
 <tr class="separator:a183c802da9e3a66ff1102109a3185640"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +144,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aedd28b275274f3287253b0399778a9b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#aedd28b275274f3287253b0399778a9b0">translation</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
 <tr class="memdesc:aedd28b275274f3287253b0399778a9b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The change of position derived from the overall linear motion between the current frame and the specified frame.  <a href="#aedd28b275274f3287253b0399778a9b0"></a><br/></td></tr>
 <tr class="separator:aedd28b275274f3287253b0399778a9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e26771b82bc970c3c17034a7a3a1d5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_frame.html#a37e26771b82bc970c3c17034a7a3a1d5">translationProbability</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
+<tr class="memdesc:a37e26771b82bc970c3c17034a7a3a1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated probability that the overall motion between the current frame and the specified frame is intended to be a translating motion.  <a href="#a37e26771b82bc970c3c17034a7a3a1d5"></a><br/></td></tr>
+<tr class="separator:a37e26771b82bc970c3c17034a7a3a1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -154,7 +163,7 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> class represents a set of hand and finger tracking data detected in a single frame. </p>
 <p>The Leap detects hands, fingers and tools within the tracking area, reporting their positions, orientations and motions in frames at the Leap frame rate.</p>
-<p>Access <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> objects through an instance of a Leap <a class="el" href="class_leap_1_1_controller.html" title="The Controller class is your main interface to the Leap device.">Controller</a>. Implement a <a class="el" href="class_leap_1_1_listener.html" title="The Listener class defines a set of callback functions that you can override in a subclass to respond...">Listener</a> subclass to receive a callback event when a new <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> is available. </p>
+<p>Access <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> objects through an instance of a Leap <a class="el" href="class_leap_1_1_controller.html" title="The Controller class is your main interface to the Leap Motion Controller.">Controller</a>. Implement a <a class="el" href="class_leap_1_1_listener.html" title="The Listener class defines a set of callback functions that you can override in a subclass to respond...">Listener</a> subclass to receive a callback event when a new <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> is available. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ad531adfeb7fc6887a4c07c604163fe04"></a>
 <div class="memitem">
@@ -398,7 +407,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reports whether this <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> instance is valid. </p>
-<p>A valid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> is one generated by the <a class="el" href="class_leap_1_1_controller.html" title="The Controller class is your main interface to the Leap device.">Leap::Controller</a> object that contains tracking data for all detected entities. An invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> contains no actual tracking data, but you can call its functions without risk of a null pointer exception. The invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> mechanism makes it more convenient to track individual data across the frame history. For example, you can invoke:</p>
+<p>A valid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> is one generated by the <a class="el" href="class_leap_1_1_controller.html" title="The Controller class is your main interface to the Leap Motion Controller.">Leap::Controller</a> object that contains tracking data for all detected entities. An invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> contains no actual tracking data, but you can call its functions without risk of a null pointer exception. The invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> mechanism makes it more convenient to track individual data across the frame history. For example, you can invoke:</p>
 <div class="fragment"><div class="line">Finger <a class="code" href="class_leap_1_1_frame.html#a5a08f65597f1f3671eea3946eb47da0b" title="The Finger object with the specified ID in this frame.">finger</a> = controller.<a class="code" href="class_leap_1_1_pointable.html#a8d67b7cc305ffca8ff8462b977f030b0" title="The Frame associated with this Pointable object.">frame</a>(n).<a class="code" href="class_leap_1_1_frame.html#a5a08f65597f1f3671eea3946eb47da0b" title="The Finger object with the specified ID in this frame.">finger</a>(fingerID);</div>
 </div><!-- fragment --><p>for an arbitrary <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> history value, "n", without first checking whether frame(n) returned a null object. (You should still check that the returned <a class="el" href="class_leap_1_1_finger.html" title="The Finger class represents a tracked finger.">Finger</a> instance is valid.)</p>
 <dl class="section return"><dt>Returns</dt><dd>True, if this is a valid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> object; false otherwise. </dd></dl>
@@ -611,6 +620,32 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aedd6e649655d59e779d39611a9500d20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Leap::Frame::rotationProbability </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>sinceFrame</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The estimated probability that the overall motion between the current frame and the specified frame is intended to be a rotating motion. </p>
+<p>If either this frame or sinceFrame is an invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> object, then this method returns zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinceFrame</td><td>The starting frame for computing the relative rotation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value between 0 and 1 representing the estimated probability that the overall motion between the current frame and the specified frame is intended to be a rotating motion. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a266b9763833f29cad764f9f616354fcf"></a>
 <div class="memitem">
 <div class="memproto">
@@ -636,6 +671,32 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A positive value representing the heuristically determined scaling change ratio between the current frame and that specified in the sinceFrame parameter. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ade5d213d6f3ffedd4ee98825253ee9df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Leap::Frame::scaleProbability </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>sinceFrame</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The estimated probability that the overall motion between the current frame and the specified frame is intended to be a scaling motion. </p>
+<p>If either this frame or sinceFrame is an invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> object, then this method returns zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinceFrame</td><td>The starting frame for computing the relative scaling. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value between 0 and 1 representing the estimated probability that the overall motion between the current frame and the specified frame is intended to be a scaling motion. </dd></dl>
 
 </div>
 </div>
@@ -746,6 +807,32 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="struct_leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> representing the heuristically determined change in position of all objects between the current frame and that specified in the sinceFrame parameter. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a37e26771b82bc970c3c17034a7a3a1d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Leap::Frame::translationProbability </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>sinceFrame</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The estimated probability that the overall motion between the current frame and the specified frame is intended to be a translating motion. </p>
+<p>If either this frame or sinceFrame is an invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> object, then this method returns zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinceFrame</td><td>The starting frame for computing the translation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value between 0 and 1 representing the estimated probability that the overall motion between the current frame and the specified frame is intended to be a translating motion. </dd></dl>
 
 </div>
 </div>

@@ -325,7 +325,7 @@ ul.auto-toc {
 <div class="document" id="using-the-leap-application">
 <h1 class="title">Using the Leap Application</h1>
 
-<p>This article describes the Leap application that acts as an intermediary between the Leap device and your Leap-enabled application.</p>
+<p>This article describes the Leap application that acts as an intermediary between the Leap Motion Controller and your Leap-enabled application.</p>
 <div class="contents topic" id="topics">
 <p class="topic-title first">Topics:</p>
 <ul class="simple">
@@ -344,7 +344,7 @@ ul.auto-toc {
 </div>
 <div class="section" id="overview">
 <h1><a class="toc-backref" href="#id1">Overview</a></h1>
-<p>The Leap application communicates with the Leap device and transmits hand tracking data to Leap-enabled applications. Thus, the Leap application must be running when you access Leap data in your application.</p>
+<p>The Leap application communicates with the Leap Motion Controller hardware and transmits hand tracking data to Leap-enabled applications. Thus, the Leap application must be running when you access Leap data in your application.</p>
 <p>When the Leap application is running, it displays an icon in the notification area of the Windows Taskbar or Mac Finder bar. When the Leap device is plugged in and working properly, the icon turns green. The icon will flash yellow while the software is initializing and turn red if an error has occurred.</p>
 <ul class="simple">
 <li><img alt="Unplugged-Icon" src="images/Leap_App_Icon_Unplugged.png" /> — the Leap device is unplugged (or the Leap application hasn't detected it yet).</li>
@@ -375,6 +375,8 @@ ul.auto-toc {
 <p>On the <em>Tracking</em> page, you can set the operating mode (see <a class="reference internal" href="#operating-modes">Operating modes</a>) and reverse the horizontal orientation with the <em>Flip Tracking</em> button.</p>
 <p>On the <em>Logging</em> page, you can set log file options, save the current log to a file, and set automatic bug reporting options.</p>
 <p>On the <em>Screen</em> page you can register the relationship between the Leap device and a selected monitor so that the Leap can accurately calculate the intersection of the screen with rays projected from fingers and tools. See <a class="reference internal" href="#screen-location">Screen location</a>.</p>
+<p>On the <em>WebSocket</em> page, you can enable and disable the WebSocket server. The WebSocket server provides JSON-formatted tracking data to Web  and other types of applications that connect through the WebSocket protocol.</p>
+<p>On the <em>Advanced</em> page, you can adjust the Leap frame rate and light sensitivity. Use these controls to test your application under a variety of conditions.</p>
 </div>
 <div class="section" id="operating-modes">
 <h1><a class="toc-backref" href="#id4">Operating modes</a></h1>
@@ -475,7 +477,7 @@ ul.auto-toc {
 </li>
 </ol>
 <p>You can view the location results in the <a class="reference external" href="Leap_Visualizer.html">Leap Visualizer</a>. (Press the <tt class="docutils literal">B</tt> key while in the Visualizer to display the computed screen bounds and finger-screen intersection points.)</p>
-<p>See <a class="reference external" href="Leap_Screen_Registration.html">Screen API</a> for information on using screen location information in a Leap-enabled application.</p>
+<p>See <a class="reference external" href="Leap_Screen_Location.html">Screen API</a> for information on using screen location information in a Leap-enabled application.</p>
 <hr class="docutils" />
 <p>Copyright © 2012-2013 Leap Motion, Inc. All rights reserved.</p>
 <p>Leap Motion proprietary and confidential. Not for distribution. Use subject to the terms of the Leap Motion SDK Agreement available at <a class="reference external" href="https://developer.leapmotion.com/sdk_agreement">https://developer.leapmotion.com/sdk_agreement</a>, or another agreement between Leap Motion and you, your company or other organization.</p>

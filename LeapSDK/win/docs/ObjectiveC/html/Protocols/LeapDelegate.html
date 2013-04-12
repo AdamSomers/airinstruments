@@ -24,37 +24,41 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/onConnect:">&nbsp;&nbsp;&nbsp;&nbsp;- onConnect:</option>
-	
-	<option value="//api/name/onDisconnect:">&nbsp;&nbsp;&nbsp;&nbsp;- onDisconnect:</option>
-	
-	<option value="//api/name/onExit:">&nbsp;&nbsp;&nbsp;&nbsp;- onExit:</option>
-	
-	<option value="//api/name/onFrame:">&nbsp;&nbsp;&nbsp;&nbsp;- onFrame:</option>
-	
-	<option value="//api/name/onInit:">&nbsp;&nbsp;&nbsp;&nbsp;- onInit:</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/onConnect:">&nbsp;&nbsp;&nbsp;&nbsp;- onConnect:</option>
+
+<option value="//api/name/onDisconnect:">&nbsp;&nbsp;&nbsp;&nbsp;- onDisconnect:</option>
+
+<option value="//api/name/onExit:">&nbsp;&nbsp;&nbsp;&nbsp;- onExit:</option>
+
+<option value="//api/name/onFocusGained:">&nbsp;&nbsp;&nbsp;&nbsp;- onFocusGained:</option>
+
+<option value="//api/name/onFocusLost:">&nbsp;&nbsp;&nbsp;&nbsp;- onFocusLost:</option>
+
+<option value="//api/name/onFrame:">&nbsp;&nbsp;&nbsp;&nbsp;- onFrame:</option>
+
+<option value="//api/name/onInit:">&nbsp;&nbsp;&nbsp;&nbsp;- onInit:</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -87,11 +91,17 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/onExit:">onExit:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/onFocusGained:">onFocusGained:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/onFocusLost:">onFocusLost:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/onFrame:">onFrame:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/onInit:">onInit:</a></span></li>
 	
 </ul></li>
+
+
 
 
 			</ul>
@@ -101,8 +111,8 @@
 				<a title="LeapDelegate Protocol Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -114,11 +124,11 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Conforms to</td>
-	<td class="specification-value">NSObject</td>
+<td class="specification-title">Conforms to</td>
+<td class="specification-value">NSObject</td>
 </tr><tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -142,8 +152,9 @@ and assign it to a LeapController instance:</p>
 
 <p>When a new frame of data is ready, the controller calls the<br/>
 <a href="#//api/name/onFrame:">[LeapDelegate onFrame:]</a> method. The other Leap events, <code>onInit</code>, <code>onConnect</code>, <code>onDisconnect</code>,<br/>
-and <code>onExit</code> are handled in the same manner. The Controller object is multithreaded and calls the<br/>
-LeapDelegate functions on its own threads, not on an application thread.</p>
+<code>onExit</code>, <code>onFocusGained</code>, and <code>onFocusLost</code> are handled in the same<br/>
+manner. The Controller object is multithreaded and calls the LeapDelegate<br/>
+functions on its own threads, not on an application thread.</p>
 
 <p>Using the LeapDelegate protocol is not mandatory. You can also use<br/>
 NSNotifications with a <a href="../Protocols/LeapListener.html">LeapListener</a> object or simply poll the<br/>
@@ -201,6 +212,20 @@ or the controller instance is destroyed.</p></span>
 		<code><a href="#//api/name/onFrame:">&ndash;&nbsp;onFrame:</a></code>
 		<span class="tooltip"><p>Called when a new frame of hand and finger tracking data is available.<br/>
 Access the new frame data using the <a href="../Classes/LeapController.html#//api/name/frame:">[LeapController frame:]</a> function.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/onFocusGained:">&ndash;&nbsp;onFocusGained:</a></code>
+		<span class="tooltip"><p>Called when this application becomes the foreground application.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/onFocusLost:">&ndash;&nbsp;onFocusLost:</a></code>
+		<span class="tooltip"><p>Called when this application loses the foreground focus.</p></span>
 	</span>
 	
 	
@@ -406,6 +431,126 @@ you to step through code without losing the connection because of time outs.</p>
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/onFocusGained:" title="onFocusGained:"></a>
+	<h3 class="subsubtitle method-title">onFocusGained:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called when this application becomes the foreground application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)onFocusGained:(LeapController *)<em>controller</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>controller</em></dt>
+			<dd><p>The parent <a href="../Classes/LeapController.html">LeapController</a> object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Called when this application becomes the foreground application.</p>
+
+<p>Only the foreground application receives tracking data from the Leap<br/>
+Motion Controller. This function is only called when the controller<br/>
+object is in a connected state.</p>
+
+<p><code>- (void)onFocusGained:(LeapController *)controller</code><br/>
+<code>{</code><br/>
+<code>   NSLog(@"Focus Gained");</code><br/>
+<code>}</code></p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/onFocusLost:" title="onFocusLost:"></a>
+	<h3 class="subsubtitle method-title">onFocusLost:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called when this application loses the foreground focus.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)onFocusLost:(LeapController *)<em>controller</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>controller</em></dt>
+			<dd><p>The parent <a href="../Classes/LeapController.html">LeapController</a> object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Called when this application loses the foreground focus.</p>
+
+<p>Only the foreground application receives tracking data from the Leap<br/>
+Motion Controller. This function is only called when the controller<br/>
+object is in a connected state.</p>
+
+<p><code>- (void)onFocuslost:(LeapController *)controller</code><br/>
+<code>{</code><br/>
+<code>   NSLog(@"Focus Lost");</code><br/>
+<code>}</code></p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/onFrame:" title="onFrame:"></a>
 	<h3 class="subsubtitle method-title">onFrame:</h3>
 	
@@ -533,17 +678,19 @@ the ID of the current frame with the ID of the previous received frame.</p>
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-04-11)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -633,6 +780,7 @@ the ID of the current frame with the ID of the previous received frame.</p>
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

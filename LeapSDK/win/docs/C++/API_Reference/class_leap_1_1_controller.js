@@ -9,7 +9,9 @@ var class_leap_1_1_controller =
     [ "config", "class_leap_1_1_controller.html#a5bf6df38bb2c9b6142d2814fffe80d11", null ],
     [ "enableGesture", "class_leap_1_1_controller.html#a63bc63057adc36a5f14e033c3a0b50d3", null ],
     [ "frame", "class_leap_1_1_controller.html#a00f7f3403c2281541f78bafbaf983ee1", null ],
+    [ "hasFocus", "class_leap_1_1_controller.html#ac2d081aa6e6bbcffe13596fbcb44b266", null ],
     [ "isConnected", "class_leap_1_1_controller.html#a95aa686bbf7a772b3f3570e179557e75", null ],
     [ "isGestureEnabled", "class_leap_1_1_controller.html#a24e3db20566a920fe5e29aded69af8a6", null ],
+    [ "locatedScreens", "class_leap_1_1_controller.html#a5c3110560c979061c8a3fcc0029e2623", null ],
     [ "removeListener", "class_leap_1_1_controller.html#a560e14d996d11b1b21bb27d5ade2a384", null ]
 ];

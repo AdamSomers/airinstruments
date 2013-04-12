@@ -102,7 +102,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae5f8d3473a15cff36a610e3f339c7423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add vectors component-wise.  <a href="#ae5f8d3473a15cff36a610e3f339c7423"></a><br/></td></tr>
 <tr class="separator:ae5f8d3473a15cff36a610e3f339c7423"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2dbd10e09399bc5679ceee380cff2cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_leap_1_1_vector.html#ac2dbd10e09399bc5679ceee380cff2cc">operator+=</a> (const <a class="el" href="struct_leap_1_1_vector.html">Vector</a> &amp;other)</td></tr>
-<tr class="memdesc:ac2dbd10e09399bc5679ceee380cff2cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add vectors component-wise and assign the sum.  <a href="#ac2dbd10e09399bc5679ceee380cff2cc"></a><br/></td></tr>
+<tr class="memdesc:ac2dbd10e09399bc5679ceee380cff2cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply vector by a scalar on the left-hand side (C++ only).  <a href="#ac2dbd10e09399bc5679ceee380cff2cc"></a><br/></td></tr>
 <tr class="separator:ac2dbd10e09399bc5679ceee380cff2cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05564e30c0301990e6f5ecea81fc0f4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_leap_1_1_vector.html#a05564e30c0301990e6f5ecea81fc0f4a">operator-</a> () const </td></tr>
 <tr class="memdesc:a05564e30c0301990e6f5ecea81fc0f4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A copy of this vector pointing in the opposite direction.  <a href="#a05564e30c0301990e6f5ecea81fc0f4a"></a><br/></td></tr>
@@ -205,9 +205,6 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a90f989718db5a1be59eb472f30e61472"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_leap_1_1_vector.html#a90f989718db5a1be59eb472f30e61472">operator*</a> (float scalar, const <a class="el" href="struct_leap_1_1_vector.html">Vector</a> &amp;vector)</td></tr>
-<tr class="memdesc:a90f989718db5a1be59eb472f30e61472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply vector by a scalar on the left-hand side (C++ only).  <a href="#a90f989718db5a1be59eb472f30e61472"></a><br/></td></tr>
-<tr class="separator:a90f989718db5a1be59eb472f30e61472"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae295e87eb813266c27e75d2809df2acc"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_leap_1_1_vector.html#ae295e87eb813266c27e75d2809df2acc">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="struct_leap_1_1_vector.html">Vector</a> &amp;vector)</td></tr>
 <tr class="memdesc:ae295e87eb813266c27e75d2809df2acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the vector to the output stream using a human readable format: (x, y, z).  <a href="#ae295e87eb813266c27e75d2809df2acc"></a><br/></td></tr>
 <tr class="separator:ae295e87eb813266c27e75d2809df2acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -790,6 +787,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Multiply vector by a scalar on the left-hand side (C++ only). </p>
 <p>Add vectors component-wise and assign the sum. </p>
 
 </div>
@@ -1327,42 +1325,6 @@ template&lt;typename Vector4Type &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a class="anchor" id="a90f989718db5a1be59eb472f30e61472"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_leap_1_1_vector.html">Vector</a> operator* </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>scalar</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="struct_leap_1_1_vector.html">Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>vector</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Multiply vector by a scalar on the left-hand side (C++ only). </p>
-
-</div>
-</div>
 <a class="anchor" id="ae295e87eb813266c27e75d2809df2acc"></a>
 <div class="memitem">
 <div class="memproto">

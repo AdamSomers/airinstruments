@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::SwipeGesture</compoundname>
+    <basecompoundref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" prot="public" virt="non-virtual">com.leapmotion.leap.Gesture</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1ad34a495de12f7c206d8ffe5d5e35c3e3" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.SwipeGesture.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="25" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a01938009f79acc501a2cdc40dec1594a" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.SwipeGesture.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="36" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="36" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1ac836a3b01f8db7b19403624bb8dcd075" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.SwipeGesture.SwipeGesture</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>SwipeGesture</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="27" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="27" bodyend="30"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a227eced6907b8d6a7e0d7a483dea0bcb" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.SwipeGesture.getCPtr</definition>
+        <argsstring>(SwipeGesture obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture" kindref="compound">SwipeGesture</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="32" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="32" bodyend="34"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a2e96cddc54b06e89cc32ccc9cfa98079" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.SwipeGesture.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="40" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="40" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1aa81c3633a8d97df4ab22beb9a6f0d8bc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.SwipeGesture.direction</definition>
+        <argsstring>()</argsstring>
+        <name>direction</name>
+        <briefdescription>
+<para>The unit direction vector parallel to the swipe motion. </para>        </briefdescription>
+        <detaileddescription>
+<para>You can compare the components of the vector to classify the swipe as appropriate for your application. For example, if you are using swipes for two dimensional scrolling, you can compare the x and y values to determine if the swipe is primarily horizontal or vertical.</para><para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> The unit direction vector representing the swipe motion. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="110" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="110" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a91f5ed0c9abfec5d6b7508527217a3c1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+        <definition>Pointable com.leapmotion.leap.SwipeGesture.pointable</definition>
+        <argsstring>()</argsstring>
+        <name>pointable</name>
+        <briefdescription>
+<para>The finger performing the swipe gesture. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object representing the swiping finger. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="131" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="131" bodyend="133"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1aba4940408797a84d046d90e34741b1e3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.SwipeGesture.position</definition>
+        <argsstring>()</argsstring>
+        <name>position</name>
+        <briefdescription>
+<para>The current position of the swipe. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> The current swipe position within the Leap frame of reference, in mm. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="94" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="94" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a3f34543ea035064b932946a611b49d3b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.SwipeGesture.speed</definition>
+        <argsstring>()</argsstring>
+        <name>speed</name>
+        <briefdescription>
+<para>The swipe speed in mm/second. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>float The speed of the finger performing the swipe gesture in millimeters per second. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="121" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="121" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a0528c070f61a70188f235c4f8dcd97f4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.SwipeGesture.startPosition</definition>
+        <argsstring>()</argsstring>
+        <name>startPosition</name>
+        <briefdescription>
+<para>The position where the swipe began. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> The starting position within the Leap frame of reference, in mm. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="83" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="83" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a790d0fafe407e35e24a4c6e51c69131d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.SwipeGesture.SwipeGesture</definition>
+        <argsstring>()</argsstring>
+        <name>SwipeGesture</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="61" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="61" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a1623cdde2a9cf1c0638dbc755e8ab256" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.SwipeGesture.SwipeGesture</definition>
+        <argsstring>(Gesture rhs)</argsstring>
+        <name>SwipeGesture</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+<para>Constructs a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture" kindref="compound">SwipeGesture</ref> object from an instance of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> class. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rhs</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> instance to specialize. This <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> instance must be a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture" kindref="compound">SwipeGesture</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="72" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="72" bodyend="74"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1acde13cfa5590a51e78c798a93504adb3" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Gesture.Type</type>
+        <definition>static Gesture.Type com.leapmotion.leap.SwipeGesture.classType</definition>
+        <argsstring>()</argsstring>
+        <name>classType</name>
+        <briefdescription>
+<para>The swipe gesture type. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Type The type value designating a swipe gesture. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="57" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="57" bodyend="59"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture" kindref="compound">SwipeGesture</ref> class represents a swiping motion of a finger or tool. </para>    </briefdescription>
+    <detaileddescription>
+<para><image type="html" name="Leap_Gesture_Swipe.png"></image>
+</para><para><bold>Important:</bold> To use swipe gestures in your application, you must enable recognition of the swipe gesture. You can enable recognition with: <verbatim>Controller::enableGesture(Gesture::TYPE_SWIPE);
+</verbatim></para><para>Swipe gestures are continuous. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="108">
+        <label>com.leapmotion.leap.Gesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_gesture"/>
+      </node>
+      <node id="107">
+        <label>com.leapmotion.leap.SwipeGesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture"/>
+        <childnode refid="108" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="110">
+        <label>com.leapmotion.leap.Gesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_gesture"/>
+      </node>
+      <node id="109">
+        <label>com.leapmotion.leap.SwipeGesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture"/>
+        <childnode refid="110" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" line="24" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/SwipeGesture.java" bodystart="24" bodyend="135"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1acde13cfa5590a51e78c798a93504adb3" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>classType</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a2e96cddc54b06e89cc32ccc9cfa98079" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1aa81c3633a8d97df4ab22beb9a6f0d8bc" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>direction</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a762ca0339845c9fd8f56eb9c50a9d939" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>duration</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ade91b8b357a0b65559f0b6e92259611a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>durationSeconds</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a9d1e2879db9699c3376ecad4ac6b5326" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a01938009f79acc501a2cdc40dec1594a" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1acd58fdacb406067210d346766317c73d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>frame</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a8a2c538af15c0678e7913cf4c1fa9b15" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ac29ba36fa9b334ce822936cf530b3aa7" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a16d3c85153f2c90a77ba8c5c74c055b8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a227eced6907b8d6a7e0d7a483dea0bcb" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1aacff5dba75bff58ece36726127ffd4d8" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Gesture."><scope>com::leapmotion::leap::SwipeGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::SwipeGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a774b6b0a846bc908140a9695446ec398" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>hands</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ad3e6aa7ddce5cf3079bcc6259f7d7412" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>id</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a8a5bf5a6582c95367b8a46ac0a220da5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>invalid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a1fbc97e34f25c3e1bb2f6ffecc57c563" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a91f5ed0c9abfec5d6b7508527217a3c1" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a43e5763a3e347a066aabd5cac4e0f899" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>pointables</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1aba4940408797a84d046d90e34741b1e3" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>position</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a3f34543ea035064b932946a611b49d3b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>speed</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a0528c070f61a70188f235c4f8dcd97f4" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>startPosition</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a13f39cae216c5f285c526936a6b0af67" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>state</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1ad34a495de12f7c206d8ffe5d5e35c3e3" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1ac836a3b01f8db7b19403624bb8dcd075" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>SwipeGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a790d0fafe407e35e24a4c6e51c69131d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>SwipeGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_swipe_gesture_1a1623cdde2a9cf1c0638dbc755e8ab256" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>SwipeGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a6e5c086a26fa919648e307887cdefcf2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a7420937c98ea7646f083e5c0a469fe3d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::SwipeGesture</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

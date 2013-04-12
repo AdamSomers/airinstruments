@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::ToolList::ToolListIterator</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">java::util::Iterator&lt; Tool &gt;</basecompoundref>
+      <sectiondef kind="package-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1a41d20cea8e690632ceca6ddc85c139ab" prot="package" static="no" mutable="no">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.ToolList.ToolListIterator.index</definition>
+        <argsstring></argsstring>
+        <name>index</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" line="45" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1a765695cf5ad73533315fe7e80fda4c97" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.ToolList.ToolListIterator.hasNext</definition>
+        <argsstring>()</argsstring>
+        <name>hasNext</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" line="46" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" bodystart="46" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1a342459e2e116ba6a8f83a294bf2d06ac" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" kindref="compound">Tool</ref></type>
+        <definition>Tool com.leapmotion.leap.ToolList.ToolListIterator.next</definition>
+        <argsstring>()</argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" line="49" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" bodystart="49" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1aadf10bb4e985e92fcac09c5472e2d914" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.ToolList.ToolListIterator.remove</definition>
+        <argsstring>()</argsstring>
+        <name>remove</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" line="52" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" bodystart="52" bodyend="53"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" line="44" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ToolList.java" bodystart="44" bodyend="54"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1a765695cf5ad73533315fe7e80fda4c97" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ToolList::ToolListIterator</scope><name>hasNext</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1a41d20cea8e690632ceca6ddc85c139ab" prot="package" virt="non-virtual"><scope>com::leapmotion::leap::ToolList::ToolListIterator</scope><name>index</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1a342459e2e116ba6a8f83a294bf2d06ac" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ToolList::ToolListIterator</scope><name>next</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_tool_list_1_1_tool_list_iterator_1aadf10bb4e985e92fcac09c5472e2d914" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ToolList::ToolListIterator</scope><name>remove</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

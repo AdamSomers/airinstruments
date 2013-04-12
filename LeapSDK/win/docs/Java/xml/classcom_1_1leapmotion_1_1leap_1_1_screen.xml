@@ -1,0 +1,613 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_screen" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::Screen</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">com.leapmotion.leap.Interface</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a50ee57f8527a7dea750537ab92aa428b" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.Screen.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="37" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0352f668cccf21a4a94cf3ed85ec575d" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Screen.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="48" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="48" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1ac293bd714f672d6f6d2b90bab4ecce8a" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Screen.Screen</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>Screen</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="39" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="39" bodyend="42"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a7210ae8b40ea6d64d7a59f7feaa07865" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.Screen.getCPtr</definition>
+        <argsstring>(Screen obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="44" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="44" bodyend="46"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a9d9fc867c67a9e76d62af5108f31367f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.bottomLeftCorner</definition>
+        <argsstring>()</argsstring>
+        <name>bottomLeftCorner</name>
+        <briefdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> representing the bottom left corner of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> within the Leap coordinate system. </para>        </briefdescription>
+        <detaileddescription>
+<para>The point represented by this vector defines the origin of the screen in the Leap coordinate system.</para><para>Together, <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1adc291ef5b94913e54c4250da15c666dd" kindref="member">horizontalAxis()</ref>, <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a275a06f4572ef4c37a862f705bb21bae" kindref="member">verticalAxis()</ref>, and <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a9d9fc867c67a9e76d62af5108f31367f" kindref="member">bottomLeftCorner()</ref> describe the physical position, size and orientation of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref>.</para><para><simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the bottom-left corner of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref>. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="518" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="518" bodyend="520"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1aaff2883cecf9de24d798f670b2638576" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.Screen.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="52" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="52" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a3944427f7ab482cb79cb0cd0fe62d396" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Screen.distanceToPoint</definition>
+        <argsstring>(Vector point)</argsstring>
+        <name>distanceToPoint</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>point</declname>
+        </param>
+        <briefdescription>
+<para>The shortest distance from the specified point to the plane in which this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> lies. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The length of the perpendicular line segment extending from the plane this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> lies in to the specified point. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="564" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="564" bodyend="566"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1ad40b7c54aef7d8bb55caf654b6ac7bdc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Screen.equals</definition>
+        <argsstring>(Screen arg0)</argsstring>
+        <name>equals</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+          <declname>arg0</declname>
+        </param>
+        <briefdescription>
+<para>Compare <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object equality. </para>        </briefdescription>
+        <detaileddescription>
+<para>Two <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> objects are equal if and only if both <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> objects represent the exact same Screens and both Screens are valid. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="605" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="605" bodyend="607"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.Screen.heightPixels</definition>
+        <argsstring>()</argsstring>
+        <name>heightPixels</name>
+        <briefdescription>
+<para>The vertical resolution of this screen, in pixels. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The height of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> in pixels. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="552" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="552" bodyend="554"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1adc291ef5b94913e54c4250da15c666dd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.horizontalAxis</definition>
+        <argsstring>()</argsstring>
+        <name>horizontalAxis</name>
+        <briefdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> representing the horizontal axis of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> within the Leap coordinate system. </para>        </briefdescription>
+        <detaileddescription>
+<para>The magnitude of this vector estimates the physical width of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> in millimeters. The direction of this vector is parallel to the bottom edge of the screen and points toward the right edge of the screen.</para><para>Together, <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1adc291ef5b94913e54c4250da15c666dd" kindref="member">horizontalAxis()</ref>, <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a275a06f4572ef4c37a862f705bb21bae" kindref="member">verticalAxis()</ref>, and <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a9d9fc867c67a9e76d62af5108f31367f" kindref="member">bottomLeftCorner()</ref> describe the physical position, size and orientation of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref>.</para><para><simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> representing the bottom, horizontal edge of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref>. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="482" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="482" bodyend="484"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a7e259d19686e894620125b3db791e04b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.Screen.id</definition>
+        <argsstring>()</argsstring>
+        <name>id</name>
+        <briefdescription>
+<para>A unique identifier for this screen based on the screen information in the configuration. </para>        </briefdescription>
+        <detaileddescription>
+<para>A default screen with ID, <emphasis>0</emphasis>, always exists and contains default characteristics, even if no screens have been located. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="82" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="82" bodyend="84"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a4b8a8b37c26147deff0707112123bafe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.intersect</definition>
+        <argsstring>(Pointable pointable, boolean normalize, float clampRatio)</argsstring>
+        <name>intersect</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+          <declname>pointable</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>normalize</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>clampRatio</declname>
+        </param>
+        <briefdescription>
+<para>Returns the intersection between this screen and a ray projecting from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>The projected ray emanates from the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> tipPosition along the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref>&apos;s direction vector.</para><para>Set the normalize parameter to true to request the intersection point in normalized screen coordinates. Normalized screen coordinates are usually values between 0 and 1, where 0 represents the screen&apos;s origin at the bottom-left corner and 1 represents the opposite edge (either top or right). When you request normalized coordinates, the z-component of the returned vector is zero. Multiply a normalized coordinate by the values returned by <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" kindref="member">Screen::widthPixels()</ref> or <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" kindref="member">Screen::heightPixels()</ref> to calculate the screen position in pixels (remembering that many other computer graphics coordinate systems place the origin in the top-left corner).</para><para>Set the normalize parameter to false to request the intersection point in Leap coordinates (millimeters from the Leap origin).</para><para>If the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object points outside the screen&apos;s border (but still intersects the plane in which the screen lies), the returned intersection point is clamped to the nearest point on the edge of the screen.</para><para>You can use the clampRatio parameter to contract or expand the area in which you can point. For example, if you set the clampRatio parameter to 0.5, then the positions reported for intersection points outside the central 50% of the screen are moved to the border of this smaller area. If, on the other hand, you expanded the area by setting clampRatio to a value such as 3.0, then you could point well outside screen&apos;s physical boundary before the intersection points would be clamped. The positions for any points clamped would also be placed on this larger outer border. The positions reported for any intersection points inside the clamping border are unaffected by clamping.</para><para><programlisting></programlisting></para><para>If the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object does not point toward the plane of the screen (i.e. it is pointing parallel to or away from the screen), then the components of the returned vector are all set to NaN (not-a-number).</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pointable</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object to check for screen intersection.</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>normalize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, return normalized coordinates representing the intersection point as a percentage of the screen&apos;s width and height. If false, return Leap coordinates (millimeters from the Leap origin, which is located at the center of the top surface of the Leap device). If true and the clampRatio parameter is set to 1.0, coordinates will be of the form (0..1, 0..1, 0). Setting the clampRatio to a different value changes the range for normalized coordinates. For example, a clampRatio of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clampRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Adjusts the clamping border around this screen. By default this ratio is 1.0, and the border corresponds to the actual boundaries of the screen. Setting clampRatio to 0.5 would reduce the interaction area. Likewise, setting the ratio to 2.0 would increase the interaction area, adding 50% around each edge of the physical monitor. Intersection points outside the interaction area are repositioned to the closest point on the clamping border before the vector is returned.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the intersection between this screen and a ray projecting from the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="150" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="150" bodyend="152"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1ab26a1ab014b00e3b431c319f31042d46" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.intersect</definition>
+        <argsstring>(Pointable pointable, boolean normalize)</argsstring>
+        <name>intersect</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+          <declname>pointable</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>normalize</declname>
+        </param>
+        <briefdescription>
+<para>Returns the intersection between this screen and a ray projecting from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>The projected ray emanates from the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> tipPosition along the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref>&apos;s direction vector.</para><para>Set the normalize parameter to true to request the intersection point in normalized screen coordinates. Normalized screen coordinates are usually values between 0 and 1, where 0 represents the screen&apos;s origin at the bottom-left corner and 1 represents the opposite edge (either top or right). When you request normalized coordinates, the z-component of the returned vector is zero. Multiply a normalized coordinate by the values returned by <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" kindref="member">Screen::widthPixels()</ref> or <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" kindref="member">Screen::heightPixels()</ref> to calculate the screen position in pixels (remembering that many other computer graphics coordinate systems place the origin in the top-left corner).</para><para>Set the normalize parameter to false to request the intersection point in Leap coordinates (millimeters from the Leap origin).</para><para>If the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object points outside the screen&apos;s border (but still intersects the plane in which the screen lies), the returned intersection point is clamped to the nearest point on the edge of the screen.</para><para>You can use the clampRatio parameter to contract or expand the area in which you can point. For example, if you set the clampRatio parameter to 0.5, then the positions reported for intersection points outside the central 50% of the screen are moved to the border of this smaller area. If, on the other hand, you expanded the area by setting clampRatio to a value such as 3.0, then you could point well outside screen&apos;s physical boundary before the intersection points would be clamped. The positions for any points clamped would also be placed on this larger outer border. The positions reported for any intersection points inside the clamping border are unaffected by clamping.</para><para><programlisting></programlisting></para><para>If the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object does not point toward the plane of the screen (i.e. it is pointing parallel to or away from the screen), then the components of the returned vector are all set to NaN (not-a-number).</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pointable</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object to check for screen intersection.</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>normalize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, return normalized coordinates representing the intersection point as a percentage of the screen&apos;s width and height. If false, return Leap coordinates (millimeters from the Leap origin, which is located at the center of the top surface of the Leap device). If true and the clampRatio parameter is set to 1.0, coordinates will be of the form (0..1, 0..1, 0). Setting the clampRatio to a different value changes the range for normalized coordinates. For example, a clampRatio of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clampRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Adjusts the clamping border around this screen. By default this ratio is 1.0, and the border corresponds to the actual boundaries of the screen. Setting clampRatio to 0.5 would reduce the interaction area. Likewise, setting the ratio to 2.0 would increase the interaction area, adding 50% around each edge of the physical monitor. Intersection points outside the interaction area are repositioned to the closest point on the clamping border before the vector is returned.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the intersection between this screen and a ray projecting from the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="218" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="218" bodyend="220"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1ab104f619cd94ec5ff26bcaf57ea86538" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.intersect</definition>
+        <argsstring>(Vector position, Vector direction, boolean normalize, float clampRatio)</argsstring>
+        <name>intersect</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>direction</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>normalize</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>clampRatio</declname>
+        </param>
+        <briefdescription>
+<para>Returns the intersection between this screen and a ray projecting from the specified position along the specified direction. </para>        </briefdescription>
+        <detaileddescription>
+<para>Set the normalize parameter to true to request the intersection point in normalized screen coordinates. Normalized screen coordinates are usually values between 0 and 1, where 0 represents the screen&apos;s origin at the bottom-left corner and 1 represents the opposite edge (either top or right). When you request normalized coordinates, the z-component of the returned vector is zero. Multiply a normalized coordinate by the values returned by <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" kindref="member">Screen::widthPixels()</ref> or <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" kindref="member">Screen::heightPixels()</ref> to calculate the screen position in pixels (remembering that many other computer graphics coordinate systems place the origin in the top-left corner).</para><para>Set the normalize parameter to false to request the intersection point in Leap coordinates (millimeters from the Leap origin).</para><para>If the specified ray points outside the screen&apos;s border (but still intersects the plane in which the screen lies), the returned intersection point is clamped to the nearest point on the edge of the screen.</para><para>You can use the clampRatio parameter to contract or expand the area in which you can point. For example, if you set the clampRatio parameter to 0.5, then the positions reported for intersection points outside the central 50% of the screen are moved to the border of this smaller area. If, on the other hand, you expanded the area by setting clampRatio to a value such as 3.0, then you could point well outside screen&apos;s physical boundary before the intersection points would be clamped. The positions for any points clamped would also be placed on this larger outer border. The positions reported for any intersection points inside the clamping border are unaffected by clamping.</para><para>If the specified ray does not point toward the plane of the screen (i.e. it is pointing parallel to or away from the screen), then the components of the returned vector are all set to NaN (not-a-number).</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position from which to check for screen intersection. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>direction</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The direction in which to check for screen intersection.</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>normalize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, return normalized coordinates representing the intersection point as a percentage of the screen&apos;s width and height. If false, return Leap coordinates (millimeters from the Leap origin, which is located at the center of the top surface of the Leap device). If true and the clampRatio parameter is set to 1.0, coordinates will be of the form (0..1, 0..1, 0). Setting the clampRatio to a different value changes the range for normalized coordinates. For example, a clampRatio of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clampRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Adjusts the clamping border around this screen. By default this ratio is 1.0, and the border corresponds to the actual boundaries of the screen. Setting clampRatio to 0.5 would reduce the interaction area. Likewise, setting the ratio to 2.0 would increase the interaction area, adding 50% around each edge of the physical monitor. Intersection points outside the interaction area are repositioned to the closest point on the clamping border before the vector is returned.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the intersection between this screen and a ray projecting from the specified position in the specified direction. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="283" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="283" bodyend="285"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0de3a92f06b02838f8e71f028a7800b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.intersect</definition>
+        <argsstring>(Vector position, Vector direction, boolean normalize)</argsstring>
+        <name>intersect</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>direction</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>normalize</declname>
+        </param>
+        <briefdescription>
+<para>Returns the intersection between this screen and a ray projecting from the specified position along the specified direction. </para>        </briefdescription>
+        <detaileddescription>
+<para>Set the normalize parameter to true to request the intersection point in normalized screen coordinates. Normalized screen coordinates are usually values between 0 and 1, where 0 represents the screen&apos;s origin at the bottom-left corner and 1 represents the opposite edge (either top or right). When you request normalized coordinates, the z-component of the returned vector is zero. Multiply a normalized coordinate by the values returned by <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" kindref="member">Screen::widthPixels()</ref> or <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" kindref="member">Screen::heightPixels()</ref> to calculate the screen position in pixels (remembering that many other computer graphics coordinate systems place the origin in the top-left corner).</para><para>Set the normalize parameter to false to request the intersection point in Leap coordinates (millimeters from the Leap origin).</para><para>If the specified ray points outside the screen&apos;s border (but still intersects the plane in which the screen lies), the returned intersection point is clamped to the nearest point on the edge of the screen.</para><para>You can use the clampRatio parameter to contract or expand the area in which you can point. For example, if you set the clampRatio parameter to 0.5, then the positions reported for intersection points outside the central 50% of the screen are moved to the border of this smaller area. If, on the other hand, you expanded the area by setting clampRatio to a value such as 3.0, then you could point well outside screen&apos;s physical boundary before the intersection points would be clamped. The positions for any points clamped would also be placed on this larger outer border. The positions reported for any intersection points inside the clamping border are unaffected by clamping.</para><para>If the specified ray does not point toward the plane of the screen (i.e. it is pointing parallel to or away from the screen), then the components of the returned vector are all set to NaN (not-a-number).</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position from which to check for screen intersection. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>direction</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The direction in which to check for screen intersection.</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>normalize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, return normalized coordinates representing the intersection point as a percentage of the screen&apos;s width and height. If false, return Leap coordinates (millimeters from the Leap origin, which is located at the center of the top surface of the Leap device). If true and the clampRatio parameter is set to 1.0, coordinates will be of the form (0..1, 0..1, 0). Setting the clampRatio to a different value changes the range for normalized coordinates. For example, a clampRatio of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clampRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Adjusts the clamping border around this screen. By default this ratio is 1.0, and the border corresponds to the actual boundaries of the screen. Setting clampRatio to 0.5 would reduce the interaction area. Likewise, setting the ratio to 2.0 would increase the interaction area, adding 50% around each edge of the physical monitor. Intersection points outside the interaction area are repositioned to the closest point on the clamping border before the vector is returned.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the intersection between this screen and a ray projecting from the specified position in the specified direction. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="348" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="348" bodyend="350"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a8804f80b992b43d46d29e27bfe9be417" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Screen.isValid</definition>
+        <argsstring>()</argsstring>
+        <name>isValid</name>
+        <briefdescription>
+<para>Reports whether this is a valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><bold>Important:</bold> A valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object does not necessarily contain up-to-date screen location information. Location information is only accurate until the Leap device or the monitor are moved. In addition, the primary screen always contains default location information even if the user has never run the screen location utility. This default location information will not return accurate results.</para><para><simplesect kind="return"><para>True, if this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object contains valid data. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="581" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="581" bodyend="583"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a16c58729697811e93b7656c94a902254" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.normal</definition>
+        <argsstring>()</argsstring>
+        <name>normal</name>
+        <briefdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> normal to the plane in which this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> lies. </para>        </briefdescription>
+        <detaileddescription>
+<para>The normal vector is a unit direction vector orthogonal to the screen&apos;s surface plane. It points toward a viewer positioned for typical use of the monitor.</para><para><simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> representing this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref>&apos;s normal vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="532" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="532" bodyend="534"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a117a8cdd78d4bb7c553b5bfde35f0c23" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.project</definition>
+        <argsstring>(Vector position, boolean normalize, float clampRatio)</argsstring>
+        <name>project</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>normalize</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>clampRatio</declname>
+        </param>
+        <briefdescription>
+<para>Returns the projection from the specified position onto this screen. </para>        </briefdescription>
+        <detaileddescription>
+<para>Set the normalize parameter to true to request the projection point in normalized screen coordinates. Normalized screen coordinates are usually values between 0 and 1, where 0 represents the screen&apos;s origin at the bottom-left corner and 1 represents the opposite edge (either top or right). When you request normalized coordinates, the z-component of the returned vector is zero. Multiply a normalized coordinate by the values returned by <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" kindref="member">Screen::widthPixels()</ref> or <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" kindref="member">Screen::heightPixels()</ref> to calculate the screen position in pixels (remembering that many other computer graphics coordinate systems place the origin in the top-left corner).</para><para>Set the normalize parameter to false to request the projection point in Leap coordinates (millimeters from the Leap origin).</para><para>If the specified point projects outside the screen&apos;s border, the returned projection point is clamped to the nearest point on the edge of the screen.</para><para>You can use the clampRatio parameter to contract or expand the area in which you can point. For example, if you set the clampRatio parameter to 0.5, then the positions reported for projection points outside the central 50% of the screen are moved to the border of this smaller area. If, on the other hand, you expanded the area by setting clampRatio to a value such as 3.0, then you could point well outside screen&apos;s physical boundary before the projection points would be clamped. The positions for any points clamped would also be placed on this larger outer border. The positions reported for any projection points inside the clamping border are unaffected by clamping.</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position from which to project onto this screen.</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>normalize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, return normalized coordinates representing the projection point as a percentage of the screen&apos;s width and height. If false, return Leap coordinates (millimeters from the Leap origin, which is located at the center of the top surface of the Leap device). If true and the clampRatio parameter is set to 1.0, coordinates will be of the form (0..1, 0..1, 0). Setting the clampRatio to a different value changes the range for normalized coordinates. For example, a clampRatio of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clampRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Adjusts the clamping border around this screen. By default this ratio is 1.0, and the border corresponds to the actual boundaries of the screen. Setting clampRatio to 0.5 would reduce the interaction area. Likewise, setting the ratio to 2.0 would increase the interaction area, adding 50% around each edge of the physical monitor. Projection points outside the interaction area are repositioned to the closest point on the clamping border before the vector is returned.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the projection between this screen and a ray projecting from the specified position onto the screen along its normal vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="406" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="406" bodyend="408"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a76c6c7ee26da36c576869aa6fca97ec5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.project</definition>
+        <argsstring>(Vector position, boolean normalize)</argsstring>
+        <name>project</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>normalize</declname>
+        </param>
+        <briefdescription>
+<para>Returns the projection from the specified position onto this screen. </para>        </briefdescription>
+        <detaileddescription>
+<para>Set the normalize parameter to true to request the projection point in normalized screen coordinates. Normalized screen coordinates are usually values between 0 and 1, where 0 represents the screen&apos;s origin at the bottom-left corner and 1 represents the opposite edge (either top or right). When you request normalized coordinates, the z-component of the returned vector is zero. Multiply a normalized coordinate by the values returned by <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" kindref="member">Screen::widthPixels()</ref> or <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" kindref="member">Screen::heightPixels()</ref> to calculate the screen position in pixels (remembering that many other computer graphics coordinate systems place the origin in the top-left corner).</para><para>Set the normalize parameter to false to request the projection point in Leap coordinates (millimeters from the Leap origin).</para><para>If the specified point projects outside the screen&apos;s border, the returned projection point is clamped to the nearest point on the edge of the screen.</para><para>You can use the clampRatio parameter to contract or expand the area in which you can point. For example, if you set the clampRatio parameter to 0.5, then the positions reported for projection points outside the central 50% of the screen are moved to the border of this smaller area. If, on the other hand, you expanded the area by setting clampRatio to a value such as 3.0, then you could point well outside screen&apos;s physical boundary before the projection points would be clamped. The positions for any points clamped would also be placed on this larger outer border. The positions reported for any projection points inside the clamping border are unaffected by clamping.</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position from which to project onto this screen.</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>normalize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, return normalized coordinates representing the projection point as a percentage of the screen&apos;s width and height. If false, return Leap coordinates (millimeters from the Leap origin, which is located at the center of the top surface of the Leap device). If true and the clampRatio parameter is set to 1.0, coordinates will be of the form (0..1, 0..1, 0). Setting the clampRatio to a different value changes the range for normalized coordinates. For example, a clampRatio of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).</para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clampRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Adjusts the clamping border around this screen. By default this ratio is 1.0, and the border corresponds to the actual boundaries of the screen. Setting clampRatio to 0.5 would reduce the interaction area. Likewise, setting the ratio to 2.0 would increase the interaction area, adding 50% around each edge of the physical monitor. Projection points outside the interaction area are repositioned to the closest point on the clamping border before the vector is returned.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the projection between this screen and a ray projecting from the specified position onto the screen along its normal vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="464" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="464" bodyend="466"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a73d3f48363688cf3f2a7990a62ccfb6a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Screen.Screen</definition>
+        <argsstring>()</argsstring>
+        <name>Screen</name>
+        <briefdescription>
+<para>Constructs a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>An uninitialized screen is considered invalid. Get valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> objects from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list" kindref="compound">ScreenList</ref> object obtained using the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_controller_1a566d7f4f612e29d1ec443ffcc4fdaa0b" kindref="member">Controller::calibratedScreens()</ref> method. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="71" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="71" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a6c4b9dab3eec68cafda31c1d4173ccfb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>String</type>
+        <definition>String com.leapmotion.leap.Screen.toString</definition>
+        <argsstring>()</argsstring>
+        <name>toString</name>
+        <briefdescription>
+<para>A string containing a brief, human readable description of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A description of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> as a string. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="615" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="615" bodyend="617"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a275a06f4572ef4c37a862f705bb21bae" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Screen.verticalAxis</definition>
+        <argsstring>()</argsstring>
+        <name>verticalAxis</name>
+        <briefdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> representing the vertical axis of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> within the Leap coordinate system. </para>        </briefdescription>
+        <detaileddescription>
+<para>The magnitude of this vector estimates the physical height of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> in millimeters. The direction of this vector is parallel to the left edge of the screen and points toward the top edge of the screen.</para><para>Together, <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1adc291ef5b94913e54c4250da15c666dd" kindref="member">horizontalAxis()</ref>, <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a275a06f4572ef4c37a862f705bb21bae" kindref="member">verticalAxis()</ref>, and <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a9d9fc867c67a9e76d62af5108f31367f" kindref="member">bottomLeftCorner()</ref> describe the physical position, size and orientation of this screen.</para><para><simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> representing the left, vertical edge of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref>. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="500" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="500" bodyend="502"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.Screen.widthPixels</definition>
+        <argsstring>()</argsstring>
+        <name>widthPixels</name>
+        <briefdescription>
+<para>The horizontal resolution of this screen, in pixels. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The width of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> in pixels. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="542" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="542" bodyend="544"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_1a59b8a3e73e63fdbb720925c6bd4c52a4" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+        <definition>static Screen com.leapmotion.leap.Screen.invalid</definition>
+        <argsstring>()</argsstring>
+        <name>invalid</name>
+        <briefdescription>
+<para>Returns an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>You can use the instance returned by this function in comparisons testing whether a given <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> instance is valid or invalid. (You can also use the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a8804f80b992b43d46d29e27bfe9be417" kindref="member">Screen::isValid()</ref> function.)</para><para><simplesect kind="return"><para>The invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> instance. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="595" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="595" bodyend="597"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> class represents a computer monitor screen. </para>    </briefdescription>
+    <detaileddescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> class reports characteristics describing the position and orientation of the monitor screen within the Leap coordinate system. These characteristics include the bottom-left corner position of the screen, direction vectors for the horizontal and vertical axes of the screen, and the screen&apos;s normal vector. The screen must be properly registered with the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> Locator for the Leap to report these characteristics accurately. The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> class also reports the size of the screen in pixels, using information obtained from the operating system. (Run the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> Locator from the Leap Application Settings dialog, on the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> page.)</para><para>You can get the point of intersection between the screen and a ray projected from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object using the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a4b8a8b37c26147deff0707112123bafe" kindref="member">Screen::intersect()</ref> function. Likewise, you can get the closest point on the screen to a point in space using the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a117a8cdd78d4bb7c553b5bfde35f0c23" kindref="member">Screen::project()</ref> function. Again, the screen location must be registered with the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> Locator for these functions to return accurate values.</para><para>Note that <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> objects can be invalid, which means that they do not contain valid screen coordinate data and do not correspond to a physical entity. Test for validity with the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a8804f80b992b43d46d29e27bfe9be417" kindref="member">Screen::isValid()</ref> function. </para>    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" line="36" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Screen.java" bodystart="36" bodyend="619"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a9d9fc867c67a9e76d62af5108f31367f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>bottomLeftCorner</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1aaff2883cecf9de24d798f670b2638576" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a3944427f7ab482cb79cb0cd0fe62d396" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>distanceToPoint</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1ad40b7c54aef7d8bb55caf654b6ac7bdc" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0352f668cccf21a4a94cf3ed85ec575d" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a7210ae8b40ea6d64d7a59f7feaa07865" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::Screen</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0430a290919b6c494538a598260ead2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>heightPixels</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1adc291ef5b94913e54c4250da15c666dd" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>horizontalAxis</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a7e259d19686e894620125b3db791e04b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>id</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a4b8a8b37c26147deff0707112123bafe" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>intersect</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1ab26a1ab014b00e3b431c319f31042d46" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>intersect</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1ab104f619cd94ec5ff26bcaf57ea86538" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>intersect</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1af0de3a92f06b02838f8e71f028a7800b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>intersect</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a59b8a3e73e63fdbb720925c6bd4c52a4" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>invalid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a8804f80b992b43d46d29e27bfe9be417" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a16c58729697811e93b7656c94a902254" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>normal</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a117a8cdd78d4bb7c553b5bfde35f0c23" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>project</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a76c6c7ee26da36c576869aa6fca97ec5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>project</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1ac293bd714f672d6f6d2b90bab4ecce8a" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>Screen</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a73d3f48363688cf3f2a7990a62ccfb6a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>Screen</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a50ee57f8527a7dea750537ab92aa428b" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a6c4b9dab3eec68cafda31c1d4173ccfb" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a275a06f4572ef4c37a862f705bb21bae" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>verticalAxis</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_1a0a307da9d78fd4c7fcbe046df4defc93" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Screen</scope><name>widthPixels</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -169,14 +169,27 @@ Additional Inherited Members</h2></td></tr>
 <img src="Leap_Gesture_Circle.png" alt="Leap_Gesture_Circle.png"/>
 </div>
 <p><b>Important:</b> To use circle gestures in your application, you must enable recognition of the circle gesture. You can enable recognition with:</p>
-<p>Controller::enableGesture(Gesture::TYPE_CIRCLE);</p>
-<p>Circle gestures are continuous. The <a class="el" href="class_leap_1_1_circle_gesture.html" title="The CircleGesture classes represents a circular finger movement.">CircleGesture</a> objects for the gesture have three possible states:</p>
+<div class="fragment"><div class="line">    controller.enableGesture(<a class="code" href="class_leap_1_1_gesture.html#a6fa6dd4f28c502f0d55abc6b71c6f9b1a32c2a26d674d97f9c9b2e72569ff6869" title="A circular movement by a finger.">Gesture::TYPE_CIRCLE</a>);</div>
+</div><!-- fragment --><p>Circle gestures are continuous. The <a class="el" href="class_leap_1_1_circle_gesture.html" title="The CircleGesture classes represents a circular finger movement.">CircleGesture</a> objects for the gesture have three possible states:</p>
 <ul>
 <li>State::STATE_START &ndash; The circle gesture has just started. The movement has progressed far enough for the recognizer to classify it as a circle.</li>
 <li>State::STATE_UPDATE &ndash; The circle gesture is continuing.</li>
-<li>State::STATE_STOP &ndash; The circle gesture is finished. </li>
+<li>State::STATE_STOP &ndash; The circle gesture is finished.</li>
 </ul>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>You can set the minimum radius and minimum arc length required for a movement to be recognized as a circle using the config attribute of a connected <a class="el" href="class_leap_1_1_controller.html" title="The Controller class is your main interface to the Leap Motion Controller.">Controller</a> object. Use the following keys to configure circle recognition:</p>
+<table class="doxtable">
+<tr>
+<th>Key string </th><th>Value type </th><th>Default value </th><th>Units</th></tr>
+<tr>
+<td>Gesture.Circle.MinRadius </td><td>float </td><td>5.0 </td><td>mm </td></tr>
+<tr>
+<td>Gesture.Circle.MinArc </td><td>float </td><td>1.5 </td><td>radians </td></tr>
+</table>
+<p>The following example demonstrates how to set the circle configuration parameters:</p>
+<div class="fragment"><div class="line">    <span class="keywordflow">if</span>(controller.config().setFloat(<span class="stringliteral">&quot;Gesture.Circle.MinRadius&quot;</span>, 10.0) &amp;&amp;</div>
+<div class="line">       controller.config().setFloat(<span class="stringliteral">&quot;Gesture.Circle.MinArc&quot;</span>, .5))</div>
+<div class="line">        controller.config().save();</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a971f5a7e5122e296b882b583eec84851"></a>
 <div class="memitem">
 <div class="memproto">

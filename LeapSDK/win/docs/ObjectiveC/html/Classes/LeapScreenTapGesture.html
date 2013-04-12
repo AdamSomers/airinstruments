@@ -24,35 +24,35 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/direction">&nbsp;&nbsp;&nbsp;&nbsp;- direction</option>
-	
-	<option value="//api/name/pointable">&nbsp;&nbsp;&nbsp;&nbsp;- pointable</option>
-	
-	<option value="//api/name/position">&nbsp;&nbsp;&nbsp;&nbsp;- position</option>
-	
-	<option value="//api/name/progress">&nbsp;&nbsp;&nbsp;&nbsp;- progress</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/direction">&nbsp;&nbsp;&nbsp;&nbsp;- direction</option>
+
+<option value="//api/name/pointable">&nbsp;&nbsp;&nbsp;&nbsp;- pointable</option>
+
+<option value="//api/name/position">&nbsp;&nbsp;&nbsp;&nbsp;- position</option>
+
+<option value="//api/name/progress">&nbsp;&nbsp;&nbsp;&nbsp;- progress</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -90,6 +90,8 @@
 </ul></li>
 
 
+
+
 			</ul>
 		</nav>
 		<article>
@@ -97,8 +99,8 @@
 				<a title="LeapScreenTapGesture Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -110,11 +112,11 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Inherits from</td>
-	<td class="specification-value"><a href="../Classes/LeapGesture.html">LeapGesture</a> : NSObject</td>
+<td class="specification-title">Inherits from</td>
+<td class="specification-value"><a href="../Classes/LeapGesture.html">LeapGesture</a> : NSObject</td>
 </tr><tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -135,11 +137,58 @@ tapping a vertical screen. The tapping finger must pause briefly before beginnin
 <p><strong>Important:</strong> To use screen tap gestures in your application, you must enable<br/>
 recognition of the screen tap gesture. You can enable recognition with:</p>
 
-<p><code>[controller enableGesture:LEAP_GESTURE_TYPE_SCREEN_TAP enable:YES];</code></p>
+<pre><code>    [controller enableGesture:LEAP_GESTURE_TYPE_SCREEN_TAP enable:YES];  
+</code></pre>
 
 <p>LeapScreenTap gestures are discrete. The LeapScreenTapGesture object<br/>
 representing a tap always has the state, LEAP_GESTURE_STATE_STOP. Only one<br/>
 LeapScreenTapGesture object is created for each screen tap gesture recognized.</p>
+
+<p>You can set the minimum finger movement and velocity required for a movement<br/>
+to be recognized as a screen tap as well as adjust the detection window for<br/>
+evaluating the movement using the config attribute of a connected<br/>
+LeapController object. Use the following keys to configure screen tap recognition:</p>
+
+<table>
+<thead>
+<tr>
+<th>Key string </th>
+<th> Value type </th>
+<th> Default value </th>
+<th> Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gesture.ScreenTap.MinForwardVelocity  </td>
+<td> float </td>
+<td> 50 </td>
+<td> mm/s</td>
+</tr>
+<tr>
+<td>Gesture.ScreenTap.HistorySeconds </td>
+<td> float </td>
+<td> 0.1 </td>
+<td> s</td>
+</tr>
+<tr>
+<td>Gesture.ScreenTap.MinDistance </td>
+<td> float </td>
+<td> 5.0 </td>
+<td> mm</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>The following example demonstrates how to set the screen tap configuration<br/>
+parameters:</p>
+
+<pre><code>    if([controller.config setFloat:@"Gesture.ScreenTap.MinForwardVelocity" value:30.0] &amp;&amp;  
+       [controller.config setFloat:@"Gesture.ScreenTap.HistorySeconds" value:.5] &amp;&amp;  
+       [controller.config setFloat:@"Gesture.ScreenTap.MinDistance" value:1.0])  
+        [controller.config save];
+</code></pre>
 					</div>
 					
 					
@@ -387,17 +436,19 @@ LeapScreenTapGesture object is created for each screen tap gesture recognized.</
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-04-11)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -487,6 +538,7 @@ LeapScreenTapGesture object is created for each screen tap gesture recognized.</
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

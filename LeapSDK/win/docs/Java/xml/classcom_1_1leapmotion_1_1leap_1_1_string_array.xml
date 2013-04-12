@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_string_array" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::StringArray</compoundname>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a4a3b5a48118abfdcb5f55e4433e2dab5" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.StringArray.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="12" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a45ed1b8d3397f7cb0e96a035d16bb79c" prot="protected" static="no" mutable="no">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.StringArray.swigCMemOwn</definition>
+        <argsstring></argsstring>
+        <name>swigCMemOwn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="13" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1ae18b6206ca8c171c5fc1af8437b1d23e" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.StringArray.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="24" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="24" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a49ee08022a18f85a52b23e5b0aa80874" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.StringArray.StringArray</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>StringArray</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="15" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="15" bodyend="18"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1ad3b11329327f27b0100f5b5070645b51" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.StringArray.getCPtr</definition>
+        <argsstring>(StringArray obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type>StringArray</type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="20" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="20" bodyend="22"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1add287233c8d381ebf21b126dee4d9260" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.StringArray.add</definition>
+        <argsstring>(String x)</argsstring>
+        <name>add</name>
+        <param>
+          <type>String</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="66" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="66" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1ac5a4798fe5d4bb769947d66e70129915" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.StringArray.capacity</definition>
+        <argsstring>()</argsstring>
+        <name>capacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="50" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="50" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1af99c02fd4bf928dde32fdd42daf5ce45" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.StringArray.clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="62" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="62" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1aa5b187ff1041da08ecfcfb9240f0b9fe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.StringArray.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="28" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="28" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a23957101000ea58d79e2f15111cb53bf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>String</type>
+        <definition>String com.leapmotion.leap.StringArray.get</definition>
+        <argsstring>(int i)</argsstring>
+        <name>get</name>
+        <param>
+          <type>int</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="70" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="70" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a2bb772a0ade96612ec714c8a545e85ae" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.StringArray.isEmpty</definition>
+        <argsstring>()</argsstring>
+        <name>isEmpty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="58" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="58" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1afc12436e00a3127a52fd04d6b0620397" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.StringArray.reserve</definition>
+        <argsstring>(long n)</argsstring>
+        <name>reserve</name>
+        <param>
+          <type>long</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="54" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="54" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a0894670a5386ad4dd490c049b9a328e5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.StringArray.set</definition>
+        <argsstring>(int i, String val)</argsstring>
+        <name>set</name>
+        <param>
+          <type>int</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>String</type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="74" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="74" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a789398740a428e13897844e7e7cb3cbf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.StringArray.size</definition>
+        <argsstring>()</argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="46" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="46" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a819db4507f7babacb417dc53dfebe47f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.StringArray.StringArray</definition>
+        <argsstring>()</argsstring>
+        <name>StringArray</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="38" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="38" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a53b026b1682f18cb4748362e56c95ceb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.StringArray.StringArray</definition>
+        <argsstring>(long n)</argsstring>
+        <name>StringArray</name>
+        <param>
+          <type>long</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="42" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="42" bodyend="44"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" line="11" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/StringArray.java" bodystart="11" bodyend="78"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1add287233c8d381ebf21b126dee4d9260" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>add</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1ac5a4798fe5d4bb769947d66e70129915" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>capacity</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1af99c02fd4bf928dde32fdd42daf5ce45" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>clear</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1aa5b187ff1041da08ecfcfb9240f0b9fe" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1ae18b6206ca8c171c5fc1af8437b1d23e" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a23957101000ea58d79e2f15111cb53bf" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>get</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1ad3b11329327f27b0100f5b5070645b51" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a2bb772a0ade96612ec714c8a545e85ae" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>isEmpty</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1afc12436e00a3127a52fd04d6b0620397" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>reserve</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a0894670a5386ad4dd490c049b9a328e5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>set</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a789398740a428e13897844e7e7cb3cbf" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>size</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a49ee08022a18f85a52b23e5b0aa80874" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>StringArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a819db4507f7babacb417dc53dfebe47f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>StringArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a53b026b1682f18cb4748362e56c95ceb" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>StringArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a45ed1b8d3397f7cb0e96a035d16bb79c" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_string_array_1a4a3b5a48118abfdcb5f55e4433e2dab5" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::StringArray</scope><name>swigCPtr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

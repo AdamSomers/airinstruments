@@ -71,7 +71,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4bc27175479eb04efb1e8c6b02cc71c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of this list.  <a href="#a4bc27175479eb04efb1e8c6b02cc71c5"></a><br/></td></tr>
 <tr class="separator:a4bc27175479eb04efb1e8c6b02cc71c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8282b92d4cd004a81a38c4cadeca6431"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#a8282b92d4cd004a81a38c4cadeca6431">empty</a> ()</td></tr>
-<tr class="memdesc:a8282b92d4cd004a81a38c4cadeca6431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports whether the list is empty.  <a href="#a8282b92d4cd004a81a38c4cadeca6431"></a><br/></td></tr>
+<tr class="memdesc:a8282b92d4cd004a81a38c4cadeca6431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deprecated.  <a href="#a8282b92d4cd004a81a38c4cadeca6431"></a><br/></td></tr>
 <tr class="separator:a8282b92d4cd004a81a38c4cadeca6431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2b91c8b1f8ac1226de6be4c0de9ff7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#af2b91c8b1f8ac1226de6be4c0de9ff7d">GestureList</a> ()</td></tr>
 <tr class="memdesc:af2b91c8b1f8ac1226de6be4c0de9ff7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty gesture list.  <a href="#af2b91c8b1f8ac1226de6be4c0de9ff7d"></a><br/></td></tr>
@@ -79,6 +79,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af3708ee5e8ced81bebbd74299378e30a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture.html">Gesture</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#af3708ee5e8ced81bebbd74299378e30a">get</a> (int index)</td></tr>
 <tr class="memdesc:af3708ee5e8ced81bebbd74299378e30a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access a list member by its position in the list.  <a href="#af3708ee5e8ced81bebbd74299378e30a"></a><br/></td></tr>
 <tr class="separator:af3708ee5e8ced81bebbd74299378e30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa685d4d5c0635cf8f97314a1e337d0ee"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#aa685d4d5c0635cf8f97314a1e337d0ee">isEmpty</a> ()</td></tr>
+<tr class="memdesc:aa685d4d5c0635cf8f97314a1e337d0ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports whether the list is empty.  <a href="#aa685d4d5c0635cf8f97314a1e337d0ee"></a><br/></td></tr>
+<tr class="separator:aa685d4d5c0635cf8f97314a1e337d0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html" title="The GestureList class represents a list of Gesture objects.">GestureList</a> class represents a list of <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture.html" title="The Gesture class represents a recognized movement by the user.">Gesture</a> objects. </p>
@@ -157,8 +160,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reports whether the list is empty. </p>
-<dl class="section return"><dt>Returns</dt><dd>True, if the list has no members. </dd></dl>
+<p>Deprecated. </p>
+<p>Use <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#aa685d4d5c0635cf8f97314a1e337d0ee" title="Reports whether the list is empty.">GestureList::isEmpty()</a> instead. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#aa685d4d5c0635cf8f97314a1e337d0ee" title="Reports whether the list is empty.">GestureList::isEmpty()</a> </dd></dl>
 
 </div>
 </div>
@@ -187,13 +191,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aa685d4d5c0635cf8f97314a1e337d0ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean com.leapmotion.leap.GestureList.isEmpty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reports whether the list is empty. </p>
+<dl class="section return"><dt>Returns</dt><dd>True, if the list has no members. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>com</b></li><li class="navelem"><b>leapmotion</b></li><li class="navelem"><b>leap</b></li><li class="navelem"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html">GestureList</a></li>
-    <li class="footer">Generated on Mon Mar 25 2013 18:41:47 for Leap Java API Reference by
+    <li class="footer">Generated on Thu Apr 11 2013 19:37:29 for Leap Java API Reference by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>

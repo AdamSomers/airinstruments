@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="_config_8java" kind="file">
+    <compoundname>Config.java</compoundname>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_config" prot="public">com::leapmotion::leap::Config</innerclass>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type_1_1_swig_next" prot="private">com::leapmotion::leap::Config::ValueType::SwigNext</innerclass>
+    <innerclass refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" prot="public">com::leapmotion::leap::Config::ValueType</innerclass>
+    <innernamespace refid="namespacecom_1_1leapmotion_1_1leap">com::leapmotion::leap</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*<sp/>----------------------------------------------------------------------------</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>was<sp/>automatically<sp/>generated<sp/>by<sp/>SWIG<sp/>(http://www.swig.org).</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>Version<sp/>2.0.6</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Do<sp/>not<sp/>make<sp/>changes<sp/>to<sp/>this<sp/>file<sp/>unless<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing--modify</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>the<sp/>SWIG<sp/>interface<sp/>file<sp/>instead.</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>-----------------------------------------------------------------------------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">package<sp/></highlight><highlight class="normal">com.leapmotion.leap;</highlight></codeline>
+<codeline lineno="18" refid="classcom_1_1leapmotion_1_1leap_1_1_config" refkind="compound"><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config" kindref="compound" tooltip="The Config class provides access to Leap system configuration information.">Config</ref><sp/></highlight><highlight class="keyword">extends</highlight><highlight class="normal"><sp/>Interface<sp/>{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>swigCPtr;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a27f0fe3690e0de400698fa6266d7d5e0" kindref="member" tooltip="Constructs a Config object.">Config</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>cPtr,<sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/>cMemoryOwn)<sp/>{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>super(LeapJNI.Config_SWIGUpcast(cPtr),<sp/>cMemoryOwn);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>swigCPtr<sp/>=<sp/>cPtr;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>getCPtr(<ref refid="classcom_1_1leapmotion_1_1leap_1_1_config" kindref="compound" tooltip="The Config class provides access to Leap system configuration information.">Config</ref><sp/>obj)<sp/>{</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(obj<sp/>==<sp/>null)<sp/>?<sp/>0<sp/>:<sp/>obj.swigCPtr;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>finalize()<sp/>{</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">();</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">synchronized</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">()<sp/>{</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(swigCPtr<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(swigCMemOwn)<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>swigCMemOwn<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LeapJNI.delete_Config(swigCPtr);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>swigCPtr<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>super.delete();</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a27f0fe3690e0de400698fa6266d7d5e0" kindref="member" tooltip="Constructs a Config object.">Config</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">(LeapJNI.new_Config(),<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config" kindref="compound" tooltip="The Config class provides access to Leap system configuration information.">Config</ref>.ValueType<sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a045db7e824cfbb29b3ac81abcbda7159" kindref="member" tooltip="Reports the natural data type for the value related to the specified key.">type</ref>(String<sp/>key)<sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config" kindref="compound" tooltip="The Config class provides access to Leap system configuration information.">Config</ref>.ValueType.swigToEnum(LeapJNI.Config_type(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key));</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a50f4e307e234b2387b64f416732e1e07" kindref="member" tooltip="Gets the boolean representation for the specified key.">getBool</ref>(String<sp/>key)<sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_getBool(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a2184b415f2f4c2f8e1c4fb2faf9479c4" kindref="member" tooltip="Sets the boolean representation for the specified key.">setBool</ref>(String<sp/>key,<sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_setBool(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key,<sp/>value);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a2edc24df6e3cf0d5393f4a2329b759ad" kindref="member" tooltip="Gets the 32-bit integer representation for the specified key.">getInt32</ref>(String<sp/>key)<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_getInt32(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a6d3fa3e078341d4a753e2d41e4e6046a" kindref="member" tooltip="Sets the 32-bit integer representation for the specified key.">setInt32</ref>(String<sp/>key,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_setInt32(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key,<sp/>value);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a49ffe2193e8afe570121f7ba67b1e897" kindref="member" tooltip="Gets the floating point representation for the specified key.">getFloat</ref>(String<sp/>key)<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_getFloat(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1a4d20230735e6f6379a68891ee1c914fd" kindref="member" tooltip="Sets the floating point representation for the specified key.">setFloat</ref>(String<sp/>key,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_setFloat(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key,<sp/>value);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>String<sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1ac7b16ec05befb0eeb35a8f9361ffbbc7" kindref="member" tooltip="The following gesture recognition tuning parameters are exposed via getFloat()/setFloat() &amp;quot;gesture_Ci...">getString</ref>(String<sp/>key)<sp/>{</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_getString(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1abe8c00a5d6d7d647692ad4df6242fdf7" kindref="member" tooltip="Sets the string representation for the specified key.">setString</ref>(String<sp/>key,<sp/>String<sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_setString(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>key,<sp/>value);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_config_1ac469b73f7cb38c301e49fb111e9c0405" kindref="member" tooltip="Saves the current state of the config.">save</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.Config_save(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref><sp/>{</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>TYPE_UNKNOWN(0),</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>TYPE_BOOLEAN(1),</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>TYPE_INT32(2),</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/>TYPE_FLOAT(6),</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>TYPE_STRING(8),</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/>;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>swigValue()<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>swigValue;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref><sp/>swigToEnum(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>swigValue)<sp/>{</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref>[]<sp/>swigValues<sp/>=<sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref>.class.getEnumConstants();</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(swigValue<sp/>&lt;<sp/>swigValues.length<sp/>&amp;&amp;<sp/>swigValue<sp/>&gt;=<sp/>0<sp/>&amp;&amp;<sp/>swigValues[swigValue].swigValue<sp/>==<sp/>swigValue)</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>swigValues[swigValue];</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref><sp/>swigEnum<sp/>:<sp/>swigValues)</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(swigEnum.swigValue<sp/>==<sp/>swigValue)</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>swigEnum;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/>IllegalArgumentException(</highlight><highlight class="stringliteral">&quot;No<sp/>enum<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref>.class<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>with<sp/>value<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>swigValue);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>@SuppressWarnings(</highlight><highlight class="stringliteral">&quot;unused&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.swigValue<sp/>=<sp/>SwigNext.next++;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/>@SuppressWarnings(</highlight><highlight class="stringliteral">&quot;unused&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>swigValue)<sp/>{</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.swigValue<sp/>=<sp/>swigValue;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>SwigNext.next<sp/>=<sp/>swigValue+1;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>@SuppressWarnings(</highlight><highlight class="stringliteral">&quot;unused&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/><ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref>(<ref refid="enumcom_1_1leapmotion_1_1leap_1_1_config_1_1_value_type" kindref="compound" tooltip="Enumerates the possible data types for configuration values.">ValueType</ref><sp/>swigEnum)<sp/>{</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.swigValue<sp/>=<sp/>swigEnum.swigValue;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>SwigNext.next<sp/>=<sp/>this.swigValue+1;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>swigValue;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">SwigNext<sp/>{</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>next<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Config.java"/>
+  </compounddef>
+</doxygen>

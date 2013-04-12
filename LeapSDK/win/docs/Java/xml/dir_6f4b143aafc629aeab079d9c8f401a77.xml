@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="dir_6f4b143aafc629aeab079d9c8f401a77" kind="dir">
+    <compoundname>/Volumes/LEAP/docs-build/temp/java</compoundname>
+    <innerdir refid="dir_270f00a52c7ce0f5d1191211cfde0ea3">/Volumes/LEAP/docs-build/temp/java/com</innerdir>
+    <innerfile refid="_leap__wrap__java_8cpp">Leap_wrap_java.cpp</innerfile>
+    <innerfile refid="_leap__wrap__java_8h">Leap_wrap_java.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/"/>
+  </compounddef>
+</doxygen>

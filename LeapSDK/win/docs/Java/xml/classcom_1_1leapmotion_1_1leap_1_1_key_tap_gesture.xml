@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::KeyTapGesture</compoundname>
+    <basecompoundref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" prot="public" virt="non-virtual">com.leapmotion.leap.Gesture</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a825ee5628ed5069d4237f8186e1befa7" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.KeyTapGesture.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="31" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a796f6fe6b56455dbdef57375b1b46904" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.KeyTapGesture.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="42" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="42" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a00d95f8f2690d50bf7d9b4e5162e598f" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.KeyTapGesture.KeyTapGesture</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>KeyTapGesture</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="33" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="33" bodyend="36"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a364e02933b32befbf4e4f97a35701877" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.KeyTapGesture.getCPtr</definition>
+        <argsstring>(KeyTapGesture obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="38" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="38" bodyend="40"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1ac6bb792e04d233e6e1a6e1c86dc307b8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.KeyTapGesture.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="46" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="46" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1aac4f485db17eaf4c7c12a000305c5ad3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.KeyTapGesture.direction</definition>
+        <argsstring>()</argsstring>
+        <name>direction</name>
+        <briefdescription>
+<para>The direction of finger tip motion. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> A unit direction vector if the finger tip is moving; otherwise, a zero-vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="106" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="106" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1ad54b78d9498062467e78d1c80861fcca" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.KeyTapGesture.KeyTapGesture</definition>
+        <argsstring>()</argsstring>
+        <name>KeyTapGesture</name>
+        <briefdescription>
+<para>Constructs a new <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>An uninitialized <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> object is considered invalid. Get valid instances of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> class from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> object. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="74" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="74" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1ab57151d61e90b7916c0032d5dc678516" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.KeyTapGesture.KeyTapGesture</definition>
+        <argsstring>(Gesture rhs)</argsstring>
+        <name>KeyTapGesture</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+<para>Constructs a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> object from an instance of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> class. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rhs</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> instance to specialize. This <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> instance must be a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="85" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="85" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1af69aa682632c33ab53b47edaddc0bf05" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+        <definition>Pointable com.leapmotion.leap.KeyTapGesture.pointable</definition>
+        <argsstring>()</argsstring>
+        <name>pointable</name>
+        <briefdescription>
+<para>The finger performing the key tap gesture. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object representing the tapping finger. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="126" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="126" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a1dfcb2c95a4a938088d1673b1ce509c8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.KeyTapGesture.position</definition>
+        <argsstring>()</argsstring>
+        <name>position</name>
+        <briefdescription>
+<para>The position where the key tap is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of tap location. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="95" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="95" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1adc4960b3b5a79e4ddda6e732bdf84936" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.KeyTapGesture.progress</definition>
+        <argsstring>()</argsstring>
+        <name>progress</name>
+        <briefdescription>
+<para>The progess value is always 1.0 for a key tap gesture. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>float The value 1.0. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="116" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="116" bodyend="118"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1abc1c883ed18f1a3dc34467c87ca1525c" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Gesture.Type</type>
+        <definition>static Gesture.Type com.leapmotion.leap.KeyTapGesture.classType</definition>
+        <argsstring>()</argsstring>
+        <name>classType</name>
+        <briefdescription>
+<para>The key tap gesture type. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Type The type value designating a key tap gesture. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="63" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="63" bodyend="65"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> class represents a tapping gesture by a finger or tool. </para>    </briefdescription>
+    <detaileddescription>
+<para>A key tap gesture is recognized when the tip of a finger rotates down toward the palm and then springs back to approximately the original postion, as if tapping. The tapping finger must pause briefly before beginning the tap.</para><para><image type="html" name="Leap_Gesture_Tap.png"></image>
+</para><para><bold>Important:</bold> To use key tap gestures in your application, you must enable recognition of the key tap gesture. You can enable recognition with: <verbatim>Controller::enableGesture(Gesture::TYPE_KEY_TAP);
+</verbatim></para><para>Key tap gestures are discrete. The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> object representing a tap always has the state, STATE_STOP. Only one <ref refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture" kindref="compound">KeyTapGesture</ref> object is created for each key tap gesture recognized. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="64">
+        <label>com.leapmotion.leap.Gesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_gesture"/>
+      </node>
+      <node id="63">
+        <label>com.leapmotion.leap.KeyTapGesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture"/>
+        <childnode refid="64" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="66">
+        <label>com.leapmotion.leap.Gesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_gesture"/>
+      </node>
+      <node id="65">
+        <label>com.leapmotion.leap.KeyTapGesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture"/>
+        <childnode refid="66" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" line="30" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/KeyTapGesture.java" bodystart="30" bodyend="130"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1abc1c883ed18f1a3dc34467c87ca1525c" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>classType</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1ac6bb792e04d233e6e1a6e1c86dc307b8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1aac4f485db17eaf4c7c12a000305c5ad3" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>direction</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a762ca0339845c9fd8f56eb9c50a9d939" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>duration</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ade91b8b357a0b65559f0b6e92259611a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>durationSeconds</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a9d1e2879db9699c3376ecad4ac6b5326" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a796f6fe6b56455dbdef57375b1b46904" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1acd58fdacb406067210d346766317c73d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>frame</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a8a2c538af15c0678e7913cf4c1fa9b15" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ac29ba36fa9b334ce822936cf530b3aa7" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a16d3c85153f2c90a77ba8c5c74c055b8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a364e02933b32befbf4e4f97a35701877" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1aacff5dba75bff58ece36726127ffd4d8" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Gesture."><scope>com::leapmotion::leap::KeyTapGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::KeyTapGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a774b6b0a846bc908140a9695446ec398" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>hands</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ad3e6aa7ddce5cf3079bcc6259f7d7412" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>id</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a8a5bf5a6582c95367b8a46ac0a220da5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>invalid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a1fbc97e34f25c3e1bb2f6ffecc57c563" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a00d95f8f2690d50bf7d9b4e5162e598f" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>KeyTapGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1ad54b78d9498062467e78d1c80861fcca" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>KeyTapGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1ab57151d61e90b7916c0032d5dc678516" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>KeyTapGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1af69aa682632c33ab53b47edaddc0bf05" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a43e5763a3e347a066aabd5cac4e0f899" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>pointables</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a1dfcb2c95a4a938088d1673b1ce509c8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>position</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1adc4960b3b5a79e4ddda6e732bdf84936" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>progress</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a13f39cae216c5f285c526936a6b0af67" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>state</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_key_tap_gesture_1a825ee5628ed5069d4237f8186e1befa7" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a6e5c086a26fa919648e307887cdefcf2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a7420937c98ea7646f083e5c0a469fe3d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::KeyTapGesture</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

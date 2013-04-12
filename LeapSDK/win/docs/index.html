@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script language="javascript">
-		var shown = "cplusplus";
+		var shown = "initialmenu";
 		 
         function show(divName){
 
@@ -12,6 +12,10 @@
             oldDiv.style.display = 'none'; 
         }
 
+        //show menu div
+            var langMenuDiv = document.getElementById("langmenu"); 
+            langMenuDiv.style.display = 'block';
+			
         //show div
             var tempDiv = document.getElementById(divName); 
             tempDiv.style.display = 'block';              
@@ -41,11 +45,21 @@
 			-moz-box-shadow: none;
 			box-shadow: none;
 		}
+		img.upperright{
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 60px;
+			height: 60px;
+		}
+		img.iconmenu{
+			cursor:pointer;
+		}
 	</style>
 </head>
 <body>
 	<h1>Leap Motion API Library</h1>
-	<div id="langmenu" class="menu" style="float:right; padding 30px;">
+	<div id="langmenu" class="menu" style="float:right; padding 30px;display:none;">
 		<h2>Language Menu</h2>
 		<ul>
 			<li><a href="#cplusplus" onClick="show('cplusplus'); return false;">C++</a></li>
@@ -56,7 +70,16 @@
 			<li><a href="#javascript" onClick="show('javascript'); return false;">JavaScript</a></li>
 		</ul>
 	</div>
-	<div id="cplusplus">
+	<div id="initialmenu" style="width:400px;">
+		<img class="iconmenu" src="Common/images/cplusplus.png" onClick="show('cplusplus')"/>
+		<img class="iconmenu" src="Common/images/csharp.png" onClick="show('csharp')"/>
+		<img class="iconmenu" src="Common/images/java.png" onClick="show('java')"/>
+		<img class="iconmenu" src="Common/images/python.png" onClick="show('python')"/>
+		<img class="iconmenu" src="Common/images/objectivec.png" onClick="show('objectivec')"/>
+		<img class="iconmenu" src="Common/images/javascript.png" onClick="show('javascript')"/>
+	</div>
+	<div id="cplusplus"  style="display:none">
+		<img class="upperright" src="Common/images/cplusplus.png"/>
 		<h2>C++ Documentation</h2><a name="cplusplus"></a>
 		<ul>
 			<li><a href="C++/Leap_Overview.html">Overview</a></li>
@@ -70,6 +93,7 @@
 		</ul>
 	</div>
 	<div id="csharp" style="display:none">
+		<img class="upperright" src="Common/images/csharp.png"/>
 		<h2>C# and Unity Documentation</h2><a name="csharp"></a>
 		<ul>
 			<li><a href="CSharpandUnity/Leap_Overview.html">Overview</a></li>
@@ -84,6 +108,7 @@
 		
 	</div>
 	<div id="java" style="display:none">
+		<img class="upperright" src="Common/images/java.png"/>
 		<h2>Java Documentation</h2><a name="java"></a>
 		<ul>
 			<li><a href="java/Leap_Overview.html">Overview</a></li>
@@ -99,6 +124,7 @@
 		
 	</div>
 	<div id="python" style="display:none">
+		<img class="upperright" src="Common/images/python.png"/>
 		<h2>Python Documentation</h2><a name="python"></a>
 		<ul>
 			<li><a href="python/Leap_Overview.html">Overview</a></li>
@@ -112,6 +138,7 @@
 		
 	</div>
 	<div id="objectivec" style="display:none">
+		<img class="upperright" src="Common/images/objectivec.png"/>
 		<h2>Objective C Documentation</h2><a name="objectivec"></a>
 		<ul>
 			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Overview.html">Overview</a></li>
@@ -125,6 +152,7 @@
 		
 	</div>
 	<div id="javascript" style="display:none">
+		<img class="upperright" src="Common/images/javascript.png"/>
 		<h2>JavaScript Documentation</h2><a name="javascript"></a>
 		<ul>
 			<li><a href="javascript/Leap_Overview.html">Overview</a></li>

@@ -22,10 +22,13 @@ var classcom_1_1leapmotion_1_1leap_1_1_frame =
     [ "rotationAngle", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a0812b9f900b648e20dc36529c353f3d3", null ],
     [ "rotationAxis", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a84c9f63c0cf256ec3de2c375586e5eba", null ],
     [ "rotationMatrix", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#ac7cfc29107e6bd94ecd4e851a40f88af", null ],
+    [ "rotationProbability", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a3dbfe02b80b3d206d94a699d2c1a0374", null ],
     [ "scaleFactor", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a9d09300fae5e7b7f243758d1a1d44d2a", null ],
+    [ "scaleProbability", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a02f3a37977f155a1203c6480e27c4827", null ],
     [ "timestamp", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#abf56bd79f7143e5e51a9c830bf0a5fbe", null ],
     [ "tool", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a8b35e3a0bb912a2a9904bee41f6373da", null ],
     [ "tools", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a1d4d3ca18d34b4df7422f18a735527ad", null ],
     [ "toString", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a9c0392d98f61df3c560c9895cbb41fcc", null ],
-    [ "translation", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a2248c1409975aa689bd63bc3970a8656", null ]
+    [ "translation", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a2248c1409975aa689bd63bc3970a8656", null ],
+    [ "translationProbability", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a9a8e95306a331c15bb11235acc639288", null ]
 ];

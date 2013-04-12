@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::GestureList</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">com.leapmotion.leap.Interface</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">Iterable&lt; Gesture &gt;</basecompoundref>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1_1_gesture_list_iterator" prot="public">com::leapmotion::leap::GestureList::GestureListIterator</innerclass>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1af0e0704426256a94077b990e094145c3" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.GestureList.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="18" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1aaae8d3543a8eaeb2f825dd6634a5d882" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.GestureList.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="29" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="29" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1adf0e0d5951e6895c8d7cf4f3f22b8d6f" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.GestureList.GestureList</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>GestureList</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="20" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="20" bodyend="23"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a46f277641093e072f1b072e7e7c1b708" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.GestureList.getCPtr</definition>
+        <argsstring>(GestureList obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="25" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="25" bodyend="27"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a67d640d0a2630612dd801efd74e916fd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref></type>
+        <definition>GestureList com.leapmotion.leap.GestureList.append</definition>
+        <argsstring>(GestureList other)</argsstring>
+        <name>append</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Appends the members of the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref> to this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref> object containing <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> objects to append to the end of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref>. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="99" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="99" bodyend="101"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a4bc27175479eb04efb1e8c6b02cc71c5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.GestureList.count</definition>
+        <argsstring>()</argsstring>
+        <name>count</name>
+        <briefdescription>
+<para>The length of this list. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The number of gestures in this list. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="70" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="70" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a3fd61f51a3d798b1b8ccfe69e1e61b90" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.GestureList.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="33" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="33" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a8282b92d4cd004a81a38c4cadeca6431" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.GestureList.empty</definition>
+        <argsstring>()</argsstring>
+        <name>empty</name>
+        <briefdescription>
+<para>Reports whether the list is empty. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True, if the list has no members. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="79" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="79" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1af2b91c8b1f8ac1226de6be4c0de9ff7d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.GestureList.GestureList</definition>
+        <argsstring>()</argsstring>
+        <name>GestureList</name>
+        <briefdescription>
+<para>Constructs an empty gesture list. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="61" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="61" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1af3708ee5e8ced81bebbd74299378e30a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref></type>
+        <definition>Gesture com.leapmotion.leap.GestureList.get</definition>
+        <argsstring>(int index)</argsstring>
+        <name>get</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>Access a list member by its position in the list. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The zero-based list position index. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> object at the specified index. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="89" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="89" bodyend="91"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a1b0b4718267734f07630c4a5c6c3d51d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>java.util.Iterator&lt; <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> &gt;</type>
+        <definition>java.util.Iterator&lt;Gesture&gt; com.leapmotion.leap.GestureList.iterator</definition>
+        <argsstring>()</argsstring>
+        <name>iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="55" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="55" bodyend="57"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref> class represents a list of <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> objects. </para>    </briefdescription>
+    <detaileddescription>
+<para>Get a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list" kindref="compound">GestureList</ref> object from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> object. </para>    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" line="17" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/GestureList.java" bodystart="17" bodyend="103"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a67d640d0a2630612dd801efd74e916fd" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>append</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a4bc27175479eb04efb1e8c6b02cc71c5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>count</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a3fd61f51a3d798b1b8ccfe69e1e61b90" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a8282b92d4cd004a81a38c4cadeca6431" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>empty</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1aaae8d3543a8eaeb2f825dd6634a5d882" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1adf0e0d5951e6895c8d7cf4f3f22b8d6f" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>GestureList</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1af2b91c8b1f8ac1226de6be4c0de9ff7d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>GestureList</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1af3708ee5e8ced81bebbd74299378e30a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>get</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a46f277641093e072f1b072e7e7c1b708" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::GestureList</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1a1b0b4718267734f07630c4a5c6c3d51d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>iterator</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_list_1af0e0704426256a94077b990e094145c3" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::GestureList</scope><name>swigCPtr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

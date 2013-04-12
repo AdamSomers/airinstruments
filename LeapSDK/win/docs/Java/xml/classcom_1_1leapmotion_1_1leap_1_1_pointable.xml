@@ -1,0 +1,357 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_pointable" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::Pointable</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">com.leapmotion.leap.Interface</basecompoundref>
+    <derivedcompoundref refid="classcom_1_1leapmotion_1_1leap_1_1_finger" prot="public" virt="non-virtual">com.leapmotion.leap.Finger</derivedcompoundref>
+    <derivedcompoundref refid="classcom_1_1leapmotion_1_1leap_1_1_tool" prot="public" virt="non-virtual">com.leapmotion.leap.Tool</derivedcompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a42f779b1c61f84365d9e5a269c699284" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.Pointable.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="29" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af63ba2e67b3588e62ceedbd89db7e4c7" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Pointable.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="40" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="40" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ad5e0cc39f620718a50710fa6c3ab2812" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Pointable.Pointable</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>Pointable</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="31" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="31" bodyend="34"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a7f3051e6807456cb21e23d97543b5181" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.Pointable.getCPtr</definition>
+        <argsstring>(Pointable obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="36" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="36" bodyend="38"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1acc8e04c2c6a6ec147238a2ede42b56b9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.Pointable.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="44" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="44" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1affbc3d564e74967addf273eb7006e7ae" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Pointable.direction</definition>
+        <argsstring>()</argsstring>
+        <name>direction</name>
+        <briefdescription>
+<para>The direction in which this finger or tool is pointing. </para>        </briefdescription>
+        <detaileddescription>
+<para>The direction is expressed as a unit vector pointing in the same direction as the tip.</para><para><image type="html" name="Leap_Finger_Model.png"></image>
+</para><para><simplesect kind="return"><para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> pointing in the same direction as the tip of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="137" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="137" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a39b00dc8ec7e54c5e07e591b38db29cf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Pointable.equals</definition>
+        <argsstring>(Pointable arg0)</argsstring>
+        <name>equals</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+          <declname>arg0</declname>
+        </param>
+        <briefdescription>
+<para>Compare <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object equality. </para>        </briefdescription>
+        <detaileddescription>
+<para>Two <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects are equal if and only if both <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects represent the exact same physical entities in the same frame and both <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects are valid. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="220" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="220" bodyend="222"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a0fc9745b4aa3f0284880647b4b482612" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref></type>
+        <definition>Frame com.leapmotion.leap.Pointable.frame</definition>
+        <argsstring>()</argsstring>
+        <name>frame</name>
+        <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> associated with this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The associated <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> object, if available; otherwise, an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> object is returned. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="90" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="90" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a10e06f1db3177a259a5e0966fb361e7a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref></type>
+        <definition>Hand com.leapmotion.leap.Pointable.hand</definition>
+        <argsstring>()</argsstring>
+        <name>hand</name>
+        <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref> associated with this finger or tool. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The associated <ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref> object, if available; otherwise, an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref> object is returned. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="101" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="101" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a46e7a47f1aa97fb073b61bc6eb1b2031" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.Pointable.id</definition>
+        <argsstring>()</argsstring>
+        <name>id</name>
+        <briefdescription>
+<para>A unique ID assigned to this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object, whose value remains the same across consecutive frames while the tracked finger or tool remains visible. </para>        </briefdescription>
+        <detaileddescription>
+<para>If tracking is lost (for example, when a finger is occluded by another finger or when it is withdrawn from the Leap field of view), the Leap may assign a new ID when it detects the entity in a future frame.</para><para>Use the ID value with the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame_1a91c0d83c637fb367e72216d22dac8fb7" kindref="member">Frame::pointable()</ref> function to find this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object in future frames.</para><para><simplesect kind="return"><para>The ID assigned to this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="79" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="79" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af8a0d3d9dc96d7d86545e604f41cb6af" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Pointable.isFinger</definition>
+        <argsstring>()</argsstring>
+        <name>isFinger</name>
+        <briefdescription>
+<para>Whether or not the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> is believed to be a finger. </para>        </briefdescription>
+        <detaileddescription>
+<para>Fingers are generally shorter, thicker, and less straight than tools.</para><para><simplesect kind="return"><para>True, if this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> is classified as a finger. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="175" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="175" bodyend="177"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a1a939138ab33f2d76e0aebdbdc28861e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Pointable.isTool</definition>
+        <argsstring>()</argsstring>
+        <name>isTool</name>
+        <briefdescription>
+<para>Whether or not the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> is believed to be a tool. </para>        </briefdescription>
+        <detaileddescription>
+<para>Tools are generally longer, thinner, and straighter than fingers.</para><para><simplesect kind="return"><para>True, if this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> is classified as a tool. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="186" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="186" bodyend="188"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Pointable.isValid</definition>
+        <argsstring>()</argsstring>
+        <name>isValid</name>
+        <briefdescription>
+<para>Reports whether this is a valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True, if this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object contains valid tracking data. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="196" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="196" bodyend="198"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1aa8f442aa58b8694384327f29111a0c41" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Pointable.length</definition>
+        <argsstring>()</argsstring>
+        <name>length</name>
+        <briefdescription>
+<para>The estimated length of the finger or tool in millimeters. </para>        </briefdescription>
+        <detaileddescription>
+<para>The reported length is the visible length of the finger or tool from the hand to tip. If the length isn&apos;t known, then a value of 0 is returned.</para><para><simplesect kind="return"><para>The estimated length of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="164" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="164" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af2d1ea38d8b44a706cc86c32769b7cb5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Pointable.Pointable</definition>
+        <argsstring>()</argsstring>
+        <name>Pointable</name>
+        <briefdescription>
+<para>Constructs a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>An uninitialized pointable is considered invalid. Get valid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> or a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound">Hand</ref> object. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="62" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="62" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a34729c90d3c4b38a6f5994ae1ad14ee2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Pointable.tipPosition</definition>
+        <argsstring>()</argsstring>
+        <name>tipPosition</name>
+        <briefdescription>
+<para>The tip position in millimeters from the Leap origin. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the tip position. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="111" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="111" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af7389a76398c7928d339c73f5af02d9e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Pointable.tipVelocity</definition>
+        <argsstring>()</argsstring>
+        <name>tipVelocity</name>
+        <briefdescription>
+<para>The rate of change of the tip position in millimeters/second. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of the tip velocity. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="121" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="121" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a91c99f0961d34be8d67ea4124ca238c5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>String</type>
+        <definition>String com.leapmotion.leap.Pointable.toString</definition>
+        <argsstring>()</argsstring>
+        <name>toString</name>
+        <briefdescription>
+<para>A string containing a brief, human readable description of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A description of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object as a string. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="230" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="230" bodyend="232"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1abba55cfb2de52af88b5a1faec2b1923b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Pointable.width</definition>
+        <argsstring>()</argsstring>
+        <name>width</name>
+        <briefdescription>
+<para>The estimated width of the finger or tool in millimeters. </para>        </briefdescription>
+        <detaileddescription>
+<para>The reported width is the average width of the visible portion of the finger or tool from the hand to the tip. If the width isn&apos;t known, then a value of 0 is returned.</para><para><simplesect kind="return"><para>The estimated width of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="151" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="151" bodyend="153"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a8d83e3b802c19f19a0f517b34095bc22" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+        <definition>static Pointable com.leapmotion.leap.Pointable.invalid</definition>
+        <argsstring>()</argsstring>
+        <name>invalid</name>
+        <briefdescription>
+<para>Returns an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>You can use the instance returned by this function in comparisons testing whether a given <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> instance is valid or invalid. (You can also use the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" kindref="member">Pointable::isValid()</ref> function.)</para><para><simplesect kind="return"><para>The invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> instance. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="210" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="210" bodyend="212"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> class reports the physical characteristics of a detected finger or tool. </para>    </briefdescription>
+    <detaileddescription>
+<para>Both fingers and tools are classified as <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects. Use the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af8a0d3d9dc96d7d86545e604f41cb6af" kindref="member">Pointable::isFinger()</ref> function to determine whether a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object represents a finger. Use the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a1a939138ab33f2d76e0aebdbdc28861e" kindref="member">Pointable::isTool()</ref> function to determine whether a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object represents a tool. The Leap classifies a detected entity as a tool when it is thinner, straighter, and longer than a typical finger.</para><para>Note that <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects can be invalid, which means that they do not contain valid tracking data and do not correspond to a physical entity. Invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects can be the result of asking for a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object using an ID from an earlier frame when no <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> objects with that ID exist in the current frame. A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object created from the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> constructor is also invalid. Test for validity with the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" kindref="member">Pointable::isValid()</ref> function. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="75">
+        <label>com.leapmotion.leap.Pointable</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_pointable"/>
+      </node>
+      <node id="76">
+        <label>com.leapmotion.leap.Finger</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_finger"/>
+        <childnode refid="75" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>com.leapmotion.leap.Tool</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_tool"/>
+        <childnode refid="75" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" line="28" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Pointable.java" bodystart="28" bodyend="234"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1acc8e04c2c6a6ec147238a2ede42b56b9" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1affbc3d564e74967addf273eb7006e7ae" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>direction</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a39b00dc8ec7e54c5e07e591b38db29cf" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af63ba2e67b3588e62ceedbd89db7e4c7" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a0fc9745b4aa3f0284880647b4b482612" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>frame</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a7f3051e6807456cb21e23d97543b5181" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::Pointable</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a10e06f1db3177a259a5e0966fb361e7a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>hand</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a46e7a47f1aa97fb073b61bc6eb1b2031" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>id</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a8d83e3b802c19f19a0f517b34095bc22" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>invalid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af8a0d3d9dc96d7d86545e604f41cb6af" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>isFinger</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a1a939138ab33f2d76e0aebdbdc28861e" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>isTool</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ac2a70d69d57a21766312bb0b42fc114a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1aa8f442aa58b8694384327f29111a0c41" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>length</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1ad5e0cc39f620718a50710fa6c3ab2812" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>Pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af2d1ea38d8b44a706cc86c32769b7cb5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>Pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a42f779b1c61f84365d9e5a269c699284" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a34729c90d3c4b38a6f5994ae1ad14ee2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>tipPosition</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1af7389a76398c7928d339c73f5af02d9e" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>tipVelocity</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1a91c99f0961d34be8d67ea4124ca238c5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_pointable_1abba55cfb2de52af88b5a1faec2b1923b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Pointable</scope><name>width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

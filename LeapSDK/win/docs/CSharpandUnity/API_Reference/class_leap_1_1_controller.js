@@ -12,5 +12,7 @@ var class_leap_1_1_controller =
     [ "RemoveListener", "class_leap_1_1_controller.html#adec62d53d2afb558224cc3ebaa33f1dc", null ],
     [ "CalibratedScreens", "class_leap_1_1_controller.html#a68f8bda754bc140924dd59fcc070cfca", null ],
     [ "Config", "class_leap_1_1_controller.html#a12503273371b21d58952a99b5fc5b0d9", null ],
-    [ "IsConnected", "class_leap_1_1_controller.html#aac7cccf354ef1a6f1f01222a9b63d8bd", null ]
+    [ "HasFocus", "class_leap_1_1_controller.html#abf910cb18c7ecb92940a3607c4b5dc1d", null ],
+    [ "IsConnected", "class_leap_1_1_controller.html#aac7cccf354ef1a6f1f01222a9b63d8bd", null ],
+    [ "LocatedScreens", "class_leap_1_1_controller.html#a5f2ef683983123e651531ac4f1c6c47b", null ]
 ];
