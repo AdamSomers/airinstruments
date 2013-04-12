@@ -247,10 +247,10 @@ void MainContentComponent::renderOpenGL()
         const int playAreaWidth = Environment::instance().screenW / 2 - 10;
         
         if (tutorial)
-            tutorial->setBounds(HUDRect(Environment::instance().screenW / 2 - 500 / 2,
-                                     Environment::instance().screenH / 2 - 225 / 2,
-                                     500,
-                                     225));
+            tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - 500 / 2),
+                                     (GLfloat) (Environment::instance().screenH / 2 - 225 / 2),
+                                     500.0f,
+                                     225.0f));
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,

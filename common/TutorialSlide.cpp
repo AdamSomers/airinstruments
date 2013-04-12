@@ -33,7 +33,7 @@ void TutorialSlide::draw()
     
     if (fade > fadeTarget)
     {
-        fade -= 0.05;
+        fade -= 0.05f;
         if (fade < 0.f) fade = 0.f;
         if (fade == 0.f && slideIndex != nextSlide && !done)
         {
@@ -43,7 +43,7 @@ void TutorialSlide::draw()
     }
     else if (fade < fadeTarget)
     {
-        fade += 0.05;
+        fade += 0.05f;
         if (fade > 1.f) fade = 1.f;
     }
 }
