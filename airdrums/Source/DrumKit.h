@@ -11,13 +11,13 @@
 #ifndef __DRUMKIT_H_FC36DC2F__
 #define __DRUMKIT_H_FC36DC2F__
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
 #include <vector>
 
 #include "Types.h"
 #include "DrumSample.h"
 #include "DrumItem.h"
+
+#include "../JuceLibraryCode/JuceHeader.h"
 
 
 class DrumKit : public DrumItem

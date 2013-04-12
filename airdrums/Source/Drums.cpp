@@ -1,17 +1,27 @@
+#include "Main.h"
 #include "Drums.h"
 #include "KitManager.h"
 #include "PatternManager.h"
+#include "DrumPattern.h"
 
 
 Drums::Drums() :
     transportState(false,false,true),
     sampleCounter(0),
     maxRecordSamples(0),
-    tempo(118),
     numNotes(0),
-    sampleRate(44100),
-	pattern(new DrumPattern)	// Create a default empty pattern for now
+    sampleRate((double) DrumPattern::kDefaultSampleRate),
+	tempoSlider(nullptr)
 {
+	AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	globalTempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
+
+	if (props.getUserSettings()->getBoolValue("tempoSource", kGlobalTempo) != kGlobalTempo)
+		tempoSource = kPatternTempo;
+	else
+		tempoSource = kGlobalTempo;
+
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
     
@@ -159,7 +169,7 @@ void Drums::NoteOn(int note, float velocity)
 {
     midiBufferLock.enter();
     if (transportState.recording && transportState.playing) {
-        float bps = tempo / 60.f;
+        float bps = getTempo() / 60.f;
         float sixteenthsPerSecond = bps * 4;
         int samplesPerSixteenth = (int) (sampleRate / sixteenthsPerSecond);
         float sixteenthsIntoPattern = sampleCounter / (float)samplesPerSixteenth;
@@ -174,6 +184,7 @@ void Drums::NoteOn(int note, float velocity)
         
         MidiMessage m = MidiMessage::noteOn(1, note, velocity);
         m.setTimeStamp(quantizedPosition);
+		jassert(pattern.get() != nullptr);
 		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
         i.setNextSamplePosition(quantizedPosition);
@@ -198,6 +209,7 @@ void Drums::NoteOn(int note, float velocity)
 void Drums::clear()
 {
     midiBufferLock.enter();
+	jassert(pattern.get() != nullptr);
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     recordBuffer.clear();
     midiBufferLock.exit();
@@ -206,6 +218,7 @@ void Drums::clear()
 void Drums::clearTrack(int note)
 {
     midiBufferLock.enter();
+	jassert(pattern.get() != nullptr);
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     MidiBuffer::Iterator i(recordBuffer);
     int samplePos = 0;
@@ -230,39 +243,35 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
     sampleRate = inSampleRate;
     midiCollector.reset (sampleRate);
     synth.setCurrentPlaybackSampleRate(sampleRate);
-    
-    float bps = tempo / 60.f;
+
+	AdjustMidiBuffers();
+}
+
+void Drums::AdjustMidiBuffers(void)
+{
+    midiBufferLock.enter();
+
+    float bps = getTempo() / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
     float samples = (float) (sampleRate * seconds);
-    long oldMaxRecordSample = maxRecordSamples;
     maxRecordSamples = (long) samples;
-    long metronomePos = 0;
     
     // Adjust the metronome buffer
+    long metronomePos = 0;
     metronomeBuffer.clear();
     for (int i = 0; i < numBeats; ++i) {
         metronomeBuffer.addEvent(MidiMessage::noteOn(1, 16, 1.f), metronomePos);
         metronomePos += (long)(samples / numBeats);
     }
     
-    // Adjust sample positions of all events in record buffer 
-    midiBufferLock.enter();
-	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
-    MidiBuffer::Iterator i(recordBuffer);
-    int samplePos = 0;
-    MidiMessage message;
-    MidiBuffer newBuffer;
-    while (i.getNextEvent(message, samplePos))
-    {
-        double positionRatio = samplePos / (double)oldMaxRecordSample;
-        long newPos = (long)(positionRatio * (double)maxRecordSamples);
-        newBuffer.addEvent(message, newPos);
-    }
-    recordBuffer = newBuffer;
+    // Adjust sample positions of all events in record buffer
+	if (pattern.get() != nullptr)
+	{
+		pattern->Conform(getTempo(), sampleRate);
+	}
+
     midiBufferLock.exit();
-    
-    
 }
 
 void Drums::releaseResources()
@@ -280,6 +289,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     if (transportState.playing) {
         playbackState.reset();
         keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+		jassert(pattern.get() != nullptr);
 		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
         int samplePos = sampleCounter;
@@ -315,10 +325,11 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 }
 
 
-void Drums::setDrumKit(SharedPtr<DrumKit> aKit, bool doLock /*= true*/)
+void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 {
-	if (doLock)
-	    midiBufferLock.enter();
+	jassert(aKit.get() != nullptr);
+
+    midiBufferLock.enter();
 
 	synth.clearSounds();
 
@@ -342,17 +353,24 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit, bool doLock /*= true*/)
 	notes.setRange (16, 1, true);
 	synth.addSound (new SamplerSound ("", *clv, notes, 16, 0.0, 0.1, 10.0));
 
-	if (doLock)
-	    midiBufferLock.exit();
+    midiBufferLock.exit();
 }
 
 
 void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 {
+	jassert(aPattern.get() != nullptr);
+
     midiBufferLock.enter();
 
+	resetToZero();
+
 	pattern = aPattern;
-	setDrumKit(pattern->GetDrumKit(), false);
+	setDrumKit(pattern->GetDrumKit());
+	if (tempoSource == kPatternTempo)
+		setTempoSlider(pattern->GetTempo());
+	else
+		AdjustMidiBuffers();	// Conform the buffers to the current global tempo and sample rate
 
     midiBufferLock.exit();
 }
@@ -417,4 +435,111 @@ void Drums::removeTransportListener(ChangeListener* listener)
 {
     MessageManagerLock mml;
     transportState.removeChangeListener(listener);
+}
+
+
+float Drums::getTempo(void)
+{
+	switch (tempoSource)
+	{
+		default :
+			jassertfalse;
+			break;
+		case kGlobalTempo :
+			break;
+		case kPatternTempo :
+			if (pattern.get() != nullptr)
+				return pattern->GetTempo();
+			break;
+	}
+
+	return globalTempo;
+}
+
+
+void Drums::setTempo(float tempo)
+{
+	ScopedLock lock(midiBufferLock);
+
+	switch (tempoSource)
+	{
+		default :
+			jassertfalse;
+			return;
+		case kPatternTempo :
+			if (pattern.get() != nullptr)
+			{
+				pattern->SetTempo(tempo);
+				break;
+			}
+			// fall through
+		case kGlobalTempo :
+		{
+			globalTempo = tempo;
+
+			AirHarpApplication* app = AirHarpApplication::getInstance();
+			ApplicationProperties& props = app->getProperties();
+			props.getUserSettings()->setValue("tempo", globalTempo);
+//			props.saveIfNeeded();	// Very slow to save here, save when the app shuts down, worst case
+			break;
+		}
+	}
+
+	AdjustMidiBuffers();
+}
+
+
+Drums::TempoSource Drums::getTempoSource(void)
+{
+	return tempoSource;
+}
+
+
+void Drums::setTempoSource(TempoSource source)
+{
+	ScopedLock lock(midiBufferLock);
+
+	switch (source)
+	{
+		default :
+			jassertfalse;
+			// fall through
+		case kGlobalTempo :
+			tempoSource = kGlobalTempo;
+			break;
+		case kPatternTempo :
+			tempoSource = kPatternTempo;
+			break;
+	}
+
+	float tempo = getTempo();
+	setTempoSlider(tempo);
+
+	AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	props.getUserSettings()->setValue("tempoSource", tempoSource);
+	props.saveIfNeeded();
+
+	AdjustMidiBuffers();
+}
+
+
+// Handles changes to the tempo slider
+void Drums::sliderValueChanged (Slider *slider)
+{
+	double value = slider->getValue();
+	setTempo((float) value);
+}
+
+
+void Drums::registerTempoSlider(Slider* slider)
+{
+	tempoSlider = slider;
+}
+
+
+void Drums::setTempoSlider(float tempo)
+{
+	jassert(tempoSlider != nullptr);
+	tempoSlider->setValue((double) tempo);
 }

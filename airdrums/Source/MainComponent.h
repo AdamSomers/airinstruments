@@ -88,6 +88,7 @@ private:
     KitSelector* kitSelector;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
+	Slider tempoControl;
     
     float prevMouseY;
     float prevMouseX;

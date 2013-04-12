@@ -63,7 +63,7 @@ void KitSelector::setBounds(const HUDRect &b)
         i->setBounds(HUDRect(0,
                              0,
                              b.w/2,
-                             (int) height));
+                             (GLfloat) (int) height));
     }
     
     layoutIcons();
@@ -129,7 +129,7 @@ void KitSelector::draw()
 
 void KitSelector::setSelection(int sel)
 {
-    float direction = sel > selection ? -1.f : 1.f;
+    //float direction = sel > selection ? -1.f : 1.f;	// Unused variable
     if (sel < 0) sel = icons.size() - 1;
     if (sel >= (int) icons.size()) sel = 0;
     selection = sel;

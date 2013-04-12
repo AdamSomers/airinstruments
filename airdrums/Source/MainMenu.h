@@ -3,7 +3,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-// This is the main menu bar for the AirDrums app
+// This is the main menu bar for the AirBeats app
 
 class MainMenu : public MenuBarModel
 {
@@ -12,7 +12,8 @@ public:
 	{
 		kAudioSettingsCmd = 1,
 		kSavePatternAsCmd = 2,
-		kLoadPatternCmd = 3
+		kLoadPatternCmd = 3,
+		kUsePatternTempoCmd = 4
 	};
 	enum TopLevelMenu
 	{
@@ -25,11 +26,14 @@ public:
     MainMenu();
     virtual ~MainMenu();
 
+	bool GetUsePatternTempo(void);
+
 	virtual StringArray  getMenuBarNames ();
 	virtual PopupMenu  getMenuForIndex (int topLevelMenuIndex, const String &menuName);
 	virtual void  menuItemSelected (int menuItemID, int topLevelMenuIndex);
 
 private:
+	bool	mUsePatternTempo;
 };
 
 #endif

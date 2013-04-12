@@ -38,6 +38,7 @@ MainContentComponent::MainContentComponent()
 , kitSelector(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
+, tempoControl(Slider::LinearHorizontal, Slider::TextBoxBelow)
 , isIdle(true)
 {
     openGLContext.setRenderer (this);
@@ -48,6 +49,17 @@ MainContentComponent::MainContentComponent()
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
+
+	tempoControl.setRange(30.0, 300.0, 0.1);
+	tempoControl.setSize(250, 50);
+	addAndMakeVisible(&tempoControl);
+	tempoControl.setCentrePosition(600, 30);
+	AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	float tempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
+	tempoControl.setValue(tempo);
+	tempoControl.addListener(&Drums::instance());
+	Drums::instance().registerTempoSlider(&tempoControl);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -86,13 +98,13 @@ void MainContentComponent::resized()
     Environment::instance().ready = true;
 }
 
-void MainContentComponent::focusGained(FocusChangeType cause)
+void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
     Logger::outputDebugString("Focus Gained");
     MotionDispatcher::instance().resume();
 }
 
-void MainContentComponent::focusLost(FocusChangeType cause)
+void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
     Logger::outputDebugString("Focus Lost");
     MotionDispatcher::instance().pause();
@@ -283,14 +295,20 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toobarHeight));
         
-        int side = fmin(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
-        int hiddenX = -side * .85;
-        int shownX = -side / 2.f;
+        int side =
+#if JUCE_MAC
+			fmin		// VS2012 apparently doesn't have std::fmin,
+#elif JUCE_WINDOWS
+			std::min	// and std::min appears to be a Microsoft extension.  Sigh.
+#endif
+			(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
+        int hiddenX = (int) (-side * .85);
+        int shownX = (int) (-side / 2.f);
         if (kitSelector)
-            kitSelector->setBounds(HUDRect(showKitSelector ? shownX : hiddenX,
-                                           statusBarHeight,
-                                           side,
-                                           side));
+            kitSelector->setBounds(HUDRect(showKitSelector ? (GLfloat) shownX : (GLfloat) hiddenX,
+                                           (GLfloat) statusBarHeight,
+                                           (GLfloat) side,
+                                           (GLfloat) side));
         
         layoutPadsLinear();
         sizeChanged = false;
@@ -374,6 +392,8 @@ void MainContentComponent::renderOpenGL()
 
     for (PadView* pv : pads)
         pv->update();
+
+	tempoControl.repaint();
 }
 
 void MainContentComponent::openGLContextClosing()
