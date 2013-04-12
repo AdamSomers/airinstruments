@@ -39,6 +39,7 @@ public:
 	String&	GetName(void);
 	Uuid&	GetUuid(void);
 	void	SetName(String& name);
+	void	SetUuid(Uuid uuid);
 
 	Status	LoadFromXml(XmlElement* element);
 	Status	SaveToXml(XmlElement* element);
