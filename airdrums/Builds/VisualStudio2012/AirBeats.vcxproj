@@ -92,6 +92,9 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\AirBeats.bsc</OutputFile>
     </Bscmake>
+    <PostBuildEvent>
+      <Command>cmd /c xcopy ..\..\Resources\*.* .\Debug /S /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -136,6 +139,9 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\AirBeats.bsc</OutputFile>
     </Bscmake>
+    <PostBuildEvent>
+      <Command>cmd /c xcopy ..\..\Resources\*.* .\Release /S /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\common\HandView.cpp"/>
@@ -1359,6 +1365,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormatManager.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_DirectXPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTMidiEventList.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.h"/>
