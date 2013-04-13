@@ -93,7 +93,7 @@
       <OutputFile>$(IntDir)\AirBeats.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>cmd /c xcopy ..\..\Resources\*.* .\Debug /S /Y</Command>
+      <Command>call copyResources.bat $(TargetDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,7 +140,7 @@
       <OutputFile>$(IntDir)\AirBeats.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>cmd /c xcopy ..\..\Resources\*.* .\Release /S /Y</Command>
+      <Command>call copyResources.bat $(TargetDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

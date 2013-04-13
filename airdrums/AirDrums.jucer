@@ -187,12 +187,12 @@
                        isDebug="1" optimisation="1" targetName="AirBeats" useRuntimeLibDLL="1"
                        wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
                        defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"
-                       postbuildCommand="cmd /c xcopy ..\..\Resources\*.* .\Debug /S /Y"/>
+                       postbuildCommand="call copyResources.bat $(TargetDir)"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="AirBeats" useRuntimeLibDLL="1"
                        wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
                        defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"
-                       postbuildCommand="cmd /c xcopy ..\..\Resources\*.* .\Release /S /Y"/>
+                       postbuildCommand="call copyResources.bat $(TargetDir)"/>
       </CONFIGURATIONS>
     </VS2012>
   </EXPORTFORMATS>
