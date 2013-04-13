@@ -7,8 +7,8 @@
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
       <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
       <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
-      <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
-      <FILE id="umTOBM" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
+      <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
+      <FILE id="umTOBM" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
       <FILE id="i5kYm4" name="TMD CHIL BKICK.aif" compile="0" resource="1"
             file="Resources/kits/TestKit/TMD CHIL BKICK.aif"/>
       <FILE id="vxmCWg" name="TMD CHIL CHH.aif" compile="0" resource="1"

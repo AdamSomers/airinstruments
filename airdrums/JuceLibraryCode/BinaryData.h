@@ -6,6 +6,12 @@
 
 namespace BinaryData
 {
+    extern const char*   testShader_fs;
+    const int            testShader_fsSize = 127;
+
+    extern const char*   testShader_vs;
+    const int            testShader_vsSize = 628;
+
     extern const char*   TMD_CHIL_BKICK_aif;
     const int            TMD_CHIL_BKICK_aifSize = 157402;
 
