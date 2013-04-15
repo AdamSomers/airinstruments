@@ -32,7 +32,7 @@ class MainContentComponent   : public Component,
                                public Leap::Listener,
                                public DrumSelector::Listener,
                                public KitSelector::Listener,
-                               public Timer
+                               public MultiTimer
 {
 public:
     //==============================================================================
@@ -67,7 +67,7 @@ public:
 
     virtual void onFrame(const Leap::Controller&);
     
-    void timerCallback();
+    void timerCallback(int timerId);
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
@@ -75,6 +75,13 @@ private:
     void handleTapGesture(const Leap::Pointable& p);
     
     bool checkIdle();
+    
+    enum TimerIds
+    {
+        kTimerCheckIdle = 0,
+        kTimerLeftHandTap,
+        kTimerRightHandTap
+    };
     
     OpenGLContext openGLContext;
     TutorialSlide* tutorial;

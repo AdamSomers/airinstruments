@@ -23,6 +23,7 @@
 
 #define NUM_PADS 16
 #define TUTORIAL_TIMEOUT 30000
+#define TAP_TIMEOUT 50
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -215,7 +216,7 @@ void MainContentComponent::newOpenGLContextCreated()
     tutorial = new TutorialSlide;
     views.push_back(tutorial);
     tutorial->begin();
-    startTimer(TUTORIAL_TIMEOUT);
+    startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
     
     for (HUDView* v : views)
         v->loadTextures();
@@ -714,24 +715,44 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
     
     if (p.tipPosition().x < 0)
     {
-        Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
+        if (!isTimerRunning(kTimerLeftHandTap)) {
+            Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
+            startTimer(kTimerLeftHandTap, TAP_TIMEOUT);
+        }
         //playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
     else
     {
-        Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
+        if (!isTimerRunning(kTimerRightHandTap)) {
+            Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
+            startTimer(kTimerRightHandTap, TAP_TIMEOUT);
+        }
         //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
     }
 }
 
-void MainContentComponent::timerCallback()
+void MainContentComponent::timerCallback(int timerId)
 {
-    if (checkIdle())
-        tutorial->begin();
-    else {
-        stopTimer();
-        startTimer(TUTORIAL_TIMEOUT);
+    switch (timerId) {
+        case kTimerCheckIdle:
+            if (checkIdle())
+                tutorial->begin();
+            else {
+                stopTimer(kTimerCheckIdle);
+                startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
+            }
+            break;
+        case kTimerLeftHandTap:
+            stopTimer(kTimerLeftHandTap);
+            break;
+        case kTimerRightHandTap:
+            stopTimer(kTimerRightHandTap);
+            break;
+            
+        default:
+            break;
     }
+
 }
 
 bool MainContentComponent::checkIdle()
