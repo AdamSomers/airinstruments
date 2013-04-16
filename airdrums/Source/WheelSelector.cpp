@@ -1,38 +1,33 @@
 //
-//  KitSelector.cpp
+//  WheelSelector.cpp
 //  AirBeats
 //
 //  Created by Adam Somers on 4/9/13.
 //
 //
 
-#include "KitSelector.h"
+#include "WheelSelector.h"
 #include "SkinManager.h"
-#include "KitManager.h"
 #include "Main.h"
 
-KitSelector::KitSelector()
+WheelSelector::WheelSelector()
 : selection(0)
 , needsLayout(false)
 , trackedFinger(nullptr)
 , enabled(false)
 {
     setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("wheelBg"));
-    int numKits = KitManager::GetInstance().GetItemCount();
-    for (int i = 0; i < numKits; ++i)
+}
+
+WheelSelector::~WheelSelector()
+{
+    for (Icon* i : icons)
     {
-        Icon* icon = new Icon(i);
-        icons.push_back(icon);
-        addChild(icon);
+        delete i;
     }
 }
 
-KitSelector::~KitSelector()
-{
-    
-}
-
-void KitSelector::setBounds(const HUDRect &b)
+void WheelSelector::setBounds(const HUDRect &b)
 {
     tempBounds = getBounds();
     targetBounds = b;
@@ -47,17 +42,9 @@ void KitSelector::setBounds(const HUDRect &b)
     for (Icon* i : icons)
     {
         float aspectRatio = 1.0f;
-        String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
-        if (kitUuidString != "Default") {
-            Uuid kitUuid(kitUuidString);
-            Image image = KitManager::GetInstance().GetItem(kitUuid)->GetImage();
+            const Image& image = i->getImage();
             if (image.isValid())
                 aspectRatio = image.getWidth() / (float)image.getHeight();
-        }
-        else {
-            const Image& image = KitManager::GetInstance().GetItem(0)->GetImage();
-            aspectRatio = image.getWidth() / (float)image.getHeight();
-        }
         
         float height = (float)(b.w/2) / aspectRatio;
         i->setBounds(HUDRect(0,
@@ -69,7 +56,7 @@ void KitSelector::setBounds(const HUDRect &b)
     layoutIcons();
 }
 
-void KitSelector::updateBounds()
+void WheelSelector::updateBounds()
 {
     if (fabsf(tempBounds.x - targetBounds.x) < 2)
         tempBounds.x = targetBounds.x;
@@ -94,10 +81,15 @@ void KitSelector::updateBounds()
     HUDView::setBounds(tempBounds);
 }
 
-void KitSelector::layoutIcons()
+void WheelSelector::addIcon(Icon *icon)
+{
+    icons.push_back(icon);
+    addChild(icon);
+}
+
+void WheelSelector::layoutIcons()
 {
     int N = icons.size();
-
     
     int first = selection;
     int i = first;
@@ -109,7 +101,7 @@ void KitSelector::layoutIcons()
     }
 }
 
-void KitSelector::draw()
+void WheelSelector::draw()
 {
     if (needsLayout) {
         layoutIcons();
@@ -127,7 +119,7 @@ void KitSelector::draw()
     HUDView::draw();
 }
 
-void KitSelector::setSelection(int sel)
+void WheelSelector::setSelection(int sel)
 {
     //float direction = sel > selection ? -1.f : 1.f;	// Unused variable
     if (sel < 0) sel = icons.size() - 1;
@@ -136,7 +128,7 @@ void KitSelector::setSelection(int sel)
     needsLayout = true;
 }
 
-void KitSelector::incSelection(int direction)
+void WheelSelector::incSelection(int direction)
 {
     selection += direction;
     if (selection < 0) selection = icons.size() - 1;
@@ -146,7 +138,7 @@ void KitSelector::incSelection(int direction)
         icon->rotate(-direction * 360.f / icons.size());
 }
 
-void KitSelector::fingerMotion(float x, float y, FingerView* fv)
+void WheelSelector::fingerMotion(float x, float y, FingerView* fv)
 {
     if (!enabled)
         return;
@@ -163,7 +155,7 @@ void KitSelector::fingerMotion(float x, float y, FingerView* fv)
     if (inc != 0 && !isTimerRunning()) {
         incSelection(inc);
         for (Listener* l : listeners)
-            l->kitSelectorChanged(this);
+            l->wheelSelectorChanged(this);
         startTimer(250);
         trackedFinger = nullptr;
     }
@@ -172,7 +164,7 @@ void KitSelector::fingerMotion(float x, float y, FingerView* fv)
     prevFingerY = y;
 }
 
-void KitSelector::fingerEntered(float x, float y, FingerView* fv)
+void WheelSelector::fingerEntered(float x, float y, FingerView* fv)
 {
     if (!trackedFinger)
         trackedFinger = fv;
@@ -184,7 +176,7 @@ void KitSelector::fingerEntered(float x, float y, FingerView* fv)
     }
 }
 
-void KitSelector::fingerExited(float x, float y, FingerView* fv)
+void WheelSelector::fingerExited(float x, float y, FingerView* fv)
 {
     if (fv == trackedFinger)
     {
@@ -194,26 +186,26 @@ void KitSelector::fingerExited(float x, float y, FingerView* fv)
     }
 }
 
-void KitSelector::timerCallback()
+void WheelSelector::timerCallback()
 {
     stopTimer();
 }
 
-void KitSelector::addListener(KitSelector::Listener *listener)
+void WheelSelector::addListener(WheelSelector::Listener *listener)
 {
     auto iter = std::find(listeners.begin(), listeners.end(), listener);
     if (iter == listeners.end())
         listeners.push_back(listener);
 }
 
-void KitSelector::removeListener(KitSelector::Listener *listener)
+void WheelSelector::removeListener(WheelSelector::Listener *listener)
 {
     auto iter = std::find(listeners.begin(), listeners.end(), listener);
     if (iter != listeners.end())
         listeners.erase(iter);
 }
 
-KitSelector::Icon::Icon(int inId)
+WheelSelector::Icon::Icon(int inId)
 : id(inId)
 , rotationCoeff(0.f)
 , targetRotationCoeff(0.f)
@@ -221,11 +213,11 @@ KitSelector::Icon::Icon(int inId)
 {
 }
 
-KitSelector::Icon::~Icon()
+WheelSelector::Icon::~Icon()
 {
 }
 
-void KitSelector::Icon::draw()
+void WheelSelector::Icon::draw()
 {
     if (fabsf(tempBounds.x - targetBounds.x) > 2 ||
         fabsf(tempBounds.y - targetBounds.y) > 2 ||
@@ -248,10 +240,7 @@ void KitSelector::Icon::draw()
     // sanity check
     if (fabsf(rotationCoeff) >= 360.f)
         rotationCoeff = targetRotationCoeff = 0.f;
-    
-    GLuint textureID = KitManager::GetInstance().GetItem(id)->GetTexture();
-    
-    setDefaultTexture(textureID);
+
     Environment::instance().modelViewMatrix.PushMatrix();
     Environment::instance().modelViewMatrix.Translate(getParent()->getBounds().w / 2, getParent()->getBounds().h / 2, 0);
     Environment::instance().modelViewMatrix.Rotate(rotationCoeff, 0, 0, 1);
@@ -260,7 +249,7 @@ void KitSelector::Icon::draw()
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
-void KitSelector::Icon::setBounds(const HUDRect &b)
+void WheelSelector::Icon::setBounds(const HUDRect &b)
 {
     tempBounds = getBounds();
     targetBounds = b;
@@ -273,18 +262,18 @@ void KitSelector::Icon::setBounds(const HUDRect &b)
     hStep = (targetBounds.h - tempBounds.h) / 10.f;
 }
 
-void KitSelector::Icon::setRotationCoefficient(float rotation)
+void WheelSelector::Icon::setRotationCoefficient(float rotation)
 {
     rotationCoeff = rotation;
 }
 
-void KitSelector::Icon::rotate(float rotation)
+void WheelSelector::Icon::rotate(float rotation)
 {
     targetRotationCoeff = rotationCoeff + rotation;
     rotationInc = rotation / 10.f;
 }
 
-void KitSelector::Icon::updateBounds()
+void WheelSelector::Icon::updateBounds()
 {
     if (fabsf(tempBounds.x - targetBounds.x) < 2)
         tempBounds.x = targetBounds.x;
@@ -307,4 +296,14 @@ void KitSelector::Icon::updateBounds()
         tempBounds.h += hStep;
     
     HUDView::setBounds(tempBounds);
+}
+
+void WheelSelector::Icon::setImage(const Image& im)
+{
+    image = im;
+}
+
+const Image& WheelSelector::Icon::getImage() const
+{
+    return image;
 }

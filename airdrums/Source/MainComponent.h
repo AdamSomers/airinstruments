@@ -16,7 +16,7 @@
 #include "TrigView.h"
 #include "DrumSelector.h"
 #include "SkinManager.h"
-#include "KitSelector.h"
+#include "WheelSelector.h"
 #include "TutorialSlide.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -31,7 +31,7 @@ class MainContentComponent   : public Component,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
                                public DrumSelector::Listener,
-                               public KitSelector::Listener,
+                               public WheelSelector::Listener,
                                public MultiTimer
 {
 public:
@@ -63,7 +63,7 @@ public:
     void drumSelectorChanged(DrumSelector* selector);
     
     // KitSelector::Listener override
-    void kitSelectorChanged(KitSelector* selector);
+    void wheelSelectorChanged(WheelSelector* selector);
 
     virtual void onFrame(const Leap::Controller&);
     
@@ -92,7 +92,7 @@ private:
     DrumSelector* drumSelectorLeft;
     DrumSelector* drumSelectorRight;
     TrigViewBank* trigViewBank;
-    KitSelector* kitSelector;
+    WheelSelector* kitSelector;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoControl;
@@ -104,7 +104,7 @@ private:
     int64 lastCircleStartTime;
     bool showKitSelector;
     bool isIdle;
-    
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

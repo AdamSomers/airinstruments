@@ -189,7 +189,17 @@ void MainContentComponent::newOpenGLContextCreated()
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
-    kitSelector = new KitSelector;
+    kitSelector = new WheelSelector;
+    int numKits = KitManager::GetInstance().GetItemCount();
+    for (int i = 0; i < numKits; ++i)
+    {
+        WheelSelector::Icon* icon = new WheelSelector::Icon(i);
+        Image image = KitManager::GetInstance().GetItem(i)->GetImage();
+        icon->setImage(image);
+        icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
+        kitSelector->addIcon(icon);
+    }
+
     kitSelector->addListener(this);
     views.push_back(kitSelector);
     
@@ -198,7 +208,6 @@ void MainContentComponent::newOpenGLContextCreated()
     String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName");
     Logger::outputDebugString("Selected kit: " + kitUuidString);
     Logger::outputDebugString("Selected kit: " + kitName);
-    int numKits = KitManager::GetInstance().GetItemCount();
     int selectedKitIndex = 0;
     for (int i = 0; i < numKits; ++i)
     {
@@ -215,7 +224,7 @@ void MainContentComponent::newOpenGLContextCreated()
     
     tutorial = new TutorialSlide;
     views.push_back(tutorial);
-    tutorial->begin();
+//    tutorial->begin();
     startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
     
     for (HUDView* v : views)
@@ -394,6 +403,7 @@ void MainContentComponent::renderOpenGL()
     for (PadView* pv : pads)
         pv->update();
 
+    glDisable(GL_CULL_FACE);
 	tempoControl.repaint();
 }
 
@@ -577,7 +587,7 @@ void MainContentComponent::drumSelectorChanged(DrumSelector* selector)
     }
 }
 
-void MainContentComponent::kitSelectorChanged(KitSelector* selector)
+void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
 {
     if (selector == kitSelector) {
         int selection = kitSelector->getSelection();

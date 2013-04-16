@@ -394,9 +394,6 @@
     <ClCompile Include="..\..\Source\KitManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\KitSelector.cpp">
-      <Filter>AirBeats\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -425,6 +422,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TrigView.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\WheelSelector.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
@@ -1707,9 +1707,6 @@
     <ClInclude Include="..\..\Source\KitManager.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\KitSelector.h">
-      <Filter>AirBeats\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Main.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
@@ -1741,6 +1738,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Types.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\WheelSelector.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">

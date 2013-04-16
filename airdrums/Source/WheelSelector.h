@@ -1,24 +1,24 @@
 //
-//  KitSelector.h
+//  WheelSelector.h
 //  AirBeats
 //
 //  Created by Adam Somers on 4/9/13.
 //
 //
 
-#ifndef __AirBeats__KitSelector__
-#define __AirBeats__KitSelector__
+#ifndef __AirBeats__WheelSelector__
+#define __AirBeats__WheelSelector__
 
 #include "HUD.h"
 
 #include <iostream>
 
-class KitSelector : public HUDView
-                  , public Timer
+class WheelSelector : public HUDView
+                    , public Timer
 {
 public:
-    KitSelector();
-    ~KitSelector();
+    WheelSelector();
+    ~WheelSelector();
     
     // HUDView overrides
     void setBounds(const HUDRect& b);
@@ -45,6 +45,8 @@ public:
         void setBounds(const HUDRect& b);
         void setRotationCoefficient(float rotation);
         void rotate(float rotation);
+        void setImage(const Image& im);
+        const Image& getImage() const;
     private:
         void updateBounds();
         int id;
@@ -54,13 +56,16 @@ public:
         HUDRect targetBounds;
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
+        Image image;
     };
+    
+    void addIcon(Icon* icon);
     
     class Listener
     {
     public:
         virtual ~Listener() {}
-        virtual void kitSelectorChanged(KitSelector* selector) = 0;
+        virtual void wheelSelectorChanged(WheelSelector* selector) = 0;
     };
     
     void addListener(Listener* listener);
@@ -86,4 +91,4 @@ private:
     std::vector<Listener*> listeners;
 };
 
-#endif /* defined(__AirBeats__KitSelector__) */
+#endif /* defined(__AirBeats__WheelSelector__) */

@@ -169,7 +169,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp"/>
-    <ClCompile Include="..\..\Source\KitSelector.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainMenu.cpp"/>
@@ -180,6 +179,7 @@
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\Source\SkinManager.cpp"/>
     <ClCompile Include="..\..\Source\TrigView.cpp"/>
+    <ClCompile Include="..\..\Source\WheelSelector.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1289,7 +1289,6 @@
     <ClInclude Include="..\..\Source\DrumSelector.h"/>
     <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
-    <ClInclude Include="..\..\Source\KitSelector.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainMenu.h"/>
@@ -1301,6 +1300,7 @@
     <ClInclude Include="..\..\Source\SkinManager.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>
     <ClInclude Include="..\..\Source\Types.h"/>
+    <ClInclude Include="..\..\Source\WheelSelector.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.h"/>
