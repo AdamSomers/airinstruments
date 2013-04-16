@@ -58,6 +58,10 @@ public:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 
+    class PatternAddedMessage : public Message
+    {
+    };
+    
 private:
 	bool perform (const InvocationInfo &info);
 

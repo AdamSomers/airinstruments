@@ -59,6 +59,8 @@ public:
     HUDView();
     virtual ~HUDView() {}
     void addChild(HUDView* child);
+    void removeChild(HUDView* child);
+    void removeAllChildren();
     void setParent(HUDView* p);
     HUDView* const getParent() { return parent; }
     

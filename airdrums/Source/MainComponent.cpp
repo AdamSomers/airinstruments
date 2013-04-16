@@ -18,6 +18,7 @@
 #include "MotionServer.h"
 #include "FingerView.h"
 #include "KitManager.h"
+#include "PatternManager.h"
 
 #include "MainComponent.h"
 
@@ -35,12 +36,16 @@ MainContentComponent::MainContentComponent()
 , sizeChanged(false)
 , playAreaLeft(NULL)
 , playAreaRight(NULL)
+, drumSelectorLeft(NULL)
+, drumSelectorRight(NULL)
 , trigViewBank(NULL)
 , kitSelector(NULL)
+, patternSelector(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoControl(Slider::LinearHorizontal, Slider::TextBoxBelow)
 , isIdle(true)
+, needsPatternListUpdate(false)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -65,7 +70,20 @@ MainContentComponent::MainContentComponent()
 
 MainContentComponent::~MainContentComponent()
 {
+//    MotionDispatcher::instance().removeAllListeners();
 	openGLContext.detach();
+//    openGLContext.deactivateCurrentContext();
+    views.clear();
+    delete tutorial;
+    delete toolbar;
+    delete statusBar;
+    delete playAreaLeft;
+    delete playAreaRight;
+    delete drumSelectorLeft;
+    delete drumSelectorRight;
+    delete trigViewBank;
+    delete kitSelector;
+    delete patternSelector;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -154,11 +172,11 @@ void MainContentComponent::newOpenGLContextCreated()
 
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
-    
+
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
-    
+
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
@@ -193,7 +211,7 @@ void MainContentComponent::newOpenGLContextCreated()
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
     {
-        WheelSelector::Icon* icon = new WheelSelector::Icon(i);
+        WheelSelector::Icon* icon = new WheelSelector::Icon(i, true);
         Image image = KitManager::GetInstance().GetItem(i)->GetImage();
         icon->setImage(image);
         icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
@@ -202,6 +220,12 @@ void MainContentComponent::newOpenGLContextCreated()
 
     kitSelector->addListener(this);
     views.push_back(kitSelector);
+    
+    patternSelector = new WheelSelector;
+    populatePatternSelector();
+    
+    patternSelector->addListener(this);
+    views.push_back(patternSelector);
     
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid");
     Uuid kitUuid(kitUuidString);
@@ -219,14 +243,13 @@ void MainContentComponent::newOpenGLContextCreated()
     }
     Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
     kitSelector->setSelection(selectedKitIndex);
-    
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
     
     tutorial = new TutorialSlide;
     views.push_back(tutorial);
 //    tutorial->begin();
     startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
-    
+
     for (HUDView* v : views)
         v->loadTextures();
     
@@ -242,8 +265,56 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
-    
+
     glClearColor(0.f, 0.f, 0.f, 1.0f );
+}
+
+void MainContentComponent::populatePatternSelector()
+{
+    patternSelector->removeAllIcons();
+    
+    int numPatterns = PatternManager::GetInstance().GetItemCount();
+    for (int i = 0; i < numPatterns; ++i)
+    {
+        WheelSelector::Icon* icon = new WheelSelector::Icon(i);
+        Image im(Image::PixelFormat::ARGB, 2000, 200, true);
+        Graphics g (im);
+        g.setColour(Colours::white);
+        g.setFont(200);
+        g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
+        
+        GLuint textureId = 0;
+        glGenTextures(1, &textureId);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        GfxTools::loadTextureFromJuceImage(im);
+        icon->setImage(im);
+        icon->setDefaultTexture(textureId);
+        
+        patternSelector->addIcon(icon);
+    }
+    selectCurrentPattern();
+}
+
+void MainContentComponent::selectCurrentPattern()
+{
+    String patternUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("patternUuid");
+    Uuid patternUuid(patternUuidString);
+    String patternName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("patternName");
+    Logger::outputDebugString("Selected pattern: " + patternUuidString);
+    Logger::outputDebugString("Selected pattern: " + patternName);
+    int selectedpatternIndex = 0;
+    int numPatterns = PatternManager::GetInstance().GetItemCount();
+    for (int i = 0; i < numPatterns; ++i)
+    {
+        std::shared_ptr<DrumPattern> pattern = PatternManager::GetInstance().GetItem(i);
+        if (pattern->GetName() == patternName) {
+            selectedpatternIndex = i;
+            break;
+        }
+    }
+    Logger::outputDebugString("Selected pattern: " + String(selectedpatternIndex));
+    patternSelector->setSelection(selectedpatternIndex);
+    Drums::instance().setPattern(PatternManager::GetInstance().GetItem(selectedpatternIndex));
 }
 
 void MainContentComponent::renderOpenGL()
@@ -305,13 +376,7 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toobarHeight));
         
-        int side =
-#if JUCE_MAC
-			fmin		// VS2012 apparently doesn't have std::fmin,
-#elif JUCE_WINDOWS
-			std::min	// and std::min appears to be a Microsoft extension.  Sigh.
-#endif
-			(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
+        int side = std::min(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
         int hiddenX = (int) (-side * .85);
         int shownX = (int) (-side / 2.f);
         if (kitSelector)
@@ -320,8 +385,22 @@ void MainContentComponent::renderOpenGL()
                                            (GLfloat) side,
                                            (GLfloat) side));
         
+        hiddenX = (int) ((GLfloat) Environment::instance().screenW - side * .15);
+        shownX = (int) ((GLfloat) Environment::instance().screenW - side / 2.f);
+        if (patternSelector)
+            patternSelector->setBounds(HUDRect(showPatternSelector ? (GLfloat) shownX : (GLfloat) hiddenX,
+                                           (GLfloat) statusBarHeight,
+                                           (GLfloat) side,
+                                           (GLfloat) side));
+        
         layoutPadsLinear();
         sizeChanged = false;
+    }
+    
+    if (needsPatternListUpdate) {
+        populatePatternSelector();
+        needsPatternListUpdate = false;
+        sizeChanged = true;
     }
     
     glEnable(GL_MULTISAMPLE);
@@ -600,6 +679,17 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", uuidString);
         Drums::instance().setDrumKit(selectedKit);
     }
+    else if (selector == patternSelector) {
+        int selection = patternSelector->getSelection();
+        std::shared_ptr<DrumPattern> selectePattern = PatternManager::GetInstance().GetItem(selection);
+        String name = selectePattern->GetName();
+        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
+        Uuid uuid = selectePattern->GetUuid();
+        String uuidString = uuid.toString();
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
+        Drums::instance().setPattern(selectePattern);
+    }
 }
 
 void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)
@@ -635,13 +725,25 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 if (swipe.direction().x > 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
                     if (tutorial->getSlideIndex() == 3)
                         tutorial->next();
-                    kitSelector->setEnabled(true);
-                    showKitSelector = true;
+                    if (showPatternSelector) {
+                        patternSelector->setEnabled(false);
+                        showPatternSelector = false;
+                    }
+                    else {
+                        kitSelector->setEnabled(true);
+                        showKitSelector = true;
+                    }
                     sizeChanged = true;
                 }
                 else if (swipe.direction().x < 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
-                    kitSelector->setEnabled(false);
-                    showKitSelector = false;
+                    if (showKitSelector) {
+                        kitSelector->setEnabled(false);
+                        showKitSelector = false;
+                    }
+                    else {
+                        patternSelector->setEnabled(true);
+                        showPatternSelector = true;
+                    }
                     sizeChanged = true;
                 }
                 
@@ -770,4 +872,14 @@ bool MainContentComponent::checkIdle()
     bool retVal = isIdle;
     isIdle = true;
     return retVal;
+}
+
+void MainContentComponent::handleMessage(const juce::Message &m)
+{
+    Message* inMsg = const_cast<Message*>(&m);
+    AirHarpApplication::PatternAddedMessage* patternAddedMessage = dynamic_cast<AirHarpApplication::PatternAddedMessage*>(inMsg);
+    if (patternAddedMessage)
+    {
+        needsPatternListUpdate = true;
+    }
 }

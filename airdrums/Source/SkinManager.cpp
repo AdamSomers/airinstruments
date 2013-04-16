@@ -49,20 +49,20 @@ void SkinManager::loadResources()
 	File resourcesFile = special.getChildFile("Contents/Resources");
 #endif
     
-    printf("SkinManager::loadResources - skins:\n");
+    //printf("SkinManager::loadResources - skins:\n");
     DirectoryIterator iter(resourcesFile.getChildFile("skins"), false, "*", File::findDirectories);
     while(iter.next())
     {
         File skinDir = iter.getFile();
         String skinName = skinDir.getFileName();
         Skin s(skinName);
-        Logger::outputDebugString("\t" + skinName);
+        //Logger::outputDebugString("\t" + skinName);
         DirectoryIterator skinImagesIter(skinDir, true, "*.png", File::findFiles);
         while (skinImagesIter.next())
         {
             File imageFile = skinImagesIter.getFile();
             String imageName = imageFile.getFileNameWithoutExtension();
-            Logger::outputDebugString("\t\t" + imageName);
+            //Logger::outputDebugString("\t\t" + imageName);
             GLuint textureId = 0;
             glGenTextures(1, &textureId);
             glBindTexture(GL_TEXTURE_2D, textureId);

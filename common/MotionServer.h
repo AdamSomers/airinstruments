@@ -31,6 +31,7 @@ public:
     
     void addListener(Leap::Listener& l);
     void removeListener(Leap::Listener& l);
+    void removeAllListeners();
     void pause();
     void resume();
     
@@ -41,10 +42,10 @@ public:
     
     void spoof(float x, float y, float z);
 
-    static std::map<int,FingerView*> fingerViews;
-    static std::map<int,HandView*> handViews;
-    static std::vector<FingerView::Listener*> fingerViewListeners;
-    static std::vector<HandView::Listener*> handViewListeners;
+    std::map<int,FingerView*> fingerViews;
+    std::map<int,HandView*> handViews;
+    std::vector<FingerView::Listener*> fingerViewListeners;
+    std::vector<HandView::Listener*> handViewListeners;
     Leap::Controller controller;
     static float zLimit;
 private:

@@ -1,9 +1,5 @@
 #include "MotionServer.h"
 
-std::map<int,FingerView*> MotionDispatcher::fingerViews;
-std::map<int,HandView*> MotionDispatcher::handViews;
-std::vector<FingerView::Listener*> MotionDispatcher::fingerViewListeners;
-std::vector<HandView::Listener*> MotionDispatcher::handViewListeners;
 float MotionDispatcher::zLimit = 0;
 MotionDispatcher* MotionDispatcher::s_instance = nullptr;
 
@@ -38,7 +34,9 @@ MotionDispatcher::MotionDispatcher()
 
 MotionDispatcher::~MotionDispatcher()
 {
-    controller.removeListener(*this);
+    fingerViewListeners.clear();
+    handViewListeners.clear();
+    removeAllListeners();
 }
 
 void MotionDispatcher::addListener(Leap::Listener& l)
@@ -53,6 +51,13 @@ void MotionDispatcher::removeListener(Leap::Listener& l)
     auto iter = std::find(listeners.begin(), listeners.end(), &l);
     if (iter != listeners.end())
         listeners.erase(iter);
+}
+
+void MotionDispatcher::removeAllListeners()
+{
+    for (Leap::Listener* l : listeners)
+        controller.removeListener(*l);
+    listeners.clear();
 }
 
 void MotionDispatcher::pause()

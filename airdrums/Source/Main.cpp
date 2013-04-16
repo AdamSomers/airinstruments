@@ -75,9 +75,9 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     
 	Drums::instance().setPattern(SharedPtr<DrumPattern>(new DrumPattern));	// Start out with a new empty pattern for now
 
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString == "Default")
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedKitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
 }
 
 void AirHarpApplication::shutdown()
@@ -90,7 +90,6 @@ void AirHarpApplication::shutdown()
 		delete settingsDialog;
 
     audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
-	MotionDispatcher::destruct();
 
 	PatternManager::Destruct();
 	#if JUCE_WINDOWS
@@ -101,6 +100,8 @@ void AirHarpApplication::shutdown()
 	delete mainMenu;
 
     mainWindow = nullptr; // (deletes our window)
+    MotionDispatcher::destruct();
+
     //audioDeviceManager.removeAudioCallback(this);
 	KitManager::Destruct();
 }
@@ -168,6 +169,18 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			SharedPtr<DrumPattern> pattern = drums.getPattern();
 			jassert(pattern.get() != nullptr);
 			pattern->SaveToXml(fileName, directory);
+            
+			mgr.BuildPatternList();	// Refresh list to find new content, etc.
+            
+            String name = pattern->GetName();
+            Uuid uuid = pattern->GetUuid();
+            String uuidString = uuid.toString();
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
+            
+            PatternAddedMessage* m = new PatternAddedMessage;
+            ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
+            
 			break;
 		}
 		case MainMenu::kLoadPatternCmd :

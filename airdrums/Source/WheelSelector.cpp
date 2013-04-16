@@ -10,11 +10,12 @@
 #include "SkinManager.h"
 #include "Main.h"
 
-WheelSelector::WheelSelector()
+WheelSelector::WheelSelector(bool left /*= false*/)
 : selection(0)
 , needsLayout(false)
 , trackedFinger(nullptr)
 , enabled(false)
+, leftHanded(left)
 {
     setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("wheelBg"));
 }
@@ -85,6 +86,16 @@ void WheelSelector::addIcon(Icon *icon)
 {
     icons.push_back(icon);
     addChild(icon);
+}
+
+void WheelSelector::removeAllIcons()
+{
+    removeAllChildren();
+    for (Icon* i : icons)
+    {
+        delete i;
+    }
+    icons.clear();
 }
 
 void WheelSelector::layoutIcons()
@@ -205,11 +216,12 @@ void WheelSelector::removeListener(WheelSelector::Listener *listener)
         listeners.erase(iter);
 }
 
-WheelSelector::Icon::Icon(int inId)
+WheelSelector::Icon::Icon(int inId, bool left /*=false*/)
 : id(inId)
 , rotationCoeff(0.f)
 , targetRotationCoeff(0.f)
 , rotationInc(0.f)
+, leftHanded(left)
 {
 }
 
@@ -242,8 +254,20 @@ void WheelSelector::Icon::draw()
         rotationCoeff = targetRotationCoeff = 0.f;
 
     Environment::instance().modelViewMatrix.PushMatrix();
-    Environment::instance().modelViewMatrix.Translate(getParent()->getBounds().w / 2, getParent()->getBounds().h / 2, 0);
-    Environment::instance().modelViewMatrix.Rotate(rotationCoeff, 0, 0, 1);
+    
+    int xTranslate = 0;
+    Point<int> about(getBounds().w,0);
+    int zAxis = -1;
+    if (leftHanded)
+    {
+        xTranslate = getParent()->getBounds().w / 2;
+        about.x = 0;
+        zAxis = 1;
+    }
+    Environment::instance().modelViewMatrix.Translate(xTranslate, getParent()->getBounds().h / 2, 0);
+    Environment::instance().modelViewMatrix.Translate(about.x,0,0);
+    Environment::instance().modelViewMatrix.Rotate(rotationCoeff, 0, 0, zAxis);
+    Environment::instance().modelViewMatrix.Translate(-about.x,0,0);
     Environment::instance().modelViewMatrix.Translate(50,0,0);
     HUDView::draw();
     Environment::instance().modelViewMatrix.PopMatrix();

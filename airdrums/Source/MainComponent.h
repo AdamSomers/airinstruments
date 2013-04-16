@@ -32,7 +32,8 @@ class MainContentComponent   : public Component,
                                public Leap::Listener,
                                public DrumSelector::Listener,
                                public WheelSelector::Listener,
-                               public MultiTimer
+                               public MultiTimer,
+                               public MessageListener
 {
 public:
     //==============================================================================
@@ -65,17 +66,22 @@ public:
     // KitSelector::Listener override
     void wheelSelectorChanged(WheelSelector* selector);
 
+    // Leap::Listener override
     virtual void onFrame(const Leap::Controller&);
     
+    // MultiTimer override
     void timerCallback(int timerId);
+    
+    // MessageListener override
+    void handleMessage(const Message& m);
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
-    
     void handleTapGesture(const Leap::Pointable& p);
-    
     bool checkIdle();
-    
+    void populatePatternSelector();
+    void selectCurrentPattern();
+
     enum TimerIds
     {
         kTimerCheckIdle = 0,
@@ -93,6 +99,7 @@ private:
     DrumSelector* drumSelectorRight;
     TrigViewBank* trigViewBank;
     WheelSelector* kitSelector;
+    WheelSelector* patternSelector;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoControl;
@@ -103,7 +110,9 @@ private:
     int lastCircleId;
     int64 lastCircleStartTime;
     bool showKitSelector;
+    bool showPatternSelector;
     bool isIdle;
+    bool needsPatternListUpdate;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -21,6 +21,18 @@ void HUDView::addChild(HUDView* child)
     child->setParent(this);
 }
 
+void HUDView::removeChild(HUDView* child)
+{
+    auto iter = std::find(children.begin(), children.end(), child);
+    if (iter != children.end())
+        children.erase(iter);
+}
+
+void HUDView::removeAllChildren()
+{
+    children.clear();
+}
+
 void HUDView::setParent(HUDView* p)
 {
     parent = p;

@@ -17,7 +17,7 @@ class WheelSelector : public HUDView
                     , public Timer
 {
 public:
-    WheelSelector();
+    WheelSelector(bool left = false);
     ~WheelSelector();
     
     // HUDView overrides
@@ -39,7 +39,7 @@ public:
     class Icon : public HUDView
     {
     public:
-        Icon(int id);
+        Icon(int id, bool left = false);
         ~Icon();
         void draw();
         void setBounds(const HUDRect& b);
@@ -57,9 +57,11 @@ public:
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
         Image image;
+        bool leftHanded;
     };
     
     void addIcon(Icon* icon);
+    void removeAllIcons();
     
     class Listener
     {
@@ -80,6 +82,7 @@ private:
     float wStep;
     float hStep;
     bool enabled;
+    bool leftHanded;
     
     void layoutIcons();
     std::vector<Icon*> icons;
