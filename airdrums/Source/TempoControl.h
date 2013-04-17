@@ -52,6 +52,7 @@ public:
         
         GLuint textureId;
         float tempoValue;
+        bool tempoValueChanged;
     };
     
 private:

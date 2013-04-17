@@ -153,6 +153,7 @@ void TempoControl::timerCallback()
 TempoControl::Icon::Icon()
 : textureId (0)
 , tempoValue(-999)
+, tempoValueChanged(true)
 {
 }
 
@@ -166,17 +167,22 @@ void TempoControl::Icon::draw()
     else if (tempBounds != targetBounds)
         HUDView::setBounds(targetBounds);
 
-    Image im(Image::PixelFormat::ARGB, getBounds().w*4, getBounds().h*4, true);
-    Graphics g (im);
-    g.setColour(Colours::white);
-    g.setFont((getBounds().h * .75) * 4);
-    g.drawText(String((int)tempoValue), 0, 0, getBounds().w*4, getBounds().h*4, Justification::centred, true);
-    if (textureId != 0)
-        glDeleteTextures(1, &textureId);
-    glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    GfxTools::loadTextureFromJuceImage(im);
-    setDefaultTexture(textureId);
+
+    if (tempoValueChanged) // need to generate a new texture
+    {
+        Image im(Image::PixelFormat::ARGB, targetBounds.w*4, targetBounds.h*4, true);
+        Graphics g (im);
+        g.setColour(Colours::white);
+        g.setFont((targetBounds.h * .75) * 4);
+        g.drawText(String((int)tempoValue), 0, 0, targetBounds.w*4, targetBounds.h*4, Justification::centred, true);
+        if (textureId != 0)
+            glDeleteTextures(1, &textureId);
+        glGenTextures(1, &textureId);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        GfxTools::loadTextureFromJuceImage(im);
+        setDefaultTexture(textureId);
+        tempoValueChanged = false;
+    }
     
     if (getBounds().x + getBounds().w * .33 > 0 && getBounds().x + getBounds().w * .66 < getParent()->getBounds().w)
         HUDView::draw();
@@ -230,4 +236,5 @@ void TempoControl::Icon::updateBounds()
 void TempoControl::Icon::setTempo(float tempo)
 {
     tempoValue = tempo;
+    tempoValueChanged = true;
 }
