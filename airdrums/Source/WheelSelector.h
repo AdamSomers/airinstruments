@@ -14,7 +14,7 @@
 #include <iostream>
 
 class WheelSelector : public HUDView
-                    , public Timer
+                    , public MultiTimer
 {
 public:
     WheelSelector(bool left = false);
@@ -28,13 +28,21 @@ public:
     void fingerExited(float x, float y, FingerView* fv);
     
     // Juce::Timer override
-    void timerCallback();
+    void timerCallback(int timerId);
+    
+    enum TimerId
+    {
+        kTimerSelectionDelay = 0,
+        kTimerShowControl,
+        kTimerIdle
+    };
     
     void setSelection(int sel);
     int getSelection() const { return selection; }
     void incSelection(int direction);
     
     void setEnabled(bool shouldBeEnabled) { enabled = shouldBeEnabled; }
+    bool isEnabled() const { return enabled; }
     
     class Icon : public HUDView
     {

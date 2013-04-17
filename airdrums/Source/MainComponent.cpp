@@ -327,6 +327,24 @@ void MainContentComponent::selectCurrentPattern()
 
 void MainContentComponent::renderOpenGL()
 {
+    if (!showKitSelector && kitSelector->isEnabled()) {
+        showKitSelector = true;
+        sizeChanged = true;
+    }
+    else if (showKitSelector && !kitSelector->isEnabled()) {
+        showKitSelector = false;
+        sizeChanged = true;
+    }
+    
+    if (!showPatternSelector && patternSelector->isEnabled()) {
+        showPatternSelector = true;
+        sizeChanged = true;
+    }
+    else if (showPatternSelector && !patternSelector->isEnabled()) {
+        showPatternSelector = false;
+        sizeChanged = true;
+    }
+    
     if (sizeChanged)
     {
         const int toolbarHeight = 75;
@@ -390,7 +408,7 @@ void MainContentComponent::renderOpenGL()
         int hiddenX = (int) (-side * .85);
         int shownX = (int) (-side / 2.f);
         if (kitSelector)
-            kitSelector->setBounds(HUDRect(showKitSelector ? (GLfloat) shownX : (GLfloat) hiddenX,
+            kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? (GLfloat) shownX : (GLfloat) hiddenX,
                                            (GLfloat) statusBarHeight,
                                            (GLfloat) side,
                                            (GLfloat) side));
@@ -398,7 +416,7 @@ void MainContentComponent::renderOpenGL()
         hiddenX = (int) ((GLfloat) Environment::instance().screenW - side * .15);
         shownX = (int) ((GLfloat) Environment::instance().screenW - side / 2.f);
         if (patternSelector)
-            patternSelector->setBounds(HUDRect(showPatternSelector ? (GLfloat) shownX : (GLfloat) hiddenX,
+            patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? (GLfloat) shownX : (GLfloat) hiddenX,
                                            (GLfloat) statusBarHeight,
                                            (GLfloat) side,
                                            (GLfloat) side));
@@ -754,8 +772,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                         showPatternSelector = false;
                     }
                     else {
-                        kitSelector->setEnabled(true);
-                        showKitSelector = true;
+                        //kitSelector->setEnabled(true);
+                        //showKitSelector = true;
                     }
                     sizeChanged = true;
                 }
@@ -765,8 +783,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                         showKitSelector = false;
                     }
                     else {
-                        patternSelector->setEnabled(true);
-                        showPatternSelector = true;
+                        //patternSelector->setEnabled(true);
+                        //showPatternSelector = true;
                     }
                     sizeChanged = true;
                 }
@@ -872,7 +890,7 @@ void MainContentComponent::timerCallback(int timerId)
     switch (timerId) {
         case kTimerCheckIdle:
             if (checkIdle())
-                tutorial->begin();
+                ;//tutorial->begin();
             else {
                 stopTimer(kTimerCheckIdle);
                 startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);

@@ -151,11 +151,17 @@ void WheelSelector::incSelection(int direction)
 
 void WheelSelector::fingerMotion(float x, float y, FingerView* fv)
 {
-    if (!enabled)
-        return;
-
     if (fv != trackedFinger)
         return;
+    
+    if (!enabled) {
+        float center = getBounds().y + getBounds().h / 2;
+        float distanceFromCenter = y - center;
+        if (fabsf(distanceFromCenter) > getBounds().h / 6)
+            if (isTimerRunning(kTimerShowControl))
+                stopTimer(kTimerShowControl);
+        return;
+    }
     
     int inc = 0;
     float center = getBounds().y + getBounds().h / 2;
@@ -165,32 +171,67 @@ void WheelSelector::fingerMotion(float x, float y, FingerView* fv)
     else if (fabsf(distanceFromCenter) > 75)
         inc = -1;
     
-    if (inc != 0 && !isTimerRunning()) {
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
         incSelection(inc);
         for (Listener* l : listeners)
             l->wheelSelectorChanged(this);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer(jmax<float>(250, 500 * (1.f-multiplier)));
+        startTimer(kTimerSelectionDelay,jmax<float>(250, 500 * (1.f-multiplier)));
     }
 }
 
 void WheelSelector::fingerEntered(float x, float y, FingerView* fv)
 {
+    if (!enabled) {
+        float center = getBounds().y + getBounds().h / 2;
+        float distanceFromCenter = y - center;
+        if (fabsf(distanceFromCenter) < getBounds().h / 6)
+            if (!isTimerRunning(kTimerShowControl))
+                startTimer(kTimerShowControl,500);
+        return;
+    }
+    
+    if (isTimerRunning(kTimerIdle))
+        stopTimer(kTimerIdle);
+    
     if (!trackedFinger)
         trackedFinger = fv;
 }
 
 void WheelSelector::fingerExited(float x, float y, FingerView* fv)
 {
+    // !!! Hack to get avoid spurious exits due to corrupt screen coord data
+    if (x < 0 || x > 2000)
+        return;
+    
+    if (!enabled && isTimerRunning(kTimerShowControl))
+        stopTimer(kTimerShowControl);
+    
     if (fv == trackedFinger)
     {
         trackedFinger = NULL;
+        startTimer(kTimerIdle, 2000);
     }
 }
 
-void WheelSelector::timerCallback()
+void WheelSelector::timerCallback(int timerId)
 {
-    stopTimer();
+    switch (timerId)
+    {
+        case kTimerSelectionDelay:
+            stopTimer(kTimerSelectionDelay);
+            break;
+        
+        case kTimerShowControl:
+            enabled = true;
+            stopTimer(kTimerShowControl);
+            break;
+            
+        case kTimerIdle:
+            enabled = false;
+            stopTimer(kTimerIdle);
+            break;
+    }
 }
 
 void WheelSelector::addListener(WheelSelector::Listener *listener)
