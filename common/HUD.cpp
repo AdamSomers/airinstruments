@@ -9,10 +9,10 @@ HUDView::HUDView()
 , defaultTexture(0)
 , defaultColorSet(false)
 {
-    defaultColor[0] = 0.67f;
-    defaultColor[1] = 0.67f;
-    defaultColor[2] = 0.67f;
-    defaultColor[3] = 0.67f;
+    defaultColor[0] = 1.f;
+    defaultColor[1] = 1.f;
+    defaultColor[2] = 1.f;
+    defaultColor[3] = 1.f;
 }
 
 void HUDView::addChild(HUDView* child)
@@ -174,6 +174,10 @@ void HUDView::updatePointedState(FingerView* fv)
     float y = screenPos[1];
     y = Environment::instance().screenH - y;
 
+    if (x > 0 && x < 2000 )
+        ;//printf("ok\n");
+    else
+        ;//printf("not ok\n");
     if (bounds.contains(x, y))
     {
         auto iter = std::find(hoveringFingers.begin(), hoveringFingers.end(), fv);

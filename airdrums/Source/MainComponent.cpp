@@ -41,9 +41,10 @@ MainContentComponent::MainContentComponent()
 , trigViewBank(NULL)
 , kitSelector(NULL)
 , patternSelector(NULL)
+, tempoControl(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
-, tempoControl(Slider::LinearHorizontal, Slider::TextBoxBelow)
+, tempoSlider(Slider::LinearHorizontal, Slider::TextBoxBelow)
 , isIdle(true)
 , needsPatternListUpdate(false)
 {
@@ -56,16 +57,17 @@ MainContentComponent::MainContentComponent()
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
 
-	tempoControl.setRange(30.0, 300.0, 0.1);
-	tempoControl.setSize(250, 50);
-	addAndMakeVisible(&tempoControl);
-	tempoControl.setCentrePosition(600, 30);
+	tempoSlider.setRange(30.0, 300.0, 0.1);
+	tempoSlider.setSize(250, 50);
+	addAndMakeVisible(&tempoSlider);
+	tempoSlider.setCentrePosition(600, 30);
 	AirHarpApplication* app = AirHarpApplication::getInstance();
 	ApplicationProperties& props = app->getProperties();
 	float tempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
-	tempoControl.setValue(tempo);
-	tempoControl.addListener(&Drums::instance());
-	Drums::instance().registerTempoSlider(&tempoControl);
+	tempoSlider.setValue(tempo);
+	tempoSlider.addListener(&Drums::instance());
+	Drums::instance().registerTempoSlider(&tempoSlider);
+    tempoSlider.setVisible(false);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -84,6 +86,7 @@ MainContentComponent::~MainContentComponent()
     delete trigViewBank;
     delete kitSelector;
     delete patternSelector;
+    delete tempoControl;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -250,6 +253,11 @@ void MainContentComponent::newOpenGLContextCreated()
 //    tutorial->begin();
     startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
 
+    tempoControl = new TempoControl;
+    float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
+    tempoControl->setTempo(tempo);
+    views.push_back(tempoControl);
+    
     for (HUDView* v : views)
         v->loadTextures();
     
@@ -321,11 +329,13 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
-        const int toobarHeight = 75;
+        const int toolbarHeight = 75;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
-        const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - drumSelectorHeight - 10;
+        const int playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight - drumSelectorHeight - 10;
         const int playAreaWidth = Environment::instance().screenW / 2 - 10;
+        const int tempoControlWidth = 365;
+        const int tempoControlHeight = 50;
         
         if (tutorial)
             tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - 500 / 2),
@@ -335,9 +345,9 @@ void MainContentComponent::renderOpenGL()
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,
-                                       (GLfloat) Environment::instance().screenH-toobarHeight,
+                                       (GLfloat) Environment::instance().screenH-toolbarHeight,
                                        (GLfloat) Environment::instance().screenW,
-                                       (GLfloat) toobarHeight));
+                                       (GLfloat) toolbarHeight));
         
         if (statusBar)
             statusBar->setBounds(HUDRect(0.0f,
@@ -372,9 +382,9 @@ void MainContentComponent::renderOpenGL()
 
         if (trigViewBank)
             trigViewBank->setBounds(HUDRect(0.0f,
-                                            (GLfloat) Environment::instance().screenH-toobarHeight,
+                                            (GLfloat) Environment::instance().screenH-toolbarHeight,
                                             (GLfloat) Environment::instance().screenW / 4,
-                                            (GLfloat) toobarHeight));
+                                            (GLfloat) toolbarHeight));
         
         int side = std::min(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
         int hiddenX = (int) (-side * .85);
@@ -392,6 +402,12 @@ void MainContentComponent::renderOpenGL()
                                            (GLfloat) statusBarHeight,
                                            (GLfloat) side,
                                            (GLfloat) side));
+        
+        if (tempoControl)
+            tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f - tempoControlWidth / 2.f,
+                                            (GLfloat) Environment::instance().screenH - toolbarHeight / 2.f - tempoControlHeight / 2.f,
+                                            tempoControlWidth,
+                                            tempoControlHeight));
         
         layoutPadsLinear();
         sizeChanged = false;
@@ -482,8 +498,8 @@ void MainContentComponent::renderOpenGL()
     for (PadView* pv : pads)
         pv->update();
 
-    glDisable(GL_CULL_FACE);
-	tempoControl.repaint();
+//    glDisable(GL_CULL_FACE);
+//	tempoSlider.repaint();
 }
 
 void MainContentComponent::openGLContextClosing()
@@ -646,6 +662,14 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         drumSelectorRight->setSelection(drumSelectorRight->getSelection() + 1);
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+    }
+    else if (kp.getKeyCode() == KeyPress::leftKey)
+    {
+        tempoControl->increment(-1);
+    }
+    else if (kp.getKeyCode() == KeyPress::rightKey)
+    {
+        tempoControl->increment(1);
     }
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();

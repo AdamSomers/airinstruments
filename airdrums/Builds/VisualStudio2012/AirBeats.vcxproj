@@ -178,6 +178,7 @@
     <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\Source\SkinManager.cpp"/>
+    <ClCompile Include="..\..\Source\TempoControl.cpp"/>
     <ClCompile Include="..\..\Source\TrigView.cpp"/>
     <ClCompile Include="..\..\Source\WheelSelector.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
@@ -1298,6 +1299,7 @@
     <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>
     <ClInclude Include="..\..\Source\SkinManager.h"/>
+    <ClInclude Include="..\..\Source\TempoControl.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>
     <ClInclude Include="..\..\Source\Types.h"/>
     <ClInclude Include="..\..\Source\WheelSelector.h"/>

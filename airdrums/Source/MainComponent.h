@@ -18,6 +18,7 @@
 #include "SkinManager.h"
 #include "WheelSelector.h"
 #include "TutorialSlide.h"
+#include "TempoControl.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -100,9 +101,10 @@ private:
     TrigViewBank* trigViewBank;
     WheelSelector* kitSelector;
     WheelSelector* patternSelector;
+    TempoControl* tempoControl;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
-	Slider tempoControl;
+	Slider tempoSlider;
     
     float prevMouseY;
     float prevMouseX;
