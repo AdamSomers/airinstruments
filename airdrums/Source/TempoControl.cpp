@@ -166,11 +166,11 @@ void TempoControl::Icon::draw()
     else if (tempBounds != targetBounds)
         HUDView::setBounds(targetBounds);
 
-    Image im(Image::PixelFormat::ARGB, getBounds().w*2, getBounds().h*2, true);
+    Image im(Image::PixelFormat::ARGB, getBounds().w*4, getBounds().h*4, true);
     Graphics g (im);
     g.setColour(Colours::white);
-    g.setFont(getBounds().w / 2);
-    g.drawText(String((int)tempoValue), 0, 0, getBounds().w*2, getBounds().h*2, Justification::centred, true);
+    g.setFont((getBounds().h * .75) * 4);
+    g.drawText(String((int)tempoValue), 0, 0, getBounds().w*4, getBounds().h*4, Justification::centred, true);
     if (textureId != 0)
         glDeleteTextures(1, &textureId);
     glGenTextures(1, &textureId);

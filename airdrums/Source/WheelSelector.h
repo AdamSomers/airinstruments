@@ -66,6 +66,7 @@ public:
         float xStep, yStep, wStep, hStep;
         Image image;
         bool leftHanded;
+        HUDView imageView;
     };
     
     void addIcon(Icon* icon);

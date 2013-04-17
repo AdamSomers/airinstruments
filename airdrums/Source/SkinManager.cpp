@@ -33,7 +33,7 @@ void Skin::addTexture(String name, GLuint texture)
 
 SkinManager::SkinManager()
 {
-    selectedSkinName = "Default";
+    selectedSkinName = "Labour";
 }
 
 SkinManager::~SkinManager()

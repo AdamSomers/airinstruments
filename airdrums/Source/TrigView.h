@@ -17,9 +17,6 @@ public:
     void trigger();
     
 private:
-    GLBatch ledBatch;
-    GLBatch LRBatch;
-    GLBatch categoryBatch;
     float fade;
     int id;
 };

@@ -29,8 +29,17 @@ void TrigView::draw()
     GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
     GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
     
-    GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("led_on");
-    GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("led_off");
+        String category = "BassDrum";
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
+    if (kitUuidString != "Default") {
+        Uuid kitUuid(kitUuidString);
+        category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetCategory();
+    }
+    else
+        category = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetCategory();
+
+    GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category + "_on");
+    GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
     
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
@@ -44,38 +53,6 @@ void TrigView::draw()
     {
         fade -= 0.11f;
         if (fade < 0.f) fade = 0.f;
-    }
-    
-    String category = "BassDrum";
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
-    if (kitUuidString != "Default") {
-        Uuid kitUuid(kitUuidString);
-        category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetCategory();
-    }
-    else
-        category = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetCategory();
-
-    GLuint categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
-    glBindTexture(GL_TEXTURE_2D, categoryTextureId);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-    defaultBatch.Draw();
-    
-    int left = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteLeft");
-    int right = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNoteRight");
-    if (left == id)
-    {
-        GLuint LTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_L");
-        glBindTexture(GL_TEXTURE_2D, LTextureId);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-        defaultBatch.Draw();
-        
-    }
-    if (right == id)
-    {
-        GLuint RTextureId = SkinManager::instance().getSelectedSkin().getTexture("Trig_R");
-        glBindTexture(GL_TEXTURE_2D, RTextureId);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-        defaultBatch.Draw();
     }
 }
 
@@ -108,16 +85,16 @@ void TrigViewBank::setup()
 void TrigViewBank::setBounds(const HUDRect& b)
 {
     HUDView::setBounds(b);
-    int trigWidth = 23;
-    int trigHeight = 32;
-    int step = trigWidth;
+    int trigWidth = 15;
+    int trigHeight = 15;
+    int step = trigWidth + 7;
     int x = 15;
     int y = 40;
     for (unsigned int i = 0; i < trigViews.size(); ++i) {
         trigViews.at(i)->setBounds(HUDRect((GLfloat) x, (GLfloat) y, (GLfloat) trigWidth, (GLfloat) trigHeight));
         x += step;
         if (i == 7) {
-            y -= trigHeight;
+            y -= trigHeight + 7;
             x = 15;
         }
     }
@@ -125,7 +102,7 @@ void TrigViewBank::setBounds(const HUDRect& b)
 
 void TrigViewBank::draw()
 {
-    GLfloat color[] = { .67f, .67f, .67f, 1.f };
+    GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
     HUDView::draw();
 }

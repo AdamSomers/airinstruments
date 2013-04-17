@@ -37,20 +37,20 @@ void DrumsToolbar::setup()
 
 void DrumsToolbar::layoutControls()
 {
-    float buttonSpacing = 10;
+    float buttonSpacing = 25;
 
-    float w = 50;
-    float h = 50;
-    float x = bounds.w - (w + buttonSpacing) * 4;
-    float y = bounds.h / 2.f - h / 2.f;
+    float w = 25;
+    float h = 40;
+    float x = bounds.w - (w + buttonSpacing) * 4 - 20;
+    float y = 110 + 70 / 2.f - h / 2.f;
     HUDRect r(x, y, w, h);
     resetButton.setBounds(r);
     r.x += w + buttonSpacing;
     playButton.setBounds(r);
     r.x += w + buttonSpacing;
-    recordButton.setBounds(r);
-    r.x += w + buttonSpacing;
-    metronomeButton.setBounds(r);
+    recordButton.setBounds(HUDRect(r.x, r.y, 40, 40));
+    r.x += w + buttonSpacing + 15;
+    metronomeButton.setBounds(HUDRect(r.x, r.y, 36, 40));
 }
 
 void DrumsToolbar::draw()
@@ -63,6 +63,8 @@ void DrumsToolbar::draw()
                            SkinManager::instance().getSelectedSkin().getTexture("record_off"));
     metronomeButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("metronome_on"),
                              SkinManager::instance().getSelectedSkin().getTexture("metronome_off"));
+    
+    setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("top_bezel"));
 
     HUDView::draw();
 }
@@ -113,7 +115,7 @@ StatusBar::StatusBar()
 {
     //indicator.setEditable(false)
     addChild(&indicator);
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    GLfloat color [] = { 0.95f, 0.95f, 0.95f, 1.f };
     setDefaultColor(color);
 }
 

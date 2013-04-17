@@ -40,17 +40,19 @@ void WheelSelector::setBounds(const HUDRect &b)
     wStep = (targetBounds.w - tempBounds.w) / 10.f;
     hStep = (targetBounds.h - tempBounds.h) / 10.f;
     
-    for (Icon* i : icons)
+    for (int i = 0; i < icons.size(); ++i)
     {
+        Icon* icon = icons.at(i);
         float aspectRatio = 1.0f;
-            const Image& image = i->getImage();
+            const Image& image = icon->getImage();
             if (image.isValid())
                 aspectRatio = image.getWidth() / (float)image.getHeight();
         
+        float width = b.w/2.f;
         float height = (float)(b.w/2) / aspectRatio;
-        i->setBounds(HUDRect(0,
+        icon->setBounds(HUDRect(0,
                              0,
-                             b.w/2,
+                             width,
                              (GLfloat) (int) height));
     }
     
@@ -300,7 +302,7 @@ void WheelSelector::Icon::draw()
     Environment::instance().modelViewMatrix.Translate(about.x,0,0);
     Environment::instance().modelViewMatrix.Rotate(rotationCoeff, 0, 0, zAxis);
     Environment::instance().modelViewMatrix.Translate(-about.x,0,0);
-    Environment::instance().modelViewMatrix.Translate(50,0,0);
+    Environment::instance().modelViewMatrix.Translate(0,0,0);
     HUDView::draw();
     Environment::instance().modelViewMatrix.PopMatrix();
 }

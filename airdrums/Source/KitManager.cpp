@@ -33,9 +33,9 @@ KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*
 	if (clear)
 	{
 		mItems.clear();
-		Status status = AddBuiltInKit();
-		if (status != kNoError)
-			return status;
+		//Status status = AddBuiltInKit();
+		//if (status != kNoError)
+		//	return status;
 	}
 	return ItemManager<KitManager, DrumKit>::BuildItemList("*.xml", "kit", path, false);
 }

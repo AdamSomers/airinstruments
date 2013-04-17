@@ -65,9 +65,10 @@ void DrumSelector::draw()
         needsLayout = false;
     }
 
-    GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
-    setDefaultTexture(textureId);
-    
+    //GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
+    //setDefaultTexture(textureId);
+    GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
+    setDefaultColor(color);
     HUDView::draw();
 }
 

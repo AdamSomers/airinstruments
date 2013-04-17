@@ -140,8 +140,8 @@ void MainContentComponent::newOpenGLContextCreated()
 
     SkinManager::instance().loadResources();
     KitManager::GetInstance().LoadTextures();
-    String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
-    SkinManager::instance().setSelectedSkin(skinSetting);
+    //String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
+    //SkinManager::instance().setSelectedSkin(skinSetting);
     
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
@@ -287,7 +287,7 @@ void MainContentComponent::populatePatternSelector()
         WheelSelector::Icon* icon = new WheelSelector::Icon(i);
         Image im(Image::PixelFormat::ARGB, 2000, 200, true);
         Graphics g (im);
-        g.setColour(Colours::white);
+        g.setColour(Colour::fromRGBA(60, 60, 60, 255));
         g.setFont(200);
         g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
         
@@ -347,13 +347,13 @@ void MainContentComponent::renderOpenGL()
     
     if (sizeChanged)
     {
-        const int toolbarHeight = 75;
+        const int toolbarHeight = 180;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
-        const int playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight - drumSelectorHeight - 10;
-        const int playAreaWidth = Environment::instance().screenW / 2 - 10;
-        const int tempoControlWidth = 365;
-        const int tempoControlHeight = 50;
+        const int playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
+        const int playAreaWidth = Environment::instance().screenW / 2;
+        const int tempoControlWidth = 260;
+        const int tempoControlHeight = 36;
         
         if (tutorial)
             tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - 500 / 2),
@@ -375,32 +375,32 @@ void MainContentComponent::renderOpenGL()
         
         if (drumSelectorLeft)
             drumSelectorLeft->setBounds(HUDRect((GLfloat) 5.0f,
-                                                (GLfloat) toolbar->getBounds().y - drumSelectorHeight,
+                                                (GLfloat) toolbar->getBounds().y + 10,
                                                 (GLfloat) playAreaWidth,
                                                 (GLfloat) drumSelectorHeight - 5));
         
         if (drumSelectorRight)
             drumSelectorRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
-                                                (GLfloat) toolbar->getBounds().y - drumSelectorHeight,
+                                                (GLfloat) toolbar->getBounds().y + 10,
                                                 (GLfloat) playAreaWidth,
                                                 (GLfloat) drumSelectorHeight - 5));
         
         if (playAreaLeft)
             playAreaLeft->setBounds(HUDRect(5.0f,
-                                            (GLfloat) statusBar->getBounds().top() + 5,
+                                            (GLfloat) statusBar->getBounds().top(),
                                             (GLfloat) playAreaWidth,
                                             (GLfloat) playAreaHeight));
                                     
         if (playAreaRight)
-            playAreaRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
-                                            (GLfloat) statusBar->getBounds().top() + 5,
+            playAreaRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2,
+                                            (GLfloat) statusBar->getBounds().top(),
                                             (GLfloat) playAreaWidth,
                                             (GLfloat) playAreaHeight));
         
 
         if (trigViewBank)
             trigViewBank->setBounds(HUDRect(0.0f,
-                                            (GLfloat) Environment::instance().screenH-toolbarHeight,
+                                            (GLfloat) Environment::instance().screenH-70,
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toolbarHeight));
         
@@ -423,7 +423,7 @@ void MainContentComponent::renderOpenGL()
         
         if (tempoControl)
             tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f - tempoControlWidth / 2.f,
-                                            (GLfloat) Environment::instance().screenH - toolbarHeight / 2.f - tempoControlHeight / 2.f,
+                                            (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
                                             tempoControlWidth,
                                             tempoControlHeight));
         
