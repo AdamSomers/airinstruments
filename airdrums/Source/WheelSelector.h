@@ -88,8 +88,6 @@ private:
     std::vector<Icon*> icons;
     int selection;
     bool needsLayout;
-    float prevFingerX;
-    float prevFingerY;
     FingerView* trackedFinger;
     std::vector<Listener*> listeners;
 };

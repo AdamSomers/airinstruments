@@ -158,33 +158,26 @@ void WheelSelector::fingerMotion(float x, float y, FingerView* fv)
         return;
     
     int inc = 0;
-    if (y - prevFingerY < -3)
+    float center = getBounds().y + getBounds().h / 2;
+    float distanceFromCenter = y - center;
+    if (fabsf(distanceFromCenter) > 75 && y < center)
         inc = 1;
-    else if (y - prevFingerY > 3)
+    else if (fabsf(distanceFromCenter) > 75)
         inc = -1;
     
     if (inc != 0 && !isTimerRunning()) {
         incSelection(inc);
         for (Listener* l : listeners)
             l->wheelSelectorChanged(this);
-        startTimer(250);
-        trackedFinger = nullptr;
+        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
+        startTimer(jmax<float>(250, 500 * (1.f-multiplier)));
     }
-    
-    prevFingerX = x;
-    prevFingerY = y;
 }
 
 void WheelSelector::fingerEntered(float x, float y, FingerView* fv)
 {
     if (!trackedFinger)
         trackedFinger = fv;
-    
-    if (fv == trackedFinger)
-    {
-        prevFingerX = x;
-        prevFingerY = y;
-    }
 }
 
 void WheelSelector::fingerExited(float x, float y, FingerView* fv)
@@ -192,8 +185,6 @@ void WheelSelector::fingerExited(float x, float y, FingerView* fv)
     if (fv == trackedFinger)
     {
         trackedFinger = NULL;
-        prevFingerX = x;
-        prevFingerY = y;
     }
 }
 
