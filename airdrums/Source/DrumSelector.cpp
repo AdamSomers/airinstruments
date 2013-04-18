@@ -85,7 +85,7 @@ void DrumSelector::setSelection(int sel)
     needsLayout = true;
 }
 
-void DrumSelector::fingerMotion(float x, float y, FingerView* fv)
+void DrumSelector::fingerMotion(float x, float /*y*/, FingerView* fv)
 {
     if (fv != trackedFinger)
         return;
@@ -103,11 +103,11 @@ void DrumSelector::fingerMotion(float x, float y, FingerView* fv)
         for (Listener* l : listeners)
             l->drumSelectorChanged(this);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer(jmax<float>(100, 500 * (1.f-multiplier)));
+        startTimer((int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
 }
 
-void DrumSelector::fingerEntered(float x, float y, FingerView* fv)
+void DrumSelector::fingerEntered(float /*x*/, float /*y*/, FingerView* fv)
 {    
     M3DVector3f vec;
     fv->objectFrame.GetOrigin(vec);
@@ -119,7 +119,7 @@ void DrumSelector::fingerEntered(float x, float y, FingerView* fv)
     }
 }
 
-void DrumSelector::fingerExited(float x, float y, FingerView* fv)
+void DrumSelector::fingerExited(float x, float /*y*/, FingerView* fv)
 {
     // !!! Hack to get avoid spurious exits due to corrupt screen coord data
     if (x < 0 || x > 2000)

@@ -40,7 +40,7 @@ void WheelSelector::setBounds(const HUDRect &b)
     wStep = (targetBounds.w - tempBounds.w) / 10.f;
     hStep = (targetBounds.h - tempBounds.h) / 10.f;
     
-    for (int i = 0; i < icons.size(); ++i)
+    for (int i = 0; i < (int) icons.size(); ++i)
     {
         Icon* icon = icons.at(i);
         float aspectRatio = 1.0f;
@@ -151,7 +151,7 @@ void WheelSelector::incSelection(int direction)
         icon->rotate(-direction * 360.f / icons.size());
 }
 
-void WheelSelector::fingerMotion(float x, float y, FingerView* fv)
+void WheelSelector::fingerMotion(float /*x*/, float y, FingerView* fv)
 {
     if (fv != trackedFinger)
         return;
@@ -178,11 +178,11 @@ void WheelSelector::fingerMotion(float x, float y, FingerView* fv)
         for (Listener* l : listeners)
             l->wheelSelectorChanged(this);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer(kTimerSelectionDelay,jmax<float>(250, 500 * (1.f-multiplier)));
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(250.0f, 500.0f * (1.f-multiplier)));
     }
 }
 
-void WheelSelector::fingerEntered(float x, float y, FingerView* fv)
+void WheelSelector::fingerEntered(float /*x*/, float y, FingerView* fv)
 {
     if (!enabled) {
         float center = getBounds().y + getBounds().h / 2;
@@ -200,7 +200,7 @@ void WheelSelector::fingerEntered(float x, float y, FingerView* fv)
         trackedFinger = fv;
 }
 
-void WheelSelector::fingerExited(float x, float y, FingerView* fv)
+void WheelSelector::fingerExited(float x, float /*y*/, FingerView* fv)
 {
     // !!! Hack to get avoid spurious exits due to corrupt screen coord data
     if (x < 0 || x > 2000)
@@ -290,19 +290,19 @@ void WheelSelector::Icon::draw()
     Environment::instance().modelViewMatrix.PushMatrix();
     
     int xTranslate = 0;
-    Point<int> about(getBounds().w,0);
+    Point<int> about((int) getBounds().w, 0);
     int zAxis = -1;
     if (leftHanded)
     {
-        xTranslate = getParent()->getBounds().w / 2;
+        xTranslate = (int) (getParent()->getBounds().w / 2);
         about.x = 0;
         zAxis = 1;
     }
-    Environment::instance().modelViewMatrix.Translate(xTranslate, getParent()->getBounds().h / 2, 0);
-    Environment::instance().modelViewMatrix.Translate(about.x,0,0);
-    Environment::instance().modelViewMatrix.Rotate(rotationCoeff, 0, 0, zAxis);
-    Environment::instance().modelViewMatrix.Translate(-about.x,0,0);
-    Environment::instance().modelViewMatrix.Translate(0,0,0);
+    Environment::instance().modelViewMatrix.Translate((GLfloat) xTranslate, getParent()->getBounds().h / 2, 0.0f);
+    Environment::instance().modelViewMatrix.Translate((GLfloat) about.x, 0.0f, 0.0f);
+    Environment::instance().modelViewMatrix.Rotate(rotationCoeff, 0.0f, 0.0f, (GLfloat) zAxis);
+    Environment::instance().modelViewMatrix.Translate((GLfloat) -about.x, 0.0f, 0.0f);
+    Environment::instance().modelViewMatrix.Translate(0.0f, 0.0f, 0.0f);
     HUDView::draw();
     Environment::instance().modelViewMatrix.PopMatrix();
 }

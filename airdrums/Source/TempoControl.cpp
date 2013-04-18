@@ -95,7 +95,7 @@ void TempoControl::increment(int direction)
 }
 
 
-void TempoControl::fingerMotion(float x, float y, FingerView* fv)
+void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
 {
     if (fv != trackedFinger)
         return;
@@ -111,7 +111,7 @@ void TempoControl::fingerMotion(float x, float y, FingerView* fv)
     if (inc != 0 && !isTimerRunning()) {
         increment(inc);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer(jmax<float>(100, 500 * (1.f-multiplier)));
+        startTimer((int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
 }
 
@@ -170,11 +170,11 @@ void TempoControl::Icon::draw()
 
     if (tempoValueChanged) // need to generate a new texture
     {
-        Image im(Image::PixelFormat::ARGB, targetBounds.w*4, targetBounds.h*4, true);
+        Image im(Image::PixelFormat::ARGB, (int) (targetBounds.w*4), (int) (targetBounds.h*4), true);
         Graphics g (im);
         g.setColour(Colours::white);
-        g.setFont((targetBounds.h * .75) * 4);
-        g.drawText(String((int)tempoValue), 0, 0, targetBounds.w*4, targetBounds.h*4, Justification::centred, true);
+        g.setFont((targetBounds.h * .75f) * 4.0f);
+        g.drawText(String((int)tempoValue), 0, 0, (int) (targetBounds.w*4), (int) (targetBounds.h*4), Justification::centred, true);
         if (textureId != 0)
             glDeleteTextures(1, &textureId);
         glGenTextures(1, &textureId);
