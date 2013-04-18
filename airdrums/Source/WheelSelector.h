@@ -34,7 +34,8 @@ public:
     {
         kTimerSelectionDelay = 0,
         kTimerShowControl,
-        kTimerIdle
+        kTimerIdle,
+        kTimerTrackedFingerMissing
     };
     
     void setSelection(int sel);

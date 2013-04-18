@@ -99,6 +99,9 @@ void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
 {
     if (fv != trackedFinger)
         return;
+
+    stopTimer(kTimerTrackedFingerMissing);
+    startTimer(kTimerTrackedFingerMissing, 100);
     
     int inc = 0;
     float center = getBounds().x + getBounds().w / 2;
@@ -108,10 +111,10 @@ void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
     else if (fabsf(distanceFromCenter) > 15)
         inc = -1;
     
-    if (inc != 0 && !isTimerRunning()) {
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
         increment(inc);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer((int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
 }
 
@@ -145,9 +148,18 @@ void TempoControl::fingerExited(float x, float y, FingerView* fv)
     }
 }
 
-void TempoControl::timerCallback()
+void TempoControl::timerCallback(int timerId)
 {
-    stopTimer();
+    switch (timerId)
+    {
+    case kTimerSelectionDelay:
+        stopTimer(kTimerSelectionDelay);
+        break;
+
+    case kTimerTrackedFingerMissing:
+        trackedFinger = NULL;
+        break;
+    }
 }
 
 TempoControl::Icon::Icon()

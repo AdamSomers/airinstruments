@@ -15,7 +15,8 @@
 #include "PatternSaveDialog.h"
 #include "PatternLoadDialog.h"
 #if JUCE_WINDOWS
-#include <vld.h>
+// ARS - This isn't present on my system
+//    #include <vld.h>
 #endif
 
 

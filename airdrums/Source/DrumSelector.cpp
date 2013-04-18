@@ -90,6 +90,9 @@ void DrumSelector::fingerMotion(float x, float /*y*/, FingerView* fv)
     if (fv != trackedFinger)
         return;
 
+    stopTimer(kTimerTrackedFingerMissing);
+    startTimer(kTimerTrackedFingerMissing, 100);
+
     int inc = 0;
     float center = getBounds().x + getBounds().w / 2;
     float distanceFromCenter = x - center;
@@ -98,12 +101,12 @@ void DrumSelector::fingerMotion(float x, float /*y*/, FingerView* fv)
     else if (fabsf(distanceFromCenter) > 30)
         inc = 1;
 
-    if (inc != 0 && !isTimerRunning()) {
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
         setSelection(selection + inc);
         for (Listener* l : listeners)
             l->drumSelectorChanged(this);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer((int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
 }
 
@@ -115,7 +118,7 @@ void DrumSelector::fingerEntered(float /*x*/, float /*y*/, FingerView* fv)
     
     if (!trackedFinger) {
         trackedFinger = fv;
-        startTimer(500);
+        startTimer(kTimerSelectionDelay, 500);
     }
 }
 
@@ -134,9 +137,18 @@ void DrumSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     }
 }
 
-void DrumSelector::timerCallback()
+void DrumSelector::timerCallback(int timerId)
 {
-    stopTimer();
+    switch (timerId)
+    {
+    case kTimerSelectionDelay:
+        stopTimer(kTimerSelectionDelay);
+        break;
+
+    case kTimerTrackedFingerMissing:
+        trackedFinger = NULL;
+        break;
+    }
 }
 
 void DrumSelector::addListener(DrumSelector::Listener *listener)

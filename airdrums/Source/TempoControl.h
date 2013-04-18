@@ -13,7 +13,7 @@
 #include <deque>
 
 class TempoControl : public HUDView
-                   , public Timer
+                   , public MultiTimer
 {
 public:
     TempoControl();
@@ -27,7 +27,13 @@ public:
     void fingerExited(float x, float y, FingerView* fv);
     
     // Juce::Timer override
-    void timerCallback();
+    void timerCallback(int timerId);
+
+    enum TimerId
+    {
+        kTimerSelectionDelay,
+        kTimerTrackedFingerMissing
+    };
     
     void setTempo(float tempo);
     void increment(int direction);

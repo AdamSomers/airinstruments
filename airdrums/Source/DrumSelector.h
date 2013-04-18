@@ -6,7 +6,7 @@
 
 
 class DrumSelector : public HUDView
-                   , public Timer
+                   , public MultiTimer
 {
 public:
     DrumSelector();
@@ -22,7 +22,13 @@ public:
     void fingerExited(float x, float y, FingerView* fv);
 
     // Juce::Timer override
-    void timerCallback();
+    void timerCallback(int timerId);
+
+    enum TimerId
+    {
+        kTimerSelectionDelay,
+        kTimerTrackedFingerMissing
+    };
 
     void setSelection(int sel);
     int getSelection() const { return selection; }

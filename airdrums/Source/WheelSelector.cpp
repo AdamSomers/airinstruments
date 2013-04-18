@@ -165,6 +165,9 @@ void WheelSelector::fingerMotion(float /*x*/, float y, FingerView* fv)
         return;
     }
     
+	stopTimer(kTimerTrackedFingerMissing);
+	startTimer(kTimerTrackedFingerMissing, 100);
+
     int inc = 0;
     float center = getBounds().y + getBounds().h / 2;
     float distanceFromCenter = y - center;
@@ -232,6 +235,11 @@ void WheelSelector::timerCallback(int timerId)
         case kTimerIdle:
             enabled = false;
             stopTimer(kTimerIdle);
+            break;
+        case kTimerTrackedFingerMissing:
+            trackedFinger = NULL;
+            startTimer(kTimerIdle, 2000);
+            stopTimer(kTimerTrackedFingerMissing);
             break;
     }
 }
