@@ -61,7 +61,7 @@ void DrumsToolbar::draw()
                            SkinManager::instance().getSelectedSkin().getTexture("play_off"));
     recordButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("record_on"),
                            SkinManager::instance().getSelectedSkin().getTexture("record_off"));
-    metronomeButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("metronome_on"),
+    metronomeButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("Metronome_on"),	// File name has upper case M
                              SkinManager::instance().getSelectedSkin().getTexture("metronome_off"));
     
     setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("top_bezel"));
