@@ -36,7 +36,7 @@ MotionDispatcher::~MotionDispatcher()
 {
     fingerViewListeners.clear();
     handViewListeners.clear();
-    //removeAllListeners();
+    removeAllListeners();
 }
 
 void MotionDispatcher::addListener(Leap::Listener& l)
