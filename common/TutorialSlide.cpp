@@ -26,10 +26,18 @@ TutorialSlide::~TutorialSlide()
 // HUDView overrides
 void TutorialSlide::draw()
 {
+    GLint blendSrc;
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+    GLint blendDst;
+    glGetIntegerv(GL_BLEND_DST, &blendDst);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     GLfloat texColor[4] = { 1.f, 1.f, 1.f, fade };
     glBindTexture(GL_TEXTURE_2D, textures[slideIndex]);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
     defaultBatch.Draw();
+
+    glBlendFunc(blendSrc, blendDst);
     
     if (fade > fadeTarget)
     {

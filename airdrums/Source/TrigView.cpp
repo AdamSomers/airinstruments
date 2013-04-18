@@ -45,9 +45,18 @@ void TrigView::draw()
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
     defaultBatch.Draw();
+
+    GLint blendSrc;
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+    GLint blendDst;
+    glGetIntegerv(GL_BLEND_DST, &blendDst);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
     defaultBatch.Draw();
+
+    glBlendFunc(blendSrc, blendDst);
     
     if (fade > 0.f)
     {
