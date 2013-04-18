@@ -13,14 +13,14 @@ MotionDispatcher::MotionDispatcher()
     
     for (int i = 0; i < 50; ++i)
     {
-        FingerView* fv = new FingerView;
+        SharedPtr<FingerView> fv(new FingerView);
         fingerViews.insert(std::make_pair(i, fv));
         fv->id = i;
     }
     
     for (int i = 0; i < 50; ++i)
     {
-        HandView* hv = new HandView;
+        SharedPtr<HandView> hv(new HandView);
         handViews.insert(std::make_pair(i, hv));
         hv->id = i;
     }
@@ -140,7 +140,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             const Leap::Hand& hand = hands[h];
             
             bool inserted = false;
-            HandView* hv = NULL;
+            SharedPtr<HandView> hv;
             auto iter = handViews.find(hand.id());
             if (iter == handViews.end())
             {
@@ -188,7 +188,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             
             for (HandView::Listener* listener : handViewListeners)
             {
-                listener->updatePointedState(hv);
+                listener->updatePointedState(hv.get());
             }
             //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
             
@@ -224,7 +224,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     
     for (auto iter : fingerViews)
     {
-        FingerView* fv = iter.second;
+        SharedPtr<FingerView> fv = iter.second;
         if (fv->invalid && fv->inUse) {
             fv->inUse = false;
             //printf("Removed finger %d\n", fv->id);
@@ -233,7 +233,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     
     for (auto iter : handViews)
     {
-        HandView* hv = iter.second;
+        SharedPtr<HandView> hv = iter.second;
         if (hv->invalid && hv->inUse) {
             hv->inUse = false;
             //printf("Removed hand %d\n", hv->id);
@@ -244,7 +244,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
 void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)
 {
     bool inserted = false;
-    FingerView* fv = NULL;
+    SharedPtr<FingerView> fv;
     auto iter = fingerViews.find(f.id());
     if (iter == fingerViews.end())
     {
@@ -292,7 +292,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     
     for (FingerView::Listener* listener : fingerViewListeners)
     {
-        listener->updatePointedState(fv);
+        listener->updatePointedState(fv.get());
     }
     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
     
@@ -342,7 +342,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
                         // Those being pointed to by current finger view should handle the tap
                         for (FingerView::Listener* listener : fingerViewListeners)
                         {
-                            listener->tap(fv, 1.f);
+                            listener->tap(fv.get(), 1.f);
                         }
                     }
                         break;
@@ -353,7 +353,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
                         {
                             for (FingerView::Listener* listener : fingerViewListeners)
                             {
-                                listener->circleBack(fv);
+                                listener->circleBack(fv.get());
                             }
                         }
                     }
@@ -371,7 +371,7 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
 {
     printf("%1.2f %1.2f %1.2f\n", inX,inY,inZ);
     bool inserted = false;
-    FingerView* fv = NULL;
+    SharedPtr<FingerView> fv;
     int fakeId = 0;
     Leap::Finger fakeFinger;
     float fakeDir[3] = { 0, 0, -1 };
@@ -422,7 +422,7 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
     
     for (FingerView::Listener* listener : fingerViewListeners)
     {
-        listener->updatePointedState(fv);
+        listener->updatePointedState(fv.get());
     }
     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
     
@@ -450,7 +450,7 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
     
     for (auto iter : fingerViews)
     {
-        FingerView* fv = iter.second;
+        SharedPtr<FingerView> fv = iter.second;
         if (fv->invalid && fv->inUse) {
             fv->inUse = false;
             printf("Removed finger %d\n", fv->id);

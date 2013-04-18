@@ -4,6 +4,7 @@
 #include "Leap.h"
 #include "FingerView.h"
 #include "HandView.h"
+#include "Types.h"
 #include <map>
 #include <vector>
 
@@ -42,8 +43,8 @@ public:
     
     void spoof(float x, float y, float z);
 
-    std::map<int,FingerView*> fingerViews;
-    std::map<int,HandView*> handViews;
+    std::map<int, SharedPtr<FingerView> > fingerViews;
+    std::map<int, SharedPtr<HandView> > handViews;
     std::vector<FingerView::Listener*> fingerViewListeners;
     std::vector<HandView::Listener*> handViewListeners;
     Leap::Controller controller;
