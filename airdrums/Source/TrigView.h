@@ -2,6 +2,7 @@
 #define h_TrigView
 
 #include "HUD.h"
+#include "Types.h"
 
 class TrigView : public HUDView
 {
@@ -42,7 +43,7 @@ public:
     
 private:
     GLuint textureID;
-    std::vector<TrigView*> trigViews;
+    std::vector<SharedPtr<TrigView> > trigViews;
 };
 
 #endif // h_TrigView

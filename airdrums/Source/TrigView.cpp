@@ -29,7 +29,7 @@ void TrigView::draw()
     GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
     GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
     
-        String category = "BassDrum";
+    String category = "BassDrum";
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
@@ -65,9 +65,9 @@ TrigViewBank::TrigViewBank()
 : textureID((GLuint) -1)
 {
     for (int i = 0; i < 16; ++i) {
-        TrigView* tv = new TrigView(i);
+        SharedPtr<TrigView> tv(new TrigView(i));
         trigViews.push_back(tv);
-        addChild(tv);
+        addChild(tv.get());
     }
     Drums::instance().playbackState.addListener(this);
 }

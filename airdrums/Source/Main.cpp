@@ -14,6 +14,9 @@
 #include "PatternManager.h"
 #include "PatternSaveDialog.h"
 #include "PatternLoadDialog.h"
+#if JUCE_WINDOWS
+#include <vld.h>
+#endif
 
 
 AirHarpApplication::AirHarpApplication()

@@ -12,9 +12,9 @@ DrumSelector::DrumSelector()
 {
     for (int i = 0; i < 16; ++i)
     {
-        Icon* icon = new Icon(i);
+        SharedPtr<Icon> icon(new Icon(i));
         icons.push_back(icon);
-        addChild(icon);
+        addChild(icon.get());
     }
 }
 
@@ -42,7 +42,7 @@ void DrumSelector::layoutIcons()
     for (int count = 0; count < N; ++count)
     {
         
-        Icon* icon = icons.at(i);
+        SharedPtr<Icon> icon = icons.at(i);
         if (count < N/2)
             icon->setBounds(HUDRect(iconWidth*count + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
         else if (count > N/2)

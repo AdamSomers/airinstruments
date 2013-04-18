@@ -2,6 +2,7 @@
 #define h_DrumSelector
 
 #include "HUD.h"
+#include "Types.h"
 
 
 class DrumSelector : public HUDView
@@ -57,7 +58,7 @@ public:
 private:
     void layoutIcons();
 
-    std::vector<Icon*> icons;
+    std::vector<SharedPtr<Icon> > icons;
     int selection;
     bool needsLayout;
     FingerView* trackedFinger;
