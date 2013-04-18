@@ -41,16 +41,22 @@ MotionDispatcher::~MotionDispatcher()
 
 void MotionDispatcher::addListener(Leap::Listener& l)
 {
-    controller.addListener(l);
-    listeners.push_back(&l);
+    auto iter = std::find(listeners.begin(), listeners.end(), &l);
+    if (iter == listeners.end())
+	{
+		controller.addListener(l);
+		listeners.push_back(&l);
+	}
 }
 
 void MotionDispatcher::removeListener(Leap::Listener& l)
 {
-    controller.removeListener(l);
     auto iter = std::find(listeners.begin(), listeners.end(), &l);
     if (iter != listeners.end())
+	{
+	    controller.removeListener(l);
         listeners.erase(iter);
+	}
 }
 
 void MotionDispatcher::removeAllListeners()

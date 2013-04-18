@@ -121,6 +121,7 @@ StatusBar::StatusBar()
 
 StatusBar::~StatusBar()
 {
+    MotionDispatcher::instance().removeListener(*this);
 }
 
 // HUDView overrides

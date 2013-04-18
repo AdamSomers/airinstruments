@@ -73,6 +73,7 @@ MainContentComponent::MainContentComponent()
 MainContentComponent::~MainContentComponent()
 {
 //    MotionDispatcher::instance().removeAllListeners();
+    MotionDispatcher::instance().removeListener(*this);
 	openGLContext.detach();
 //    openGLContext.deactivateCurrentContext();
     views.clear();
