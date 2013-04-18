@@ -45,7 +45,7 @@ public:
 	int		GetNoteNumber(void);
 	String&	GetCategory(void);
 	//Image	GetImage(void);
-    GLuint GetTexture() const;
+    GLuint GetTexture(bool on) const;
 	SynthesiserSound::Ptr	GetSound(void);
 
 private:

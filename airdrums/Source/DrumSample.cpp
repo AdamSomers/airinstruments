@@ -118,13 +118,16 @@ String& DrumSample::GetCategory(void)
 	return mCategory;
 }
 
-GLuint DrumSample::GetTexture() const
+GLuint DrumSample::GetTexture(bool on) const
 {
     if (mImage.isValid())
         return mTextureId;
-    else
-        return SkinManager::instance().getSelectedSkin().getTexture(mCategory);
-        
+    else {
+        String imageName = mCategory;
+        if (on)
+            imageName += "_on";
+        return SkinManager::instance().getSelectedSkin().getTexture(imageName);
+    }
 }
 
 void DrumSample::LoadTextures()

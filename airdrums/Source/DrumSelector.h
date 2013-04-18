@@ -42,10 +42,13 @@ public:
         void draw();
         void loadTextures();
         void setBounds(const HUDRect& b);
+        void setIsSelection(bool is);
+        int getId() const { return id; }
     private:
         void updateBounds();
         
         int id;
+        bool isSelection;
         HUDRect targetBounds;
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;

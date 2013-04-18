@@ -82,6 +82,10 @@ void DrumSelector::setSelection(int sel)
     if (sel < 0) sel = icons.size() - 1;
     if (sel >= (int) icons.size()) sel = 0;
     selection = sel;
+
+    for (SharedPtr<Icon> i : icons)
+        i->setIsSelection(i->getId() == sel);
+
     needsLayout = true;
 }
 
@@ -167,6 +171,7 @@ void DrumSelector::removeListener(DrumSelector::Listener *listener)
 
 DrumSelector::Icon::Icon(int inId)
 : id(inId)
+, isSelection(false)
 {
 }
 
@@ -193,10 +198,10 @@ void DrumSelector::Icon::draw()
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
-        textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture();
+        textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture(isSelection);
     }
     else
-        textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture();
+        textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture(isSelection);
     
     setDefaultTexture(textureID);
     HUDView::draw();
@@ -213,6 +218,11 @@ void DrumSelector::Icon::setBounds(const HUDRect &b)
     yStep = (targetBounds.y - tempBounds.y) / 10.f;
     wStep = (targetBounds.w - tempBounds.w) / 10.f;
     hStep = (targetBounds.h - tempBounds.h) / 10.f;
+}
+
+void DrumSelector::Icon::setIsSelection(bool is)
+{
+    isSelection = is;
 }
 
 void DrumSelector::Icon::updateBounds()
