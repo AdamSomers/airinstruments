@@ -44,7 +44,7 @@ MainContentComponent::MainContentComponent()
 , tempoControl(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
-, tempoSlider(Slider::LinearHorizontal, Slider::TextBoxBelow)
+, tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
 , isIdle(true)
 , needsPatternListUpdate(false)
 {
