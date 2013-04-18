@@ -70,8 +70,9 @@ namespace GfxTools
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest);
         
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
         glTexImage2D(GL_TEXTURE_2D, 0, 4, image.getWidth(), image.getHeight(), 0,
-                     GL_BGRA, GL_UNSIGNED_BYTE, bits);
+                     image.getFormat() == Image::RGB ? GL_RGB : GL_BGRA, GL_UNSIGNED_BYTE, bits);
         glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
         glGenerateMipmap(GL_TEXTURE_2D);
 
