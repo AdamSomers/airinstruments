@@ -1638,6 +1638,9 @@
     <ClInclude Include="..\..\..\common\TutorialSlide.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\common\Types.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h">
       <Filter>AirBeats\GLTools\include\GL</Filter>
     </ClInclude>
@@ -1741,9 +1744,6 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TrigView.h">
-      <Filter>AirBeats\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Types.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\WheelSelector.h">
@@ -3044,6 +3044,54 @@
     <None Include="..\..\Resources\icon.png">
       <Filter>AirBeats\resources</Filter>
     </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLV.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL BKICK.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CHH.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLAP.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CYM.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL HTOM.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL KICK.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL LTOM.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL MTOM.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL OHH.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL PAD.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL PHH.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL RIDE.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL SFX.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL SN 1.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL VERB.aif">
+      <Filter>AirBeats\resources</Filter>
+    </None>
     <None Include="..\..\Resources\icon.icns">
       <Filter>AirBeats\resources</Filter>
     </None>
@@ -3051,54 +3099,6 @@
       <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\..\common\testShader.vs">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL BKICK.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CHH.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLAP.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLV.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CYM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL HTOM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL KICK.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL LTOM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL MTOM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL OHH.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PAD.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PHH.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL RIDE.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SFX.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SN 1.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL VERB.aif">
       <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">

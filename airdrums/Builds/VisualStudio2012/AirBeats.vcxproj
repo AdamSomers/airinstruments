@@ -1266,6 +1266,7 @@
     <ClInclude Include="..\..\..\common\HUD.h"/>
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
     <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
+    <ClInclude Include="..\..\..\common\Types.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glxew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\wglew.h"/>
@@ -1301,7 +1302,6 @@
     <ClInclude Include="..\..\Source\SkinManager.h"/>
     <ClInclude Include="..\..\Source\TempoControl.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>
-    <ClInclude Include="..\..\Source\Types.h"/>
     <ClInclude Include="..\..\Source\WheelSelector.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h"/>
@@ -1736,25 +1736,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\icon.png"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLV.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL BKICK.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CHH.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLAP.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL CYM.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL HTOM.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL KICK.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL LTOM.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL MTOM.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL OHH.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL PAD.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL PHH.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL RIDE.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL SFX.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL SN 1.aif"/>
+    <None Include="..\..\Resources\kits\Electro\TMD CHIL VERB.aif"/>
     <None Include="..\..\Resources\icon.icns"/>
     <None Include="..\..\..\common\testShader.fs"/>
     <None Include="..\..\..\common\testShader.vs"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL BKICK.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CHH.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLAP.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CLV.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL CYM.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL HTOM.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL KICK.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL LTOM.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL MTOM.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL OHH.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PAD.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL PHH.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL RIDE.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SFX.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL SN 1.aif"/>
-    <None Include="..\..\Resources\kits\TestKit\TMD CHIL VERB.aif"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_module_info"/>

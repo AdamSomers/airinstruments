@@ -6,41 +6,41 @@
   <MAINGROUP id="qE7qno" name="AirBeats">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
       <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
+      <FILE id="CyktGR" name="TMD CHIL CLV.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL CLV.aif"/>
+      <FILE id="MRjN4y" name="TMD CHIL BKICK.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL BKICK.aif"/>
+      <FILE id="DiKxkY" name="TMD CHIL CHH.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL CHH.aif"/>
+      <FILE id="YJvlP5" name="TMD CHIL CLAP.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL CLAP.aif"/>
+      <FILE id="uWBUj6" name="TMD CHIL CYM.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL CYM.aif"/>
+      <FILE id="VRJBD9" name="TMD CHIL HTOM.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL HTOM.aif"/>
+      <FILE id="ApwuGo" name="TMD CHIL KICK.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL KICK.aif"/>
+      <FILE id="C8h3Ga" name="TMD CHIL LTOM.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL LTOM.aif"/>
+      <FILE id="Yd3eMI" name="TMD CHIL MTOM.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL MTOM.aif"/>
+      <FILE id="X2nGvk" name="TMD CHIL OHH.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL OHH.aif"/>
+      <FILE id="gw0HNA" name="TMD CHIL PAD.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL PAD.aif"/>
+      <FILE id="qG2nxM" name="TMD CHIL PHH.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL PHH.aif"/>
+      <FILE id="BQZI5q" name="TMD CHIL RIDE.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL RIDE.aif"/>
+      <FILE id="HNhXIs" name="TMD CHIL SFX.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL SFX.aif"/>
+      <FILE id="XV7h3x" name="TMD CHIL SN 1.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL SN 1.aif"/>
+      <FILE id="sPwsQo" name="TMD CHIL VERB.aif" compile="0" resource="1"
+            file="Resources/kits/Electro/TMD CHIL VERB.aif"/>
       <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
-      <FILE id="i5kYm4" name="TMD CHIL BKICK.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL BKICK.aif"/>
-      <FILE id="vxmCWg" name="TMD CHIL CHH.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL CHH.aif"/>
-      <FILE id="M8BOtc" name="TMD CHIL CLAP.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL CLAP.aif"/>
-      <FILE id="QtfzrB" name="TMD CHIL CLV.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL CLV.aif"/>
-      <FILE id="jie8IM" name="TMD CHIL CYM.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL CYM.aif"/>
-      <FILE id="xnltvK" name="TMD CHIL HTOM.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL HTOM.aif"/>
-      <FILE id="kQN4uA" name="TMD CHIL KICK.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL KICK.aif"/>
-      <FILE id="WmXgHi" name="TMD CHIL LTOM.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL LTOM.aif"/>
-      <FILE id="Gr82Zy" name="TMD CHIL MTOM.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL MTOM.aif"/>
-      <FILE id="sQmP7R" name="TMD CHIL OHH.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL OHH.aif"/>
-      <FILE id="sueEo5" name="TMD CHIL PAD.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL PAD.aif"/>
-      <FILE id="BGF4N7" name="TMD CHIL PHH.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL PHH.aif"/>
-      <FILE id="cD3inG" name="TMD CHIL RIDE.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL RIDE.aif"/>
-      <FILE id="Kiskoh" name="TMD CHIL SFX.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL SFX.aif"/>
-      <FILE id="W9VQMg" name="TMD CHIL SN 1.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL SN 1.aif"/>
-      <FILE id="LrGLUc" name="TMD CHIL VERB.aif" compile="0" resource="1"
-            file="Resources/kits/TestKit/TMD CHIL VERB.aif"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
@@ -59,6 +59,7 @@
       <FILE id="RcloxN" name="TutorialSlide.cpp" compile="1" resource="0"
             file="../common/TutorialSlide.cpp"/>
       <FILE id="SKcLcS" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
+      <FILE id="PPfLKm" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
     </GROUP>
     <GROUP id="{9ED69939-FCC6-9596-4256-AA83B4D8178A}" name="GLTools">
       <GROUP id="{63BF3604-9EA2-C52D-4873-BAF2092B480D}" name="include">
@@ -147,7 +148,6 @@
       <FILE id="N8hPCh" name="TempoControl.h" compile="0" resource="0" file="Source/TempoControl.h"/>
       <FILE id="NWbMPc" name="TrigView.cpp" compile="1" resource="0" file="Source/TrigView.cpp"/>
       <FILE id="ubxFLq" name="TrigView.h" compile="0" resource="0" file="Source/TrigView.h"/>
-      <FILE id="IUKWVp" name="Types.h" compile="0" resource="0" file="Source/Types.h"/>
       <FILE id="vWZtYD" name="WheelSelector.cpp" compile="1" resource="0"
             file="Source/WheelSelector.cpp"/>
       <FILE id="Gl0jaf" name="WheelSelector.h" compile="0" resource="0" file="Source/WheelSelector.h"/>
