@@ -68,7 +68,7 @@ public:
         ARGB,               /**<< each pixel is a 4-byte ARGB premultiplied colour value. For byte order, see the PixelARGB class. */
         SingleChannel       /**<< each pixel is a 1-byte alpha channel value. */
     };
-
+    
     //==============================================================================
     /** Creates a null image. */
     Image();
