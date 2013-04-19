@@ -120,9 +120,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3a8b105c4b81d40ae67a8c56a97ebb80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#a3a8b105c4b81d40ae67a8c56a97ebb80">rotationMatrix</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
 <tr class="memdesc:a3a8b105c4b81d40ae67a8c56a97ebb80"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transform matrix expressing the rotation derived from the change in orientation of this hand, and any associated fingers and tools, between the current frame and the specified frame.  <a href="#a3a8b105c4b81d40ae67a8c56a97ebb80"></a><br/></td></tr>
 <tr class="separator:a3a8b105c4b81d40ae67a8c56a97ebb80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad79633ebc10182ea852d2985dbef6d5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#aad79633ebc10182ea852d2985dbef6d5">rotationProbability</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
+<tr class="memdesc:aad79633ebc10182ea852d2985dbef6d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated probability that the hand motion between the current frame and the specified frame is intended to be a rotating motion.  <a href="#aad79633ebc10182ea852d2985dbef6d5"></a><br/></td></tr>
+<tr class="separator:aad79633ebc10182ea852d2985dbef6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5cdf7a2df5e76f18dca5da0d83c21c9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#ab5cdf7a2df5e76f18dca5da0d83c21c9">scaleFactor</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
 <tr class="memdesc:ab5cdf7a2df5e76f18dca5da0d83c21c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale factor derived from this hand's motion between the current frame and the specified frame.  <a href="#ab5cdf7a2df5e76f18dca5da0d83c21c9"></a><br/></td></tr>
 <tr class="separator:ab5cdf7a2df5e76f18dca5da0d83c21c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b84632c59165754e23b5370ee1cfd41"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#a5b84632c59165754e23b5370ee1cfd41">scaleProbability</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
+<tr class="memdesc:a5b84632c59165754e23b5370ee1cfd41"><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated probability that the hand motion between the current frame and the specified frame is intended to be a scaling motion.  <a href="#a5b84632c59165754e23b5370ee1cfd41"></a><br/></td></tr>
+<tr class="separator:a5b84632c59165754e23b5370ee1cfd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a411c02c77001ba2049f4e61fd3f62c5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#a411c02c77001ba2049f4e61fd3f62c5c">sphereCenter</a> () const </td></tr>
 <tr class="memdesc:a411c02c77001ba2049f4e61fd3f62c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The center of a sphere fit to the curvature of this hand.  <a href="#a411c02c77001ba2049f4e61fd3f62c5c"></a><br/></td></tr>
 <tr class="separator:a411c02c77001ba2049f4e61fd3f62c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +147,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a738ebafa7082d2d3202fe3bf34cd3373"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#a738ebafa7082d2d3202fe3bf34cd3373">translation</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
 <tr class="memdesc:a738ebafa7082d2d3202fe3bf34cd3373"><td class="mdescLeft">&#160;</td><td class="mdescRight">The change of position of this hand between the current frame and the specified frame.  <a href="#a738ebafa7082d2d3202fe3bf34cd3373"></a><br/></td></tr>
 <tr class="separator:a738ebafa7082d2d3202fe3bf34cd3373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3308555b1c8861910601d4b38dda77d6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_hand.html#a3308555b1c8861910601d4b38dda77d6">translationProbability</a> (const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;sinceFrame) const </td></tr>
+<tr class="memdesc:a3308555b1c8861910601d4b38dda77d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated probability that the hand motion between the current frame and the specified frame is intended to be a translating motion.  <a href="#a3308555b1c8861910601d4b38dda77d6"></a><br/></td></tr>
+<tr class="separator:a3308555b1c8861910601d4b38dda77d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -588,6 +597,32 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aad79633ebc10182ea852d2985dbef6d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Leap::Hand::rotationProbability </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>sinceFrame</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The estimated probability that the hand motion between the current frame and the specified frame is intended to be a rotating motion. </p>
+<p>If a corresponding <a class="el" href="class_leap_1_1_hand.html" title="The Hand class reports the physical characteristics of a detected hand.">Hand</a> object is not found in sinceFrame, or if either this frame or sinceFrame are invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> objects, then this method returns zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinceFrame</td><td>The starting frame for computing the relative rotation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value between 0 and 1 representing the estimated probability that the hand motion between the current frame and the specified frame is intended to be a rotating motion. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab5cdf7a2df5e76f18dca5da0d83c21c9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -613,6 +648,32 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A positive value representing the heuristically determined scaling change ratio of the hand between the current frame and that specified in the sinceFrame parameter. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5b84632c59165754e23b5370ee1cfd41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Leap::Hand::scaleProbability </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>sinceFrame</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The estimated probability that the hand motion between the current frame and the specified frame is intended to be a scaling motion. </p>
+<p>If a corresponding <a class="el" href="class_leap_1_1_hand.html" title="The Hand class reports the physical characteristics of a detected hand.">Hand</a> object is not found in sinceFrame, or if either this frame or sinceFrame are invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> objects, then this method returns zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinceFrame</td><td>The starting frame for computing the relative scaling. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value between 0 and 1 representing the estimated probability that the hand motion between the current frame and the specified frame is intended to be a scaling motion. </dd></dl>
 
 </div>
 </div>
@@ -745,6 +806,32 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="struct_leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> representing the heuristically determined change in hand position between the current frame and that specified in the sinceFrame parameter. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3308555b1c8861910601d4b38dda77d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Leap::Hand::translationProbability </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_leap_1_1_frame.html">Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>sinceFrame</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The estimated probability that the hand motion between the current frame and the specified frame is intended to be a translating motion. </p>
+<p>If a corresponding <a class="el" href="class_leap_1_1_hand.html" title="The Hand class reports the physical characteristics of a detected hand.">Hand</a> object is not found in sinceFrame, or if either this frame or sinceFrame are invalid <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> objects, then this method returns zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinceFrame</td><td>The starting frame for computing the translation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value between 0 and 1 representing the estimated probability that the hand motion between the current frame and the specified frame is intended to be a translating motion. </dd></dl>
 
 </div>
 </div>

@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_double_array" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::DoubleArray</compoundname>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ab80ed02007d1a4fcf03262d7909d04b6" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.DoubleArray.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="12" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ad519b6fcb55b44f9e6c09ddc983dc386" prot="protected" static="no" mutable="no">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.DoubleArray.swigCMemOwn</definition>
+        <argsstring></argsstring>
+        <name>swigCMemOwn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="13" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a3ade225f184e6a105e3b59ebb741db67" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.DoubleArray.DoubleArray</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>DoubleArray</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="15" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="15" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a287d7478ca8466dff1eb3c541160fa75" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.DoubleArray.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="24" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="24" bodyend="26"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a403e0cce1b1fe7fcaf8aea2270b19cfd" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.DoubleArray.getCPtr</definition>
+        <argsstring>(DoubleArray obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type>DoubleArray</type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="20" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="20" bodyend="22"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ac02aac004fb09e72ead6eb18d52a8488" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.DoubleArray.add</definition>
+        <argsstring>(double x)</argsstring>
+        <name>add</name>
+        <param>
+          <type>double</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="66" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="66" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ad52463464c43822a5b5163348954e12b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.DoubleArray.capacity</definition>
+        <argsstring>()</argsstring>
+        <name>capacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="50" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="50" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a0eb90974fa15a8f5c141077256a342bf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.DoubleArray.clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="62" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="62" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a3fa722d79ee2d91e9cfdfc447928f6e5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.DoubleArray.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="28" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="28" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a8b3fe73680d9010595a8f8691f7c7d8f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.DoubleArray.DoubleArray</definition>
+        <argsstring>()</argsstring>
+        <name>DoubleArray</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="38" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="38" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1aaa80f6ff69f0929d0780e525cb8727ed" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.DoubleArray.DoubleArray</definition>
+        <argsstring>(long n)</argsstring>
+        <name>DoubleArray</name>
+        <param>
+          <type>long</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="42" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="42" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a9db9f2e151f3b9076479163e9dbb4059" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double com.leapmotion.leap.DoubleArray.get</definition>
+        <argsstring>(int i)</argsstring>
+        <name>get</name>
+        <param>
+          <type>int</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="70" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="70" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1afabb9a81b58ce140da1401c38dfdc0ea" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.DoubleArray.isEmpty</definition>
+        <argsstring>()</argsstring>
+        <name>isEmpty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="58" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="58" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a2f1b9226557391c50efac18efdb0577f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.DoubleArray.reserve</definition>
+        <argsstring>(long n)</argsstring>
+        <name>reserve</name>
+        <param>
+          <type>long</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="54" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="54" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ad2546658c3676e4f46e8e98d9524dffa" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.DoubleArray.set</definition>
+        <argsstring>(int i, double val)</argsstring>
+        <name>set</name>
+        <param>
+          <type>int</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="74" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="74" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a4576fe64f05b126db2a4a0fef4fb56e6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.DoubleArray.size</definition>
+        <argsstring>()</argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="46" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="46" bodyend="48"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" line="11" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/DoubleArray.java" bodystart="11" bodyend="78"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ac02aac004fb09e72ead6eb18d52a8488" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>add</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ad52463464c43822a5b5163348954e12b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>capacity</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a0eb90974fa15a8f5c141077256a342bf" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>clear</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a3fa722d79ee2d91e9cfdfc447928f6e5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a3ade225f184e6a105e3b59ebb741db67" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>DoubleArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a8b3fe73680d9010595a8f8691f7c7d8f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>DoubleArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1aaa80f6ff69f0929d0780e525cb8727ed" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>DoubleArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a287d7478ca8466dff1eb3c541160fa75" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a9db9f2e151f3b9076479163e9dbb4059" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>get</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a403e0cce1b1fe7fcaf8aea2270b19cfd" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1afabb9a81b58ce140da1401c38dfdc0ea" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>isEmpty</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a2f1b9226557391c50efac18efdb0577f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>reserve</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ad2546658c3676e4f46e8e98d9524dffa" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>set</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1a4576fe64f05b126db2a4a0fef4fb56e6" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>size</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ad519b6fcb55b44f9e6c09ddc983dc386" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_double_array_1ab80ed02007d1a4fcf03262d7909d04b6" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::DoubleArray</scope><name>swigCPtr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

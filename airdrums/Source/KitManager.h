@@ -28,6 +28,8 @@ private:
 	friend class ItemManager<KitManager, DrumKit>;
 	KitManager();
 	~KitManager();
+
+	Status	AddBuiltInKit(void);
 };
 
 #endif  // __KITMANAGER_H_C9AB6D2C__

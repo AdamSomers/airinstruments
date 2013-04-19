@@ -12,9 +12,9 @@ DrumSelector::DrumSelector()
 {
     for (int i = 0; i < 16; ++i)
     {
-        Icon* icon = new Icon(i);
+        SharedPtr<Icon> icon(new Icon(i));
         icons.push_back(icon);
-        addChild(icon);
+        addChild(icon.get());
     }
 }
 
@@ -42,7 +42,7 @@ void DrumSelector::layoutIcons()
     for (int count = 0; count < N; ++count)
     {
         
-        Icon* icon = icons.at(i);
+        SharedPtr<Icon> icon = icons.at(i);
         if (count < N/2)
             icon->setBounds(HUDRect(iconWidth*count + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
         else if (count > N/2)
@@ -55,35 +55,6 @@ void DrumSelector::layoutIcons()
 
 void DrumSelector::setup()
 {  
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    batch.CopyVertexData3f(verts);
-    batch.CopyTexCoordData2f(texCoords, 0);
-    batch.CopyNormalDataf(normals);
-    if (!didSetup)
-        batch.End();
-
     HUDView::setup();
 }
 
@@ -94,23 +65,11 @@ void DrumSelector::draw()
         needsLayout = false;
     }
 
-    GLfloat color[4] = { 1.f, 1.f, 1.f, 1.f };
-
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    GLint polygonMode;
-    glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(1.f);
-    //batch.Draw();
-    glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
-
-    GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-    batch.Draw();
-    
+    //GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("DrumSelectorBg");
+    //setDefaultTexture(textureId);
+    GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
+    setDefaultColor(color);
     HUDView::draw();
-
 }
 
 
@@ -123,56 +82,77 @@ void DrumSelector::setSelection(int sel)
     if (sel < 0) sel = icons.size() - 1;
     if (sel >= (int) icons.size()) sel = 0;
     selection = sel;
+
+    for (SharedPtr<Icon> i : icons)
+        i->setIsSelection(i->getId() == sel);
+
     needsLayout = true;
 }
 
-void DrumSelector::fingerMotion(float x, float y, FingerView* fv)
+void DrumSelector::fingerMotion(float x, float /*y*/, FingerView* fv)
 {
     if (fv != trackedFinger)
         return;
 
-    int inc = 0;
-    if (x - prevFingerX < -3)
-        inc = 1;
-    else if (x - prevFingerX > 3)
-        inc = -1;
+    stopTimer(kTimerTrackedFingerMissing);
+    startTimer(kTimerTrackedFingerMissing, 100);
 
-    if (inc != 0 && !isTimerRunning()) {
+    int inc = 0;
+    float center = getBounds().x + getBounds().w / 2;
+    float distanceFromCenter = x - center;
+    if (fabsf(distanceFromCenter) > 30 && x < center)
+        inc = -1;
+    else if (fabsf(distanceFromCenter) > 30)
+        inc = 1;
+
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
         setSelection(selection + inc);
         for (Listener* l : listeners)
             l->drumSelectorChanged(this);
-        startTimer(250);
+        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
-
-    prevFingerX = x;
-    prevFingerY = y;
 }
 
-void DrumSelector::fingerEntered(float x, float y, FingerView* fv)
-{
-    if (!trackedFinger)
+void DrumSelector::fingerEntered(float /*x*/, float /*y*/, FingerView* fv)
+{    
+    M3DVector3f vec;
+    fv->objectFrame.GetOrigin(vec);
+    //printf("%x entered %d %d %.2f %.2f\n", fv, (int)x, (int)y, vec[0], vec[1]);
+    
+    if (!trackedFinger) {
         trackedFinger = fv;
-
-    if (fv == trackedFinger)
-    {
-        prevFingerX = x;
-        prevFingerY = y;
+        startTimer(kTimerSelectionDelay, 500);
     }
 }
 
-void DrumSelector::fingerExited(float x, float y, FingerView* fv)
+void DrumSelector::fingerExited(float x, float /*y*/, FingerView* fv)
 {
+    // !!! Hack to get avoid spurious exits due to corrupt screen coord data
+    if (x < 0 || x > 2000)
+        return;
+    
+    M3DVector3f vec;
+    fv->objectFrame.GetOrigin(vec);
+    //printf("%x exited %d %d %.2f %.2f\n", fv, (int)x, (int)y, vec[0], vec[1]);
     if (fv == trackedFinger)
     {
         trackedFinger = NULL;
-        prevFingerX = x;
-        prevFingerY = y;
     }
 }
 
-void DrumSelector::timerCallback()
+void DrumSelector::timerCallback(int timerId)
 {
-    stopTimer();
+    switch (timerId)
+    {
+    case kTimerSelectionDelay:
+        stopTimer(kTimerSelectionDelay);
+        break;
+
+    case kTimerTrackedFingerMissing:
+        trackedFinger = NULL;
+        break;
+    }
 }
 
 void DrumSelector::addListener(DrumSelector::Listener *listener)
@@ -191,6 +171,7 @@ void DrumSelector::removeListener(DrumSelector::Listener *listener)
 
 DrumSelector::Icon::Icon(int inId)
 : id(inId)
+, isSelection(false)
 {
 }
 
@@ -199,36 +180,8 @@ DrumSelector::Icon::~Icon()
 }
 
 void DrumSelector::Icon::setup()
-{    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    batch.CopyVertexData3f(verts);
-    batch.CopyTexCoordData2f(texCoords, 0);
-    batch.CopyNormalDataf(normals);
-    if (!didSetup)
-        batch.End();
-    didSetup = true;
+{
+    HUDView::setup();
 }
 
 void DrumSelector::Icon::draw()
@@ -240,31 +193,18 @@ void DrumSelector::Icon::draw()
         updateBounds();
     else if (tempBounds != targetBounds)
         HUDView::setBounds(targetBounds);
-    
-    HUDView::draw();
-    
-    GLfloat color[4] = { 1.f, 1.f, 1.f, 1.f };
-    
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    GLint polygonMode;
-    glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(1.f);
-    //batch.Draw();
-    glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
-    
+
     GLuint textureID = 0;
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
-        textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture();
+        textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture(isSelection);
     }
     else
-        textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture();
+        textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture(isSelection);
     
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-    batch.Draw();
+    setDefaultTexture(textureID);
+    HUDView::draw();
 }
 
 void DrumSelector::Icon::setBounds(const HUDRect &b)
@@ -278,6 +218,11 @@ void DrumSelector::Icon::setBounds(const HUDRect &b)
     yStep = (targetBounds.y - tempBounds.y) / 10.f;
     wStep = (targetBounds.w - tempBounds.w) / 10.f;
     hStep = (targetBounds.h - tempBounds.h) / 10.f;
+}
+
+void DrumSelector::Icon::setIsSelection(bool is)
+{
+    isSelection = is;
 }
 
 void DrumSelector::Icon::updateBounds()

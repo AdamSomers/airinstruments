@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_screen_list" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::ScreenList</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">com.leapmotion.leap.Interface</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">Iterable&lt; Screen &gt;</basecompoundref>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1_1_screen_list_iterator" prot="public">com::leapmotion::leap::ScreenList::ScreenListIterator</innerclass>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a52a2266bf57796ea98cce151f6da87c1" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.ScreenList.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="27" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ae37ee59ccc4082a6907ea45ac61b89d8" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.ScreenList.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="38" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="38" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ab1dd3d14cce65d1823aa3a981355df2c" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.ScreenList.ScreenList</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>ScreenList</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="29" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="29" bodyend="32"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1af905fad7fd42f83af64e5adee30d1e64" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.ScreenList.getCPtr</definition>
+        <argsstring>(ScreenList obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list" kindref="compound">ScreenList</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="34" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="34" bodyend="36"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a6826b66fda183d59cb09483c02206d53" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+        <definition>Screen com.leapmotion.leap.ScreenList.closestScreen</definition>
+        <argsstring>(Vector position)</argsstring>
+        <name>closestScreen</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Gets the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> closest to the specified position. </para>        </briefdescription>
+        <detaileddescription>
+<para>The specified position is projected along each screen&apos;s normal vector onto the screen&apos;s plane. The screen whose projected point is closest to the specified position is returned. Call Screen::intersect(position) on the returned <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object to find the projected point.</para><para><programlisting></programlisting></para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position from which to check for screen projection. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The closest <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> onto which the specified position is projected. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="175" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="175" bodyend="177"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a630aba17bdc5610f5f7d1b1def796a3a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+        <definition>Screen com.leapmotion.leap.ScreenList.closestScreenHit</definition>
+        <argsstring>(Pointable pointable)</argsstring>
+        <name>closestScreenHit</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+          <declname>pointable</declname>
+        </param>
+        <briefdescription>
+<para>Gets the closest <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> intercepting a ray projecting from the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>The projected ray emanates from the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> tipPosition along the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref>&apos;s direction vector. If the projected ray does not intersect any screen surface directly, then the Leap checks for intersection with the planes extending from the surfaces of the known screens and returns the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> with the closest intersection.</para><para><programlisting></programlisting></para><para>If no intersections are found (i.e. the ray is directed parallel to or away from all known screens), then an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object is returned.</para><para><emphasis>Note:</emphasis> Be sure to test whether the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object returned by this method is valid. Attempting to use an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object will lead to incorrect results.</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pointable</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object to check for screen intersection. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The closest <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> toward which the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object is pointing, or, if the pointable is not pointing in the direction of any known screen, an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="127" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="127" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ae3d8a02bc48df584a193f7aa99bb105d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+        <definition>Screen com.leapmotion.leap.ScreenList.closestScreenHit</definition>
+        <argsstring>(Vector position, Vector direction)</argsstring>
+        <name>closestScreenHit</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>direction</declname>
+        </param>
+        <briefdescription>
+<para>Gets the closest <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> intercepting a ray projecting from the specified position in the specified direction. </para>        </briefdescription>
+        <detaileddescription>
+<para>The projected ray emanates from the position along the direction vector. If the projected ray does not intersect any screen surface directly, then the Leap checks for intersection with the planes extending from the surfaces of the known screens and returns the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> with the closest intersection.</para><para><programlisting></programlisting></para><para>If no intersections are found (i.e. the ray is directed parallel to or away from all known screens), then an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object is returned.</para><para><emphasis>Note:</emphasis> Be sure to test whether the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object returned by this method is valid. Attempting to use an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object will lead to incorrect results.</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position from which to check for screen intersection. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>direction</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The direction in which to check for screen intersection. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The closest <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> toward which the specified ray is pointing, or, if the ray is not pointing in the direction of any known screen, an invalid <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="157" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="157" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a7d571d0f5fa89b3ed8b3d62ffeba4541" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int com.leapmotion.leap.ScreenList.count</definition>
+        <argsstring>()</argsstring>
+        <name>count</name>
+        <briefdescription>
+<para>Returns the number of screens in this list. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The number of screens in this list. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="79" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="79" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a3fa5fb48b238ee10579823d2fd3c468f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.ScreenList.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="42" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="42" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1acd0537b800be8ba6eff441d8386cc577" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.ScreenList.empty</definition>
+        <argsstring>()</argsstring>
+        <name>empty</name>
+        <briefdescription>
+<para>Reports whether the list is empty. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True, if the list has no members. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="88" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="88" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ad6142d20a2b1547b10fd9c3126dfa74f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref></type>
+        <definition>Screen com.leapmotion.leap.ScreenList.get</definition>
+        <argsstring>(int index)</argsstring>
+        <name>get</name>
+        <param>
+          <type>int</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>Access a list member by its position in the list. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The zero-based list position index. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object at the specified index. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="98" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="98" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1af44cb8be45d0afd7934f5d3f392d2463" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>java.util.Iterator&lt; <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> &gt;</type>
+        <definition>java.util.Iterator&lt;Screen&gt; com.leapmotion.leap.ScreenList.iterator</definition>
+        <argsstring>()</argsstring>
+        <name>iterator</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="64" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="64" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a30c583c3e258baa3177e26d7f79887e1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.ScreenList.ScreenList</definition>
+        <argsstring>()</argsstring>
+        <name>ScreenList</name>
+        <briefdescription>
+<para>Constructs an empty list of screens. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="70" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="70" bodyend="72"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list" kindref="compound">ScreenList</ref> class represents a list of <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> objects. </para>    </briefdescription>
+    <detaileddescription>
+<para>The list always contains at least one entry representing the default screen. If the user has not registered the location of this default screen, then the coordinates, directions, and other values reported by the functions in its <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> object will not be accurate. Other monitor screens only appear in the list if their positions have been registered using the Leap <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen" kindref="compound">Screen</ref> Locator.</para><para>Get a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list" kindref="compound">ScreenList</ref> object by calling <ref refid="classcom_1_1leapmotion_1_1leap_1_1_controller_1a566d7f4f612e29d1ec443ffcc4fdaa0b" kindref="member">Controller::calibratedScreens()</ref>.</para><para><programlisting></programlisting> </para>    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" line="26" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenList.java" bodystart="26" bodyend="179"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a6826b66fda183d59cb09483c02206d53" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>closestScreen</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a630aba17bdc5610f5f7d1b1def796a3a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>closestScreenHit</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ae3d8a02bc48df584a193f7aa99bb105d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>closestScreenHit</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a7d571d0f5fa89b3ed8b3d62ffeba4541" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>count</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a3fa5fb48b238ee10579823d2fd3c468f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1acd0537b800be8ba6eff441d8386cc577" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>empty</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ae37ee59ccc4082a6907ea45ac61b89d8" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ad6142d20a2b1547b10fd9c3126dfa74f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>get</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1af905fad7fd42f83af64e5adee30d1e64" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::ScreenList</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1af44cb8be45d0afd7934f5d3f392d2463" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>iterator</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1ab1dd3d14cce65d1823aa3a981355df2c" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>ScreenList</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a30c583c3e258baa3177e26d7f79887e1" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>ScreenList</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_list_1a52a2266bf57796ea98cce151f6da87c1" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::ScreenList</scope><name>swigCPtr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

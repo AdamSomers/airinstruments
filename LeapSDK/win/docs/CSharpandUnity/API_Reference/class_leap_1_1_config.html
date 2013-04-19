@@ -62,17 +62,12 @@ $(document).ready(function(){initNavTree('class_leap_1_1_config.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aee9819af7eacacc324aa72619310a9d8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>ValueType</b> { <br/>
-&#160;&#160;<b>TYPEUNKNOWN</b>, 
-<b>TYPEBOOLEAN</b>, 
-<b>TYPEINT32</b>, 
-<b>TYPEINT64</b>, 
+&#160;&#160;<b>TYPEUNKNOWN</b> = 0, 
+<b>TYPEBOOLEAN</b> = 1, 
+<b>TYPEINT32</b> = 2, 
+<b>TYPEFLOAT</b> = 6, 
 <br/>
-&#160;&#160;<b>TYPEUINT32</b>, 
-<b>TYPEUINT64</b>, 
-<b>TYPEFLOAT</b>, 
-<b>TYPEDOUBLE</b>, 
-<br/>
-&#160;&#160;<b>TYPESTRING</b>
+&#160;&#160;<b>TYPESTRING</b> = 8
 <br/>
  }</td></tr>
 <tr class="separator:aee9819af7eacacc324aa72619310a9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -85,48 +80,30 @@ override void&#160;</td><td class="memItemRight" valign="bottom"><b>Dispose</b> 
 <tr class="memitem:abad3addef437788d854f8fd5fcd5f6be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abad3addef437788d854f8fd5fcd5f6be"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetBool</b> (string key)</td></tr>
 <tr class="separator:abad3addef437788d854f8fd5fcd5f6be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76b0abcd17eb1fcb79604bf5387820d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76b0abcd17eb1fcb79604bf5387820d1"></a>
-<a class="el" href="class_leap_1_1_bool_array.html">BoolArray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetBoolArray</b> (string key)</td></tr>
-<tr class="separator:a76b0abcd17eb1fcb79604bf5387820d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45d3cfbb4a7e1b2e6bc2f5d7380fb2c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45d3cfbb4a7e1b2e6bc2f5d7380fb2c8"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>GetDouble</b> (string key)</td></tr>
-<tr class="separator:a45d3cfbb4a7e1b2e6bc2f5d7380fb2c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab11bfaef2ed9563ca4251b2dfca0951c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab11bfaef2ed9563ca4251b2dfca0951c"></a>
-<a class="el" href="class_leap_1_1_double_array.html">DoubleArray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetDoubleArray</b> (string key)</td></tr>
-<tr class="separator:ab11bfaef2ed9563ca4251b2dfca0951c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8132eb2703cb076d591779bb73a62d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8132eb2703cb076d591779bb73a62d9"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>GetFloat</b> (string key)</td></tr>
 <tr class="separator:ad8132eb2703cb076d591779bb73a62d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a246b8ffa03604b60702b5e1179102fb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a246b8ffa03604b60702b5e1179102fb5"></a>
-<a class="el" href="class_leap_1_1_float_array.html">FloatArray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetFloatArray</b> (string key)</td></tr>
-<tr class="separator:a246b8ffa03604b60702b5e1179102fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ca03fafeec531432c6905b228317caa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ca03fafeec531432c6905b228317caa"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>GetInt32</b> (string key)</td></tr>
 <tr class="separator:a8ca03fafeec531432c6905b228317caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdba85eb99b0eec7ebee0e0cf3ca9242"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdba85eb99b0eec7ebee0e0cf3ca9242"></a>
-<a class="el" href="class_leap_1_1_int32_array.html">Int32Array</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetInt32Array</b> (string key)</td></tr>
-<tr class="separator:abdba85eb99b0eec7ebee0e0cf3ca9242"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c14ccf472873a641ff650c7753e0c66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c14ccf472873a641ff650c7753e0c66"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>GetInt64</b> (string key)</td></tr>
-<tr class="separator:a3c14ccf472873a641ff650c7753e0c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54c6fdc094fa6581ea4ab2aad9e347b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54c6fdc094fa6581ea4ab2aad9e347b3"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>GetString</b> (string key)</td></tr>
 <tr class="separator:a54c6fdc094fa6581ea4ab2aad9e347b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a233c81f722939d050980be413266d363"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a233c81f722939d050980be413266d363"></a>
-<a class="el" href="class_leap_1_1_string_array.html">StringArray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetStringArray</b> (string key)</td></tr>
-<tr class="separator:a233c81f722939d050980be413266d363"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d5636b93f51cd666340ee7cc8e4d8ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d5636b93f51cd666340ee7cc8e4d8ba"></a>
-uint&#160;</td><td class="memItemRight" valign="bottom"><b>GetUInt32</b> (string key)</td></tr>
-<tr class="separator:a8d5636b93f51cd666340ee7cc8e4d8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bde4a2afbe2edf8d10be618e665c5f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bde4a2afbe2edf8d10be618e665c5f0"></a>
-<a class="el" href="class_leap_1_1_u_int32_array.html">UInt32Array</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetUInt32Array</b> (string key)</td></tr>
-<tr class="separator:a9bde4a2afbe2edf8d10be618e665c5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa715582d091d200b56a60e30d903ef98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa715582d091d200b56a60e30d903ef98"></a>
-ulong&#160;</td><td class="memItemRight" valign="bottom"><b>GetUInt64</b> (string key)</td></tr>
-<tr class="separator:aa715582d091d200b56a60e30d903ef98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13a53e6d841921078eb5389cb44e825a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13a53e6d841921078eb5389cb44e825a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsArray</b> (string key)</td></tr>
-<tr class="separator:a13a53e6d841921078eb5389cb44e825a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a631db08c670e9df74b6873669d9636eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a631db08c670e9df74b6873669d9636eb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Save</b> ()</td></tr>
+<tr class="separator:a631db08c670e9df74b6873669d9636eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48ee08f47555ecc07da20e24c64a34b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48ee08f47555ecc07da20e24c64a34b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetBool</b> (string key, bool value)</td></tr>
+<tr class="separator:a48ee08f47555ecc07da20e24c64a34b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea39b0e2cb819f87d8356ac216a525cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea39b0e2cb819f87d8356ac216a525cb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetFloat</b> (string key, float value)</td></tr>
+<tr class="separator:aea39b0e2cb819f87d8356ac216a525cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a787f4eb383b5e56216345227efb6d378"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a787f4eb383b5e56216345227efb6d378"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetInt32</b> (string key, int value)</td></tr>
+<tr class="separator:a787f4eb383b5e56216345227efb6d378"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fc49204d44638f4ffe3ea91449a2492"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fc49204d44638f4ffe3ea91449a2492"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>SetString</b> (string key, string value)</td></tr>
+<tr class="separator:a1fc49204d44638f4ffe3ea91449a2492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00a67e016a5034c5f939c778b1cd5c21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00a67e016a5034c5f939c778b1cd5c21"></a>
 Config.ValueType&#160;</td><td class="memItemRight" valign="bottom"><b>Type</b> (string key)</td></tr>
 <tr class="separator:a00a67e016a5034c5f939c778b1cd5c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,7 +121,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>swigCMemOwn</b></td><
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_leap.html">Leap</a></li><li class="navelem"><a class="el" href="class_leap_1_1_config.html">Config</a></li>
-    <li class="footer">Generated on Mon Mar 25 2013 18:41:45 for Leap C# API Reference by
+    <li class="footer">Generated on Thu Apr 11 2013 19:37:27 for Leap C# API Reference by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>

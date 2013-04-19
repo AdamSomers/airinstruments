@@ -2,10 +2,11 @@
 #define h_DrumSelector
 
 #include "HUD.h"
+#include "Types.h"
 
 
 class DrumSelector : public HUDView
-                   , public Timer
+                   , public MultiTimer
 {
 public:
     DrumSelector();
@@ -21,7 +22,13 @@ public:
     void fingerExited(float x, float y, FingerView* fv);
 
     // Juce::Timer override
-    void timerCallback();
+    void timerCallback(int timerId);
+
+    enum TimerId
+    {
+        kTimerSelectionDelay,
+        kTimerTrackedFingerMissing
+    };
 
     void setSelection(int sel);
     int getSelection() const { return selection; }
@@ -35,11 +42,13 @@ public:
         void draw();
         void loadTextures();
         void setBounds(const HUDRect& b);
+        void setIsSelection(bool is);
+        int getId() const { return id; }
     private:
         void updateBounds();
         
-        GLBatch batch;
         int id;
+        bool isSelection;
         HUDRect targetBounds;
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
@@ -58,12 +67,9 @@ public:
 private:
     void layoutIcons();
 
-    GLBatch batch;
-    std::vector<Icon*> icons;
+    std::vector<SharedPtr<Icon> > icons;
     int selection;
     bool needsLayout;
-    float prevFingerX;
-    float prevFingerY;
     FingerView* trackedFinger;
     std::vector<Listener*> listeners;
 };

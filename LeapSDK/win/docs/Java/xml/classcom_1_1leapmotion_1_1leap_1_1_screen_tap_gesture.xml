@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::ScreenTapGesture</compoundname>
+    <basecompoundref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" prot="public" virt="non-virtual">com.leapmotion.leap.Gesture</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1aecb8a3fad8f4198823bd525ab732013e" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.ScreenTapGesture.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="31" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a73ca7009f26e15c5ab490a0eda3a2c3c" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.ScreenTapGesture.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="42" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="42" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a8da65b9d1907603f3c38e4da02c50fca" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.ScreenTapGesture.ScreenTapGesture</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>ScreenTapGesture</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="33" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="33" bodyend="36"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a95c10db2249fcc30bc6b0dcd0498bd21" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.ScreenTapGesture.getCPtr</definition>
+        <argsstring>(ScreenTapGesture obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="38" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="38" bodyend="40"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a3b9f0fff082d8bf0ce49458736d3746a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.ScreenTapGesture.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="46" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="46" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a036e61e60292e21e750596f091281579" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.ScreenTapGesture.direction</definition>
+        <argsstring>()</argsstring>
+        <name>direction</name>
+        <briefdescription>
+<para>The direction of finger tip motion. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> A unit direction vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="105" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="105" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a615687baa717d64eba11763be949fcbc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref></type>
+        <definition>Pointable com.leapmotion.leap.ScreenTapGesture.pointable</definition>
+        <argsstring>()</argsstring>
+        <name>pointable</name>
+        <briefdescription>
+<para>The finger performing the screen tap gesture. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_pointable" kindref="compound">Pointable</ref> object representing the tapping finger. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="125" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="125" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a516f9d8ad8ccb01eb6b3765239bc0f6d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.ScreenTapGesture.position</definition>
+        <argsstring>()</argsstring>
+        <name>position</name>
+        <briefdescription>
+<para>The position where the screen tap is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> containing the coordinates of screen tap location. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="95" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="95" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a45e92b2d8e4a64989af0da069bf64b39" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.ScreenTapGesture.progress</definition>
+        <argsstring>()</argsstring>
+        <name>progress</name>
+        <briefdescription>
+<para>The progess value is always 1.0 for a screen tap gesture. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>float The value 1.0. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="115" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="115" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1abcee0014d6b4f96f39e95aabbc995d2d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.ScreenTapGesture.ScreenTapGesture</definition>
+        <argsstring>()</argsstring>
+        <name>ScreenTapGesture</name>
+        <briefdescription>
+<para>Constructs a new <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para>An uninitialized <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> object is considered invalid. Get valid instances of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> class from a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_frame" kindref="compound">Frame</ref> object. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="74" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="74" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1aa2c8fdfaed9410f0540b4c3e5788ac35" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.ScreenTapGesture.ScreenTapGesture</definition>
+        <argsstring>(Gesture rhs)</argsstring>
+        <name>ScreenTapGesture</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref></type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+<para>Constructs a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> object from an instance of the <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> class. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rhs</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> instance to specialize. This <ref refid="classcom_1_1leapmotion_1_1leap_1_1_gesture" kindref="compound">Gesture</ref> instance must be a <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="85" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="85" bodyend="87"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a80490fb65cb06fd60171c4dc05deb211" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Gesture.Type</type>
+        <definition>static Gesture.Type com.leapmotion.leap.ScreenTapGesture.classType</definition>
+        <argsstring>()</argsstring>
+        <name>classType</name>
+        <briefdescription>
+<para>The screen tap gesture type. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Type The type value designating a screen tap gesture. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="63" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="63" bodyend="65"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> class represents a tapping gesture by a finger or tool. </para>    </briefdescription>
+    <detaileddescription>
+<para>A screen tap gesture is recognized when the tip of a finger pokes forward and then springs back to approximately the original postion, as if tapping a vertical screen. The tapping finger must pause briefly before beginning the tap.</para><para><image type="html" name="Leap_Gesture_Tap2.png"></image>
+</para><para><bold>Important:</bold> To use screen tap gestures in your application, you must enable recognition of the screen tap gesture. You can enable recognition with: <verbatim>Controller::enableGesture(Gesture::TYPE_SCREEN_TAP);
+</verbatim></para><para>ScreenTap gestures are discrete. The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> object representing a tap always has the state, STATE_STOP. Only one <ref refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture" kindref="compound">ScreenTapGesture</ref> object is created for each screen tap gesture recognized. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="90">
+        <label>com.leapmotion.leap.Gesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_gesture"/>
+      </node>
+      <node id="89">
+        <label>com.leapmotion.leap.ScreenTapGesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture"/>
+        <childnode refid="90" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="92">
+        <label>com.leapmotion.leap.Gesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_gesture"/>
+      </node>
+      <node id="91">
+        <label>com.leapmotion.leap.ScreenTapGesture</label>
+        <link refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture"/>
+        <childnode refid="92" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" line="30" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/ScreenTapGesture.java" bodystart="30" bodyend="129"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a80490fb65cb06fd60171c4dc05deb211" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>classType</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a3b9f0fff082d8bf0ce49458736d3746a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a036e61e60292e21e750596f091281579" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>direction</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a762ca0339845c9fd8f56eb9c50a9d939" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>duration</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ade91b8b357a0b65559f0b6e92259611a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>durationSeconds</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a9d1e2879db9699c3376ecad4ac6b5326" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a73ca7009f26e15c5ab490a0eda3a2c3c" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1acd58fdacb406067210d346766317c73d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>frame</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a8a2c538af15c0678e7913cf4c1fa9b15" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ac29ba36fa9b334ce822936cf530b3aa7" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a16d3c85153f2c90a77ba8c5c74c055b8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>Gesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a95c10db2249fcc30bc6b0dcd0498bd21" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1aacff5dba75bff58ece36726127ffd4d8" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Gesture."><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a7f420935413dfa0b73d522d173b89521" prot="protected" virt="non-virtual" ambiguityscope="com::leapmotion::leap::Interface."><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a774b6b0a846bc908140a9695446ec398" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>hands</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1ad3e6aa7ddce5cf3079bcc6259f7d7412" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>id</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1a2dc14921e56d16434d81b56f6ca73e91" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>Interface</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a8a5bf5a6582c95367b8a46ac0a220da5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>invalid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a1fbc97e34f25c3e1bb2f6ffecc57c563" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a615687baa717d64eba11763be949fcbc" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>pointable</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a43e5763a3e347a066aabd5cac4e0f899" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>pointables</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a516f9d8ad8ccb01eb6b3765239bc0f6d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>position</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a45e92b2d8e4a64989af0da069bf64b39" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>progress</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1a8da65b9d1907603f3c38e4da02c50fca" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>ScreenTapGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1abcee0014d6b4f96f39e95aabbc995d2d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>ScreenTapGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1aa2c8fdfaed9410f0540b4c3e5788ac35" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>ScreenTapGesture</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a13f39cae216c5f285c526936a6b0af67" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>state</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_interface_1aa0a823d6318274e955270e17360d3505" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_screen_tap_gesture_1aecb8a3fad8f4198823bd525ab732013e" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a6e5c086a26fa919648e307887cdefcf2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_gesture_1a7420937c98ea7646f083e5c0a469fe3d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::ScreenTapGesture</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

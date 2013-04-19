@@ -37,9 +37,9 @@ public:
 	// Other accessors
 
 	String&	GetName(void);
-	//Image	GetImage(void);
 	Uuid&	GetUuid(void);
 	void	SetName(String& name);
+	void	SetUuid(Uuid uuid);
 
 	Status	LoadFromXml(XmlElement* element);
 	Status	SaveToXml(XmlElement* element);
@@ -49,7 +49,6 @@ protected:
 
 private:
 	String	mName;
-	//Image	mImage;
 	Uuid	mUuid;
 };
 

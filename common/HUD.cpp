@@ -6,13 +6,31 @@ HUDView::HUDView()
 , trackingMouse(false)
 , hover(false)
 , didSetup(false)
+, defaultTexture(0)
+, defaultColorSet(false)
 {
+    defaultColor[0] = 1.f;
+    defaultColor[1] = 1.f;
+    defaultColor[2] = 1.f;
+    defaultColor[3] = 1.f;
 }
 
 void HUDView::addChild(HUDView* child)
 {
     children.push_back(child);
     child->setParent(this);
+}
+
+void HUDView::removeChild(HUDView* child)
+{
+    auto iter = std::find(children.begin(), children.end(), child);
+    if (iter != children.end())
+        children.erase(iter);
+}
+
+void HUDView::removeAllChildren()
+{
+    children.clear();
 }
 
 void HUDView::setParent(HUDView* p)
@@ -22,18 +40,24 @@ void HUDView::setParent(HUDView* p)
 
 void HUDView::draw()
 {
-#if 0
-    HUDRect parentBounds(0,0,0,0);
-    if (parent)
-        parentBounds = parent->bounds;
-    Environment::instance().modelViewMatrix.PushMatrix(viewFrame);
-    Environment::instance().modelViewMatrix.Translate(parentBounds.x, parentBounds.y, 0);
-    GLfloat vRed [] = { 1.f, 0.f, 0.f, 0.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), vRed);
-    glLineWidth(1.f);
-    defaultBatch.Draw();
-    Environment::instance().modelViewMatrix.PopMatrix();
-#endif
+    if (0 != defaultTexture)
+    {
+        glBindTexture(GL_TEXTURE_2D, defaultTexture);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
+        defaultBatch.Draw();
+    }
+    else
+    {
+        GLint polygonMode[2];
+        glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
+        if (!defaultColorSet)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), defaultColor);
+        glLineWidth(1.f);
+        defaultBatch.Draw();
+        glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
+    }
+
     for (HUDView* v : children)
     {
         Environment::instance().modelViewMatrix.PushMatrix();
@@ -123,14 +147,14 @@ void HUDView::passiveMotion(float x, float y)
         {
             if (!child->hover) {
                 child->hover = true;
-                printf("hover\n");
+                //printf("hover\n");
             }
             child->passiveMotion(localX, localY);
         }
         else {
             if (child->hover) {
                 child->hover = false;
-                printf("un-hover\n");
+                //printf("un-hover\n");
             }
         }
     }
@@ -150,6 +174,10 @@ void HUDView::updatePointedState(FingerView* fv)
     float y = screenPos[1];
     y = Environment::instance().screenH - y;
 
+    if (x > 0 && x < 2000 )
+        ;//printf("ok\n");
+    else
+        ;//printf("not ok\n");
     if (bounds.contains(x, y))
     {
         auto iter = std::find(hoveringFingers.begin(), hoveringFingers.end(), fv);
@@ -192,6 +220,17 @@ void HUDView::loadTextures()
     {
         child->loadTextures();
     }
+}
+
+void HUDView::setDefaultTexture(GLuint texture)
+{
+    defaultTexture = texture;
+}
+
+void HUDView::setDefaultColor(GLfloat* color)
+{
+    memcpy(defaultColor, color, 4 * sizeof(GLfloat));
+    defaultColorSet = true;
 }
 
 HUDButton::HUDButton(int id)
@@ -243,20 +282,26 @@ void HUDButton::draw()
         else
             color = offColor;
     }
-    //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    
+
     GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
     GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
-    
-    //int textureID = state ? onTextureID : offTextureID;	// Unused variable
+
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
-    glLineWidth(1.f);
-    batch.Draw();
+    defaultBatch.Draw();
+    
+    GLint blendSrc;
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+    GLint blendDst;
+    glGetIntegerv(GL_BLEND_DST, &blendDst);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
-    batch.Draw();
-    
+    defaultBatch.Draw();
+
+    glBlendFunc(blendSrc, blendDst);
+
     if (state && fade < 1.f)
     {
         fade += 0.3f;
@@ -272,25 +317,6 @@ void HUDButton::draw()
 void HUDButton::setup()
 {
     HUDView::setup();
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    batch.CopyVertexData3f(verts);
-    batch.CopyTexCoordData2f(texCoords, 0);
-    //batch.CopyNormalDataf(normals);
-    batch.End();
     
     offColor[0] = 0.3f;
     offColor[1] = 0.3f;

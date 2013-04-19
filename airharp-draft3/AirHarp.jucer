@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.4.0"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
+<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.6.0"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
@@ -44,6 +44,9 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
+      <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
+            file="../common/TutorialSlide.cpp"/>
+      <FILE id="whakCI" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
     </GROUP>
     <GROUP id="{9ED69939-FCC6-9596-4256-AA83B4D8178A}" name="GLTools">
       <GROUP id="{63BF3604-9EA2-C52D-4873-BAF2092B480D}" name="include">
@@ -156,7 +159,7 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH"
+               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/Resources"
                extraCompilerFlags="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"

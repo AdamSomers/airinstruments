@@ -154,7 +154,32 @@ Static Public Member Functions</h2></td></tr>
 <p>Circle and swipe gestures are continuous and these objects can have a state of start, update, and stop.</p>
 <p>The screen tap gesture is a discrete gesture. The Leap only creates a single <a class="el" href="class_leap_1_1_screen_tap_gesture.html" title="The ScreenTapGesture class represents a tapping gesture by a finger or tool.">ScreenTapGesture</a> object appears for each tap and it always has a stop state.</p>
 <p>Get valid <a class="el" href="class_leap_1_1_gesture.html" title="The Gesture class represents a recognized movement by the user.">Gesture</a> instances from a <a class="el" href="class_leap_1_1_frame.html" title="The Frame class represents a set of hand and finger tracking data detected in a single frame...">Frame</a> object. You can get a list of gestures with the <a class="el" href="class_leap_1_1_frame.html#a7d03b8432c1b0862c19fa2cf138d752a" title="The gestures recognized or continuing in this frame.">Frame::gestures()</a> method. You can get a list of gestures since a specified frame with the <code>Frame::gestures(const Frame&amp;)</code> method. You can also use the <code><a class="el" href="class_leap_1_1_frame.html#a859dbec398b4309229db8a2cb0b7cbdc" title="The Gesture object with the specified ID in this frame.">Frame::gesture()</a></code> method to find a gesture in the current frame using an ID value obtained in a previous frame.</p>
-<p><a class="el" href="class_leap_1_1_gesture.html" title="The Gesture class represents a recognized movement by the user.">Gesture</a> objects can be invalid. For example, when you get a gesture by ID using <code><a class="el" href="class_leap_1_1_frame.html#a859dbec398b4309229db8a2cb0b7cbdc" title="The Gesture object with the specified ID in this frame.">Frame::gesture()</a></code>, and there is no gesture with that ID in the current frame, then <code>gesture()</code> returns an Invalid <a class="el" href="class_leap_1_1_gesture.html" title="The Gesture class represents a recognized movement by the user.">Gesture</a> object (rather than a null value). Always check object validity in situations where a gesture might be invalid. </p>
+<p><a class="el" href="class_leap_1_1_gesture.html" title="The Gesture class represents a recognized movement by the user.">Gesture</a> objects can be invalid. For example, when you get a gesture by ID using <code><a class="el" href="class_leap_1_1_frame.html#a859dbec398b4309229db8a2cb0b7cbdc" title="The Gesture object with the specified ID in this frame.">Frame::gesture()</a></code>, and there is no gesture with that ID in the current frame, then <code>gesture()</code> returns an Invalid <a class="el" href="class_leap_1_1_gesture.html" title="The Gesture class represents a recognized movement by the user.">Gesture</a> object (rather than a null value). Always check object validity in situations where a gesture might be invalid.</p>
+<p>The following keys can be used with the <a class="el" href="class_leap_1_1_config.html" title="The Config class provides access to Leap system configuration information.">Config</a> class to configure the gesture recognizer:</p>
+<table class="doxtable">
+<tr>
+<th>Key string </th><th>Value type </th><th>Default value </th><th>Units</th></tr>
+<tr>
+<td>Gesture.Circle.MinRadius </td><td>float </td><td>5.0 </td><td>mm </td></tr>
+<tr>
+<td>Gesture.Circle.MinArc </td><td>float </td><td>1.5 </td><td>radians </td></tr>
+<tr>
+<td>Gesture.Swipe.MinLength </td><td>float </td><td>150 </td><td>mm </td></tr>
+<tr>
+<td>Gesture.Swipe.MinVelocity </td><td>float </td><td>1000 </td><td>mm/s </td></tr>
+<tr>
+<td>Gesture.KeyTap.MinDownVelocity </td><td>float </td><td>50 </td><td>mm/s </td></tr>
+<tr>
+<td>Gesture.KeyTap.HistorySeconds </td><td>float </td><td>0.1 </td><td>s </td></tr>
+<tr>
+<td>Gesture.KeyTap.MinDistance </td><td>float </td><td>3.0 </td><td>mm </td></tr>
+<tr>
+<td>Gesture.ScreenTap.MinForwardVelocity </td><td>float </td><td>50 </td><td>mm/s </td></tr>
+<tr>
+<td>Gesture.ScreenTap.HistorySeconds </td><td>float </td><td>0.1 </td><td>s </td></tr>
+<tr>
+<td>Gesture.ScreenTap.MinDistance </td><td>float </td><td>5.0 </td><td>mm </td></tr>
+</table>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a068c6f3ba05970dc557b62a366073578"></a>
 <div class="memitem">

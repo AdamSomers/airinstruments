@@ -18,22 +18,35 @@
 #include "MotionServer.h"
 #include "FingerView.h"
 #include "KitManager.h"
+#include "PatternManager.h"
 
 #include "MainComponent.h"
 
 #define NUM_PADS 16
+#define TUTORIAL_TIMEOUT 30000
+#define TAP_TIMEOUT 50
 
 //==============================================================================
-MainContentComponent::MainContentComponent() :
-  toolbar(NULL)
+MainContentComponent::MainContentComponent()
+: tutorial(NULL)
+, toolbar(NULL)
 , statusBar(NULL)
 , prevMouseY(0.f)
 , prevMouseX(0.f)
 , sizeChanged(false)
 , playAreaLeft(NULL)
 , playAreaRight(NULL)
+, drumSelectorLeft(NULL)
+, drumSelectorRight(NULL)
 , trigViewBank(NULL)
+, kitSelector(NULL)
+, patternSelector(NULL)
+, tempoControl(NULL)
 , lastCircleId(0)
+, showKitSelector(false)
+, tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
+, isIdle(true)
+, needsPatternListUpdate(false)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -43,11 +56,38 @@ MainContentComponent::MainContentComponent() :
     MotionDispatcher::zLimit = -100;
     Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
+
+	tempoSlider.setRange(30.0, 300.0, 0.1);
+	tempoSlider.setSize(250, 50);
+	addAndMakeVisible(&tempoSlider);
+	tempoSlider.setCentrePosition(600, 30);
+	AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	float tempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
+	tempoSlider.setValue(tempo);
+	tempoSlider.addListener(&Drums::instance());
+	Drums::instance().registerTempoSlider(&tempoSlider);
+    tempoSlider.setVisible(false);
 }
 
 MainContentComponent::~MainContentComponent()
 {
+//    MotionDispatcher::instance().removeAllListeners();
+    MotionDispatcher::instance().removeListener(*this);
 	openGLContext.detach();
+//    openGLContext.deactivateCurrentContext();
+    views.clear();
+    delete tutorial;
+    delete toolbar;
+    delete statusBar;
+    delete playAreaLeft;
+    delete playAreaRight;
+    delete drumSelectorLeft;
+    delete drumSelectorRight;
+    delete trigViewBank;
+    delete kitSelector;
+    delete patternSelector;
+    delete tempoControl;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -81,6 +121,18 @@ void MainContentComponent::resized()
     Environment::instance().ready = true;
 }
 
+void MainContentComponent::focusGained(FocusChangeType /*cause*/)
+{
+    Logger::outputDebugString("Focus Gained");
+    MotionDispatcher::instance().resume();
+}
+
+void MainContentComponent::focusLost(FocusChangeType /*cause*/)
+{
+    Logger::outputDebugString("Focus Lost");
+    MotionDispatcher::instance().pause();
+}
+
 void MainContentComponent::newOpenGLContextCreated()
 {
 #ifdef _WIN32
@@ -89,8 +141,8 @@ void MainContentComponent::newOpenGLContextCreated()
 
     SkinManager::instance().loadResources();
     KitManager::GetInstance().LoadTextures();
-    String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
-    SkinManager::instance().setSelectedSkin(skinSetting);
+    //String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
+    //SkinManager::instance().setSelectedSkin(skinSetting);
     
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
@@ -128,7 +180,7 @@ void MainContentComponent::newOpenGLContextCreated()
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
-    
+
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
@@ -146,6 +198,7 @@ void MainContentComponent::newOpenGLContextCreated()
     playAreaRight->setSelectedMidiNote(noteRight);
     views.push_back(playAreaLeft);
     views.push_back(playAreaRight);
+    
     drumSelectorLeft = new DrumSelector;
     drumSelectorRight = new DrumSelector;
     drumSelectorLeft->setSelection(noteLeft);
@@ -154,8 +207,57 @@ void MainContentComponent::newOpenGLContextCreated()
     drumSelectorRight->addListener(this);
     views.push_back(drumSelectorLeft);
     views.push_back(drumSelectorRight);
+    
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
+    
+    kitSelector = new WheelSelector;
+    int numKits = KitManager::GetInstance().GetItemCount();
+    for (int i = 0; i < numKits; ++i)
+    {
+        WheelSelector::Icon* icon = new WheelSelector::Icon(i, true);
+        Image image = KitManager::GetInstance().GetItem(i)->GetImage();
+        icon->setImage(image);
+        icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
+        kitSelector->addIcon(icon);
+    }
+
+    kitSelector->addListener(this);
+    views.push_back(kitSelector);
+    
+    patternSelector = new WheelSelector;
+    populatePatternSelector();
+    
+    patternSelector->addListener(this);
+    views.push_back(patternSelector);
+    
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid");
+    Uuid kitUuid(kitUuidString);
+    String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName");
+    Logger::outputDebugString("Selected kit: " + kitUuidString);
+    Logger::outputDebugString("Selected kit: " + kitName);
+    int selectedKitIndex = 0;
+    for (int i = 0; i < numKits; ++i)
+    {
+        std::shared_ptr<DrumKit> kit = KitManager::GetInstance().GetItem(i);
+        if (kit->GetName() == kitName) {
+            selectedKitIndex = i;
+            break;
+        }
+    }
+    Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
+    kitSelector->setSelection(selectedKitIndex);
+    Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
+    
+    tutorial = new TutorialSlide;
+    views.push_back(tutorial);
+//    tutorial->begin();
+    startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
+
+    tempoControl = new TempoControl;
+    float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
+    tempoControl->setTempo(tempo);
+    views.push_back(tempoControl);
     
     for (HUDView* v : views)
         v->loadTextures();
@@ -165,32 +267,106 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
 
-    MotionDispatcher::instance().controller.addListener(*this);
+    MotionDispatcher::instance().addListener(*this);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
-    
+
     glClearColor(0.f, 0.f, 0.f, 1.0f );
+}
+
+void MainContentComponent::populatePatternSelector()
+{
+    patternSelector->removeAllIcons();
+    
+    int numPatterns = PatternManager::GetInstance().GetItemCount();
+    for (int i = 0; i < numPatterns; ++i)
+    {
+        WheelSelector::Icon* icon = new WheelSelector::Icon(i);
+        Image im(Image::PixelFormat::ARGB, 2000, 200, true);
+        Graphics g (im);
+        g.setColour(Colour::fromRGBA(60, 60, 60, 255));
+        g.setFont(200);
+        g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
+        
+        GLuint textureId = 0;
+        glGenTextures(1, &textureId);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        GfxTools::loadTextureFromJuceImage(im);
+        icon->setImage(im);
+        icon->setDefaultTexture(textureId);
+        
+        patternSelector->addIcon(icon);
+    }
+    selectCurrentPattern();
+}
+
+void MainContentComponent::selectCurrentPattern()
+{
+    String patternUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("patternUuid");
+    Uuid patternUuid(patternUuidString);
+    String patternName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("patternName");
+    Logger::outputDebugString("Selected pattern: " + patternUuidString);
+    Logger::outputDebugString("Selected pattern: " + patternName);
+    int selectedpatternIndex = 0;
+    int numPatterns = PatternManager::GetInstance().GetItemCount();
+    for (int i = 0; i < numPatterns; ++i)
+    {
+        std::shared_ptr<DrumPattern> pattern = PatternManager::GetInstance().GetItem(i);
+        if (pattern->GetName() == patternName) {
+            selectedpatternIndex = i;
+            break;
+        }
+    }
+    Logger::outputDebugString("Selected pattern: " + String(selectedpatternIndex));
+    patternSelector->setSelection(selectedpatternIndex);
+    Drums::instance().setPattern(PatternManager::GetInstance().GetItem(selectedpatternIndex));
 }
 
 void MainContentComponent::renderOpenGL()
 {
+    if (!showKitSelector && kitSelector->isEnabled()) {
+        showKitSelector = true;
+        sizeChanged = true;
+    }
+    else if (showKitSelector && !kitSelector->isEnabled()) {
+        showKitSelector = false;
+        sizeChanged = true;
+    }
+    
+    if (!showPatternSelector && patternSelector->isEnabled()) {
+        showPatternSelector = true;
+        sizeChanged = true;
+    }
+    else if (showPatternSelector && !patternSelector->isEnabled()) {
+        showPatternSelector = false;
+        sizeChanged = true;
+    }
+    
     if (sizeChanged)
     {
-        const int toobarHeight = 75;
+        const int toolbarHeight = 180;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
-        const int playAreaHeight = Environment::instance().screenH - toobarHeight - statusBarHeight - drumSelectorHeight - 10;
-        const int playAreaWidth = Environment::instance().screenW / 2 - 10;
+        const int playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
+        const int playAreaWidth = Environment::instance().screenW / 2;
+        const int tempoControlWidth = 260;
+        const int tempoControlHeight = 36;
+        
+        if (tutorial)
+            tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - 500 / 2),
+                                     (GLfloat) (Environment::instance().screenH / 2 - 225 / 2),
+                                     500.0f,
+                                     225.0f));
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,
-                                       (GLfloat) Environment::instance().screenH-toobarHeight,
+                                       (GLfloat) Environment::instance().screenH-toolbarHeight,
                                        (GLfloat) Environment::instance().screenW,
-                                       (GLfloat) toobarHeight));
+                                       (GLfloat) toolbarHeight));
         
         if (statusBar)
             statusBar->setBounds(HUDRect(0.0f,
@@ -200,37 +376,66 @@ void MainContentComponent::renderOpenGL()
         
         if (drumSelectorLeft)
             drumSelectorLeft->setBounds(HUDRect((GLfloat) 5.0f,
-                                                (GLfloat) toolbar->getBounds().y - drumSelectorHeight,
+                                                (GLfloat) toolbar->getBounds().y + 10,
                                                 (GLfloat) playAreaWidth,
                                                 (GLfloat) drumSelectorHeight - 5));
         
         if (drumSelectorRight)
             drumSelectorRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
-                                                (GLfloat) toolbar->getBounds().y - drumSelectorHeight,
+                                                (GLfloat) toolbar->getBounds().y + 10,
                                                 (GLfloat) playAreaWidth,
                                                 (GLfloat) drumSelectorHeight - 5));
         
         if (playAreaLeft)
-            playAreaLeft->setBounds(HUDRect(5.0f,
-                                            (GLfloat) statusBar->getBounds().top() + 5,
+            playAreaLeft->setBounds(HUDRect(0,
+                                            (GLfloat) statusBar->getBounds().top(),
                                             (GLfloat) playAreaWidth,
                                             (GLfloat) playAreaHeight));
                                     
         if (playAreaRight)
-            playAreaRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
-                                            (GLfloat) statusBar->getBounds().top() + 5,
+            playAreaRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2,
+                                            (GLfloat) statusBar->getBounds().top(),
                                             (GLfloat) playAreaWidth,
                                             (GLfloat) playAreaHeight));
         
 
         if (trigViewBank)
             trigViewBank->setBounds(HUDRect(0.0f,
-                                            (GLfloat) Environment::instance().screenH-toobarHeight,
+                                            (GLfloat) Environment::instance().screenH-70,
                                             (GLfloat) Environment::instance().screenW / 4,
-                                            (GLfloat) toobarHeight));
+                                            (GLfloat) toolbarHeight));
+        
+        int side = std::min(playAreaHeight + drumSelectorHeight, playAreaWidth*2);
+        int hiddenX = (int) (-side * .85);
+        int shownX = (int) (-side / 2.f);
+        if (kitSelector)
+            kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? (GLfloat) shownX : (GLfloat) hiddenX,
+                                           (GLfloat) statusBarHeight,
+                                           (GLfloat) side,
+                                           (GLfloat) side));
+        
+        hiddenX = (int) ((GLfloat) Environment::instance().screenW - side * .15);
+        shownX = (int) ((GLfloat) Environment::instance().screenW - side / 2.f);
+        if (patternSelector)
+            patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? (GLfloat) shownX : (GLfloat) hiddenX,
+                                           (GLfloat) statusBarHeight,
+                                           (GLfloat) side,
+                                           (GLfloat) side));
+        
+        if (tempoControl)
+            tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f - tempoControlWidth / 2.f,
+                                            (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
+                                            (GLfloat) tempoControlWidth,
+                                            (GLfloat) tempoControlHeight));
         
         layoutPadsLinear();
         sizeChanged = false;
+    }
+    
+    if (needsPatternListUpdate) {
+        populatePatternSelector();
+        needsPatternListUpdate = false;
+        sizeChanged = true;
     }
     
     glEnable(GL_MULTISAMPLE);
@@ -238,7 +443,7 @@ void MainContentComponent::renderOpenGL()
     glEnable(GL_POINT_SMOOTH);
     glEnable(GL_POLYGON_SMOOTH);
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -311,6 +516,9 @@ void MainContentComponent::renderOpenGL()
 
     for (PadView* pv : pads)
         pv->update();
+
+//    glDisable(GL_CULL_FACE);
+//	tempoSlider.repaint();
 }
 
 void MainContentComponent::openGLContextClosing()
@@ -437,7 +645,12 @@ void MainContentComponent::mouseWheelMove (const MouseEvent& /*e*/, const MouseW
 bool MainContentComponent::keyPressed(const KeyPress& kp)
 {
     bool ret = false;
-    if (kp.getTextCharacter() == 'm') {
+    if (kp.getTextCharacter() == 'h')
+    {
+        tutorial->begin();
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'm') {
         Drums::instance().getTransportState().toggleMetronome();
         ret = true;
     }
@@ -469,6 +682,14 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
     }
+    else if (kp.getKeyCode() == KeyPress::leftKey)
+    {
+        tempoControl->increment(-1);
+    }
+    else if (kp.getKeyCode() == KeyPress::rightKey)
+    {
+        tempoControl->increment(1);
+    }
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
     return ret;
@@ -485,6 +706,32 @@ void MainContentComponent::drumSelectorChanged(DrumSelector* selector)
     {
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+    }
+}
+
+void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
+{
+    if (selector == kitSelector) {
+        int selection = kitSelector->getSelection();
+        std::shared_ptr<DrumKit> selectedKit = KitManager::GetInstance().GetItem(selection);
+        String name = selectedKit->GetName();
+        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
+        Uuid uuid = selectedKit->GetUuid();
+        String uuidString = uuid.toString();
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", name);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", uuidString);
+        Drums::instance().setDrumKit(selectedKit);
+    }
+    else if (selector == patternSelector) {
+        int selection = patternSelector->getSelection();
+        std::shared_ptr<DrumPattern> selectePattern = PatternManager::GetInstance().GetItem(selection);
+        String name = selectePattern->GetName();
+        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
+        Uuid uuid = selectePattern->GetUuid();
+        String uuidString = uuid.toString();
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
+        Drums::instance().setPattern(selectePattern);
     }
 }
 
@@ -508,6 +755,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     const Leap::GestureList& gestures = frame.gestures();
     Leap::GestureList::const_iterator i = gestures.begin();
     Leap::GestureList::const_iterator end = gestures.end();
+    if (!gestures.empty())
+        isIdle = false;
     for ( ; i != end; ++i)
     {
         const Leap::Gesture& g = *i;
@@ -516,7 +765,30 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             case Leap::Gesture::TYPE_SWIPE:
             {
                 Leap::SwipeGesture swipe(g);
-                Environment::instance().cameraFrame.TranslateWorld((swipe.direction().x * swipe.speed()) * .00002f, 0, 0);
+                if (swipe.direction().x > 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
+                    if (tutorial->getSlideIndex() == 3)
+                        tutorial->next();
+                    if (showPatternSelector) {
+                        patternSelector->setEnabled(false);
+                        showPatternSelector = false;
+                    }
+                    else {
+                        //kitSelector->setEnabled(true);
+                        //showKitSelector = true;
+                    }
+                    sizeChanged = true;
+                }
+                else if (swipe.direction().x < 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
+                    if (showKitSelector) {
+                        kitSelector->setEnabled(false);
+                        showKitSelector = false;
+                    }
+                    else {
+                        //patternSelector->setEnabled(true);
+                        //showPatternSelector = true;
+                    }
+                    sizeChanged = true;
+                }
                 
             }
                 break;
@@ -541,12 +813,26 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 
                 bool isClockwise = circle.normal().z < 0;
                 
+                if (circle.state() == Leap::Gesture::STATE_START)
+                    lastCircleStartTime = Time::currentTimeMillis();
+                
+                int64 timeDiff = Time::currentTimeMillis() - lastCircleStartTime;
+                
+                if (!tutorial->isDone() && isClockwise && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
+                    tutorial->end();
+                    break;
+                }
+                else if (!tutorial->isDone() && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
+                    tutorial->back();
+                    break;
+                }
+                
                 //if (!isClockwise)
                 //    printf("Circle CCW - id %d - progress %f\n", circle.id(), circle.progress());
                 //else
                 //    printf("Circle CW - id %d - progress %f\n", circle.id(), circle.progress());
-                
-                if (circle.progress() >= 1.f && circle.progress() < 2.f && isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP) {
+                                
+                if (circle.progress() >= 1.f && circle.progress() < 2.f && isClockwise && lastCircleId != circle.id() && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
                     Drums::instance().getTransportState().play();
                     lastCircleId = circle.id();
                 }
@@ -579,14 +865,64 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 {
+    if (!tutorial->isDone() && tutorial->getSlideIndex() != 3)
+        tutorial->next();
+    
     if (p.tipPosition().x < 0)
     {
-        Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
+        if (!isTimerRunning(kTimerLeftHandTap)) {
+            Drums::instance().NoteOn(playAreaLeft->getSelectedMidiNote(), 1.f);
+            startTimer(kTimerLeftHandTap, TAP_TIMEOUT);
+        }
         //playAreaLeft->tap(playAreaLeft->getSelectedMidiNote());
     }
     else
     {
-        Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
+        if (!isTimerRunning(kTimerRightHandTap)) {
+            Drums::instance().NoteOn(playAreaRight->getSelectedMidiNote(), 1.f);
+            startTimer(kTimerRightHandTap, TAP_TIMEOUT);
+        }
         //playAreaRight->tap(playAreaRight->getSelectedMidiNote());
+    }
+}
+
+void MainContentComponent::timerCallback(int timerId)
+{
+    switch (timerId) {
+        case kTimerCheckIdle:
+            if (checkIdle())
+                ;//tutorial->begin();
+            else {
+                stopTimer(kTimerCheckIdle);
+                startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
+            }
+            break;
+        case kTimerLeftHandTap:
+            stopTimer(kTimerLeftHandTap);
+            break;
+        case kTimerRightHandTap:
+            stopTimer(kTimerRightHandTap);
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
+bool MainContentComponent::checkIdle()
+{
+    bool retVal = isIdle;
+    isIdle = true;
+    return retVal;
+}
+
+void MainContentComponent::handleMessage(const juce::Message &m)
+{
+    Message* inMsg = const_cast<Message*>(&m);
+    AirHarpApplication::PatternAddedMessage* patternAddedMessage = dynamic_cast<AirHarpApplication::PatternAddedMessage*>(inMsg);
+    if (patternAddedMessage)
+    {
+        needsPatternListUpdate = true;
     }
 }

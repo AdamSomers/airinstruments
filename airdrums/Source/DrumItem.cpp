@@ -39,6 +39,12 @@ void DrumItem::SetName(String& name)
 }
 
 
+void DrumItem::SetUuid(Uuid uuid)
+{
+	mUuid = uuid;
+}
+
+
 DrumItem::Status DrumItem::LoadFromXml(XmlElement* element)
 {
 	String name = element->getStringAttribute("name", "");

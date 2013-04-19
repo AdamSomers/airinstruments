@@ -40,7 +40,6 @@ var struct_leap_1_1_vector =
     [ "yAxis", "struct_leap_1_1_vector.html#a9a387eb8ab05e55708542c031c641f31", null ],
     [ "zAxis", "struct_leap_1_1_vector.html#a6ec3652d02a9599bc2a00411a1e05501", null ],
     [ "zero", "struct_leap_1_1_vector.html#a743b469003fa6622a00ff277d2481da9", null ],
-    [ "operator*", "struct_leap_1_1_vector.html#a90f989718db5a1be59eb472f30e61472", null ],
     [ "operator<<", "struct_leap_1_1_vector.html#ae295e87eb813266c27e75d2809df2acc", null ],
     [ "x", "struct_leap_1_1_vector.html#a58ab75fe089da2070f5dcef82c9a578a", null ],
     [ "y", "struct_leap_1_1_vector.html#abfff2f5b5c10d58a43cf377fc4cb9951", null ],

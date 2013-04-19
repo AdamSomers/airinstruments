@@ -14,6 +14,10 @@
 #include "PatternManager.h"
 #include "PatternSaveDialog.h"
 #include "PatternLoadDialog.h"
+#if JUCE_WINDOWS
+// ARS - This isn't present on my system
+//    #include <vld.h>
+#endif
 
 
 AirHarpApplication::AirHarpApplication()
@@ -42,21 +46,29 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 	options.osxLibrarySubFolder = "Application Support";
 	options.commonToAllUsers = "false";
 	options.ignoreCaseOfKeyNames = true;
-	options.millisecondsBeforeSaving = 0;
+	options.millisecondsBeforeSaving = 1000;
 	options.storageFormat = PropertiesFile::storeAsXML;
 	properties.setStorageParameters(options);
 
     mainWindow = new MainWindow();
+	mainMenu = new MainMenu();
 	#if JUCE_WINDOWS
-		mainWindow->setMenuBar(&mainMenu);
+		mainWindow->setMenuBar(mainMenu);
 	#elif JUCE_MAC
-		MenuBarModel::setMacMainMenu(&mainMenu);
+		MenuBarModel::setMacMainMenu(mainMenu);
 	#endif
 
 	XmlElement* audioState = properties.getUserSettings()->getXmlValue(AudioSettingsDialog::getPropertiesName());
-    audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
+    String audioStatus = audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
 	if (audioState != nullptr)
 		delete audioState;
+	if (audioStatus != "")
+    {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Audio device error", audioStatus);
+        quit();
+        return;
+    }
+
     //audioDeviceManager.addAudioCallback(this);
     audioSourcePlayer.setSource (&Drums::instance());
     audioDeviceManager.addAudioCallback (&audioSourcePlayer);
@@ -65,27 +77,44 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     PatternManager& pmgr = PatternManager::GetInstance();
 	/*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
     
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("selectedKitUuid", "Default");
+	Drums::instance().setPattern(SharedPtr<DrumPattern>(new DrumPattern));	// Start out with a new empty pattern for now
+
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
+	String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName", "Default");
     if (kitUuidString == "Default")
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedKitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
+	else {
+		Uuid kitUuid(kitUuidString);
+        SharedPtr<DrumKit> kit = KitManager::GetInstance().GetItem(kitUuid);
+		if (!kit) {
+			Logger::outputDebugString("Did not find saved kit with name " + kitName + "and uuid " + kitUuidString);
+			AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
+		}
+	}
 }
 
 void AirHarpApplication::shutdown()
 {
     // Add your application's shutdown code here..
 
+	properties.saveIfNeeded();
+
 	if (settingsDialog != nullptr)
 		delete settingsDialog;
 
     audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
-	MotionDispatcher::destruct();
 
 	PatternManager::Destruct();
-	#if JUCE_MAC
+	#if JUCE_WINDOWS
+		mainWindow->setMenuBar(nullptr);
+	#elif JUCE_MAC
 		MenuBarModel::setMacMainMenu(nullptr);
 	#endif
+	delete mainMenu;
 
     mainWindow = nullptr; // (deletes our window)
+    MotionDispatcher::destruct();
+
     //audioDeviceManager.removeAudioCallback(this);
 	KitManager::Destruct();
 }
@@ -153,6 +182,18 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			SharedPtr<DrumPattern> pattern = drums.getPattern();
 			jassert(pattern.get() != nullptr);
 			pattern->SaveToXml(fileName, directory);
+            
+			mgr.BuildPatternList();	// Refresh list to find new content, etc.
+            
+            String name = pattern->GetName();
+            Uuid uuid = pattern->GetUuid();
+            String uuidString = uuid.toString();
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
+            
+            PatternAddedMessage* m = new PatternAddedMessage;
+            ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
+            
 			break;
 		}
 		case MainMenu::kLoadPatternCmd :
@@ -169,6 +210,16 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			SharedPtr<DrumPattern> pattern = mgr.GetItem(index);
 			Drums& drums = Drums::instance();
 			drums.setPattern(pattern);
+			break;
+		}
+		case MainMenu::kUsePatternTempoCmd :
+		{
+			bool usePatternTempo = mainMenu->GetUsePatternTempo();
+			Drums& drums = Drums::instance();
+			if (usePatternTempo)
+				drums.setTempoSource(Drums::kPatternTempo);
+			else
+				drums.setTempoSource(Drums::kGlobalTempo);
 			break;
 		}
 	}

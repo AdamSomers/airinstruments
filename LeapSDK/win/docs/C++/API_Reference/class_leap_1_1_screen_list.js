@@ -10,5 +10,6 @@ var class_leap_1_1_screen_list =
     [ "count", "class_leap_1_1_screen_list.html#a5a62705f1be43cd6069f083dd4e53f38", null ],
     [ "empty", "class_leap_1_1_screen_list.html#a0b740350b1054dc7f40127eeebabb576", null ],
     [ "end", "class_leap_1_1_screen_list.html#a23a5564b75264594487828904c3dbe23", null ],
+    [ "isEmpty", "class_leap_1_1_screen_list.html#a7ba8102369fbca39482db7fdeca55db7", null ],
     [ "operator[]", "class_leap_1_1_screen_list.html#a8e1f70dbf9a2e636840337ae6ff3dee1", null ]
 ];

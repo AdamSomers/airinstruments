@@ -20,11 +20,14 @@ var class_leap_1_1_frame =
     [ "rotationAngle", "class_leap_1_1_frame.html#a741eefcd6f02b31e107224679bb407c5", null ],
     [ "rotationAxis", "class_leap_1_1_frame.html#af849602b78c4d972ea03a6b9540d6640", null ],
     [ "rotationMatrix", "class_leap_1_1_frame.html#a397f0d748e8ee46ac660bd94e84cf468", null ],
+    [ "rotationProbability", "class_leap_1_1_frame.html#aedd6e649655d59e779d39611a9500d20", null ],
     [ "scaleFactor", "class_leap_1_1_frame.html#a266b9763833f29cad764f9f616354fcf", null ],
+    [ "scaleProbability", "class_leap_1_1_frame.html#ade5d213d6f3ffedd4ee98825253ee9df", null ],
     [ "timestamp", "class_leap_1_1_frame.html#a183c802da9e3a66ff1102109a3185640", null ],
     [ "tool", "class_leap_1_1_frame.html#aee970a2b992100554eb523d16162fe31", null ],
     [ "tools", "class_leap_1_1_frame.html#ad25dd292bd3ad09a4306b65dc525e124", null ],
     [ "toString", "class_leap_1_1_frame.html#ad010435cda50ebdb64c7b907998024e3", null ],
     [ "translation", "class_leap_1_1_frame.html#aedd28b275274f3287253b0399778a9b0", null ],
+    [ "translationProbability", "class_leap_1_1_frame.html#a37e26771b82bc970c3c17034a7a3a1d5", null ],
     [ "operator<<", "class_leap_1_1_frame.html#a93ae459899bc696130af880cb7b9edb3", null ]
 ];

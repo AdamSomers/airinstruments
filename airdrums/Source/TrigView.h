@@ -2,6 +2,7 @@
 #define h_TrigView
 
 #include "HUD.h"
+#include "Types.h"
 
 class TrigView : public HUDView
 {
@@ -17,9 +18,6 @@ public:
     void trigger();
     
 private:
-    GLBatch ledBatch;
-    GLBatch LRBatch;
-    GLBatch categoryBatch;
     float fade;
     int id;
 };
@@ -44,9 +42,8 @@ public:
     void trigger(int midiNote);
     
 private:
-    GLBatch batch;
     GLuint textureID;
-    std::vector<TrigView*> trigViews;
+    std::vector<SharedPtr<TrigView> > trigViews;
 };
 
 #endif // h_TrigView

@@ -12,6 +12,7 @@
 #include "HarpHUD.h"
 #include "StringView.h"
 #include "HarpView.h"
+#include "TutorialSlide.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -24,7 +25,9 @@
 */
 class MainContentComponent   : public Component,
                                public OpenGLRenderer,
-                               public ChangeListener
+                               public ChangeListener,
+                               public Leap::Listener,
+                               public Timer
 {
 public:
     //==============================================================================
@@ -34,6 +37,8 @@ public:
     // component overrides
     void paint (Graphics&);
     void resized();
+    void focusGained(FocusChangeType cause);
+    void focusLost(FocusChangeType cause);
     void mouseMove(const MouseEvent& e);
     void mouseDown(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);
@@ -47,6 +52,9 @@ public:
     // ChangeListener override
     void changeListenerCallback (ChangeBroadcaster* source);
     
+    void onFrame(const Leap::Controller&);
+    
+    void timerCallback();
 private:
     void go2d();
     void go3d();
@@ -55,6 +63,9 @@ private:
     void layoutChordRegions();
     bool chordRegionsNeedUpdate = false;
     
+    void handleTapGesture(const Leap::Pointable& p);
+    
+    TutorialSlide* slide = NULL;
     HarpToolbar* toolbar = NULL;
     StatusBar* statusBar = NULL;
     std::vector<ChordRegion*> chordRegions;

@@ -19,6 +19,9 @@ DrumsToolbar::DrumsToolbar()
 
     Drums::instance().addTransportListener(this);
     Drums::instance().getTransportState().sendChangeMessage();
+
+    GLfloat color[] = { .67f, .67f, .67f, 1.f };
+    setDefaultColor(color);
 }
 
 DrumsToolbar::~DrumsToolbar()
@@ -29,37 +32,25 @@ DrumsToolbar::~DrumsToolbar()
 void DrumsToolbar::setup()
 {
     HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
     layoutControls();
 }
 
 void DrumsToolbar::layoutControls()
 {
-    float buttonSpacing = 10;
+    float buttonSpacing = 25;
 
-    float w = 50;
-    float h = 50;
-    float x = bounds.w - (w + buttonSpacing) * 4;
-    float y = bounds.h / 2.f - h / 2.f;
+    float w = 25;
+    float h = 40;
+    float x = bounds.w - (w + buttonSpacing) * 4 - 20;
+    float y = 110 + 70 / 2.f - h / 2.f;
     HUDRect r(x, y, w, h);
     resetButton.setBounds(r);
     r.x += w + buttonSpacing;
     playButton.setBounds(r);
     r.x += w + buttonSpacing;
-    recordButton.setBounds(r);
-    r.x += w + buttonSpacing;
-    metronomeButton.setBounds(r);
+    recordButton.setBounds(HUDRect(r.x, r.y, 40, 40));
+    r.x += w + buttonSpacing + 15;
+    metronomeButton.setBounds(HUDRect(r.x, r.y, 36, 40));
 }
 
 void DrumsToolbar::draw()
@@ -70,13 +61,11 @@ void DrumsToolbar::draw()
                            SkinManager::instance().getSelectedSkin().getTexture("play_off"));
     recordButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("record_on"),
                            SkinManager::instance().getSelectedSkin().getTexture("record_off"));
-    metronomeButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("metronome_on"),
+    metronomeButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("metronome_on"),	// File name has upper case M
                              SkinManager::instance().getSelectedSkin().getTexture("metronome_off"));
+    
+    setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("top_bezel"));
 
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    glLineWidth(1.f);
-    batch.Draw();
     HUDView::draw();
 }
 
@@ -126,31 +115,22 @@ StatusBar::StatusBar()
 {
     //indicator.setEditable(false)
     addChild(&indicator);
+    GLfloat color [] = { 0.95f, 0.95f, 0.95f, 1.f };
+    setDefaultColor(color);
 }
 
 StatusBar::~StatusBar()
 {
+    MotionDispatcher::instance().removeListener(*this);
 }
 
 // HUDView overrides
 void StatusBar::setup()
 {
     HUDView::setup();
-    
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    batch.Begin(GL_TRIANGLE_STRIP, 4);
-    batch.CopyVertexData3f(verts);
-    batch.End();
-    
     layoutControls();
-    
-    MotionDispatcher::instance().controller.addListener(*this);
+
+    MotionDispatcher::instance().addListener(*this);
 }
 
 void StatusBar::layoutControls()
@@ -167,10 +147,6 @@ void StatusBar::draw()
 {
     indicator.setTextures(SkinManager::instance().getSelectedSkin().getTexture("leapStatus_on"),
                            SkinManager::instance().getSelectedSkin().getTexture("leapStatus_off"));
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
-    glLineWidth(1.f);
-    batch.Draw();
     HUDView::draw();
 }
 

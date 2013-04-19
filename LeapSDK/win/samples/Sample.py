@@ -24,6 +24,7 @@ class SampleListener(Leap.Listener):
         controller.enable_gesture(Leap.Gesture.TYPE_SWIPE);
 
     def on_disconnect(self, controller):
+        # Note: not dispatched when running in a debugger.
         print "Disconnected"
 
     def on_exit(self, controller):

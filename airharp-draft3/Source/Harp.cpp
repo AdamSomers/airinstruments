@@ -20,6 +20,7 @@ Harp::Harp()
 , wetDryMix(NULL)
 , wetLevel(0.3f)
 , dryLevel(0.7f)
+, idle(true)
 {
     Init();
 }
@@ -172,6 +173,7 @@ void Harp::NoteOn(int num, int note, int velocity)
     ScopedLock sl(lock);
     
     strings.at(num)->NoteOn(note, velocity);
+    idle = false;
 }
 
 void Harp::ExciteString(int num, int note, int velocity, float* buff, int bufferSize)
@@ -179,6 +181,7 @@ void Harp::ExciteString(int num, int note, int velocity, float* buff, int buffer
     ScopedLock sl(lock);
     
     strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
+    idle = false;
 }
 
 void Harp::SetScale(int scaleIndex)
@@ -334,6 +337,13 @@ void Harp::setActive(bool shouldBeActive)
         AudioServer::GetInstance()->RemoveClient(outputGain, 0);
         AudioServer::GetInstance()->RemoveClient(outputGain, 1);
     }
+}
+
+bool Harp::checkIdle()
+{
+    bool retVal = idle;
+    idle = true;
+    return retVal;
 }
 
 HarpManager::HarpManager()

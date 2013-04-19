@@ -8,5 +8,9 @@ var class_leap_1_1_finger_list =
     [ "count", "class_leap_1_1_finger_list.html#a0044ff38bc97308368b5ab936aa53f50", null ],
     [ "empty", "class_leap_1_1_finger_list.html#a5ed38a2fef6ac0272d303ecba077b839", null ],
     [ "end", "class_leap_1_1_finger_list.html#a2b61eadec1a9653b125aa689205bdf05", null ],
-    [ "operator[]", "class_leap_1_1_finger_list.html#abb70de5aa68df0901b174d57b08582be", null ]
+    [ "frontmost", "class_leap_1_1_finger_list.html#a30bf0aa005b7fabc591e6c837abb4d63", null ],
+    [ "isEmpty", "class_leap_1_1_finger_list.html#ab8252ea11f9bd1c39d129fa2e449c215", null ],
+    [ "leftmost", "class_leap_1_1_finger_list.html#af7c5af1781bb60ab03dd957ea12f0ee6", null ],
+    [ "operator[]", "class_leap_1_1_finger_list.html#abb70de5aa68df0901b174d57b08582be", null ],
+    [ "rightmost", "class_leap_1_1_finger_list.html#a3fb263a577a2ff847e9e4762aac49a61", null ]
 ];

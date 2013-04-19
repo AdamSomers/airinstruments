@@ -1,0 +1,786 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="classcom_1_1leapmotion_1_1leap_1_1_vector" kind="class" prot="public">
+    <compoundname>com::leapmotion::leap::Vector</compoundname>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a88ce00cd01d485d8e9ae48f14ce6b0e5" prot="private" static="no" mutable="no">
+        <type>long</type>
+        <definition>long com.leapmotion.leap.Vector.swigCPtr</definition>
+        <argsstring></argsstring>
+        <name>swigCPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="27" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aef04388fb35ada0359be3aa1280c8efd" prot="protected" static="no" mutable="no">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Vector.swigCMemOwn</definition>
+        <argsstring></argsstring>
+        <name>swigCMemOwn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="28" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6f1620522e3a0c885c5723f9128e9de6" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Vector.finalize</definition>
+        <argsstring>()</argsstring>
+        <name>finalize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="39" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="39" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7eb5529e228ed195ac4a857c3d24df1b" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Vector.Vector</definition>
+        <argsstring>(long cPtr, boolean cMemoryOwn)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>long</type>
+          <declname>cPtr</declname>
+        </param>
+        <param>
+          <type>boolean</type>
+          <declname>cMemoryOwn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="30" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="30" bodyend="33"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1ad3bdaadaf095eeb265291f2a64a7556e" prot="protected" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>long</type>
+        <definition>static long com.leapmotion.leap.Vector.getCPtr</definition>
+        <argsstring>(Vector obj)</argsstring>
+        <name>getCPtr</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="35" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="35" bodyend="37"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a3e1559ccfdbcca8594600af460c86625" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.angleTo</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>angleTo</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>The angle between this vector and the specified vector in radians. </para>        </briefdescription>
+        <detaileddescription>
+<para>The angle is measured in the plane formed by the two vectors. The angle returned is always the smaller of the two conjugate angles. Thus <computeroutput>A.angleTo(B) == B.angleTo(A)</computeroutput> and is always a positive value less than or equal to pi radians (180 degrees).</para><para>If either vector has zero length, then this function returns zero.</para><para><image type="html" name="Math_AngleTo.png"></image>
+</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The angle between this vector and the specified vector in radians. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="186" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="186" bodyend="188"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1ae24246a28023db7f459c3218938b504c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.cross</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>cross</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>The cross product of this vector and the specified vector. </para>        </briefdescription>
+        <detaileddescription>
+<para>The cross product is a vector orthogonal to both original vectors. It has a magnitude equal to the area of a parallelogram having the two vectors as sides. The direction of the returned vector is determined by the right-hand rule. Thus <computeroutput>A.cross(B) == -B.cross(A).</computeroutput></para><para><image type="html" name="Math_Cross.png"></image>
+</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The cross product of this vector and the specified vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="279" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="279" bodyend="281"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aafefdf977677efce81d0f188cbf1bda6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>synchronized void</type>
+        <definition>synchronized void com.leapmotion.leap.Vector.delete</definition>
+        <argsstring>()</argsstring>
+        <name>delete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="43" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="43" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7af09174561edbe3fa639363c3f1ec70" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.distanceTo</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>distanceTo</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>The distance between the point represented by this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object and a point represented by the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The distance from this point to the specified point. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="166" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="166" bodyend="168"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1acc121bbdb861079951dfb62a35e77071" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.divide</definition>
+        <argsstring>(float scalar)</argsstring>
+        <name>divide</name>
+        <param>
+          <type>float</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Divide vector by a scalar. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="327" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="327" bodyend="329"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1ad499bd83e3676b2b79f4be138454c479" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.dot</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>dot</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>The dot product of this vector with another vector. </para>        </briefdescription>
+        <detaileddescription>
+<para>The dot product is the magnitude of the projection of this vector onto the specified vector.</para><para><image type="html" name="Math_Dot.png"></image>
+</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The dot product of this vector and the specified vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="261" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="261" bodyend="263"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a65dd586b063eba3e16e7ef079b4bb819" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Vector.equals</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>equals</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compare <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> equality component-wise. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="339" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="339" bodyend="341"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aace71cfbe3547910ff60e7748bef4a1f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.get</definition>
+        <argsstring>(long index)</argsstring>
+        <name>get</name>
+        <param>
+          <type>long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+<para>Index vector components numerically. </para>        </briefdescription>
+        <detaileddescription>
+<para>Index 0 is x, index 1 is y, and index 2 is z. <simplesect kind="return"><para>The x, y, or z component of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref>, if the specified index value is at least 0 and at most 2; otherwise, returns zero. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="359" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="359" bodyend="361"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7901d72a1490c333a7192d3bcd93b069" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.getX</definition>
+        <argsstring>()</argsstring>
+        <name>getX</name>
+        <briefdescription>
+<para>The horizontal component. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="371" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="371" bodyend="373"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a609c86c70d7d82dbd60607bf35b66bdd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.getY</definition>
+        <argsstring>()</argsstring>
+        <name>getY</name>
+        <briefdescription>
+<para>The vertical component. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="383" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="383" bodyend="385"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a0632680777cfb405da4883fc3daa2438" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.getZ</definition>
+        <argsstring>()</argsstring>
+        <name>getZ</name>
+        <briefdescription>
+<para>The depth component. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="395" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="395" bodyend="397"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6805632ab99d332b121883beb8ac015a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>boolean</type>
+        <definition>boolean com.leapmotion.leap.Vector.isValid</definition>
+        <argsstring>()</argsstring>
+        <name>isValid</name>
+        <briefdescription>
+<para>Returns true if all of the vector&apos;s components are finite. </para>        </briefdescription>
+        <detaileddescription>
+<para>If any component is NaN or infinite, then this returns false. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="348" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="348" bodyend="350"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6b713b087c4a1550d2892751daa6b9ab" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.magnitude</definition>
+        <argsstring>()</argsstring>
+        <name>magnitude</name>
+        <briefdescription>
+<para>*The magnitude, or length, of this vector. </para>        </briefdescription>
+        <detaileddescription>
+<para>The magnitude is the L2 norm, or Euclidean distance between the origin and the point represented by the (x, y, z) components of this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object.</para><para><simplesect kind="return"><para>The length of this vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="144" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="144" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a29b3635fc135833a7809b5a5197108a5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.magnitudeSquared</definition>
+        <argsstring>()</argsstring>
+        <name>magnitudeSquared</name>
+        <briefdescription>
+<para>*The square of the magnitude, or length, of this vector. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The square of the length of this vector. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="154" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="154" bodyend="156"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a8b0b1e6f5ab30a65aedbf6b8dc0a9ee2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.minus</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>minus</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Subtract vectors component-wise. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="315" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="315" bodyend="317"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6af23209bd1dd0c52209079eed289ce8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.normalized</definition>
+        <argsstring>()</argsstring>
+        <name>normalized</name>
+        <briefdescription>
+<para>A normalized copy of this vector. </para>        </briefdescription>
+        <detaileddescription>
+<para>A normalized vector has the same direction as the original vector, but with a length of one.</para><para><simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object with a length of one, pointing in the same direction as this <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="293" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="293" bodyend="295"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a094d02ff75dfc7a7c6365d9cd028d4bb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.opposite</definition>
+        <argsstring>()</argsstring>
+        <name>opposite</name>
+        <briefdescription>
+<para>A copy of this vector pointing in the opposite direction. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> object with all components negated. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="303" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="303" bodyend="305"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a3846e71ed303896bcb8920759f786128" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.pitch</definition>
+        <argsstring>()</argsstring>
+        <name>pitch</name>
+        <briefdescription>
+<para>The pitch angle in radians. </para>        </briefdescription>
+        <detaileddescription>
+<para>Pitch is the angle between the negative z-axis and the projection of the vector onto the y-z plane. In other words, pitch represents rotation around the x-axis. If the vector points upward, the returned angle is between 0 and pi radians (180 degrees); if it points downward, the angle is between 0 and -pi radians.</para><para><image type="html" name="Math_Pitch_Angle.png"></image>
+</para><para><simplesect kind="return"><para>The angle of this vector above or below the horizon (x-z plane). </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="204" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="204" bodyend="206"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1ae953da8fad75f9c6875235a94af2b4ac" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.plus</definition>
+        <argsstring>(Vector other)</argsstring>
+        <name>plus</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Add vectors component-wise. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="309" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="309" bodyend="311"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aac1844b328ff263d881171c362d71837" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.roll</definition>
+        <argsstring>()</argsstring>
+        <name>roll</name>
+        <briefdescription>
+<para>The roll angle in radians. </para>        </briefdescription>
+        <detaileddescription>
+<para>Roll is the angle between the y-axis and the projection of the vector onto the x-y plane. In other words, roll represents rotation around the z-axis. If the vector points to the left of the y-axis, then the returned angle is between 0 and pi radians (180 degrees); if it points to the right, the angle is between 0 and -pi radians.</para><para><image type="html" name="Math_Roll_Angle.png"></image>
+</para><para>Use this function to get roll angle of the plane to which this vector is a normal. For example, if this vector represents the normal to the palm, then this function returns the tilt or roll of the palm plane compared to the horizontal (x-z) plane.</para><para><simplesect kind="return"><para>The angle of this vector to the right or left of the y-axis. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="245" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="245" bodyend="247"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a8506b443988fc0d5d4ef00367a4ae2d7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Vector.setX</definition>
+        <argsstring>(float value)</argsstring>
+        <name>setX</name>
+        <param>
+          <type>float</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>The horizontal component. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="365" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="365" bodyend="367"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7a80bb11d8c7a666c4e7c5adc91e4aa2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Vector.setY</definition>
+        <argsstring>(float value)</argsstring>
+        <name>setY</name>
+        <param>
+          <type>float</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>The vertical component. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="377" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="377" bodyend="379"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1af88539afb2c8eee19154361c6b6e32ee" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void com.leapmotion.leap.Vector.setZ</definition>
+        <argsstring>(float value)</argsstring>
+        <name>setZ</name>
+        <param>
+          <type>float</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>The depth component. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="389" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="389" bodyend="391"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aea149a86ea12f74b32a0fe82f666181f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>Vector com.leapmotion.leap.Vector.times</definition>
+        <argsstring>(float scalar)</argsstring>
+        <name>times</name>
+        <param>
+          <type>float</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Multiply vector by a scalar. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="321" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="321" bodyend="323"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a1abbc2db04a185837f58d7dbceb89d3d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float[]</type>
+        <definition>float [] com.leapmotion.leap.Vector.toFloatArray</definition>
+        <argsstring>()</argsstring>
+        <name>toFloatArray</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="53" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="53" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aba41477e3082659ec7987429bccd845b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>String</type>
+        <definition>String com.leapmotion.leap.Vector.toString</definition>
+        <argsstring>()</argsstring>
+        <name>toString</name>
+        <briefdescription>
+<para>Returns a string containing this vector in a human readable format: (x, y, z). </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="333" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="333" bodyend="335"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1ab1f1d78560fa93b47c77d731b643f65e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Vector.Vector</definition>
+        <argsstring>()</argsstring>
+        <name>Vector</name>
+        <briefdescription>
+<para>Creates a new <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> with all components set to zero. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="59" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="59" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a9b9d024ea58c8ce0ee7851662b268ee8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Vector.Vector</definition>
+        <argsstring>(float _x, float _y, float _z)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>float</type>
+          <declname>_x</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>_y</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>_z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a new <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> with the specified component values. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="65" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="65" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a245e59cfd1e1b6a37b2fd93c42ce58c9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>com.leapmotion.leap.Vector.Vector</definition>
+        <argsstring>(Vector vector)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+          <declname>vector</declname>
+        </param>
+        <briefdescription>
+<para>Copies the specified <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref>. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="71" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="71" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a94015d7ce48ab69adebbdf7414b462e8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float com.leapmotion.leap.Vector.yaw</definition>
+        <argsstring>()</argsstring>
+        <name>yaw</name>
+        <briefdescription>
+<para>The yaw angle in radians. </para>        </briefdescription>
+        <detaileddescription>
+<para>Yaw is the angle between the negative z-axis and the projection of the vector onto the x-z plane. In other words, yaw represents rotation around the y-axis. If the vector points to the right of the negative z-axis, then the returned angle is between 0 and pi radians (180 degrees); if it points to the left, the angle is between 0 and -pi radians.</para><para><image type="html" name="Math_Yaw_Angle.png"></image>
+</para><para><simplesect kind="return"><para>The angle of this vector to the right or left of the negative z-axis. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="222" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="222" bodyend="224"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a9ea8cc1db9b0e7a4fbf44c99c03f68e5" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.backward</definition>
+        <argsstring>()</argsstring>
+        <name>backward</name>
+        <briefdescription>
+<para>The unit vector pointing backward along the positive z-axis: (0, 0, 1) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="131" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="131" bodyend="133"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1ae7a1e8e3b7bf44bf106743ba8fdee666" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.down</definition>
+        <argsstring>()</argsstring>
+        <name>down</name>
+        <briefdescription>
+<para>The unit vector pointing down along the negative y-axis: (0, -1, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="113" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="113" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a71e39596252837897bfb4e522f81a471" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.forward</definition>
+        <argsstring>()</argsstring>
+        <name>forward</name>
+        <briefdescription>
+<para>The unit vector pointing forward along the negative z-axis: (0, 0, -1) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="125" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="125" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a26372f7c8299ad958849033272e9000f" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.left</definition>
+        <argsstring>()</argsstring>
+        <name>left</name>
+        <briefdescription>
+<para>The unit vector pointing left along the negative x-axis: (-1, 0, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="101" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="101" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a1824792398f794deacf1631ca217d69d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.right</definition>
+        <argsstring>()</argsstring>
+        <name>right</name>
+        <briefdescription>
+<para>The unit vector pointing right along the positive x-axis: (1, 0, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="107" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="107" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aa7307c5bfe098fd6794a745e0d11360f" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.up</definition>
+        <argsstring>()</argsstring>
+        <name>up</name>
+        <briefdescription>
+<para>The unit vector pointing up along the positive y-axis: (0, 1, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="119" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="119" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a3265f33265cd45bfc25a8d4cbb735240" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.xAxis</definition>
+        <argsstring>()</argsstring>
+        <name>xAxis</name>
+        <briefdescription>
+<para>The x-axis unit vector: (1, 0, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="83" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="83" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1aeced7b630ad5116804fdb6140f54a6e4" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.yAxis</definition>
+        <argsstring>()</argsstring>
+        <name>yAxis</name>
+        <briefdescription>
+<para>The y-axis unit vector: (0, 1, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="89" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="89" bodyend="91"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1a2c009c83c79ce5f571b9bc25fc229b8b" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.zAxis</definition>
+        <argsstring>()</argsstring>
+        <name>zAxis</name>
+        <briefdescription>
+<para>The z-axis unit vector: (0, 0, 1) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="95" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="95" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classcom_1_1leapmotion_1_1leap_1_1_vector_1afbf55f5415064edba5044edd1f208f5b" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref></type>
+        <definition>static Vector com.leapmotion.leap.Vector.zero</definition>
+        <argsstring>()</argsstring>
+        <name>zero</name>
+        <briefdescription>
+<para>The zero vector: (0, 0, 0) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="77" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="77" bodyend="79"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>The <ref refid="classcom_1_1leapmotion_1_1leap_1_1_vector" kindref="compound">Vector</ref> struct represents a three-component mathematical vector or point such as a direction or position in three-dimensional space. </para>    </briefdescription>
+    <detaileddescription>
+<para>The Leap software employs a right-handed Cartesian coordinate system. Values given are in units of real-world millimeters. The origin is centered at the center of the Leap device. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</para><para><image type="html" name="Leap_Axes.png"></image>
+ </para>    </detaileddescription>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" line="26" bodyfile="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/Vector.java" bodystart="26" bodyend="399"/>
+    <listofallmembers>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a3e1559ccfdbcca8594600af460c86625" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>angleTo</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a9ea8cc1db9b0e7a4fbf44c99c03f68e5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>backward</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1ae24246a28023db7f459c3218938b504c" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>cross</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aafefdf977677efce81d0f188cbf1bda6" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>delete</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7af09174561edbe3fa639363c3f1ec70" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>distanceTo</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1acc121bbdb861079951dfb62a35e77071" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>divide</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1ad499bd83e3676b2b79f4be138454c479" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>dot</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1ae7a1e8e3b7bf44bf106743ba8fdee666" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>down</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a65dd586b063eba3e16e7ef079b4bb819" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>equals</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6f1620522e3a0c885c5723f9128e9de6" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>finalize</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a71e39596252837897bfb4e522f81a471" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>forward</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aace71cfbe3547910ff60e7748bef4a1f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>get</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1ad3bdaadaf095eeb265291f2a64a7556e" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>getCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7901d72a1490c333a7192d3bcd93b069" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>getX</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a609c86c70d7d82dbd60607bf35b66bdd" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>getY</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a0632680777cfb405da4883fc3daa2438" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>getZ</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6805632ab99d332b121883beb8ac015a" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>isValid</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a26372f7c8299ad958849033272e9000f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>left</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6b713b087c4a1550d2892751daa6b9ab" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>magnitude</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a29b3635fc135833a7809b5a5197108a5" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>magnitudeSquared</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a8b0b1e6f5ab30a65aedbf6b8dc0a9ee2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>minus</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a6af23209bd1dd0c52209079eed289ce8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>normalized</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a094d02ff75dfc7a7c6365d9cd028d4bb" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>opposite</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a3846e71ed303896bcb8920759f786128" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>pitch</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1ae953da8fad75f9c6875235a94af2b4ac" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>plus</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a1824792398f794deacf1631ca217d69d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>right</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aac1844b328ff263d881171c362d71837" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>roll</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a8506b443988fc0d5d4ef00367a4ae2d7" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>setX</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7a80bb11d8c7a666c4e7c5adc91e4aa2" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>setY</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1af88539afb2c8eee19154361c6b6e32ee" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>setZ</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aef04388fb35ada0359be3aa1280c8efd" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>swigCMemOwn</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a88ce00cd01d485d8e9ae48f14ce6b0e5" prot="private" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>swigCPtr</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aea149a86ea12f74b32a0fe82f666181f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>times</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a1abbc2db04a185837f58d7dbceb89d3d" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>toFloatArray</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aba41477e3082659ec7987429bccd845b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>toString</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aa7307c5bfe098fd6794a745e0d11360f" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>up</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a7eb5529e228ed195ac4a857c3d24df1b" prot="protected" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>Vector</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1ab1f1d78560fa93b47c77d731b643f65e" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>Vector</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a9b9d024ea58c8ce0ee7851662b268ee8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>Vector</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a245e59cfd1e1b6a37b2fd93c42ce58c9" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>Vector</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a3265f33265cd45bfc25a8d4cbb735240" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>xAxis</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a94015d7ce48ab69adebbdf7414b462e8" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>yaw</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1aeced7b630ad5116804fdb6140f54a6e4" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>yAxis</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1a2c009c83c79ce5f571b9bc25fc229b8b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>zAxis</name></member>
+      <member refid="classcom_1_1leapmotion_1_1leap_1_1_vector_1afbf55f5415064edba5044edd1f208f5b" prot="public" virt="non-virtual"><scope>com::leapmotion::leap::Vector</scope><name>zero</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

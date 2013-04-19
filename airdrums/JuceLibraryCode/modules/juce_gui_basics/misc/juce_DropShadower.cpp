@@ -95,9 +95,7 @@ void DropShadower::setOwner (Component* componentToFollow)
         jassert (componentToFollow != nullptr);
 
         owner = componentToFollow;
-
         jassert (owner != nullptr);
-        jassert (owner->isOpaque()); // doesn't work properly for semi-transparent comps!
 
         updateParent();
         owner->addComponentListener (this);
@@ -175,7 +173,7 @@ void DropShadower::updateShadows()
         const int w = owner->getWidth();
         const int h = owner->getHeight() + shadowEdge + shadowEdge;
 
-        for (int i = shadowWindows.size(); --i >= 0;)
+        for (int i = 4; --i >= 0;)
         {
             // there seem to be rare situations where the dropshadower may be deleted by
             // callbacks during this loop, so use a weak ref to watch out for this..
@@ -197,7 +195,7 @@ void DropShadower::updateShadows()
             }
 
             if (sw != nullptr)
-                sw->toBehind (owner);
+                sw->toBehind (i == 3 ? owner : shadowWindows.getUnchecked (i + 1));
 
             if (sw == nullptr)
                 return;

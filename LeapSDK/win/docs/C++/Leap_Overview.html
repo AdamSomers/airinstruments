@@ -358,7 +358,7 @@ ul.auto-toc {
 </div>
 <div class="section" id="coordinate-system">
 <h1><a class="toc-backref" href="#id1">Coordinate system</a></h1>
-<p>The Leap employs a right-handed Cartesian coordinate system. Values reported are in units of real-world millimeters. The origin is centered at the center of the Leap device. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</p>
+<p>The Leap employs a right-handed Cartesian coordinate system. Values reported are in units of real-world millimeters. The origin is centered at the center of the Leap Motion Controller. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</p>
 <div class="figure">
 <img alt="images/Leap_Axes.png" src="images/Leap_Axes.png" />
 <p class="caption">The Leap right-handed coordinate system.</p>
@@ -410,7 +410,7 @@ ul.auto-toc {
 <h2><a class="toc-backref" href="#id6">Hand model</a></h2>
 <p>The hand model provides information about the position, characteristics, and movement of a detected hand as well as lists of the fingers and tools associated with the hand.</p>
 <p>The Leap API provides as much information about a hand as possible. However, the Leap may not be able to determine all hand attributes in every frame. For example, when a hand is clenched into a fist, its fingers are not visible to the Leap so the finger list will be empty. Your code should handle the cases where an attribute in the model is not available.</p>
-<p>The Leap does not determine whether a hand is a left or right hand. More than two hands can appear in the hand list for a frame if more than one person's hands or other hand-like objects are in view. However, we recommend keeping at most two hands in the Leap device's field of view for optimal motion tracking quality.</p>
+<p>The Leap does not determine whether a hand is a left or right hand. More than two hands can appear in the hand list for a frame if more than one person's hands or other hand-like objects are in view. However, we recommend keeping at most two hands in the Leap Motion Controller's field of view for optimal motion tracking quality.</p>
 <div class="section" id="hand-attributes">
 <h3><a class="toc-backref" href="#id7">Hand attributes</a></h3>
 <p>The Hand object provides several attributes reporting the physical characteristics of a detected hand:</p>

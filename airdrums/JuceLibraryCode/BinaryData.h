@@ -6,6 +6,9 @@
 
 namespace BinaryData
 {
+    extern const char*   TMD_CHIL_CLV_aif;
+    const int            TMD_CHIL_CLV_aifSize = 67118;
+
     extern const char*   TMD_CHIL_BKICK_aif;
     const int            TMD_CHIL_BKICK_aifSize = 157402;
 
@@ -14,9 +17,6 @@ namespace BinaryData
 
     extern const char*   TMD_CHIL_CLAP_aif;
     const int            TMD_CHIL_CLAP_aifSize = 699518;
-
-    extern const char*   TMD_CHIL_CLV_aif;
-    const int            TMD_CHIL_CLV_aifSize = 67118;
 
     extern const char*   TMD_CHIL_CYM_aif;
     const int            TMD_CHIL_CYM_aifSize = 1215774;
@@ -53,6 +53,12 @@ namespace BinaryData
 
     extern const char*   TMD_CHIL_VERB_aif;
     const int            TMD_CHIL_VERB_aifSize = 1365786;
+
+    extern const char*   testShader_fs;
+    const int            testShader_fsSize = 127;
+
+    extern const char*   testShader_vs;
+    const int            testShader_vsSize = 628;
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding data and its size (or a null pointer if the name isn't found).

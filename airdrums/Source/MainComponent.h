@@ -16,6 +16,9 @@
 #include "TrigView.h"
 #include "DrumSelector.h"
 #include "SkinManager.h"
+#include "WheelSelector.h"
+#include "TutorialSlide.h"
+#include "TempoControl.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -28,7 +31,10 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
-                               public DrumSelector::Listener
+                               public DrumSelector::Listener,
+                               public WheelSelector::Listener,
+                               public MultiTimer,
+                               public MessageListener
 {
 public:
     //==============================================================================
@@ -38,6 +44,8 @@ public:
     // component overrides
     void paint (Graphics&);
     void resized();
+    void focusGained(FocusChangeType cause);
+    void focusLost(FocusChangeType cause);
     void mouseMove(const MouseEvent& e);
     void mouseDown(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);
@@ -55,15 +63,35 @@ public:
     
     // DrumSelector::Listener override
     void drumSelectorChanged(DrumSelector* selector);
+    
+    // KitSelector::Listener override
+    void wheelSelectorChanged(WheelSelector* selector);
 
+    // Leap::Listener override
     virtual void onFrame(const Leap::Controller&);
+    
+    // MultiTimer override
+    void timerCallback(int timerId);
+    
+    // MessageListener override
+    void handleMessage(const Message& m);
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
-    
     void handleTapGesture(const Leap::Pointable& p);
+    bool checkIdle();
+    void populatePatternSelector();
+    void selectCurrentPattern();
+
+    enum TimerIds
+    {
+        kTimerCheckIdle = 0,
+        kTimerLeftHandTap,
+        kTimerRightHandTap
+    };
     
     OpenGLContext openGLContext;
+    TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
     PlayArea* playAreaLeft;
@@ -71,16 +99,23 @@ private:
     DrumSelector* drumSelectorLeft;
     DrumSelector* drumSelectorRight;
     TrigViewBank* trigViewBank;
+    WheelSelector* kitSelector;
+    WheelSelector* patternSelector;
+    TempoControl* tempoControl;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
+	Slider tempoSlider;
     
     float prevMouseY;
     float prevMouseX;
-    
     bool sizeChanged;
-    
     int lastCircleId;
-    
+    int64 lastCircleStartTime;
+    bool showKitSelector;
+    bool showPatternSelector;
+    bool isIdle;
+    bool needsPatternListUpdate;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.2">
+  <compounddef id="_hand_list_8java" kind="file">
+    <compoundname>HandList.java</compoundname>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" prot="public">com::leapmotion::leap::HandList</innerclass>
+    <innerclass refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1_1_hand_list_iterator" prot="public">com::leapmotion::leap::HandList::HandListIterator</innerclass>
+    <innernamespace refid="namespacecom_1_1leapmotion_1_1leap">com::leapmotion::leap</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*<sp/>----------------------------------------------------------------------------</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>was<sp/>automatically<sp/>generated<sp/>by<sp/>SWIG<sp/>(http://www.swig.org).</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>Version<sp/>2.0.6</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Do<sp/>not<sp/>make<sp/>changes<sp/>to<sp/>this<sp/>file<sp/>unless<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing--modify</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>the<sp/>SWIG<sp/>interface<sp/>file<sp/>instead.</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>-----------------------------------------------------------------------------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">package<sp/></highlight><highlight class="normal">com.leapmotion.leap;</highlight></codeline>
+<codeline lineno="17" refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" refkind="compound"><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" kindref="compound" tooltip="The HandList class represents a list of Hand objects.">HandList</ref><sp/></highlight><highlight class="keyword">extends</highlight><highlight class="normal"><sp/>Interface<sp/>implements<sp/>Iterable&lt;Hand&gt;<sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>swigCPtr;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1a668ad32526f770bc4f7aad33b00a1309" kindref="member" tooltip="Constructs an empty list of hands.">HandList</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>cPtr,<sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/>cMemoryOwn)<sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>super(LeapJNI.HandList_SWIGUpcast(cPtr),<sp/>cMemoryOwn);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>swigCPtr<sp/>=<sp/>cPtr;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>getCPtr(<ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" kindref="compound" tooltip="The HandList class represents a list of Hand objects.">HandList</ref><sp/>obj)<sp/>{</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(obj<sp/>==<sp/>null)<sp/>?<sp/>0<sp/>:<sp/>obj.swigCPtr;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>finalize()<sp/>{</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">();</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">synchronized</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">()<sp/>{</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(swigCPtr<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(swigCMemOwn)<sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>swigCMemOwn<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LeapJNI.delete_HandList(swigCPtr);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>swigCPtr<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>super.delete();</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">HandListIterator<sp/></highlight><highlight class="keyword">implements</highlight><highlight class="normal"><sp/>java.util.Iterator&lt;Hand&gt;<sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>@Override<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/>hasNext()<sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>index<sp/>&lt;<sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1af341a1bfe518816cb11592410c6141e2" kindref="member" tooltip="Returns the number of hands in this list.">count</ref>();</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>@Override<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound" tooltip="The Hand class reports the physical characteristics of a detected hand.">Hand</ref><sp/>next()<sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">get</highlight><highlight class="normal">(index++);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>@Override<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">remove</highlight><highlight class="normal">()<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>@Override<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>java.util.Iterator&lt;<ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound" tooltip="The Hand class reports the physical characteristics of a detected hand.">Hand</ref>&gt;<sp/>iterator()<sp/>{</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/>HandListIterator();</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1a668ad32526f770bc4f7aad33b00a1309" kindref="member" tooltip="Constructs an empty list of hands.">HandList</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">(LeapJNI.new_HandList(),<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1af341a1bfe518816cb11592410c6141e2" kindref="member" tooltip="Returns the number of hands in this list.">count</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.HandList_count(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">boolean</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1ae36df85bad1eb89b4cdd813968982796" kindref="member" tooltip="Reports whether the list is empty.">empty</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LeapJNI.HandList_empty(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound" tooltip="The Hand class reports the physical characteristics of a detected hand.">Hand</ref><sp/></highlight><highlight class="keyword">get</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index)<sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand" kindref="compound" tooltip="The Hand class reports the physical characteristics of a detected hand.">Hand</ref>(LeapJNI.HandList_get(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>index),<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" kindref="compound" tooltip="The HandList class represents a list of Hand objects.">HandList</ref><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1a695dd12e673a0808095e28b53091c27b" kindref="member" tooltip="Appends the members of the specifed HandList to this HandList.">append</ref>(<ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" kindref="compound" tooltip="The HandList class represents a list of Hand objects.">HandList</ref><sp/>other)<sp/>{</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list_1a668ad32526f770bc4f7aad33b00a1309" kindref="member" tooltip="Constructs an empty list of hands.">HandList</ref>(LeapJNI.HandList_append(swigCPtr,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/><ref refid="classcom_1_1leapmotion_1_1leap_1_1_hand_list" kindref="compound" tooltip="The HandList class represents a list of Hand objects.">HandList</ref>.getCPtr(other),<sp/>other),<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Volumes/LEAP/docs-build/temp/java/com/leapmotion/leap/HandList.java"/>
+  </compounddef>
+</doxygen>

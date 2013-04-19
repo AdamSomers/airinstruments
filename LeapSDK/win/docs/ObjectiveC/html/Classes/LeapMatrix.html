@@ -24,63 +24,63 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	<option value="properties">Properties</option>
-	
-	<option value="//api/name/origin">&nbsp;&nbsp;&nbsp;&nbsp;origin</option>
-	
-	<option value="//api/name/xBasis">&nbsp;&nbsp;&nbsp;&nbsp;xBasis</option>
-	
-	<option value="//api/name/yBasis">&nbsp;&nbsp;&nbsp;&nbsp;yBasis</option>
-	
-	<option value="//api/name/zBasis">&nbsp;&nbsp;&nbsp;&nbsp;zBasis</option>
-	
-	
-	
-	
-	<option value="class_methods">Class Methods</option>
-	
-	<option value="//api/name/identity">&nbsp;&nbsp;&nbsp;&nbsp;+ identity</option>
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/equals:">&nbsp;&nbsp;&nbsp;&nbsp;- equals:</option>
-	
-	<option value="//api/name/initWithAxis:angleRadians:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithAxis:angleRadians:</option>
-	
-	<option value="//api/name/initWithAxis:angleRadians:translation:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithAxis:angleRadians:translation:</option>
-	
-	<option value="//api/name/initWithMatrix:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithMatrix:</option>
-	
-	<option value="//api/name/initWithXBasis:yBasis:zBasis:origin:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithXBasis:yBasis:zBasis:origin:</option>
-	
-	<option value="//api/name/times:">&nbsp;&nbsp;&nbsp;&nbsp;- times:</option>
-	
-	<option value="//api/name/toNSArray3x3">&nbsp;&nbsp;&nbsp;&nbsp;- toNSArray3x3</option>
-	
-	<option value="//api/name/toNSArray4x4">&nbsp;&nbsp;&nbsp;&nbsp;- toNSArray4x4</option>
-	
-	<option value="//api/name/transformDirection:">&nbsp;&nbsp;&nbsp;&nbsp;- transformDirection:</option>
-	
-	<option value="//api/name/transformPoint:">&nbsp;&nbsp;&nbsp;&nbsp;- transformPoint:</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+<option value="properties">Properties</option>
+
+<option value="//api/name/origin">&nbsp;&nbsp;&nbsp;&nbsp;origin</option>
+
+<option value="//api/name/xBasis">&nbsp;&nbsp;&nbsp;&nbsp;xBasis</option>
+
+<option value="//api/name/yBasis">&nbsp;&nbsp;&nbsp;&nbsp;yBasis</option>
+
+<option value="//api/name/zBasis">&nbsp;&nbsp;&nbsp;&nbsp;zBasis</option>
+
+
+
+
+<option value="class_methods">Class Methods</option>
+
+<option value="//api/name/identity">&nbsp;&nbsp;&nbsp;&nbsp;+ identity</option>
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/equals:">&nbsp;&nbsp;&nbsp;&nbsp;- equals:</option>
+
+<option value="//api/name/initWithAxis:angleRadians:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithAxis:angleRadians:</option>
+
+<option value="//api/name/initWithAxis:angleRadians:translation:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithAxis:angleRadians:translation:</option>
+
+<option value="//api/name/initWithMatrix:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithMatrix:</option>
+
+<option value="//api/name/initWithXBasis:yBasis:zBasis:origin:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithXBasis:yBasis:zBasis:origin:</option>
+
+<option value="//api/name/times:">&nbsp;&nbsp;&nbsp;&nbsp;- times:</option>
+
+<option value="//api/name/toNSArray3x3">&nbsp;&nbsp;&nbsp;&nbsp;- toNSArray3x3</option>
+
+<option value="//api/name/toNSArray4x4">&nbsp;&nbsp;&nbsp;&nbsp;- toNSArray4x4</option>
+
+<option value="//api/name/transformDirection:">&nbsp;&nbsp;&nbsp;&nbsp;- transformDirection:</option>
+
+<option value="//api/name/transformPoint:">&nbsp;&nbsp;&nbsp;&nbsp;- transformPoint:</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -148,6 +148,8 @@
 </ul></li>
 
 
+
+
 			</ul>
 		</nav>
 		<article>
@@ -155,8 +157,8 @@
 				<a title="LeapMatrix Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -168,11 +170,11 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">NSObject</td>
+<td class="specification-title">Inherits from</td>
+<td class="specification-value">NSObject</td>
 </tr><tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -528,6 +530,9 @@ scale only.</p></span>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Returns the identity matrix specifying no translation, rotation, and scale.</p>
+
+<pre><code>    LeapMatrix *identity = [LeapMatrix identity];
+</code></pre>
 	</div>
 	
 	
@@ -592,6 +597,9 @@ scale only.</p></span>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Compare LeapMatrix equality component-wise.</p>
+
+<pre><code>    bool matricesAreEqual = [thisMatrix equals:thatMatrix];
+</code></pre>
 	</div>
 	
 	
@@ -648,6 +656,10 @@ scale only.</p></span>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Constructs a transformation matrix specifying a rotation around the specified vector.</p>
+
+<pre><code>    LeapMatrix *rotation = [[LeapMatrix alloc] initWithAxis:[LeapVector up]  
+                                             angleRadians:LEAP_PI/3];
+</code></pre>
 	</div>
 	
 	
@@ -711,6 +723,14 @@ and a translation by the specified vector.</p>
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Constructs a transformation matrix specifying a rotation around the specified vector<br/>
 and a translation by the specified vector.</p>
+
+<pre><code>    LeapMatrix *transform = [[LeapMatrix alloc] initWithAxis:[LeapVector zAxis]  
+                                                angleRadians:LEAP_PI  
+                                                 translation:[[LeapVector alloc]  
+                                                              initWithX:5  
+                                                              y:3  
+                                                              z:1]];
+</code></pre>
 	</div>
 	
 	
@@ -762,6 +782,9 @@ and a translation by the specified vector.</p>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Constructs a copy of the specified Matrix object.</p>
+
+<pre><code>    LeapMatrix *copyMatrix = [[LeapMatrix alloc] initWithMatrix:otherMatrix];
+</code></pre>
 	</div>
 	
 	
@@ -828,6 +851,12 @@ and a translation by the specified vector.</p>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Constructs a transformation matrix from the specified basis and translation vectors.</p>
+
+<pre><code>    LeapMatrix *newMatrix = [[LeapMatrix alloc] initWithXBasis:[LeapVector xAxis]  
+                                                        yBasis:[LeapVector yAxis]  
+                                                        zBasis:[LeapVector zAxis]  
+                                                        origin:[LeapVector zero]];
+</code></pre>
 	</div>
 	
 	
@@ -886,6 +915,9 @@ applying the other transformation followed by this transformation.</p>
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Multiply transform matrices.</p>
 
+<pre><code>    LeapMatrix *product = [thisMatrix times:thatMatrix];  
+</code></pre>
+
 <p>Combines two transformations into a single equivalent transformation.</p>
 	</div>
 	
@@ -931,6 +963,10 @@ applying the other transformation followed by this transformation.</p>
 
 <p>The elements of the matrix are inserted into the array in row-major order.</p>
 
+<pre><code>    NSArray *matrix3x3Array = thisMatrix.toNSArray3x3;  
+    float R2C1 = [[matrix3x3Array objectAtIndex:4] floatValue];  
+</code></pre>
+
 <p>Translation factors are discarded.</p>
 	</div>
 	
@@ -975,6 +1011,12 @@ applying the other transformation followed by this transformation.</p>
 		<p>Converts a LeapMatrix object to a 16-element NSArray object.</p>
 
 <p>The elements of the matrix are inserted into the array in row-major order.</p>
+
+<pre><code>    NSArray *matrix4x4Array = thisMatrix.toNSArray4x4;  
+    float R4C3 = [[matrix4x4Array objectAtIndex:15] floatValue];  
+}  
+@end
+</code></pre>
 	</div>
 	
 	
@@ -1093,6 +1135,10 @@ scale, and translation.</p>
 scale, and translation.</p>
 
 <p>Translation is applied after rotation and scale.</p>
+
+<pre><code>    LeapVector *point = [[LeapVector alloc] initWithX:10 y:100 z:-30];  
+    LeapVector *transformedPoint = [thisMatrix transformPoint:point];
+</code></pre>
 	</div>
 	
 	
@@ -1112,17 +1158,19 @@ scale, and translation.</p>
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-04-11)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -1212,6 +1260,7 @@ scale, and translation.</p>
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

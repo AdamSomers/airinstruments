@@ -15,11 +15,7 @@ void FingerView::setup()
     gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
     gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
     
-    File appDataFile = File::getSpecialLocation(File::SpecialLocationType::currentApplicationFile).getChildFile("Contents").getChildFile("Resources");
-    File vsFile = appDataFile.getChildFile("testShader.vs");
-    File fsFile = appDataFile.getChildFile("testShader.fs");
-    
-    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
                                                                                             GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
 }
 

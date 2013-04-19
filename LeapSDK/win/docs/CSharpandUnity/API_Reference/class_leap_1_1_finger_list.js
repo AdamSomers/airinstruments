@@ -6,5 +6,9 @@ var class_leap_1_1_finger_list =
     [ "GetEnumerator", "class_leap_1_1_finger_list.html#afea73e56725d2f0e3bda218f9eb653b3", null ],
     [ "Count", "class_leap_1_1_finger_list.html#a8737d9dc5cde5464f399b9ae8f14dcc7", null ],
     [ "Empty", "class_leap_1_1_finger_list.html#a3d39b8b232f968482806caa6b33063e6", null ],
+    [ "Frontmost", "class_leap_1_1_finger_list.html#aac1b7bb2d167b98fb2876d055fbeb765", null ],
+    [ "IsEmpty", "class_leap_1_1_finger_list.html#a572f75ecf26043574ab776808c4055ba", null ],
+    [ "Leftmost", "class_leap_1_1_finger_list.html#a976aef97702d68e75d95138949d3575e", null ],
+    [ "Rightmost", "class_leap_1_1_finger_list.html#a18ab9c12a8619cc18480162c049d4e37", null ],
     [ "this[int index]", "class_leap_1_1_finger_list.html#a39f30aa8c05342d0f5a4ed02fe960799", null ]
 ];

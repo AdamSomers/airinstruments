@@ -326,7 +326,7 @@ ul.auto-toc {
 <div class="document" id="leap-sdk-release-notes">
 <h1 class="title">Leap SDK Release Notes</h1>
 
-<p><em>Version 0.7.6</em></p>
+<p><em>Version 0.7.7</em></p>
 <div class="contents topic" id="topics">
 <p class="topic-title first">Topics:</p>
 <ul class="simple">
@@ -347,28 +347,30 @@ ul.auto-toc {
 </ul>
 </li>
 <li><a class="reference internal" href="#change-log" id="id15">Change log</a><ul>
-<li><a class="reference internal" href="#version-0-7-6" id="id16">Version 0.7.6</a></li>
-<li><a class="reference internal" href="#version-0-7-5" id="id17">Version 0.7.5</a></li>
-<li><a class="reference internal" href="#version-0-7-4" id="id18">Version 0.7.4</a></li>
-<li><a class="reference internal" href="#version-0-7-3" id="id19">Version 0.7.3</a></li>
-<li><a class="reference internal" href="#version-0-7-2" id="id20">Version 0.7.2</a></li>
-<li><a class="reference internal" href="#version-0-7-1" id="id21">Version 0.7.1</a></li>
-<li><a class="reference internal" href="#version-0-7-0" id="id22">Version 0.7.0</a></li>
-<li><a class="reference internal" href="#version-0-6-6" id="id23">Version 0.6.6</a></li>
-<li><a class="reference internal" href="#version-0-6-5" id="id24">Version 0.6.5</a></li>
-<li><a class="reference internal" href="#version-0-6-4" id="id25">Version 0.6.4</a></li>
-<li><a class="reference internal" href="#version-0-6-3" id="id26">Version 0.6.3</a></li>
-<li><a class="reference internal" href="#version-0-6-2" id="id27">Version 0.6.2</a></li>
-<li><a class="reference internal" href="#version-0-6-1" id="id28">Version 0.6.1</a></li>
-<li><a class="reference internal" href="#version-0-6-0" id="id29">Version 0.6.0</a></li>
+<li><a class="reference internal" href="#version-0-7-7" id="id16">Version 0.7.7</a></li>
+<li><a class="reference internal" href="#version-0-7-6" id="id17">Version 0.7.6</a></li>
+<li><a class="reference internal" href="#version-0-7-5" id="id18">Version 0.7.5</a></li>
+<li><a class="reference internal" href="#version-0-7-4" id="id19">Version 0.7.4</a></li>
+<li><a class="reference internal" href="#version-0-7-3" id="id20">Version 0.7.3</a></li>
+<li><a class="reference internal" href="#version-0-7-2" id="id21">Version 0.7.2</a></li>
+<li><a class="reference internal" href="#version-0-7-1" id="id22">Version 0.7.1</a></li>
+<li><a class="reference internal" href="#version-0-7-0" id="id23">Version 0.7.0</a></li>
+<li><a class="reference internal" href="#version-0-6-6" id="id24">Version 0.6.6</a></li>
+<li><a class="reference internal" href="#version-0-6-5" id="id25">Version 0.6.5</a></li>
+<li><a class="reference internal" href="#version-0-6-4" id="id26">Version 0.6.4</a></li>
+<li><a class="reference internal" href="#version-0-6-3" id="id27">Version 0.6.3</a></li>
+<li><a class="reference internal" href="#version-0-6-2" id="id28">Version 0.6.2</a></li>
+<li><a class="reference internal" href="#version-0-6-1" id="id29">Version 0.6.1</a></li>
+<li><a class="reference internal" href="#version-0-6-0" id="id30">Version 0.6.0</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="highlights">
 <h1><a class="toc-backref" href="#id1">Highlights</a></h1>
-<p>In the 0.7.6 release, we introduce a new finger tracking technique that handles a greater variety of finger orientations, such as parallel to the Leap device.
-We also add new intersection and projection methods to the <tt class="docutils literal">Screen</tt> class and release the first Linux build of Leap software, SDK, and example applications.</p>
+<p>In the 0.7.7 release, we add further tracking improvements and API enhancements. In addition, as of this release, only the foreground application can access tracking data. Background applications receive only frames containing no data. This change does not apply to web applications at this time (but will be implemented in a future release).</p>
+<p>Tracking improvements focus on hand tracking. Hands can be tracked in a wider range of orientations. Two hands can be tracked when partially overlapped. Spurious detection of objects caused by noise sources (such as sleeves and rings) is reduced.</p>
+<p>API changes support gesture configuration, motion classification, and spatial list queries.</p>
 </div>
 <div class="section" id="sdk-folder-contents">
 <h1><a class="toc-backref" href="#id2">SDK folder contents</a></h1>
@@ -462,6 +464,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 <li>The Leap software may occasionally disconnect from client applications. If this occurs and does not reconnect soon after, close and restart the Leap software to restore hand tracking. On some computers, setting the device to the Low Resource operating mode can resolve these problems. Sometimes reseating the USB cable or using a different cable can resolve the problem. Please report these issues to <a class="reference external" href="https://developer.leapmotion.com">Leap Motion</a> with information about your hardware setup.</li>
 <li>Enabling gesture recognition can affect gesture recognition for all Leap-enabled applications. Your application will always receive gestures of the types that it enables, but may receive additional gestures types as well if another Leap application has enabled them.</li>
 <li>The JavaScript client library allows all gesture recognition to be enabled or disabled, but does not allow individual gesture types to be controlled as in the native client library.</li>
+<li>The JavaScript example Sample.html only runs properly on Chrome.  JSONViewer.html works properly on all browsers.</li>
 </ul>
 </div>
 <div class="section" id="device-recalibration">
@@ -507,8 +510,45 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </div>
 <div class="section" id="change-log">
 <h1><a class="toc-backref" href="#id15">Change log</a></h1>
+<div class="section" id="version-0-7-7">
+<h2><a class="toc-backref" href="#id16">Version 0.7.7</a></h2>
+<ul class="simple">
+<li>Hand tracking improvements and better noise rejection.</li>
+<li>Added parameters for configuring gesture recognition:<ul>
+<li>CircleGesture: minimum radius and minimum traced arc.</li>
+<li>KeyTapGesture: minimum velocity, minimum distance and duration of recognition window</li>
+<li>ScreenTapGesture: minimum velocity, minimum distance and duration of recognition window</li>
+<li>SwipeGesture: minimum length and minimum velocity</li>
+</ul>
+</li>
+<li>Added setter methods to the Config class for changing the gesture parameters.</li>
+<li>Added a <tt class="docutils literal">save()</tt> method to the Config class for sending configuration changes to the Leap software.</li>
+<li>Added methods for getting the entity that is the front most, left most, or right most from the PointableList, FingerList, ToolList, and HandList classes.</li>
+<li>Added events/callbacks dispatched by the Controller when an application gains or loses focus.</li>
+<li>In Objective-C, changed the name of the [LeapController calibratedScreen] selector to [LeapController locatedScreens].</li>
+<li>The Leap application now only provides tracking data to the application which has the operating system input focus.</li>
+<li>Added probabilities that the motion reported for Frame and Hand objects are primarily translation, rotation, or scaling. You can use these probabilities to exclude unwanted transformations.</li>
+<li>Added automatic smudge detection to the Leap application.</li>
+<li>Added automatic detection of poor calibration to the Leap application.</li>
+<li>Added automatic error reporting to the Leap application.</li>
+</ul>
+<blockquote>
+<em>Note:</em> The JavaScript API and JSON output have not been updated with the new API features (Gesture parameters, list methods, focus events).</blockquote>
+<ul class="simple">
+<li>Deprecated:<ul>
+<li>Controller::calibratedScreens() -- use Controller::locatedScreens()</li>
+<li>PointableList::empty() -- use PointableList::isEmpty()</li>
+<li>FingerList::empty() -- use FingerList::isEmpty()</li>
+<li>ToolList::empty() -- use ToolList::isEmpty()</li>
+<li>HandList::empty() -- use HandList::isEmpty()</li>
+<li>GestureList::empty() -- use GestureList::isEmpty()</li>
+<li>ScreenList::empty() -- use ScreenList::isEmpty()</li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="version-0-7-6">
-<h2><a class="toc-backref" href="#id16">Version 0.7.6</a></h2>
+<h2><a class="toc-backref" href="#id17">Version 0.7.6</a></h2>
 <ul class="simple">
 <li>New finger tracking technique that handles a greater variety of finger orientations, such as parallel to the Leap device.</li>
 <li>First Linux release of the Leap software, SDK, and example applications.</li>
@@ -534,7 +574,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-7-5">
-<h2><a class="toc-backref" href="#id17">Version 0.7.5</a></h2>
+<h2><a class="toc-backref" href="#id18">Version 0.7.5</a></h2>
 <ul class="simple">
 <li>Added gestures to the WebSocket JSON output and the JavaScript client library (available from <a class="reference external" href="https://github.com/leapmotion/leapjs">GitHub</a>).</li>
 <li>Added Mac retina display support for Leap application windows.</li>
@@ -543,7 +583,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-7-4">
-<h2><a class="toc-backref" href="#id18">Version 0.7.4</a></h2>
+<h2><a class="toc-backref" href="#id19">Version 0.7.4</a></h2>
 <ul class="simple">
 <li>Added an early-stage Gesture API supporting circle, swipe, and two tap gestures. (Not supported in the WebSocket JSON output or JavaScript client library in this version.)</li>
 <li>Added Gesture visualization to the Visualizer application. Press &quot;O&quot; to turn gestures on and off.</li>
@@ -557,14 +597,14 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-7-3">
-<h2><a class="toc-backref" href="#id19">Version 0.7.3</a></h2>
+<h2><a class="toc-backref" href="#id20">Version 0.7.3</a></h2>
 <ul class="simple">
 <li>Added the Leap Device Recalibration utility to the Leap application.</li>
 <li>Updated device firmware to version 12.</li>
 </ul>
 </div>
 <div class="section" id="version-0-7-2">
-<h2><a class="toc-backref" href="#id20">Version 0.7.2</a></h2>
+<h2><a class="toc-backref" href="#id21">Version 0.7.2</a></h2>
 <ul class="simple">
 <li>Added a Report Bug command to the Leap application menu. This command opens a Bug Report form that allows you to more easily record diagnostics and submit them with bug reports to Leap Motion.</li>
 <li>Added an option to automatically send diagnostic information to Leap Motion when certain types of errors are encountered by the Leap. This option defaults to off, but we encourage you to turn it on to help us improve the Leap software.</li>
@@ -578,7 +618,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-7-1">
-<h2><a class="toc-backref" href="#id21">Version 0.7.1</a></h2>
+<h2><a class="toc-backref" href="#id22">Version 0.7.1</a></h2>
 <ul class="simple">
 <li>Added motion properties to <tt class="docutils literal">Hand</tt> and <tt class="docutils literal">Frame</tt> classes, which provide information about the translation, rotation, and scaling of a hand or all objects in a frame.</li>
 <li>Added <tt class="docutils literal">isConnected</tt> method to the to the <tt class="docutils literal">Controller</tt> class, allowing polling-based applications to know when a controller is connected to the Leap application and device.</li>
@@ -592,7 +632,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-7-0">
-<h2><a class="toc-backref" href="#id22">Version 0.7.0</a></h2>
+<h2><a class="toc-backref" href="#id23">Version 0.7.0</a></h2>
 <p><strong>Important:</strong> Version 0.7.0 contains several changes to the Leap API that are incompatible with previous versions. When updating from an earlier version, you will have to make code changes and recompile your applications. Applications compiled against earlier versions of the API will not work with version 0.7.0 of the Leap application. See the <a class="reference external" href="https://developer.leapmotion.com/articles/migrating-to-api-version-0-7-0">0.7.0 Migration Guide</a> for tips on updating your application code to work with version 0.7.0 of the Leap API.</p>
 <ul class="simple">
 <li>Added <tt class="docutils literal">LeapMath.h</tt> library containing <tt class="docutils literal">Vector</tt> and <tt class="docutils literal">Matrix</tt> struct definitions.</li>
@@ -624,7 +664,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-6-6">
-<h2><a class="toc-backref" href="#id23">Version 0.6.6</a></h2>
+<h2><a class="toc-backref" href="#id24">Version 0.6.6</a></h2>
 <ul class="simple">
 <li>Added preliminary JavaScript support: the Leap application provides a WebSocket server that sends tracking data as JSON messages.</li>
 <li>Added ability to save Leap application settings between sessions.</li>
@@ -633,7 +673,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-6-5">
-<h2><a class="toc-backref" href="#id24">Version 0.6.5</a></h2>
+<h2><a class="toc-backref" href="#id25">Version 0.6.5</a></h2>
 <ul class="simple">
 <li>Added <tt class="docutils literal">Leapd.lib</tt> and <tt class="docutils literal">Leapd.dll</tt> for Visual Studio debug build configurations.</li>
 <li>Added <tt class="docutils literal">com.leapmotion.leap</tt> package to the Java library.</li>
@@ -645,7 +685,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-6-4">
-<h2><a class="toc-backref" href="#id25">Version 0.6.4</a></h2>
+<h2><a class="toc-backref" href="#id26">Version 0.6.4</a></h2>
 <ul class="simple">
 <li>Added the <tt class="docutils literal"><span class="pre">Leap::Ball</span></tt> class to represent the position and radius of a sphere.</li>
 <li>Added the following member functions to the <tt class="docutils literal"><span class="pre">Leap::Hand</span></tt> class:<ul>
@@ -676,7 +716,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-6-3">
-<h2><a class="toc-backref" href="#id26">Version 0.6.3</a></h2>
+<h2><a class="toc-backref" href="#id27">Version 0.6.3</a></h2>
 <ul class="simple">
 <li>Added robust lighting mode to permit operation in bright environments.</li>
 <li>Added low resource mode to permit operation on slower computers.</li>
@@ -686,7 +726,7 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-6-2">
-<h2><a class="toc-backref" href="#id27">Version 0.6.2</a></h2>
+<h2><a class="toc-backref" href="#id28">Version 0.6.2</a></h2>
 <ul class="simple">
 <li>Improved stability of C# sample application.</li>
 <li>Added support for C# development on Mac with Mono.</li>
@@ -694,13 +734,13 @@ We also add new intersection and projection methods to the <tt class="docutils l
 </ul>
 </div>
 <div class="section" id="version-0-6-1">
-<h2><a class="toc-backref" href="#id28">Version 0.6.1</a></h2>
+<h2><a class="toc-backref" href="#id29">Version 0.6.1</a></h2>
 <ul class="simple">
 <li>Improved stability when switching quality mode.</li>
 </ul>
 </div>
 <div class="section" id="version-0-6-0">
-<h2><a class="toc-backref" href="#id29">Version 0.6.0</a></h2>
+<h2><a class="toc-backref" href="#id30">Version 0.6.0</a></h2>
 <ul class="simple">
 <li>Initial developer beta release of Leap software and SDK.</li>
 </ul>

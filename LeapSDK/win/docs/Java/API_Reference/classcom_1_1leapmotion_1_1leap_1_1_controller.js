@@ -13,7 +13,9 @@ var classcom_1_1leapmotion_1_1leap_1_1_controller =
     [ "frame", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#a2c4cbec7ffa3d187a41c136279e145df", null ],
     [ "frame", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#af31ab95b5311721e816e8d9ece03bea4", null ],
     [ "getCPtr", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#a6510fbbf87490b33127cf9356a4d80ba", null ],
+    [ "hasFocus", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#a2eb2f7b29f1fedaa3e7b68f9bbff9287", null ],
     [ "isConnected", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#a80a13bc6fc939b6b40791b03bd314ed3", null ],
     [ "isGestureEnabled", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#ad445c8142735bdaef98685d1391865c3", null ],
+    [ "locatedScreens", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#a041138fe32fa123fe6fb95964af16fc2", null ],
     [ "removeListener", "classcom_1_1leapmotion_1_1leap_1_1_controller.html#a33ae2103e110125fdb2eb6054b33ef7b", null ]
 ];

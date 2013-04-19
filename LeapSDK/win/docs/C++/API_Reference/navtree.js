@@ -21,7 +21,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"class_leap_1_1_screen_list.html#a7ce73ebf3b8f5d85f456417a3fd5227c"
+"class_leap_1_1_screen.html#aef02c5977f0fe0060398456a8322d5db"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

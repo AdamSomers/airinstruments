@@ -25,6 +25,7 @@ class SampleListener extends Listener {
     }
 
     public void onDisconnect(Controller controller) {
+        //Note: not dispatched when running in a debugger.
         System.out.println("Disconnected");
     }
 

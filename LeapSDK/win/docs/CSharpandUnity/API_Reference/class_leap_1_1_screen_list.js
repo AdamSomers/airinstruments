@@ -8,5 +8,6 @@ var class_leap_1_1_screen_list =
     [ "GetEnumerator", "class_leap_1_1_screen_list.html#a4b5433deb473b62ad1976720271220b8", null ],
     [ "Count", "class_leap_1_1_screen_list.html#a0fa74553f420377e79ed0dbd7ce742d4", null ],
     [ "Empty", "class_leap_1_1_screen_list.html#adcbf5648c62aa63d38299f0c6d76bda6", null ],
+    [ "IsEmpty", "class_leap_1_1_screen_list.html#ae7790ed1b32f6bd38f63f2519f60eba8", null ],
     [ "this[int index]", "class_leap_1_1_screen_list.html#a0a664d40b271e71f2dea613a2ffd5dbe", null ]
 ];
