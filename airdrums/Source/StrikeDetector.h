@@ -34,10 +34,13 @@ public:
     
     void handMotion(const Leap::Hand& hand);
     
+    const Time& getLastStrikeTime() const;
+    
 private:
     bool crossedVelocityThreshold;
     bool recoilPending;
     float maxVel;
+    Time lastStrikeTime;
     
     bool isLeft(const Leap::Hand& hand);
 };

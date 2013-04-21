@@ -70,6 +70,8 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
         crossedVelocityThreshold = false;
         maxVel = 0.f;
         Logger::outputDebugString(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
+        
+        lastStrikeTime = Time::getCurrentTime();
     }
 }
 
@@ -82,26 +84,31 @@ bool StrikeDetector::isLeft(const Leap::Hand &hand)
     if (hand.palmPosition().x < 0)
         leftHand = true;
     
-    const Leap::FingerList& fingers = hand.fingers();
-    const size_t numFingers = fingers.count();
-    if (numFingers >= 1)
+    const Leap::PointableList& pointables = hand.pointables();
+    const size_t numPointables = pointables.count();
+    if (numPointables >= 1)
     {
-        int fingerClosestToScreen = 0;
+        int pointableClosestToScreen = 0;
         float zMin = 999.f;
-        for (unsigned int i = 0; i < numFingers; ++i)
+        for (unsigned int i = 0; i < numPointables; ++i)
         {
-            const Leap::Finger& f = fingers[i];
-            if (f.tipPosition().z < zMin)
+            const Leap::Pointable& p = pointables[i];
+            if (p.tipPosition().z < zMin)
             {
-                fingerClosestToScreen = i;
-                zMin = f.tipPosition().z;
+                pointableClosestToScreen = i;
+                zMin = p.tipPosition().z;
             }
         }
         
-        if (!leftHand && fingers[fingerClosestToScreen].tipPosition().x < 0.f)
+        if (!leftHand && pointables[pointableClosestToScreen].tipPosition().x < 0.f)
             leftHand = true;
-        else if (leftHand && fingers[fingerClosestToScreen].tipPosition().x > 0.f)
+        else if (leftHand && pointables[pointableClosestToScreen].tipPosition().x > 0.f)
             leftHand = false;
     }
     return leftHand;
+}
+
+const Time& StrikeDetector::getLastStrikeTime() const
+{
+    return lastStrikeTime;
 }
