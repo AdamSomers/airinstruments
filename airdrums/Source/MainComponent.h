@@ -19,6 +19,7 @@
 #include "WheelSelector.h"
 #include "TutorialSlide.h"
 #include "TempoControl.h"
+#include "StrikeDetector.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -78,6 +79,8 @@ public:
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
+    void handleGestures(const Leap::GestureList& gestures);
+    void handleHands(const Leap::HandList& hands);
     void handleTapGesture(const Leap::Pointable& p);
     bool checkIdle();
     void populatePatternSelector();
@@ -105,6 +108,9 @@ private:
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;
+    
+    typedef std::map<int, StrikeDetector> StrikeDetectorMap;
+    StrikeDetectorMap strikeDetectors;
     
     float prevMouseY;
     float prevMouseX;

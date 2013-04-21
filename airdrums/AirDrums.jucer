@@ -143,6 +143,10 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="uZdbZi" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>
       <FILE id="zf1uwf" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
+      <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"
+            file="Source/StrikeDetector.cpp"/>
+      <FILE id="Oira0u" name="StrikeDetector.h" compile="0" resource="0"
+            file="Source/StrikeDetector.h"/>
       <FILE id="NLCMoY" name="TempoControl.cpp" compile="1" resource="0"
             file="Source/TempoControl.cpp"/>
       <FILE id="N8hPCh" name="TempoControl.h" compile="0" resource="0" file="Source/TempoControl.h"/>

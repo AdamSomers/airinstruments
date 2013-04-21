@@ -753,6 +753,25 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     
     const Leap::Frame frame = controller.frame();
     const Leap::GestureList& gestures = frame.gestures();
+    handleGestures(gestures);
+    
+    const Leap::HandList& hands = frame.hands();
+    const size_t numHands = hands.count();
+    
+    for (unsigned int h = 0; h < numHands; ++h) {
+        const Leap::Hand& hand = hands[h];
+        
+        std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
+        if (insertResult.second)
+            Logger::outputDebugString("Inserted detector for hand id " + String(hand.id()));
+        StrikeDetectorMap::iterator iter = insertResult.first;
+        StrikeDetector& detector = (*iter).second;
+        detector.handMotion(hand);
+    }
+}
+
+void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
+{
     Leap::GestureList::const_iterator i = gestures.begin();
     Leap::GestureList::const_iterator end = gestures.end();
     if (!gestures.empty())
@@ -796,14 +815,14 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             case Leap::Gesture::TYPE_KEY_TAP:
             {
                 const Leap::KeyTapGesture keyTap(g);
-                handleTapGesture(keyTap.pointable());
+                //handleTapGesture(keyTap.pointable());
             }
                 break;
                 
             case Leap::Gesture::TYPE_SCREEN_TAP:
             {
                 const Leap::ScreenTapGesture screenTap(g);
-                handleTapGesture(screenTap.pointable());
+                //handleTapGesture(screenTap.pointable());
             }
                 break;
                 

@@ -421,6 +421,9 @@
     <ClCompile Include="..\..\Source\SkinManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\StrikeDetector.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\TempoControl.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1738,6 +1741,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SkinManager.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StrikeDetector.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TempoControl.h">
