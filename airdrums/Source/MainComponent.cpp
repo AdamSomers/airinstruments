@@ -47,6 +47,7 @@ MainContentComponent::MainContentComponent()
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
 , isIdle(true)
 , needsPatternListUpdate(false)
+, setPriority(false)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -751,6 +752,12 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     if (!Environment::instance().ready)
         return;
     
+	if (!setPriority)
+	{
+		setPriority = true;
+		Thread::setCurrentThreadPriority(10);
+	}
+
     const Leap::Frame frame = controller.frame();
     const Leap::GestureList& gestures = frame.gestures();
     handleGestures(gestures);
@@ -762,8 +769,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         const Leap::Hand& hand = hands[h];
         
         std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
-        if (insertResult.second)
-            Logger::outputDebugString("Inserted detector for hand id " + String(hand.id()));
+//        if (insertResult.second)
+//            Logger::outputDebugString("Inserted detector for hand id " + String(hand.id()));
         StrikeDetectorMap::iterator iter = insertResult.first;
         StrikeDetector& detector = (*iter).second;
         detector.handMotion(hand);

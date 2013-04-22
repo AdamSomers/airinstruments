@@ -12,67 +12,122 @@
 
 // How fast hand is moving downwards to initiate a strike gesture.
 // Note that stike doesn't occur until another threshold is crossed.
-#define VELOCITY_THRESHOLD -200.f
+#define VELOCITY_THRESHOLD 300.f
 
 // Upper limit to velocity to avoid extreme cases due to tracking jitter
-#define MAX_VELOCTIY -1000.f
+#define MAX_VELOCTIY 1500.f
 
 // 0 -> strike on direction reversal
 // 1 -> strike as soon as threshold is crossed
-#define SENSITIVITY .5f
+#define SENSITIVITY .90f
 
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
-#define Y_MAX 500.f 
+// Also, the pad area upper edge is at about 310
+#define Y_MAX 300.f 
 
-StrikeDetector::StrikeDetector()
-: crossedVelocityThreshold(false)
-, recoilPending(false)
+StrikeDetector::StrikeDetector() :
+ state(kStateStrikeBegin)
 , maxVel(0.f)
 {
 }
 
 void StrikeDetector::handMotion(const Leap::Hand& hand)
 {
-    // Get midi note to play based on left/right 
-    int midiNote = 0;
-    bool leftHand = isLeft(hand);
-    midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue(leftHand ? "selectedNoteLeft" : "selectedNoteRight", 0);
-    
-    if (!recoilPending &&
-        hand.palmVelocity().y < VELOCITY_THRESHOLD &&
-        hand.palmPosition().y < Y_MAX)
-    {
-        crossedVelocityThreshold = true;
-        if (hand.palmVelocity().y < maxVel)
-            maxVel = hand.palmVelocity().y;
-    }
-    else if (hand.palmVelocity().y > 0) // palm moving up
-    {
-        // move to idle state
-        recoilPending = false;
-    }
+	float position = hand.palmPosition().y;
+	float velocity = hand.palmVelocity().y;
+	float direction;
+	if (velocity < 0.0f)
+		direction = -1.0f;
+	else
+		direction = +1.0f;
+	velocity = fabsf(velocity);
 
-    if (crossedVelocityThreshold &&
-        (hand.palmVelocity().y > 0.f || // direction changed
-         hand.palmVelocity().y > (maxVel * SENSITIVITY))) // slowed down 'enough'
-    {
-        // calc velocity in range [0.0, 1.0]
-        float rangeLow = fabsf(VELOCITY_THRESHOLD);
-        float rangeHigh = fabsf(MAX_VELOCTIY);
-        float val = jmin(fabsf(maxVel), rangeHigh);
-        float vel = (val - rangeLow) / (rangeHigh - rangeLow);
+	for (int i = kHistoryDepth - 1; i > 0 ; --i)
+	{
+		lastVelocity[i] = lastVelocity[i - 1];
+		lastDirection[i] = lastDirection[i - 1];
+	}
+	lastVelocity[0] = velocity;
+	lastDirection[0] = direction;
+
+	switch (state)
+	{
+		default :
+			jassertfalse;
+			return;
+		case kStateRecoilEnd :
+		{
+			if (direction < 0.0f)	// Downward motion
+			{
+				state = kStateStrikeBegin;
+				// And then fall through
+			}
+			else
+				break;
+		}
+		case kStateStrikeBegin :
+		{
+			if ((direction < 0.0f)					// Downward motion
+				&& (velocity > VELOCITY_THRESHOLD)	// Moving faster than minimum velocity to signify a strike
+				&& (position < Y_MAX))				// Below top of valid Y range
+			{
+				state = kStateStrikeEnd;
+				// And then fall through
+			}
+			else
+				break;
+		}
+		case kStateStrikeEnd :
+		{
+			if (velocity > maxVel)
+				maxVel = velocity;
+
+			bool trigger = true;
+			for (int i = 0; i < kHistoryDepth; ++i)
+			{
+				if (lastDirection[i] > 0.0f)					// Upward motion
+				{
+					trigger = false;
+					break;
+				}
+				if (lastVelocity[i] >= (maxVel * SENSITIVITY))	// Velocity has not slowed down sufficiently to trigger a strike
+				{
+					trigger = false;
+					break;
+				}
+			}
+
+			if (trigger)
+			{
+				// calc velocity in range [0.0, 1.0]
+				float rangeLow = VELOCITY_THRESHOLD;
+				float rangeHigh = MAX_VELOCTIY;
+				float val = jmin(maxVel, rangeHigh);
+				float vel = (val - rangeLow) / (rangeHigh - rangeLow);
+				maxVel = 0.0f;
         
-        // play the note
-        Drums::instance().NoteOn(midiNote, vel);
-        
-        // move to post-strike state
-        recoilPending = true;
-        crossedVelocityThreshold = false;
-        maxVel = 0.f;
-        Logger::outputDebugString(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
-        
-        lastStrikeTime = Time::getCurrentTime();
-    }
+				// Get midi note to play based on left/right 
+				bool leftHand = isLeft(hand);
+				int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue(leftHand ? "selectedNoteLeft" : "selectedNoteRight", 0);
+
+				// play the note
+				Drums::instance().NoteOn(midiNote, vel);
+//				Logger::outputDebugString(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
+
+			    lastStrikeTime = Time::getCurrentTime();
+
+				state = kStateRecoilBegin;
+			}
+
+			break;
+		}
+		case kStateRecoilBegin :
+		{
+			if (direction > 0.0f)	// Upward motion
+				state = kStateRecoilEnd;
+			break;
+		}
+	}
 }
 
 // Whether a hand is considered to be on the left or right side of the screen

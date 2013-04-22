@@ -121,6 +121,7 @@ private:
     bool showPatternSelector;
     bool isIdle;
     bool needsPatternListUpdate;
+	bool setPriority;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -9,27 +9,24 @@
 #ifndef __AirBeats__StrikeDetector__
 #define __AirBeats__StrikeDetector__
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "GL/glew.h"
 #include "Leap.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 
 // Given a Leap::Hand, this class determines when a drum stike
-// motion is performed by moving through various states:
-//
-// State1, Idle: Detector is waiting for rapid downwards motion.
-//
-// State2, Mid-Strike: hand has moved quickly in donwards motion,
-// and we expect an abrupt change in velocity.  Track a maximim
-// downwards velocity for comparison
-//
-// State3, Post-Strike: hand has slowed down from maximum velocity
-// or changed direction, causing a strike.  The amount that the hand
-// needs to have slowed is set by sensitivity control.
-//
-// Return to state 1 when hand has moved in upwards motion (recoil)
+// motion is performed by moving through various states
 
 class StrikeDetector
 {
 public:
+	enum WaitingState
+	{
+		kStateStrikeBegin = 0,	// Waiting for downward motion to begin (exceed min velocity threshold)
+		kStateStrikeEnd = 1,	// Waiting for downward motion to end (velocity to drop sufficiently below peak level)
+		kStateRecoilBegin = 2,	// Waiting for upward motion to begin
+		kStateRecoilEnd = 3		// Waiting for upward motion to end
+	};
+
     StrikeDetector();
     
     void handMotion(const Leap::Hand& hand);
@@ -37,9 +34,11 @@ public:
     const Time& getLastStrikeTime() const;
     
 private:
-    bool crossedVelocityThreshold;
-    bool recoilPending;
-    float maxVel;
+	WaitingState state;
+    float maxVel;				// Velocity here is always positive, regardless of direction
+	#define kHistoryDepth	3
+	float lastVelocity[kHistoryDepth];		// Most recent velocities
+	float lastDirection[kHistoryDepth];		// Most recent directions
     Time lastStrikeTime;
     
     bool isLeft(const Leap::Hand& hand);
