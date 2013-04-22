@@ -4,6 +4,7 @@
 #include "Leap.h"
 #include "FingerView.h"
 #include "HandView.h"
+#include "CursorView.h"
 #include "Types.h"
 #include <map>
 #include <vector>
@@ -45,8 +46,11 @@ public:
 
     std::map<int, SharedPtr<FingerView> > fingerViews;
     std::map<int, SharedPtr<HandView> > handViews;
+    SharedPtr<CursorView> cursor;
+
     std::vector<FingerView::Listener*> fingerViewListeners;
     std::vector<HandView::Listener*> handViewListeners;
+    std::vector<CursorView::Listener*> cursorViewListeners;
     Leap::Controller controller;
     static float zLimit;
 private:

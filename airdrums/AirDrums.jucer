@@ -145,6 +145,10 @@
       <FILE id="zf1uwf" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
       <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"
             file="Source/StrikeDetector.cpp"/>
+      <FILE id="kNn5KQ" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
+      <FILE id="w731yX" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
+      <FILE id="VYKSMK" name="View2d.cpp" compile="1" resource="0" file="../common/View2d.cpp"/>
+      <FILE id="lcpgrA" name="View2d.h" compile="0" resource="0" file="../common/View2d.h"/>
       <FILE id="Oira0u" name="StrikeDetector.h" compile="0" resource="0"
             file="Source/StrikeDetector.h"/>
       <FILE id="NLCMoY" name="TempoControl.cpp" compile="1" resource="0"

@@ -179,6 +179,8 @@
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\Source\SkinManager.cpp"/>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp"/>
+    <ClCompile Include="..\..\..\common\CursorView.cpp"/>
+    <ClCompile Include="..\..\..\common\View2d.cpp"/>
     <ClCompile Include="..\..\Source\TempoControl.cpp"/>
     <ClCompile Include="..\..\Source\TrigView.cpp"/>
     <ClCompile Include="..\..\Source\WheelSelector.cpp"/>
@@ -1301,6 +1303,8 @@
     <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>
     <ClInclude Include="..\..\Source\SkinManager.h"/>
+    <ClInclude Include="..\..\..\common\CursorView.h"/>
+    <ClInclude Include="..\..\..\common\View2d.h"/>
     <ClInclude Include="..\..\Source\StrikeDetector.h"/>
     <ClInclude Include="..\..\Source\TempoControl.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>

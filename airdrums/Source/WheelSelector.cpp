@@ -219,6 +219,57 @@ void WheelSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     }
 }
 
+void WheelSelector::cursorMoved(float x, float y)
+{
+    if (!enabled) {
+        float center = getBounds().y + getBounds().h / 2;
+        float distanceFromCenter = y - center;
+        if (fabsf(distanceFromCenter) > getBounds().h / 6)
+            if (isTimerRunning(kTimerShowControl))
+                stopTimer(kTimerShowControl);
+        return;
+    }
+    
+    int inc = 0;
+    float center = getBounds().y + getBounds().h / 2;
+    float distanceFromCenter = y - center;
+    if (fabsf(distanceFromCenter) > 75 && y < center)
+        inc = 1;
+    else if (fabsf(distanceFromCenter) > 75)
+        inc = -1;
+    
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
+        incSelection(inc);
+        for (Listener* l : listeners)
+            l->wheelSelectorChanged(this);
+        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(250.0f, 500.0f * (1.f-multiplier)));
+    }
+}
+
+void WheelSelector::cursorEntered(float x, float y)
+{
+    if (!enabled) {
+        float center = getBounds().y + getBounds().h / 2;
+        float distanceFromCenter = y - center;
+        if (fabsf(distanceFromCenter) < getBounds().h / 6)
+            if (!isTimerRunning(kTimerShowControl))
+                startTimer(kTimerShowControl,500);
+        return;
+    }
+    
+    if (isTimerRunning(kTimerIdle))
+        stopTimer(kTimerIdle);
+}
+
+void WheelSelector::cursorExited(float x, float y)
+{    
+    if (!enabled && isTimerRunning(kTimerShowControl))
+        stopTimer(kTimerShowControl);
+    
+    startTimer(kTimerIdle, 2000);
+}
+
 void WheelSelector::timerCallback(int timerId)
 {
     switch (timerId)

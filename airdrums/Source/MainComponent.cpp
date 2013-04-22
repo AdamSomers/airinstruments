@@ -259,7 +259,7 @@ void MainContentComponent::newOpenGLContextCreated()
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
     tempoControl->setTempo(tempo);
     views.push_back(tempoControl);
-    
+
     for (HUDView* v : views)
         v->loadTextures();
     
@@ -428,7 +428,7 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
                                             (GLfloat) tempoControlWidth,
                                             (GLfloat) tempoControlHeight));
-        
+
         layoutPadsLinear();
         sizeChanged = false;
     }
@@ -503,6 +503,8 @@ void MainContentComponent::renderOpenGL()
 
     for (HUDView* v : views)
         v->draw();
+    
+    MotionDispatcher::instance().cursor->draw();
     
     glEnable(GL_DEPTH_TEST);
 
@@ -775,6 +777,25 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         StrikeDetector& detector = (*iter).second;
         detector.handMotion(hand);
     }
+    
+    StrikeDetectorMap::iterator iter = strikeDetectors.begin();
+    bool useCursor = true;
+    while (iter != strikeDetectors.end())
+    {
+        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
+            useCursor = false;
+        ++iter;
+    }
+    if (useCursor)
+    {
+        MotionDispatcher::instance().cursor->setEnabled(true);
+    }
+    else
+    {
+        MotionDispatcher::instance().cursor->setEnabled(false);
+    }
+    
+    
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)

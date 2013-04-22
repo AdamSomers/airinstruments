@@ -148,6 +148,32 @@ void TempoControl::fingerExited(float x, float y, FingerView* fv)
     }
 }
 
+void TempoControl::cursorMoved(float x, float /*y*/)
+{
+    int inc = 0;
+    float center = getBounds().x + getBounds().w / 2;
+    float distanceFromCenter = x - center;
+    if (fabsf(distanceFromCenter) > 15 && x < center)
+        inc = 1;
+    else if (fabsf(distanceFromCenter) > 15)
+        inc = -1;
+    
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
+        increment(inc);
+        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
+    }
+}
+
+void TempoControl::cursorEntered(float /*x*/, float /*y*/)
+{
+}
+
+void TempoControl::cursorExited(float, float)
+{
+}
+
+
 void TempoControl::timerCallback(int timerId)
 {
     switch (timerId)

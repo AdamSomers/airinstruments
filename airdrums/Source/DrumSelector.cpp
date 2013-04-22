@@ -141,6 +141,34 @@ void DrumSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     }
 }
 
+void DrumSelector::cursorMoved(float x, float /*y*/)
+{      
+    int inc = 0;
+    float center = getBounds().x + getBounds().w / 2;
+    float distanceFromCenter = x - center;
+    if (fabsf(distanceFromCenter) > 30 && x < center)
+        inc = -1;
+    else if (fabsf(distanceFromCenter) > 30)
+        inc = 1;
+    
+    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
+        setSelection(selection + inc);
+        for (Listener* l : listeners)
+            l->drumSelectorChanged(this);
+        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
+        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
+    }
+}
+
+void DrumSelector::cursorEntered(float /*x*/, float /*y*/)
+{
+    startTimer(kTimerSelectionDelay, 500);
+}
+
+void DrumSelector::cursorExited(float, float)
+{
+}
+
 void DrumSelector::timerCallback(int timerId)
 {
     switch (timerId)

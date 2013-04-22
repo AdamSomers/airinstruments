@@ -26,6 +26,9 @@ public:
     void fingerMotion(float x, float y, FingerView* fv);
     void fingerEntered(float x, float y, FingerView* fv);
     void fingerExited(float x, float y, FingerView* fv);
+    void cursorMoved(float x, float y);
+    void cursorEntered(float x, float y);
+    void cursorExited(float x, float y);
     
     // Juce::Timer override
     void timerCallback(int timerId);

@@ -20,6 +20,7 @@
 #include "TutorialSlide.h"
 #include "TempoControl.h"
 #include "StrikeDetector.h"
+#include "CursorView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -108,7 +109,7 @@ private:
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;
-    
+
     typedef std::map<int, StrikeDetector> StrikeDetectorMap;
     StrikeDetectorMap strikeDetectors;
     

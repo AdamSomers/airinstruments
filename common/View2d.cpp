@@ -1,0 +1,109 @@
+//
+//  View2d.cpp
+//  AirBeats
+//
+//  Created by Adam Somers on 4/22/13.
+//
+//
+
+#include "View2d.h"
+#include "Environment.h"
+
+View2d::View2d()
+: didSetup(false)
+, defaultTexture(0)
+, defaultColorSet(false)
+{
+    defaultColor[0] = 1.f;
+    defaultColor[1] = .3f;
+    defaultColor[2] = .3f;
+    defaultColor[3] = 1.f;
+}
+
+View2d::~View2d()
+{
+    
+}
+
+
+void View2d::draw()
+{
+    if (0 != defaultTexture)
+    {
+        glBindTexture(GL_TEXTURE_2D, defaultTexture);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
+        defaultBatch.Draw();
+    }
+    else
+    {
+        GLint polygonMode[2];
+        glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
+        if (!defaultColorSet)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), defaultColor);
+        glLineWidth(1.f);
+        defaultBatch.Draw();
+        glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
+    }
+}
+
+void View2d::setup()
+{
+    M3DVector3f verts[4] = {
+        bounds.x, bounds.y, 0.f,
+        bounds.x + bounds.w, bounds.y, 0.f,
+        bounds.x, bounds.y + bounds.h, 0.f,
+        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
+    };
+    
+    M3DVector3f normals[4] = {
+        0.f, 0.f, 1.f,
+        0.f, 0.f, 1.f,
+        0.f, 0.f, 1.f,
+        0.f, 0.f, 1.f
+    };
+    
+    M3DVector2f texCoords[4] = {
+        0.f, 1.f,
+        1.f, 1.f,
+        0.f, 0.f,
+        1.f, 0.f
+    };
+    
+    if (!didSetup)
+        defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    defaultBatch.CopyVertexData3f(verts);
+    defaultBatch.CopyTexCoordData2f(texCoords, 0);
+    defaultBatch.CopyNormalDataf(normals);
+    if (!didSetup)
+        defaultBatch.End();
+    
+    didSetup = true;
+}
+
+void View2d::boundsChanged()
+{
+    setup();
+}
+
+void View2d::setBounds(const HUDRect& b)
+{
+    bounds = b;
+    boundsChanged();
+}
+
+void View2d::loadTextures()
+{
+    
+}
+
+void View2d::setDefaultTexture(GLuint texture)
+{
+    defaultTexture = texture;
+}
+
+void View2d::setDefaultColor(GLfloat* color)
+{
+    memcpy(defaultColor, color, 4 * sizeof(GLfloat));
+    defaultColorSet = true;
+}

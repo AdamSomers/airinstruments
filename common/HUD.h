@@ -9,38 +9,10 @@
 #include <iostream>
 #include <vector>
 
+#include "View2d.h"
 #include "Environment.h"
 #include "FingerView.h"
-
-struct HUDRect {
-    HUDRect() : x(0.f), y(0.f), w(0.f), h(0.f) {}
-    
-    HUDRect(GLfloat _x, GLfloat _y, GLfloat _w, GLfloat _h)
-    {
-        x = _x; y = _y; w = _w; h = _h;
-    }
-    
-    bool contains(GLfloat _x, GLfloat _y) const
-    {
-        return _x > x && _y > y && _x < x+w && _y < y+h;
-    }
-    
-    bool operator==(const HUDRect& other) const
-    {
-        return x == other.x &&
-               y == other.y &&
-               w == other.w &&
-               h == other.h;
-    }
-    
-    bool operator!=(const HUDRect &other) const
-    {
-        return !(*this == other);
-    }
-    
-    GLfloat top() const { return y + h; }
-    GLfloat x, y, w , h;
-};
+#include "CursorView.h"
 
 // HUDView is hierarchical 2d UI element that has the following properties:
 //
@@ -53,55 +25,54 @@ struct HUDRect {
 //
 // Child HUDView objects can be added and their bounds set relative to the parent.
 //
-class HUDView : public FingerView::Listener
+class HUDView : public View2d
+              , public FingerView::Listener
+              , public CursorView::Listener
 {
 public:
     HUDView();
     virtual ~HUDView() {}
+    
+    // View2d overrides
+    virtual void draw();
+    virtual void setup();
+    virtual void loadTextures();
+    
     void addChild(HUDView* child);
     void removeChild(HUDView* child);
     void removeAllChildren();
     void setParent(HUDView* p);
     HUDView* const getParent() { return parent; }
     
-    // The base class implementation of draw() 
-    virtual void draw();
-    virtual void update() {}
-    virtual void setup();
-    virtual void boundsChanged();
     virtual void mouseDown(float x, float y);
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
+    
+    // FingerView::Listener override
+    virtual void updatePointedState(FingerView* fv);
+    
+    // CursorView::Listener override
+    virtual void updateCursorState(float x, float y);
 
     // Multi-finger interaction methods in screen coords.
     // x, y are FingerView position cooreds projected to screen plane 
     virtual void fingerMotion(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
     virtual void fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
     virtual void fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
+    
+    virtual void cursorMoved(float x, float y) {}
+    virtual void cursorEntered(float x, float y) {}
+    virtual void cursorExited(float x, float y) {}
 
-    virtual void setBounds(const HUDRect& b);
-    const HUDRect& getBounds() const { return bounds; }
-    virtual void loadTextures();
-
-    // FingerView::Listener override
-    virtual void updatePointedState(FingerView* fv);
-
-    void setDefaultTexture(GLuint texture);
-    void setDefaultColor(GLfloat* color);
 
 protected:
     bool trackingMouse;
-    HUDRect bounds;
     bool hover;
-    bool didSetup;
-    GLBatch defaultBatch;
-    
+    bool cursorInside;
+
 private:
     std::vector<HUDView*> children;
     HUDView* parent;
-    GLuint defaultTexture;
-    GLfloat defaultColor[4];
-    bool defaultColorSet;
     std::vector<FingerView*> hoveringFingers;
 };
 
