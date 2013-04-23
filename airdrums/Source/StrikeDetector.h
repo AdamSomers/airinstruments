@@ -39,9 +39,6 @@ public:
 private:
 	WaitingState state;
     float maxVel;				// Velocity here is always positive, regardless of direction
-	#define kHistoryDepth	3
-	float lastVelocity[kHistoryDepth];		// Most recent velocities
-	float lastDirection[kHistoryDepth];		// Most recent directions
     Time lastStrikeTime;
     
     bool isLeft(const Leap::Hand& hand);

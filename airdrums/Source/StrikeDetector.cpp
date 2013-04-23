@@ -19,7 +19,7 @@
 
 // 0 -> strike on direction reversal
 // 1 -> strike as soon as threshold is crossed
-#define SENSITIVITY .90f
+#define SENSITIVITY .50f
 
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
 // Also, the pad area upper edge is at about 310
@@ -41,14 +41,6 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 	else
 		direction = +1.0f;
 	velocity = fabsf(velocity);
-
-	for (int i = kHistoryDepth - 1; i > 0 ; --i)
-	{
-		lastVelocity[i] = lastVelocity[i - 1];
-		lastDirection[i] = lastDirection[i - 1];
-	}
-	lastVelocity[0] = velocity;
-	lastDirection[0] = direction;
 
 	switch (state)
 	{
@@ -82,21 +74,8 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 			if (velocity > maxVel)
 				maxVel = velocity;
 
-			bool trigger = true;
-			for (int i = 0; i < kHistoryDepth; ++i)
-			{
-				if (lastDirection[i] > 0.0f)					// Upward motion
-				{
-					trigger = false;
-					break;
-				}
-				if (lastVelocity[i] >= (maxVel * SENSITIVITY))	// Velocity has not slowed down sufficiently to trigger a strike
-				{
-					trigger = false;
-					break;
-				}
-			}
-
+			bool trigger = direction > 0 || velocity <= (maxVel * SENSITIVITY);
+            
 			if (trigger)
 			{
 				// calc velocity in range [0.0, 1.0]
