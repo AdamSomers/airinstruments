@@ -219,7 +219,7 @@ void WheelSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     }
 }
 
-void WheelSelector::cursorMoved(float x, float y)
+void WheelSelector::cursorMoved(float /*x*/, float y)
 {
     if (!enabled) {
         float center = getBounds().y + getBounds().h / 2;
@@ -247,7 +247,7 @@ void WheelSelector::cursorMoved(float x, float y)
     }
 }
 
-void WheelSelector::cursorEntered(float x, float y)
+void WheelSelector::cursorEntered(float /*x*/, float y)
 {
     if (!enabled) {
         float center = getBounds().y + getBounds().h / 2;
@@ -262,7 +262,7 @@ void WheelSelector::cursorEntered(float x, float y)
         stopTimer(kTimerIdle);
 }
 
-void WheelSelector::cursorExited(float x, float y)
+void WheelSelector::cursorExited(float /*x*/, float /*y*/)
 {    
     if (!enabled && isTimerRunning(kTimerShowControl))
         stopTimer(kTimerShowControl);

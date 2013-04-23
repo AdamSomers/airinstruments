@@ -129,6 +129,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
 
     return;
 
+#if 0	// Unreachable code due to return above
     if (!Environment::instance().ready)
         return;
     
@@ -264,6 +265,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             //printf("Removed hand %d\n", hv->id);
         }
     }
+#endif
 }
 
 void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)

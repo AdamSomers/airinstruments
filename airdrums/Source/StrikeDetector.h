@@ -9,7 +9,7 @@
 #ifndef __AirBeats__StrikeDetector__
 #define __AirBeats__StrikeDetector__
 
-#if JUCE_WINDOWS
+#if defined(_WIN32)
 #include "GL/glew.h"
 #endif
 

@@ -60,9 +60,9 @@ public:
     virtual void fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
     virtual void fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
     
-    virtual void cursorMoved(float x, float y) {}
-    virtual void cursorEntered(float x, float y) {}
-    virtual void cursorExited(float x, float y) {}
+    virtual void cursorMoved(float /*x*/, float /*y*/) {}
+    virtual void cursorEntered(float /*x*/, float /*y*/) {}
+    virtual void cursorExited(float /*x*/, float /*y*/) {}
 
 
 protected:
