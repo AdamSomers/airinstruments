@@ -1,6 +1,8 @@
 #include "HUD.h"
 #include "GfxTools.h"
 
+#define BUTTON_TIMEOUT 750
+
 HUDView::HUDView()
 : parent(NULL)
 , trackingMouse(false)
@@ -179,6 +181,24 @@ void HUDView::updateCursorState(float x, float y)
             cursorInside = false;
         }
     }
+    
+    for (HUDView* child : children)
+    {
+        float localX = x - bounds.x;
+        float localY = y - bounds.y;
+        //printf("%f %f %f %f\n",x, y, localX,localY);
+        if (child->bounds.contains(localX,localY) && !child->cursorInside)
+        {
+            child->cursorEntered(localX, localY);
+            child->cursorInside = true;
+        }
+        else if (!child->bounds.contains(localX,localY) && child->cursorInside)
+        {
+            child->cursorExited(localX, localY);
+            child->cursorInside = false;
+
+        }
+    }
 }
 
 HUDButton::HUDButton(int id)
@@ -186,7 +206,11 @@ HUDButton::HUDButton(int id)
 , state(false)
 , prevNumPointers(0)
 , fade(0.f)
+, ringTextureID(0)
 {
+    // set a transparent color for the background
+    GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
+    setDefaultColor(color);
 }
 
 void HUDButton::setState(bool inState, bool broadcast)
@@ -215,6 +239,11 @@ void HUDButton::removeListener(HUDButton::Listener* l)
 
 void HUDButton::draw()
 {
+    HUDView::draw();
+
+    if (isTimerRunning())
+        setup();
+    
     GLfloat* color;
     if (state)
     {
@@ -231,8 +260,8 @@ void HUDButton::draw()
             color = offColor;
     }
 
-    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
-    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
+    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade * opacity};
+    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, (1.f - fade) * opacity  };
 
     glBindTexture(GL_TEXTURE_2D, onTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
@@ -260,12 +289,18 @@ void HUDButton::draw()
         fade -= 0.11f;
         if (fade < 0.f) fade = 0.f;
     }
+    
+    if (isTimerRunning()) {
+        GLfloat circleColor[4] = { 1.f, 1.f, 1.f, 1.f };
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor);
+        glBindTexture(GL_TEXTURE_2D, ringTextureID);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor, 0);
+        circleBatch.Draw();
+    }
 }
 
 void HUDButton::setup()
-{
-    HUDView::setup();
-    
+{   
     offColor[0] = 0.3f;
     offColor[1] = 0.3f;
     offColor[2] = 0.3f;
@@ -282,15 +317,54 @@ void HUDButton::setup()
     hoverOnColor[1] = .9f;
     hoverOnColor[2] = 0.f;
     hoverOnColor[3] = 1.f;
+    
+    const int numVerts = 51;
+    M3DVector3f verts[numVerts];
+    M3DVector2f texCoords[numVerts];
+
+    M3DVector3f middle = { bounds.w / 2.f, bounds.h / 2.f, 0.f };
+    float r = m3dGetVectorLength3(middle) + 5;
+    
+    verts[0][0] = bounds.x + bounds.w / 2.f;
+    verts[0][1] = bounds.y + bounds.h / 2.f;
+    verts[0][2] = 0.f;
+    texCoords[0][0] = 0.5f;
+    texCoords[0][1] = 0.5f;
+    
+    for (int i = 1; i < numVerts; ++i)
+    {
+        RelativeTime elapsed = Time::getCurrentTime() - lastTimerStartTime;
+        float progress = elapsed.inMilliseconds() / (float)BUTTON_TIMEOUT;
+        float phase = -1.f * ((i - 1) / (float)(numVerts-2)) * progress;
+        float offset = 3.14159 / 2.f;
+        verts[i][0] = verts[0][0] + r * cosf(offset + 2*3.14159*phase);
+        verts[i][1] = verts[0][1] + r * sinf(offset + 2*3.14159*phase);
+        verts[i][2] = 0;
+        texCoords[i][0] = 0.5f + 0.5f * cosf(-offset + 2*3.14159*-phase);
+        texCoords[i][1] = 0.5f + 0.5f * sinf(-offset + 2*3.14159*-phase);
+    }
+    
+    if (!didSetup)
+        circleBatch.Begin(GL_TRIANGLE_FAN, numVerts, 1);
+    circleBatch.CopyVertexData3f(verts);
+    circleBatch.CopyTexCoordData2f(texCoords, 0);
+    if (!didSetup)
+        circleBatch.End();
+    
+    HUDView::setup();
 }
 
 void HUDButton::mouseDown(float /*x*/, float /*y*/)
 {
+    if (!isVisible)
+        return;
     setState(!state, true);
 }
 
 void HUDButton::updatePointedState(FingerView* /*fv*/)
 {
+    if (!isVisible)
+        return;
     if (prevNumPointers == 0 && pointers.size() > 0)
         setState(!state, true);
 
@@ -311,4 +385,34 @@ void HUDButton::setTextures(GLuint on, GLuint off)
 {
     onTextureID = on;
     offTextureID = off;
+}
+
+void HUDButton::setRingTexture(GLuint tex)
+{
+    ringTextureID = tex;
+}
+
+void HUDButton::cursorEntered(float x, float y)
+{
+    if (!isVisible)
+        return;
+    lastTimerStartTime = Time::getCurrentTime();
+    startTimer(BUTTON_TIMEOUT);
+    Logger::outputDebugString("Entered");
+}
+
+void HUDButton::cursorExited(float x, float y)
+{
+    if (!isVisible)
+        return;
+    stopTimer();
+    Logger::outputDebugString("Exited");
+}
+
+void HUDButton::timerCallback()
+{
+    Logger::outputDebugString("Boom");
+    setState(!getState(), true);
+    lastTimerStartTime = Time::getCurrentTime();
+    startTimer(BUTTON_TIMEOUT);
 }

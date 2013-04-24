@@ -212,7 +212,7 @@ void MainContentComponent::newOpenGLContextCreated()
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
-    kitSelector = new WheelSelector;
+    kitSelector = new WheelSelector(true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
     {
@@ -269,12 +269,17 @@ void MainContentComponent::newOpenGLContextCreated()
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
 
     MotionDispatcher::instance().addListener(*this);
+    
+#if 0 // disabled all gestures in favor of buttons
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
-    
+#endif
+
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
+    
+    MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 }

@@ -124,7 +124,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         cursor->setX(x);
         cursor->setY(y);
         for (CursorView::Listener* l : cursorViewListeners)
-            l->updateCursorState(x, y);
+            l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
     }
 
     return;
@@ -484,4 +484,10 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
         }
     }
     
+}
+
+void MotionDispatcher::setCursorTexture(GLuint texture)
+{
+    if (cursor)
+        cursor->setDefaultTexture(texture);
 }

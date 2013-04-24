@@ -64,7 +64,6 @@ public:
     virtual void cursorEntered(float /*x*/, float /*y*/) {}
     virtual void cursorExited(float /*x*/, float /*y*/) {}
 
-
 protected:
     bool trackingMouse;
     bool hover;
@@ -76,7 +75,7 @@ private:
     std::vector<FingerView*> hoveringFingers;
 };
 
-class HUDButton : public HUDView
+class HUDButton : public HUDView, public Timer
 {
 public:
     HUDButton(int id = -1);
@@ -87,6 +86,7 @@ public:
     bool getState() const { return state; }
     int getId() const { return buttonId; }
     void setTextures(GLuint on, GLuint off);
+    void setRingTexture(GLuint tex);
     void loadTextures();
     class Listener
     {
@@ -100,6 +100,12 @@ public:
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
     
+    virtual void updateCursorState(float x, float y) {}
+    virtual void cursorEntered(float x, float y);
+    virtual void cursorExited(float x, float y);
+    
+    void timerCallback();
+    
 private:
     bool state;
     std::vector<Listener*> listeners;
@@ -112,6 +118,9 @@ private:
     GLuint onTextureID;
     GLuint offTextureID;
     float fade;
+    GLBatch circleBatch;
+    Time lastTimerStartTime;
+    GLuint ringTextureID;
 };
 
 #endif

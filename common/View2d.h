@@ -14,6 +14,8 @@
 #include <GLMatrixStack.h>
 #include <GLGeometryTransform.h>
 
+#include "../JuceLibraryCode/JuceHeader.h"
+
 struct HUDRect {
     HUDRect() : x(0.f), y(0.f), w(0.f), h(0.f) {}
     
@@ -59,12 +61,17 @@ public:
     virtual void loadTextures();
     void setDefaultTexture(GLuint texture);
     void setDefaultColor(GLfloat* color);
+    void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
     
 protected:
     HUDRect bounds;
     bool didSetup;
     GLBatch defaultBatch;
-    
+    bool isVisible;
+    float opacity;
+    Time lastVisibilityChange;
+    int fadeTime;
+
 private:
     GLuint defaultTexture;
     GLfloat defaultColor[4];
