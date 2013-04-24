@@ -19,7 +19,7 @@
 
 // 0 -> strike on direction reversal
 // 1 -> strike as soon as threshold is crossed
-#define SENSITIVITY .50f
+#define SENSITIVITY .90f
 
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
 // Also, the pad area upper edge is at about 310
@@ -29,12 +29,30 @@ StrikeDetector::StrikeDetector() :
  state(kStateStrikeBegin)
 , maxVel(0.f)
 {
+	for (int i = 0; i < kHistoryDepth; ++i)
+	{
+		positionHistory[i] = 0.0f;
+		velocityHistory[i] = 0.0f;
+#if kDebugHistory
+		avgPositionHistory[i] = 0.0f;
+		avgVelocityHistory[i] = 0.0f;
+#endif
+		timestampHistory[i] = 0;
+	}
 }
 
+#if kDebugHistory
+static int noteCount = 0;
+static int dataCount = 0;
+#endif
 void StrikeDetector::handMotion(const Leap::Hand& hand)
 {
 	float position = hand.palmPosition().y;
 	float velocity = hand.palmVelocity().y;
+	int64_t timestamp = hand.frame().timestamp();
+
+	SmoothData(velocity, position, timestamp);
+
 	float direction;
 	if (velocity < 0.0f)
 		direction = -1.0f;
@@ -83,7 +101,6 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 				float rangeHigh = MAX_VELOCTIY;
 				float val = jmin(maxVel, rangeHigh);
 				float vel = (val - rangeLow) / (rangeHigh - rangeLow);
-				maxVel = 0.0f;
         
 				// Get midi note to play based on left/right 
 				bool leftHand = isLeft(hand);
@@ -93,8 +110,14 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 				Drums::instance().NoteOn(midiNote, vel);
 //				Logger::outputDebugString(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
 
+#if kDebugHistory
+				noteCount++;
+				dataCount = 0;
+#endif
+
 			    lastStrikeTime = Time::getCurrentTime();
 
+				maxVel = 0.0f;
 				state = kStateRecoilBegin;
 			}
 
@@ -145,4 +168,63 @@ bool StrikeDetector::isLeft(const Leap::Hand &hand)
 const Time& StrikeDetector::getLastStrikeTime() const
 {
     return lastStrikeTime;
+}
+
+
+void StrikeDetector::SmoothData(float& velocity, float& position, int64_t timestamp)
+{
+#if kDebugHistory
+	if (noteCount >= 5)
+	{
+		dataCount++;
+		if (dataCount >= 20)
+		{
+			noteCount = 0;
+		}
+	}
+#endif
+
+	for (int i = kHistoryDepth - 1; i > 0; --i)
+	{
+		positionHistory[i] = positionHistory[i - 1];
+		velocityHistory[i] = velocityHistory[i - 1];
+#if kDebugHistory
+		avgPositionHistory[i] = avgPositionHistory[i - 1];
+		avgVelocityHistory[i] = avgVelocityHistory[i - 1];
+#endif
+		timestampHistory[i] = timestampHistory[i - 1];
+	}
+
+	positionHistory[0] = position;
+	velocityHistory[0] = velocity;
+	timestampHistory[0] = timestamp;
+
+	float	velTotal = 0.0f;
+	float	posTotal = 0.0f;
+	float	weightTotal = 0.0f;
+	float	weight = 1.0f;
+
+	int count = 0;
+	while (count < kHistoryDepth)
+	{
+		posTotal += (positionHistory[count] * weight);
+		velTotal += (velocityHistory[count] * weight);
+		weightTotal += weight;
+		weight *= kWeightFactor;
+		int64_t timeDif = timestamp - timestampHistory[count];
+		count++;
+		if (timeDif > kMeanDepth)
+			break;
+	}
+
+	velTotal /= weightTotal;
+	posTotal /= weightTotal;
+
+	velocity = velTotal;
+	position = posTotal;
+
+#if kDebugHistory
+	avgPositionHistory[0] = position;
+	avgVelocityHistory[0] = velocity;
+#endif
 }
