@@ -6,7 +6,7 @@
 
 
 class DrumSelector : public HUDView
-                   , public MultiTimer
+                   , public HUDButton::Listener
 {
 public:
     DrumSelector();
@@ -17,41 +17,23 @@ public:
     void draw();
     void loadTextures();
     void setBounds(const HUDRect& b);
-    void fingerMotion(float x, float y, FingerView* fv);
-    void fingerEntered(float x, float y, FingerView* fv);
-    void fingerExited(float x, float y, FingerView* fv);
-    void cursorMoved(float x, float y);
-    void cursorEntered(float x, float y);
-    void cursorExited(float x, float y);
-
-    // Juce::Timer override
-    void timerCallback(int timerId);
-
-    enum TimerId
-    {
-        kTimerSelectionDelay,
-        kTimerTrackedFingerMissing
-    };
+    
+    // HUDButton::Listener override
+    void buttonStateChanged(HUDButton* b);
 
     void setSelection(int sel);
     int getSelection() const { return selection; }
 
-    class Icon : public HUDView
+    class Icon : public HUDButton
     {
     public:
         Icon(int id);
         ~Icon();
-        void setup();
         void draw();
-        void loadTextures();
         void setBounds(const HUDRect& b);
-        void setIsSelection(bool is);
-        int getId() const { return id; }
     private:
         void updateBounds();
         
-        int id;
-        bool isSelection;
         HUDRect targetBounds;
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
@@ -73,7 +55,6 @@ private:
     std::vector<SharedPtr<Icon> > icons;
     int selection;
     bool needsLayout;
-    FingerView* trackedFinger;
     std::vector<Listener*> listeners;
 };
 
