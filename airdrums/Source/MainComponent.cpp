@@ -674,29 +674,35 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() - 1);
         playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        ret = true;
     }
     else if (kp.getTextCharacter() == 'w') {
         drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() + 1);
         playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        ret = true;
     }
     else if (kp.getTextCharacter() == 'a') {
         drumSelectorRight->setSelection(drumSelectorRight->getSelection() - 1);
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+        ret = true;
     }
     else if (kp.getTextCharacter() == 's') {
         drumSelectorRight->setSelection(drumSelectorRight->getSelection() + 1);
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+        ret = true;
     }
     else if (kp.getKeyCode() == KeyPress::leftKey)
     {
         tempoControl->increment(-1);
+        ret = true;
     }
     else if (kp.getKeyCode() == KeyPress::rightKey)
     {
         tempoControl->increment(1);
+        ret = true;
     }
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
@@ -766,9 +772,12 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 	}
 
     const Leap::Frame frame = controller.frame();
+
+#if 0 // disabled gestures in favor of simple cursor controlled buttons
     const Leap::GestureList& gestures = frame.gestures();
     handleGestures(gestures);
-    
+#endif
+
     const Leap::HandList& hands = frame.hands();
     const size_t numHands = hands.count();
     
