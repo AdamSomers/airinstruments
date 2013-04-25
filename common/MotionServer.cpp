@@ -140,6 +140,12 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         for (CursorView::Listener* l : cursorViewListeners)
             l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
     }
+    else
+    {
+        cursor->setEnabled(false);
+        cursor->setX(0);
+        cursor->setY(0);
+    }
 
     return;
 
