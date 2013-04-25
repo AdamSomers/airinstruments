@@ -403,10 +403,6 @@ void WheelSelector::Icon::draw()
     }
     else
         rotationInc = 0;
-    
-    // sanity check
-    if (fabsf(rotationCoeff) >= 360.f)
-        rotationCoeff = targetRotationCoeff = 0.f;
 
     Environment::instance().modelViewMatrix.PushMatrix();
     
