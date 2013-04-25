@@ -398,7 +398,7 @@ void HUDButton::cursorEntered(float x, float y)
         return;
     lastTimerStartTime = Time::getCurrentTime();
     startTimer(BUTTON_TIMEOUT);
-    Logger::outputDebugString("Entered");
+    //Logger::outputDebugString("Entered");
 }
 
 void HUDButton::cursorExited(float x, float y)
@@ -406,12 +406,12 @@ void HUDButton::cursorExited(float x, float y)
     if (!isVisible)
         return;
     stopTimer();
-    Logger::outputDebugString("Exited");
+    //Logger::outputDebugString("Exited");
 }
 
 void HUDButton::timerCallback()
 {
-    Logger::outputDebugString("Boom");
+    //Logger::outputDebugString("Boom");
     setState(!getState(), true);
     lastTimerStartTime = Time::getCurrentTime();
     startTimer(BUTTON_TIMEOUT);
