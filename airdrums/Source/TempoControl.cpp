@@ -20,6 +20,21 @@ TempoControl::TempoControl()
         icons.push_back(icon);
         addChild(icon);
     }
+    
+    addChild(&leftButton);
+    addChild(&rightButton);
+    leftButton.addListener(this);
+    rightButton.addListener(this);
+
+    leftButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_left"), SkinManager::instance().getSelectedSkin().getTexture("arrow_left"));
+    rightButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_right"), SkinManager::instance().getSelectedSkin().getTexture("arrow_right"));
+    
+    
+    leftButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    rightButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    
+    leftButton.setTimeout(300);
+    rightButton.setTimeout(300);
 }
 
 TempoControl::~TempoControl()
@@ -43,6 +58,16 @@ void TempoControl::setBounds(const HUDRect &b)
 {
     HUDView::setBounds(b);
     layoutIcons();
+    
+    float buttonWidth = b.h;
+    leftButton.setBounds(HUDRect(-buttonWidth - 10,
+                                 0,
+                                 buttonWidth,
+                                 buttonWidth));
+    rightButton.setBounds(HUDRect(b.w + 10,
+                                  0,
+                                  buttonWidth,
+                                  buttonWidth));
 }
 
 void TempoControl::layoutIcons()
@@ -94,9 +119,15 @@ void TempoControl::increment(int direction)
     needsLayout = true;
 }
 
+void TempoControl::enableButtons(bool shouldBeEnabled)
+{
+    leftButton.setVisible(shouldBeEnabled);
+    rightButton.setVisible(shouldBeEnabled);
+}
 
 void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
 {
+#if 0
     if (fv != trackedFinger)
         return;
 
@@ -116,10 +147,12 @@ void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
         startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
+#endif
 }
 
 void TempoControl::fingerEntered(float x, float y, FingerView* fv)
 {
+#if 0
     M3DVector3f vec;
     fv->objectFrame.GetOrigin(vec);
     //printf("%x entered %d %d %.2f %.2f\n", fv, (int)x, (int)y, vec[0], vec[1]);
@@ -133,10 +166,12 @@ void TempoControl::fingerEntered(float x, float y, FingerView* fv)
         initialFingerX = x;
         initialFingerY = y;
     }
+#endif
 }
 
 void TempoControl::fingerExited(float x, float y, FingerView* fv)
 {
+#if 0
     M3DVector3f vec;
     fv->objectFrame.GetOrigin(vec);
     //printf("%x exited %d %d %.2f %.2f\n", fv, (int)x, (int)y, vec[0], vec[1]);
@@ -146,10 +181,12 @@ void TempoControl::fingerExited(float x, float y, FingerView* fv)
         initialFingerX = x;
         initialFingerY = y;
     }
+#endif
 }
 
 void TempoControl::cursorMoved(float x, float /*y*/)
 {
+#if 0
     int inc = 0;
     float center = getBounds().x + getBounds().w / 2;
     float distanceFromCenter = x - center;
@@ -163,6 +200,7 @@ void TempoControl::cursorMoved(float x, float /*y*/)
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
         startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
     }
+#endif
 }
 
 void TempoControl::cursorEntered(float /*x*/, float /*y*/)
@@ -186,6 +224,14 @@ void TempoControl::timerCallback(int timerId)
         trackedFinger = NULL;
         break;
     }
+}
+
+void TempoControl::buttonStateChanged(HUDButton* b)
+{
+    if (b == &leftButton)
+        increment(1);
+    if (b == &rightButton)
+        increment(-1);
 }
 
 TempoControl::Icon::Icon()

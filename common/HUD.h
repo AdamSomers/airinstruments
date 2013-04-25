@@ -88,6 +88,8 @@ public:
     void setTextures(GLuint on, GLuint off);
     void setRingTexture(GLuint tex);
     void loadTextures();
+    void setTimeout(int newTimeout);
+    
     class Listener
     {
     public:
@@ -121,6 +123,7 @@ private:
     GLBatch circleBatch;
     Time lastTimerStartTime;
     GLuint ringTextureID;
+    int hoverTimeout;
 };
 
 #endif

@@ -28,11 +28,11 @@ WheelSelector::WheelSelector(bool left /*= false*/)
     upButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     downButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     if (leftHanded)
-        displayToggleButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_right"),
-                                        SkinManager::instance().getSelectedSkin().getTexture("arrow_left"));
-    else
         displayToggleButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_left"),
                                         SkinManager::instance().getSelectedSkin().getTexture("arrow_right"));
+    else
+        displayToggleButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_right"),
+                                        SkinManager::instance().getSelectedSkin().getTexture("arrow_left"));
     
     upButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_up"),
                          SkinManager::instance().getSelectedSkin().getTexture("arrow_up"));

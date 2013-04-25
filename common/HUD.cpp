@@ -1,8 +1,6 @@
 #include "HUD.h"
 #include "GfxTools.h"
 
-#define BUTTON_TIMEOUT 750
-
 HUDView::HUDView()
 : parent(NULL)
 , trackingMouse(false)
@@ -207,6 +205,7 @@ HUDButton::HUDButton(int id)
 , prevNumPointers(0)
 , fade(0.f)
 , ringTextureID(0)
+, hoverTimeout(750)
 {
     // set a transparent color for the background
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -334,7 +333,7 @@ void HUDButton::setup()
     for (int i = 1; i < numVerts; ++i)
     {
         RelativeTime elapsed = Time::getCurrentTime() - lastTimerStartTime;
-        float progress = elapsed.inMilliseconds() / (float)BUTTON_TIMEOUT;
+        float progress = elapsed.inMilliseconds() / (float)hoverTimeout;
         float phase = -1.f * ((i - 1) / (float)(numVerts-2)) * progress;
         float offset = 3.14159 / 2.f;
         verts[i][0] = verts[0][0] + r * cosf(offset + 2*3.14159*phase);
@@ -392,12 +391,17 @@ void HUDButton::setRingTexture(GLuint tex)
     ringTextureID = tex;
 }
 
+void HUDButton::setTimeout(int newTimeout)
+{
+    hoverTimeout = newTimeout;
+}
+
 void HUDButton::cursorEntered(float x, float y)
 {
     if (!isVisible)
         return;
     lastTimerStartTime = Time::getCurrentTime();
-    startTimer(BUTTON_TIMEOUT);
+    startTimer(hoverTimeout);
     //Logger::outputDebugString("Entered");
 }
 
@@ -414,5 +418,5 @@ void HUDButton::timerCallback()
     //Logger::outputDebugString("Boom");
     setState(!getState(), true);
     lastTimerStartTime = Time::getCurrentTime();
-    startTimer(BUTTON_TIMEOUT);
+    startTimer(hoverTimeout);
 }
