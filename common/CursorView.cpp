@@ -13,6 +13,7 @@ CursorView::CursorView()
 : targetX(0.f)
 , targetY(0.f)
 , enabled(true)
+, fingerId(-1)
 {
     
 }
@@ -48,6 +49,11 @@ void CursorView::setY(float y)
 void CursorView::setEnabled(bool shouldBeEnabled)
 {
     enabled = shouldBeEnabled;
+}
+
+void CursorView::setFingerId(int id)
+{
+    fingerId = id;
 }
 
 CursorView::Listener::Listener()
