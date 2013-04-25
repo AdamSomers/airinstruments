@@ -247,7 +247,6 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 	resetToZero();
 
 	pattern = aPattern;
-	setDrumKit(pattern->GetDrumKit());
 	if (tempoSource == kPatternTempo)
 		setTempoSlider(pattern->GetTempo());
 	else

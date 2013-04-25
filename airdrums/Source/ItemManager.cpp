@@ -76,6 +76,16 @@ SharedPtr<Managed> ItemManager<Manager, Managed>::GetItem(Uuid& uuid)
 	return SharedPtr<Managed>();
 }
 
+template <typename Manager, typename Managed>
+int ItemManager<Manager, Managed>::GetIndexOfItem(SharedPtr<Managed> item)
+{
+    for (int i = 0; i < (int) mItems.size(); ++i)
+	{
+		if (mItems.at(i) == item)
+			return i;
+	}
+    return -1;
+}
 
 template <typename Manager, typename Managed>
 String& ItemManager<Manager, Managed>::GetDefaultPath(void)

@@ -289,6 +289,11 @@ void MainContentComponent::populatePatternSelector()
     patternSelector->removeAllIcons();
     
     int numPatterns = PatternManager::GetInstance().GetItemCount();
+    if (numPatterns == 0)
+    {
+        Logger::outputDebugString("no patterns!");
+        return;
+    }
     for (int i = 0; i < numPatterns; ++i)
     {
         WheelSelector::Icon* icon = new WheelSelector::Icon(i);
@@ -738,14 +743,26 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
     }
     else if (selector == patternSelector) {
         int selection = patternSelector->getSelection();
-        std::shared_ptr<DrumPattern> selectePattern = PatternManager::GetInstance().GetItem(selection);
-        String name = selectePattern->GetName();
-        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
-        Uuid uuid = selectePattern->GetUuid();
+        std::shared_ptr<DrumPattern> selectedPattern = PatternManager::GetInstance().GetItem(selection);
+        String name = selectedPattern->GetName();
+        Logger::outputDebugString("patternSelectorChanged - index: " + String(selection) + " name: " + name);
+        Uuid uuid = selectedPattern->GetUuid();
         String uuidString = uuid.toString();
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
-        Drums::instance().setPattern(selectePattern);
+        Drums::instance().setPattern(selectedPattern);
+        std::shared_ptr<DrumKit> kit = selectedPattern->GetDrumKit();
+        if (kit) {
+            Drums::instance().setDrumKit(kit);
+            int drumKitIndex = KitManager::GetInstance().GetIndexOfItem(selectedPattern->GetDrumKit());
+            kitSelector->setSelection(drumKitIndex);
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", kit->GetName());
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", kit->GetUuid().toString());
+        }
+        else
+        {
+            Logger::outputDebugString("Pattern selected with unknown kit");
+        }
     }
 }
 
