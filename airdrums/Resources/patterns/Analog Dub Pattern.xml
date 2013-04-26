@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pattern name="Analog Dub Pattern" uuid="97df8c44f5b1dca4492620957ca11034"
+         sampleRate="44100" tempo="118">
+  <kit name="AnalogDub" uuid="a429e59be400009f43e60995a528f8bb"/>
+  <event position="5594" data="900252"/>
+  <event position="11197" data="900322"/>
+  <event position="16801" data="900235"/>
+  <event position="22405" data="900168"/>
+  <event position="22405" data="90063a"/>
+  <event position="22405" data="90083a"/>
+  <event position="28010" data="90021d"/>
+  <event position="28010" data="90030e"/>
+  <event position="33616" data="900649"/>
+  <event position="39222" data="900234"/>
+  <event position="39222" data="900e1b"/>
+  <event position="39229" data="90050e"/>
+  <event position="44826" data="900048"/>
+  <event position="44826" data="900322"/>
+  <event position="44826" data="900335"/>
+  <event position="44826" data="900617"/>
+  <event position="44826" data="900743"/>
+  <event position="50431" data="900531"/>
+  <event position="67247" data="90031a"/>
+  <event position="72852" data="90020e"/>
+  <event position="78459" data="900207"/>
+  <event position="78459" data="900149"/>
+  <event position="78459" data="900618"/>
+  <event position="84063" data="900228"/>
+  <event position="89667" data="900222"/>
+  <event position="95274" data="900250"/>
+  <event position="100880" data="900519"/>
+  <event position="112088" data="900639"/>
+  <event position="112088" data="900501"/>
+  <event position="112088" data="900e4b"/>
+  <event position="112088" data="900b31"/>
+  <event position="117695" data="90031f"/>
+  <event position="123298" data="90021b"/>
+  <event position="123298" data="90061d"/>
+  <event position="134509" data="900252"/>
+  <event position="134509" data="90002f"/>
+  <event position="134509" data="90030d"/>
+  <event position="134509" data="90061a"/>
+  <event position="134509" data="900730"/>
+  <event position="140113" data="900532"/>
+  <event position="156930" data="900339"/>
+  <event position="162533" data="90021d"/>
+  <event position="168140" data="900205"/>
+  <event position="168140" data="90001d"/>
+  <event position="168177" data="900504"/>
+  <event position="173744" data="900206"/>
+</pattern>
