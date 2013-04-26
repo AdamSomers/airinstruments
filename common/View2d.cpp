@@ -15,7 +15,7 @@ View2d::View2d()
 , defaultColorSet(false)
 , isVisible(true)
 , opacity(1.f)
-, fadeTime(0.f)
+, fadeTime(0)
 {
     defaultColor[0] = 1.f;
     defaultColor[1] = .3f;

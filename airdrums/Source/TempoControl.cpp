@@ -125,7 +125,7 @@ void TempoControl::enableButtons(bool shouldBeEnabled)
     rightButton.setVisible(shouldBeEnabled);
 }
 
-void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
+void TempoControl::fingerMotion(float /*x*/, float /*y*/, FingerView* /*fv*/)
 {
 #if 0
     if (fv != trackedFinger)
@@ -150,7 +150,7 @@ void TempoControl::fingerMotion(float x, float /*y*/, FingerView* fv)
 #endif
 }
 
-void TempoControl::fingerEntered(float x, float y, FingerView* fv)
+void TempoControl::fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/)
 {
 #if 0
     M3DVector3f vec;
@@ -169,7 +169,7 @@ void TempoControl::fingerEntered(float x, float y, FingerView* fv)
 #endif
 }
 
-void TempoControl::fingerExited(float x, float y, FingerView* fv)
+void TempoControl::fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/)
 {
 #if 0
     M3DVector3f vec;
@@ -184,7 +184,7 @@ void TempoControl::fingerExited(float x, float y, FingerView* fv)
 #endif
 }
 
-void TempoControl::cursorMoved(float x, float /*y*/)
+void TempoControl::cursorMoved(float /*x*/, float /*y*/)
 {
 #if 0
     int inc = 0;

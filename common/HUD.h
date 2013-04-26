@@ -102,7 +102,7 @@ public:
     // FingerView::Listener override
     virtual void updatePointedState(FingerView* fv);
     
-    virtual void updateCursorState(float x, float y) {}
+    virtual void updateCursorState(float, float) {}
     virtual void cursorEntered(float x, float y);
     virtual void cursorExited(float x, float y);
     

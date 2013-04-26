@@ -16,7 +16,7 @@
 #include "PatternLoadDialog.h"
 #if JUCE_WINDOWS
 #if JUCE_DEBUG
-    #include <vld.h>
+    //#include <vld.h>
 #endif
 #endif
 

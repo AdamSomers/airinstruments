@@ -40,10 +40,10 @@ void TextHUDButton::loadTextures()
     Graphics gOn (imOn);
     
     gOn.setColour(Colour(0.f, 0.f, 0.f, .3f));
-    gOn.fillEllipse(0, 0, imageW, imageH);
+    gOn.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
     gOn.setColour(Colours::white);
-    float textSize = jmin(imageH, imageW) * .22;
+    float textSize = jmin(imageH, imageW) * .22f;
     gOn.setFont(textSize);
 
     float lineHeight = textSize;
@@ -52,7 +52,7 @@ void TextHUDButton::loadTextures()
         y += lineHeight / 2.f;
     for (int i = 0; i < onText.size(); ++i)
     {
-        gOn.drawText(onText[i], 0, y, imageW, lineHeight, Justification::centred, false);
+        gOn.drawText(onText[i], 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
         y += lineHeight;
     }
     
@@ -66,7 +66,7 @@ void TextHUDButton::loadTextures()
     Graphics gOff (imOff);
     
     gOff.setColour(Colour(0.f, 0.f, 0.f, .3f));
-    gOff.fillEllipse(0, 0, imageW, imageH);
+    gOff.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
     gOff.setColour(Colours::white);
     gOff.setFont(textSize);
@@ -77,7 +77,7 @@ void TextHUDButton::loadTextures()
         y += lineHeight / 2.f;
     for (int i = 0; i < offText.size(); ++i)
     {
-        gOff.drawText(offText[i], 0, y, imageW, lineHeight, Justification::centred, false);
+        gOff.drawText(offText[i], 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
         y += lineHeight;
     }
     

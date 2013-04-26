@@ -447,10 +447,10 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) tempoControlHeight));
         
         if (buttonBar)
-            buttonBar->setBounds(HUDRect(0,
-                                         statusBarHeight + 10,
-                                         Environment::instance().screenW,
-                                         100));
+            buttonBar->setBounds(HUDRect((GLfloat) 0,
+                                         (GLfloat) (statusBarHeight + 10),
+                                         (GLfloat) Environment::instance().screenW,
+                                         (GLfloat)100));
         
 
 #if 0

@@ -335,12 +335,12 @@ void HUDButton::setup()
         RelativeTime elapsed = Time::getCurrentTime() - lastTimerStartTime;
         float progress = elapsed.inMilliseconds() / (float)hoverTimeout;
         float phase = -1.f * ((i - 1) / (float)(numVerts-2)) * progress;
-        float offset = 3.14159 / 2.f;
-        verts[i][0] = verts[0][0] + r * cosf(offset + 2*3.14159*phase);
-        verts[i][1] = verts[0][1] + r * sinf(offset + 2*3.14159*phase);
+        float offset = 3.14159f / 2.f;
+        verts[i][0] = verts[0][0] + r * cosf(offset + 2*3.14159f*phase);
+        verts[i][1] = verts[0][1] + r * sinf(offset + 2*3.14159f*phase);
         verts[i][2] = 0;
-        texCoords[i][0] = 0.5f + 0.5f * cosf(-offset + 2*3.14159*-phase);
-        texCoords[i][1] = 0.5f + 0.5f * sinf(-offset + 2*3.14159*-phase);
+        texCoords[i][0] = 0.5f + 0.5f * cosf(-offset + 2*3.14159f*-phase);
+        texCoords[i][1] = 0.5f + 0.5f * sinf(-offset + 2*3.14159f*-phase);
     }
     
     if (!didSetup)
@@ -396,7 +396,7 @@ void HUDButton::setTimeout(int newTimeout)
     hoverTimeout = newTimeout;
 }
 
-void HUDButton::cursorEntered(float x, float y)
+void HUDButton::cursorEntered(float, float)
 {
     if (!isVisible)
         return;
@@ -405,7 +405,7 @@ void HUDButton::cursorEntered(float x, float y)
     //Logger::outputDebugString("Entered");
 }
 
-void HUDButton::cursorExited(float x, float y)
+void HUDButton::cursorExited(float, float)
 {
     if (!isVisible)
         return;
