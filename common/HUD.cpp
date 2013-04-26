@@ -260,17 +260,17 @@ void HUDButton::draw()
     }
 
     GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade * opacity};
-    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, (1.f - fade) * opacity  };
+    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, (1.f - fade) * opacity };
 
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
-    defaultBatch.Draw();
-    
     GLint blendSrc;
     glGetIntegerv(GL_BLEND_SRC, &blendSrc);
     GLint blendDst;
     glGetIntegerv(GL_BLEND_DST, &blendDst);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
+    defaultBatch.Draw();
 
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);

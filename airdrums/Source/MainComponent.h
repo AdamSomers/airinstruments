@@ -21,6 +21,7 @@
 #include "TempoControl.h"
 #include "StrikeDetector.h"
 #include "CursorView.h"
+#include "ButtonBar.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -77,6 +78,7 @@ public:
     
     // MessageListener override
     void handleMessage(const Message& m);
+
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
@@ -106,6 +108,7 @@ private:
     WheelSelector* kitSelector;
     WheelSelector* patternSelector;
     TempoControl* tempoControl;
+    ButtonBar* buttonBar;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;

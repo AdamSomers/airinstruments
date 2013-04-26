@@ -42,6 +42,7 @@ MainContentComponent::MainContentComponent()
 , kitSelector(NULL)
 , patternSelector(NULL)
 , tempoControl(NULL)
+, buttonBar(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
@@ -89,6 +90,7 @@ MainContentComponent::~MainContentComponent()
     delete kitSelector;
     delete patternSelector;
     delete tempoControl;
+    delete buttonBar;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -259,6 +261,11 @@ void MainContentComponent::newOpenGLContextCreated()
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
     tempoControl->setTempo(tempo);
     views.push_back(tempoControl);
+    
+    buttonBar = new ButtonBar;
+    GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
+    buttonBar->setDefaultColor(transparent);
+    views.push_back(buttonBar);
 
     for (HUDView* v : views)
         v->loadTextures();
@@ -438,8 +445,17 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
                                             (GLfloat) tempoControlWidth,
                                             (GLfloat) tempoControlHeight));
+        
+        if (buttonBar)
+            buttonBar->setBounds(HUDRect(0,
+                                         statusBarHeight + 10,
+                                         Environment::instance().screenW,
+                                         100));
+        
 
+#if 0
         layoutPadsLinear();
+#endif
         sizeChanged = false;
     }
     

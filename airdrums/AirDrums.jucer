@@ -43,6 +43,8 @@
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="kNn5KQ" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
+      <FILE id="w731yX" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
       <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
       <FILE id="whjiPC" name="HandView.h" compile="0" resource="0" file="../common/HandView.h"/>
       <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>
@@ -60,6 +62,10 @@
             file="../common/TutorialSlide.cpp"/>
       <FILE id="SKcLcS" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
       <FILE id="PPfLKm" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
+      <FILE id="zYMXR5" name="TextButton.cpp" compile="1" resource="0" file="../common/TextButton.cpp"/>
+      <FILE id="rFkMZa" name="TextButton.h" compile="0" resource="0" file="../common/TextButton.h"/>
+      <FILE id="VYKSMK" name="View2d.cpp" compile="1" resource="0" file="../common/View2d.cpp"/>
+      <FILE id="lcpgrA" name="View2d.h" compile="0" resource="0" file="../common/View2d.h"/>
     </GROUP>
     <GROUP id="{9ED69939-FCC6-9596-4256-AA83B4D8178A}" name="GLTools">
       <GROUP id="{63BF3604-9EA2-C52D-4873-BAF2092B480D}" name="include">
@@ -99,6 +105,8 @@
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
             file="Source/AudioSettingsDialog.h"/>
+      <FILE id="mXgtFu" name="ButtonBar.cpp" compile="1" resource="0" file="Source/ButtonBar.cpp"/>
+      <FILE id="OlLNDr" name="ButtonBar.h" compile="0" resource="0" file="Source/ButtonBar.h"/>
       <FILE id="JSRMF6" name="DrumItem.cpp" compile="1" resource="0" file="Source/DrumItem.cpp"/>
       <FILE id="PzAZWh" name="DrumItem.h" compile="0" resource="0" file="Source/DrumItem.h"/>
       <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
@@ -145,10 +153,6 @@
       <FILE id="zf1uwf" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
       <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"
             file="Source/StrikeDetector.cpp"/>
-      <FILE id="kNn5KQ" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
-      <FILE id="w731yX" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
-      <FILE id="VYKSMK" name="View2d.cpp" compile="1" resource="0" file="../common/View2d.cpp"/>
-      <FILE id="lcpgrA" name="View2d.h" compile="0" resource="0" file="../common/View2d.h"/>
       <FILE id="Oira0u" name="StrikeDetector.h" compile="0" resource="0"
             file="Source/StrikeDetector.h"/>
       <FILE id="NLCMoY" name="TempoControl.cpp" compile="1" resource="0"
