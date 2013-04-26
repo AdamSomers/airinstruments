@@ -40,6 +40,7 @@ public:
 
 	SharedPtr<Managed>	GetItem(int index);
 	SharedPtr<Managed>	GetItem(Uuid& uuid);
+    int GetIndexOfItem(SharedPtr<Managed> item);
 
 	//void	SetPathToItemFolder(String path);
 

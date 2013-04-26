@@ -57,8 +57,18 @@ DrumPattern::Status DrumPattern::LoadFromXml(XmlElement* element, File& /*direct
 		return status;
 	KitManager& mgr = KitManager::GetInstance();
 	SharedPtr<DrumKit> kit = mgr.GetItem(kitInfo.GetUuid());
-	if (kit.get() == nullptr)
-		return kNoKitError;
+    if (kit.get() == nullptr) {
+        kit = mgr.GetItem(0);
+        if (kit.get() == nullptr) {
+            Logger::outputDebugString("ERROR: No kits to load with pattern!");
+            return kNoKitError;
+        }
+        else {
+            Logger::outputDebugString("WARNING: Pattern loaded with unknown kit!");
+            Logger::outputDebugString("Pattern: " + GetName() + " " + GetUuid().toString());
+            Logger::outputDebugString("Kit: " + kitInfo.GetName() + " " + kitInfo.GetUuid().toString() + "\n");
+        }
+    }
 	mDrumKit = kit;
 
 	XmlElement* child = element->getChildByName("event");

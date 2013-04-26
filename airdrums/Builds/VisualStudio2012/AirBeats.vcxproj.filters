@@ -325,6 +325,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\CursorView.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\HandView.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
@@ -346,6 +349,12 @@
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\TextButton.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\View2d.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\GLTools\src\GLBatch.cpp">
       <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
@@ -365,6 +374,9 @@
       <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ButtonBar.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumItem.cpp">
@@ -419,6 +431,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SkinManager.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StrikeDetector.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TempoControl.cpp">
@@ -1617,6 +1632,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\CursorView.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\common\HandView.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
@@ -1639,6 +1657,12 @@
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\Types.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\TextButton.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\View2d.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h">
@@ -1684,6 +1708,9 @@
       <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ButtonBar.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumItem.h">
@@ -1738,6 +1765,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SkinManager.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StrikeDetector.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TempoControl.h">

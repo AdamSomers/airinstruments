@@ -14,6 +14,7 @@
 
 class TempoControl : public HUDView
                    , public MultiTimer
+                   , public HUDButton::Listener
 {
 public:
     TempoControl();
@@ -25,6 +26,9 @@ public:
     void fingerMotion(float x, float y, FingerView* fv);
     void fingerEntered(float x, float y, FingerView* fv);
     void fingerExited(float x, float y, FingerView* fv);
+    void cursorMoved(float x, float y);
+    void cursorEntered(float x, float y);
+    void cursorExited(float x, float y);
     
     // Juce::Timer override
     void timerCallback(int timerId);
@@ -34,9 +38,13 @@ public:
         kTimerSelectionDelay,
         kTimerTrackedFingerMissing
     };
+
+    // HUDButton::Listener overrides
+    void buttonStateChanged(HUDButton* b);
     
     void setTempo(float tempo);
     void increment(int direction);
+    void enableButtons(bool shouldBeEnabled);
     
     class Icon : public HUDView
     {
@@ -69,6 +77,9 @@ private:
     float initialFingerX;
     float initialFingerY;
     FingerView* trackedFinger;
+    
+    HUDButton leftButton;
+    HUDButton rightButton;
 };
 
 #endif /* defined(__AirBeats__TempoControl__) */

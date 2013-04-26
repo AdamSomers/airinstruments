@@ -5,14 +5,7 @@ HUDView::HUDView()
 : parent(NULL)
 , trackingMouse(false)
 , hover(false)
-, didSetup(false)
-, defaultTexture(0)
-, defaultColorSet(false)
 {
-    defaultColor[0] = 1.f;
-    defaultColor[1] = 1.f;
-    defaultColor[2] = 1.f;
-    defaultColor[3] = 1.f;
 }
 
 void HUDView::addChild(HUDView* child)
@@ -40,23 +33,7 @@ void HUDView::setParent(HUDView* p)
 
 void HUDView::draw()
 {
-    if (0 != defaultTexture)
-    {
-        glBindTexture(GL_TEXTURE_2D, defaultTexture);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
-        defaultBatch.Draw();
-    }
-    else
-    {
-        GLint polygonMode[2];
-        glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
-        if (!defaultColorSet)
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), defaultColor);
-        glLineWidth(1.f);
-        defaultBatch.Draw();
-        glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
-    }
+    View2d::draw();
 
     for (HUDView* v : children)
     {
@@ -69,44 +46,19 @@ void HUDView::draw()
 
 void HUDView::setup()
 {
-    M3DVector3f verts[4] = {
-        bounds.x, bounds.y, 0.f,
-        bounds.x + bounds.w, bounds.y, 0.f,
-        bounds.x, bounds.y + bounds.h, 0.f,
-        bounds.x + bounds.w, bounds.y + bounds.h, 0.f
-    };
-    
-    M3DVector3f normals[4] = {
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f,
-        0.f, 0.f, 1.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        defaultBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    defaultBatch.CopyVertexData3f(verts);
-    defaultBatch.CopyTexCoordData2f(texCoords, 0);
-    defaultBatch.CopyNormalDataf(normals);
-    if (!didSetup)
-        defaultBatch.End();
-    
-    didSetup = true;
+    View2d::setup();
     
     for (HUDView* v : children)
         v->setup();
 }
 
-void HUDView::boundsChanged()
+
+void HUDView::loadTextures()
 {
-    setup();
+    for (HUDView* child : children)
+    {
+        child->loadTextures();
+    }
 }
 
 void HUDView::mouseDown(float x, float y)
@@ -160,12 +112,6 @@ void HUDView::passiveMotion(float x, float y)
     }
 }
 
-void HUDView::setBounds(const HUDRect& b)
-{
-    bounds = b;
-    boundsChanged();
-}
-
 void HUDView::updatePointedState(FingerView* fv)
 {
     M3DVector2f screenPos;
@@ -214,23 +160,43 @@ void HUDView::updatePointedState(FingerView* fv)
     }
 }
 
-void HUDView::loadTextures()
+void HUDView::updateCursorState(float x, float y)
 {
+    if (bounds.contains(x, y))
+    {
+        if (!cursorInside)
+        {
+            cursorInside = true;
+            cursorEntered(x, y);
+        }
+        cursorMoved(x, y);
+    }
+    else
+    {
+        if (cursorInside)
+        {
+            cursorExited(x, y);
+            cursorInside = false;
+        }
+    }
+    
     for (HUDView* child : children)
     {
-        child->loadTextures();
+        float localX = x - bounds.x;
+        float localY = y - bounds.y;
+        //printf("%f %f %f %f\n",x, y, localX,localY);
+        if (child->bounds.contains(localX,localY) && !child->cursorInside)
+        {
+            child->cursorEntered(localX, localY);
+            child->cursorInside = true;
+        }
+        else if (!child->bounds.contains(localX,localY) && child->cursorInside)
+        {
+            child->cursorExited(localX, localY);
+            child->cursorInside = false;
+
+        }
     }
-}
-
-void HUDView::setDefaultTexture(GLuint texture)
-{
-    defaultTexture = texture;
-}
-
-void HUDView::setDefaultColor(GLfloat* color)
-{
-    memcpy(defaultColor, color, 4 * sizeof(GLfloat));
-    defaultColorSet = true;
 }
 
 HUDButton::HUDButton(int id)
@@ -238,7 +204,12 @@ HUDButton::HUDButton(int id)
 , state(false)
 , prevNumPointers(0)
 , fade(0.f)
+, ringTextureID(0)
+, hoverTimeout(750)
 {
+    // set a transparent color for the background
+    GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
+    setDefaultColor(color);
 }
 
 void HUDButton::setState(bool inState, bool broadcast)
@@ -267,6 +238,11 @@ void HUDButton::removeListener(HUDButton::Listener* l)
 
 void HUDButton::draw()
 {
+    HUDView::draw();
+
+    if (isTimerRunning())
+        setup();
+    
     GLfloat* color;
     if (state)
     {
@@ -283,18 +259,18 @@ void HUDButton::draw()
             color = offColor;
     }
 
-    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade };
-    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, 1.f - fade };
+    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade * opacity};
+    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, (1.f - fade) * opacity };
 
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
-    defaultBatch.Draw();
-    
     GLint blendSrc;
     glGetIntegerv(GL_BLEND_SRC, &blendSrc);
     GLint blendDst;
     glGetIntegerv(GL_BLEND_DST, &blendDst);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
+    defaultBatch.Draw();
 
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
@@ -312,12 +288,18 @@ void HUDButton::draw()
         fade -= 0.11f;
         if (fade < 0.f) fade = 0.f;
     }
+    
+    if (isTimerRunning()) {
+        GLfloat circleColor[4] = { 1.f, 1.f, 1.f, 1.f };
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor);
+        glBindTexture(GL_TEXTURE_2D, ringTextureID);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor, 0);
+        circleBatch.Draw();
+    }
 }
 
 void HUDButton::setup()
-{
-    HUDView::setup();
-    
+{   
     offColor[0] = 0.3f;
     offColor[1] = 0.3f;
     offColor[2] = 0.3f;
@@ -334,15 +316,54 @@ void HUDButton::setup()
     hoverOnColor[1] = .9f;
     hoverOnColor[2] = 0.f;
     hoverOnColor[3] = 1.f;
+    
+    const int numVerts = 51;
+    M3DVector3f verts[numVerts];
+    M3DVector2f texCoords[numVerts];
+
+    M3DVector3f middle = { bounds.w / 2.f, bounds.h / 2.f, 0.f };
+    float r = m3dGetVectorLength3(middle) + 5;
+    
+    verts[0][0] = bounds.x + bounds.w / 2.f;
+    verts[0][1] = bounds.y + bounds.h / 2.f;
+    verts[0][2] = 0.f;
+    texCoords[0][0] = 0.5f;
+    texCoords[0][1] = 0.5f;
+    
+    for (int i = 1; i < numVerts; ++i)
+    {
+        RelativeTime elapsed = Time::getCurrentTime() - lastTimerStartTime;
+        float progress = elapsed.inMilliseconds() / (float)hoverTimeout;
+        float phase = -1.f * ((i - 1) / (float)(numVerts-2)) * progress;
+        float offset = 3.14159f / 2.f;
+        verts[i][0] = verts[0][0] + r * cosf(offset + 2*3.14159f*phase);
+        verts[i][1] = verts[0][1] + r * sinf(offset + 2*3.14159f*phase);
+        verts[i][2] = 0;
+        texCoords[i][0] = 0.5f + 0.5f * cosf(-offset + 2*3.14159f*-phase);
+        texCoords[i][1] = 0.5f + 0.5f * sinf(-offset + 2*3.14159f*-phase);
+    }
+    
+    if (!didSetup)
+        circleBatch.Begin(GL_TRIANGLE_FAN, numVerts, 1);
+    circleBatch.CopyVertexData3f(verts);
+    circleBatch.CopyTexCoordData2f(texCoords, 0);
+    if (!didSetup)
+        circleBatch.End();
+    
+    HUDView::setup();
 }
 
 void HUDButton::mouseDown(float /*x*/, float /*y*/)
 {
+    if (!isVisible)
+        return;
     setState(!state, true);
 }
 
 void HUDButton::updatePointedState(FingerView* /*fv*/)
 {
+    if (!isVisible)
+        return;
     if (prevNumPointers == 0 && pointers.size() > 0)
         setState(!state, true);
 
@@ -363,4 +384,39 @@ void HUDButton::setTextures(GLuint on, GLuint off)
 {
     onTextureID = on;
     offTextureID = off;
+}
+
+void HUDButton::setRingTexture(GLuint tex)
+{
+    ringTextureID = tex;
+}
+
+void HUDButton::setTimeout(int newTimeout)
+{
+    hoverTimeout = newTimeout;
+}
+
+void HUDButton::cursorEntered(float, float)
+{
+    if (!isVisible)
+        return;
+    lastTimerStartTime = Time::getCurrentTime();
+    startTimer(hoverTimeout);
+    //Logger::outputDebugString("Entered");
+}
+
+void HUDButton::cursorExited(float, float)
+{
+    if (!isVisible)
+        return;
+    stopTimer();
+    //Logger::outputDebugString("Exited");
+}
+
+void HUDButton::timerCallback()
+{
+    //Logger::outputDebugString("Boom");
+    setState(!getState(), true);
+    lastTimerStartTime = Time::getCurrentTime();
+    startTimer(hoverTimeout);
 }

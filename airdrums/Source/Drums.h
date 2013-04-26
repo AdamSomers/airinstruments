@@ -3,10 +3,10 @@
 
 #include <iostream>
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
 #include "DrumPattern.h"
 #include "DrumKit.h"
+
+#include "../JuceLibraryCode/JuceHeader.h"
 
 
 class Drums :	public AudioSource,

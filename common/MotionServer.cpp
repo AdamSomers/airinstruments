@@ -25,6 +25,9 @@ MotionDispatcher::MotionDispatcher()
         hv->id = i;
     }
     
+    cursor = SharedPtr<CursorView>(new CursorView);
+    cursor->setBounds(HUDRect(0, 0, 20, 20));
+    
     for (auto iter : fingerViews)
         iter.second->setup();
     
@@ -103,6 +106,50 @@ void MotionDispatcher::onDisconnect(const Leap::Controller& /*controller*/)
 
 void MotionDispatcher::onFrame(const Leap::Controller& controller)
 {
+    const Leap::Frame frame = controller.frame();
+
+    const Leap::PointableList& pointables = frame.pointables();
+    const Leap::ScreenList& screens = controller.calibratedScreens();
+    if (pointables.count() > 0 && screens.count() > 0)
+    {
+        float x = 0.f;
+        float y = 0.f;
+        const Leap::Pointable& p = frame.pointable(cursor->getFingerId());
+        if (p.isValid())
+        {
+            const Leap::Screen& s = screens[0];
+            const Leap::Vector& v = s.intersect(p, true);
+            x = v.x * Environment::instance().screenW;
+            y = v.y * Environment::instance().screenH;
+        }
+        else
+        {
+            const Leap::Screen& s = screens[0];
+            const Leap::Vector& v = s.intersect(pointables[0], true);
+            x = v.x * Environment::instance().screenW;
+            y = v.y * Environment::instance().screenH;
+            cursor->setFingerId(pointables[0].id());
+        }
+
+        
+        if (!cursor->isEnabled())
+            x = y = 0.f;
+        
+        cursor->setX(x);
+        cursor->setY(y);
+        for (CursorView::Listener* l : cursorViewListeners)
+            l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
+    }
+    else
+    {
+        cursor->setEnabled(false);
+        cursor->setX(0);
+        cursor->setY(0);
+    }
+
+    return;
+
+#if 0	// Unreachable code due to return above
     if (!Environment::instance().ready)
         return;
     
@@ -127,7 +174,6 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     }
     
     // Get the most recent frame and report some basic information
-    const Leap::Frame frame = controller.frame();
     const Leap::HandList& hands = frame.hands();
     const size_t numHands = hands.count();
     //    std::cout << "Frame id: " << frame.id()
@@ -239,6 +285,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             //printf("Removed hand %d\n", hv->id);
         }
     }
+#endif
 }
 
 void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)
@@ -457,4 +504,10 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
         }
     }
     
+}
+
+void MotionDispatcher::setCursorTexture(GLuint texture)
+{
+    if (cursor)
+        cursor->setDefaultTexture(texture);
 }

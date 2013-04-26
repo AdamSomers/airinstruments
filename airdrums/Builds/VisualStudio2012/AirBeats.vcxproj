@@ -144,6 +144,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\CursorView.cpp"/>
     <ClCompile Include="..\..\..\common\HandView.cpp"/>
     <ClCompile Include="..\..\..\common\Environment.cpp"/>
     <ClCompile Include="..\..\..\common\FingerView.cpp"/>
@@ -151,6 +152,8 @@
     <ClCompile Include="..\..\..\common\HUD.cpp"/>
     <ClCompile Include="..\..\..\common\MotionServer.cpp"/>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp"/>
+    <ClCompile Include="..\..\..\common\TextButton.cpp"/>
+    <ClCompile Include="..\..\..\common\View2d.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\glew.c"/>
     <ClCompile Include="..\..\..\GLTools\src\GLShaderManager.cpp"/>
@@ -158,6 +161,7 @@
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
+    <ClCompile Include="..\..\Source\ButtonBar.cpp"/>
     <ClCompile Include="..\..\Source\DrumItem.cpp"/>
     <ClCompile Include="..\..\Source\DrumKit.cpp"/>
     <ClCompile Include="..\..\Source\DrumPattern.cpp"/>
@@ -178,6 +182,7 @@
     <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\Source\SkinManager.cpp"/>
+    <ClCompile Include="..\..\Source\StrikeDetector.cpp"/>
     <ClCompile Include="..\..\Source\TempoControl.cpp"/>
     <ClCompile Include="..\..\Source\TrigView.cpp"/>
     <ClCompile Include="..\..\Source\WheelSelector.cpp"/>
@@ -1259,6 +1264,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_video\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\CursorView.h"/>
     <ClInclude Include="..\..\..\common\HandView.h"/>
     <ClInclude Include="..\..\..\common\Environment.h"/>
     <ClInclude Include="..\..\..\common\FingerView.h"/>
@@ -1267,6 +1273,8 @@
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
     <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
     <ClInclude Include="..\..\..\common\Types.h"/>
+    <ClInclude Include="..\..\..\common\TextButton.h"/>
+    <ClInclude Include="..\..\..\common\View2d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glxew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\wglew.h"/>
@@ -1282,6 +1290,7 @@
     <ClInclude Include="..\..\..\GLTools\include\math3d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
+    <ClInclude Include="..\..\Source\ButtonBar.h"/>
     <ClInclude Include="..\..\Source\DrumItem.h"/>
     <ClInclude Include="..\..\Source\DrumKit.h"/>
     <ClInclude Include="..\..\Source\DrumPattern.h"/>
@@ -1300,6 +1309,7 @@
     <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>
     <ClInclude Include="..\..\Source\SkinManager.h"/>
+    <ClInclude Include="..\..\Source\StrikeDetector.h"/>
     <ClInclude Include="..\..\Source\TempoControl.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>
     <ClInclude Include="..\..\Source\WheelSelector.h"/>

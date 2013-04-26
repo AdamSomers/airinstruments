@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pattern name="Dubstep Pattern" uuid="329b3060646ec586f0524cacfdae92f8"
+         sampleRate="44100" tempo="118">
+  <kit name="Dubstep" uuid="56aec18d7b9e23b9f658795687d19dda"/>
+  <event position="0" data="900442"/>
+  <event position="11210" data="90017f"/>
+  <event position="11210" data="900411"/>
+  <event position="22420" data="90041e"/>
+  <event position="28025" data="900443"/>
+  <event position="33630" data="900436"/>
+  <event position="39235" data="900408"/>
+  <event position="44840" data="900438"/>
+  <event position="50445" data="900404"/>
+  <event position="56050" data="90041b"/>
+  <event position="61655" data="90007f"/>
+  <event position="61655" data="900406"/>
+  <event position="61655" data="900415"/>
+  <event position="67260" data="90040d"/>
+  <event position="78470" data="90041b"/>
+  <event position="84075" data="900440"/>
+  <event position="89680" data="900431"/>
+  <event position="100890" data="90015e"/>
+  <event position="100890" data="900070"/>
+  <event position="100890" data="900425"/>
+  <event position="100890" data="900f3c"/>
+  <event position="106495" data="900432"/>
+  <event position="112100" data="90041f"/>
+  <event position="117705" data="900058"/>
+  <event position="117705" data="900432"/>
+  <event position="123310" data="900152"/>
+  <event position="123310" data="900428"/>
+  <event position="128915" data="900410"/>
+  <event position="134520" data="90014a"/>
+  <event position="134520" data="900058"/>
+  <event position="140125" data="900f37"/>
+  <event position="156940" data="900008"/>
+  <event position="156940" data="900433"/>
+  <event position="156940" data="90042f"/>
+  <event position="156940" data="90040a"/>
+  <event position="156940" data="900f45"/>
+  <event position="162545" data="900414"/>
+  <event position="168150" data="90042b"/>
+  <event position="173755" data="900418"/>
+</pattern>

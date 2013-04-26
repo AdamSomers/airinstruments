@@ -1,32 +1,59 @@
 AirBeats - Release Notes
 
-Note: The application works best when used with one finger pointing from each hand.  The fact that all fingers are visualized leads to easy confusion, and will be addressed in a future build.  The current plan is to switch to using the screen API to display a cursor, of which there will only be one.
-
-Also take note that all kits have the same placeholder sounds, except HipHop which has different placeholder sounds.
+Note that all kits have the same placeholder sounds, except HipHop which has different placeholder sounds, and Analog Dub which is has a rough draft of the final soundset for that kit.  Also note most of the buttons have temporary graphics.
 
 Please send all comments to adam@handwavy.co.  Thanks!
 
 Usage:
 
-- Tap on the left or right half of the Leap's field of view to play the L or R sound.
+- "Air drum" in left or right half of the Leap's field of view to play the L or R sound.
 
-- Hover over the drum selectors to change the L or R sound.  The tracked finger's distance from the horizontal center of the control determines the rate at which the drum selection advances. 
+- The application detectects rapid downward movement of your hands.  You can play in a variety of ways: open hands, finger extended, closed fist (imaginary drumstick), or using tools.
 
-- Hover over the wheel "tabs" on the left and right edges of the screen to bring out the kit and pattern wheels.  The tracked finger's distance from the vertical center of the wheel determines the rate at which the selection advances.  The wheels are automatically dismissed when you stop interacting with them.
+- When not drumming, a cursor tacks where you are pointing to on the screen (use one finger or tool to move the cursor).
 
-- Tempo control works similarly to drum selector.
+- All buttons are activated by hovering the cursor over the button.
 
-Transport controls:
-- One clockwise circle gesture starts the transport
-- Two clockwise circles toggles record mode
-- Three clockwise circles toggles the metronome
-- One counter-clockwise circle stops the transport
-- Two counter-clockwise circles resets the transport to start of pattern
-- Three counter-clockwise circles clears the pattern
+- Select kits and patterns by bringing the wheels into view with the arrow buttons, and use the up/down buttons that appear to make your selection.
 
-An audio settings dialog is available in the Options menu, in case you need to use a different audio device.
+- Change the tempo using the left/right buttons on either side of the tempo display.
 
-Patterns can be saved from the file menu.
+- Control the transport (play/record/metronome) using the transport buttons in the upper-right.
+
+- An audio settings dialog is available in the Options menu, in case you need to use a different audio device.
+
+- Patterns can be saved from the file menu.
+
+==================
+v0.3 - 4/26/2013
+
+Completed features:
+
+- New drumming interaction. Very responsive to many different playing styles.
+- Velocity sensitivity
+- Cursor
+- Buttons with hover timeout and animation
+- Removed gesture input
+- Removed finger visualization
+- Random-access to drum sounds.  Drum selector no longer a carousel.
+- Clear track
+- Clear pattern
+- Resolved issue wherein wheel selections can become jumbled
+- Resolved issue wherein changing pattern did not update kit wheel
+
+Currently in development:
+
+- Continued trigger accuracy improvements
+- Tutorial mode with instructional overlays
+- New icons for drum graphics
+- display drum graphic and name on trigger pad
+- Timeline visualization
+- Professionally designed drum kits and default patterns
+- Splash screen and initialization progress indication 
+
+Known issues:
+
+- If a large number of patterns are saved, the pattern wheel is overcrowded.  Need to set a maximum 
 
 ==================
 v0.2 - 4/18/2013

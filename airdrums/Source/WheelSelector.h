@@ -15,6 +15,7 @@
 
 class WheelSelector : public HUDView
                     , public MultiTimer
+                    , public HUDButton::Listener
 {
 public:
     WheelSelector(bool left = false);
@@ -26,6 +27,15 @@ public:
     void fingerMotion(float x, float y, FingerView* fv);
     void fingerEntered(float x, float y, FingerView* fv);
     void fingerExited(float x, float y, FingerView* fv);
+    
+#if 0 // wheel does not respond directly to cursor anymore
+    void cursorMoved(float x, float y);
+    void cursorEntered(float x, float y);
+    void cursorExited(float x, float y);
+#endif
+
+    // HUDButton::Listener overrides
+    void buttonStateChanged(HUDButton* b);
     
     // Juce::Timer override
     void timerCallback(int timerId);
@@ -100,6 +110,10 @@ private:
     bool needsLayout;
     FingerView* trackedFinger;
     std::vector<Listener*> listeners;
+    
+    HUDButton displayToggleButton;
+    HUDButton upButton;
+    HUDButton downButton;
 };
 
 #endif /* defined(__AirBeats__WheelSelector__) */

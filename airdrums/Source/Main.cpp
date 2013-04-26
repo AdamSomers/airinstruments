@@ -15,8 +15,9 @@
 #include "PatternSaveDialog.h"
 #include "PatternLoadDialog.h"
 #if JUCE_WINDOWS
-// ARS - This isn't present on my system
-//    #include <vld.h>
+#if JUCE_DEBUG
+    //#include <vld.h>
+#endif
 #endif
 
 
@@ -181,6 +182,7 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			Drums& drums = Drums::instance();
 			SharedPtr<DrumPattern> pattern = drums.getPattern();
 			jassert(pattern.get() != nullptr);
+            pattern->SetUuid(Uuid::Uuid());
 			pattern->SaveToXml(fileName, directory);
             
 			mgr.BuildPatternList();	// Refresh list to find new content, etc.
