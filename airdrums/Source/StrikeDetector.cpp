@@ -24,6 +24,8 @@
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
 // Also, the pad area upper edge is at about 310
 #define Y_MAX 300.f 
+// Position of X-Z strike plane
+#define	Y_TRIGGER_BOUNDARY 250.0f
 
 StrikeDetector::StrikeDetector() :
  state(kStateStrikeBegin)
@@ -92,7 +94,7 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 			if (velocity > maxVel)
 				maxVel = velocity;
 
-			bool trigger = direction > 0 || velocity <= (maxVel * SENSITIVITY);
+			bool trigger = direction > 0 || velocity <= (maxVel * SENSITIVITY) /*|| (position <= Y_TRIGGER_BOUNDARY)*/;
             
 			if (trigger)
 			{
