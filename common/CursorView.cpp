@@ -58,12 +58,10 @@ void CursorView::setFingerId(int id)
 
 CursorView::Listener::Listener()
 {
-    MotionDispatcher::instance().cursorViewListeners.push_back(this);
+    MotionDispatcher::instance().addCursorListener(*this);
 }
 
 CursorView::Listener::~Listener()
 {
-    auto i = std::find(MotionDispatcher::instance().cursorViewListeners.begin(), MotionDispatcher::instance().cursorViewListeners.end(), this);
-    if (i != MotionDispatcher::instance().cursorViewListeners.end())
-        MotionDispatcher::instance().cursorViewListeners.erase(i);
+    MotionDispatcher::instance().removeCursorListener(*this);
 }

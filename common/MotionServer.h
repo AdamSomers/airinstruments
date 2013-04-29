@@ -37,6 +37,9 @@ public:
     void pause();
     void resume();
     
+	void addCursorListener(CursorView::Listener& listener);
+	void removeCursorListener(CursorView::Listener& listener);
+
     virtual void onInit(const Leap::Controller&);
     virtual void onConnect(const Leap::Controller&);
     virtual void onDisconnect(const Leap::Controller&);
@@ -52,7 +55,6 @@ public:
 
     std::vector<FingerView::Listener*> fingerViewListeners;
     std::vector<HandView::Listener*> handViewListeners;
-    std::vector<CursorView::Listener*> cursorViewListeners;
     Leap::Controller controller;
     static float zLimit;
 private:
@@ -76,6 +78,8 @@ private:
 	static MotionDispatcher* s_instance;
     
     std::vector<Leap::Listener*> listeners;
+    std::vector<CursorView::Listener*> cursorViewListeners;
+    CriticalSection listenerLock;
     bool paused;
 };
 
