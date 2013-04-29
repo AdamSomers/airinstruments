@@ -113,6 +113,7 @@ void AirHarpApplication::shutdown()
 	#endif
 	delete mainMenu;
 
+	MotionDispatcher::instance().stop();
     mainWindow = nullptr; // (deletes our window)
     MotionDispatcher::destruct();
 

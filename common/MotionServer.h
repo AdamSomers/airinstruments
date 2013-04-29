@@ -36,6 +36,7 @@ public:
     void removeAllListeners();
     void pause();
     void resume();
+	void stop();
     
 	void addCursorListener(CursorView::Listener& listener);
 	void removeCursorListener(CursorView::Listener& listener);

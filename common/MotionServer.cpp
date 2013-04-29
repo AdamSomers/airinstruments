@@ -90,6 +90,11 @@ void MotionDispatcher::resume()
     }
 }
 
+void MotionDispatcher::stop()
+{
+    removeListener(*this);
+}
+
 void MotionDispatcher::addCursorListener(CursorView::Listener& listener)
 {
 	ScopedLock lock(listenerLock);
