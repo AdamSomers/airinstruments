@@ -8,13 +8,13 @@
 DrumSelector::DrumSelector()
 : selection(0)
 , needsLayout(false)
-, trackedFinger(nullptr)
 {
     for (int i = 0; i < 16; ++i)
     {
         SharedPtr<Icon> icon(new Icon(i));
         icons.push_back(icon);
         addChild(icon.get());
+        icon->addListener(this);
     }
 }
 
@@ -37,19 +37,16 @@ void DrumSelector::layoutIcons()
     const float iconWidth = (getBounds().w-selectedIconWidth) / (float)(N - (N%2));
     const float iconHeight = iconWidth;
 
-    int first = (selection + N / 2) % N;
-    int i = first;
-    for (int count = 0; count < N; ++count)
+    float iconX = 0.f;
+    for (int i = 0; i < N; ++i)
     {
+        float w = i == selection ? selectedIconWidth : iconWidth;
+        float h = i == selection ? selectedIconHeight : iconHeight;
         
         SharedPtr<Icon> icon = icons.at(i);
-        if (count < N/2)
-            icon->setBounds(HUDRect(iconWidth*count + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
-        else if (count > N/2)
-            icon->setBounds(HUDRect(iconWidth*(count-1) + selectedIconWidth + 10, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
-        else
-            icon->setBounds(HUDRect(getBounds().w / 2 - selectedIconWidth  / 2 + 10, getBounds().h / 2 - selectedIconHeight / 2, (GLfloat) selectedIconWidth, (GLfloat) selectedIconHeight));
-        i = (i+1) % N;
+        icon->setBounds(HUDRect(iconX + 10, getBounds().h / 2 - h / 2, w, h));
+        
+        iconX += w;
     }
 }
 
@@ -72,7 +69,6 @@ void DrumSelector::draw()
     HUDView::draw();
 }
 
-
 void DrumSelector::loadTextures()
 {
 }
@@ -84,103 +80,9 @@ void DrumSelector::setSelection(int sel)
     selection = sel;
 
     for (SharedPtr<Icon> i : icons)
-        i->setIsSelection(i->getId() == sel);
+        i->setState(i->getId() == sel);
 
     needsLayout = true;
-}
-
-void DrumSelector::fingerMotion(float x, float /*y*/, FingerView* fv)
-{
-    if (fv != trackedFinger)
-        return;
-
-    stopTimer(kTimerTrackedFingerMissing);
-    startTimer(kTimerTrackedFingerMissing, 100);
-
-    int inc = 0;
-    float center = getBounds().x + getBounds().w / 2;
-    float distanceFromCenter = x - center;
-    if (fabsf(distanceFromCenter) > 30 && x < center)
-        inc = -1;
-    else if (fabsf(distanceFromCenter) > 30)
-        inc = 1;
-
-    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
-        setSelection(selection + inc);
-        for (Listener* l : listeners)
-            l->drumSelectorChanged(this);
-        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
-    }
-}
-
-void DrumSelector::fingerEntered(float /*x*/, float /*y*/, FingerView* fv)
-{    
-    M3DVector3f vec;
-    fv->objectFrame.GetOrigin(vec);
-    //printf("%x entered %d %d %.2f %.2f\n", fv, (int)x, (int)y, vec[0], vec[1]);
-    
-    if (!trackedFinger) {
-        trackedFinger = fv;
-        startTimer(kTimerSelectionDelay, 500);
-    }
-}
-
-void DrumSelector::fingerExited(float x, float /*y*/, FingerView* fv)
-{
-    // !!! Hack to get avoid spurious exits due to corrupt screen coord data
-    if (x < 0 || x > 2000)
-        return;
-    
-    M3DVector3f vec;
-    fv->objectFrame.GetOrigin(vec);
-    //printf("%x exited %d %d %.2f %.2f\n", fv, (int)x, (int)y, vec[0], vec[1]);
-    if (fv == trackedFinger)
-    {
-        trackedFinger = NULL;
-    }
-}
-
-void DrumSelector::cursorMoved(float x, float /*y*/)
-{      
-    int inc = 0;
-    float center = getBounds().x + getBounds().w / 2;
-    float distanceFromCenter = x - center;
-    if (fabsf(distanceFromCenter) > 30 && x < center)
-        inc = -1;
-    else if (fabsf(distanceFromCenter) > 30)
-        inc = 1;
-    
-    if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
-        setSelection(selection + inc);
-        for (Listener* l : listeners)
-            l->drumSelectorChanged(this);
-        float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
-        startTimer(kTimerSelectionDelay, (int) jmax<float>(100.0f, 500.0f * (1.f-multiplier)));
-    }
-}
-
-void DrumSelector::cursorEntered(float /*x*/, float /*y*/)
-{
-    startTimer(kTimerSelectionDelay, 500);
-}
-
-void DrumSelector::cursorExited(float, float)
-{
-}
-
-void DrumSelector::timerCallback(int timerId)
-{
-    switch (timerId)
-    {
-    case kTimerSelectionDelay:
-        stopTimer(kTimerSelectionDelay);
-        break;
-
-    case kTimerTrackedFingerMissing:
-        trackedFinger = NULL;
-        break;
-    }
 }
 
 void DrumSelector::addListener(DrumSelector::Listener *listener)
@@ -197,19 +99,21 @@ void DrumSelector::removeListener(DrumSelector::Listener *listener)
         listeners.erase(iter);
 }
 
-DrumSelector::Icon::Icon(int inId)
-: id(inId)
-, isSelection(false)
+void DrumSelector::buttonStateChanged(HUDButton* b)
 {
+    setSelection(b->getId());
+    for (Listener* l : listeners)
+        l->drumSelectorChanged(this);
+}
+
+DrumSelector::Icon::Icon(int inId)
+: HUDButton(inId)
+{
+    setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
 }
 
 DrumSelector::Icon::~Icon()
 {
-}
-
-void DrumSelector::Icon::setup()
-{
-    HUDView::setup();
 }
 
 void DrumSelector::Icon::draw()
@@ -220,19 +124,25 @@ void DrumSelector::Icon::draw()
         fabsf(tempBounds.h - targetBounds.h) > 2)
         updateBounds();
     else if (tempBounds != targetBounds)
-        HUDView::setBounds(targetBounds);
+        HUDButton::setBounds(targetBounds);
 
-    GLuint textureID = 0;
+    GLuint onTextureID = 0;
+    GLuint offTextureID = 0;
+
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
-        textureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(id)->GetTexture(isSelection);
+        offTextureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(false);
+        onTextureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(true);
+        setTextures(onTextureID, offTextureID);
     }
-    else
-        textureID = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetTexture(isSelection);
+    else {
+        offTextureID = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(false);
+        onTextureID = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(true);
+        setTextures(onTextureID, offTextureID);
+    }
     
-    setDefaultTexture(textureID);
-    HUDView::draw();
+    HUDButton::draw();
 }
 
 void DrumSelector::Icon::setBounds(const HUDRect &b)
@@ -246,11 +156,6 @@ void DrumSelector::Icon::setBounds(const HUDRect &b)
     yStep = (targetBounds.y - tempBounds.y) / 10.f;
     wStep = (targetBounds.w - tempBounds.w) / 10.f;
     hStep = (targetBounds.h - tempBounds.h) / 10.f;
-}
-
-void DrumSelector::Icon::setIsSelection(bool is)
-{
-    isSelection = is;
 }
 
 void DrumSelector::Icon::updateBounds()
@@ -276,8 +181,4 @@ void DrumSelector::Icon::updateBounds()
         tempBounds.h += hStep;
     
     HUDView::setBounds(tempBounds);
-}
-
-void DrumSelector::Icon::loadTextures()
-{
 }

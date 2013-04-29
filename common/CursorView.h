@@ -22,6 +22,8 @@ public:
     void setY(float y);
     void setEnabled(bool shouldBeEnabled);
     bool isEnabled() const { return enabled; }
+    void setFingerId(int id);
+    int getFingerId() const { return fingerId; }
 
     class Listener
     {
@@ -35,6 +37,7 @@ private:
     float targetX;
     float targetY;
     bool enabled;
+    int fingerId;
 };
 
 

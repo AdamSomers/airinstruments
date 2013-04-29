@@ -18,6 +18,29 @@ WheelSelector::WheelSelector(bool left /*= false*/)
 , leftHanded(left)
 {
     setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("wheelBg"));
+    displayToggleButton.addListener(this);
+    upButton.addListener(this);
+    downButton.addListener(this);
+    addChild(&displayToggleButton);
+    addChild(&upButton);
+    addChild(&downButton);
+    displayToggleButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    upButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    downButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    if (leftHanded)
+        displayToggleButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_left"),
+                                        SkinManager::instance().getSelectedSkin().getTexture("arrow_right"));
+    else
+        displayToggleButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_right"),
+                                        SkinManager::instance().getSelectedSkin().getTexture("arrow_left"));
+    
+    upButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_up"),
+                         SkinManager::instance().getSelectedSkin().getTexture("arrow_up"));
+    downButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_down"),
+                           SkinManager::instance().getSelectedSkin().getTexture("arrow_down"));
+    
+    upButton.setVisible(false, 0);
+    downButton.setVisible(false, 0);
 }
 
 WheelSelector::~WheelSelector()
@@ -57,6 +80,7 @@ void WheelSelector::setBounds(const HUDRect &b)
     }
     
     layoutIcons();
+
 }
 
 void WheelSelector::updateBounds()
@@ -81,6 +105,25 @@ void WheelSelector::updateBounds()
     else
         tempBounds.h += hStep;
     
+    float buttonWidth = 75.f;
+    float buttonHeight = 75.f;
+    float buttonOffset = 20.f;
+    float x = leftHanded ? tempBounds.w + buttonWidth / 2.f : -buttonWidth - buttonWidth / 2.f;
+    displayToggleButton.setBounds(HUDRect(x,
+                                          tempBounds.y + tempBounds.h / 2.f - buttonHeight / 2.f,
+                                          buttonWidth,
+                                          buttonHeight));
+    upButton.setBounds(HUDRect(leftHanded ? x - 50 : x + 50,
+                               buttonOffset + displayToggleButton.getBounds().y + displayToggleButton.getBounds().h,
+                               buttonWidth,
+                               buttonHeight));
+    
+    downButton.setBounds(HUDRect(leftHanded ? x - 50 : x + 50,
+                               -buttonOffset + displayToggleButton.getBounds().y - + displayToggleButton.getBounds().h,
+                               buttonWidth,
+                               buttonHeight));
+
+    
     HUDView::setBounds(tempBounds);
 }
 
@@ -92,9 +135,9 @@ void WheelSelector::addIcon(Icon *icon)
 
 void WheelSelector::removeAllIcons()
 {
-    removeAllChildren();
     for (Icon* i : icons)
     {
+        removeChild(i);
         delete i;
     }
     icons.clear();
@@ -149,6 +192,9 @@ void WheelSelector::incSelection(int direction)
     
     for (Icon* icon : icons)
         icon->rotate(-direction * 360.f / icons.size());
+    
+    for (Listener* l : listeners)
+        l->wheelSelectorChanged(this);
 }
 
 void WheelSelector::fingerMotion(float /*x*/, float y, FingerView* fv)
@@ -178,8 +224,6 @@ void WheelSelector::fingerMotion(float /*x*/, float y, FingerView* fv)
     
     if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
         incSelection(inc);
-        for (Listener* l : listeners)
-            l->wheelSelectorChanged(this);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
         startTimer(kTimerSelectionDelay, (int) jmax<float>(250.0f, 500.0f * (1.f-multiplier)));
     }
@@ -219,7 +263,8 @@ void WheelSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     }
 }
 
-void WheelSelector::cursorMoved(float /*x*/, float y)
+#if 0 // wheel does not respond directly to cursor anymore
+void WheelSelector::cursorMoved(float x, float y)
 {
     if (!enabled) {
         float center = getBounds().y + getBounds().h / 2;
@@ -240,8 +285,6 @@ void WheelSelector::cursorMoved(float /*x*/, float y)
     
     if (inc != 0 && !isTimerRunning(kTimerSelectionDelay)) {
         incSelection(inc);
-        for (Listener* l : listeners)
-            l->wheelSelectorChanged(this);
         float multiplier = fabsf(distanceFromCenter*2.f) / getBounds().w;
         startTimer(kTimerSelectionDelay, (int) jmax<float>(250.0f, 500.0f * (1.f-multiplier)));
     }
@@ -269,23 +312,24 @@ void WheelSelector::cursorExited(float /*x*/, float /*y*/)
     
     startTimer(kTimerIdle, 2000);
 }
+#endif
 
 void WheelSelector::timerCallback(int timerId)
 {
     switch (timerId)
     {
         case kTimerSelectionDelay:
-            stopTimer(kTimerSelectionDelay);
+            //stopTimer(kTimerSelectionDelay);
             break;
         
         case kTimerShowControl:
-            enabled = true;
-            stopTimer(kTimerShowControl);
+            //enabled = true;
+            //stopTimer(kTimerShowControl);
             break;
             
         case kTimerIdle:
-            enabled = false;
-            stopTimer(kTimerIdle);
+            //enabled = false;
+            //stopTimer(kTimerIdle);
             break;
         case kTimerTrackedFingerMissing:
             trackedFinger = NULL;
@@ -307,6 +351,24 @@ void WheelSelector::removeListener(WheelSelector::Listener *listener)
     auto iter = std::find(listeners.begin(), listeners.end(), listener);
     if (iter != listeners.end())
         listeners.erase(iter);
+}
+
+void WheelSelector::buttonStateChanged(HUDButton *b)
+{
+    if (b == &displayToggleButton)
+    {
+        enabled = b->getState();
+        upButton.setVisible(enabled, enabled ? 500 : 1000);
+        downButton.setVisible(enabled, enabled ? 500 : 1000);
+    }
+    else if (b == &upButton)
+    {
+        incSelection(-1);
+    }
+    else if (b == &downButton)
+    {
+        incSelection(1);
+    }
 }
 
 WheelSelector::Icon::Icon(int inId, bool left /*=false*/)
@@ -341,10 +403,6 @@ void WheelSelector::Icon::draw()
     }
     else
         rotationInc = 0;
-    
-    // sanity check
-    if (fabsf(rotationCoeff) >= 360.f)
-        rotationCoeff = targetRotationCoeff = 0.f;
 
     Environment::instance().modelViewMatrix.PushMatrix();
     

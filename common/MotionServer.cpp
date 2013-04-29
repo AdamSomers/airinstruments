@@ -90,6 +90,21 @@ void MotionDispatcher::resume()
     }
 }
 
+void MotionDispatcher::addCursorListener(CursorView::Listener& listener)
+{
+	ScopedLock lock(listenerLock);
+    cursorViewListeners.push_back(&listener);
+}
+
+
+void MotionDispatcher::removeCursorListener(CursorView::Listener& listener)
+{
+	ScopedLock lock(listenerLock);
+    auto i = std::find(cursorViewListeners.begin(), cursorViewListeners.end(), &listener);
+    if (i != cursorViewListeners.end())
+        cursorViewListeners.erase(i);
+}
+
 void MotionDispatcher::onInit(const Leap::Controller& /*controller*/)
 {
     std::cout << "Initialized" << std::endl;
@@ -113,19 +128,40 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     const Leap::ScreenList& screens = controller.calibratedScreens();
     if (pointables.count() > 0 && screens.count() > 0)
     {
-        const Leap::Pointable& p = pointables[0];
-        const Leap::Screen& s = screens[0];
-        const Leap::Vector& v = s.intersect(p, true);
-        float x = v.x * Environment::instance().screenW;
-        float y = v.y * Environment::instance().screenH;
+        float x = 0.f;
+        float y = 0.f;
+        const Leap::Pointable& p = frame.pointable(cursor->getFingerId());
+        if (p.isValid())
+        {
+            const Leap::Screen& s = screens[0];
+            const Leap::Vector& v = s.intersect(p, true);
+            x = v.x * Environment::instance().screenW;
+            y = v.y * Environment::instance().screenH;
+        }
+        else
+        {
+            const Leap::Screen& s = screens[0];
+            const Leap::Vector& v = s.intersect(pointables[0], true);
+            x = v.x * Environment::instance().screenW;
+            y = v.y * Environment::instance().screenH;
+            cursor->setFingerId(pointables[0].id());
+        }
+
         
         if (!cursor->isEnabled())
             x = y = 0.f;
         
         cursor->setX(x);
         cursor->setY(y);
+		ScopedLock lock(listenerLock);
         for (CursorView::Listener* l : cursorViewListeners)
-            l->updateCursorState(x, y);
+            l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
+    }
+    else
+    {
+        cursor->setEnabled(false);
+        cursor->setX(0);
+        cursor->setY(0);
     }
 
     return;
@@ -485,4 +521,10 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
         }
     }
     
+}
+
+void MotionDispatcher::setCursorTexture(GLuint texture)
+{
+    if (cursor)
+        cursor->setDefaultTexture(texture);
 }

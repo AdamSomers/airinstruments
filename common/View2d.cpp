@@ -13,6 +13,9 @@ View2d::View2d()
 : didSetup(false)
 , defaultTexture(0)
 , defaultColorSet(false)
+, isVisible(true)
+, opacity(1.f)
+, fadeTime(0)
 {
     defaultColor[0] = 1.f;
     defaultColor[1] = .3f;
@@ -28,19 +31,38 @@ View2d::~View2d()
 
 void View2d::draw()
 {
+    if (isVisible && opacity < 1.f)
+    {
+        RelativeTime timeSinceLateVisibiltyChange = Time::getCurrentTime() - lastVisibilityChange;
+        float deltaTime = timeSinceLateVisibiltyChange.inMilliseconds() / (float)fadeTime;
+        opacity = deltaTime*deltaTime;
+        if (opacity > 1.f) opacity = 1.f;
+    }
+    else if (!isVisible && opacity > 0.f)
+    {
+        RelativeTime timeSinceLateVisibiltyChange = Time::getCurrentTime() - lastVisibilityChange;
+        float deltaTime = timeSinceLateVisibiltyChange.inMilliseconds() / (float)fadeTime;
+        opacity = 1 - (deltaTime*deltaTime);
+        if (opacity < 0.f) opacity = 0.f;
+    }
+
     if (0 != defaultTexture)
     {
+        GLfloat color[4] = { 1.f, 1.f, 1.f, opacity };
+        
         glBindTexture(GL_TEXTURE_2D, defaultTexture);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewMatrix(), 0);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
         defaultBatch.Draw();
     }
     else
     {
+        GLfloat color[4] = { defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3] * opacity };
+        
         GLint polygonMode[2];
         glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
         if (!defaultColorSet)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), defaultColor);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), color);
         glLineWidth(1.f);
         defaultBatch.Draw();
         glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
@@ -106,4 +128,12 @@ void View2d::setDefaultColor(GLfloat* color)
 {
     memcpy(defaultColor, color, 4 * sizeof(GLfloat));
     defaultColorSet = true;
+}
+
+
+void View2d::setVisible(bool shouldBeVisible, int fadeTimeMs /* = 500 */)
+{
+    isVisible = shouldBeVisible;
+    lastVisibilityChange = Time::getCurrentTime();
+    fadeTime = fadeTimeMs;
 }

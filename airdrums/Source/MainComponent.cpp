@@ -42,6 +42,7 @@ MainContentComponent::MainContentComponent()
 , kitSelector(NULL)
 , patternSelector(NULL)
 , tempoControl(NULL)
+, buttonBar(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
@@ -89,6 +90,7 @@ MainContentComponent::~MainContentComponent()
     delete kitSelector;
     delete patternSelector;
     delete tempoControl;
+    delete buttonBar;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -212,7 +214,7 @@ void MainContentComponent::newOpenGLContextCreated()
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
-    kitSelector = new WheelSelector;
+    kitSelector = new WheelSelector(true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
     {
@@ -259,6 +261,11 @@ void MainContentComponent::newOpenGLContextCreated()
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
     tempoControl->setTempo(tempo);
     views.push_back(tempoControl);
+    
+    buttonBar = new ButtonBar;
+    GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
+    buttonBar->setDefaultColor(transparent);
+    views.push_back(buttonBar);
 
     for (HUDView* v : views)
         v->loadTextures();
@@ -269,12 +276,17 @@ void MainContentComponent::newOpenGLContextCreated()
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
 
     MotionDispatcher::instance().addListener(*this);
+    
+#if 0 // disabled all gestures in favor of buttons
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
-    
+#endif
+
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
+    
+    MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 }
@@ -284,6 +296,11 @@ void MainContentComponent::populatePatternSelector()
     patternSelector->removeAllIcons();
     
     int numPatterns = PatternManager::GetInstance().GetItemCount();
+    if (numPatterns == 0)
+    {
+        Logger::outputDebugString("no patterns!");
+        return;
+    }
     for (int i = 0; i < numPatterns; ++i)
     {
         WheelSelector::Icon* icon = new WheelSelector::Icon(i);
@@ -428,8 +445,17 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
                                             (GLfloat) tempoControlWidth,
                                             (GLfloat) tempoControlHeight));
+        
+        if (buttonBar)
+            buttonBar->setBounds(HUDRect((GLfloat) 0,
+                                         (GLfloat) (statusBarHeight + 10),
+                                         (GLfloat) Environment::instance().screenW,
+                                         (GLfloat)100));
+        
 
+#if 0
         layoutPadsLinear();
+#endif
         sizeChanged = false;
     }
     
@@ -669,29 +695,35 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() - 1);
         playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        ret = true;
     }
     else if (kp.getTextCharacter() == 'w') {
         drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() + 1);
         playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        ret = true;
     }
     else if (kp.getTextCharacter() == 'a') {
         drumSelectorRight->setSelection(drumSelectorRight->getSelection() - 1);
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+        ret = true;
     }
     else if (kp.getTextCharacter() == 's') {
         drumSelectorRight->setSelection(drumSelectorRight->getSelection() + 1);
         playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+        ret = true;
     }
     else if (kp.getKeyCode() == KeyPress::leftKey)
     {
         tempoControl->increment(-1);
+        ret = true;
     }
     else if (kp.getKeyCode() == KeyPress::rightKey)
     {
         tempoControl->increment(1);
+        ret = true;
     }
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
@@ -727,14 +759,26 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
     }
     else if (selector == patternSelector) {
         int selection = patternSelector->getSelection();
-        std::shared_ptr<DrumPattern> selectePattern = PatternManager::GetInstance().GetItem(selection);
-        String name = selectePattern->GetName();
-        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
-        Uuid uuid = selectePattern->GetUuid();
+        std::shared_ptr<DrumPattern> selectedPattern = PatternManager::GetInstance().GetItem(selection);
+        String name = selectedPattern->GetName();
+        Logger::outputDebugString("patternSelectorChanged - index: " + String(selection) + " name: " + name);
+        Uuid uuid = selectedPattern->GetUuid();
         String uuidString = uuid.toString();
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
-        Drums::instance().setPattern(selectePattern);
+        Drums::instance().setPattern(selectedPattern);
+        std::shared_ptr<DrumKit> kit = selectedPattern->GetDrumKit();
+        if (kit) {
+            Drums::instance().setDrumKit(kit);
+            int drumKitIndex = KitManager::GetInstance().GetIndexOfItem(selectedPattern->GetDrumKit());
+            kitSelector->setSelection(drumKitIndex);
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", kit->GetName());
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", kit->GetUuid().toString());
+        }
+        else
+        {
+            Logger::outputDebugString("Pattern selected with unknown kit");
+        }
     }
 }
 
@@ -761,9 +805,12 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 	}
 
     const Leap::Frame frame = controller.frame();
+
+#if 0 // disabled gestures in favor of simple cursor controlled buttons
     const Leap::GestureList& gestures = frame.gestures();
     handleGestures(gestures);
-    
+#endif
+
     const Leap::HandList& hands = frame.hands();
     const size_t numHands = hands.count();
     
