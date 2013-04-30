@@ -1,6 +1,8 @@
 #include "GfxTools.h"
 #include "Environment.h"
 
+#define USE_MIPMAP 1
+
 namespace GfxTools
 {
     void drawBatch(GLTriangleBatch* pBatch, bool drawWireFrame)
@@ -62,21 +64,25 @@ namespace GfxTools
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         
+#if USE_MIPMAP
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+#else
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+#endif
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         
-        GLfloat fLargest;
-        glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest);
-        
+#if USE_MIPMAP
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 5);
+#endif
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         glTexImage2D(GL_TEXTURE_2D, 0, 4, image.getWidth(), image.getHeight(), 0,
                      image.getFormat() == Image::RGB ? GL_RGB : GL_BGRA, GL_UNSIGNED_BYTE, bits);
+#if USE_MIPMAP
         glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
         glGenerateMipmap(GL_TEXTURE_2D);
+#endif
 
     }
 }
