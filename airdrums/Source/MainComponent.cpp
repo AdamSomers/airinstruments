@@ -767,6 +767,10 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
         Drums::instance().setPattern(selectedPattern);
+        if (Drums::instance().getTempoSource() == Drums::kPatternTempo)
+        {
+            tempoControl->setTempo(Drums::instance().getTempo());
+        }
         std::shared_ptr<DrumKit> kit = selectedPattern->GetDrumKit();
         if (kit) {
             Drums::instance().setDrumKit(kit);

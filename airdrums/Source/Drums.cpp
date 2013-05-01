@@ -247,8 +247,10 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 	resetToZero();
 
 	pattern = aPattern;
-	if (tempoSource == kPatternTempo)
+	if (tempoSource == kPatternTempo) {
+        setTempo(pattern->GetTempo());
 		setTempoSlider(pattern->GetTempo());
+    }
 	else
 		AdjustMidiBuffers();	// Conform the buffers to the current global tempo and sample rate
 
@@ -421,5 +423,5 @@ void Drums::registerTempoSlider(Slider* slider)
 void Drums::setTempoSlider(float tempo)
 {
 	jassert(tempoSlider != nullptr);
-	tempoSlider->setValue((double) tempo);
+	tempoSlider->setValue((double) tempo, dontSendNotification);
 }
