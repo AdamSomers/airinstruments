@@ -221,18 +221,17 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 	for (int i = 0; i < count; ++i)
 	{
 		SharedPtr<DrumSample> sample = kit->GetSample(i);
-		synth.addSound(sample->GetSound());
+		for (int j = 0; j < sample->GetLayerCount(); ++j)
+		{
+			synth.addSound(sample->GetSound(j));
+		}
 	}
     
-	// Continue to use the hardcoded clave sound for the metronome for now
-	AiffAudioFormat aiffFormat;
-	ScopedPointer<AudioFormatReader> clv (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_CLV_aif,
-																										BinaryData::TMD_CHIL_CLV_aifSize,
-																										false),
-																				true));
-	BigInteger notes;
-	notes.setRange (16, 1, true);
-	synth.addSound (new SamplerSound ("", *clv, notes, 16, 0.0, 0.1, 10.0));
+	SharedPtr<DrumSample> sample = kit->GetMetronome();
+	for (int j = 0; j < sample->GetLayerCount(); ++j)
+	{
+		synth.addSound(sample->GetSound(j));
+	}
 
     midiBufferLock.exit();
 }

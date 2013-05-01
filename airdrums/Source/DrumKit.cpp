@@ -14,6 +14,11 @@
 DrumKit::DrumKit()
 : mTextureId(0)
 {
+	// Continue to use the hardcoded clave sound for the metronome for now
+	SharedPtr<DrumSample> sample(new DrumSample);
+	DrumSample::Status status = sample->CreateFromMemory(BinaryData::TMD_CHIL_CLV_aif, BinaryData::TMD_CHIL_CLV_aifSize, 16, "metronome");
+	if (status == DrumSample::kNoError)
+		mMetronome = sample;
 }
 
 
@@ -99,6 +104,12 @@ SharedPtr<DrumSample> DrumKit::GetSample(int index)
 	jassert(index >= 0);
 
 	return mSamples.at(index);
+}
+
+
+SharedPtr<DrumSample> DrumKit::GetMetronome(void)
+{
+	return mMetronome;
 }
 
 

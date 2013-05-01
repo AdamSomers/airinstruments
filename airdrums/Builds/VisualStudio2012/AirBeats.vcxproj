@@ -167,12 +167,14 @@
     <ClCompile Include="..\..\Source\DrumPattern.cpp"/>
     <ClCompile Include="..\..\Source\Drums.cpp"/>
     <ClCompile Include="..\..\Source\DrumSample.cpp"/>
-    <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
+    <ClCompile Include="..\..\Source\DrumSampler.cpp"/>
     <ClCompile Include="..\..\Source\DrumSelector.cpp"/>
+    <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp"/>
+    <ClCompile Include="..\..\Source\LayeredSamplerSound.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainMenu.cpp"/>
@@ -181,6 +183,7 @@
     <ClCompile Include="..\..\Source\PatternManager.cpp"/>
     <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
+    <ClCompile Include="..\..\Source\SampleLayer.cpp"/>
     <ClCompile Include="..\..\Source\SkinManager.cpp"/>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp"/>
     <ClCompile Include="..\..\Source\TempoControl.cpp"/>
@@ -1296,10 +1299,12 @@
     <ClInclude Include="..\..\Source\DrumPattern.h"/>
     <ClInclude Include="..\..\Source\Drums.h"/>
     <ClInclude Include="..\..\Source\DrumSample.h"/>
-    <ClInclude Include="..\..\Source\DrumsHUD.h"/>
+    <ClInclude Include="..\..\Source\DrumSampler.h"/>
     <ClInclude Include="..\..\Source\DrumSelector.h"/>
+    <ClInclude Include="..\..\Source\DrumsHUD.h"/>
     <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
+    <ClInclude Include="..\..\Source\LayeredSamplerSound.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainMenu.h"/>
@@ -1308,6 +1313,7 @@
     <ClInclude Include="..\..\Source\PatternManager.h"/>
     <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>
+    <ClInclude Include="..\..\Source\SampleLayer.h"/>
     <ClInclude Include="..\..\Source\SkinManager.h"/>
     <ClInclude Include="..\..\Source\StrikeDetector.h"/>
     <ClInclude Include="..\..\Source\TempoControl.h"/>
@@ -1379,6 +1385,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormatManager.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_DirectXPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTMidiEventList.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.h"/>

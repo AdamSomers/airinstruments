@@ -34,11 +34,11 @@ public:
 	// Access to the kit's samples for playback
 
 	SharedPtr<DrumSample>	GetSample(int index);
+	SharedPtr<DrumSample>	GetMetronome(void);
 
 	// Other accessors
 
 	int	GetSampleCount(void);
-
     
     void LoadTextures();
     GLuint GetTexture() const;
@@ -60,6 +60,7 @@ private:
 	typedef	Container::iterator		Iterator;
 
 	Container	mSamples;
+	Item		mMetronome;
     
     Image	mImage;
     GLuint  mTextureId;

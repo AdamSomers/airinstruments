@@ -12,8 +12,9 @@
 #define __DRUMSAMPLE_H_3AC03E5__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include <vector>
 #include "Types.h"
+#include "SampleLayer.h"
 
 
 class DrumSample
@@ -24,9 +25,8 @@ public:
 		kNoError = 0,
 		kNoteNumberError = 1,
 		kCategoryError = 2,
-		kFilenameError = 3,
-		kFileNotFoundError = 4,
-		kFileLoadError = 5
+		kLayerError = 3,
+		kNoLayersError = 4
 	};
 
 	DrumSample();
@@ -45,16 +45,20 @@ public:
 	int		GetNoteNumber(void);
 	String&	GetCategory(void);
 	//Image	GetImage(void);
-    GLuint GetTexture(bool on) const;
-	SynthesiserSound::Ptr	GetSound(void);
+    GLuint	GetTexture(bool on) const;
+	SynthesiserSound::Ptr	GetSound(int layer);
+	int		GetLayerCount(void);
 
 private:
-	int		mNoteNumber;
-	String	mCategory;
-	Image	mImage;
-    GLuint  mTextureId;
+	typedef	SharedPtr<SampleLayer>	Item;
+	typedef	std::vector<Item>		Container;
+	typedef	Container::iterator		Iterator;
 
-	SynthesiserSound::Ptr	mSound;
+	int			mNoteNumber;
+	String		mCategory;
+	Image		mImage;
+    GLuint		mTextureId;
+	Container	mLayers;
 };
 
 #endif  // __DRUMSAMPLE_H_3AC03E5__
