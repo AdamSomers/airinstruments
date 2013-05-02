@@ -74,6 +74,8 @@ void Drums::NoteOn(int note, float velocity)
         bool found = i.getNextEvent(existingMessage, position);
         if (!found || position != quantizedPosition || existingMessage.getNoteNumber() != note)
             recordBuffer.addEvent(m, quantizedPosition);
+        else if (found && position == quantizedPosition && existingMessage.getNoteNumber() == note)
+            replaceNoteVelocity(m, quantizedPosition);
         
         if (diff < 0.5) {
             keyboardState.noteOn(1,note,velocity);
@@ -109,6 +111,27 @@ void Drums::clearTrack(int note)
     {
         if (message.getNoteNumber() != note)
             newBuffer.addEvent(message, samplePos);
+    }
+    recordBuffer = newBuffer;
+    midiBufferLock.exit();
+}
+
+void Drums::replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos)
+{
+    midiBufferLock.enter();
+	jassert(pattern.get() != nullptr);
+	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
+    MidiBuffer::Iterator i(recordBuffer);
+    int samplePos = 0;
+    MidiMessage message;
+    MidiBuffer newBuffer;
+    while (i.getNextEvent(message, samplePos))
+    {
+        if (inMessage.getNoteNumber() == message.getNoteNumber() && samplePos == inSamplePos)
+        {
+            message.setVelocity(inMessage.getVelocity() / 127.f);
+        }
+        newBuffer.addEvent(message, samplePos);
     }
     recordBuffer = newBuffer;
     midiBufferLock.exit();

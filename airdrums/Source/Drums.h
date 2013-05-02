@@ -25,6 +25,7 @@ public:
     void NoteOn(int note, float velocity);
     void clear();
     void clearTrack(int note);
+    void replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos);
     void resetToZero();
     
     // AudioSource overrides
