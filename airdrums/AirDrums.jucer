@@ -117,15 +117,21 @@
       <FILE id="Q8Lg9a" name="Drums.h" compile="0" resource="0" file="Source/Drums.h"/>
       <FILE id="l6SKgC" name="DrumSample.cpp" compile="1" resource="0" file="Source/DrumSample.cpp"/>
       <FILE id="So6Uef" name="DrumSample.h" compile="0" resource="0" file="Source/DrumSample.h"/>
-      <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
-      <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
+      <FILE id="LGCLHB" name="DrumSampler.cpp" compile="1" resource="0" file="Source/DrumSampler.cpp"/>
+      <FILE id="iPaTBq" name="DrumSampler.h" compile="0" resource="0" file="Source/DrumSampler.h"/>
       <FILE id="VPGoah" name="DrumSelector.cpp" compile="1" resource="0"
             file="Source/DrumSelector.cpp"/>
       <FILE id="FoDZug" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
+      <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
+      <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
       <FILE id="apTSIi" name="ItemManager.cpp" compile="0" resource="0" file="Source/ItemManager.cpp"/>
       <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
       <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
+      <FILE id="pyUpKY" name="LayeredSamplerSound.cpp" compile="1" resource="0"
+            file="Source/LayeredSamplerSound.cpp"/>
+      <FILE id="PizL5x" name="LayeredSamplerSound.h" compile="0" resource="0"
+            file="Source/LayeredSamplerSound.h"/>
       <FILE id="jzBYXC" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="ynO4Iz" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="vAgls0" name="MainComponent.cpp" compile="1" resource="0"
@@ -149,6 +155,8 @@
             file="Source/PatternSaveDialog.h"/>
       <FILE id="cY2YSL" name="PlayArea.cpp" compile="1" resource="0" file="Source/PlayArea.cpp"/>
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
+      <FILE id="Sq8qx7" name="SampleLayer.cpp" compile="1" resource="0" file="Source/SampleLayer.cpp"/>
+      <FILE id="dj1uwR" name="SampleLayer.h" compile="0" resource="0" file="Source/SampleLayer.h"/>
       <FILE id="uZdbZi" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>
       <FILE id="zf1uwf" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
       <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"

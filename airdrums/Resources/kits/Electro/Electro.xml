@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <kit name="Electro" image="Electro.png" uuid="c9e66ee9e308fb4daa7dc2a20e1fb685">
-    <sample note="0" category="BassDrum" image="" file="TMD CHIL KICK.aif" />
+  <sample note="0" category="BassDrum" image="" file="TMD CHIL KICK.aif" />
 	<sample note="1" category="Snare" image="" file="TMD CHIL SN 1.aif" />
 	<sample note="2" category="Clap" image="" file="TMD CHIL CLAP.aif" />
 	<sample note="3" category="HiPerc" image="" file="TMD CHIL CLV.aif" />
 
-    <sample note="4" category="ClosedHiHat" image="" file="TMD CHIL CHH.aif" />
+  <sample note="4" category="ClosedHiHat" image="">
+  <layer minVelocity="0" maxVelocity="42" file="TMD CHIL CHH.aif" />
+  <layer minVelocity="43" maxVelocity="84" file="TMD CHIL PHH.aif" />
+  <layer minVelocity="85" maxVelocity="127" file="TMD CHIL OHH.aif" />
+  </sample>
+
 	<sample note="5" category="PedalHiHat" image="" file="TMD CHIL PHH.aif" />
 	<sample note="6" category="OpenHiHat" image="" file="TMD CHIL OHH.aif" />
 
@@ -16,8 +21,8 @@
 	<sample note="10" category="Crash" image="" file="TMD CHIL CYM.aif" />
 	<sample note="11" category="Ride" image="" file="TMD CHIL RIDE.aif" />
 
-    <sample note="12" category="Pad" image="" file="TMD CHIL PAD.aif" />
+  <sample note="12" category="Pad" image="" file="TMD CHIL PAD.aif" />
 	<sample note="13" category="FX" image="" file="TMD CHIL SFX.aif" />
 	<sample note="14" category="FX" image="" file="TMD CHIL VERB.aif" />
-    <sample note="15" category="BassDrum" image="DeepBass.png" file="TMD CHIL BKICK.aif" />
+  <sample note="15" category="BassDrum" image="DeepBass.png" file="TMD CHIL BKICK.aif" />
 </kit>

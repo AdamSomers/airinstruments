@@ -5,6 +5,7 @@
 
 #include "DrumPattern.h"
 #include "DrumKit.h"
+#include "DrumSampler.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -83,7 +84,7 @@ private:
 
     TransportState transportState;
     MidiKeyboardState keyboardState;
-    Synthesiser synth;
+    DrumSampler synth;
     MidiMessageCollector midiCollector;
     SharedPtr<DrumPattern> pattern;
     MidiBuffer metronomeBuffer;

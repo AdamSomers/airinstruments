@@ -394,16 +394,22 @@
     <ClCompile Include="..\..\Source\DrumSample.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\DrumsHUD.cpp">
+    <ClCompile Include="..\..\Source\DrumSampler.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumSelector.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DrumsHUD.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LayeredSamplerSound.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
@@ -428,6 +434,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PlayArea.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SampleLayer.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SkinManager.cpp">
@@ -1728,16 +1737,22 @@
     <ClInclude Include="..\..\Source\DrumSample.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\DrumsHUD.h">
+    <ClInclude Include="..\..\Source\DrumSampler.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumSelector.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DrumsHUD.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ItemManager.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\KitManager.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LayeredSamplerSound.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Main.h">
@@ -1762,6 +1777,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlayArea.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SampleLayer.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SkinManager.h">
@@ -1975,6 +1993,9 @@
       <Filter>Juce Modules\juce_audio_processors\format</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.h">
+      <Filter>Juce Modules\juce_audio_processors\format_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_DirectXPluginFormat.h">
       <Filter>Juce Modules\juce_audio_processors\format_types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.h">
