@@ -100,8 +100,7 @@ private:
     TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
-    PlayArea* playAreaLeft;
-    PlayArea* playAreaRight;
+    std::vector<PlayArea*> playAreas;
     DrumSelector* drumSelectorLeft;
     DrumSelector* drumSelectorRight;
     TrigViewBank* trigViewBank;

@@ -19,7 +19,7 @@
 
 // 0 -> strike on direction reversal
 // 1 -> strike as soon as threshold is crossed
-#define SENSITIVITY .90f
+#define SENSITIVITY .50f
 
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
 // Also, the pad area upper edge is at about 310
@@ -105,8 +105,7 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 				float vel = (val - rangeLow) / (rangeHigh - rangeLow);
         
 				// Get midi note to play based on left/right 
-				bool leftHand = isLeft(hand);
-				int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue(leftHand ? "selectedNoteLeft" : "selectedNoteRight", 0);
+				int midiNote = getNoteForHand(hand);
 
 				// play the note
 				Drums::instance().NoteOn(midiNote, vel);
@@ -134,17 +133,18 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 	}
 }
 
-// Whether a hand is considered to be on the left or right side of the screen
-// is first given by the palm vectors position, but if an extended finger is
-// crossing the center line, the user probably intends to play the the opposite side.
-bool StrikeDetector::isLeft(const Leap::Hand &hand)
-{
-    bool leftHand = false;
-    if (hand.palmPosition().x < 0)
-        leftHand = true;
+int StrikeDetector::getNoteForHand(const Leap::Hand &hand)
+{    
+    int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", -1);
+    jassert(layout != -1);
+
+    PropertiesFile* settings = AirHarpApplication::getInstance()->getProperties().getUserSettings();
+    int midiNote = 0;
     
     const Leap::PointableList& pointables = hand.pointables();
     const size_t numPointables = pointables.count();
+    float pointableX = hand.palmPosition().x;
+    float pointableZ = hand.palmPosition().z;
     if (numPointables >= 1)
     {
         int pointableClosestToScreen = 0;
@@ -159,12 +159,67 @@ bool StrikeDetector::isLeft(const Leap::Hand &hand)
             }
         }
         
-        if (!leftHand && pointables[pointableClosestToScreen].tipPosition().x < 0.f)
-            leftHand = true;
-        else if (leftHand && pointables[pointableClosestToScreen].tipPosition().x > 0.f)
-            leftHand = false;
+        pointableX = pointables[pointableClosestToScreen].tipPosition().x;
+        pointableZ = pointables[pointableClosestToScreen].tipPosition().z;
     }
-    return leftHand;
+    
+    int padNumber = 0;
+    bool inLeftHalf = false;
+    bool inFrontHalf = false;
+    bool inMiddleThird = false;
+    
+    if (pointableX < 0.f)
+        inLeftHalf = true;
+    
+    if (pointableZ > 0)
+        inFrontHalf = true;
+    
+    if (pointableX > -50 && pointableX < 50.f)
+        inMiddleThird = true;
+    
+    switch (layout) {
+        case kLayout2x1:
+            if (inLeftHalf)
+                padNumber = 0;
+            else
+                padNumber = 1;
+            break;
+        case kLayout3x1:
+            if (inMiddleThird)
+                padNumber = 1;
+            else if (inLeftHalf)
+                padNumber = 0;
+            else
+                padNumber = 2;
+            break;
+        case kLayout2x2:
+            if (inLeftHalf)
+                padNumber = 0;
+            else
+                padNumber = 1;
+
+            if (!inFrontHalf)
+                padNumber += 2;
+            break;
+        case kLayout3x2:
+            if (inMiddleThird)
+                padNumber = 1;
+            else if (inLeftHalf)
+                padNumber = 0;
+            else
+                padNumber = 2;
+            
+            if (!inFrontHalf)
+                padNumber += 3;
+            break;
+        default:
+            break;
+    }
+    
+    midiNote = settings->getIntValue("selectedNote" + String(padNumber), 0);
+
+    
+    return midiNote;
 }
 
 const Time& StrikeDetector::getLastStrikeTime() const

@@ -30,6 +30,14 @@ public:
 		kStateRecoilEnd = 3		// Waiting for upward motion to end
 	};
 
+    enum Layout
+    {
+        kLayout2x1 = 0,
+        kLayout3x1,
+        kLayout2x2,
+        kLayout3x2
+    };
+
     StrikeDetector();
     
     void handMotion(const Leap::Hand& hand);
@@ -58,7 +66,7 @@ private:
 #endif
 	int64_t timestampHistory[kHistoryDepth];
     
-    bool isLeft(const Leap::Hand& hand);
+    int getNoteForHand(const Leap::Hand& hand);
 	void SmoothData(float& velocity, float& position, int64_t timestamp);
 };
 
