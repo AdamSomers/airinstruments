@@ -101,8 +101,7 @@ private:
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
     std::vector<PlayArea*> playAreas;
-    DrumSelector* drumSelectorLeft;
-    DrumSelector* drumSelectorRight;
+    DrumSelector* drumSelector;
     TrigViewBank* trigViewBank;
     WheelSelector* kitSelector;
     WheelSelector* patternSelector;

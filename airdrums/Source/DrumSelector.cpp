@@ -30,23 +30,22 @@ void DrumSelector::setBounds(const HUDRect& b)
 
 void DrumSelector::layoutIcons()
 {
-    int N = icons.size();
+    const int N = icons.size();
 
-    const int selectedIconWidth = (int) getBounds().h;
-    const int selectedIconHeight = (int) getBounds().h;
-    const float iconWidth = (getBounds().w-selectedIconWidth) / (float)(N - (N%2));
+    const float minIconSpacing = 15.f;
+    float iconSpacing = minIconSpacing;
+    if ((getBounds().h + minIconSpacing) * N < getBounds().w)
+        iconSpacing = (getBounds().w - (getBounds().h * N)) / (N+2);
+    const float availableWidth = getBounds().w - iconSpacing * (float)(N+2);
+    const float iconWidth = jmin(availableWidth / (float)N, getBounds().h);
     const float iconHeight = iconWidth;
-
-    float iconX = 0.f;
+    
+    float iconX = iconSpacing;
     for (int i = 0; i < N; ++i)
     {
-        float w = i == selection ? selectedIconWidth : iconWidth;
-        float h = i == selection ? selectedIconHeight : iconHeight;
-        
         SharedPtr<Icon> icon = icons.at(i);
-        icon->setBounds(HUDRect(iconX + 10, getBounds().h / 2 - h / 2, w, h));
-        
-        iconX += w;
+        icon->setBounds(HUDRect(iconX, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
+        iconX += iconWidth + iconSpacing;
     }
 }
 

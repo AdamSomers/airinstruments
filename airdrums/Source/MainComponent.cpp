@@ -34,8 +34,7 @@ MainContentComponent::MainContentComponent()
 , prevMouseY(0.f)
 , prevMouseX(0.f)
 , sizeChanged(false)
-, drumSelectorLeft(NULL)
-, drumSelectorRight(NULL)
+, drumSelector(NULL)
 , trigViewBank(NULL)
 , kitSelector(NULL)
 , patternSelector(NULL)
@@ -80,8 +79,7 @@ MainContentComponent::~MainContentComponent()
     delete tutorial;
     delete toolbar;
     delete statusBar;
-    delete drumSelectorLeft;
-    delete drumSelectorRight;
+    delete drumSelector;
     delete trigViewBank;
     delete kitSelector;
     delete patternSelector;
@@ -200,14 +198,10 @@ void MainContentComponent::newOpenGLContextCreated()
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
     }
     
-    drumSelectorLeft = new DrumSelector;
-    drumSelectorRight = new DrumSelector;
-    drumSelectorLeft->setSelection(0);
-    drumSelectorRight->setSelection(1);
-    drumSelectorLeft->addListener(this);
-    drumSelectorRight->addListener(this);
-    views.push_back(drumSelectorLeft);
-    views.push_back(drumSelectorRight);
+    drumSelector = new DrumSelector;
+    drumSelector->setSelection(0);
+    drumSelector->addListener(this);
+    views.push_back(drumSelector);
     
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
@@ -388,16 +382,10 @@ void MainContentComponent::renderOpenGL()
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat) statusBarHeight));
         
-        if (drumSelectorLeft)
-            drumSelectorLeft->setBounds(HUDRect((GLfloat) 5.0f,
+        if (drumSelector)
+            drumSelector->setBounds(HUDRect((GLfloat) 5.0f,
                                                 (GLfloat) toolbar->getBounds().y + 10,
-                                                (GLfloat) Environment::instance().screenW / 2,
-                                                (GLfloat) drumSelectorHeight - 5));
-        
-        if (drumSelectorRight)
-            drumSelectorRight->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2 + 5,
-                                                (GLfloat) toolbar->getBounds().y + 10,
-                                                (GLfloat) Environment::instance().screenW / 2,
+                                                (GLfloat) Environment::instance().screenW,
                                                 (GLfloat) drumSelectorHeight - 5));
         
         if (playAreas.size() != 0)
