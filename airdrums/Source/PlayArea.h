@@ -19,6 +19,8 @@ public:
     const int getSelectedMidiNote() const { return selectedMidiNote; }
     void setSelectedMidiNote(int note);
     
+    void setColor(const Colour& color);
+    
 private:
     float fade;
     int selectedMidiNote;

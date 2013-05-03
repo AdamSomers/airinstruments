@@ -259,8 +259,8 @@ void HUDButton::draw()
             color = offColor;
     }
 
-    GLfloat onTexColor[4] = { 1.f, 1.f, 1.f, fade * opacity};
-    GLfloat offTexColor[4] = { 1.f, 1.f, 1.f, (1.f - fade) * opacity };
+    GLfloat onTexColor[4] = { onColor[0], onColor[1], onColor[2], fade * opacity};
+    GLfloat offTexColor[4] = { offColor[0], offColor[1], offColor[2], (1.f - fade) * opacity };
 
     GLint blendSrc;
     glGetIntegerv(GL_BLEND_SRC, &blendSrc);
@@ -300,13 +300,13 @@ void HUDButton::draw()
 
 void HUDButton::setup()
 {   
-    offColor[0] = 0.3f;
-    offColor[1] = 0.3f;
-    offColor[2] = 0.3f;
-    offColor[3] = 1.0f;
-    onColor[0] = 0.f;
+    offColor[0] = 1.f;
+    offColor[1] = 1.f;
+    offColor[2] = 1.f;
+    offColor[3] = 1.f;
+    onColor[0] = 1.f;
     onColor[1] = 1.f;
-    onColor[2] = 0.f;
+    onColor[2] = 1.f;
     onColor[3] = 1.f;
     hoverOffColor[0] = 0.4f;
     hoverOffColor[1] = 0.4f;
@@ -419,4 +419,14 @@ void HUDButton::timerCallback()
     setState(!getState(), true);
     lastTimerStartTime = Time::getCurrentTime();
     startTimer(hoverTimeout);
+}
+
+void HUDButton::setOnColor(GLfloat *color)
+{
+    memcpy(onColor, color, 4 * sizeof(GLfloat));
+}
+
+void HUDButton::setOffColor(GLfloat *color)
+{
+    memcpy(offColor, color, 4 * sizeof(GLfloat));
 }

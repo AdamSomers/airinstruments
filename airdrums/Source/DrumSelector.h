@@ -32,7 +32,7 @@ public:
         ~Icon();
         void draw();
         void setBounds(const HUDRect& b);
-        void setPadNumber(int pad) { padNumber = pad; }
+        void setPadNumber(int pad);
         int getPadNumber() const { return padNumber; }
     private:
         void updateBounds();

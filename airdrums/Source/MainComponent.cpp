@@ -192,14 +192,22 @@ void MainContentComponent::newOpenGLContextCreated()
     drumSelector->addListener(this);
     views.push_back(drumSelector);
     
+    const String defaultPadColors[6] = { "E3FFDA", "D4FFC7", "C2FFAE", "B1E0A2", "A2E0CC", "6DD4B2" };
+    
     for (int i = 0; i < 6; ++i)
     {
         PlayArea* pad = new PlayArea;
         int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNote" + String(i), i);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
         pad->setSelectedMidiNote(midiNote);
+        
+        String color = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("padColor" + String(i), defaultPadColors[i]);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("padColor" + String(i), color);
+        
+        pad->setColor(Colour::fromString(color));
+
         playAreas.push_back(pad);
         views.push_back(pad);
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
         
         drumSelector->setPadAssociation(midiNote, i);
     }
@@ -855,7 +863,16 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 void MainContentComponent::incPadAssociation(int padNumber, int inc)
 {
     jassert(inc == -1 || inc == 1)
-    drumSelector->setPadAssociation(drumSelector->getNoteForPad(padNumber) + inc, padNumber);
+    int note = drumSelector->getNoteForPad(padNumber) + inc;
+    if (note < 0) note = 15;
+    if (note > (int) 15) note = 0;
+    
+    while (drumSelector->getPadForNote(note) != -1) {
+        note = (note + inc) % 16;
+        if (note < 0) note = 15;
+    }
+
+    drumSelector->setPadAssociation(note, padNumber);
     playAreas.at(padNumber)->setSelectedMidiNote(drumSelector->getNoteForPad(padNumber));
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(padNumber), drumSelector->getNoteForPad(padNumber));
 }

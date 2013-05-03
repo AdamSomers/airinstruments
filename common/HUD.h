@@ -89,6 +89,8 @@ public:
     void setRingTexture(GLuint tex);
     void loadTextures();
     void setTimeout(int newTimeout);
+    void setOnColor(GLfloat* color);
+    void setOffColor(GLfloat* color);
     
     class Listener
     {

@@ -75,7 +75,7 @@ void DrumSelector::setPadAssociation(int note, int pad)
 {
     if (note < 0) note = icons.size() - 1;
     if (note >= (int) icons.size()) note = 0;
-    
+
     for (SharedPtr<Icon> i : icons)
         if (i->getPadNumber() == pad)
             i->setPadNumber(-1);
@@ -145,6 +145,14 @@ void DrumSelector::Icon::draw()
 
     GLuint onTextureID = 0;
     GLuint offTextureID = 0;
+    
+    if (padNumber != -1)
+    {
+        String padColor = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("padColor" + String(padNumber), "FFFFFF");
+        Colour c = Colour::fromString(padColor);
+        GLfloat color[4] = { c.getFloatRed(), c.getFloatGreen(), c.getFloatBlue(), c.getFloatAlpha() };
+        setOnColor(color);
+    }
 
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
@@ -160,6 +168,12 @@ void DrumSelector::Icon::draw()
     }
     
     HUDButton::draw();
+}
+
+void DrumSelector::Icon::setPadNumber(int pad)
+{
+    padNumber = pad;
+    setState(padNumber != -1);
 }
 
 void DrumSelector::Icon::setBounds(const HUDRect &b)
