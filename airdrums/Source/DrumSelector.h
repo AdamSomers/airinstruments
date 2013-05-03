@@ -21,8 +21,9 @@ public:
     // HUDButton::Listener override
     void buttonStateChanged(HUDButton* b);
 
-    void setSelection(int sel);
-    int getSelection() const { return selection; }
+    void setPadAssociation(int note, int pad);
+    int getPadForNote(int note) const;
+    int getNoteForPad(int pad) const;
 
     class Icon : public HUDButton
     {
@@ -31,11 +32,14 @@ public:
         ~Icon();
         void draw();
         void setBounds(const HUDRect& b);
+        void setPadNumber(int pad) { padNumber = pad; }
+        int getPadNumber() const { return padNumber; }
     private:
         void updateBounds();
         
         HUDRect targetBounds;
         HUDRect tempBounds;
+        int padNumber;
         float xStep, yStep, wStep, hStep;
     };
 
@@ -53,7 +57,6 @@ private:
     void layoutIcons();
 
     std::vector<SharedPtr<Icon> > icons;
-    int selection;
     bool needsLayout;
     std::vector<Listener*> listeners;
 };

@@ -88,6 +88,7 @@ private:
     bool checkIdle();
     void populatePatternSelector();
     void selectCurrentPattern();
+    void incPadAssociation(int padNumber, int inc);
 
     enum TimerIds
     {

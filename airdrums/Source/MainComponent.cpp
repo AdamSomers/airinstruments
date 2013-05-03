@@ -188,6 +188,10 @@ void MainContentComponent::newOpenGLContextCreated()
     int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", layout);
     
+    drumSelector = new DrumSelector;
+    drumSelector->addListener(this);
+    views.push_back(drumSelector);
+    
     for (int i = 0; i < 6; ++i)
     {
         PlayArea* pad = new PlayArea;
@@ -196,13 +200,10 @@ void MainContentComponent::newOpenGLContextCreated()
         playAreas.push_back(pad);
         views.push_back(pad);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
+        
+        drumSelector->setPadAssociation(midiNote, i);
     }
-    
-    drumSelector = new DrumSelector;
-    drumSelector->setSelection(0);
-    drumSelector->addListener(this);
-    views.push_back(drumSelector);
-    
+
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
@@ -788,32 +789,54 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         sizeChanged = true;
         ret = true;
     }
-/*/
     else if (kp.getTextCharacter() == 'q') {
-        drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() - 1);
-        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        incPadAssociation(0, -1);
         ret = true;
     }
     else if (kp.getTextCharacter() == 'w') {
-        drumSelectorLeft->setSelection(drumSelectorLeft->getSelection() + 1);
-        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        incPadAssociation(0, 1);
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'a') {
-        drumSelectorRight->setSelection(drumSelectorRight->getSelection() - 1);
-        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+    else if (kp.getTextCharacter() == 'e') {
+        incPadAssociation(1, -1);
         ret = true;
     }
-    else if (kp.getTextCharacter() == 's') {
-        drumSelectorRight->setSelection(drumSelectorRight->getSelection() + 1);
-        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
+    else if (kp.getTextCharacter() == 'r') {
+        incPadAssociation(1, 1);
         ret = true;
     }
-//*/
+    else if (kp.getTextCharacter() == 't') {
+        incPadAssociation(2, -1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'y') {
+        incPadAssociation(2, 1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'u') {
+        incPadAssociation(3, -1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'i') {
+        incPadAssociation(3, 1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'o') {
+        incPadAssociation(4, -1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'p') {
+        incPadAssociation(4, 1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == '[') {
+        incPadAssociation(5, -1);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == ']') {
+        incPadAssociation(5, 1);
+        ret = true;
+    }
     else if (kp.getKeyCode() == KeyPress::leftKey)
     {
         tempoControl->increment(-1);
@@ -827,6 +850,14 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     
     AirHarpApplication::getInstance()->getProperties().saveIfNeeded();
     return ret;
+}
+
+void MainContentComponent::incPadAssociation(int padNumber, int inc)
+{
+    jassert(inc == -1 || inc == 1)
+    drumSelector->setPadAssociation(drumSelector->getNoteForPad(padNumber) + inc, padNumber);
+    playAreas.at(padNumber)->setSelectedMidiNote(drumSelector->getNoteForPad(padNumber));
+    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(padNumber), drumSelector->getNoteForPad(padNumber));
 }
 
 void MainContentComponent::drumSelectorChanged(DrumSelector* selector)

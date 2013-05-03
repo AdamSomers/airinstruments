@@ -6,8 +6,7 @@
 #include "Main.h"
 
 DrumSelector::DrumSelector()
-: selection(0)
-, needsLayout(false)
+: needsLayout(false)
 {
     for (int i = 0; i < 16; ++i)
     {
@@ -72,16 +71,34 @@ void DrumSelector::loadTextures()
 {
 }
 
-void DrumSelector::setSelection(int sel)
+void DrumSelector::setPadAssociation(int note, int pad)
 {
-    if (sel < 0) sel = icons.size() - 1;
-    if (sel >= (int) icons.size()) sel = 0;
-    selection = sel;
-
+    if (note < 0) note = icons.size() - 1;
+    if (note >= (int) icons.size()) note = 0;
+    
     for (SharedPtr<Icon> i : icons)
-        i->setState(i->getId() == sel);
+        if (i->getPadNumber() == pad)
+            i->setPadNumber(-1);
+
+    icons.at(note)->setPadNumber(pad);
 
     needsLayout = true;
+}
+
+int DrumSelector::getPadForNote(int note) const
+{
+    jassert(note >= 0 && note < icons.size())
+    return icons.at(note)->getPadNumber();
+}
+
+int DrumSelector::getNoteForPad(int pad) const
+{
+    int note = -1;
+    jassert(pad >= 0 && pad < 6)
+    for (int i = 0; i < icons.size(); ++i)
+        if (getPadForNote(i) == pad)
+            note = i;
+    return note;
 }
 
 void DrumSelector::addListener(DrumSelector::Listener *listener)
@@ -100,13 +117,14 @@ void DrumSelector::removeListener(DrumSelector::Listener *listener)
 
 void DrumSelector::buttonStateChanged(HUDButton* b)
 {
-    setSelection(b->getId());
-    for (Listener* l : listeners)
-        l->drumSelectorChanged(this);
+//    setSelection(b->getId());
+//    for (Listener* l : listeners)
+//        l->drumSelectorChanged(this);
 }
 
 DrumSelector::Icon::Icon(int inId)
 : HUDButton(inId)
+, padNumber(-1)
 {
     setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
 }
