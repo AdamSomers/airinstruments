@@ -10,6 +10,7 @@ public:
     ~PlayArea();
     
     // HUDView overrides
+    void setBounds(const HUDRect& r);
     void setup();
     void draw();
     void loadTextures();
@@ -22,8 +23,12 @@ public:
     void setColor(const Colour& color);
     
 private:
-    float fade;
+    Time fadeStartTime;
     int selectedMidiNote;
+    
+    HUDView icon;
+    HUDRect iconBounds;
+    float iconRotation;
     
     GLfloat offColor[4];
     GLfloat onColor[4];
