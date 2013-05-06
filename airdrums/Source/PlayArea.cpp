@@ -62,29 +62,27 @@ void PlayArea::draw()
     RelativeTime diff = Time::getCurrentTime() - fadeStartTime;
     if (diff < RelativeTime::milliseconds(FADE_TIME))
         fade = 1.f - diff.inMilliseconds() / (float)FADE_TIME;
-    
-    onColor[3] = fade;
-    offColor[3] = 1.f - fade;
-    
+
     GLfloat padOnColor[4] = { 1.f, 1.f, 1.f, fade};
-    GLfloat padOffColor[4] = { 1.f, 1.f, 1.f, 1.f - fade};
+    GLfloat padOffColor[4] = { 1.f, 1.f, 1.f, 1.f};
 
     GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
     GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
-
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOnColor, 0);
-    glLineWidth(1.f);
-    defaultBatch.Draw();
 
     GLint blendSrc;
     glGetIntegerv(GL_BLEND_SRC, &blendSrc);
     GLint blendDst;
     glGetIntegerv(GL_BLEND_DST, &blendDst);
+    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glBindTexture(GL_TEXTURE_2D, offTextureID);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOffColor, 0);
+    defaultBatch.Draw();
+    
+    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOnColor, 0);
+    glLineWidth(1.f);
     defaultBatch.Draw();
 
     int iconTextureId = 0;
@@ -98,7 +96,7 @@ void PlayArea::draw()
         iconTextureId = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
     }
     
-    icon.setDefaultColor(offColor);
+    icon.setDefaultColor(onColor);
     
     icon.setDefaultTexture(iconTextureId);    
 
@@ -108,6 +106,9 @@ void PlayArea::draw()
         wobble *= iconBounds.w / 10.f;
         icon.setBounds(HUDRect(iconBounds.x - wobble, iconBounds.y-wobble, iconBounds.w+wobble*2, iconBounds.h+wobble*2));
     }
+    
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    
     Environment::instance().modelViewMatrix.PushMatrix();
     Environment::instance().modelViewMatrix.Translate(getBounds().x, getBounds().y, 0.0f);
     Environment::instance().modelViewMatrix.Translate(getBounds().w / 2, getBounds().h / 2.f, 0.0f);
@@ -117,6 +118,7 @@ void PlayArea::draw()
     Environment::instance().modelViewMatrix.PopMatrix();
     
     glBlendFunc(blendSrc, blendDst);
+    
     Environment::instance().modelViewMatrix.PushMatrix();
     Environment::instance().modelViewMatrix.Translate(getBounds().x, getBounds().y, 0.0f);
     assignButton.draw();
