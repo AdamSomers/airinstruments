@@ -518,7 +518,7 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toolbarHeight));
         
-        int side = std::min(Environment::instance().screenH / 2 + drumSelectorHeight, Environment::instance().screenW);
+        int side = jmin((int)drumSelector->getBounds().y - statusBarHeight, Environment::instance().screenW);
         int hiddenX = (int) (-side * .85);
         int shownX = (int) (-side / 2.f);
         if (kitSelector)
