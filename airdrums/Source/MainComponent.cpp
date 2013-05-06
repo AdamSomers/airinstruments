@@ -192,7 +192,7 @@ void MainContentComponent::newOpenGLContextCreated()
     drumSelector->addListener(this);
     views.push_back(drumSelector);
     
-    const String defaultPadColors[6] = { "E3FFDA", "D4FFC7", "C2FFAE", "B1E0A2", "A2E0CC", "6DD4B2" };
+    const String defaultPadColors[6] = { "8080ff", "ff8080", "080ff80", "80ffff", "ff80ff", "ffff80" };
     
     for (int i = 0; i < 6; ++i)
     {

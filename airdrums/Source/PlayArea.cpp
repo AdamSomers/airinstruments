@@ -57,11 +57,14 @@ void PlayArea::draw()
     onColor[3] = fade;
     offColor[3] = 1.f - fade;
     
+    GLfloat padOnColor[4] = { 1.f, 1.f, 1.f, fade};
+    GLfloat padOffColor[4] = { 1.f, 1.f, 1.f, 1.f - fade};
+
     GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
     GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
 
     glBindTexture(GL_TEXTURE_2D, onTextureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onColor, 0);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOnColor, 0);
     glLineWidth(1.f);
     defaultBatch.Draw();
 
@@ -72,7 +75,7 @@ void PlayArea::draw()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glBindTexture(GL_TEXTURE_2D, offTextureID);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offColor, 0);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOffColor, 0);
     defaultBatch.Draw();
 
     int iconTextureId = 0;
