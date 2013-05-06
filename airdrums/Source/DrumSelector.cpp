@@ -102,25 +102,10 @@ int DrumSelector::getNoteForPad(int pad) const
     return note;
 }
 
-void DrumSelector::addListener(DrumSelector::Listener *listener)
-{
-    auto iter = std::find(listeners.begin(), listeners.end(), listener);
-    if (iter == listeners.end())
-        listeners.push_back(listener);
-}
-
-void DrumSelector::removeListener(DrumSelector::Listener *listener)
-{
-    auto iter = std::find(listeners.begin(), listeners.end(), listener);
-    if (iter != listeners.end())
-        listeners.erase(iter);
-}
-
 void DrumSelector::buttonStateChanged(HUDButton* b)
 {
     setSelection(b->getId());
-    for (Listener* l : listeners)
-        l->drumSelectorChanged(b->getId());
+    sendActionMessage("startAssignMode/" + String(b->getId()));
 }
 
 void DrumSelector::setSelection(int selection)

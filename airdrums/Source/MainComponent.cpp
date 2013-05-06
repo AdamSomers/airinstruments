@@ -190,7 +190,7 @@ void MainContentComponent::newOpenGLContextCreated()
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", layout);
     
     drumSelector = new DrumSelector;
-    drumSelector->addListener(this);
+    drumSelector->addActionListener(this);
     views.push_back(drumSelector);
     
     const String defaultPadColors[6] = { "ff8080ff", "ffff8080", "ff080ff80", "ff80ffff", "ffff80ff", "ffffff80" };
@@ -209,7 +209,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
         playAreas.push_back(pad);
         views.push_back(pad);
-        pad->addListener(this);
+        pad->addActionListener(this);
         
         drumSelector->setPadAssociation(midiNote, i);
     }
@@ -266,6 +266,7 @@ void MainContentComponent::newOpenGLContextCreated()
     views.push_back(tempoControl);
     
     buttonBar = new ButtonBar;
+    buttonBar->addActionListener(this);
     GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
     buttonBar->setDefaultColor(transparent);
     views.push_back(buttonBar);
@@ -879,34 +880,6 @@ void MainContentComponent::incPadAssociation(int padNumber, int inc)
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(padNumber), drumSelector->getNoteForPad(padNumber));
 }
 
-void MainContentComponent::drumSelectorChanged(int selectedItem)
-{
-    bool enableAsignMode = true;
-    if (lastDrumSelection == selectedItem)
-    {
-        drumSelector->setSelection(-1);
-        enableAsignMode = false;
-        lastDrumSelection = -1;
-    }
-    else
-        lastDrumSelection = selectedItem;
-    
-    for (PlayArea* pad : playAreas)
-        pad->enableAssignButton(enableAsignMode);
-    
-}
-
-void MainContentComponent::playAreaChanged(PlayArea* playArea)
-{
-    playArea->setSelectedMidiNote(drumSelector->getSelection());
-    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
-    drumSelector->setPadAssociation(drumSelector->getSelection(), playArea->getId());
-    for (PlayArea* pad : playAreas)
-        pad->enableAssignButton(false);
-    drumSelector->setSelection(-1);
-    lastDrumSelection = -1;
-}
-
 void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
 {
     if (selector == kitSelector) {
@@ -1187,5 +1160,74 @@ void MainContentComponent::handleMessage(const juce::Message &m)
     if (patternAddedMessage)
     {
         needsPatternListUpdate = true;
+    }
+}
+
+void MainContentComponent::actionListenerCallback(const String& message)
+{
+    if (message.contains("assign/"))
+    {
+        String padNumberStr = message.trimCharactersAtStart("assign/");
+        int padNumber = padNumberStr.getIntValue();
+        jassert(padNumber >= 0 && padNumber < playAreas.size());
+        PlayArea* playArea = playAreas.at(padNumber);
+        playArea->setSelectedMidiNote(drumSelector->getSelection());
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
+        drumSelector->setPadAssociation(drumSelector->getSelection(), playArea->getId());
+        for (PlayArea* pad : playAreas)
+            pad->enableAssignButton(false);
+        drumSelector->setSelection(-1);
+        lastDrumSelection = -1;
+    }
+    else if (message.contains("startAssignMode/"))
+    {
+        String drumNumberStr = message.trimCharactersAtStart("startAssignMode/");
+        int drumNumber = drumNumberStr.getIntValue();
+        jassert(drumNumber >= 0 && drumNumber < 16);
+        // disable clear mode if we're in it
+        for (PlayArea* pad : playAreas)
+            pad->enableClearButton(false);
+        
+        bool enableAsignMode = true;
+        if (lastDrumSelection == drumNumber)
+        {
+            drumSelector->setSelection(-1);
+            enableAsignMode = false;
+            lastDrumSelection = -1;
+        }
+        else
+            lastDrumSelection = drumNumber;
+        
+        for (PlayArea* pad : playAreas)
+            pad->enableAssignButton(enableAsignMode);
+        
+        buttonBar->resetClearButton();
+    }
+    else if (message.contains("clear/"))
+    {
+        String padNumberStr = message.trimCharactersAtStart("clear/");
+        int padNumber = padNumberStr.getIntValue();
+        jassert(padNumber >= 0 && padNumber < playAreas.size());
+        PlayArea* playArea = playAreas.at(padNumber);
+        Drums::instance().clearTrack(playArea->getSelectedMidiNote());
+        for (PlayArea* pad : playAreas)
+            pad->enableClearButton(false);
+        buttonBar->resetClearButton();
+    }
+    else if (message == "clearTrack")
+    {
+        for (PlayArea* pad : playAreas)
+            pad->enableClearButton(true);
+        
+        // disable assign mode if we're in it
+        for (PlayArea* pad : playAreas)
+            pad->enableAssignButton(false);
+        drumSelector->setSelection(-1);
+        lastDrumSelection = -1;
+    }
+    else if (message == "cancelClear")
+    {
+        for (PlayArea* pad : playAreas)
+            pad->enableClearButton(false);
     }
 }

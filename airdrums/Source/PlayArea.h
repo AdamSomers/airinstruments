@@ -6,6 +6,7 @@
 
 class PlayArea : public HUDView
                , public HUDButton::Listener
+               , public ActionBroadcaster
 {
 public:
     PlayArea(int inId);
@@ -28,19 +29,10 @@ public:
     void setColor(const Colour& color);
     
     void enableAssignButton(bool shouldBeEnabled);
+    void enableClearButton(bool shouldBeEnabled);
     
     // HUDButton::Listener override
     void buttonStateChanged(HUDButton* b);
-    
-    class Listener
-    {
-    public:
-        virtual ~Listener() {}
-        virtual void playAreaChanged(PlayArea* playArea) = 0;
-    };
-    
-    void addListener(Listener* listener);
-    void removeListener(Listener* listener);
     
 private:
     Time fadeStartTime;
@@ -52,13 +44,12 @@ private:
     float iconRotation;
     
     TextHUDButton assignButton;
+    TextHUDButton clearButton;
     
     GLfloat offColor[4];
     GLfloat onColor[4];
     GLfloat hoverOffColor[4];
     GLfloat hoverOnColor[4];
-    
-    std::vector<Listener*> listeners;
 };
 
 #endif // h_PlayArea

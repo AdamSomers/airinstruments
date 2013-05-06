@@ -7,6 +7,7 @@
 
 class DrumSelector : public HUDView
                    , public HUDButton::Listener
+                   , public ActionBroadcaster
 {
 public:
     DrumSelector();
@@ -50,22 +51,11 @@ public:
         bool flashState;
     };
 
-    class Listener
-    {
-    public:
-        virtual ~Listener() {}
-        virtual void drumSelectorChanged(int selectedItem) = 0;
-    };
-    
-    void addListener(Listener* listener);
-    void removeListener(Listener* listener);
-
 private:
     void layoutIcons();
 
     std::vector<SharedPtr<Icon> > icons;
     bool needsLayout;
-    std::vector<Listener*> listeners;
     
     int selectedItem;
 };

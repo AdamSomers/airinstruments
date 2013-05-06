@@ -34,11 +34,10 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
-                               public DrumSelector::Listener,
-                               public PlayArea::Listener,
                                public WheelSelector::Listener,
                                public MultiTimer,
-                               public MessageListener
+                               public MessageListener,
+                               public ActionListener
 {
 public:
     //==============================================================================
@@ -68,9 +67,6 @@ public:
     // DrumSelector::Listener override
     void drumSelectorChanged(int selectedItem);
     
-    // PlayArea::Listener override
-    void playAreaChanged(PlayArea* playArea);
-    
     // KitSelector::Listener override
     void wheelSelectorChanged(WheelSelector* selector);
 
@@ -82,6 +78,9 @@ public:
     
     // MessageListener override
     void handleMessage(const Message& m);
+    
+    // ActionListener override
+    void actionListenerCallback(const String& message);
 
 private:
     void layoutPadsGrid();

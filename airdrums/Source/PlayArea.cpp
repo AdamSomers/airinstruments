@@ -32,6 +32,12 @@ PlayArea::PlayArea(int inId)
     assignButton.setVisible(false, 0);
     assignButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     assignButton.addListener(this);
+    
+    addChild(&clearButton);
+    clearButton.setText(StringArray("Clear"), StringArray("Clear"));
+    clearButton.setVisible(false, 0);
+    clearButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    clearButton.addListener(this);
 }
 
 PlayArea::~PlayArea()
@@ -47,6 +53,7 @@ void PlayArea::setBounds(const HUDRect& r)
     icon.setBounds(iconBounds);
     
     assignButton.setBounds(iconBounds);
+    clearButton.setBounds(iconBounds);
 
     HUDView::setBounds(r);
 }
@@ -122,6 +129,7 @@ void PlayArea::draw()
     Environment::instance().modelViewMatrix.PushMatrix();
     Environment::instance().modelViewMatrix.Translate(getBounds().x, getBounds().y, 0.0f);
     assignButton.draw();
+    clearButton.draw();
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
@@ -164,23 +172,16 @@ void PlayArea::enableAssignButton(bool shouldBeEnabled)
     assignButton.setEnabled(shouldBeEnabled);
 }
 
+void PlayArea::enableClearButton(bool shouldBeEnabled)
+{
+    clearButton.setVisible(shouldBeEnabled);
+    clearButton.setEnabled(shouldBeEnabled);
+}
+
 void PlayArea::buttonStateChanged(HUDButton* b)
 {
     if (b == &assignButton)
-        for (Listener* l : listeners)
-            l->playAreaChanged(this);
-}
-
-void PlayArea::addListener(PlayArea::Listener *listener)
-{
-    auto iter = std::find(listeners.begin(), listeners.end(), listener);
-    if (iter == listeners.end())
-        listeners.push_back(listener);
-}
-
-void PlayArea::removeListener(PlayArea::Listener *listener)
-{
-    auto iter = std::find(listeners.begin(), listeners.end(), listener);
-    if (iter != listeners.end())
-        listeners.erase(iter);
+        sendActionMessage("assign/" + String(id));
+    else if (b == &clearButton)
+        sendActionMessage("clear/" + String(id));
 }
