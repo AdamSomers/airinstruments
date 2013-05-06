@@ -7,9 +7,10 @@
 
 #define FADE_TIME 300
 
-PlayArea::PlayArea()
+PlayArea::PlayArea(int inId)
 : selectedMidiNote(0)
 , iconRotation(0.f)
+, id(inId)
 {
     offColor[0] = 1.f;
     offColor[1] = .5f;
@@ -25,6 +26,12 @@ PlayArea::PlayArea()
     
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
+    
+    addChild(&assignButton);
+    assignButton.setText(StringArray("Assign"), StringArray("Assign"));
+    assignButton.setVisible(false, 0);
+    assignButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    assignButton.addListener(this);
 }
 
 PlayArea::~PlayArea()
@@ -38,6 +45,8 @@ void PlayArea::setBounds(const HUDRect& r)
     float y = r.h / 2.f - w / 2.f;
     iconBounds = HUDRect(x,y,w,w);
     icon.setBounds(iconBounds);
+    
+    assignButton.setBounds(iconBounds);
 
     HUDView::setBounds(r);
 }
@@ -106,7 +115,12 @@ void PlayArea::draw()
     Environment::instance().modelViewMatrix.Translate(-(getBounds().w / 2.f), -(getBounds().h / 2.f), 0.0f);
     icon.draw();
     Environment::instance().modelViewMatrix.PopMatrix();
+    
     glBlendFunc(blendSrc, blendDst);
+    Environment::instance().modelViewMatrix.PushMatrix();
+    Environment::instance().modelViewMatrix.Translate(getBounds().x, getBounds().y, 0.0f);
+    assignButton.draw();
+    Environment::instance().modelViewMatrix.PopMatrix();
 }
 
 void PlayArea::tap(int midiNote)
@@ -140,4 +154,31 @@ void PlayArea::setColor(const Colour& color)
     offColor[1] = color.getFloatGreen();
     offColor[2] = color.getFloatBlue();
     offColor[3] = color.getFloatAlpha();
+}
+
+void PlayArea::enableAssignButton(bool shouldBeEnabled)
+{
+    assignButton.setVisible(shouldBeEnabled);
+    assignButton.setEnabled(shouldBeEnabled);
+}
+
+void PlayArea::buttonStateChanged(HUDButton* b)
+{
+    if (b == &assignButton)
+        for (Listener* l : listeners)
+            l->playAreaChanged(this);
+}
+
+void PlayArea::addListener(PlayArea::Listener *listener)
+{
+    auto iter = std::find(listeners.begin(), listeners.end(), listener);
+    if (iter == listeners.end())
+        listeners.push_back(listener);
+}
+
+void PlayArea::removeListener(PlayArea::Listener *listener)
+{
+    auto iter = std::find(listeners.begin(), listeners.end(), listener);
+    if (iter != listeners.end())
+        listeners.erase(iter);
 }

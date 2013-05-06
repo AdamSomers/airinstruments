@@ -206,6 +206,7 @@ HUDButton::HUDButton(int id)
 , fade(0.f)
 , ringTextureID(0)
 , hoverTimeout(750)
+, enabled(true)
 {
     // set a transparent color for the background
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -289,7 +290,7 @@ void HUDButton::draw()
         if (fade < 0.f) fade = 0.f;
     }
     
-    if (isTimerRunning()) {
+    if (enabled && isTimerRunning()) {
         GLfloat circleColor[4] = { 1.f, 1.f, 1.f, 1.f };
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor);
         glBindTexture(GL_TEXTURE_2D, ringTextureID);
@@ -407,8 +408,6 @@ void HUDButton::cursorEntered(float, float)
 
 void HUDButton::cursorExited(float, float)
 {
-    if (!isVisible)
-        return;
     stopTimer();
     //Logger::outputDebugString("Exited");
 }

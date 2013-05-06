@@ -46,6 +46,7 @@ MainContentComponent::MainContentComponent()
 , isIdle(true)
 , needsPatternListUpdate(false)
 , setPriority(false)
+, lastDrumSelection(-1)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -196,7 +197,7 @@ void MainContentComponent::newOpenGLContextCreated()
     
     for (int i = 0; i < 6; ++i)
     {
-        PlayArea* pad = new PlayArea;
+        PlayArea* pad = new PlayArea(i);
         int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNote" + String(i), i);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
         pad->setSelectedMidiNote(midiNote);
@@ -208,6 +209,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
         playAreas.push_back(pad);
         views.push_back(pad);
+        pad->addListener(this);
         
         drumSelector->setPadAssociation(midiNote, i);
     }
@@ -399,7 +401,7 @@ void MainContentComponent::renderOpenGL()
         
         if (playAreas.size() != 0)
         {            
-            int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout2x2);
+            int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
             
             int numPads = 0;
             switch (layout)
@@ -877,20 +879,31 @@ void MainContentComponent::incPadAssociation(int padNumber, int inc)
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(padNumber), drumSelector->getNoteForPad(padNumber));
 }
 
-void MainContentComponent::drumSelectorChanged(DrumSelector* selector)
+void MainContentComponent::drumSelectorChanged(int selectedItem)
 {
-/*/
-    if (selector == drumSelectorLeft)
+    bool enableAsignMode = true;
+    if (lastDrumSelection == selectedItem)
     {
-        playAreaLeft->setSelectedMidiNote(drumSelectorLeft->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteLeft", drumSelectorLeft->getSelection());
+        drumSelector->setSelection(-1);
+        enableAsignMode = false;
+        lastDrumSelection = -1;
     }
-    else if (selector == drumSelectorRight)
-    {
-        playAreaRight->setSelectedMidiNote(drumSelectorRight->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNoteRight", drumSelectorRight->getSelection());
-    }
-//*/
+    else
+        lastDrumSelection = selectedItem;
+    
+    for (PlayArea* pad : playAreas)
+        pad->enableAssignButton(enableAsignMode);
+    
+}
+
+void MainContentComponent::playAreaChanged(PlayArea* playArea)
+{
+    playArea->setSelectedMidiNote(drumSelector->getSelection());
+    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
+    drumSelector->setPadAssociation(drumSelector->getSelection(), playArea->getId());
+    for (PlayArea* pad : playAreas)
+        pad->enableAssignButton(false);
+    drumSelector->setSelection(-1);
 }
 
 void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)

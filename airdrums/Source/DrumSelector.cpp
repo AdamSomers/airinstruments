@@ -7,6 +7,7 @@
 
 DrumSelector::DrumSelector()
 : needsLayout(false)
+, selectedItem(-1)
 {
     for (int i = 0; i < 16; ++i)
     {
@@ -117,14 +118,27 @@ void DrumSelector::removeListener(DrumSelector::Listener *listener)
 
 void DrumSelector::buttonStateChanged(HUDButton* b)
 {
-//    setSelection(b->getId());
-//    for (Listener* l : listeners)
-//        l->drumSelectorChanged(this);
+    setSelection(b->getId());
+    for (Listener* l : listeners)
+        l->drumSelectorChanged(b->getId());
+}
+
+void DrumSelector::setSelection(int selection)
+{
+    for (SharedPtr<Icon> i : icons) {
+        i->setHighlighted(i->getId() == selection);
+        if (selection != i->getId())
+            i->setState(i->getPadNumber() != -1);
+    }
+    
+    selectedItem = selection;
 }
 
 DrumSelector::Icon::Icon(int inId)
 : HUDButton(inId)
 , padNumber(-1)
+, highlighted(false)
+, flashState(false)
 {
     setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
 }
@@ -151,6 +165,19 @@ void DrumSelector::Icon::draw()
         String padColor = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("padColor" + String(padNumber), "FFFFFF");
         Colour c = Colour::fromString(padColor);
         GLfloat color[4] = { c.getFloatRed(), c.getFloatGreen(), c.getFloatBlue(), c.getFloatAlpha() };
+        setOnColor(color);
+    }
+    
+    if (highlighted)
+    {
+        RelativeTime diff = Time::getCurrentTime() - flashStart;
+        if (diff.inMilliseconds() >= 300)
+        {
+            flashState = !flashState;
+            flashStart = Time::getCurrentTime();
+        }
+
+        GLfloat color[4] = { flashState * 1.f, flashState * 1.f, flashState * 1.f, 1.f };
         setOnColor(color);
     }
 
@@ -212,4 +239,13 @@ void DrumSelector::Icon::updateBounds()
         tempBounds.h += hStep;
     
     HUDView::setBounds(tempBounds);
+}
+
+void DrumSelector::Icon::setHighlighted(bool shouldBeHighlighted)
+{
+    highlighted = shouldBeHighlighted;
+    if (shouldBeHighlighted) {
+        flashStart = Time::getCurrentTime();
+        setState(true);
+    }
 }

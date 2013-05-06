@@ -24,6 +24,9 @@ public:
     void setPadAssociation(int note, int pad);
     int getPadForNote(int note) const;
     int getNoteForPad(int pad) const;
+    
+    int getSelection() const { return selectedItem; }
+    void setSelection(int selection);
 
     class Icon : public HUDButton
     {
@@ -34,6 +37,7 @@ public:
         void setBounds(const HUDRect& b);
         void setPadNumber(int pad);
         int getPadNumber() const { return padNumber; }
+        void setHighlighted(bool shouldBeHighlighted);
     private:
         void updateBounds();
         
@@ -41,13 +45,16 @@ public:
         HUDRect tempBounds;
         int padNumber;
         float xStep, yStep, wStep, hStep;
+        bool highlighted;
+        Time flashStart;
+        bool flashState;
     };
 
     class Listener
     {
     public:
         virtual ~Listener() {}
-        virtual void drumSelectorChanged(DrumSelector* selector) = 0;
+        virtual void drumSelectorChanged(int selectedItem) = 0;
     };
     
     void addListener(Listener* listener);
@@ -59,6 +66,8 @@ private:
     std::vector<SharedPtr<Icon> > icons;
     bool needsLayout;
     std::vector<Listener*> listeners;
+    
+    int selectedItem;
 };
 
 #endif // h_DrumSelector

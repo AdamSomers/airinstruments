@@ -35,6 +35,7 @@ class MainContentComponent   : public Component,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
                                public DrumSelector::Listener,
+                               public PlayArea::Listener,
                                public WheelSelector::Listener,
                                public MultiTimer,
                                public MessageListener
@@ -65,7 +66,10 @@ public:
     void handleNoteOff (MidiKeyboardState* /*source*/, int /*midiChannel*/, int /*midiNoteNumber*/) {}
     
     // DrumSelector::Listener override
-    void drumSelectorChanged(DrumSelector* selector);
+    void drumSelectorChanged(int selectedItem);
+    
+    // PlayArea::Listener override
+    void playAreaChanged(PlayArea* playArea);
     
     // KitSelector::Listener override
     void wheelSelectorChanged(WheelSelector* selector);
@@ -125,6 +129,7 @@ private:
     bool isIdle;
     bool needsPatternListUpdate;
 	bool setPriority;
+    int lastDrumSelection;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -91,6 +91,7 @@ public:
     void setTimeout(int newTimeout);
     void setOnColor(GLfloat* color);
     void setOffColor(GLfloat* color);
+    void setEnabled(bool shouldBeEnabled) { enabled = shouldBeEnabled; }
     
     class Listener
     {
@@ -126,6 +127,7 @@ private:
     Time lastTimerStartTime;
     GLuint ringTextureID;
     int hoverTimeout;
+    bool enabled;
 };
 
 #endif
