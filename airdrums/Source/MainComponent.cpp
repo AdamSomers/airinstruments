@@ -409,8 +409,8 @@ void MainContentComponent::renderOpenGL()
             {
                 case StrikeDetector::kLayout2x1:
                 {
-                    const int playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
-                    const int playAreaWidth = Environment::instance().screenW / 2;
+                    const float playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
+                    const float playAreaWidth = Environment::instance().screenW / 2.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                     (GLfloat) statusBar->getBounds().top(),
                                                     (GLfloat) playAreaWidth,
@@ -428,8 +428,8 @@ void MainContentComponent::renderOpenGL()
                     break;
                 case StrikeDetector::kLayout3x1:
                 {
-                    const int playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
-                    const int playAreaWidth = Environment::instance().screenW / 3;
+                    const float playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
+                    const float playAreaWidth = Environment::instance().screenW / 3.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                        (GLfloat) statusBar->getBounds().top(),
                                                        (GLfloat) playAreaWidth,
@@ -451,8 +451,8 @@ void MainContentComponent::renderOpenGL()
                     break;
                 case StrikeDetector::kLayout2x2:
                 {
-                    const int playAreaHeight = (Environment::instance().screenH - toolbarHeight - statusBarHeight) / 2;
-                    const int playAreaWidth = Environment::instance().screenW / 2;
+                    const float playAreaHeight = (Environment::instance().screenH - toolbarHeight - statusBarHeight) / 2.f;
+                    const float playAreaWidth = Environment::instance().screenW / 2.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                        (GLfloat) statusBar->getBounds().top(),
                                                        (GLfloat) playAreaWidth,
@@ -477,8 +477,8 @@ void MainContentComponent::renderOpenGL()
                     break;
                 case StrikeDetector::kLayout3x2:
                 {
-                    const int playAreaHeight = (Environment::instance().screenH - toolbarHeight - statusBarHeight) / 2;
-                    const int playAreaWidth = Environment::instance().screenW / 3;
+                    const float playAreaHeight = (Environment::instance().screenH - toolbarHeight - statusBarHeight) / 2.f;
+                    const float playAreaWidth = Environment::instance().screenW / 3.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                        (GLfloat) statusBar->getBounds().top(),
                                                        (GLfloat) playAreaWidth,
