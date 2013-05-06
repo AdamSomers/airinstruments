@@ -904,6 +904,7 @@ void MainContentComponent::playAreaChanged(PlayArea* playArea)
     for (PlayArea* pad : playAreas)
         pad->enableAssignButton(false);
     drumSelector->setSelection(-1);
+    lastDrumSelection = -1;
 }
 
 void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
