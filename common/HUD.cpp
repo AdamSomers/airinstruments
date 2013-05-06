@@ -207,6 +207,7 @@ HUDButton::HUDButton(int id)
 , ringTextureID(0)
 , hoverTimeout(750)
 , enabled(true)
+, buttonType(kToggle)
 {
     // set a transparent color for the background
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -415,9 +416,13 @@ void HUDButton::cursorExited(float, float)
 void HUDButton::timerCallback()
 {
     //Logger::outputDebugString("Boom");
+    if (!enabled)
+        return;
+
     setState(!getState(), true);
     lastTimerStartTime = Time::getCurrentTime();
-    startTimer(hoverTimeout);
+    if (buttonType != kMomentary)
+        stopTimer();
 }
 
 void HUDButton::setOnColor(GLfloat *color)
@@ -428,4 +433,9 @@ void HUDButton::setOnColor(GLfloat *color)
 void HUDButton::setOffColor(GLfloat *color)
 {
     memcpy(offColor, color, 4 * sizeof(GLfloat));
+}
+
+void HUDButton::setEnabled(bool shouldBeEnabled)
+{
+    enabled = shouldBeEnabled;
 }

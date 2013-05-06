@@ -35,6 +35,9 @@ TempoControl::TempoControl()
     
     leftButton.setTimeout(300);
     rightButton.setTimeout(300);
+    
+    leftButton.setButtonType(HUDButton::kMomentary);
+    rightButton.setButtonType(HUDButton::kMomentary);
 }
 
 TempoControl::~TempoControl()
