@@ -47,6 +47,7 @@ MainContentComponent::MainContentComponent()
 , needsPatternListUpdate(false)
 , setPriority(false)
 , lastDrumSelection(-1)
+, resizeCursor(false)
 {
     openGLContext.setRenderer (this);
     openGLContext.setComponentPaintingEnabled (true);
@@ -350,6 +351,15 @@ void MainContentComponent::selectCurrentPattern()
 
 void MainContentComponent::renderOpenGL()
 {
+    if (resizeCursor)
+    {
+        MotionDispatcher::instance().cursor->setBounds(HUDRect(MotionDispatcher::instance().cursor->getBounds().x,
+                                                               MotionDispatcher::instance().cursor->getBounds().y,
+                                                               newCursorW,
+                                                               newCursorH));
+        resizeCursor = false;
+    }
+
     if (!showKitSelector && kitSelector->isEnabled()) {
         showKitSelector = true;
         sizeChanged = true;
@@ -1178,12 +1188,17 @@ void MainContentComponent::actionListenerCallback(const String& message)
             pad->enableAssignButton(false);
         drumSelector->setSelection(-1);
         lastDrumSelection = -1;
+        MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
+        newCursorW = 20;
+        newCursorH = 20;
+        resizeCursor = true;
     }
     else if (message.contains("startAssignMode/"))
     {
         String drumNumberStr = message.trimCharactersAtStart("startAssignMode/");
         int drumNumber = drumNumberStr.getIntValue();
         jassert(drumNumber >= 0 && drumNumber < 16);
+
         // disable clear mode if we're in it
         for (PlayArea* pad : playAreas)
             pad->enableClearButton(false);
@@ -1194,14 +1209,34 @@ void MainContentComponent::actionListenerCallback(const String& message)
             drumSelector->setSelection(-1);
             enableAsignMode = false;
             lastDrumSelection = -1;
+            MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
+            newCursorW = 20;
+            newCursorH = 20;
+            resizeCursor = true;
         }
         else
+        {
             lastDrumSelection = drumNumber;
+            
+            // set the cursor to drum texture
+            String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
+            if (kitUuidString != "Default") {
+                Uuid kitUuid(kitUuidString);
+                int texture = KitManager::GetInstance().GetItem(kitUuid)->GetSample(drumNumber)->GetTexture(false);
+                MotionDispatcher::instance().setCursorTexture(texture);
+                newCursorW = 50;
+                newCursorH = 50;
+                resizeCursor = true;
+            }
+        }
         
         for (PlayArea* pad : playAreas)
             pad->enableAssignButton(enableAsignMode);
         
         buttonBar->resetClearButton();
+    }
+    else if (message == "cancelAssign")
+    {
     }
     else if (message.contains("clear/"))
     {
@@ -1224,6 +1259,10 @@ void MainContentComponent::actionListenerCallback(const String& message)
             pad->enableAssignButton(false);
         drumSelector->setSelection(-1);
         lastDrumSelection = -1;
+        MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
+        newCursorW = 20;
+        newCursorH = 20;
+        resizeCursor = true;
     }
     else if (message == "cancelClear")
     {

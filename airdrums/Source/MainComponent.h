@@ -129,6 +129,9 @@ private:
     bool needsPatternListUpdate;
 	bool setPriority;
     int lastDrumSelection;
+    float newCursorW;
+    float newCursorH;
+    bool resizeCursor;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
