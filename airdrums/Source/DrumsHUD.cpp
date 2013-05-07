@@ -19,9 +19,6 @@ DrumsToolbar::DrumsToolbar()
 
     Drums::instance().addTransportListener(this);
     Drums::instance().getTransportState().sendChangeMessage();
-
-    GLfloat color[] = { .67f, .67f, .67f, 1.f };
-    setDefaultColor(color);
 }
 
 DrumsToolbar::~DrumsToolbar()

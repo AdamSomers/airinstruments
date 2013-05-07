@@ -41,6 +41,9 @@ WheelSelector::WheelSelector(bool left /*= false*/)
     
     upButton.setVisible(false, 0);
     downButton.setVisible(false, 0);
+
+    upButton.setButtonType(HUDButton::kMomentary);
+    downButton.setButtonType(HUDButton::kMomentary);
 }
 
 WheelSelector::~WheelSelector()

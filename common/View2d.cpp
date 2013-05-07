@@ -18,8 +18,8 @@ View2d::View2d()
 , fadeTime(0)
 {
     defaultColor[0] = 1.f;
-    defaultColor[1] = .3f;
-    defaultColor[2] = .3f;
+    defaultColor[1] = 1.f;
+    defaultColor[2] = 1.f;
     defaultColor[3] = 1.f;
 }
 
@@ -48,7 +48,7 @@ void View2d::draw()
 
     if (0 != defaultTexture)
     {
-        GLfloat color[4] = { 1.f, 1.f, 1.f, opacity };
+        GLfloat color[4] = { defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3] * opacity };
         
         glBindTexture(GL_TEXTURE_2D, defaultTexture);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);

@@ -89,6 +89,16 @@ public:
     void setRingTexture(GLuint tex);
     void loadTextures();
     void setTimeout(int newTimeout);
+    void setOnColor(GLfloat* color);
+    void setOffColor(GLfloat* color);
+    void setEnabled(bool shouldBeEnabled);
+    void setButtonType(int type) { buttonType = type; };
+    
+    enum Type
+    {
+        kToggle = 0,
+        kMomentary
+    };
     
     class Listener
     {
@@ -124,6 +134,8 @@ private:
     Time lastTimerStartTime;
     GLuint ringTextureID;
     int hoverTimeout;
+    bool enabled;
+    int buttonType;
 };
 
 #endif
