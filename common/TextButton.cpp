@@ -39,10 +39,10 @@ void TextHUDButton::loadTextures()
     Image imOn(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOn (imOn);
     
-    gOn.setColour(Colour(0.f, 0.f, 0.f, .3f));
+    gOn.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .25f));
     gOn.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
-    gOn.setColour(Colours::white);
+    gOn.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
     float textSize = jmin(imageH, imageW) * .22f;
     gOn.setFont(textSize);
 
@@ -65,10 +65,10 @@ void TextHUDButton::loadTextures()
     Image imOff(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOff (imOff);
     
-    gOff.setColour(Colour(0.f, 0.f, 0.f, .3f));
+    gOff.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .25f));
     gOff.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
-    gOff.setColour(Colours::white);
+    gOff.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
     gOff.setFont(textSize);
 
     lineHeight = textSize;
