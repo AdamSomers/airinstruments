@@ -312,7 +312,7 @@ void MainContentComponent::populatePatternSelector()
         Image im(Image::PixelFormat::ARGB, 2000, 200, true);
         Graphics g (im);
         g.setColour(Colour::fromRGBA(60, 60, 60, 255));
-        g.setFont(200);
+        g.setFont(Font(Environment::instance().getDefaultFont(), 200, Font::plain));
         g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
         
         GLuint textureId = 0;

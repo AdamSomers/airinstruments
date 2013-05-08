@@ -34,6 +34,8 @@ void TextHUDButton::loadTextures()
 {
     HUDButton::loadTextures();
     
+    String fontName = Environment::instance().getDefaultFont();
+    
     int imageW = 256;
     int imageH = 256;
     Image imOn(Image::PixelFormat::ARGB, imageW, imageH, true);
@@ -45,6 +47,7 @@ void TextHUDButton::loadTextures()
     gOn.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
     float textSize = jmin(imageH, imageW) * .22f;
     gOn.setFont(textSize);
+    gOn.setFont(Font(fontName, textSize, Font::plain));
 
     float lineHeight = textSize;
     float y = imageH / 2.f  - (lineHeight * ceilf(onText.size() / 2.f));
@@ -52,7 +55,7 @@ void TextHUDButton::loadTextures()
         y += lineHeight / 2.f;
     for (int i = 0; i < onText.size(); ++i)
     {
-        gOn.drawText(onText[i], 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
+        gOn.drawText(onText[i].toUpperCase(), 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
         y += lineHeight;
     }
     
@@ -70,6 +73,7 @@ void TextHUDButton::loadTextures()
     
     gOff.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
     gOff.setFont(textSize);
+    gOff.setFont(Font(fontName, textSize, Font::plain));
 
     lineHeight = textSize;
     y = imageH / 2.f  - (lineHeight * ceilf(offText.size() / 2.f));
@@ -77,7 +81,7 @@ void TextHUDButton::loadTextures()
         y += lineHeight / 2.f;
     for (int i = 0; i < offText.size(); ++i)
     {
-        gOff.drawText(offText[i], 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
+        gOff.drawText(offText[i].toUpperCase(), 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
         y += lineHeight;
     }
     
