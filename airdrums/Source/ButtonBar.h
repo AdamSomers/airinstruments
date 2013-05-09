@@ -14,6 +14,7 @@
 
 class ButtonBar : public HUDView
                 , public HUDButton::Listener
+                , public ActionBroadcaster
 {
 public:
     ButtonBar();
@@ -27,10 +28,11 @@ public:
     
     void showButtons(bool shouldShow);
     
+    void resetClearButton();
+    
 private:
     TextHUDButton clearPatternButton;
-    TextHUDButton clearLeftTrackButton;
-    TextHUDButton clearRightTrackButton;
+    TextHUDButton clearTrackButton;
 };
 
 #endif /* defined(__AirBeats__ButtonBar__) */

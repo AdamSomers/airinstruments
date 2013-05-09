@@ -6,8 +6,8 @@
 #include "Main.h"
 
 DrumSelector::DrumSelector()
-: selection(0)
-, needsLayout(false)
+: needsLayout(false)
+, selectedItem(-1)
 {
     for (int i = 0; i < 16; ++i)
     {
@@ -30,23 +30,22 @@ void DrumSelector::setBounds(const HUDRect& b)
 
 void DrumSelector::layoutIcons()
 {
-    int N = icons.size();
+    const int N = icons.size();
 
-    const int selectedIconWidth = (int) getBounds().h;
-    const int selectedIconHeight = (int) getBounds().h;
-    const float iconWidth = (getBounds().w-selectedIconWidth) / (float)(N - (N%2));
+    const float minIconSpacing = 15.f;
+    float iconSpacing = minIconSpacing;
+    if ((getBounds().h + minIconSpacing) * N < getBounds().w)
+        iconSpacing = (getBounds().w - (getBounds().h * N)) / (N+2);
+    const float availableWidth = getBounds().w - iconSpacing * (float)(N+2);
+    const float iconWidth = jmin(availableWidth / (float)N, getBounds().h);
     const float iconHeight = iconWidth;
-
-    float iconX = 0.f;
+    
+    float iconX = iconSpacing;
     for (int i = 0; i < N; ++i)
     {
-        float w = i == selection ? selectedIconWidth : iconWidth;
-        float h = i == selection ? selectedIconHeight : iconHeight;
-        
         SharedPtr<Icon> icon = icons.at(i);
-        icon->setBounds(HUDRect(iconX + 10, getBounds().h / 2 - h / 2, w, h));
-        
-        iconX += w;
+        icon->setBounds(HUDRect(iconX, getBounds().h / 2 - iconHeight / 2, iconWidth, iconHeight));
+        iconX += iconWidth + iconSpacing;
     }
 }
 
@@ -73,41 +72,58 @@ void DrumSelector::loadTextures()
 {
 }
 
-void DrumSelector::setSelection(int sel)
+void DrumSelector::setPadAssociation(int note, int pad)
 {
-    if (sel < 0) sel = icons.size() - 1;
-    if (sel >= (int) icons.size()) sel = 0;
-    selection = sel;
+    if (note < 0) note = icons.size() - 1;
+    if (note >= (int) icons.size()) note = 0;
 
     for (SharedPtr<Icon> i : icons)
-        i->setState(i->getId() == sel);
+        if (i->getPadNumber() == pad)
+            i->setPadNumber(-1);
+
+    icons.at(note)->setPadNumber(pad);
 
     needsLayout = true;
 }
 
-void DrumSelector::addListener(DrumSelector::Listener *listener)
+int DrumSelector::getPadForNote(int note) const
 {
-    auto iter = std::find(listeners.begin(), listeners.end(), listener);
-    if (iter == listeners.end())
-        listeners.push_back(listener);
+    jassert(note >= 0 && note < (int) icons.size())
+    return icons.at(note)->getPadNumber();
 }
 
-void DrumSelector::removeListener(DrumSelector::Listener *listener)
+int DrumSelector::getNoteForPad(int pad) const
 {
-    auto iter = std::find(listeners.begin(), listeners.end(), listener);
-    if (iter != listeners.end())
-        listeners.erase(iter);
+    int note = -1;
+    jassert(pad >= 0 && pad < 6)
+    for (int i = 0; i < (int) icons.size(); ++i)
+        if (getPadForNote(i) == pad)
+            note = i;
+    return note;
 }
 
 void DrumSelector::buttonStateChanged(HUDButton* b)
 {
     setSelection(b->getId());
-    for (Listener* l : listeners)
-        l->drumSelectorChanged(this);
+    sendActionMessage("startAssignMode/" + String(b->getId()));
+}
+
+void DrumSelector::setSelection(int selection)
+{
+    for (SharedPtr<Icon> i : icons) {
+        i->setHighlighted(i->getId() == selection);
+        if (selection != i->getId())
+            i->setState(i->getPadNumber() != -1);
+    }
+    
+    selectedItem = selection;
 }
 
 DrumSelector::Icon::Icon(int inId)
 : HUDButton(inId)
+, padNumber(-1)
+, highlighted(false)
+, flashState(false)
 {
     setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
 }
@@ -128,6 +144,27 @@ void DrumSelector::Icon::draw()
 
     GLuint onTextureID = 0;
     GLuint offTextureID = 0;
+    
+    if (padNumber != -1)
+    {
+        String padColor = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("padColor" + String(padNumber), "FFFFFF");
+        Colour c = Colour::fromString(padColor);
+        GLfloat color[4] = { c.getFloatRed(), c.getFloatGreen(), c.getFloatBlue(), c.getFloatAlpha() };
+        setOnColor(color);
+    }
+    
+    if (highlighted)
+    {
+        RelativeTime diff = Time::getCurrentTime() - flashStart;
+        if (diff.inMilliseconds() >= 300)
+        {
+            flashState = !flashState;
+            flashStart = Time::getCurrentTime();
+        }
+
+        GLfloat color[4] = { flashState * 1.f, flashState * 1.f, flashState * 1.f, 1.f };
+        setOnColor(color);
+    }
 
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
@@ -143,6 +180,12 @@ void DrumSelector::Icon::draw()
     }
     
     HUDButton::draw();
+}
+
+void DrumSelector::Icon::setPadNumber(int pad)
+{
+    padNumber = pad;
+    setState(padNumber != -1);
 }
 
 void DrumSelector::Icon::setBounds(const HUDRect &b)
@@ -181,4 +224,13 @@ void DrumSelector::Icon::updateBounds()
         tempBounds.h += hStep;
     
     HUDView::setBounds(tempBounds);
+}
+
+void DrumSelector::Icon::setHighlighted(bool shouldBeHighlighted)
+{
+    highlighted = shouldBeHighlighted;
+    if (shouldBeHighlighted) {
+        flashStart = Time::getCurrentTime();
+        setState(true);
+    }
 }

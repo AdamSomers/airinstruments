@@ -35,6 +35,9 @@ TempoControl::TempoControl()
     
     leftButton.setTimeout(300);
     rightButton.setTimeout(300);
+    
+    leftButton.setButtonType(HUDButton::kMomentary);
+    rightButton.setButtonType(HUDButton::kMomentary);
 }
 
 TempoControl::~TempoControl()
@@ -257,7 +260,7 @@ void TempoControl::Icon::draw()
         Image im(Image::PixelFormat::ARGB, (int) (targetBounds.w*4), (int) (targetBounds.h*4), true);
         Graphics g (im);
         g.setColour(Colours::white);
-        g.setFont((targetBounds.h * .75f) * 4.0f);
+        g.setFont(Font(Environment::instance().getDefaultFont(), (targetBounds.h * .75f) * 4.0f, Font::plain));
         g.drawText(String((int)tempoValue), 0, 0, (int) (targetBounds.w*4), (int) (targetBounds.h*4), Justification::centred, true);
         if (textureId != 0)
             glDeleteTextures(1, &textureId);

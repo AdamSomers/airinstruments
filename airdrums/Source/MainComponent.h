@@ -34,10 +34,10 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
-                               public DrumSelector::Listener,
                                public WheelSelector::Listener,
                                public MultiTimer,
-                               public MessageListener
+                               public MessageListener,
+                               public ActionListener
 {
 public:
     //==============================================================================
@@ -65,7 +65,7 @@ public:
     void handleNoteOff (MidiKeyboardState* /*source*/, int /*midiChannel*/, int /*midiNoteNumber*/) {}
     
     // DrumSelector::Listener override
-    void drumSelectorChanged(DrumSelector* selector);
+    void drumSelectorChanged(int selectedItem);
     
     // KitSelector::Listener override
     void wheelSelectorChanged(WheelSelector* selector);
@@ -78,6 +78,9 @@ public:
     
     // MessageListener override
     void handleMessage(const Message& m);
+    
+    // ActionListener override
+    void actionListenerCallback(const String& message);
 
 private:
     void layoutPadsGrid();
@@ -88,6 +91,7 @@ private:
     bool checkIdle();
     void populatePatternSelector();
     void selectCurrentPattern();
+    void incPadAssociation(int padNumber, int inc);
 
     enum TimerIds
     {
@@ -100,10 +104,8 @@ private:
     TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
-    PlayArea* playAreaLeft;
-    PlayArea* playAreaRight;
-    DrumSelector* drumSelectorLeft;
-    DrumSelector* drumSelectorRight;
+    std::vector<PlayArea*> playAreas;
+    DrumSelector* drumSelector;
     TrigViewBank* trigViewBank;
     WheelSelector* kitSelector;
     WheelSelector* patternSelector;
@@ -126,6 +128,10 @@ private:
     bool isIdle;
     bool needsPatternListUpdate;
 	bool setPriority;
+    int lastDrumSelection;
+    float newCursorW;
+    float newCursorH;
+    bool resizeCursor;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

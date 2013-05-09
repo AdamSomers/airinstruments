@@ -19,9 +19,6 @@ DrumsToolbar::DrumsToolbar()
 
     Drums::instance().addTransportListener(this);
     Drums::instance().getTransportState().sendChangeMessage();
-
-    GLfloat color[] = { .67f, .67f, .67f, 1.f };
-    setDefaultColor(color);
 }
 
 DrumsToolbar::~DrumsToolbar()
@@ -140,9 +137,9 @@ void StatusBar::setup()
 
 void StatusBar::layoutControls()
 {
-    float w = 20;
-    float h = 20;
-    float x = bounds.w - 35;
+    float w = 10;
+    float h = 10;
+    float x = bounds.w - 15;
     float y = bounds.h / 2.f - h / 2.f;
     HUDRect r(x, y, w, h);
     indicator.setBounds(r);
