@@ -23,6 +23,7 @@ PlayArea::PlayArea(int inId)
     onColor[3] = 1.f;
     
     addChild(&icon);
+    addChild(&text);
     
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
@@ -51,6 +52,12 @@ void PlayArea::setBounds(const HUDRect& r)
     float y = r.h / 2.f - w / 2.f;
     iconBounds = HUDRect(x,y,w,w);
     icon.setBounds(iconBounds);
+    float aspectRatio = 100.f / 600.f;
+    float textWidth = jmin(600.f, r.w) * 0.5f;
+    float textHeight = textWidth * aspectRatio;
+    text.setBounds(HUDRect(r.w / 2.f - textWidth / 2.f,
+                           jmax(0.f, y - textHeight - 20),
+                           textWidth, textHeight));
     
     assignButton.setBounds(iconBounds);
     clearButton.setBounds(iconBounds);
@@ -93,19 +100,25 @@ void PlayArea::draw()
     defaultBatch.Draw();
 
     int iconTextureId = 0;
+    int categoryTextureId = 0;
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
         iconTextureId = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
+        categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
 
     }
     else {
         iconTextureId = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
+        categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
     }
     
     icon.setDefaultColor(onColor);
+    icon.setDefaultTexture(iconTextureId);
+    text.setDefaultTexture(categoryTextureId);
     
-    icon.setDefaultTexture(iconTextureId);    
 
     if (fade > 0.f)
     {
@@ -130,6 +143,7 @@ void PlayArea::draw()
     Environment::instance().modelViewMatrix.Translate(getBounds().x, getBounds().y, 0.0f);
     assignButton.draw();
     clearButton.draw();
+    text.draw();
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 

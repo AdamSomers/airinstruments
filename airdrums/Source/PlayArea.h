@@ -43,6 +43,8 @@ private:
     HUDRect iconBounds;
     float iconRotation;
     
+    HUDView text;
+    
     TextHUDButton assignButton;
     TextHUDButton clearButton;
     
