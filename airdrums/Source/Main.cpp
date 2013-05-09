@@ -14,9 +14,10 @@
 #include "PatternManager.h"
 #include "PatternSaveDialog.h"
 #include "PatternLoadDialog.h"
+#include "AudioExporter.h"
 #if JUCE_WINDOWS
 #if JUCE_DEBUG
-    //#include <vld.h>
+    #include <vld.h>
 #endif
 #endif
 
@@ -72,7 +73,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 
     //audioDeviceManager.addAudioCallback(this);
     audioSourcePlayer.setSource (&Drums::instance());
-    audioDeviceManager.addAudioCallback (&audioSourcePlayer);
+	StartAudioDevice();
     Logger::outputDebugString(audioDeviceManager.getCurrentAudioDevice()->getName());
     
     PatternManager& pmgr = PatternManager::GetInstance();
@@ -103,7 +104,7 @@ void AirHarpApplication::shutdown()
 	if (settingsDialog != nullptr)
 		delete settingsDialog;
 
-    audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
+	StopAudioDevice();
 
 	PatternManager::Destruct();
 	#if JUCE_WINDOWS
@@ -120,6 +121,19 @@ void AirHarpApplication::shutdown()
     //audioDeviceManager.removeAudioCallback(this);
 	KitManager::Destruct();
 }
+
+
+void AirHarpApplication::StartAudioDevice(void)
+{
+    audioDeviceManager.addAudioCallback (&audioSourcePlayer);
+}
+
+
+void AirHarpApplication::StopAudioDevice(void)
+{
+    audioDeviceManager.removeAudioCallback (&audioSourcePlayer);
+}
+
 
 //==============================================================================
 void AirHarpApplication::systemRequestedQuit()
@@ -224,6 +238,11 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			else
 				drums.setTempoSource(Drums::kGlobalTempo);
 			break;
+		}
+		case MainMenu::kExportCmd :
+		{
+			UniquePtr<AudioExporter> exporter(new AudioExporter);
+			exporter->Export();
 		}
 	}
 

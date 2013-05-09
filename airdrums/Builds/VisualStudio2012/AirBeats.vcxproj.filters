@@ -373,6 +373,9 @@
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp">
       <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\AudioExporter.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1715,6 +1718,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h">
       <Filter>AirBeats\GLTools\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\AudioExporter.h">
+      <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
       <Filter>AirBeats\Source</Filter>

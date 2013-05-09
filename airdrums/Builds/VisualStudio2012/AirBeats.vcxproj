@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\..\GLTools\src\GLTools.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
+    <ClCompile Include="..\..\Source\AudioExporter.cpp"/>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
     <ClCompile Include="..\..\Source\ButtonBar.cpp"/>
     <ClCompile Include="..\..\Source\DrumItem.cpp"/>
@@ -1292,6 +1293,7 @@
     <ClInclude Include="..\..\..\GLTools\include\GLTriangleBatch.h"/>
     <ClInclude Include="..\..\..\GLTools\include\math3d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
+    <ClInclude Include="..\..\Source\AudioExporter.h"/>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
     <ClInclude Include="..\..\Source\ButtonBar.h"/>
     <ClInclude Include="..\..\Source\DrumItem.h"/>
