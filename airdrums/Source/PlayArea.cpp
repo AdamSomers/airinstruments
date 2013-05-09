@@ -122,7 +122,7 @@ void PlayArea::draw()
 
     if (fade > 0.f)
     {
-        float wobble = sinf(4*3.14159*(1-fade)) * fade;
+        float wobble = sinf(4*3.14159f*(1-fade)) * fade;
         wobble *= iconBounds.w / 10.f;
         icon.setBounds(HUDRect(iconBounds.x - wobble, iconBounds.y-wobble, iconBounds.w+wobble*2, iconBounds.h+wobble*2));
     }

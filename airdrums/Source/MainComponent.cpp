@@ -414,12 +414,12 @@ void MainContentComponent::renderOpenGL()
         {            
             int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
             
-            int numPads = 0;
+            //int numPads = 0;	// Unused variable
             switch (layout)
             {
                 case StrikeDetector::kLayout2x1:
                 {
-                    const float playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
+                    const float playAreaHeight = (float) Environment::instance().screenH - toolbarHeight - statusBarHeight;
                     const float playAreaWidth = Environment::instance().screenW / 2.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                     (GLfloat) statusBar->getBounds().top(),
@@ -438,7 +438,7 @@ void MainContentComponent::renderOpenGL()
                     break;
                 case StrikeDetector::kLayout3x1:
                 {
-                    const float playAreaHeight = Environment::instance().screenH - toolbarHeight - statusBarHeight;
+                    const float playAreaHeight = (float) Environment::instance().screenH - toolbarHeight - statusBarHeight;
                     const float playAreaWidth = Environment::instance().screenW / 3.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                        (GLfloat) statusBar->getBounds().top(),
@@ -1107,7 +1107,7 @@ void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
     }
 }
 
-void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
+void MainContentComponent::handleTapGesture(const Leap::Pointable &/*p*/)
 {
 #if 0
     if (!tutorial->isDone() && tutorial->getSlideIndex() != 3)
@@ -1179,7 +1179,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         String padNumberStr = message.trimCharactersAtStart("assign/");
         int padNumber = padNumberStr.getIntValue();
-        jassert(padNumber >= 0 && padNumber < playAreas.size());
+        jassert(padNumber >= 0 && padNumber < (int) playAreas.size());
         PlayArea* playArea = playAreas.at(padNumber);
         playArea->setSelectedMidiNote(drumSelector->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
@@ -1242,7 +1242,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         String padNumberStr = message.trimCharactersAtStart("clear/");
         int padNumber = padNumberStr.getIntValue();
-        jassert(padNumber >= 0 && padNumber < playAreas.size());
+        jassert(padNumber >= 0 && padNumber < (int) playAreas.size());
         PlayArea* playArea = playAreas.at(padNumber);
         Drums::instance().clearTrack(playArea->getSelectedMidiNote());
         for (PlayArea* pad : playAreas)
