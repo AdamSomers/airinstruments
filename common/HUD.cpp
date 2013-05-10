@@ -204,7 +204,6 @@ HUDButton::HUDButton(int id)
 , state(false)
 , prevNumPointers(0)
 , fade(0.f)
-, ringTextureID(0)
 , hoverTimeout(750)
 , enabled(true)
 , buttonType(kToggle)
@@ -267,11 +266,11 @@ void HUDButton::draw()
     a = (1.f - fade) * opacity;
     GLfloat offTexColor[4] = { offColor[0] * a, offColor[1] * a, offColor[2] * a, a};
     
-    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    glBindTexture(GL_TEXTURE_2D, offTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
     defaultBatch.Draw();
     
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    glBindTexture(GL_TEXTURE_2D, onTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     defaultBatch.Draw();
 
@@ -289,14 +288,14 @@ void HUDButton::draw()
     if (enabled && isTimerRunning()) {
         GLfloat circleColor[4] = { 1.f, 1.f, 1.f, 1.f };
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor);
-        glBindTexture(GL_TEXTURE_2D, ringTextureID);
+        glBindTexture(GL_TEXTURE_2D, ringTextureDesc.textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor, 0);
         circleBatch.Draw();
     }
 }
 
 void HUDButton::setup()
-{   
+{
     offColor[0] = 1.f;
     offColor[1] = 1.f;
     offColor[2] = 1.f;
@@ -377,15 +376,19 @@ void HUDButton::loadTextures()
 //    GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::button_small_off_png, BinaryData::button_small_off_pngSize));
 }
 
-void HUDButton::setTextures(GLuint on, GLuint off)
+void HUDButton::setTextures(TextureDescription on, TextureDescription off)
 {
-    onTextureID = on;
-    offTextureID = off;
+    onTextureDesc = on;
+    offTextureDesc = off;
+    TextureDescription desc;
+    desc.texX = on.texX;
+    desc.texY = on.texY;
+    setDefaultTexture(desc);
 }
 
-void HUDButton::setRingTexture(GLuint tex)
+void HUDButton::setRingTexture(TextureDescription tex)
 {
-    ringTextureID = tex;
+    ringTextureDesc = tex;
 }
 
 void HUDButton::setTimeout(int newTimeout)

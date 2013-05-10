@@ -528,7 +528,7 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
     
 }
 
-void MotionDispatcher::setCursorTexture(GLuint texture)
+void MotionDispatcher::setCursorTexture(TextureDescription texture)
 {
     if (cursor)
         cursor->setDefaultTexture(texture);

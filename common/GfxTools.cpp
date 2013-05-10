@@ -2,6 +2,7 @@
 #include "Environment.h"
 
 #define USE_MIPMAP 1
+#define FORCE_POWER_OF_TWO_RESOURCES 1
 
 namespace GfxTools
 {
@@ -57,9 +58,36 @@ namespace GfxTools
         outCollisionPoint[2] = pZ;
     }
     
-    void loadTextureFromJuceImage(const Image& image)
+    TextureDescription loadTextureFromJuceImage(const Image& image)
     {
-        Image::BitmapData bitmapData(image, 0, 0, image.getWidth(), image.getHeight());
+        TextureDescription desc;
+        desc.imageW = image.getWidth();
+        desc.imageH = image.getHeight();
+        glGenTextures(1, &desc.textureId);
+        glBindTexture(GL_TEXTURE_2D, desc.textureId);
+        
+        Image imageToUse = image;
+        
+#if FORCE_POWER_OF_TWO_RESOURCES
+        if (image.getWidth() != image.getHeight() || !isPowerOfTwo(image.getWidth()) || !isPowerOfTwo(image.getHeight()))
+        {
+            int side = jmax(image.getWidth(), image.getHeight());
+            if (!isPowerOfTwo(image.getWidth()))
+            {
+                int v = nextPowerOfTwo(side);
+                Logger::outputDebugString("Old size: " + String(side) + " new size: " + String(v));
+                side = v;
+            }
+            Image newImage(image.getFormat(), side, side, true);
+            Graphics g(newImage);
+            g.drawImageAt(image, 0, 0);
+            imageToUse = newImage;
+            desc.texX = image.getWidth() / (float)side;
+            desc.texY = image.getHeight() / (float)side;
+        }
+#endif
+
+        Image::BitmapData bitmapData(imageToUse, 0, 0, imageToUse.getWidth(), imageToUse.getHeight());
         GLbyte* bits = (GLbyte*)bitmapData.data;
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -77,12 +105,12 @@ namespace GfxTools
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, 4, image.getWidth(), image.getHeight(), 0,
-                     image.getFormat() == Image::RGB ? GL_RGB : GL_BGRA, GL_UNSIGNED_BYTE, bits);
+        glTexImage2D(GL_TEXTURE_2D, 0, 4, imageToUse.getWidth(), imageToUse.getHeight(), 0,
+                     imageToUse.getFormat() == Image::RGB ? GL_RGB : GL_BGRA, GL_UNSIGNED_BYTE, bits);
 #if USE_MIPMAP
         glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
         glGenerateMipmap(GL_TEXTURE_2D);
 #endif
-
+        return desc;
     }
 }

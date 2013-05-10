@@ -142,8 +142,8 @@ void DrumSelector::Icon::draw()
     else if (tempBounds != targetBounds)
         HUDButton::setBounds(targetBounds);
 
-    GLuint onTextureID = 0;
-    GLuint offTextureID = 0;
+    TextureDescription onTextureDesc;
+    TextureDescription offTextureDesc;
     
     if (padNumber != -1)
     {
@@ -169,14 +169,14 @@ void DrumSelector::Icon::draw()
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
-        offTextureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(false);
-        onTextureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(true);
-        setTextures(onTextureID, offTextureID);
+        offTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(false);
+        onTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(true);
+        setTextures(onTextureDesc, offTextureDesc);
     }
     else {
-        offTextureID = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(false);
-        onTextureID = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(true);
-        setTextures(onTextureID, offTextureID);
+        offTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(false);
+        onTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(true);
+        setTextures(onTextureDesc, offTextureDesc);
     }
     
     HUDButton::draw();

@@ -11,11 +11,11 @@
 
 View2d::View2d()
 : didSetup(false)
-, defaultTexture(0)
 , defaultColorSet(false)
 , isVisible(true)
 , opacity(1.f)
 , fadeTime(0)
+, needsSetup(false)
 {
     defaultColor[0] = 1.f;
     defaultColor[1] = 1.f;
@@ -31,6 +31,11 @@ View2d::~View2d()
 
 void View2d::draw()
 {
+    if (needsSetup) {
+        setup();
+        needsSetup = false;
+    }
+
     if (isVisible && opacity < 1.f)
     {
         RelativeTime timeSinceLateVisibiltyChange = Time::getCurrentTime() - lastVisibilityChange;
@@ -46,11 +51,11 @@ void View2d::draw()
         if (opacity < 0.f) opacity = 0.f;
     }
 
-    if (0 != defaultTexture)
+    if (0 != defaultTexture.textureId)
     {
         GLfloat color[4] = { defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3] * opacity };
         
-        glBindTexture(GL_TEXTURE_2D, defaultTexture);
+        glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
         defaultBatch.Draw();
     }
@@ -86,10 +91,10 @@ void View2d::setup()
     };
     
     M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
+        0.f, defaultTexture.texY,
+        defaultTexture.texX, defaultTexture.texY,
         0.f, 0.f,
-        1.f, 0.f
+        defaultTexture.texX, 0.f
     };
     
     if (!didSetup)
@@ -119,9 +124,12 @@ void View2d::loadTextures()
     
 }
 
-void View2d::setDefaultTexture(GLuint texture)
+void View2d::setDefaultTexture(TextureDescription texture)
 {
-    defaultTexture = texture;
+    if (defaultTexture != texture) {
+        defaultTexture = texture;
+        needsSetup = true;
+    }
 }
 
 void View2d::setDefaultColor(GLfloat* color)

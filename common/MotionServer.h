@@ -48,7 +48,7 @@ public:
     
     void spoof(float x, float y, float z);
 
-    void setCursorTexture(GLuint texture);
+    void setCursorTexture(TextureDescription texture);
     
     std::map<int, SharedPtr<FingerView> > fingerViews;
     std::map<int, SharedPtr<HandView> > handViews;

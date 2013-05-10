@@ -13,8 +13,6 @@ TextHUDButton::TextHUDButton(StringArray on /*= "on"*/, StringArray off /*= "off
 : onText(on)
 , offText(off)
 , textChanged(false)
-, onTexture(0)
-, offTexture(0)
 {
     
 }
@@ -59,11 +57,9 @@ void TextHUDButton::loadTextures()
         y += lineHeight;
     }
     
-    if (onTexture != 0)
-        glDeleteTextures(1, &onTexture);
-    glGenTextures(1, &onTexture);
-    glBindTexture(GL_TEXTURE_2D, onTexture);
-    GfxTools::loadTextureFromJuceImage(imOn);
+    if (onTextureDesc.textureId != 0)
+        glDeleteTextures(1, &onTextureDesc.textureId);
+    onTextureDesc = GfxTools::loadTextureFromJuceImage(imOn);
     
     Image imOff(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOff (imOff);
@@ -85,13 +81,11 @@ void TextHUDButton::loadTextures()
         y += lineHeight;
     }
     
-    if (offTexture != 0)
-        glDeleteTextures(1, &offTexture);
-    glGenTextures(1, &offTexture);
-    glBindTexture(GL_TEXTURE_2D, offTexture);
-    GfxTools::loadTextureFromJuceImage(imOff);
+    if (offTextureDesc.textureId != 0)
+        glDeleteTextures(1, &offTextureDesc.textureId);
+    offTextureDesc = GfxTools::loadTextureFromJuceImage(imOff);
     
-    setTextures(onTexture, offTexture);
+    setTextures(onTextureDesc, offTextureDesc);
 }
 
 void TextHUDButton::setText(StringArray on, StringArray off)

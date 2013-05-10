@@ -15,7 +15,7 @@
 #include <vector>
 #include "Types.h"
 #include "SampleLayer.h"
-
+#include "GfxTools.h"
 
 class DrumSample
 {
@@ -45,7 +45,7 @@ public:
 	int		GetNoteNumber(void);
 	String&	GetCategory(void);
 	//Image	GetImage(void);
-    GLuint	GetTexture(bool on) const;
+    TextureDescription	GetTexture(bool on) const;
 	SynthesiserSound::Ptr	GetSound(int layer);
 	int		GetLayerCount(void);
 
@@ -57,7 +57,7 @@ private:
 	int			mNoteNumber;
 	String		mCategory;
 	Image		mImage;
-    GLuint		mTextureId;
+    TextureDescription		mTextureDesc;
 	Container	mLayers;
 };
 

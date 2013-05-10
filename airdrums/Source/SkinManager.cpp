@@ -11,9 +11,9 @@ const String& Skin::getName() const
     return name;
 }
 
-const GLuint Skin::getTexture(String name) const
+const TextureDescription Skin::getTexture(String name) const
 {
-    GLuint tex = 0;
+    TextureDescription tex;
     try {
         tex = textures.at(name);
     }
@@ -23,11 +23,11 @@ const GLuint Skin::getTexture(String name) const
     return tex;
 }
 
-void Skin::addTexture(String name, GLuint texture)
+void Skin::addTexture(String name, TextureDescription texture)
 {
     auto iter = textures.find(name);
     if (iter != textures.end())
-        Logger::outputDebugString("Warning: overwriting texture " + String(iter->second) + " for " + name + " with " + String(texture));
+        Logger::outputDebugString("Warning: overwriting texture " + String(iter->second.textureId) + " for " + name + " with " + String(texture.textureId));
     textures.insert(std::make_pair(name, texture));
 }
 
@@ -63,11 +63,8 @@ void SkinManager::loadResources()
             File imageFile = skinImagesIter.getFile();
             String imageName = imageFile.getFileNameWithoutExtension();
             //Logger::outputDebugString("\t\t" + imageName);
-            GLuint textureId = 0;
-            glGenTextures(1, &textureId);
-            glBindTexture(GL_TEXTURE_2D, textureId);
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-            s.addTexture(imageName, textureId);
+            TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
+            s.addTexture(imageName, textureDesc);
         }
         skins.insert(std::make_pair(skinName, s));
     }

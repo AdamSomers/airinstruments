@@ -41,7 +41,7 @@ public:
 	int	GetSampleCount(void);
     
     void LoadTextures();
-    GLuint GetTexture() const;
+    TextureDescription GetTexture() const;
     const Image& GetImage() const;
 
 	struct MemorySampleInfo		// Used to describe a memory based audio sample
@@ -63,7 +63,7 @@ private:
 	Item		mMetronome;
     
     Image	mImage;
-    GLuint  mTextureId;
+    TextureDescription  mTextureDesc;
 };
 
 #endif  // __DRUMKIT_H_FC36DC2F__

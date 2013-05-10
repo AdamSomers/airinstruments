@@ -85,8 +85,8 @@ public:
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }
-    void setTextures(GLuint on, GLuint off);
-    void setRingTexture(GLuint tex);
+    void setTextures(TextureDescription on, TextureDescription off);
+    void setRingTexture(TextureDescription tex);
     void loadTextures();
     void setTimeout(int newTimeout);
     void setOnColor(GLfloat* color);
@@ -127,12 +127,12 @@ private:
     GLfloat hoverOnColor[4];
     int prevNumPointers;
     int buttonId;
-    GLuint onTextureID;
-    GLuint offTextureID;
+    TextureDescription onTextureDesc;
+    TextureDescription offTextureDesc;
     float fade;
     GLBatch circleBatch;
     Time lastTimerStartTime;
-    GLuint ringTextureID;
+    TextureDescription ringTextureDesc;
     int hoverTimeout;
     bool enabled;
     int buttonType;

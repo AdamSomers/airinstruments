@@ -80,8 +80,8 @@ void PlayArea::draw()
     GLfloat padOnColor[4] = { 1.f, 1.f, 1.f, fade};
     GLfloat padOffColor[4] = { 1.f, 1.f, 1.f, 1.f};
 
-    GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
-    GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
+    TextureDescription onTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
+    TextureDescription offTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
 
     GLint blendSrc;
     glGetIntegerv(GL_BLEND_SRC, &blendSrc);
@@ -90,34 +90,34 @@ void PlayArea::draw()
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    glBindTexture(GL_TEXTURE_2D, offTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOffColor, 0);
     defaultBatch.Draw();
     
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    glBindTexture(GL_TEXTURE_2D, onTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOnColor, 0);
     glLineWidth(1.f);
     defaultBatch.Draw();
 
-    int iconTextureId = 0;
-    int categoryTextureId = 0;
+    TextureDescription iconTextureDesc;
+    TextureDescription categoryTextureDesc;
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
-        iconTextureId = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
+        iconTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
         String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
-        categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
 
     }
     else {
-        iconTextureId = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
+        iconTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
         String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
-        categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
     }
     
     icon.setDefaultColor(onColor);
-    icon.setDefaultTexture(iconTextureId);
-    text.setDefaultTexture(categoryTextureId);
+    icon.setDefaultTexture(iconTextureDesc);
+    text.setDefaultTexture(categoryTextureDesc);
     
 
     if (fade > 0.f)

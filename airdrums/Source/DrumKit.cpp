@@ -12,7 +12,6 @@
 #include "DrumKit.h"
 
 DrumKit::DrumKit()
-: mTextureId(0)
 {
 	// Continue to use the hardcoded clave sound for the metronome for now
 	SharedPtr<DrumSample> sample(new DrumSample);
@@ -133,15 +132,13 @@ void DrumKit::LoadTextures()
     
     if (mImage.isValid())
     {
-        glGenTextures(1, &mTextureId);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
-        GfxTools::loadTextureFromJuceImage(mImage);
+        mTextureDesc = GfxTools::loadTextureFromJuceImage(mImage);
     }
 }
 
-GLuint DrumKit::GetTexture() const
+TextureDescription DrumKit::GetTexture() const
 {
-    return mTextureId;
+    return mTextureDesc;
 }
 
 const Image& DrumKit::GetImage() const

@@ -315,12 +315,9 @@ void MainContentComponent::populatePatternSelector()
         g.setFont(Font(Environment::instance().getDefaultFont(), 200, Font::plain));
         g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
         
-        GLuint textureId = 0;
-        glGenTextures(1, &textureId);
-        glBindTexture(GL_TEXTURE_2D, textureId);
-        GfxTools::loadTextureFromJuceImage(im);
+        TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(im);
         icon->setImage(im);
-        icon->setDefaultTexture(textureId);
+        icon->setDefaultTexture(textureDesc);
         
         patternSelector->addIcon(icon);
     }
@@ -1222,7 +1219,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
             String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
             if (kitUuidString != "Default") {
                 Uuid kitUuid(kitUuidString);
-                int texture = KitManager::GetInstance().GetItem(kitUuid)->GetSample(drumNumber)->GetTexture(false);
+                TextureDescription texture = KitManager::GetInstance().GetItem(kitUuid)->GetSample(drumNumber)->GetTexture(false);
                 MotionDispatcher::instance().setCursorTexture(texture);
                 newCursorW = 50;
                 newCursorH = 50;

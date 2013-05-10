@@ -172,8 +172,10 @@ void WheelSelector::draw()
     fabsf(tempBounds.w - targetBounds.w) > 2 ||
     fabsf(tempBounds.h - targetBounds.h) > 2)
         updateBounds();
-    else if (tempBounds != targetBounds)
+    else if (tempBounds != targetBounds) {
         HUDView::setBounds(targetBounds);
+        tempBounds = targetBounds;
+    }
     
     HUDView::draw();
 }
@@ -394,8 +396,10 @@ void WheelSelector::Icon::draw()
         fabsf(tempBounds.w - targetBounds.w) > 2 ||
         fabsf(tempBounds.h - targetBounds.h) > 2)
         updateBounds();
-    else if (tempBounds != targetBounds)
+    else if (tempBounds != targetBounds) {
         HUDView::setBounds(targetBounds);
+        tempBounds = targetBounds;
+    }
     
     if (fabsf(rotationCoeff - targetRotationCoeff) > 10.f) {
         rotationCoeff += rotationInc;
