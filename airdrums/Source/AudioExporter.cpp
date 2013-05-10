@@ -8,14 +8,13 @@
   ==============================================================================
 */
 
-#include "Main.h"
+#include "ExportComponent.h"
 #include "AudioExporter.h"
-#include "Drums.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
 
-AudioExporter::AudioExporter()
+AudioExporter::AudioExporter(DocumentWindow* mainWindow) : mMainWindow(mainWindow)
 {
 }
 
@@ -27,41 +26,17 @@ AudioExporter::~AudioExporter()
 
 void AudioExporter::Export(void)
 {
-	AirHarpApplication* app = AirHarpApplication::getInstance();
-	Drums& drums = Drums::instance();
-	Drums::TransportState& transport = drums.getTransportState();
-
-	transport.pause();
-
-	File file("Export.wav");
-	FileOutputStream* stream = new FileOutputStream(file);
-	WavAudioFormat format;
-	UniquePtr<AudioFormatWriter> writer(format.createWriterFor(stream, drums.getSampleRate(), 2, 32, StringPairArray(), 0));
-	jassert(writer.get() != nullptr);
-	const long blockSize = 2048;
-
-	drums.AllNotesOff();
-	app->StopAudioDevice();
-	drums.resetToZero();
-
-	long totalSamples = drums.getMaxSamples();
-	long samplesToGo = totalSamples;
-	transport.doExport();
-	transport.play();
-	while (samplesToGo > 0)
-	{
-		long count = jmin(samplesToGo, blockSize);
-		samplesToGo -= count;
-		bool status = writer->writeFromAudioSource(drums, count, count);
-		if (!status)
-		{
-			// May need some error dialog here
-			jassertfalse;
-			break;
-		}
-	}
-	transport.pause();
-	drums.AllNotesOff();
-
-	app->StartAudioDevice();
+	ExportComponent* component = new ExportComponent();
+	DialogWindow::LaunchOptions options;
+	options.dialogTitle = "Export As Audio";
+	options.dialogBackgroundColour = Colours::azure;
+	options.content.set(component, true);
+	options.componentToCentreAround = mMainWindow;
+	options.escapeKeyTriggersCloseButton = true;
+	options.useNativeTitleBar = true;
+	options.resizable = false;
+	options.useBottomRightCornerResizer = false;
+	UniquePtr<DialogWindow> dialog(options.create());
+	component->SetParentDialog(dialog.get());
+	dialog->runModalLoop();
 }

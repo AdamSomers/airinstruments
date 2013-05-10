@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\Source\DrumSampler.cpp"/>
     <ClCompile Include="..\..\Source\DrumSelector.cpp"/>
     <ClCompile Include="..\..\Source\DrumsHUD.cpp"/>
+    <ClCompile Include="..\..\Source\ExportComponent.cpp"/>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1304,6 +1305,7 @@
     <ClInclude Include="..\..\Source\DrumSampler.h"/>
     <ClInclude Include="..\..\Source\DrumSelector.h"/>
     <ClInclude Include="..\..\Source\DrumsHUD.h"/>
+    <ClInclude Include="..\..\Source\ExportComponent.h"/>
     <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
     <ClInclude Include="..\..\Source\LayeredSamplerSound.h"/>

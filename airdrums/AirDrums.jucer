@@ -127,6 +127,10 @@
       <FILE id="FoDZug" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
       <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
+      <FILE id="HGpqKP" name="ExportComponent.cpp" compile="1" resource="0"
+            file="Source/ExportComponent.cpp"/>
+      <FILE id="bPk7ky" name="ExportComponent.h" compile="0" resource="0"
+            file="Source/ExportComponent.h"/>
       <FILE id="apTSIi" name="ItemManager.cpp" compile="0" resource="0" file="Source/ItemManager.cpp"/>
       <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>

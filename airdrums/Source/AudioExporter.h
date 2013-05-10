@@ -11,17 +11,19 @@
 #ifndef __AUDIOEXPORTER_H_99CEB6B6__
 #define __AUDIOEXPORTER_H_99CEB6B6__
 
+#include "../JuceLibraryCode/JuceHeader.h"
+
 
 class AudioExporter
 {
 public:
-	AudioExporter();
+	AudioExporter(DocumentWindow* mainWindow);
 	~AudioExporter();
 
 	void Export(void);
 
 private:
-
+	DocumentWindow* mMainWindow;
 };
 
 

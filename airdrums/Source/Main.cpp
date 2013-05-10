@@ -17,7 +17,7 @@
 #include "AudioExporter.h"
 #if JUCE_WINDOWS
 #if JUCE_DEBUG
-    #include <vld.h>
+    //#include <vld.h>
 #endif
 #endif
 
@@ -241,7 +241,7 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 		}
 		case MainMenu::kExportCmd :
 		{
-			UniquePtr<AudioExporter> exporter(new AudioExporter);
+			UniquePtr<AudioExporter> exporter(new AudioExporter(mainWindow));
 			exporter->Export();
 		}
 	}

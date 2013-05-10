@@ -406,6 +406,9 @@
     <ClCompile Include="..\..\Source\DrumsHUD.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ExportComponent.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1750,6 +1753,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumsHUD.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ExportComponent.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ItemManager.h">
