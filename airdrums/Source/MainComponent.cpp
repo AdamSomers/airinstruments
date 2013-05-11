@@ -223,8 +223,6 @@ void MainContentComponent::newOpenGLContextCreated()
     for (int i = 0; i < numKits; ++i)
     {
         WheelSelector::Icon* icon = new WheelSelector::Icon(i, true);
-        Image image = KitManager::GetInstance().GetItem(i)->GetImage();
-        icon->setImage(image);
         icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
         kitSelector->addIcon(icon);
     }
@@ -314,9 +312,10 @@ void MainContentComponent::populatePatternSelector()
         g.setColour(Colour::fromRGBA(60, 60, 60, 255));
         g.setFont(Font(Environment::instance().getDefaultFont(), 200, Font::plain));
         g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
-        
-        TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(im);
-        icon->setImage(im);
+
+        TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(im, true);
+        textureDesc.imageW = im.getWidth();
+        textureDesc.imageH = im.getHeight();
         icon->setDefaultTexture(textureDesc);
         
         patternSelector->addIcon(icon);

@@ -23,6 +23,7 @@ public:
     // call me from OpenGL thread only!
     void LoadTextures();
 	Status	BuildKitList(String path = "", bool clear = true);
+    const TextureDescription& getTextureAtlas() const;
 
 private:
 	friend class ItemManager<KitManager, DrumKit>;

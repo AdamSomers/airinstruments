@@ -136,6 +136,11 @@ void DrumKit::LoadTextures()
     }
 }
 
+void DrumKit::SetTexture(TextureDescription texture)
+{
+    mTextureDesc = texture;
+}
+
 TextureDescription DrumKit::GetTexture() const
 {
     return mTextureDesc;

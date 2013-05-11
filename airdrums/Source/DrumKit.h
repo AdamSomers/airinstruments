@@ -41,6 +41,7 @@ public:
 	int	GetSampleCount(void);
     
     void LoadTextures();
+    void SetTexture(TextureDescription texture);
     TextureDescription GetTexture() const;
     const Image& GetImage() const;
 

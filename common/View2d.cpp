@@ -91,10 +91,10 @@ void View2d::setup()
     };
     
     M3DVector2f texCoords[4] = {
-        0.f, defaultTexture.texY,
+        defaultTexture.texX, defaultTexture.texY + defaultTexture.texH,
+        defaultTexture.texX + defaultTexture.texW, defaultTexture.texY + defaultTexture.texH,
         defaultTexture.texX, defaultTexture.texY,
-        0.f, 0.f,
-        defaultTexture.texX, 0.f
+        defaultTexture.texX + defaultTexture.texW, defaultTexture.texY
     };
     
     if (!didSetup)

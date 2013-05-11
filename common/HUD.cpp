@@ -383,6 +383,8 @@ void HUDButton::setTextures(TextureDescription on, TextureDescription off)
     TextureDescription desc;
     desc.texX = on.texX;
     desc.texY = on.texY;
+    desc.texW = on.texW;
+    desc.texH = on.texH;
     setDefaultTexture(desc);
 }
 

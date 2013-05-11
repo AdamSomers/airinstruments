@@ -52,9 +52,10 @@ void PlayArea::setBounds(const HUDRect& r)
     float y = r.h / 2.f - w / 2.f;
     iconBounds = HUDRect(x,y,w,w);
     icon.setBounds(iconBounds);
-    float aspectRatio = 100.f / 600.f;
-    float textWidth = jmin(600.f, r.w) * 0.5f;
-    float textHeight = textWidth * aspectRatio;
+    TextureDescription td = text.getDefaultTexture();
+    float aspectRatio = (float)td.imageW / (float)td.imageH;
+    float textHeight = jmin(r.w, r.h) / 10.f;
+    float textWidth = textHeight * aspectRatio;
     text.setBounds(HUDRect(r.w / 2.f - textWidth / 2.f,
                            jmax(0.f, y - textHeight - 20),
                            textWidth, textHeight));
@@ -72,6 +73,11 @@ void PlayArea::setup()
 
 void PlayArea::draw()
 {
+    if (needsSetup) {
+        setBounds(getBounds());
+        needsSetup = false;
+    }
+
     float fade = 0.f;
     RelativeTime diff = Time::getCurrentTime() - fadeStartTime;
     if (diff < RelativeTime::milliseconds(FADE_TIME))
@@ -98,27 +104,8 @@ void PlayArea::draw()
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOnColor, 0);
     glLineWidth(1.f);
     defaultBatch.Draw();
-
-    TextureDescription iconTextureDesc;
-    TextureDescription categoryTextureDesc;
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
-    if (kitUuidString != "Default") {
-        Uuid kitUuid(kitUuidString);
-        iconTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
-        String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
-        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
-
-    }
-    else {
-        iconTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
-        String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
-        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
-    }
     
-    icon.setDefaultColor(onColor);
-    icon.setDefaultTexture(iconTextureDesc);
-    text.setDefaultTexture(categoryTextureDesc);
-    
+    icon.setDefaultColor(onColor);    
 
     if (fade > 0.f)
     {
@@ -162,6 +149,27 @@ void PlayArea::setSelectedMidiNote(int note)
     else if (note < 0)
         note = Drums::instance().getNumNotes() - 1;
     selectedMidiNote = note;
+
+    TextureDescription iconTextureDesc;
+    TextureDescription categoryTextureDesc;
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
+    if (kitUuidString != "Default") {
+        Uuid kitUuid(kitUuidString);
+        iconTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
+        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+        
+    }
+    else {
+        iconTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
+        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+    }
+    
+    icon.setDefaultTexture(iconTextureDesc);
+    text.setDefaultTexture(categoryTextureDesc);
+
+    needsSetup = true;
 }
 
 void PlayArea::loadTextures()

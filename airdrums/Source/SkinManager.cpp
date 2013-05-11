@@ -1,5 +1,6 @@
 #include "GfxTools.h"
 #include "SkinManager.h"
+#include "Types.h"
 
 Skin::Skin(String skinName)
 : name(skinName)
@@ -61,10 +62,26 @@ void SkinManager::loadResources()
         while (skinImagesIter.next())
         {
             File imageFile = skinImagesIter.getFile();
+            Image image = ImageFileFormat::loadFrom (imageFile);
+            TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(image);
             String imageName = imageFile.getFileNameWithoutExtension();
+            File atlasXml = imageFile.getParentDirectory().getChildFile(imageName + ".xml");
+            if (atlasXml.exists())
+            {
+                Logger::outputDebugString(imageFile.getFileName() + " is an atlas!");
+                
+                Array<TextureDescription> textures = GfxTools::loadTextureAtlas(atlasXml);
+                for (int i = 0; i < textures.size(); ++i)
+                {
+                    TextureDescription td = textures[i];
+                    s.addTexture(td.name, td);
+                }
+            }
+            else
+            {
+                s.addTexture(imageName, textureDesc);
+            }
             //Logger::outputDebugString("\t\t" + imageName);
-            TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-            s.addTexture(imageName, textureDesc);
         }
         skins.insert(std::make_pair(skinName, s));
     }

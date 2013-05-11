@@ -8,22 +8,21 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-// Images can be non-power of 2 (NPOT), but they are converted
-// internally on load to next POT.  The description contains the
-// original bounds and the ratio of original bounds to adjusted
-// bounds for use in proper texture mapping.
 struct TextureDescription
 {
     TextureDescription()
-    : textureId(0), imageW(0), imageH(0), texX(1.f), texY(1.f) {}
+    : textureId(0), texX(0.f), texY(0.f), texW(1.f), texH(1.f), imageW(0.f), imageH(0.f) {}
     
     bool operator==(const TextureDescription& other) const
     {
-        return textureId == other.textureId &&
-        imageW == other.imageW &&
-        imageH == other.imageH &&
+        return name == other.name &&
+        textureId == other.textureId &&
         texX == other.texX &&
-        texY == other.texY;
+        texY == other.texY &&
+        texW == other.texW &&
+        texH == other.texH &&
+        imageW == other.imageW &&
+        imageH == other.imageH;
     }
     
     bool operator!=(const TextureDescription& other) const
@@ -31,18 +30,22 @@ struct TextureDescription
         return !((*this) == other);
     }
     
+    String name;
     GLuint textureId;
-    int imageW;   // Actual image width
-    int imageH;   // Actual image height
-    GLfloat texX; // Ratio of original to adjusted width
-    GLfloat texY; // Ratio of original to adjusted height
+    GLfloat texX;
+    GLfloat texY;
+    GLfloat texW;
+    GLfloat texH;
+    int imageW;
+    int imageH;
 };
 
 namespace GfxTools
 {
     void collide(M3DVector3f rOrigin, M3DVector3f rNormal, M3DVector3f pOrigin, M3DVector3f pNormal, M3DVector3f outCollisionPoint);
     void drawBatch(GLTriangleBatch* pBatch, bool drawWireFrame = false);
-    TextureDescription loadTextureFromJuceImage(const Image& iamge);
+    TextureDescription loadTextureFromJuceImage(const Image iamge, bool forcePowerOf2 = true);
+    Array<TextureDescription> loadTextureAtlas(const File atlasXml);
 }
 
 #endif // h_GfxTools
