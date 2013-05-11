@@ -72,21 +72,25 @@ namespace GfxTools
         
         if (forcePowerOf2)
         {
-            if (image.getWidth() != image.getHeight() || !isPowerOfTwo(image.getWidth()) || !isPowerOfTwo(image.getHeight()))
+            if (!isPowerOfTwo(image.getWidth()) || !isPowerOfTwo(image.getHeight()))
             {
-                int side = jmax(image.getWidth(), image.getHeight());
-                if (!isPowerOfTwo(image.getWidth()))
+                int widthToUse = image.getWidth();
+                int heightToUse = image.getHeight();
+                if (!isPowerOfTwo(widthToUse))
                 {
-                    int v = nextPowerOfTwo(side);
-                    Logger::outputDebugString("Old size: " + String(side) + " new size: " + String(v));
-                    side = v;
+                    widthToUse = nextPowerOfTwo(widthToUse);
                 }
-                Image newImage(image.getFormat(), side, side, true);
+                if (!isPowerOfTwo(heightToUse))
+                {
+                    heightToUse = nextPowerOfTwo(heightToUse);
+                }
+                //Logger::outputDebugString("Old size: " + String(image.getWidth()) + "x" + String(image.getHeight()) + " new size: " + String(widthToUse) + "x" +  String(heightToUse));
+                Image newImage(image.getFormat(), widthToUse, heightToUse, true);
                 Graphics g(newImage);
                 g.drawImageAt(image, 0, 0);
                 imageToUse = newImage;
-                desc.texW = image.getWidth() / (float)side;
-                desc.texH = image.getHeight() / (float)side;
+                desc.texW = image.getWidth() / (float)widthToUse;
+                desc.texH = image.getHeight() / (float)heightToUse;
             }
         }
 
