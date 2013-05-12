@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.3"
-              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.1.0"
+              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirBeats">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
@@ -101,6 +101,9 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
+      <FILE id="ftb9dR" name="AudioExporter.cpp" compile="1" resource="0"
+            file="Source/AudioExporter.cpp"/>
+      <FILE id="WkSsxS" name="AudioExporter.h" compile="0" resource="0" file="Source/AudioExporter.h"/>
       <FILE id="E3neZk" name="AudioSettingsDialog.cpp" compile="1" resource="0"
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
@@ -124,6 +127,10 @@
       <FILE id="FoDZug" name="DrumSelector.h" compile="0" resource="0" file="Source/DrumSelector.h"/>
       <FILE id="oMAT9g" name="DrumsHUD.cpp" compile="1" resource="0" file="Source/DrumsHUD.cpp"/>
       <FILE id="EfV8ir" name="DrumsHUD.h" compile="0" resource="0" file="Source/DrumsHUD.h"/>
+      <FILE id="HGpqKP" name="ExportComponent.cpp" compile="1" resource="0"
+            file="Source/ExportComponent.cpp"/>
+      <FILE id="bPk7ky" name="ExportComponent.h" compile="0" resource="0"
+            file="Source/ExportComponent.h"/>
       <FILE id="apTSIi" name="ItemManager.cpp" compile="0" resource="0" file="Source/ItemManager.cpp"/>
       <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>

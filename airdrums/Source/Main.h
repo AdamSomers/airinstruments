@@ -20,6 +20,9 @@ public:
 	ApplicationProperties& getProperties()		{ return properties; }
 	static AirHarpApplication* getInstance()	{ return dynamic_cast<AirHarpApplication*> (JUCEApplication::getInstance()); }
 
+	void StartAudioDevice(void);
+	void StopAudioDevice(void);
+
     //==============================================================================
     void initialise (const String& /*commandLine*/);
 

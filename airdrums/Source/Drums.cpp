@@ -6,7 +6,7 @@
 
 
 Drums::Drums() :
-    transportState(false,false,true),
+    transportState(false,false,false,true),
     sampleCounter(0),
     maxRecordSamples(0),
     numNotes(0),
@@ -87,6 +87,11 @@ void Drums::NoteOn(int note, float velocity)
         playbackState.noteOn(1,note,velocity);
     }
     midiBufferLock.exit();
+}
+
+void Drums::AllNotesOff(void)
+{
+	synth.allNotesOff(0, false);
 }
 
 void Drums::clear()
@@ -188,11 +193,17 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     bufferToFill.clearActiveBufferRegion();
     
     MidiBuffer incomingMidi;
-    midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
+    if (!transportState.exporting)
+	    midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
     
-    if (transportState.playing) {
-        playbackState.reset();
-        keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+    if (transportState.playing)
+	{
+	    if (!transportState.exporting)
+		{
+			playbackState.reset();
+			keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+		}
+
 		jassert(pattern.get() != nullptr);
 		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
@@ -203,10 +214,11 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
         {
             //Logger::outputDebugString(String::formatted("%d\n", samplePos));
             incomingMidi.addEvent(message, samplePos - sampleCounter);
-            playbackState.noteOn(1, message.getNoteNumber(),1);
+		    if (!transportState.exporting)
+	            playbackState.noteOn(1, message.getNoteNumber(),1);
         }
         
-        if (transportState.metronomeOn) {
+        if (transportState.metronomeOn && !transportState.exporting) {
             MidiBuffer::Iterator metronomeIterator(metronomeBuffer);
             metronomeIterator.setNextSamplePosition(sampleCounter);
             while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
@@ -215,16 +227,17 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
                 incomingMidi.addEvent(message, 0);
             }
         }
-        
+
+		sampleCounter += bufferToFill.numSamples;
+		if (sampleCounter >= maxRecordSamples)
+			sampleCounter = 0;
     }
     else
+    if (!transportState.exporting)
         keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
     
     synth.renderNextBlock (*bufferToFill.buffer, incomingMidi, 0, bufferToFill.numSamples);
     
-    sampleCounter += bufferToFill.numSamples;
-    if (sampleCounter > maxRecordSamples)
-        sampleCounter = 0;
     midiBufferLock.exit();
 }
 
@@ -280,9 +293,10 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 }
 
 
-Drums::TransportState::TransportState(bool record, bool play, bool metronome)
+Drums::TransportState::TransportState(bool record, bool play, bool exportState, bool metronome)
 : recording(record)
 , playing(play)
+, exporting(exportState)
 , metronomeOn(metronome)
 {
 }
@@ -290,14 +304,22 @@ Drums::TransportState::TransportState(bool record, bool play, bool metronome)
 void Drums::TransportState::play()
 {
     playing = true;
-    sendChangeMessage();
+	if (!exporting)
+	    sendChangeMessage();
 }
 
 void Drums::TransportState::pause()
 {
     playing = false;
     recording = false;
-    sendChangeMessage();
+	if (!exporting)
+	    sendChangeMessage();
+	exporting = false;
+}
+
+void Drums::TransportState::doExport()
+{
+	exporting = true;
 }
 
 void Drums::TransportState::record(bool state)

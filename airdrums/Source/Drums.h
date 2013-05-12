@@ -23,6 +23,7 @@ public:
     Drums();
     ~Drums();
     void NoteOn(int note, float velocity);
+	void AllNotesOff(void);
     void clear();
     void clearTrack(int note);
     void replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos);
@@ -38,6 +39,7 @@ public:
 
     const int getNumNotes() const { return numNotes; }
 	double getSampleRate() const { return sampleRate; }
+	long getMaxSamples() const { return maxRecordSamples; }
 	SharedPtr<DrumKit> getDrumKit() const { return kit; }
 	SharedPtr<DrumPattern> getPattern() const { return pattern; }
 	void setDrumKit(SharedPtr<DrumKit> aKit);
@@ -59,10 +61,11 @@ public:
     class TransportState : public ChangeBroadcaster
     {
     public:
-        TransportState(bool record, bool play, bool metronome);
+        TransportState(bool record, bool play, bool exportState, bool metronome);
     
         void play();
         void pause();
+		void doExport();
         void record(bool state);
         void metronome(bool state);
 
@@ -72,6 +75,7 @@ public:
 
         bool recording;
         bool playing;
+		bool exporting;
         bool metronomeOn;
     };
 

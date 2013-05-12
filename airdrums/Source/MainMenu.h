@@ -13,7 +13,8 @@ public:
 		kAudioSettingsCmd = 1,
 		kSavePatternAsCmd = 2,
 		kLoadPatternCmd = 3,
-		kUsePatternTempoCmd = 4
+		kUsePatternTempoCmd = 4,
+		kExportCmd = 5
 	};
 	enum TopLevelMenu
 	{
