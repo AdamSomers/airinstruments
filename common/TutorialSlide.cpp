@@ -33,7 +33,7 @@ void TutorialSlide::draw()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     GLfloat texColor[4] = { 1.f, 1.f, 1.f, fade };
-    glBindTexture(GL_TEXTURE_2D, textures[slideIndex]);
+    glBindTexture(GL_TEXTURE_2D, textures[slideIndex].textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
     defaultBatch.Draw();
 
@@ -69,11 +69,8 @@ void TutorialSlide::loadTextures()
     while (imagesIter.next())
     {
         File imageFile = imagesIter.getFile();
-        GLuint textureId = 0;
-        glGenTextures(1, &textureId);
-        glBindTexture(GL_TEXTURE_2D, textureId);
-        GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-        textures.add(textureId);
+        TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
+        textures.add(textureDesc);
     }
 }
 

@@ -9,9 +9,7 @@
 #ifndef __AirBeats__StrikeDetector__
 #define __AirBeats__StrikeDetector__
 
-#if defined(_WIN32)
-#include "GL/glew.h"
-#endif
+#include "Drums.h"
 
 #include "Leap.h"
 #include "../JuceLibraryCode/JuceHeader.h"

@@ -31,7 +31,7 @@ public:
     const int getSlideIndex() const { return slideIndex; }
     
 private:
-    Array<GLuint> textures;
+    Array<TextureDescription> textures;
     
     float fade;
     float fadeTarget;

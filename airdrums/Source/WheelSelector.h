@@ -64,8 +64,6 @@ public:
         void setBounds(const HUDRect& b);
         void setRotationCoefficient(float rotation);
         void rotate(float rotation);
-        void setImage(const Image& im);
-        const Image& getImage() const;
     private:
         void updateBounds();
         int id;
@@ -75,7 +73,6 @@ public:
         HUDRect targetBounds;
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
-        Image image;
         bool leftHanded;
         HUDView imageView;
     };

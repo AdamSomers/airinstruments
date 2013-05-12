@@ -38,10 +38,10 @@ void TrigView::draw()
     else
         category = KitManager::GetInstance().GetItem(0)->GetSample(id)->GetCategory();
 
-    GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category + "_on");
-    GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
+    TextureDescription onTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category + "_on");
+    TextureDescription offTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Trig_" + category);
     
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    glBindTexture(GL_TEXTURE_2D, onTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), onTexColor, 0);
     glLineWidth(1.f);
     defaultBatch.Draw();
@@ -52,7 +52,7 @@ void TrigView::draw()
     glGetIntegerv(GL_BLEND_DST, &blendDst);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    glBindTexture(GL_TEXTURE_2D, offTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), offTexColor, 0);
     defaultBatch.Draw();
 
@@ -71,7 +71,6 @@ void TrigView::trigger()
 }
 
 TrigViewBank::TrigViewBank()
-: textureID((GLuint) -1)
 {
     for (int i = 0; i < 16; ++i) {
         SharedPtr<TrigView> tv(new TrigView(i));

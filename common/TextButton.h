@@ -26,8 +26,8 @@ private:
     StringArray onText;
     StringArray offText;
     bool textChanged;
-    GLuint onTexture;
-    GLuint offTexture;
+    TextureDescription onTextureDesc;
+    TextureDescription offTextureDesc;
 };
 
 #endif /* defined(__AirBeats__TextButton__) */

@@ -4,17 +4,18 @@
 #include <iostream>
 #include <map>
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "GfxTools.h"
 
 class Skin
 {
 public:
     Skin(String skinName);
     const String& getName() const;
-    const GLuint getTexture(String name) const;
-    void addTexture(String name, GLuint texture);
+    const TextureDescription getTexture(String name) const;
+    void addTexture(String name, TextureDescription texture);
 private:
     String name;
-    std::map<String, GLuint> textures;
+    std::map<String, TextureDescription> textures;
 };
 
 class SkinManager

@@ -12,9 +12,7 @@
 #include "SkinManager.h"
 #include "DrumSample.h"
 
-
 DrumSample::DrumSample()
-: mTextureId(0)
 {
 }
 
@@ -131,10 +129,10 @@ String& DrumSample::GetCategory(void)
 }
 
 
-GLuint DrumSample::GetTexture(bool on) const
+TextureDescription DrumSample::GetTexture(bool on) const
 {
     if (mImage.isValid())
-        return mTextureId;
+        return mTextureDesc;
     else {
         String imageName = mCategory;
         if (on)
@@ -148,9 +146,7 @@ void DrumSample::LoadTextures()
 {
     if (mImage.isValid())
     {
-        glGenTextures(1, &mTextureId);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
-        GfxTools::loadTextureFromJuceImage(mImage);
+        mTextureDesc = GfxTools::loadTextureFromJuceImage(mImage);
     }
 }
 

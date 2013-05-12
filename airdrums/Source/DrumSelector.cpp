@@ -88,7 +88,7 @@ void DrumSelector::setPadAssociation(int note, int pad)
 
 int DrumSelector::getPadForNote(int note) const
 {
-    jassert(note >= 0 && note < (int) icons.size())
+    jassert(note >= 0 && note < (int)icons.size())
     return icons.at(note)->getPadNumber();
 }
 
@@ -96,7 +96,7 @@ int DrumSelector::getNoteForPad(int pad) const
 {
     int note = -1;
     jassert(pad >= 0 && pad < 6)
-    for (int i = 0; i < (int) icons.size(); ++i)
+    for (int i = 0; i < (int)icons.size(); ++i)
         if (getPadForNote(i) == pad)
             note = i;
     return note;
@@ -142,8 +142,8 @@ void DrumSelector::Icon::draw()
     else if (tempBounds != targetBounds)
         HUDButton::setBounds(targetBounds);
 
-    GLuint onTextureID = 0;
-    GLuint offTextureID = 0;
+    TextureDescription onTextureDesc;
+    TextureDescription offTextureDesc;
     
     if (padNumber != -1)
     {
@@ -169,14 +169,14 @@ void DrumSelector::Icon::draw()
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
     if (kitUuidString != "Default") {
         Uuid kitUuid(kitUuidString);
-        offTextureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(false);
-        onTextureID = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(true);
-        setTextures(onTextureID, offTextureID);
+        offTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(false);
+        onTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(getId())->GetTexture(true);
+        setTextures(onTextureDesc, offTextureDesc);
     }
     else {
-        offTextureID = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(false);
-        onTextureID = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(true);
-        setTextures(onTextureID, offTextureID);
+        offTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(false);
+        onTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(getId())->GetTexture(true);
+        setTextures(onTextureDesc, offTextureDesc);
     }
     
     HUDButton::draw();

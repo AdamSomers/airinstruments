@@ -42,7 +42,7 @@ public:
     void trigger(int midiNote);
     
 private:
-    GLuint textureID;
+    TextureDescription textureDesc;
     std::vector<SharedPtr<TrigView> > trigViews;
 };
 

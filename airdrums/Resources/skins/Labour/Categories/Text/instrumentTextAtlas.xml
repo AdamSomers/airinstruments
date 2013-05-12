@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:7993084c8397350475c438974c9a22c8$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="instrumentTextAtlas.png" width="1024" height="1024">
+    <sprite n="Text_Bass.png" x="2" y="2" w="200" h="80" oX="205" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_BassDrum.png" x="204" y="2" w="450" h="82" oX="79" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_Clap.png" x="656" y="2" w="204" h="80" oX="202" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_ClosedHiHat.png" x="2" y="86" w="588" h="80" oX="11" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_Crash.png" x="592" y="86" w="268" h="80" oX="169" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_FX.png" x="2" y="168" w="268" h="80" oX="172" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_HiPerc.png" x="272" y="168" w="440" h="80" oX="83" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_HiTom.png" x="2" y="250" w="406" h="82" oX="101" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_LowPerc.png" x="410" y="250" w="418" h="80" oX="94" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_LowTom.png" x="2" y="334" w="384" h="82" oX="112" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_MidPerc.png" x="388" y="334" w="392" h="82" oX="107" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_MidTom.png" x="2" y="418" w="358" h="82" oX="125" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_OpenHiHat.png" x="362" y="418" w="508" h="82" oX="51" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_Pad.png" x="2" y="502" w="158" h="80" oX="226" oY="18" oW="600" oH="100"/>
+    <sprite n="Text_PedalHiHat.png" x="162" y="502" w="518" h="80" oX="47" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_Ride.png" x="682" y="502" w="178" h="78" oX="216" oY="21" oW="600" oH="100"/>
+    <sprite n="Text_Shaker.png" x="2" y="584" w="310" h="80" oX="149" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_Snare.png" x="314" y="584" w="516" h="82" oX="45" oY="17" oW="600" oH="100"/>
+    <sprite n="Text_Stick.png" x="2" y="668" w="224" h="80" oX="192" oY="19" oW="600" oH="100"/>
+    <sprite n="Text_Vocal.png" x="228" y="668" w="278" h="82" oX="165" oY="18" oW="600" oH="100"/>
+</TextureAtlas>

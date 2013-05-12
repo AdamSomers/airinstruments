@@ -1,7 +1,9 @@
 #include "GfxTools.h"
 #include "Environment.h"
+#include "Types.h"
 
 #define USE_MIPMAP 1
+#define FORCE_POWER_OF_TWO_RESOURCES 1
 
 namespace GfxTools
 {
@@ -57,9 +59,42 @@ namespace GfxTools
         outCollisionPoint[2] = pZ;
     }
     
-    void loadTextureFromJuceImage(const Image& image)
+    TextureDescription loadTextureFromJuceImage(const Image image, bool forcePowerOf2 /* = true */)
     {
-        Image::BitmapData bitmapData(image, 0, 0, image.getWidth(), image.getHeight());
+        TextureDescription desc;
+        glGenTextures(1, &desc.textureId);
+        glBindTexture(GL_TEXTURE_2D, desc.textureId);
+        
+        desc.imageW = image.getWidth();
+        desc.imageH = image.getHeight();
+        
+        Image imageToUse = image;
+        
+        if (forcePowerOf2)
+        {
+            if (!isPowerOfTwo(image.getWidth()) || !isPowerOfTwo(image.getHeight()))
+            {
+                int widthToUse = image.getWidth();
+                int heightToUse = image.getHeight();
+                if (!isPowerOfTwo(widthToUse))
+                {
+                    widthToUse = nextPowerOfTwo(widthToUse);
+                }
+                if (!isPowerOfTwo(heightToUse))
+                {
+                    heightToUse = nextPowerOfTwo(heightToUse);
+                }
+                //Logger::outputDebugString("Old size: " + String(image.getWidth()) + "x" + String(image.getHeight()) + " new size: " + String(widthToUse) + "x" +  String(heightToUse));
+                Image newImage(image.getFormat(), widthToUse, heightToUse, true);
+                Graphics g(newImage);
+                g.drawImageAt(image, 0, 0);
+                imageToUse = newImage;
+                desc.texW = image.getWidth() / (float)widthToUse;
+                desc.texH = image.getHeight() / (float)heightToUse;
+            }
+        }
+
+        Image::BitmapData bitmapData(imageToUse, 0, 0, imageToUse.getWidth(), imageToUse.getHeight());
         GLbyte* bits = (GLbyte*)bitmapData.data;
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -77,12 +112,60 @@ namespace GfxTools
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, 4, image.getWidth(), image.getHeight(), 0,
-                     image.getFormat() == Image::RGB ? GL_RGB : GL_BGRA, GL_UNSIGNED_BYTE, bits);
+        glTexImage2D(GL_TEXTURE_2D, 0, 4, imageToUse.getWidth(), imageToUse.getHeight(), 0,
+                     imageToUse.getFormat() == Image::RGB ? GL_RGB : GL_BGRA, GL_UNSIGNED_BYTE, bits);
 #if USE_MIPMAP
         glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
         glGenerateMipmap(GL_TEXTURE_2D);
 #endif
+        return desc;
+    }
+    
+    Array<TextureDescription> loadTextureAtlas(const File atlasXml)
+    {
+        Array<TextureDescription> textures;
 
+        if (!atlasXml.exists()) {
+            Logger::outputDebugString("Error: " + atlasXml.getFileName() + " does not exist!");
+            return textures;
+        }
+        
+        UniquePtr<XmlElement> document(XmlDocument::parse(atlasXml));
+        if (document == nullptr) {
+            Logger::outputDebugString("Error: Could not parse " + atlasXml.getFileName());
+            return textures;
+        }
+        
+        if (!document->hasTagName("TextureAtlas")) {
+            Logger::outputDebugString("Error: TextureAtlas tag not found in " + atlasXml.getFileName());
+            return textures;
+        }
+        
+        String atlasFileNmae = document->getStringAttribute("imagePath");
+        File atlasImageFile(atlasXml.getParentDirectory().getChildFile(atlasFileNmae));
+        if (!atlasImageFile.exists()) {
+            Logger::outputDebugString("Error: " + atlasFileNmae + " not found");
+            return textures;
+        }
+        
+        Image atlasImage = ImageFileFormat::loadFrom(atlasImageFile);
+        TextureDescription atlasTexture = GfxTools::loadTextureFromJuceImage(atlasImage, false);
+        
+        XmlElement* spriteElement = document->getFirstChildElement();
+        while (spriteElement != nullptr) {
+            TextureDescription td;
+            td.textureId = atlasTexture.textureId;
+            td.name = spriteElement->getStringAttribute("n").replace(".png", "");
+            td.texX = spriteElement->getIntAttribute("x") / (float)atlasImage.getWidth();
+            td.texY = spriteElement->getIntAttribute("y") / (float)atlasImage.getHeight();
+            td.texW = spriteElement->getIntAttribute("w") / (float)atlasImage.getWidth();
+            td.texH = spriteElement->getIntAttribute("h") / (float)atlasImage.getHeight();
+            td.imageW = spriteElement->getIntAttribute("w");
+            td.imageH = spriteElement->getIntAttribute("h");
+            textures.add(td);
+            spriteElement = spriteElement->getNextElementWithTagName("sprite");
+        }
+        
+        return textures;
     }
 }

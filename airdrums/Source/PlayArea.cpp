@@ -52,9 +52,10 @@ void PlayArea::setBounds(const HUDRect& r)
     float y = r.h / 2.f - w / 2.f;
     iconBounds = HUDRect(x,y,w,w);
     icon.setBounds(iconBounds);
-    float aspectRatio = 100.f / 600.f;
-    float textWidth = jmin(600.f, r.w) * 0.5f;
-    float textHeight = textWidth * aspectRatio;
+    TextureDescription td = text.getDefaultTexture();
+    float aspectRatio = (float)td.imageW / (float)td.imageH;
+    float textHeight = jmin(r.w, r.h) / 10.f;
+    float textWidth = textHeight * aspectRatio;
     text.setBounds(HUDRect(r.w / 2.f - textWidth / 2.f,
                            jmax(0.f, y - textHeight - 20),
                            textWidth, textHeight));
@@ -72,6 +73,11 @@ void PlayArea::setup()
 
 void PlayArea::draw()
 {
+    if (needsSetup) {
+        setBounds(getBounds());
+        needsSetup = false;
+    }
+
     float fade = 0.f;
     RelativeTime diff = Time::getCurrentTime() - fadeStartTime;
     if (diff < RelativeTime::milliseconds(FADE_TIME))
@@ -80,8 +86,8 @@ void PlayArea::draw()
     GLfloat padOnColor[4] = { 1.f, 1.f, 1.f, fade};
     GLfloat padOffColor[4] = { 1.f, 1.f, 1.f, 1.f};
 
-    GLuint onTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
-    GLuint offTextureID = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
+    TextureDescription onTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
+    TextureDescription offTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
 
     GLint blendSrc;
     glGetIntegerv(GL_BLEND_SRC, &blendSrc);
@@ -90,35 +96,16 @@ void PlayArea::draw()
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBindTexture(GL_TEXTURE_2D, offTextureID);
+    glBindTexture(GL_TEXTURE_2D, offTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOffColor, 0);
     defaultBatch.Draw();
     
-    glBindTexture(GL_TEXTURE_2D, onTextureID);
+    glBindTexture(GL_TEXTURE_2D, onTextureDesc.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), padOnColor, 0);
     glLineWidth(1.f);
     defaultBatch.Draw();
-
-    int iconTextureId = 0;
-    int categoryTextureId = 0;
-    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
-    if (kitUuidString != "Default") {
-        Uuid kitUuid(kitUuidString);
-        iconTextureId = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
-        String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
-        categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
-
-    }
-    else {
-        iconTextureId = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
-        String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
-        categoryTextureId = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
-    }
     
-    icon.setDefaultColor(onColor);
-    icon.setDefaultTexture(iconTextureId);
-    text.setDefaultTexture(categoryTextureId);
-    
+    icon.setDefaultColor(onColor);    
 
     if (fade > 0.f)
     {
@@ -162,6 +149,27 @@ void PlayArea::setSelectedMidiNote(int note)
     else if (note < 0)
         note = Drums::instance().getNumNotes() - 1;
     selectedMidiNote = note;
+
+    TextureDescription iconTextureDesc;
+    TextureDescription categoryTextureDesc;
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
+    if (kitUuidString != "Default") {
+        Uuid kitUuid(kitUuidString);
+        iconTextureDesc = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
+        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+        
+    }
+    else {
+        iconTextureDesc = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
+        categoryTextureDesc = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+    }
+    
+    icon.setDefaultTexture(iconTextureDesc);
+    text.setDefaultTexture(categoryTextureDesc);
+
+    needsSetup = true;
 }
 
 void PlayArea::loadTextures()

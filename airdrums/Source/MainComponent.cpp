@@ -223,8 +223,6 @@ void MainContentComponent::newOpenGLContextCreated()
     for (int i = 0; i < numKits; ++i)
     {
         WheelSelector::Icon* icon = new WheelSelector::Icon(i, true);
-        Image image = KitManager::GetInstance().GetItem(i)->GetImage();
-        icon->setImage(image);
         icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
         kitSelector->addIcon(icon);
     }
@@ -314,13 +312,11 @@ void MainContentComponent::populatePatternSelector()
         g.setColour(Colour::fromRGBA(60, 60, 60, 255));
         g.setFont(Font(Environment::instance().getDefaultFont(), 200, Font::plain));
         g.drawText(PatternManager::GetInstance().GetItem(i)->GetName(), 0, 0, 1500, 200, Justification::left, true);
-        
-        GLuint textureId = 0;
-        glGenTextures(1, &textureId);
-        glBindTexture(GL_TEXTURE_2D, textureId);
-        GfxTools::loadTextureFromJuceImage(im);
-        icon->setImage(im);
-        icon->setDefaultTexture(textureId);
+
+        TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(im, true);
+        textureDesc.imageW = im.getWidth();
+        textureDesc.imageH = im.getHeight();
+        icon->setDefaultTexture(textureDesc);
         
         patternSelector->addIcon(icon);
     }
@@ -413,13 +409,12 @@ void MainContentComponent::renderOpenGL()
         if (playAreas.size() != 0)
         {            
             int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
-            
-            //int numPads = 0;	// Unused variable
+
             switch (layout)
             {
                 case StrikeDetector::kLayout2x1:
                 {
-                    const float playAreaHeight = (float) Environment::instance().screenH - toolbarHeight - statusBarHeight;
+                    const float playAreaHeight = (float)(Environment::instance().screenH - toolbarHeight - statusBarHeight);
                     const float playAreaWidth = Environment::instance().screenW / 2.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                     (GLfloat) statusBar->getBounds().top(),
@@ -438,7 +433,7 @@ void MainContentComponent::renderOpenGL()
                     break;
                 case StrikeDetector::kLayout3x1:
                 {
-                    const float playAreaHeight = (float) Environment::instance().screenH - toolbarHeight - statusBarHeight;
+                    const float playAreaHeight = (float)Environment::instance().screenH - toolbarHeight - statusBarHeight;
                     const float playAreaWidth = Environment::instance().screenW / 3.f;
                     playAreas.at(0)->setBounds(HUDRect(0,
                                                        (GLfloat) statusBar->getBounds().top(),
@@ -1107,7 +1102,7 @@ void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
     }
 }
 
-void MainContentComponent::handleTapGesture(const Leap::Pointable &/*p*/)
+void MainContentComponent::handleTapGesture(const Leap::Pointable& /*p*/)
 {
 #if 0
     if (!tutorial->isDone() && tutorial->getSlideIndex() != 3)
@@ -1179,7 +1174,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         String padNumberStr = message.trimCharactersAtStart("assign/");
         int padNumber = padNumberStr.getIntValue();
-        jassert(padNumber >= 0 && padNumber < (int) playAreas.size());
+        jassert(padNumber >= 0 && padNumber < (int)playAreas.size());
         PlayArea* playArea = playAreas.at(padNumber);
         playArea->setSelectedMidiNote(drumSelector->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
@@ -1222,7 +1217,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
             String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
             if (kitUuidString != "Default") {
                 Uuid kitUuid(kitUuidString);
-                int texture = KitManager::GetInstance().GetItem(kitUuid)->GetSample(drumNumber)->GetTexture(false);
+                TextureDescription texture = KitManager::GetInstance().GetItem(kitUuid)->GetSample(drumNumber)->GetTexture(false);
                 MotionDispatcher::instance().setCursorTexture(texture);
                 newCursorW = 50;
                 newCursorH = 50;
@@ -1242,7 +1237,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         String padNumberStr = message.trimCharactersAtStart("clear/");
         int padNumber = padNumberStr.getIntValue();
-        jassert(padNumber >= 0 && padNumber < (int) playAreas.size());
+        jassert(padNumber >= 0 && padNumber < (int)playAreas.size());
         PlayArea* playArea = playAreas.at(padNumber);
         Drums::instance().clearTrack(playArea->getSelectedMidiNote());
         for (PlayArea* pad : playAreas)

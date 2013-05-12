@@ -48,8 +48,8 @@ TempoControl::~TempoControl()
 
 void TempoControl::draw()
 {
-    GLuint textureId = SkinManager::instance().getSelectedSkin().getTexture("tempo_background");
-    setDefaultTexture(textureId);
+    TextureDescription textureDesc = SkinManager::instance().getSelectedSkin().getTexture("tempo_background");
+    setDefaultTexture(textureDesc);
     if (needsLayout) {
         layoutIcons();
         needsLayout = false;
@@ -238,8 +238,7 @@ void TempoControl::buttonStateChanged(HUDButton* b)
 }
 
 TempoControl::Icon::Icon()
-: textureId (0)
-, tempoValue(-999)
+: tempoValue(-999)
 , tempoValueChanged(true)
 {
 }
@@ -251,8 +250,10 @@ void TempoControl::Icon::draw()
         fabsf(tempBounds.w - targetBounds.w) > 2 ||
         fabsf(tempBounds.h - targetBounds.h) > 2)
         updateBounds();
-    else if (tempBounds != targetBounds)
+    else if (tempBounds != targetBounds) {
         HUDView::setBounds(targetBounds);
+        tempBounds = targetBounds;
+    }
 
 
     if (tempoValueChanged) // need to generate a new texture
@@ -262,12 +263,10 @@ void TempoControl::Icon::draw()
         g.setColour(Colours::white);
         g.setFont(Font(Environment::instance().getDefaultFont(), (targetBounds.h * .75f) * 4.0f, Font::plain));
         g.drawText(String((int)tempoValue), 0, 0, (int) (targetBounds.w*4), (int) (targetBounds.h*4), Justification::centred, true);
-        if (textureId != 0)
-            glDeleteTextures(1, &textureId);
-        glGenTextures(1, &textureId);
-        glBindTexture(GL_TEXTURE_2D, textureId);
-        GfxTools::loadTextureFromJuceImage(im);
-        setDefaultTexture(textureId);
+        if (textureDesc.textureId != 0)
+            glDeleteTextures(1, &textureDesc.textureId);
+        textureDesc = GfxTools::loadTextureFromJuceImage(im);
+        setDefaultTexture(textureDesc);
         tempoValueChanged = false;
     }
     
