@@ -13,6 +13,7 @@
 
 #include <vector>
 
+#include "GfxTools.h"
 #include "Types.h"
 #include "DrumSample.h"
 #include "DrumItem.h"

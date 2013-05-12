@@ -11,8 +11,11 @@
 #ifndef __PATTERNLOADDIALOG_H_E47EDE9D__
 #define __PATTERNLOADDIALOG_H_E47EDE9D__
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#if defined(_WIN32)
+#include "GL/glew.h"
+#endif
 
+#include "../JuceLibraryCode/JuceHeader.h"
 
 class PatternLoadDialog : public DialogWindow
 {

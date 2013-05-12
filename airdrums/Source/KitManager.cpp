@@ -166,7 +166,7 @@ void KitManager::LoadTextures()
     
     File special = File::getSpecialLocation(File::currentApplicationFile);
 #if JUCE_WINDOWS
-	File folder = special.getChildFile("../kits");
+	File folder = special.getChildFile("..");
 #elif JUCE_MAC
 	File folder = special.getChildFile("Contents/Resources");
 #endif

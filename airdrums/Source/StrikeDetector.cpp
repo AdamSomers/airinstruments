@@ -7,7 +7,6 @@
 //
 
 #include "StrikeDetector.h"
-#include "Drums.h"
 #include "Main.h"
 
 // How fast hand is moving downwards to initiate a strike gesture.

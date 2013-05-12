@@ -88,7 +88,7 @@ void DrumSelector::setPadAssociation(int note, int pad)
 
 int DrumSelector::getPadForNote(int note) const
 {
-    jassert(note >= 0 && note < icons.size())
+    jassert(note >= 0 && note < (int)icons.size())
     return icons.at(note)->getPadNumber();
 }
 
@@ -96,7 +96,7 @@ int DrumSelector::getNoteForPad(int pad) const
 {
     int note = -1;
     jassert(pad >= 0 && pad < 6)
-    for (int i = 0; i < icons.size(); ++i)
+    for (int i = 0; i < (int)icons.size(); ++i)
         if (getPadForNote(i) == pad)
             note = i;
     return note;

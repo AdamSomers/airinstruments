@@ -6,12 +6,16 @@
 #include <GLMatrixStack.h>
 #include <GLGeometryTransform.h>
 
+#if defined(_WIN32)
+#include "GL/glew.h"
+#endif
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 struct TextureDescription
 {
     TextureDescription()
-    : textureId(0), texX(0.f), texY(0.f), texW(1.f), texH(1.f), imageW(0.f), imageH(0.f) {}
+    : textureId(0), texX(0.f), texY(0.f), texW(1.f), texH(1.f), imageW(0), imageH(0) {}
     
     bool operator==(const TextureDescription& other) const
     {
