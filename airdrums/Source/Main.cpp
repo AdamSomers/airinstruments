@@ -94,7 +94,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 		}
 	}
 
-    mainWindow->getContentComponent()->grabKeyboardFocus();
+//    mainWindow->getContentComponent()->grabKeyboardFocus();
 #if JUCE_MAC
     postMessage(new GrabFocusMessage);
 #endif
