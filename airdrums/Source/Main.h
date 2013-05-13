@@ -8,6 +8,7 @@
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
+                          , public MessageListener
                           //, public AudioIODeviceCallback
 {
 public:
@@ -38,6 +39,8 @@ public:
     
     void anotherInstanceStarted (const String& /*commandLine*/);
 
+    void handleMessage(const juce::Message &m);
+    
     //==============================================================================
     /*
         This class implements the desktop window that contains an instance of
@@ -61,10 +64,10 @@ public:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 
-    class PatternAddedMessage : public Message
-    {
-    };
+    class PatternAddedMessage : public Message {};
     
+    class GrabFocusMessage : public Message {};
+
 private:
 	bool perform (const InvocationInfo &info);
 
