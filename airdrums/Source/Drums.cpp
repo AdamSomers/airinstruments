@@ -50,18 +50,21 @@ void Drums::NoteOn(int note, float velocity)
 {
     midiBufferLock.enter();
     if (transportState.recording && transportState.playing) {
-        float bps = getTempo() / 60.f;
-        float sixteenthsPerSecond = bps * 4;
-        int samplesPerSixteenth = (int) (sampleRate / sixteenthsPerSecond);
-        float sixteenthsIntoPattern = sampleCounter / (float)samplesPerSixteenth;
-        int quantizedPosition = (int)sixteenthsIntoPattern * samplesPerSixteenth;
-        float diff = sixteenthsIntoPattern - (int)sixteenthsIntoPattern;
+		// Quantize the note to the nearest 16th boundary
+		// Assumes pattern length is 2 bars of 4/4 time
+        float bps = getTempo() / 60.0f;
+        float sixteenthsPerSecond = bps * 4.0f;
+        float samplesPerSixteenth = (float) (sampleRate / sixteenthsPerSecond);
+        float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
+        long quantizedPosition = (long) sixteenthsIntoPattern;
+        float diff = sixteenthsIntoPattern - quantizedPosition;
         Logger::outputDebugString(String::formatted("%f\n", diff));
-        if (diff > 0.5) {
-            quantizedPosition += samplesPerSixteenth;
-            if (quantizedPosition > maxRecordSamples)
+        if (diff >= 0.5) {
+            quantizedPosition++;
+            if (quantizedPosition >= 32)
                 quantizedPosition = 0;
         }
+		quantizedPosition = (long) (quantizedPosition * samplesPerSixteenth);
         
         MidiMessage m = MidiMessage::noteOn(1, note, velocity);
         m.setTimeStamp(quantizedPosition);
@@ -74,7 +77,7 @@ void Drums::NoteOn(int note, float velocity)
         bool found = i.getNextEvent(existingMessage, position);
         if (!found || position != quantizedPosition || existingMessage.getNoteNumber() != note)
             recordBuffer.addEvent(m, quantizedPosition);
-        else if (found && position == quantizedPosition && existingMessage.getNoteNumber() == note)
+        else /*if (found && position == quantizedPosition && existingMessage.getNoteNumber() == note)*/	// Redundant test
             replaceNoteVelocity(m, quantizedPosition);
         
         if (diff < 0.5) {
