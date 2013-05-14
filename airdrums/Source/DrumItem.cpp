@@ -11,7 +11,10 @@
 #include "DrumItem.h"
 
 
-DrumItem::DrumItem()
+DrumItem::DrumItem() :
+	mModifiable(false)
+	, mDirty(false)
+	, mHasValidName(false)
 {
 }
 
@@ -36,6 +39,10 @@ Uuid& DrumItem::GetUuid(void)
 void DrumItem::SetName(String& name)
 {
 	mName = name;
+	if (name == "")
+		mHasValidName = false;
+	else
+		mHasValidName = true;
 }
 
 
@@ -45,8 +52,40 @@ void DrumItem::SetUuid(Uuid uuid)
 }
 
 
+bool DrumItem::GetModifiable(void)
+{
+	return mModifiable;
+}
+
+
+void DrumItem::SetModifiable(bool modifiable)
+{
+	mModifiable = modifiable;
+}
+
+
+bool DrumItem::GetDirty(void)
+{
+	return mDirty;
+}
+
+
+void DrumItem::SetDirty(bool dirty)
+{
+	mDirty = dirty;
+}
+
+
+bool DrumItem::GetHasValidName(void)
+{
+	return mHasValidName;
+}
+
+
 DrumItem::Status DrumItem::LoadFromXml(XmlElement* element)
 {
+	SetDirty(false);
+
 	String name = element->getStringAttribute("name", "");
 	if (name == "")
 		return kItemNameError;
@@ -54,8 +93,8 @@ DrumItem::Status DrumItem::LoadFromXml(XmlElement* element)
 	if (uuid == "")
 		return kItemUuidError;
 
-	mName = name;
-	mUuid = uuid;
+	SetName(name);
+	SetUuid(uuid);
 
 	return kNoError;
 }

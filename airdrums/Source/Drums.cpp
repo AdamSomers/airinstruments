@@ -76,7 +76,10 @@ void Drums::NoteOn(int note, float velocity)
         MidiMessage existingMessage;
         bool found = i.getNextEvent(existingMessage, position);
         if (!found || position != quantizedPosition || existingMessage.getNoteNumber() != note)
+		{
             recordBuffer.addEvent(m, quantizedPosition);
+			pattern->SetDirty(true);
+		}
         else /*if (found && position == quantizedPosition && existingMessage.getNoteNumber() == note)*/	// Redundant test
             replaceNoteVelocity(m, quantizedPosition);
         
@@ -103,6 +106,7 @@ void Drums::clear()
 	jassert(pattern.get() != nullptr);
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     recordBuffer.clear();
+	pattern->SetDirty(true);
     midiBufferLock.exit();
 }
 
@@ -119,6 +123,8 @@ void Drums::clearTrack(int note)
     {
         if (message.getNoteNumber() != note)
             newBuffer.addEvent(message, samplePos);
+		else
+			pattern->SetDirty(true);
     }
     recordBuffer = newBuffer;
     midiBufferLock.exit();
@@ -138,6 +144,7 @@ void Drums::replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos)
         if (inMessage.getNoteNumber() == message.getNoteNumber() && samplePos == inSamplePos)
         {
             message.setVelocity(inMessage.getVelocity() / 127.f);
+			pattern->SetDirty(true);
         }
         newBuffer.addEvent(message, samplePos);
     }

@@ -30,7 +30,9 @@ public:
 		kPathNotFoundError = 1,
 		kXmlParseError = 2,
 		kItemLoadError = 3,
-		kNoItemsError = 4
+		kNoItemsError = 4,
+		kCancelled = 5,
+		kSaveError = 6
 	};
 
 	static Manager&	GetInstance(void);

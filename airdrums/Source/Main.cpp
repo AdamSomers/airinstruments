@@ -12,8 +12,6 @@
 #include "Main.h"
 #include "KitManager.h"
 #include "PatternManager.h"
-#include "PatternSaveDialog.h"
-#include "PatternLoadDialog.h"
 #include "AudioExporter.h"
 #if JUCE_WINDOWS
 #if JUCE_DEBUG
@@ -77,9 +75,8 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     Logger::outputDebugString(audioDeviceManager.getCurrentAudioDevice()->getName());
     
     PatternManager& pmgr = PatternManager::GetInstance();
-	/*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
-    
-	Drums::instance().setPattern(SharedPtr<DrumPattern>(new DrumPattern));	// Start out with a new empty pattern for now
+	/*PatternManager::Status bstatus =*/ pmgr.BuildPatternList();
+	/*PatternManager::Status cstatus =*/ pmgr.CreateNewPattern();
 
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
 	String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName", "Default");
@@ -189,65 +186,34 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 		}
 		case MainMenu::kSavePatternAsCmd :
 		{
-			UniquePtr<PatternSaveDialog> dlg(new PatternSaveDialog(mainWindow));
-			int status = dlg->runModalLoop();
-			if (status == 0)
-				break;
-			String fileName = dlg->GetFileName();
-			fileName = File::createLegalFileName(fileName);
-			// For now, use the default path
 			PatternManager& mgr = PatternManager::GetInstance();
-			File directory = mgr.GetDefaultPath();
-
-			Drums& drums = Drums::instance();
-			SharedPtr<DrumPattern> pattern = drums.getPattern();
-			jassert(pattern.get() != nullptr);
-            pattern->SetUuid(Uuid::Uuid());
-			pattern->SaveToXml(fileName, directory);
-            
-			mgr.BuildPatternList();	// Refresh list to find new content, etc.
-            
-            String name = pattern->GetName();
-            Uuid uuid = pattern->GetUuid();
-            String uuidString = uuid.toString();
-            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
-            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
-            
-            PatternAddedMessage* m = new PatternAddedMessage;
-            ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
-            
+			/*PatternManager::Status status =*/ mgr.SavePatternAs(mainWindow);
 			break;
 		}
 		case MainMenu::kLoadPatternCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
-			mgr.BuildPatternList();	// Refresh list to find new content, etc.
-			UniquePtr<PatternLoadDialog> dlg(new PatternLoadDialog(mainWindow));
-			int status = dlg->runModalLoop();
-			if (status == 0)
-				break;
-			int index = dlg->GetSelection();
-			if (index < 0)
-				break;
-			SharedPtr<DrumPattern> pattern = mgr.GetItem(index);
-			Drums& drums = Drums::instance();
-			drums.setPattern(pattern);
+			/*PatternManager::Status status =*/ mgr.LoadPattern(mainWindow);
 			break;
 		}
 		case MainMenu::kUsePatternTempoCmd :
 		{
 			bool usePatternTempo = mainMenu->GetUsePatternTempo();
-			Drums& drums = Drums::instance();
-			if (usePatternTempo)
-				drums.setTempoSource(Drums::kPatternTempo);
-			else
-				drums.setTempoSource(Drums::kGlobalTempo);
+			PatternManager& mgr = PatternManager::GetInstance();
+			/*PatternManager::Status status =*/ mgr.UsePatternTempo(usePatternTempo);
 			break;
 		}
 		case MainMenu::kExportCmd :
 		{
 			UniquePtr<AudioExporter> exporter(new AudioExporter(mainWindow));
 			exporter->Export();
+			break;
+		}
+		case MainMenu::kNewPatternCmd :
+		{
+			PatternManager& mgr = PatternManager::GetInstance();
+			/*PatternManager::Status status =*/ mgr.CreateNewPattern();
+			break;
 		}
 	}
 

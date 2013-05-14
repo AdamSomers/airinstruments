@@ -141,12 +141,14 @@ DrumPattern::Status DrumPattern::SaveToXml(String fileName, File& directory)
 	if (!main.writeToFile(file, ""))
 		return kItemSaveError;
 
+	SetDirty(false);
+
 	return kNoError;
 }
 
 
 MidiBuffer& DrumPattern::GetMidiBuffer(void)
-{
+{	// If caller modifies the pattern, SetDirty(true) must be called
 	return *mMidiBuffer.get();
 }
 
@@ -167,11 +169,12 @@ void DrumPattern::SetTempo(float tempo)
 {
 	mTempo = tempo;
 	Conform(mTempo, mSampleRate);
+	SetDirty(true);
 }
 
 
 void DrumPattern::Conform(float tempo, double rate)
-{
+{	// Does not dirty the pattern
 	Conform(GetMidiBuffer(), tempo, rate);
 	mConformTempo = tempo;
 	mSampleRate = rate;
@@ -179,7 +182,7 @@ void DrumPattern::Conform(float tempo, double rate)
 
 
 void DrumPattern::SetSampleRate(double rate)
-{
+{	// Does not dirty the pattern
 	Conform(mConformTempo, rate);
 }
 
@@ -191,7 +194,7 @@ double DrumPattern::GetSampleRate(void)
 
 
 void DrumPattern::Conform(MidiBuffer& buffer, float tempo, double rate)
-{
+{	// Does not dirty the pattern
 	double adj = rate / mSampleRate;
 	adj *= (double) (mConformTempo / tempo);
 

@@ -14,7 +14,8 @@ public:
 		kSavePatternAsCmd = 2,
 		kLoadPatternCmd = 3,
 		kUsePatternTempoCmd = 4,
-		kExportCmd = 5
+		kExportCmd = 5,
+		kNewPatternCmd = 6
 	};
 	enum TopLevelMenu
 	{

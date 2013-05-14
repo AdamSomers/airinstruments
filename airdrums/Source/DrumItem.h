@@ -41,6 +41,12 @@ public:
 	void	SetName(String& name);
 	void	SetUuid(Uuid uuid);
 
+	bool	GetModifiable(void);
+	void	SetModifiable(bool modifiable);
+	bool	GetDirty(void);
+	void	SetDirty(bool dirty);
+	bool	GetHasValidName(void);
+
 	Status	LoadFromXml(XmlElement* element);
 	Status	SaveToXml(XmlElement* element);
 
@@ -50,6 +56,10 @@ protected:
 private:
 	String	mName;
 	Uuid	mUuid;
+	bool	mModifiable;	// Factory items are not modifiable, only user items are modifiable.
+							// To modify a factory item, make a copy of it as a user item.
+	bool	mDirty;
+	bool	mHasValidName;	// New items do not have a valid name until a Save As is performed
 };
 
 #endif  // __DRUMITEM_H_87D00F4E__
