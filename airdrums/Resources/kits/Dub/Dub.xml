@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="Dub" image="" uuid="3b0001e1daf2b6f192ab7c11df12df8d">
+    <sample note="0" category="BassDrum" image="" file="dub2render kick.aiff" />
+    <sample note="1" category="Snare" image="" file="dub2render snare.aiff" />
+    <sample note="2" category="HiTom" image="" file="dub2render hitom.aiff" />
+    <sample note="3" category="LowTom" image="" file="dub2render lowtom.aiff" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="dub2render closed hat.aiff" />
+    <sample note="5" category="OpenHiHat" image="" file="dub2render openhat.aiff" />
+    <sample note="6" category="Ride" image="" file="dub2render ride.aiff" />
+
+    <sample note="7" category="Crash" image="" file="dub2render crash.aiff" />
+    <sample note="8" category="Shaker" image="" file="dub2render shaker.aiff" />
+
+    <sample note="9" category="Pad" image="" file="dub2render chord1.aiff" />
+    <sample note="10" category="Pad" image="" file="dub2render chord2.aiff" />
+    <sample note="11" category="Pad" image="" file="dub2render chord3.aiff" />
+    <sample note="12" category="Pad" image="" file="dub2render chord4.aiff" />
+
+    <sample note="13" category="Bass" image="" file="dub2render bass1.aiff" />
+    <sample note="14" category="Bass" image="" file="dub2render bass2.aiff" />
+    <sample note="15" category="Bass" image="" file="dub2render bass3.aiff" />
+</kit>

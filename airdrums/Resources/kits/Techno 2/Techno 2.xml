@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="Techno 2" image="" uuid="b484bb1c775f0d5b83fdb80c106b24f0">
+    <sample note="0" category="BassDrum" image="" file="techno3rend kick.aiff" />
+    <sample note="1" category="Snare" image="" file="techno3rend snare.aiff" />
+    <sample note="2" category="Shaker" image="" file="techno3rend shaker.aiff" />
+    <sample note="3" category="FX" image="" file="techno3rend impact.aiff" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="techno3rend closedhat.aiff" />
+    <sample note="5" category="OpenHiHat" image="" file="techno3rend openhat.aiff" />
+
+    <sample note="6" category="LowTom" image="" file="techno3rend lotom.aiff" />
+    <sample note="7" category="HiTom" image="" file="techno3rend hitom.aiff" />
+
+    <sample note="8" category="Crash" image="" file="techno3rend noiseswoosh.aiff"  />
+    <sample note="9" category="Ride" image="" file="techno3rend ride.aiff"/>
+
+    <sample note="10" category="Pad" image="" file="techno3rend chord1.aiff" />
+    <sample note="11" category="Pad" image="" file="techno3rend chord2.aiff" />
+
+    <sample note="12" category="Bass" image="" file="techno3rend bass1.aiff" />
+    <sample note="13" category="Bass" image="" file="techno3rend bass2.aiff" />
+    <sample note="14" category="Bass" image="" file="techno3rend bass3.aiff" />
+    <sample note="15" category="Bass" image="" file="techno3rend bass4.aiff" />
+</kit>

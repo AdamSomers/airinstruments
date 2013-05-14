@@ -22,6 +22,10 @@
 
 AirHarpApplication::AirHarpApplication()
 {
+#if 0
+    for (int i = 0; i < 16; ++i)
+        Logger::outputDebugString(Uuid::Uuid().toString());
+#endif
 }
 
 
