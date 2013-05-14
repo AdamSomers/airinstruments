@@ -36,6 +36,29 @@ PatternManager::Status PatternManager::BuildPatternList(String path /* = ""*/, b
 }
 
 
+PatternManager::Status PatternManager::SavePattern(AirHarpApplication::MainWindow* mainWindow)
+{
+	Drums& drums = Drums::instance();
+	SharedPtr<DrumPattern> pattern = drums.getPattern();
+	jassert(pattern.get() != nullptr);
+	if (!pattern->GetDirty())
+		return kCancelled;
+	if (!pattern->GetHasValidName() || !pattern->GetModifiable())
+		return SavePatternAs(mainWindow);
+
+	String fileName = pattern->GetName();
+	fileName = File::createLegalFileName(fileName);
+	// For now, use the default path
+	File directory = GetDefaultPath();
+
+	DrumItem::Status saveStatus = pattern->SaveToXml(fileName, directory);
+	if (saveStatus != DrumItem::Status::kNoError)
+		return kSaveError;
+
+	return kNoError;
+}
+
+
 PatternManager::Status PatternManager::SavePatternAs(AirHarpApplication::MainWindow* mainWindow)
 {
 	UniquePtr<PatternSaveDialog> dlg(new PatternSaveDialog(mainWindow));

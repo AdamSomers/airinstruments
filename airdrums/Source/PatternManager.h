@@ -22,6 +22,7 @@ class PatternManager : public ItemManager<PatternManager, DrumPattern>
 {
 public:
 	Status	BuildPatternList(String path = "", bool clear = true);
+	Status	SavePattern(AirHarpApplication::MainWindow* mainWindow);
 	Status	SavePatternAs(AirHarpApplication::MainWindow* mainWindow);
 	Status	LoadPattern(AirHarpApplication::MainWindow* mainWindow);
 	Status	UsePatternTempo(bool usePatternTempo);

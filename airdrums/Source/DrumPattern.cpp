@@ -167,9 +167,12 @@ float DrumPattern::GetTempo(void)
 
 void DrumPattern::SetTempo(float tempo)
 {
-	mTempo = tempo;
+	if (mTempo != tempo)
+	{
+		SetDirty(true);
+		mTempo = tempo;
+	}
 	Conform(mTempo, mSampleRate);
-	SetDirty(true);
 }
 
 

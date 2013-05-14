@@ -215,6 +215,12 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			/*PatternManager::Status status =*/ mgr.CreateNewPattern();
 			break;
 		}
+		case MainMenu::kSavePatternCmd :
+		{
+			PatternManager& mgr = PatternManager::GetInstance();
+			/*PatternManager::Status status =*/ mgr.SavePattern(mainWindow);
+			break;
+		}
 	}
 
 	return true;

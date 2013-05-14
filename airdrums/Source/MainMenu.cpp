@@ -45,6 +45,7 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 		case kFileMenu :
 			menu.addItem(kNewPatternCmd, "New Pattern");
 			menu.addItem(kLoadPatternCmd, "Load Pattern...");
+			menu.addItem(kSavePatternCmd, "Save Pattern");
 			menu.addItem(kSavePatternAsCmd, "Save Pattern As...");
 			menu.addItem(kExportCmd, "Export Pattern...");
 			break;
@@ -82,6 +83,7 @@ void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 		case kLoadPatternCmd :
 		case kExportCmd :
 		case kNewPatternCmd :
+		case kSavePatternCmd :
 		{
 			ApplicationCommandTarget::InvocationInfo info(menuItemID);
 			info.commandFlags = 0;
