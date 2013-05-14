@@ -287,7 +287,7 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 	pattern = aPattern;
 	if (tempoSource == kPatternTempo) {
         setTempo(pattern->GetTempo());
-		setTempoSlider(pattern->GetTempo());
+		;//setTempoSlider(pattern->GetTempo());
     }
 	else
 		AdjustMidiBuffers();	// Conform the buffers to the current global tempo and sample rate
@@ -442,7 +442,7 @@ void Drums::setTempoSource(TempoSource source)
 	}
 
 	float tempo = getTempo();
-	setTempoSlider(tempo);
+	//setTempoSlider(tempo);
 
 	AirHarpApplication* app = AirHarpApplication::getInstance();
 	ApplicationProperties& props = app->getProperties();

@@ -49,13 +49,8 @@ MainContentComponent::MainContentComponent()
 , lastDrumSelection(-1)
 , resizeCursor(false)
 {
-    openGLContext.setRenderer (this);
-    openGLContext.setComponentPaintingEnabled (true);
-    openGLContext.attachTo (*this);
-    openGLContext.setSwapInterval(1);
     setSize (1200, 750);
     MotionDispatcher::zLimit = -100;
-    Drums::instance().playbackState.addListener(this);
     setWantsKeyboardFocus(true);
 
 	tempoSlider.setRange(30.0, 300.0, 0.1);
@@ -66,9 +61,26 @@ MainContentComponent::MainContentComponent()
 	ApplicationProperties& props = app->getProperties();
 	float tempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
 	tempoSlider.setValue(tempo);
-	tempoSlider.addListener(&Drums::instance());
-	Drums::instance().registerTempoSlider(&tempoSlider);
     tempoSlider.setVisible(false);
+    
+    File special = File::getSpecialLocation(File::currentApplicationFile);
+#if JUCE_WINDOWS
+	File resourcesFile = special.getChildFile("../");
+#elif JUCE_MAC
+	File resourcesFile = special.getChildFile("Contents/Resources");
+#endif
+    File bgImageFile = resourcesFile.getChildFile("splash_bg.png");
+    File splashTitleImageFile = resourcesFile.getChildFile("splash_title.png");
+    
+    if (bgImageFile.exists())
+        splashBgImage = ImageFileFormat::loadFrom(bgImageFile);
+    else
+        Logger::outputDebugString("ERROR: splash_bg.png not found!");
+    
+    if (splashTitleImageFile.exists())
+        splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
+    else
+        Logger::outputDebugString("ERROR: splash_title.png not found!");
 }
 
 MainContentComponent::~MainContentComponent()
@@ -94,11 +106,33 @@ MainContentComponent::~MainContentComponent()
 
 void MainContentComponent::paint (Graphics& g)
 {
-    g.fillAll (Colour (0x00000ff));
+    static bool firstTime = true;
+    if (Environment::instance().ready)
+        return;
 
+    splashImage = Image(Image::ARGB, getWidth(), getHeight(), true);
+    Graphics offscreen(splashImage);
+    g.fillAll (Colour (0x00000ff));
     g.setFont (Font (16.0f));
     g.setColour (Colours::black);
-    //g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+    g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+    if (splashBgImage.isValid())
+        offscreen.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
+    if (splashTitleImage.isValid()) {
+        float aspectRatio = splashTitleImage.getHeight() / (float)splashTitleImage.getWidth();
+        int w = getWidth() / 2.f;
+        int h = w * aspectRatio;
+        int x = getWidth() / 2.f - w / 2.f;
+        int y = getHeight() / 2.f - h / 2.f;
+        offscreen.drawImage(splashTitleImage, x, y, w, h, 0, 0, splashTitleImage.getWidth(), splashTitleImage.getHeight());
+    }
+    g.drawImage(splashImage, 0, 0, getWidth(), getHeight(), 0, 0, splashImage.getWidth(), splashImage.getHeight());
+    
+    if (firstTime) {
+        Logger::outputDebugString("painted once, sending InitGLMessage");
+        postMessage(new InitGLMessage);
+    }
+    firstTime = false;
 }
 
 void MainContentComponent::resized()
@@ -119,8 +153,6 @@ void MainContentComponent::resized()
     Environment::instance().screenH = h;
     
     sizeChanged = true;
-    
-    Environment::instance().ready = true;
 }
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
@@ -137,6 +169,12 @@ void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    Logger::outputDebugString("newOpenGLContextCreated()");
+    
+    Drums::instance().playbackState.addListener(this);
+    Drums::instance().registerTempoSlider(&tempoSlider);
+    tempoSlider.addListener(&Drums::instance());
+
 #ifdef _WIN32
 	glewInit();		// Not sure if this is in the right place, but it seems to work for now.
 #endif // _WIN32
@@ -292,6 +330,8 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
+    
+    Environment::instance().ready = true;
 }
 
 void MainContentComponent::populatePatternSelector()
@@ -1169,6 +1209,16 @@ void MainContentComponent::handleMessage(const juce::Message &m)
     if (patternAddedMessage)
     {
         needsPatternListUpdate = true;
+    }
+    
+    InitGLMessage* initGLMessage = dynamic_cast<InitGLMessage*>(inMsg);
+    if (initGLMessage)
+    {
+        Logger::outputDebugString("Got InitGLMessage");
+        openGLContext.setRenderer (this);
+        openGLContext.setComponentPaintingEnabled (true);
+        openGLContext.attachTo (*this);
+        openGLContext.setSwapInterval(1);
     }
 }
 

@@ -100,6 +100,8 @@ private:
         kTimerRightHandTap
     };
     
+    class InitGLMessage : public Message {};
+    
     OpenGLContext openGLContext;
     TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
@@ -132,6 +134,10 @@ private:
     float newCursorW;
     float newCursorH;
     bool resizeCursor;
+    
+    Image splashBgImage;
+    Image splashTitleImage;
+    Image splashImage;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
