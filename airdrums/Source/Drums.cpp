@@ -69,6 +69,7 @@ void Drums::NoteOn(int note, float velocity)
         MidiMessage m = MidiMessage::noteOn(1, note, velocity);
         m.setTimeStamp(quantizedPosition);
 		jassert(pattern.get() != nullptr);
+		jassert(pattern->GetModifiable());
 		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
         i.setNextSamplePosition(quantizedPosition);
@@ -103,7 +104,10 @@ void Drums::AllNotesOff(void)
 void Drums::clear()
 {
     midiBufferLock.enter();
+	PatternManager& mgr = PatternManager::GetInstance();
+	/*PatternManager::Status status =*/ mgr.MakePatternModifiable();
 	jassert(pattern.get() != nullptr);
+	jassert(pattern->GetModifiable());
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     recordBuffer.clear();
 	pattern->SetDirty(true);
@@ -113,7 +117,10 @@ void Drums::clear()
 void Drums::clearTrack(int note)
 {
     midiBufferLock.enter();
+	PatternManager& mgr = PatternManager::GetInstance();
+	/*PatternManager::Status status =*/ mgr.MakePatternModifiable();
 	jassert(pattern.get() != nullptr);
+	jassert(pattern->GetModifiable());
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     MidiBuffer::Iterator i(recordBuffer);
     int samplePos = 0;
@@ -134,6 +141,7 @@ void Drums::replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos)
 {
     midiBufferLock.enter();
 	jassert(pattern.get() != nullptr);
+	jassert(pattern->GetModifiable());
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     MidiBuffer::Iterator i(recordBuffer);
     int samplePos = 0;
@@ -334,6 +342,11 @@ void Drums::TransportState::doExport()
 
 void Drums::TransportState::record(bool state)
 {
+	if (state)
+	{
+		PatternManager& mgr = PatternManager::GetInstance();
+		/*PatternManager::Status status =*/ mgr.MakePatternModifiable();
+	}
     recording = state;
     if (recording && !playing)
         playing = true;
@@ -405,6 +418,11 @@ void Drums::setTempo(float tempo)
 		case kPatternTempo :
 			if (pattern.get() != nullptr)
 			{
+				if (pattern->GetTempo() != tempo)
+				{
+					PatternManager& mgr = PatternManager::GetInstance();
+					/*PatternManager::Status status =*/ mgr.MakePatternModifiable();
+				}
 				pattern->SetTempo(tempo);
 				break;
 			}

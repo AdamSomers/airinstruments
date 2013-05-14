@@ -41,17 +41,18 @@ public:
 	void	SetName(String& name);
 	void	SetUuid(Uuid uuid);
 
-	bool	GetModifiable(void);
+	bool	GetModifiable(void) const;
 	void	SetModifiable(bool modifiable);
-	bool	GetDirty(void);
+	bool	GetDirty(void) const;
 	void	SetDirty(bool dirty);
-	bool	GetHasValidName(void);
+	bool	GetHasValidName(void) const;
 
 	Status	LoadFromXml(XmlElement* element);
 	Status	SaveToXml(XmlElement* element);
 
 protected:
 	DrumItem();
+	DrumItem(const DrumItem& source);	// Copy construct a modifiable item from the source, new Uuid is generated, name is empty
 
 private:
 	String	mName;

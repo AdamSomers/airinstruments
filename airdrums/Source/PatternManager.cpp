@@ -139,3 +139,18 @@ PatternManager::Status PatternManager::CreateNewPattern(void)
 
 	return kNoError;
 }
+
+
+PatternManager::Status PatternManager::MakePatternModifiable(void)
+{
+	Drums& drums = Drums::instance();
+	SharedPtr<DrumPattern> pattern = drums.getPattern();
+	jassert(pattern.get() != nullptr);
+	if (pattern->GetModifiable())
+		return kNoError;
+
+	SharedPtr<DrumPattern> newPattern(new DrumPattern(*pattern.get()));
+	drums.setPattern(newPattern);
+
+	return kNoError;
+}

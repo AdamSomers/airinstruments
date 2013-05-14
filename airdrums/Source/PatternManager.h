@@ -26,7 +26,8 @@ public:
 	Status	SavePatternAs(AirHarpApplication::MainWindow* mainWindow);
 	Status	LoadPattern(AirHarpApplication::MainWindow* mainWindow);
 	Status	UsePatternTempo(bool usePatternTempo);
-	Status	CreateNewPattern(void);		// Creates a new, modifiable, unnamed, empty pattern and sets it as the current pattern in the Drums object
+	Status	CreateNewPattern(void);			// Creates a new, modifiable, unnamed, empty pattern and sets it as the current pattern in the Drums object
+	Status	MakePatternModifiable(void);	// If necessary, makes a modifiable copy of the current pattern and sets it as the current pattern in the Drums object
 
 private:
 	friend class ItemManager<PatternManager, DrumPattern>;

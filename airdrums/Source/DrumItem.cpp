@@ -19,6 +19,14 @@ DrumItem::DrumItem() :
 }
 
 
+DrumItem::DrumItem(const DrumItem& source) :
+	mModifiable(true)
+	, mDirty(source.GetDirty())
+	, mHasValidName(false)
+{
+}
+
+
 DrumItem::~DrumItem()
 {
 }
@@ -52,7 +60,7 @@ void DrumItem::SetUuid(Uuid uuid)
 }
 
 
-bool DrumItem::GetModifiable(void)
+bool DrumItem::GetModifiable(void) const
 {
 	return mModifiable;
 }
@@ -64,7 +72,7 @@ void DrumItem::SetModifiable(bool modifiable)
 }
 
 
-bool DrumItem::GetDirty(void)
+bool DrumItem::GetDirty(void) const
 {
 	return mDirty;
 }
@@ -76,7 +84,7 @@ void DrumItem::SetDirty(bool dirty)
 }
 
 
-bool DrumItem::GetHasValidName(void)
+bool DrumItem::GetHasValidName(void) const
 {
 	return mHasValidName;
 }

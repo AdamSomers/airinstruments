@@ -26,6 +26,18 @@ DrumPattern::DrumPattern() :
 }
 
 
+DrumPattern::DrumPattern(const DrumPattern& source) :
+	DrumItem(source)
+	, mMidiBuffer(new MidiBuffer)
+	, mTempo(source.GetTempo())
+	, mConformTempo(source.GetConformTempo())
+	, mSampleRate(source.GetSampleRate())
+	, mDrumKit(source.GetDrumKit())
+{
+	*mMidiBuffer.get() = source.GetMidiBuffer();
+}
+
+
 DrumPattern::~DrumPattern()
 {
 }
@@ -147,21 +159,27 @@ DrumPattern::Status DrumPattern::SaveToXml(String fileName, File& directory)
 }
 
 
-MidiBuffer& DrumPattern::GetMidiBuffer(void)
-{	// If caller modifies the pattern, SetDirty(true) must be called
+MidiBuffer& DrumPattern::GetMidiBuffer(void) const
+{	// If caller modifies the pattern's MIDI data, SetDirty(true) must be called
 	return *mMidiBuffer.get();
 }
 
 
-SharedPtr<DrumKit> DrumPattern::GetDrumKit(void)
+SharedPtr<DrumKit> DrumPattern::GetDrumKit(void) const
 {
 	return mDrumKit;
 }
 
 
-float DrumPattern::GetTempo(void)
+float DrumPattern::GetTempo(void) const
 {
 	return mTempo;
+}
+
+
+float DrumPattern::GetConformTempo(void) const
+{
+	return mConformTempo;
 }
 
 
@@ -190,7 +208,7 @@ void DrumPattern::SetSampleRate(double rate)
 }
 
 
-double DrumPattern::GetSampleRate(void)
+double DrumPattern::GetSampleRate(void) const
 {
 	return mSampleRate;
 }
