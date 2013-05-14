@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="Trance" image="" uuid="8679f5f0e883fb4d3336fbab1ba5a7f3">
+    <sample note="0" category="BassDrum" image="" file="techno2 rend kick.aiff" />
+    <sample note="1" category="Snare" image="" file="techno2 rend snare.aiff" />
+    <sample note="2" category="Shaker" image="" file="techno2 rend shaker 1.aiff" />
+    <sample note="3" category="Shaker" image="" file="techno2 rend shaker 2.aiff" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="techno2 rend closed hat.aiff" />
+    <sample note="5" category="OpenHiHat" image="" file="techno2 rend open hat.aiff" />
+
+    <sample note="6" category="LowTom" image="" file="techno2 rend lotom.aiff" />
+    <sample note="7" category="HiTom" image="" file="techno2 rend hightom.aiff" />
+
+    <sample note="8" category="LowTom" image="" file="techno2 rend tabla 1.aiff"  />
+    <sample note="9" category="HiTom" image="" file="techno2 rend tabla2.aiff"/>
+
+    <sample note="10" category="Clap" image="" file="techno2 rend clap.aiff" />
+    <sample note="11" category="Crash" image="" file="techno2 rend crash.aiff" />
+    <sample note="12" category="FX" image="" file="techno2 rend noise swoosh.aiff" />
+
+    <sample note="13" category="Bass" image="" file="techno2 rend bass.aiff" />
+    <sample note="14" category="Pad" image="" file="techno2 rend chord1.aiff" />
+    <sample note="15" category="Pad" image="" file="techno2 rend chord2.aiff" />
+</kit>

@@ -34,7 +34,7 @@ MainContentComponent::MainContentComponent()
 , prevMouseY(0.f)
 , prevMouseX(0.f)
 , sizeChanged(false)
-, drumSelector(NULL)
+, drumSelector(NULL) 
 , trigViewBank(NULL)
 , kitSelector(NULL)
 , patternSelector(NULL)
@@ -897,6 +897,8 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", name);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", uuidString);
         Drums::instance().setDrumKit(selectedKit);
+        for (PlayArea* pad : playAreas)
+            pad->setSelectedMidiNote(pad->getSelectedMidiNote());
     }
     else if (selector == patternSelector) {
         int selection = patternSelector->getSelection();
@@ -919,6 +921,8 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
             kitSelector->setSelection(drumKitIndex);
             AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", kit->GetName());
             AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", kit->GetUuid().toString());
+            for (PlayArea* pad : playAreas)
+                pad->setSelectedMidiNote(pad->getSelectedMidiNote());
         }
         else
         {

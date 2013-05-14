@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="DrumNBass 1" image="" uuid="1878d8efc1a21823438c1b4dc3f19749">
+    <sample note="0" category="BassDrum" image="" file="DnB kit rend kick.aiff" />
+	<sample note="1" category="Snare" image="" file="DnB kit rend snare1.aiff" />
+	<sample note="2" category="Snare" image="" file="DnB kit rend snare2.aiff" />
+	<sample note="3" category="Shaker" image="" file="DnB kit rend shaker.aiff" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="DnB kit rend closed hat.aiff" />
+	<sample note="5" category="OpenHiHat" image="" file="DnB kit rend open hat.aiff" />
+	<sample note="6" category="FX" image="" file="DnB kit rend reverse crash.aiff" />
+
+	<sample note="7" category="HiTom" image="" file="DnB kit rend hitom.aiff" />
+	<sample note="8" category="LowTom" image="" file="DnB kit rend lowtom.aiff" />
+	<sample note="9" category="Bass" image="" file="DnB kit rend bassdrop.aiff" />
+
+	<sample note="10" category="Crash" image="" file="DnB kit rend gong.aiff" />
+	<sample note="11" category="Ride" image="" file="DnB kit rend ride.aiff" />
+
+    <sample note="12" category="Pad" image="" file="DnB kit rend chord1.aiff" />
+	<sample note="13" category="Bass" image="" file="DnB kit rend bass1.aiff" />
+	<sample note="14" category="Bass" image="" file="DnB kit rend bass2.aiff" />
+    <sample note="15" category="Bass" image="" file="DnB kit rend bass3.aiff" />
+</kit>

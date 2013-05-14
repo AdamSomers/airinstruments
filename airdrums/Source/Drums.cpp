@@ -17,7 +17,7 @@ Drums::Drums() :
 	ApplicationProperties& props = app->getProperties();
 	globalTempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
 
-	if (props.getUserSettings()->getBoolValue("tempoSource", kGlobalTempo) != kGlobalTempo)
+	if (props.getUserSettings()->getBoolValue("tempoSource", kPatternTempo) != kGlobalTempo)
 		tempoSource = kPatternTempo;
 	else
 		tempoSource = kGlobalTempo;
