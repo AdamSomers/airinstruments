@@ -441,7 +441,7 @@ void Drums::setTempoSource(TempoSource source)
 			break;
 	}
 
-	float tempo = getTempo();
+	//float tempo = getTempo();
 	//setTempoSlider(tempo);
 
 	AirHarpApplication* app = AirHarpApplication::getInstance();

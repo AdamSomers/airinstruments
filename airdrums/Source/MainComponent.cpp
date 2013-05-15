@@ -122,16 +122,16 @@ void MainContentComponent::paint (Graphics& g)
         offscreen.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
     if (splashTitleImage.isValid()) {
         float aspectRatio = splashTitleImage.getHeight() / (float)splashTitleImage.getWidth();
-        int w = getWidth() / 2.f;
-        int h = w * aspectRatio;
-        int x = getWidth() / 2.f - w / 2.f;
-        int y = getHeight() / 2.f - h / 2.f;
-        offscreen.drawImage(splashTitleImage, x, y, w, h, 0, 0, splashTitleImage.getWidth(), splashTitleImage.getHeight());
+        float w = getWidth() / 2.f;
+        float h = w * aspectRatio;
+        int x = (int)(getWidth() / 2.f - w / 2.f);
+        int y = (int)(getHeight() / 2.f - h / 2.f);
+        offscreen.drawImage(splashTitleImage, x, y, (int)w, (int)h, 0, 0, splashTitleImage.getWidth(), splashTitleImage.getHeight());
         offscreen.setColour (Colour (0xffffffff));
         Font f = Font(Environment::instance().getDefaultFont(), 12, Font::plain);
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
-        offscreen.drawText("LOADING", x, y + h + 20, w, 12, Justification::centred, false);
+        offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
     }
     g.drawImage(splashImage, 0, 0, getWidth(), getHeight(), 0, 0, splashImage.getWidth(), splashImage.getHeight());
     
