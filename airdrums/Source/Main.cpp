@@ -97,11 +97,6 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 			AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
 		}
 	}
-
-//    mainWindow->getContentComponent()->grabKeyboardFocus();
-#if JUCE_MAC
-    postMessage(new GrabFocusMessage);
-#endif
 }
 
 void AirHarpApplication::shutdown()
@@ -258,19 +253,8 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 	return true;
 }
 
-void AirHarpApplication::handleMessage(const juce::Message &m)
+void AirHarpApplication::handleMessage(const juce::Message&)
 {
-    Message* inMsg = const_cast<Message*>(&m);
-
-#if defined(JUCE_MAC) && !defined(JUCE_DEBUG)
-    GrabFocusMessage* grabFocusMessage = dynamic_cast<GrabFocusMessage*>(inMsg);
-    if (grabFocusMessage)
-    {
-        mainWindow->getContentComponent()->grabKeyboardFocus();
-        if(!mainWindow->getContentComponent()->hasKeyboardFocus(false))
-            postMessage(inMsg);
-    }
-#endif
 }
 
 //==============================================================================

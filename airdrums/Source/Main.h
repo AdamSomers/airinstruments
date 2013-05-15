@@ -65,8 +65,6 @@ public:
     };
 
     class PatternAddedMessage : public Message {};
-    
-    class GrabFocusMessage : public Message {};
 
 private:
 	bool perform (const InvocationInfo &info);
