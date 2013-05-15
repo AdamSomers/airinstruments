@@ -292,6 +292,8 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
+
+    grabKeyboardFocus();
 }
 
 void MainContentComponent::populatePatternSelector()
