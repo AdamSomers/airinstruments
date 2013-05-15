@@ -25,6 +25,7 @@
 #define NUM_PADS 16
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
+#define SPLASH_FADE 1500
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -40,6 +41,7 @@ MainContentComponent::MainContentComponent()
 , patternSelector(NULL)
 , tempoControl(NULL)
 , buttonBar(NULL)
+, splashView(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
@@ -125,6 +127,11 @@ void MainContentComponent::paint (Graphics& g)
         int x = getWidth() / 2.f - w / 2.f;
         int y = getHeight() / 2.f - h / 2.f;
         offscreen.drawImage(splashTitleImage, x, y, w, h, 0, 0, splashTitleImage.getWidth(), splashTitleImage.getHeight());
+        offscreen.setColour (Colour (0xffffffff));
+        Font f = Font(Environment::instance().getDefaultFont(), 12, Font::plain);
+        f.setExtraKerningFactor(1.5);
+        offscreen.setFont(f);
+        offscreen.drawText("LOADING", x, y + h + 20, w, 12, Justification::centred, false);
     }
     g.drawImage(splashImage, 0, 0, getWidth(), getHeight(), 0, 0, splashImage.getWidth(), splashImage.getHeight());
     
@@ -315,6 +322,11 @@ void MainContentComponent::newOpenGLContextCreated()
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
+    
+    splashView = new View2d;
+    splashView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
+    splashView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
+    splashView->setVisible(false, SPLASH_FADE);
 
     MotionDispatcher::instance().addListener(*this);
     
@@ -421,7 +433,7 @@ void MainContentComponent::renderOpenGL()
         const int drumSelectorHeight = 100;
         const int tempoControlWidth = 260;
         const int tempoControlHeight = 36;
-        
+
         if (tutorial)
             tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - 500 / 2),
                                      (GLfloat) (Environment::instance().screenH / 2 - 225 / 2),
@@ -670,6 +682,9 @@ void MainContentComponent::renderOpenGL()
 
     for (HUDView* v : views)
         v->draw();
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    splashView->draw();
     
     MotionDispatcher::instance().cursor->draw();
     

@@ -117,6 +117,8 @@ private:
     std::vector<HUDView*> views;
 	Slider tempoSlider;
 
+    View2d* splashView;
+    
     typedef std::map<int, StrikeDetector> StrikeDetectorMap;
     StrikeDetectorMap strikeDetectors;
     
@@ -138,6 +140,7 @@ private:
     Image splashBgImage;
     Image splashTitleImage;
     Image splashImage;
+    Time lastRender;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
