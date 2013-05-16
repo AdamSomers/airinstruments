@@ -306,7 +306,8 @@ void MainContentComponent::newOpenGLContextCreated()
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     tutorial->addActionListener(this);
-    startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
+    tutorial->setVisible(false, 0);
+    startTimer(kTimerShowTutorial, 500);
 
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
@@ -1197,13 +1198,9 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable& /*p*/)
 void MainContentComponent::timerCallback(int timerId)
 {
     switch (timerId) {
-        case kTimerCheckIdle:
-            if (checkIdle())
-                ;
-            else {
-                stopTimer(kTimerCheckIdle);
-                startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
-            }
+        case kTimerShowTutorial:
+            tutorial->setVisible(true, 2000);
+            stopTimer(kTimerShowTutorial);
             break;
         case kTimerLeftHandTap:
             stopTimer(kTimerLeftHandTap);

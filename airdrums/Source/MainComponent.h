@@ -95,7 +95,7 @@ private:
 
     enum TimerIds
     {
-        kTimerCheckIdle = 0,
+        kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap
     };

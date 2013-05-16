@@ -118,7 +118,7 @@ void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
     for (int i = 0; i < (int)slides.size(); ++i)
     {
         if (i != slideIndex)
-            slides.at(i)->setVisible(false);
+            slides.at(i)->setVisible(false, 0);
     }
     if (slideIndex == 0)
         prevButton.setVisible(false, 0);
