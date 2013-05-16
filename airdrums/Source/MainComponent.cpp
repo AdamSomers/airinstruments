@@ -301,13 +301,6 @@ void MainContentComponent::newOpenGLContextCreated()
     Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
     kitSelector->setSelection(selectedKitIndex);
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
-    
-    tutorial = new TutorialSlide;
-    tutorial->loadTextures();
-    tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
-    tutorial->addActionListener(this);
-    tutorial->setVisible(false, 0);
-    startTimer(kTimerShowTutorial, 500);
 
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
@@ -319,11 +312,22 @@ void MainContentComponent::newOpenGLContextCreated()
     GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
     buttonBar->setDefaultColor(transparent);
     views.push_back(buttonBar);
-
+    
+    bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
+    
     for (HUDView* v : views) {
         v->loadTextures();
-        v->setVisible(false);
+        if (showTutorial)
+            v->setVisible(false);
     }
+    
+    tutorial = new TutorialSlide;
+    tutorial->loadTextures();
+    tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    tutorial->addActionListener(this);
+    tutorial->setVisible(false, 0);
+    if (showTutorial)
+        startTimer(kTimerShowTutorial, 500);
 
     int w = getWidth();
     int h = getHeight();
@@ -333,6 +337,8 @@ void MainContentComponent::newOpenGLContextCreated()
     splashBgView = new View2d;
     splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
+    if (!showTutorial)
+        splashBgView->setVisible(false, SPLASH_FADE);
     splashTitleView = new View2d;
     splashTitleView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
@@ -845,6 +851,7 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     bool ret = false;
     if (kp.getTextCharacter() == 'h')
     {
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
         tutorial->setVisible(true);
         splashBgView->setVisible(true);
         for (HUDView* v : views)
@@ -1342,5 +1349,9 @@ void MainContentComponent::actionListenerCallback(const String& message)
         splashBgView->setVisible(false, 1000);
         for (HUDView* v : views)
             v->setVisible(true);
+    }
+    else if (message == "disableTutorial")
+    {
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", false);
     }
 }

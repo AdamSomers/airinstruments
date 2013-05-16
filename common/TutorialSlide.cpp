@@ -19,7 +19,10 @@ TutorialSlide::TutorialSlide()
     skipButton.addListener(this);
     nextButton.setText(StringArray("next"), StringArray("next"));
     prevButton.setText(StringArray("back"), StringArray("back"));
-    skipButton.setText(StringArray("skip"), StringArray("skip"));
+    StringArray skipText("Dont");
+    skipText.add("Show");
+    skipText.add("Again");
+    skipButton.setText(skipText, skipText);
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
     prevButton.setVisible(false);
@@ -45,7 +48,7 @@ void TutorialSlide::setBounds(const HUDRect &b)
     buttonHeight /= 2.f;
     buttonWidth /= 2.f;
     skipButton.setBounds(HUDRect(nextButton.getBounds().x + nextButton.getBounds().w / 2.f - buttonWidth / 2.f,
-                                 nextButton.getBounds().y - buttonHeight - 10,
+                                 nextButton.getBounds().y - buttonHeight - 30,
                                  buttonWidth,
                                  buttonHeight));
     for (SharedPtr<SlideContents> slide : slides)
@@ -135,8 +138,10 @@ void TutorialSlide::buttonStateChanged(HUDButton* b)
         setSlideIndex(getSlideIndex() + 1);
     else if (b == &prevButton)
         setSlideIndex(jmax(0, getSlideIndex() - 1));
-    else if (b == &skipButton)
+    else if (b == &skipButton) {
         setSlideIndex(slides.size());
+        sendActionMessage("disableTutorial");
+    }
 }
 
 void TutorialSlide::setSlideIndex(int newSlideIndex)
