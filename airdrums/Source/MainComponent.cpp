@@ -129,7 +129,7 @@ void MainContentComponent::paint (Graphics& g)
         int y = (int)(getHeight() / 2.f - h / 2.f);
         offscreen.drawImage(splashTitleImage, x, y, (int)w, (int)h, 0, 0, splashTitleImage.getWidth(), splashTitleImage.getHeight());
         offscreen.setColour (Colour (0xffffffff));
-        Font f = Font(Environment::instance().getDefaultFont(), 12, Font::plain);
+        Font f = Font(Environment::instance().getDefaultFont(), 16, Font::plain);
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
