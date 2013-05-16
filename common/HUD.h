@@ -37,6 +37,7 @@ public:
     virtual void draw();
     virtual void setup();
     virtual void loadTextures();
+    virtual void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
     
     void addChild(HUDView* child);
     void removeChild(HUDView* child);

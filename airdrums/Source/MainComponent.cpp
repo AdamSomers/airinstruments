@@ -41,7 +41,8 @@ MainContentComponent::MainContentComponent()
 , patternSelector(NULL)
 , tempoControl(NULL)
 , buttonBar(NULL)
-, splashView(NULL)
+, splashBgView(NULL)
+, splashTitleView(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
@@ -101,6 +102,8 @@ MainContentComponent::~MainContentComponent()
     delete patternSelector;
     delete tempoControl;
     delete buttonBar;
+    delete splashBgView;
+    delete splashTitleView;
     
     for (PlayArea* pad : playAreas)
         delete pad;
@@ -118,8 +121,6 @@ void MainContentComponent::paint (Graphics& g)
     g.setFont (Font (16.0f));
     g.setColour (Colours::black);
     g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
-    if (splashBgImage.isValid())
-        offscreen.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
     if (splashTitleImage.isValid()) {
         float aspectRatio = splashTitleImage.getHeight() / (float)splashTitleImage.getWidth();
         float w = getWidth() / 2.f;
@@ -133,6 +134,8 @@ void MainContentComponent::paint (Graphics& g)
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
     }
+    if (splashBgImage.isValid())
+        g.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
     g.drawImage(splashImage, 0, 0, getWidth(), getHeight(), 0, 0, splashImage.getWidth(), splashImage.getHeight());
     
     if (firstTime) {
@@ -300,8 +303,8 @@ void MainContentComponent::newOpenGLContextCreated()
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
     
     tutorial = new TutorialSlide;
-    views.push_back(tutorial);
-//    tutorial->begin();
+    tutorial->loadTextures();
+    tutorial->addActionListener(this);
     startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
 
     tempoControl = new TempoControl;
@@ -315,18 +318,23 @@ void MainContentComponent::newOpenGLContextCreated()
     buttonBar->setDefaultColor(transparent);
     views.push_back(buttonBar);
 
-    for (HUDView* v : views)
+    for (HUDView* v : views) {
         v->loadTextures();
-    
+        v->setVisible(false);
+    }
+
     int w = getWidth();
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
     
-    splashView = new View2d;
-    splashView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
-    splashView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
-    splashView->setVisible(false, SPLASH_FADE);
+    splashBgView = new View2d;
+    splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
+    splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
+    splashTitleView = new View2d;
+    splashTitleView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
+    splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
+    splashTitleView->setVisible(false, SPLASH_FADE);
 
     MotionDispatcher::instance().addListener(*this);
     
@@ -433,12 +441,14 @@ void MainContentComponent::renderOpenGL()
         const int drumSelectorHeight = 100;
         const int tempoControlWidth = 260;
         const int tempoControlHeight = 36;
+        const float tutorialWidth = 800.f;
+        const float tutorialHeight = 500.f;
 
         if (tutorial)
-            tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - 500 / 2),
-                                     (GLfloat) (Environment::instance().screenH / 2 - 225 / 2),
-                                     500.0f,
-                                     225.0f));
+            tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - tutorialWidth / 2),
+                                     (GLfloat) (Environment::instance().screenH / 2 - tutorialHeight / 2),
+                                     tutorialWidth,
+                                     tutorialHeight));
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,
@@ -683,9 +693,13 @@ void MainContentComponent::renderOpenGL()
     for (HUDView* v : views)
         v->draw();
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    splashView->draw();
+    splashBgView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    splashBgView->draw();
+    splashTitleView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    splashTitleView->draw();
     
+    tutorial->draw();
+
     MotionDispatcher::instance().cursor->draw();
     
     glEnable(GL_DEPTH_TEST);
@@ -789,6 +803,8 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     for (PlayArea* pad : playAreas)
         if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
             Drums::instance().NoteOn(pad->getSelectedMidiNote(), 1.f);
+    
+    tutorial->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
@@ -825,7 +841,10 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     bool ret = false;
     if (kp.getTextCharacter() == 'h')
     {
-        tutorial->begin();
+        tutorial->setVisible(true);
+        splashBgView->setVisible(true);
+        for (HUDView* v : views)
+            v->setVisible(false);
         ret = true;
     }
     else if (kp.getTextCharacter() == 'm') {
@@ -1064,8 +1083,6 @@ void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
             {
                 Leap::SwipeGesture swipe(g);
                 if (swipe.direction().x > 0 &&  swipe.state() == Leap::Gesture::STATE_START) {
-                    if (tutorial->getSlideIndex() == 3)
-                        tutorial->next();
                     if (showPatternSelector) {
                         patternSelector->setEnabled(false);
                         showPatternSelector = false;
@@ -1116,15 +1133,6 @@ void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
                 
                 int64 timeDiff = Time::currentTimeMillis() - lastCircleStartTime;
                 
-                if (!tutorial->isDone() && isClockwise && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
-                    tutorial->end();
-                    break;
-                }
-                else if (!tutorial->isDone() && circle.state() == Leap::Gesture::STATE_STOP && timeDiff < 500) {
-                    tutorial->back();
-                    break;
-                }
-                
                 //if (!isClockwise)
                 //    printf("Circle CCW - id %d - progress %f\n", circle.id(), circle.progress());
                 //else
@@ -1164,9 +1172,6 @@ void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
 void MainContentComponent::handleTapGesture(const Leap::Pointable& /*p*/)
 {
 #if 0
-    if (!tutorial->isDone() && tutorial->getSlideIndex() != 3)
-        tutorial->next();
-    
     if (p.tipPosition().x < 0)
     {
         if (!isTimerRunning(kTimerLeftHandTap)) {
@@ -1191,7 +1196,7 @@ void MainContentComponent::timerCallback(int timerId)
     switch (timerId) {
         case kTimerCheckIdle:
             if (checkIdle())
-                ;//tutorial->begin();
+                ;
             else {
                 stopTimer(kTimerCheckIdle);
                 startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
@@ -1332,5 +1337,11 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         for (PlayArea* pad : playAreas)
             pad->enableClearButton(false);
+    }
+    else if (message == "tutorialDone")
+    {
+        splashBgView->setVisible(false, 1000);
+        for (HUDView* v : views)
+            v->setVisible(true);
     }
 }

@@ -117,8 +117,9 @@ private:
     std::vector<HUDView*> views;
 	Slider tempoSlider;
 
-    View2d* splashView;
-    
+    View2d* splashBgView;
+    View2d* splashTitleView;
+
     typedef std::map<int, StrikeDetector> StrikeDetectorMap;
     StrikeDetectorMap strikeDetectors;
     
