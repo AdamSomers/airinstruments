@@ -304,6 +304,7 @@ void MainContentComponent::newOpenGLContextCreated()
     
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
+    tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     tutorial->addActionListener(this);
     startTimer(kTimerCheckIdle, TUTORIAL_TIMEOUT);
 
@@ -350,7 +351,9 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
-    
+
+    openGLContext.setSwapInterval(1);
+
     Environment::instance().ready = true;
 }
 
@@ -1238,7 +1241,6 @@ void MainContentComponent::handleMessage(const juce::Message &m)
         openGLContext.setRenderer (this);
         openGLContext.setComponentPaintingEnabled (true);
         openGLContext.attachTo (*this);
-        openGLContext.setSwapInterval(1);
     }
 }
 

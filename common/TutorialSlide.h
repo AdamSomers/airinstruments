@@ -34,6 +34,8 @@ public:
     const int getSlideIndex() const { return slideIndex; }
     void setSlideIndex(int newSlideIndex);
     
+    void setButtonRingTexture(TextureDescription texture);
+
 private:
     TextHUDButton nextButton;
     TextHUDButton prevButton;

@@ -7,7 +7,6 @@
 
 #include "TutorialSlide.h"
 #include "GfxTools.h"
-#include "SkinManager.h"
 
 TutorialSlide::TutorialSlide()
 : slideIndex(0)
@@ -21,9 +20,6 @@ TutorialSlide::TutorialSlide()
     nextButton.setText(StringArray("next"), StringArray("next"));
     prevButton.setText(StringArray("back"), StringArray("back"));
     skipButton.setText(StringArray("skip"), StringArray("skip"));
-    nextButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
-    prevButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
-    skipButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
     prevButton.setVisible(false);
@@ -119,7 +115,7 @@ void TutorialSlide::loadTextures()
 void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
 {
     HUDView::setVisible(shouldBeVisible, fadeTimeMs);
-    for (int i = 0; i < slides.size(); ++i)
+    for (int i = 0; i < (int)slides.size(); ++i)
     {
         if (i != slideIndex)
             slides.at(i)->setVisible(false);
@@ -127,7 +123,7 @@ void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
     if (slideIndex == 0)
         prevButton.setVisible(false, 0);
 
-    if (slideIndex >= slides.size() - 1)
+    if (slideIndex >= (int)slides.size() - 1)
         nextButton.setText(StringArray("done"), StringArray("done"));
     else
         nextButton.setText(StringArray("next"), StringArray("next"));
@@ -145,7 +141,7 @@ void TutorialSlide::buttonStateChanged(HUDButton* b)
 
 void TutorialSlide::setSlideIndex(int newSlideIndex)
 {
-    if (newSlideIndex == slides.size()) {
+    if (newSlideIndex == (int)slides.size()) {
         setVisible(false, 1000);
         slideIndex = 0;
         sendActionMessage("tutorialDone");
@@ -155,7 +151,7 @@ void TutorialSlide::setSlideIndex(int newSlideIndex)
         slideIndex = newSlideIndex;
         slides.at(slideIndex)->setVisible(true);
         
-        if (slideIndex == slides.size() - 1)
+        if (slideIndex == (int)slides.size() - 1)
             nextButton.setText(StringArray("done"), StringArray("done"));
         else
             nextButton.setText(StringArray("next"), StringArray("next"));
@@ -166,6 +162,13 @@ void TutorialSlide::setSlideIndex(int newSlideIndex)
             prevButton.setVisible(false);
     }
     
+}
+
+void TutorialSlide::setButtonRingTexture(TextureDescription texture)
+{
+    nextButton.setRingTexture(texture);
+    prevButton.setRingTexture(texture);
+    skipButton.setRingTexture(texture);
 }
 
 TutorialSlide::SlideContents::SlideContents()
