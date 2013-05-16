@@ -111,17 +111,17 @@ void WheelSelector::updateBounds()
     float buttonWidth = 75.f;
     float buttonHeight = 75.f;
     float buttonOffset = 20.f;
-    float x = leftHanded ? tempBounds.w + buttonWidth / 2.f : -buttonWidth - buttonWidth / 2.f;
+    float x = leftHanded ? tempBounds.w + 10 : -buttonWidth - 10;
     displayToggleButton.setBounds(HUDRect(x,
                                           tempBounds.y + tempBounds.h / 2.f - buttonHeight / 2.f,
                                           buttonWidth,
                                           buttonHeight));
-    upButton.setBounds(HUDRect(leftHanded ? x - 50 : x + 50,
+    upButton.setBounds(HUDRect(leftHanded ? x - 25 : x + 25,
                                buttonOffset + displayToggleButton.getBounds().y + displayToggleButton.getBounds().h,
                                buttonWidth,
                                buttonHeight));
     
-    downButton.setBounds(HUDRect(leftHanded ? x - 50 : x + 50,
+    downButton.setBounds(HUDRect(leftHanded ? x - 25 : x + 25,
                                -buttonOffset + displayToggleButton.getBounds().y - + displayToggleButton.getBounds().h,
                                buttonWidth,
                                buttonHeight));
@@ -267,6 +267,16 @@ void WheelSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     {
         trackedFinger = NULL;
         startTimer(kTimerIdle, 2000);
+    }
+}
+
+void WheelSelector::setVisible(bool shouldBeVisible, int fadeTimeMs)
+{
+    HUDView::setVisible(shouldBeVisible, fadeTimeMs);
+    if (shouldBeVisible && !enabled)
+    {
+        upButton.setVisible(false, 0);
+        downButton.setVisible(false, 0);
     }
 }
 

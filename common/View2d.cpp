@@ -16,6 +16,9 @@ View2d::View2d()
 , opacity(1.f)
 , fadeTime(0)
 , needsSetup(false)
+, defaultBlendModeSrc(GL_ONE)
+, defaultBlendModeDst(GL_ONE_MINUS_SRC_ALPHA)
+, multiplyAlpha(false)
 {
     defaultColor[0] = 1.f;
     defaultColor[1] = 1.f;
@@ -31,6 +34,11 @@ View2d::~View2d()
 
 void View2d::draw()
 {
+    GLint blendSrc;
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+    GLint blendDst;
+    glGetIntegerv(GL_BLEND_DST, &blendDst);
+    glBlendFunc(defaultBlendModeSrc, defaultBlendModeDst);
     if (needsSetup) {
         setup();
         needsSetup = false;
@@ -53,16 +61,24 @@ void View2d::draw()
 
     if (0 != defaultTexture.textureId)
     {
-        GLfloat color[4] = { defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3] * opacity };
-        
+        float alphaMult = 1.f;
+        if (multiplyAlpha)
+            alphaMult = opacity;
+
+        GLfloat color[4] = { defaultColor[0] * alphaMult, defaultColor[1] * alphaMult, defaultColor[2] * alphaMult, defaultColor[3] * opacity };
+
         glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
         defaultBatch.Draw();
     }
     else
     {
-        GLfloat color[4] = { defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3] * opacity };
-        
+        float alphaMult = 1.f;
+        if (multiplyAlpha)
+            alphaMult = opacity;
+
+        GLfloat color[4] = { defaultColor[0] * alphaMult, defaultColor[1] * alphaMult, defaultColor[2] * alphaMult, defaultColor[3] * opacity };
+
         GLint polygonMode[2];
         glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
         if (!defaultColorSet)
@@ -72,6 +88,7 @@ void View2d::draw()
         defaultBatch.Draw();
         glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
     }
+    glBlendFunc(blendSrc,blendDst);
 }
 
 void View2d::setup()
@@ -144,4 +161,10 @@ void View2d::setVisible(bool shouldBeVisible, int fadeTimeMs /* = 500 */)
     isVisible = shouldBeVisible;
     lastVisibilityChange = Time::getCurrentTime();
     fadeTime = fadeTimeMs;
+}
+
+void View2d::setDefaultBlendMode(GLint inSrc, GLint inDst)
+{
+    defaultBlendModeSrc = inSrc;
+    defaultBlendModeDst = inDst;
 }

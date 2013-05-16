@@ -64,7 +64,9 @@ public:
     void setDefaultTexture(TextureDescription texture);
     const TextureDescription& getDefaultTexture() const { return defaultTexture; }
     void setDefaultColor(GLfloat* color);
-    void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
+    virtual void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
+    void setDefaultBlendMode(GLint inSrc, GLint inDst);
+    void setMultiplyAlpha(bool shouldMultiplyAlpha) { multiplyAlpha = shouldMultiplyAlpha; }
     
 protected:
     HUDRect bounds;
@@ -80,6 +82,9 @@ private:
     TextureDescription defaultTexture;
     GLfloat defaultColor[4];
     bool defaultColorSet;
+    GLint defaultBlendModeSrc;
+    GLint defaultBlendModeDst;
+    bool multiplyAlpha;
 };
 
 #endif /* defined(__AirBeats__View2d__) */

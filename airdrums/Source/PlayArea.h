@@ -17,6 +17,7 @@ public:
     void setup();
     void draw();
     void loadTextures();
+    void setVisible(bool shouldBeVisible, int fadeTimeMs);
     
     void tap(int midiNote);
     
