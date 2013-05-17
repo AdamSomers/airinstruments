@@ -28,6 +28,8 @@ Usage:
 
 - You can export your pattern to an audio file from the file menu.
 
+- If you dismiss the tutorial with the "Don't show again" button, you can bring it back with the 'h' key on your keyboard.
+
 ==================
 v0.4 - 5/17/2013
 
