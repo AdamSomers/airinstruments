@@ -1,12 +1,14 @@
 AirBeats - Release Notes
 
-Note that all kits have the same placeholder sounds, except HipHop which has different placeholder sounds, and Analog Dub which is has a rough draft of the final soundset for that kit.  Also note most of the buttons have temporary graphics.
+Note that the HipHop kits are still in progress.  The one in this build is temporary.  All other kits are nearly final.
 
 Please send all comments to adam@handwavy.co.  Thanks!
 
 Usage:
 
-- "Air drum" in left or right half of the Leap's field of view to play the L or R sound.
+- "Air drum" in over the Leap's field of view to play one of up to six zones.
+
+- There are four "strike zone" layouts: 2x1, 3x1, 2x2, 3x2.  Use keys 1-4 on your keyboard to switch layouts.
 
 - The application detectects rapid downward movement of your hands.  You can play in a variety of ways: open hands, finger extended, closed fist (imaginary drumstick), or using tools.
 
@@ -23,6 +25,32 @@ Usage:
 - An audio settings dialog is available in the Options menu, in case you need to use a different audio device.
 
 - Patterns can be saved from the file menu.
+
+- You can export your pattern to an audio file from the file menu.
+
+==================
+v0.4 - 5/17/2013
+
+Completed features:
+
+- New instrument icon set
+- Multiple strike zone layouts
+- Color-code icons to pads
+- New hover+drag drum assignment method
+- New clear track method
+- Optimized graphics for Intel HD cards (fixes MacBook Air issues)
+- Splash screen
+- Tutorial mode on app launch
+- Integrated professionally designed drumkits
+
+Currently in development:
+
+- Timeline visualization
+- Linear lists instead of 'wheels'
+- Relocate transport controls to center
+- More minimal look for tempo control
+- "New Pattern" function
+- Management of user vs. factory patterns
 
 ==================
 v0.3 - 4/26/2013
