@@ -2,6 +2,7 @@
 #include "Drums.h"
 #include "MotionServer.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 DrumsToolbar::DrumsToolbar()
 {
@@ -98,6 +99,10 @@ void DrumsToolbar::buttonStateChanged(HUDButton* b)
     else if (b == &metronomeButton)
     {
         Drums::instance().getTransportState().metronome(b->getState());
+        AirHarpApplication* app = AirHarpApplication::getInstance();
+        ApplicationProperties& props = app->getProperties();
+        props.getUserSettings()->setValue("metronome", b->getState());
+
     }
     else if (b == &resetButton)
     {

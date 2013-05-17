@@ -6,7 +6,7 @@
 
 
 Drums::Drums() :
-    transportState(false,false,false,true),
+    transportState(false,false,false,false),
     sampleCounter(0),
     maxRecordSamples(0),
     numNotes(0),
@@ -21,6 +21,9 @@ Drums::Drums() :
 		tempoSource = kPatternTempo;
 	else
 		tempoSource = kGlobalTempo;
+    
+    bool metronome = props.getUserSettings()->getBoolValue("metronome", false);
+    transportState.metronome(metronome);
 
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
