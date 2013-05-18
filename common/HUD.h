@@ -37,6 +37,7 @@ public:
     virtual void draw();
     virtual void setup();
     virtual void loadTextures();
+    virtual void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
     
     void addChild(HUDView* child);
     void removeChild(HUDView* child);
@@ -85,10 +86,20 @@ public:
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }
-    void setTextures(GLuint on, GLuint off);
-    void setRingTexture(GLuint tex);
+    void setTextures(TextureDescription on, TextureDescription off);
+    void setRingTexture(TextureDescription tex);
     void loadTextures();
     void setTimeout(int newTimeout);
+    void setOnColor(GLfloat* color);
+    void setOffColor(GLfloat* color);
+    void setEnabled(bool shouldBeEnabled);
+    void setButtonType(int type) { buttonType = type; };
+    
+    enum Type
+    {
+        kToggle = 0,
+        kMomentary
+    };
     
     class Listener
     {
@@ -117,13 +128,15 @@ private:
     GLfloat hoverOnColor[4];
     int prevNumPointers;
     int buttonId;
-    GLuint onTextureID;
-    GLuint offTextureID;
+    TextureDescription onTextureDesc;
+    TextureDescription offTextureDesc;
     float fade;
     GLBatch circleBatch;
     Time lastTimerStartTime;
-    GLuint ringTextureID;
+    TextureDescription ringTextureDesc;
     int hoverTimeout;
+    bool enabled;
+    int buttonType;
 };
 
 #endif

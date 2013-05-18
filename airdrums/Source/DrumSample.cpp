@@ -13,7 +13,6 @@
 #include "DrumSample.h"
 
 DrumSample::DrumSample()
-: mTextureId(0)
 {
 }
 
@@ -41,26 +40,33 @@ DrumSample::Status DrumSample::LoadFromXml(XmlElement* element, File& directory)
             Logger::outputDebugString("Sample image " + imageFilename + " not found");
     }
 	String filename = element->getStringAttribute("file", "");
-	if (filename == "")
-		return kFilenameError;
-	File file = directory.getChildFile(filename);
-	if (!file.existsAsFile()) {
-        Logger::outputDebugString("Sample file " + file.getFileName() + " not found");
-		return kFileNotFoundError;
-    }
+	if (filename != "")
+	{	// This sample has only one implicit layer
+		SharedPtr<SampleLayer> layer(new SampleLayer());
+		SampleLayer::Status status = layer->LoadFromFile(note, filename, directory);
+		if (status != SampleLayer::kNoError)
+			return kLayerError;
+		mLayers.push_back(layer);
+	}
+	else
+	{	// This sample has one or more explicit layers
+		XmlElement* child = element->getChildByName("layer");
+		while (child != nullptr)
+		{
+			SharedPtr<SampleLayer> layer(new SampleLayer());
+			SampleLayer::Status status = layer->LoadFromXml(note, child, directory);
+			if (status != SampleLayer::kNoError)
+				return kLayerError;
+			mLayers.push_back(layer);
+			child = child->getNextElementWithTagName("layer");
+		}
+	}
 
-	FileInputStream* stream(new FileInputStream(file));
-    AiffAudioFormat aiffFormat;
-	ScopedPointer<AudioFormatReader> reader(aiffFormat.createReaderFor(stream, true));
-    BigInteger notes;
-    notes.setRange(note, 1, true);
-	SamplerSound* sound = new SamplerSound("", *reader, notes, note, 0.0, 0.1, 10.0);
-	if (sound->getAudioData() == nullptr)
-		return kFileLoadError;
+	if (mLayers.size() == 0)
+		return kNoLayersError;
 
 	mNoteNumber = note;
 	mCategory = category;
-	mSound = sound;
 
 	return kNoError;
 }
@@ -86,24 +92,28 @@ DrumSample::Status DrumSample::CreateFromMemory(const char* data, int size, int 
     }
 */
 
-	MemoryInputStream* stream(new MemoryInputStream(data, size, false));
-    AiffAudioFormat aiffFormat;
-	ScopedPointer<AudioFormatReader> reader(aiffFormat.createReaderFor(stream, true));
-    BigInteger notes;
-    notes.setRange(note, 1, true);
-	SamplerSound* sound = new SamplerSound("", *reader, notes, note, 0.0, 0.1, 10.0);
+	SharedPtr<SampleLayer> layer(new SampleLayer());
+	SampleLayer::Status status = layer->CreateFromMemory(data, size, note);
+	if (status != SampleLayer::kNoError)
+		return kLayerError;
+	mLayers.push_back(layer);
 
 	mNoteNumber = note;
 	mCategory = category;
-	mSound = sound;
 
 	return kNoError;
 }
 
 
-SynthesiserSound::Ptr DrumSample::GetSound(void)
+SynthesiserSound::Ptr DrumSample::GetSound(int layer)
 {
-	return mSound;
+	if (layer >= (int) mLayers.size())
+	{
+		jassertfalse;
+		return SynthesiserSound::Ptr();
+	}
+
+	return mLayers.at(layer)->GetSound();
 }
 
 
@@ -118,10 +128,11 @@ String& DrumSample::GetCategory(void)
 	return mCategory;
 }
 
-GLuint DrumSample::GetTexture(bool on) const
+
+TextureDescription DrumSample::GetTexture(bool on) const
 {
     if (mImage.isValid())
-        return mTextureId;
+        return mTextureDesc;
     else {
         String imageName = mCategory;
         if (on)
@@ -130,12 +141,17 @@ GLuint DrumSample::GetTexture(bool on) const
     }
 }
 
+
 void DrumSample::LoadTextures()
 {
     if (mImage.isValid())
     {
-        glGenTextures(1, &mTextureId);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
-        GfxTools::loadTextureFromJuceImage(mImage);
+        mTextureDesc = GfxTools::loadTextureFromJuceImage(mImage);
     }
+}
+
+
+int DrumSample::GetLayerCount(void)
+{
+	return mLayers.size();
 }

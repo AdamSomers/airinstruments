@@ -16,6 +16,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "GfxTools.h"
+
 struct HUDRect {
     HUDRect() : x(0.f), y(0.f), w(0.f), h(0.f) {}
     
@@ -59,9 +61,12 @@ public:
     virtual void setBounds(const HUDRect& b);
     const HUDRect& getBounds() const { return bounds; }
     virtual void loadTextures();
-    void setDefaultTexture(GLuint texture);
+    void setDefaultTexture(TextureDescription texture);
+    const TextureDescription& getDefaultTexture() const { return defaultTexture; }
     void setDefaultColor(GLfloat* color);
-    void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
+    virtual void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
+    void setDefaultBlendMode(GLint inSrc, GLint inDst);
+    void setMultiplyAlpha(bool shouldMultiplyAlpha) { multiplyAlpha = shouldMultiplyAlpha; }
     
 protected:
     HUDRect bounds;
@@ -71,11 +76,15 @@ protected:
     float opacity;
     Time lastVisibilityChange;
     int fadeTime;
+    bool needsSetup;
 
 private:
-    GLuint defaultTexture;
+    TextureDescription defaultTexture;
     GLfloat defaultColor[4];
     bool defaultColorSet;
+    GLint defaultBlendModeSrc;
+    GLint defaultBlendModeDst;
+    bool multiplyAlpha;
 };
 
 #endif /* defined(__AirBeats__View2d__) */

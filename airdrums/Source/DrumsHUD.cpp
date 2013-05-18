@@ -2,6 +2,7 @@
 #include "Drums.h"
 #include "MotionServer.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 DrumsToolbar::DrumsToolbar()
 {
@@ -19,9 +20,6 @@ DrumsToolbar::DrumsToolbar()
 
     Drums::instance().addTransportListener(this);
     Drums::instance().getTransportState().sendChangeMessage();
-
-    GLfloat color[] = { .67f, .67f, .67f, 1.f };
-    setDefaultColor(color);
 }
 
 DrumsToolbar::~DrumsToolbar()
@@ -101,6 +99,10 @@ void DrumsToolbar::buttonStateChanged(HUDButton* b)
     else if (b == &metronomeButton)
     {
         Drums::instance().getTransportState().metronome(b->getState());
+        AirHarpApplication* app = AirHarpApplication::getInstance();
+        ApplicationProperties& props = app->getProperties();
+        props.getUserSettings()->setValue("metronome", b->getState());
+
     }
     else if (b == &resetButton)
     {
@@ -140,9 +142,9 @@ void StatusBar::setup()
 
 void StatusBar::layoutControls()
 {
-    float w = 20;
-    float h = 20;
-    float x = bounds.w - 35;
+    float w = 10;
+    float h = 10;
+    float x = bounds.w - 15;
     float y = bounds.h / 2.f - h / 2.f;
     HUDRect r(x, y, w, h);
     indicator.setBounds(r);

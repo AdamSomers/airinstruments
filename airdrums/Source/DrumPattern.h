@@ -11,12 +11,12 @@
 #ifndef __DRUMPATTERN_H_2DCA5AE9__
 #define __DRUMPATTERN_H_2DCA5AE9__
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
+#include "KitManager.h"
 #include "Types.h"
 #include "DrumItem.h"
 #include "DrumKit.h"
 
+#include "../JuceLibraryCode/JuceHeader.h"
 
 class DrumPattern : public DrumItem
 {

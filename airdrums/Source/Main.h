@@ -8,6 +8,7 @@
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
+                          , public MessageListener
                           //, public AudioIODeviceCallback
 {
 public:
@@ -19,6 +20,9 @@ public:
     bool moreThanOneInstanceAllowed()			{ return true; }
 	ApplicationProperties& getProperties()		{ return properties; }
 	static AirHarpApplication* getInstance()	{ return dynamic_cast<AirHarpApplication*> (JUCEApplication::getInstance()); }
+
+	void StartAudioDevice(void);
+	void StopAudioDevice(void);
 
     //==============================================================================
     void initialise (const String& /*commandLine*/);
@@ -35,6 +39,8 @@ public:
     
     void anotherInstanceStarted (const String& /*commandLine*/);
 
+    void handleMessage(const juce::Message &m);
+    
     //==============================================================================
     /*
         This class implements the desktop window that contains an instance of
@@ -58,10 +64,12 @@ public:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 
-    class PatternAddedMessage : public Message
-    {
-    };
+    class PatternAddedMessage : public Message {};
     
+    class GrabFocusMessage : public Message {};
+    
+    class InitializeMessage : public Message {};
+
 private:
 	bool perform (const InvocationInfo &info);
 

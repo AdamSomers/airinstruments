@@ -12,7 +12,6 @@
 #include "Drums.h"
 #include "DrumKit.h"
 #include "PatternManager.h"
-#include "KitManager.h"
 
 
 DrumPattern::DrumPattern() :

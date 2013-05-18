@@ -11,15 +11,18 @@
 
 View2d::View2d()
 : didSetup(false)
-, defaultTexture(0)
 , defaultColorSet(false)
 , isVisible(true)
 , opacity(1.f)
 , fadeTime(0)
+, needsSetup(false)
+, defaultBlendModeSrc(GL_ONE)
+, defaultBlendModeDst(GL_ONE_MINUS_SRC_ALPHA)
+, multiplyAlpha(false)
 {
     defaultColor[0] = 1.f;
-    defaultColor[1] = .3f;
-    defaultColor[2] = .3f;
+    defaultColor[1] = 1.f;
+    defaultColor[2] = 1.f;
     defaultColor[3] = 1.f;
 }
 
@@ -31,6 +34,16 @@ View2d::~View2d()
 
 void View2d::draw()
 {
+    GLint blendSrc;
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+    GLint blendDst;
+    glGetIntegerv(GL_BLEND_DST, &blendDst);
+    glBlendFunc(defaultBlendModeSrc, defaultBlendModeDst);
+    if (needsSetup) {
+        setup();
+        needsSetup = false;
+    }
+
     if (isVisible && opacity < 1.f)
     {
         RelativeTime timeSinceLateVisibiltyChange = Time::getCurrentTime() - lastVisibilityChange;
@@ -46,18 +59,26 @@ void View2d::draw()
         if (opacity < 0.f) opacity = 0.f;
     }
 
-    if (0 != defaultTexture)
+    if (0 != defaultTexture.textureId)
     {
-        GLfloat color[4] = { 1.f, 1.f, 1.f, opacity };
-        
-        glBindTexture(GL_TEXTURE_2D, defaultTexture);
+        float alphaMult = 1.f;
+        if (multiplyAlpha)
+            alphaMult = opacity;
+
+        GLfloat color[4] = { defaultColor[0] * alphaMult, defaultColor[1] * alphaMult, defaultColor[2] * alphaMult, defaultColor[3] * opacity };
+
+        glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
         defaultBatch.Draw();
     }
     else
     {
-        GLfloat color[4] = { defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3] * opacity };
-        
+        float alphaMult = 1.f;
+        if (multiplyAlpha)
+            alphaMult = opacity;
+
+        GLfloat color[4] = { defaultColor[0] * alphaMult, defaultColor[1] * alphaMult, defaultColor[2] * alphaMult, defaultColor[3] * opacity };
+
         GLint polygonMode[2];
         glGetIntegerv(GL_POLYGON_MODE, &polygonMode[0]);
         if (!defaultColorSet)
@@ -67,6 +88,7 @@ void View2d::draw()
         defaultBatch.Draw();
         glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
     }
+    glBlendFunc(blendSrc,blendDst);
 }
 
 void View2d::setup()
@@ -86,10 +108,10 @@ void View2d::setup()
     };
     
     M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
+        defaultTexture.texX, defaultTexture.texY + defaultTexture.texH,
+        defaultTexture.texX + defaultTexture.texW, defaultTexture.texY + defaultTexture.texH,
+        defaultTexture.texX, defaultTexture.texY,
+        defaultTexture.texX + defaultTexture.texW, defaultTexture.texY
     };
     
     if (!didSetup)
@@ -119,9 +141,12 @@ void View2d::loadTextures()
     
 }
 
-void View2d::setDefaultTexture(GLuint texture)
+void View2d::setDefaultTexture(TextureDescription texture)
 {
-    defaultTexture = texture;
+    if (defaultTexture != texture) {
+        defaultTexture = texture;
+        needsSetup = true;
+    }
 }
 
 void View2d::setDefaultColor(GLfloat* color)
@@ -136,4 +161,10 @@ void View2d::setVisible(bool shouldBeVisible, int fadeTimeMs /* = 500 */)
     isVisible = shouldBeVisible;
     lastVisibilityChange = Time::getCurrentTime();
     fadeTime = fadeTimeMs;
+}
+
+void View2d::setDefaultBlendMode(GLint inSrc, GLint inDst)
+{
+    defaultBlendModeSrc = inSrc;
+    defaultBlendModeDst = inDst;
 }

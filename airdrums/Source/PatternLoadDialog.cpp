@@ -100,7 +100,7 @@ void PatternLoadDialog::PatternLoadListBoxModel::paintListBoxItem(int rowNumber,
 	{
 	    g.setColour(Colours::black);
 	}
-	Rectangle<int> itemRect(0, 0, width, height);
+	juce::Rectangle<int> itemRect(0, 0, width, height);
 	g.drawText(pattern->GetName(), itemRect, Justification::topLeft, false);
 }
 

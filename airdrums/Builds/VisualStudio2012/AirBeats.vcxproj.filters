@@ -373,6 +373,9 @@
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp">
       <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\AudioExporter.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -394,16 +397,25 @@
     <ClCompile Include="..\..\Source\DrumSample.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\DrumsHUD.cpp">
+    <ClCompile Include="..\..\Source\DrumSampler.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DrumSelector.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DrumsHUD.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ExportComponent.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ItemManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LayeredSamplerSound.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
@@ -428,6 +440,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PlayArea.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SampleLayer.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SkinManager.cpp">
@@ -1707,6 +1722,9 @@
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h">
       <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\AudioExporter.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
@@ -1728,16 +1746,25 @@
     <ClInclude Include="..\..\Source\DrumSample.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\DrumsHUD.h">
+    <ClInclude Include="..\..\Source\DrumSampler.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DrumSelector.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DrumsHUD.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ExportComponent.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ItemManager.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\KitManager.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LayeredSamplerSound.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Main.h">
@@ -1762,6 +1789,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PlayArea.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SampleLayer.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SkinManager.h">

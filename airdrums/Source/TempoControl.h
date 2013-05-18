@@ -64,7 +64,7 @@ public:
         HUDRect tempBounds;
         float xStep, yStep, wStep, hStep;
         
-        GLuint textureId;
+        TextureDescription textureDesc;
         float tempoValue;
         bool tempoValueChanged;
     };

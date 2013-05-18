@@ -1,5 +1,6 @@
 #include "GfxTools.h"
 #include "SkinManager.h"
+#include "Types.h"
 
 Skin::Skin(String skinName)
 : name(skinName)
@@ -11,9 +12,9 @@ const String& Skin::getName() const
     return name;
 }
 
-const GLuint Skin::getTexture(String name) const
+const TextureDescription Skin::getTexture(String name) const
 {
-    GLuint tex = 0;
+    TextureDescription tex;
     try {
         tex = textures.at(name);
     }
@@ -23,11 +24,11 @@ const GLuint Skin::getTexture(String name) const
     return tex;
 }
 
-void Skin::addTexture(String name, GLuint texture)
+void Skin::addTexture(String name, TextureDescription texture)
 {
     auto iter = textures.find(name);
     if (iter != textures.end())
-        Logger::outputDebugString("Warning: overwriting texture " + String(iter->second) + " for " + name + " with " + String(texture));
+        Logger::outputDebugString("Warning: overwriting texture " + String(iter->second.textureId) + " for " + name + " with " + String(texture.textureId));
     textures.insert(std::make_pair(name, texture));
 }
 
@@ -61,13 +62,26 @@ void SkinManager::loadResources()
         while (skinImagesIter.next())
         {
             File imageFile = skinImagesIter.getFile();
+            Image image = ImageFileFormat::loadFrom (imageFile);
+            TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(image);
             String imageName = imageFile.getFileNameWithoutExtension();
+            File atlasXml = imageFile.getParentDirectory().getChildFile(imageName + ".xml");
+            if (atlasXml.exists())
+            {
+                Logger::outputDebugString(imageFile.getFileName() + " is an atlas!");
+                
+                Array<TextureDescription> textures = GfxTools::loadTextureAtlas(atlasXml);
+                for (int i = 0; i < textures.size(); ++i)
+                {
+                    TextureDescription td = textures[i];
+                    s.addTexture(td.name, td);
+                }
+            }
+            else
+            {
+                s.addTexture(imageName, textureDesc);
+            }
             //Logger::outputDebugString("\t\t" + imageName);
-            GLuint textureId = 0;
-            glGenTextures(1, &textureId);
-            glBindTexture(GL_TEXTURE_2D, textureId);
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (imageFile));
-            s.addTexture(imageName, textureId);
         }
         skins.insert(std::make_pair(skinName, s));
     }

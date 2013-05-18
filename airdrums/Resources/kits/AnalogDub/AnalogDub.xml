@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="AnalogDub" image="" uuid="c1ce04e3b3f4c921005a9ae1639cc47c">
+    <sample note="0" category="BassDrum" image="" file="dub_0_bd_layer127_bip.aif" />
+	<sample note="1" category="Snare" image="" file="dub_1_snare_layer127_bip.aif" />
+	<sample note="2" category="Stick" image="" file="dub_3_stick_layer0_bip.aif" />
+	<sample note="3" category="Shaker" image="" file="dub_4_shaker_layer127_bip.aif" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="dub_5_chh_layer127_bip.aif" />
+	<sample note="5" category="PedalHiHat" image="" file="dub_6_ohh_layer127_bip.aif" />
+    
+	<sample note="6" category="LowPerc" image="" file="dub_8_lowperc_layer127_bip.aif" />
+	<sample note="7" category="MidPerc" image="" file="dub_9_midperc_layer127_bip.aif" />
+	<sample note="8" category="HiPerc" image="" file="dub_10_hiperc_layer127_bip.aif" />
+    
+	<sample note="9" category="Crash" image="" file="dub_16_crash2_layer127_bip.aif" />
+
+	<sample note="10" category="FX" image="" file="dub_13_fx_layer127_bip.aif" />
+	<sample note="11" category="Bass" image="" file="dub_14_bass_layer127_bip.aif" />
+
+    <sample note="12" category="FX" image="" file="dub_17_fx2_layer127_bip.aif" />
+	<sample note="13" category="FX" image="" file="dub_18_fx3_layer127_bip.aif" />
+	<sample note="14" category="Snare" image="" file="dub_18_snare2_layer127_bip.aif" />
+    <sample note="15" category="Snare" image="" file="dub_19_snare3_layer127_bip.aif" />
+</kit>

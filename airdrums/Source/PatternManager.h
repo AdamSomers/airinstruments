@@ -11,10 +11,10 @@
 #ifndef __PATTERNMANAGER_H_9CB8DC32__
 #define __PATTERNMANAGER_H_9CB8DC32__
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
-#include "ItemManager.h"
 #include "DrumPattern.h"
+#include "ItemManager.h"
+
+#include "../JuceLibraryCode/JuceHeader.h"
 
 
 class PatternManager : public ItemManager<PatternManager, DrumPattern>

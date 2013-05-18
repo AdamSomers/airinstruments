@@ -8,12 +8,15 @@
   ==============================================================================
 */
 
-#include "GfxTools.h"
 #include "DrumKit.h"
 
 DrumKit::DrumKit()
-: mTextureId(0)
 {
+	// Continue to use the hardcoded clave sound for the metronome for now
+	SharedPtr<DrumSample> sample(new DrumSample);
+	DrumSample::Status status = sample->CreateFromMemory(BinaryData::TMD_CHIL_CLV_aif, BinaryData::TMD_CHIL_CLV_aifSize, 16, "metronome");
+	if (status == DrumSample::kNoError)
+		mMetronome = sample;
 }
 
 
@@ -102,6 +105,12 @@ SharedPtr<DrumSample> DrumKit::GetSample(int index)
 }
 
 
+SharedPtr<DrumSample> DrumKit::GetMetronome(void)
+{
+	return mMetronome;
+}
+
+
 int DrumKit::GetSampleCount(void)
 {
 	return mSamples.size();
@@ -122,15 +131,18 @@ void DrumKit::LoadTextures()
     
     if (mImage.isValid())
     {
-        glGenTextures(1, &mTextureId);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
-        GfxTools::loadTextureFromJuceImage(mImage);
+        mTextureDesc = GfxTools::loadTextureFromJuceImage(mImage);
     }
 }
 
-GLuint DrumKit::GetTexture() const
+void DrumKit::SetTexture(TextureDescription texture)
 {
-    return mTextureId;
+    mTextureDesc = texture;
+}
+
+TextureDescription DrumKit::GetTexture() const
+{
+    return mTextureDesc;
 }
 
 const Image& DrumKit::GetImage() const

@@ -41,6 +41,9 @@ WheelSelector::WheelSelector(bool left /*= false*/)
     
     upButton.setVisible(false, 0);
     downButton.setVisible(false, 0);
+
+    upButton.setButtonType(HUDButton::kMomentary);
+    downButton.setButtonType(HUDButton::kMomentary);
 }
 
 WheelSelector::~WheelSelector()
@@ -67,13 +70,13 @@ void WheelSelector::setBounds(const HUDRect &b)
     {
         Icon* icon = icons.at(i);
         float aspectRatio = 1.0f;
-            const Image& image = icon->getImage();
-            if (image.isValid())
-                aspectRatio = image.getWidth() / (float)image.getHeight();
+        const TextureDescription& td = icon->getDefaultTexture();
+        if (td.imageH != 0)
+            aspectRatio = (float)td.imageW / (float)td.imageH;
         
-        float width = b.w/2.f;
-        float height = (float)(b.w/2) / aspectRatio;
-        icon->setBounds(HUDRect(0,
+        float height = b.h / 20.f;
+        float width = height * aspectRatio;
+        icon->setBounds(HUDRect(b.w / 2.f - width,
                              0,
                              width,
                              (GLfloat) (int) height));
@@ -108,17 +111,17 @@ void WheelSelector::updateBounds()
     float buttonWidth = 75.f;
     float buttonHeight = 75.f;
     float buttonOffset = 20.f;
-    float x = leftHanded ? tempBounds.w + buttonWidth / 2.f : -buttonWidth - buttonWidth / 2.f;
+    float x = leftHanded ? tempBounds.w + 10 : -buttonWidth - 10;
     displayToggleButton.setBounds(HUDRect(x,
                                           tempBounds.y + tempBounds.h / 2.f - buttonHeight / 2.f,
                                           buttonWidth,
                                           buttonHeight));
-    upButton.setBounds(HUDRect(leftHanded ? x - 50 : x + 50,
+    upButton.setBounds(HUDRect(leftHanded ? x - 25 : x + 25,
                                buttonOffset + displayToggleButton.getBounds().y + displayToggleButton.getBounds().h,
                                buttonWidth,
                                buttonHeight));
     
-    downButton.setBounds(HUDRect(leftHanded ? x - 50 : x + 50,
+    downButton.setBounds(HUDRect(leftHanded ? x - 25 : x + 25,
                                -buttonOffset + displayToggleButton.getBounds().y - + displayToggleButton.getBounds().h,
                                buttonWidth,
                                buttonHeight));
@@ -137,6 +140,8 @@ void WheelSelector::removeAllIcons()
 {
     for (Icon* i : icons)
     {
+        if (i->getDefaultTexture().textureId != 0)
+            glDeleteTextures(1, &(i->getDefaultTexture().textureId));
         removeChild(i);
         delete i;
     }
@@ -169,8 +174,10 @@ void WheelSelector::draw()
     fabsf(tempBounds.w - targetBounds.w) > 2 ||
     fabsf(tempBounds.h - targetBounds.h) > 2)
         updateBounds();
-    else if (tempBounds != targetBounds)
+    else if (tempBounds != targetBounds) {
         HUDView::setBounds(targetBounds);
+        tempBounds = targetBounds;
+    }
     
     HUDView::draw();
 }
@@ -260,6 +267,16 @@ void WheelSelector::fingerExited(float x, float /*y*/, FingerView* fv)
     {
         trackedFinger = NULL;
         startTimer(kTimerIdle, 2000);
+    }
+}
+
+void WheelSelector::setVisible(bool shouldBeVisible, int fadeTimeMs)
+{
+    HUDView::setVisible(shouldBeVisible, fadeTimeMs);
+    if (shouldBeVisible && !enabled)
+    {
+        upButton.setVisible(false, 0);
+        downButton.setVisible(false, 0);
     }
 }
 
@@ -391,8 +408,10 @@ void WheelSelector::Icon::draw()
         fabsf(tempBounds.w - targetBounds.w) > 2 ||
         fabsf(tempBounds.h - targetBounds.h) > 2)
         updateBounds();
-    else if (tempBounds != targetBounds)
+    else if (tempBounds != targetBounds) {
         HUDView::setBounds(targetBounds);
+        tempBounds = targetBounds;
+    }
     
     if (fabsf(rotationCoeff - targetRotationCoeff) > 10.f) {
         rotationCoeff += rotationInc;
@@ -471,14 +490,4 @@ void WheelSelector::Icon::updateBounds()
         tempBounds.h += hStep;
     
     HUDView::setBounds(tempBounds);
-}
-
-void WheelSelector::Icon::setImage(const Image& im)
-{
-    image = im;
-}
-
-const Image& WheelSelector::Icon::getImage() const
-{
-    return image;
 }

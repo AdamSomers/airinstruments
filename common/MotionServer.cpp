@@ -37,9 +37,10 @@ MotionDispatcher::MotionDispatcher()
 
 MotionDispatcher::~MotionDispatcher()
 {
+    removeAllListeners();
     fingerViewListeners.clear();
     handViewListeners.clear();
-    removeAllListeners();
+	cursorViewListeners.clear();
 }
 
 void MotionDispatcher::addListener(Leap::Listener& l)
@@ -87,6 +88,26 @@ void MotionDispatcher::resume()
             controller.addListener(*l);
         paused = false;
     }
+}
+
+void MotionDispatcher::stop()
+{
+    removeListener(*this);
+}
+
+void MotionDispatcher::addCursorListener(CursorView::Listener& listener)
+{
+	ScopedLock lock(listenerLock);
+    cursorViewListeners.push_back(&listener);
+}
+
+
+void MotionDispatcher::removeCursorListener(CursorView::Listener& listener)
+{
+	ScopedLock lock(listenerLock);
+    auto i = std::find(cursorViewListeners.begin(), cursorViewListeners.end(), &listener);
+    if (i != cursorViewListeners.end())
+        cursorViewListeners.erase(i);
 }
 
 void MotionDispatcher::onInit(const Leap::Controller& /*controller*/)
@@ -137,6 +158,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         
         cursor->setX(x);
         cursor->setY(y);
+		ScopedLock lock(listenerLock);
         for (CursorView::Listener* l : cursorViewListeners)
             l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
     }
@@ -506,7 +528,7 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
     
 }
 
-void MotionDispatcher::setCursorTexture(GLuint texture)
+void MotionDispatcher::setCursorTexture(TextureDescription texture)
 {
     if (cursor)
         cursor->setDefaultTexture(texture);

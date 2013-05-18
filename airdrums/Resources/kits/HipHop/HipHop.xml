@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kit name="HipHop" image="HipHop.png" uuid="615ba540a22211e29e960800200c9a66">
+<kit name="HipHop" image="" uuid="f0aa49b3ff35ba753f932c6b435bf848">
     <sample note="0" category="BassDrum" image="" file="DAT-HipHop Kit4-Kick2.aif" />
 	<sample note="1" category="Snare" image="" file="DAT-HipHop Kit4-Snr1.aif" />
 	<sample note="2" category="Clap" image="" file="DAT-HipHop Kit4-Clap.aif" />

@@ -2,26 +2,52 @@
 #define h_PlayArea
 
 #include "HUD.h"
+#include "TextButton.h"
 
 class PlayArea : public HUDView
+               , public HUDButton::Listener
+               , public ActionBroadcaster
 {
 public:
-    PlayArea();
+    PlayArea(int inId);
     ~PlayArea();
     
     // HUDView overrides
+    void setBounds(const HUDRect& r);
     void setup();
     void draw();
     void loadTextures();
+    void setVisible(bool shouldBeVisible, int fadeTimeMs);
     
     void tap(int midiNote);
     
     const int getSelectedMidiNote() const { return selectedMidiNote; }
     void setSelectedMidiNote(int note);
     
+    void setId(int newId) { id = newId; }
+    const int getId() const { return id; }
+    
+    void setColor(const Colour& color);
+    
+    void enableAssignButton(bool shouldBeEnabled);
+    void enableClearButton(bool shouldBeEnabled);
+    
+    // HUDButton::Listener override
+    void buttonStateChanged(HUDButton* b);
+    
 private:
-    float fade;
+    Time fadeStartTime;
     int selectedMidiNote;
+    int id;
+    
+    HUDView icon;
+    HUDRect iconBounds;
+    float iconRotation;
+    
+    HUDView text;
+    
+    TextHUDButton assignButton;
+    TextHUDButton clearButton;
     
     GLfloat offColor[4];
     GLfloat onColor[4];

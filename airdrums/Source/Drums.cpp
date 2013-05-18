@@ -6,7 +6,7 @@
 
 
 Drums::Drums() :
-    transportState(false,false,true),
+    transportState(false,false,false,false),
     sampleCounter(0),
     maxRecordSamples(0),
     numNotes(0),
@@ -17,10 +17,13 @@ Drums::Drums() :
 	ApplicationProperties& props = app->getProperties();
 	globalTempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
 
-	if (props.getUserSettings()->getBoolValue("tempoSource", kGlobalTempo) != kGlobalTempo)
+	if (props.getUserSettings()->getBoolValue("tempoSource", kPatternTempo) != kGlobalTempo)
 		tempoSource = kPatternTempo;
 	else
 		tempoSource = kGlobalTempo;
+    
+    bool metronome = props.getUserSettings()->getBoolValue("metronome", false);
+    transportState.metronome(metronome);
 
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
@@ -50,18 +53,21 @@ void Drums::NoteOn(int note, float velocity)
 {
     midiBufferLock.enter();
     if (transportState.recording && transportState.playing) {
-        float bps = getTempo() / 60.f;
-        float sixteenthsPerSecond = bps * 4;
-        int samplesPerSixteenth = (int) (sampleRate / sixteenthsPerSecond);
-        float sixteenthsIntoPattern = sampleCounter / (float)samplesPerSixteenth;
-        int quantizedPosition = (int)sixteenthsIntoPattern * samplesPerSixteenth;
-        float diff = sixteenthsIntoPattern - (int)sixteenthsIntoPattern;
+		// Quantize the note to the nearest 16th boundary
+		// Assumes pattern length is 2 bars of 4/4 time
+        float bps = getTempo() / 60.0f;
+        float sixteenthsPerSecond = bps * 4.0f;
+        float samplesPerSixteenth = (float) (sampleRate / sixteenthsPerSecond);
+        float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
+        long quantizedPosition = (long) sixteenthsIntoPattern;
+        float diff = sixteenthsIntoPattern - quantizedPosition;
         Logger::outputDebugString(String::formatted("%f\n", diff));
-        if (diff > 0.5) {
-            quantizedPosition += samplesPerSixteenth;
-            if (quantizedPosition > maxRecordSamples)
+        if (diff >= 0.5) {
+            quantizedPosition++;
+            if (quantizedPosition >= 32)
                 quantizedPosition = 0;
         }
+		quantizedPosition = (long) (quantizedPosition * samplesPerSixteenth);
         
         MidiMessage m = MidiMessage::noteOn(1, note, velocity);
         m.setTimeStamp(quantizedPosition);
@@ -74,6 +80,8 @@ void Drums::NoteOn(int note, float velocity)
         bool found = i.getNextEvent(existingMessage, position);
         if (!found || position != quantizedPosition || existingMessage.getNoteNumber() != note)
             recordBuffer.addEvent(m, quantizedPosition);
+        else /*if (found && position == quantizedPosition && existingMessage.getNoteNumber() == note)*/	// Redundant test
+            replaceNoteVelocity(m, quantizedPosition);
         
         if (diff < 0.5) {
             keyboardState.noteOn(1,note,velocity);
@@ -85,6 +93,11 @@ void Drums::NoteOn(int note, float velocity)
         playbackState.noteOn(1,note,velocity);
     }
     midiBufferLock.exit();
+}
+
+void Drums::AllNotesOff(void)
+{
+	synth.allNotesOff(0, false);
 }
 
 void Drums::clear()
@@ -109,6 +122,27 @@ void Drums::clearTrack(int note)
     {
         if (message.getNoteNumber() != note)
             newBuffer.addEvent(message, samplePos);
+    }
+    recordBuffer = newBuffer;
+    midiBufferLock.exit();
+}
+
+void Drums::replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos)
+{
+    midiBufferLock.enter();
+	jassert(pattern.get() != nullptr);
+	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
+    MidiBuffer::Iterator i(recordBuffer);
+    int samplePos = 0;
+    MidiMessage message;
+    MidiBuffer newBuffer;
+    while (i.getNextEvent(message, samplePos))
+    {
+        if (inMessage.getNoteNumber() == message.getNoteNumber() && samplePos == inSamplePos)
+        {
+            message.setVelocity(inMessage.getVelocity() / 127.f);
+        }
+        newBuffer.addEvent(message, samplePos);
     }
     recordBuffer = newBuffer;
     midiBufferLock.exit();
@@ -165,11 +199,17 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
     bufferToFill.clearActiveBufferRegion();
     
     MidiBuffer incomingMidi;
-    midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
+    if (!transportState.exporting)
+	    midiCollector.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
     
-    if (transportState.playing) {
-        playbackState.reset();
-        keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+    if (transportState.playing)
+	{
+	    if (!transportState.exporting)
+		{
+			playbackState.reset();
+			keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
+		}
+
 		jassert(pattern.get() != nullptr);
 		MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
         MidiBuffer::Iterator i(recordBuffer);
@@ -180,10 +220,11 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
         {
             //Logger::outputDebugString(String::formatted("%d\n", samplePos));
             incomingMidi.addEvent(message, samplePos - sampleCounter);
-            playbackState.noteOn(1, message.getNoteNumber(),1);
+		    if (!transportState.exporting)
+	            playbackState.noteOn(1, message.getNoteNumber(),1);
         }
         
-        if (transportState.metronomeOn) {
+        if (transportState.metronomeOn && !transportState.exporting) {
             MidiBuffer::Iterator metronomeIterator(metronomeBuffer);
             metronomeIterator.setNextSamplePosition(sampleCounter);
             while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
@@ -192,16 +233,17 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
                 incomingMidi.addEvent(message, 0);
             }
         }
-        
+
+		sampleCounter += bufferToFill.numSamples;
+		if (sampleCounter >= maxRecordSamples)
+			sampleCounter = 0;
     }
     else
+    if (!transportState.exporting)
         keyboardState.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
     
     synth.renderNextBlock (*bufferToFill.buffer, incomingMidi, 0, bufferToFill.numSamples);
     
-    sampleCounter += bufferToFill.numSamples;
-    if (sampleCounter > maxRecordSamples)
-        sampleCounter = 0;
     midiBufferLock.exit();
 }
 
@@ -221,18 +263,17 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 	for (int i = 0; i < count; ++i)
 	{
 		SharedPtr<DrumSample> sample = kit->GetSample(i);
-		synth.addSound(sample->GetSound());
+		for (int j = 0; j < sample->GetLayerCount(); ++j)
+		{
+			synth.addSound(sample->GetSound(j));
+		}
 	}
     
-	// Continue to use the hardcoded clave sound for the metronome for now
-	AiffAudioFormat aiffFormat;
-	ScopedPointer<AudioFormatReader> clv (aiffFormat.createReaderFor (new MemoryInputStream (BinaryData::TMD_CHIL_CLV_aif,
-																										BinaryData::TMD_CHIL_CLV_aifSize,
-																										false),
-																				true));
-	BigInteger notes;
-	notes.setRange (16, 1, true);
-	synth.addSound (new SamplerSound ("", *clv, notes, 16, 0.0, 0.1, 10.0));
+	SharedPtr<DrumSample> sample = kit->GetMetronome();
+	for (int j = 0; j < sample->GetLayerCount(); ++j)
+	{
+		synth.addSound(sample->GetSound(j));
+	}
 
     midiBufferLock.exit();
 }
@@ -247,8 +288,10 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 	resetToZero();
 
 	pattern = aPattern;
-	if (tempoSource == kPatternTempo)
-		setTempoSlider(pattern->GetTempo());
+	if (tempoSource == kPatternTempo) {
+        setTempo(pattern->GetTempo());
+		;//setTempoSlider(pattern->GetTempo());
+    }
 	else
 		AdjustMidiBuffers();	// Conform the buffers to the current global tempo and sample rate
 
@@ -256,9 +299,10 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 }
 
 
-Drums::TransportState::TransportState(bool record, bool play, bool metronome)
+Drums::TransportState::TransportState(bool record, bool play, bool exportState, bool metronome)
 : recording(record)
 , playing(play)
+, exporting(exportState)
 , metronomeOn(metronome)
 {
 }
@@ -266,14 +310,22 @@ Drums::TransportState::TransportState(bool record, bool play, bool metronome)
 void Drums::TransportState::play()
 {
     playing = true;
-    sendChangeMessage();
+	if (!exporting)
+	    sendChangeMessage();
 }
 
 void Drums::TransportState::pause()
 {
     playing = false;
     recording = false;
-    sendChangeMessage();
+	if (!exporting)
+	    sendChangeMessage();
+	exporting = false;
+}
+
+void Drums::TransportState::doExport()
+{
+	exporting = true;
 }
 
 void Drums::TransportState::record(bool state)
@@ -392,8 +444,8 @@ void Drums::setTempoSource(TempoSource source)
 			break;
 	}
 
-	float tempo = getTempo();
-	setTempoSlider(tempo);
+	//float tempo = getTempo();
+	//setTempoSlider(tempo);
 
 	AirHarpApplication* app = AirHarpApplication::getInstance();
 	ApplicationProperties& props = app->getProperties();
@@ -421,5 +473,5 @@ void Drums::registerTempoSlider(Slider* slider)
 void Drums::setTempoSlider(float tempo)
 {
 	jassert(tempoSlider != nullptr);
-	tempoSlider->setValue((double) tempo);
+	tempoSlider->setValue((double) tempo, dontSendNotification);
 }

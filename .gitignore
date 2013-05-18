@@ -1,3 +1,8 @@
+# Audio files
+*.aif
+*.aiff
+*.wav
+
 # Compiled Object files
 *.slo
 *.lo

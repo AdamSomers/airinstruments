@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pattern name="Dub Pattern" uuid="151fdf35988563395a1cbb5f05e3ce82" sampleRate="44100"
+         tempo="116">
+  <kit name="Dub" uuid="3b0001e1daf2b6f192ab7c11df12df8d"/>
+  <event position="0" data="90097f"/>
+  <event position="0" data="90047f"/>
+  <event position="5702" data="90044f"/>
+  <event position="22808" data="90017f"/>
+  <event position="22808" data="90043f"/>
+  <event position="22808" data="90045a"/>
+  <event position="34212" data="90000b"/>
+  <event position="39914" data="900f56"/>
+  <event position="45616" data="90053a"/>
+  <event position="45616" data="90042f"/>
+  <event position="45616" data="90045f"/>
+  <event position="57020" data="90013d"/>
+  <event position="68424" data="900451"/>
+  <event position="74126" data="900a63"/>
+  <event position="91232" data="900803"/>
+  <event position="91232" data="900e58"/>
+  <event position="91232" data="90043e"/>
+  <event position="96934" data="900819"/>
+  <event position="96934" data="90046b"/>
+  <event position="102636" data="90007f"/>
+  <event position="102636" data="90051c"/>
+  <event position="114040" data="90017f"/>
+  <event position="114040" data="900443"/>
+  <event position="114040" data="90047a"/>
+  <event position="114040" data="900442"/>
+  <event position="125444" data="900d30"/>
+  <event position="125444" data="900b20"/>
+  <event position="136848" data="90044b"/>
+  <event position="142550" data="90046c"/>
+  <event position="148252" data="900b08"/>
+  <event position="148252" data="90087f"/>
+  <event position="159656" data="900068"/>
+  <event position="159656" data="900452"/>
+  <event position="159656" data="90047f"/>
+  <event position="165358" data="90056d"/>
+  <event position="165358" data="900016"/>
+  <event position="176762" data="90000d"/>
+  <event position="176762" data="900403"/>
+  <event position="182464" data="90007f"/>
+  <event position="182464" data="900e59"/>
+  <event position="182464" data="900466"/>
+</pattern>
