@@ -452,8 +452,8 @@ void MainContentComponent::renderOpenGL()
         const int toolbarHeight = 180;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
-        const int tempoControlWidth = 260;
-        const int tempoControlHeight = 36;
+        const int tempoControlWidth = 115;
+        const int tempoControlHeight = 45;
         const float tutorialWidth = 800.f;
         const float tutorialHeight = 500.f;
 
