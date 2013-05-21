@@ -11,8 +11,12 @@
 #include <iostream>
 
 #include "HUD.h"
+#include "TextButton.h"
+#include "Types.h"
 
 class TutorialSlide : public HUDView
+                    , public HUDButton::Listener
+                    , public ActionBroadcaster
 {
 public:
     TutorialSlide();
@@ -20,24 +24,38 @@ public:
     
     // HUDView overrides
     void draw();
+    void setBounds(const HUDRect &b);
     void loadTextures();
+    void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
     
-    void next();
-    void back();
-    void end();
-    void begin();
-    bool isDone();
+    // HUDButton::Listener override
+    void buttonStateChanged(HUDButton* b);
     
     const int getSlideIndex() const { return slideIndex; }
+    void setSlideIndex(int newSlideIndex);
     
+    void setButtonRingTexture(TextureDescription texture);
+
 private:
-    Array<TextureDescription> textures;
+    TextHUDButton nextButton;
+    TextHUDButton prevButton;
+    TextHUDButton skipButton;
     
-    float fade;
-    float fadeTarget;
+    class SlideContents : public HUDView
+    {
+    public:
+        SlideContents();
+        void init();
+        void draw();
+        void setBounds(const HUDRect &b);
+        StringArray text;
+        std::vector<SharedPtr<HUDView> > textViews;
+        HUDView imageView;
+        bool boundsChanged;
+    };
+
     int slideIndex;
-    int nextSlide;
-    bool done;
+    std::vector<SharedPtr<SlideContents> > slides;
 };
 
 #endif // h_TutorialSlide

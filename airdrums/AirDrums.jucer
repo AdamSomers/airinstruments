@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.3"
-              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
+<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.4"
+              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirBeats">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
@@ -108,6 +108,9 @@
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
             file="Source/AudioSettingsDialog.h"/>
+      <FILE id="wGPexN" name="BeatCountView.cpp" compile="1" resource="0"
+            file="Source/BeatCountView.cpp"/>
+      <FILE id="HgnhIZ" name="BeatCountView.h" compile="0" resource="0" file="Source/BeatCountView.h"/>
       <FILE id="mXgtFu" name="ButtonBar.cpp" compile="1" resource="0" file="Source/ButtonBar.cpp"/>
       <FILE id="OlLNDr" name="ButtonBar.h" compile="0" resource="0" file="Source/ButtonBar.h"/>
       <FILE id="JSRMF6" name="DrumItem.cpp" compile="0" resource="0" file="Source/DrumItem.cpp"/>

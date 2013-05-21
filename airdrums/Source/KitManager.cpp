@@ -30,6 +30,8 @@ KitManager::~KitManager()
 
 KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*= true*/)
 {
+    Logger::outputDebugString("KitManager::BuildKitList()");
+
 	if (clear)
 	{
 		mItems.clear();
@@ -157,6 +159,7 @@ KitManager::Status KitManager::AddBuiltInKit(void)
 
 void KitManager::LoadTextures()
 {
+    Logger::outputDebugString("KitManager::LoadTextures()");
 	int count = GetItemCount();
     for (int i = 0; i < count; ++i)
     {

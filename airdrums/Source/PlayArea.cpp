@@ -114,7 +114,7 @@ void PlayArea::draw()
         icon.setBounds(HUDRect(iconBounds.x - wobble, iconBounds.y-wobble, iconBounds.w+wobble*2, iconBounds.h+wobble*2));
     }
     
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    icon.setDefaultBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
     Environment::instance().modelViewMatrix.PushMatrix();
     Environment::instance().modelViewMatrix.Translate(getBounds().x, getBounds().y, 0.0f);
@@ -174,6 +174,13 @@ void PlayArea::setSelectedMidiNote(int note)
 
 void PlayArea::loadTextures()
 {
+}
+
+void PlayArea::setVisible(bool shouldBeVisible, int fadeTimeMs)
+{
+    HUDView::setVisible(shouldBeVisible, fadeTimeMs);
+    assignButton.setVisible(false, 0);
+    clearButton.setVisible(false, 0);
 }
 
 void PlayArea::setColor(const Colour& color)

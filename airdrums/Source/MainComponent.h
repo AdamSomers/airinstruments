@@ -95,10 +95,12 @@ private:
 
     enum TimerIds
     {
-        kTimerCheckIdle = 0,
+        kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap
     };
+    
+    class InitGLMessage : public Message {};
     
     OpenGLContext openGLContext;
     TutorialSlide* tutorial;
@@ -114,6 +116,9 @@ private:
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;
+
+    View2d* splashBgView;
+    View2d* splashTitleView;
 
     typedef std::map<int, StrikeDetector> StrikeDetectorMap;
     StrikeDetectorMap strikeDetectors;
@@ -132,6 +137,11 @@ private:
     float newCursorW;
     float newCursorH;
     bool resizeCursor;
+    
+    Image splashBgImage;
+    Image splashTitleImage;
+    Image splashImage;
+    Time lastRender;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

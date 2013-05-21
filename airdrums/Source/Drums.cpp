@@ -6,7 +6,7 @@
 
 
 Drums::Drums() :
-    transportState(false,false,false,true),
+    transportState(false,false,false,false),
     sampleCounter(0),
     maxRecordSamples(0),
     numNotes(0),
@@ -21,6 +21,9 @@ Drums::Drums() :
 		tempoSource = kPatternTempo;
 	else
 		tempoSource = kGlobalTempo;
+    
+    bool metronome = props.getUserSettings()->getBoolValue("metronome", false);
+    transportState.metronome(metronome);
 
     for (int i = 0; i < 16; ++i)
         synth.addVoice (new SamplerVoice());
@@ -171,13 +174,17 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 void Drums::AdjustMidiBuffers(void)
 {
     midiBufferLock.enter();
+    
+    double position = sampleCounter / (double)maxRecordSamples;
 
     float bps = getTempo() / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
     float samples = (float) (sampleRate * seconds);
     maxRecordSamples = (long) samples;
-    
+
+    sampleCounter = (long)(maxRecordSamples * position);
+
     // Adjust the metronome buffer
     long metronomePos = 0;
     metronomeBuffer.clear();
@@ -296,7 +303,7 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 	pattern = aPattern;
 	if (tempoSource == kPatternTempo) {
         setTempo(pattern->GetTempo());
-		setTempoSlider(pattern->GetTempo());
+		;//setTempoSlider(pattern->GetTempo());
     }
 	else
 		AdjustMidiBuffers();	// Conform the buffers to the current global tempo and sample rate
@@ -383,7 +390,7 @@ void Drums::removeTransportListener(ChangeListener* listener)
 }
 
 
-float Drums::getTempo(void)
+float Drums::getTempo(void) const
 {
 	switch (tempoSource)
 	{
@@ -459,8 +466,8 @@ void Drums::setTempoSource(TempoSource source)
 			break;
 	}
 
-	float tempo = getTempo();
-	setTempoSlider(tempo);
+	//float tempo = getTempo();
+	//setTempoSlider(tempo);
 
 	AirHarpApplication* app = AirHarpApplication::getInstance();
 	ApplicationProperties& props = app->getProperties();
@@ -489,4 +496,13 @@ void Drums::setTempoSlider(float tempo)
 {
 	jassert(tempoSlider != nullptr);
 	tempoSlider->setValue((double) tempo, dontSendNotification);
+}
+
+int Drums::getCurrentStep() const
+{
+    float bps = getTempo() / 60.0f;
+    float sixteenthsPerSecond = bps * 4.0f;
+    float samplesPerSixteenth = (float) (sampleRate / sixteenthsPerSecond);
+    float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
+    return (int)sixteenthsIntoPattern;
 }

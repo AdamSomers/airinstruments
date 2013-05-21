@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
     <ClCompile Include="..\..\Source\AudioExporter.cpp"/>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
+    <ClCompile Include="..\..\Source\BeatCountView.cpp"/>
     <ClCompile Include="..\..\Source\ButtonBar.cpp"/>
     <ClCompile Include="..\..\Source\DrumItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -1298,6 +1299,7 @@
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
     <ClInclude Include="..\..\Source\AudioExporter.h"/>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
+    <ClInclude Include="..\..\Source\BeatCountView.h"/>
     <ClInclude Include="..\..\Source\ButtonBar.h"/>
     <ClInclude Include="..\..\Source\DrumItem.h"/>
     <ClInclude Include="..\..\Source\DrumKit.h"/>
@@ -1391,7 +1393,6 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format\juce_AudioPluginFormatManager.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.h"/>
-    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_DirectXPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTMidiEventList.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\juce_VSTPluginFormat.h"/>

@@ -10,10 +10,9 @@
 #define __AirBeats__TempoControl__
 
 #include "HUD.h"
-#include <deque>
+#include "Types.h"
 
 class TempoControl : public HUDView
-                   , public MultiTimer
                    , public HUDButton::Listener
 {
 public:
@@ -23,21 +22,6 @@ public:
     // HUDView overrides
     void draw();
     void setBounds(const HUDRect& b);
-    void fingerMotion(float x, float y, FingerView* fv);
-    void fingerEntered(float x, float y, FingerView* fv);
-    void fingerExited(float x, float y, FingerView* fv);
-    void cursorMoved(float x, float y);
-    void cursorEntered(float x, float y);
-    void cursorExited(float x, float y);
-    
-    // Juce::Timer override
-    void timerCallback(int timerId);
-
-    enum TimerId
-    {
-        kTimerSelectionDelay,
-        kTimerTrackedFingerMissing
-    };
 
     // HUDButton::Listener overrides
     void buttonStateChanged(HUDButton* b);
@@ -52,32 +36,17 @@ public:
         Icon();
         //~Icon();
         void draw();
-        void setBounds(const HUDRect& b);
-        
-        void setBoundsImmediately(const HUDRect& b);
-        
+
         void setTempo(float tempo);
         float getTempo() const { return tempoValue; }
-    private:
-        void updateBounds();
-        HUDRect targetBounds;
-        HUDRect tempBounds;
-        float xStep, yStep, wStep, hStep;
-        
+    private:        
         TextureDescription textureDesc;
         float tempoValue;
         bool tempoValueChanged;
     };
     
 private:
-    void layoutIcons();
-    std::deque<Icon*> icons;
-    bool needsLayout;
-    
-    float initialFingerX;
-    float initialFingerY;
-    FingerView* trackedFinger;
-    
+    SharedPtr<Icon> icon;    
     HUDButton leftButton;
     HUDButton rightButton;
 };

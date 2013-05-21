@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tutorial>
+    <slide image="tutorial_point.png">
+        <line text="Welcome to AirBeats."/>
+        <line text="Point with one finger to control the cursor."/>
+    </slide>
+    <slide image="tutorial_slap.png">
+        <line text="Strike the air over the leap to play the drums."/>
+        <line text="Try it now."/>
+    </slide>
+    <slide image="tutorial_strike.png">
+        <line text="You can strike the zones with open hands,"/>
+        <line text="extended fingers, fists, and pencils."/>
+    </slide>
+</Tutorial>

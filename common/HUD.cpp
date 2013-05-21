@@ -61,6 +61,16 @@ void HUDView::loadTextures()
     }
 }
 
+void HUDView::setVisible(bool shouldBeVisible, int fadeTimeMs /*= 500*/)
+{
+    View2d::setVisible(shouldBeVisible, fadeTimeMs);
+
+    for (HUDView* child : children)
+    {
+        child->setVisible(shouldBeVisible, fadeTimeMs);
+    }
+}
+
 void HUDView::mouseDown(float x, float y)
 {
     y = Environment::instance().screenH - y;

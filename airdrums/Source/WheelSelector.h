@@ -27,6 +27,7 @@ public:
     void fingerMotion(float x, float y, FingerView* fv);
     void fingerEntered(float x, float y, FingerView* fv);
     void fingerExited(float x, float y, FingerView* fv);
+    void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
     
 #if 0 // wheel does not respond directly to cursor anymore
     void cursorMoved(float x, float y);
