@@ -200,7 +200,7 @@ void TutorialSlide::SlideContents::init()
 
 void TutorialSlide::SlideContents::draw()
 {
-    jassert(text.size() == textViews.size());
+    jassert(text.size() == (int)textViews.size());
 
     if (boundsChanged && isVisible)
     {

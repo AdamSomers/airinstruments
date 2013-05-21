@@ -47,7 +47,6 @@ void DrumsToolbar::layoutControls()
 
     float w = 25;
     float h = 40;
-    const GLfloat tempoControlHeight = 45;
     const GLfloat tempoControlWidth = 115;
     const GLfloat recordButtonWith = 40;
     const GLfloat metronomeButtonWidth = 36;

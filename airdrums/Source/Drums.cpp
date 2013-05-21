@@ -174,7 +174,7 @@ void Drums::AdjustMidiBuffers(void)
     float samples = (float) (sampleRate * seconds);
     maxRecordSamples = (long) samples;
 
-    sampleCounter = maxRecordSamples * position;
+    sampleCounter = (long)(maxRecordSamples * position);
 
     // Adjust the metronome buffer
     long metronomePos = 0;
@@ -486,5 +486,5 @@ int Drums::getCurrentStep() const
     float sixteenthsPerSecond = bps * 4.0f;
     float samplesPerSixteenth = (float) (sampleRate / sixteenthsPerSecond);
     float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
-    return sixteenthsIntoPattern;
+    return (int)sixteenthsIntoPattern;
 }
