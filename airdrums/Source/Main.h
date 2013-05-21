@@ -68,6 +68,8 @@ public:
     
     class GrabFocusMessage : public Message {};
 
+	MainWindow* GetMainWindow()					{ return mainWindow; }
+
 private:
 	bool perform (const InvocationInfo &info);
 

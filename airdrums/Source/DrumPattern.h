@@ -18,9 +18,12 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class DrumPattern : public DrumItem
+
+class DrumPattern : public DrumItem<DrumPattern>
 {
 public:
+	using DrumItem<DrumPattern>::RevertToClean;
+
 	enum
 	{
 		kDefaultTempo = 118,
@@ -46,6 +49,10 @@ public:
 	void Conform(float tempo, double rate);	// Conform the pattern to the passed in (global) tempo and sample rate, also sets pattern sample rate
 	void SetSampleRate(double rate);		// Set the pattern's sample rate, and conform the midi buffer to it
 	double GetSampleRate(void) const;
+
+protected:
+	friend class DrumItem<DrumPattern>;
+	void	RevertToClean(const DrumPattern* clean);
 
 private:
 	void Conform(MidiBuffer& buffer, float tempo, double rate);

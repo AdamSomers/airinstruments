@@ -80,7 +80,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     
     PatternManager& pmgr = PatternManager::GetInstance();
 	/*PatternManager::Status bstatus =*/ pmgr.BuildPatternList();
-	/*PatternManager::Status cstatus =*/ pmgr.CreateNewPattern();
+	// /*PatternManager::Status cstatus =*/ pmgr.CreateNewPattern();	// No longer a need to start with an empty pattern, use the last used pattern from the prefs
 
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
 	String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName", "Default");
@@ -191,13 +191,13 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 		case MainMenu::kSavePatternAsCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
-			/*PatternManager::Status status =*/ mgr.SavePatternAs(mainWindow);
+			/*PatternManager::Status status =*/ mgr.SavePatternAs();
 			break;
 		}
 		case MainMenu::kLoadPatternCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
-			/*PatternManager::Status status =*/ mgr.LoadPattern(mainWindow);
+			/*PatternManager::Status status =*/ mgr.LoadPattern();
 			break;
 		}
 		case MainMenu::kUsePatternTempoCmd :
@@ -222,7 +222,7 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 		case MainMenu::kSavePatternCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
-			/*PatternManager::Status status =*/ mgr.SavePattern(mainWindow);
+			/*PatternManager::Status status =*/ mgr.SavePattern();
 			break;
 		}
 	}

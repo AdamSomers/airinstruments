@@ -110,7 +110,7 @@
             file="Source/AudioSettingsDialog.h"/>
       <FILE id="mXgtFu" name="ButtonBar.cpp" compile="1" resource="0" file="Source/ButtonBar.cpp"/>
       <FILE id="OlLNDr" name="ButtonBar.h" compile="0" resource="0" file="Source/ButtonBar.h"/>
-      <FILE id="JSRMF6" name="DrumItem.cpp" compile="1" resource="0" file="Source/DrumItem.cpp"/>
+      <FILE id="JSRMF6" name="DrumItem.cpp" compile="0" resource="0" file="Source/DrumItem.cpp"/>
       <FILE id="PzAZWh" name="DrumItem.h" compile="0" resource="0" file="Source/DrumItem.h"/>
       <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
       <FILE id="K27Jhn" name="DrumKit.h" compile="0" resource="0" file="Source/DrumKit.h"/>

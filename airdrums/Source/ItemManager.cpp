@@ -76,6 +76,7 @@ SharedPtr<Managed> ItemManager<Manager, Managed>::GetItem(Uuid& uuid)
 	return SharedPtr<Managed>();
 }
 
+
 template <typename Manager, typename Managed>
 int ItemManager<Manager, Managed>::GetIndexOfItem(SharedPtr<Managed> item)
 {
@@ -86,6 +87,14 @@ int ItemManager<Manager, Managed>::GetIndexOfItem(SharedPtr<Managed> item)
 	}
     return -1;
 }
+
+
+template <typename Manager, typename Managed>
+void ItemManager<Manager, Managed>::AddItem(SharedPtr<Managed> item)
+{
+	mItems.push_back(item);
+}
+
 
 template <typename Manager, typename Managed>
 String& ItemManager<Manager, Managed>::GetDefaultPath(void)
@@ -123,6 +132,7 @@ typename ItemManager<Manager, Managed>::Status ItemManager<Manager, Managed>::Bu
 		typename Managed::Status status = item->LoadFromXml(document.get(), folder);
 		if (status != Managed::kNoError)
 			return kItemLoadError;
+		item->SetFile(file);
 
 		mItems.push_back(item);
 	}

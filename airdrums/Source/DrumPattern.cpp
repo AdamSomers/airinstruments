@@ -47,7 +47,7 @@ DrumPattern::Status DrumPattern::LoadFromXml(XmlElement* element, File& /*direct
 {
 	mMidiBuffer->clear();
 
-	Status status = DrumItem::LoadFromXml(element);
+	Status status = DrumItem<DrumPattern>::LoadFromXml(element);
 	if (status != kNoError)
 		return status;
 	double rate = element->getDoubleAttribute("sampleRate", 0.0);
@@ -63,11 +63,12 @@ DrumPattern::Status DrumPattern::LoadFromXml(XmlElement* element, File& /*direct
 	if (kitElement == nullptr)
 		return kNoKitError;
 	DrumKit kitInfo;
-	status = kitInfo.DrumItem::LoadFromXml(kitElement);
-	if (status != kNoError)
-		return status;
+	DrumKit::Status kitStatus = kitInfo.DrumItem<DrumKit>::LoadFromXml(kitElement);
+	if (kitStatus != DrumKit::kNoError)
+		return kItemLoadError;
 	KitManager& mgr = KitManager::GetInstance();
-	SharedPtr<DrumKit> kit = mgr.GetItem(kitInfo.GetUuid());
+	Uuid uuid = kitInfo.GetUuid();
+	SharedPtr<DrumKit> kit = mgr.GetItem(uuid);
     if (kit.get() == nullptr) {
         kit = mgr.GetItem(0);
         if (kit.get() == nullptr) {
@@ -120,7 +121,7 @@ DrumPattern::Status DrumPattern::SaveToXml(String fileName, File& directory)
 	SetName(fileName);
 
 	XmlElement main("pattern");
-	DrumItem::SaveToXml(&main);
+	DrumItem<DrumPattern>::SaveToXml(&main);
 	main.setAttribute("sampleRate", mSampleRate);	// On save, pattern will now reference its current sample rate, regardless of what sample rate it had on load
 	main.setAttribute("tempo", (double) mTempo);	// Pattern will use its current local tempo
 
@@ -129,7 +130,7 @@ DrumPattern::Status DrumPattern::SaveToXml(String fileName, File& directory)
 	jassert(kit.get() != nullptr);
 	XmlElement* kitElement = main.createNewChildElement("kit");
 	jassert(kitElement != nullptr);
-	kit->DrumItem::SaveToXml(kitElement);
+	kit->DrumItem<DrumKit>::SaveToXml(kitElement);
 
 	MidiBuffer tempBuffer = GetMidiBuffer();		// Work with a copy of the pattern's buffer
 	Conform(tempBuffer, mTempo, mSampleRate);		// Conform it to the pattern tempo (it might be currently conformed to the global tempo)
@@ -153,7 +154,7 @@ DrumPattern::Status DrumPattern::SaveToXml(String fileName, File& directory)
 	if (!main.writeToFile(file, ""))
 		return kItemSaveError;
 
-	SetDirty(false);
+	SetFile(file);
 
 	return kNoError;
 }
@@ -233,4 +234,14 @@ void DrumPattern::Conform(MidiBuffer& buffer, float tempo, double rate)
 		newBuffer.addEvent(message, samplePos);
 	}
 	buffer = newBuffer;
+}
+
+
+void DrumPattern::RevertToClean(const DrumPattern* clean)
+{
+	*mMidiBuffer.get() = clean->GetMidiBuffer();
+	mTempo = clean->GetTempo();
+	mConformTempo = clean->GetConformTempo();
+	mSampleRate = clean->GetSampleRate();
+	mDrumKit = clean->GetDrumKit();
 }

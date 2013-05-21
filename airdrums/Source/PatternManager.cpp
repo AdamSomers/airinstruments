@@ -36,31 +36,34 @@ PatternManager::Status PatternManager::BuildPatternList(String path /* = ""*/, b
 }
 
 
-PatternManager::Status PatternManager::SavePattern(AirHarpApplication::MainWindow* mainWindow)
+PatternManager::Status PatternManager::SavePattern(void)
 {
 	Drums& drums = Drums::instance();
 	SharedPtr<DrumPattern> pattern = drums.getPattern();
 	jassert(pattern.get() != nullptr);
 	if (!pattern->GetDirty())
 		return kCancelled;
-	if (!pattern->GetHasValidName() || !pattern->GetModifiable())
-		return SavePatternAs(mainWindow);
+	if ((pattern->GetFile() == File::nonexistent) || !pattern->GetModifiable())
+		return SavePatternAs();
 
 	String fileName = pattern->GetName();
 	fileName = File::createLegalFileName(fileName);
 	// For now, use the default path
 	File directory = GetDefaultPath();
 
-	DrumItem::Status saveStatus = pattern->SaveToXml(fileName, directory);
-	if (saveStatus != DrumItem::Status::kNoError)
+	DrumPattern::Status saveStatus = pattern->SaveToXml(fileName, directory);
+	if (saveStatus != DrumPattern::kNoError)
 		return kSaveError;
 
 	return kNoError;
 }
 
 
-PatternManager::Status PatternManager::SavePatternAs(AirHarpApplication::MainWindow* mainWindow)
+PatternManager::Status PatternManager::SavePatternAs(void)
 {
+	AirHarpApplication::MainWindow* mainWindow = AirHarpApplication::getInstance()->GetMainWindow();
+	jassert(mainWindow != nullptr);
+
 	UniquePtr<PatternSaveDialog> dlg(new PatternSaveDialog(mainWindow));
 	int status = dlg->runModalLoop();
 	if (status == 0)
@@ -73,33 +76,32 @@ PatternManager::Status PatternManager::SavePatternAs(AirHarpApplication::MainWin
 	Drums& drums = Drums::instance();
 	SharedPtr<DrumPattern> pattern = drums.getPattern();
 	jassert(pattern.get() != nullptr);
-    pattern->SetUuid(Uuid::Uuid());
-	DrumItem::Status saveStatus = pattern->SaveToXml(fileName, directory);
-	if (saveStatus != DrumItem::Status::kNoError)
+	SharedPtr<DrumPattern> newPattern(new DrumPattern(*pattern.get()));	// Make a clone of the pattern to be saved with the new name
+	pattern->RevertToClean();	// Undo all changes in original pattern
+	Uuid newUuid;	// Create a new Uuid for this new pattern
+    newPattern->SetUuid(newUuid);
+	DrumPattern::Status saveStatus = newPattern->SaveToXml(fileName, directory);
+	if (saveStatus != DrumPattern::kNoError)
 		return kSaveError;
-            
+
 	Status buildStatus = BuildPatternList();	// Refresh list to find new content, etc.
 	if (buildStatus != kNoError)
 		return buildStatus;
 
-    String name = pattern->GetName();
-    Uuid uuid = pattern->GetUuid();
-    String uuidString = uuid.toString();
-    AirHarpApplication* app = AirHarpApplication::getInstance();
-	ApplicationProperties& props = app->getProperties();
-	PropertiesFile* propsFile = props.getUserSettings();
-	propsFile->setValue("patternName", name);
-    propsFile->setValue("patternUuid", uuidString);
-            
-    AirHarpApplication::PatternAddedMessage* m = new AirHarpApplication::PatternAddedMessage;
-    ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
+	drums.setPattern(newPattern);
+
+	UpdatePrefsLastPattern(newPattern);
+	UpdatePatternWheel();
 
 	return kNoError;
 }
 
 
-PatternManager::Status PatternManager::LoadPattern(AirHarpApplication::MainWindow* mainWindow)
+PatternManager::Status PatternManager::LoadPattern(void)
 {
+	AirHarpApplication::MainWindow* mainWindow = AirHarpApplication::getInstance()->GetMainWindow();
+	jassert(mainWindow != nullptr);
+
 	Status buildStatus = BuildPatternList();	// Refresh list to find new content, etc.
 	if (buildStatus != kNoError)
 		return buildStatus;
@@ -113,6 +115,8 @@ PatternManager::Status PatternManager::LoadPattern(AirHarpApplication::MainWindo
 	SharedPtr<DrumPattern> pattern = GetItem(index);
 	Drums& drums = Drums::instance();
 	drums.setPattern(pattern);
+
+	UpdatePrefsLastPattern(pattern);
 
 	return kNoError;
 }
@@ -135,22 +139,38 @@ PatternManager::Status PatternManager::CreateNewPattern(void)
 	Drums& drums = Drums::instance();
 	SharedPtr<DrumPattern> pattern(new DrumPattern);
 	pattern->SetModifiable(true);
+	String patName = "untitled ";
+	String kitName = drums.getDrumKit()->GetName();
+	patName += kitName;
+	pattern->SetName(patName); 
+	AddItem(pattern);
 	drums.setPattern(pattern);
+
+	UpdatePrefsLastPattern(pattern);
+	UpdatePatternWheel();
 
 	return kNoError;
 }
 
 
-PatternManager::Status PatternManager::MakePatternModifiable(void)
+void PatternManager::UpdatePrefsLastPattern(SharedPtr<DrumPattern> pattern)
 {
-	Drums& drums = Drums::instance();
-	SharedPtr<DrumPattern> pattern = drums.getPattern();
-	jassert(pattern.get() != nullptr);
-	if (pattern->GetModifiable())
-		return kNoError;
+    String name = pattern->GetName();
+    Uuid uuid = pattern->GetUuid();
+    String uuidString = uuid.toString();
+    AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+	PropertiesFile* propsFile = props.getUserSettings();
+	propsFile->setValue("patternName", name);
+    propsFile->setValue("patternUuid", uuidString);
+}
 
-	SharedPtr<DrumPattern> newPattern(new DrumPattern(*pattern.get()));
-	drums.setPattern(newPattern);
 
-	return kNoError;
+void PatternManager::UpdatePatternWheel(void)
+{
+	AirHarpApplication::MainWindow* mainWindow = AirHarpApplication::getInstance()->GetMainWindow();
+	jassert(mainWindow != nullptr);
+
+    AirHarpApplication::PatternAddedMessage* m = new AirHarpApplication::PatternAddedMessage;
+    ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
 }

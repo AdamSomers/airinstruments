@@ -29,7 +29,7 @@ DrumKit::Status DrumKit::LoadFromXml(XmlElement* element, File& directory)
 {
 	mSamples.clear();
 
-	Status status = DrumItem::LoadFromXml(element);
+	Status status = DrumItem<DrumKit>::LoadFromXml(element);
 	if (status != kNoError)
 		return status;
     
