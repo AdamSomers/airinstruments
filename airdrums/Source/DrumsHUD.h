@@ -4,6 +4,7 @@
 #include <iostream>
 #include "HUD.h"
 #include "Leap.h"
+#include "BeatCountView.h"
 
 class DrumsToolbar : public HUDView
                    , public ChangeListener
@@ -17,6 +18,7 @@ public:
     // HUDView overrides
     void setup();
     void draw();
+    void setBounds(const HUDRect& b);
 
     // ChangeListener overrides
     void changeListenerCallback(ChangeBroadcaster* source);
@@ -28,12 +30,13 @@ public:
     void timerCallback();
 
     void layoutControls();
-    
+
 private:
     HUDButton resetButton;
     HUDButton playButton;
     HUDButton recordButton;
     HUDButton metronomeButton;
+    BeatCountView beatCountView;
 };
 
 class StatusBar : public HUDView

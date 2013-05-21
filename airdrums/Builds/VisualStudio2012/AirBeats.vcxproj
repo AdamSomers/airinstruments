@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
     <ClCompile Include="..\..\Source\AudioExporter.cpp"/>
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
+    <ClCompile Include="..\..\Source\BeatCountView.cpp"/>
     <ClCompile Include="..\..\Source\ButtonBar.cpp"/>
     <ClCompile Include="..\..\Source\DrumItem.cpp"/>
     <ClCompile Include="..\..\Source\DrumKit.cpp"/>
@@ -1296,6 +1297,7 @@
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
     <ClInclude Include="..\..\Source\AudioExporter.h"/>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
+    <ClInclude Include="..\..\Source\BeatCountView.h"/>
     <ClInclude Include="..\..\Source\ButtonBar.h"/>
     <ClInclude Include="..\..\Source\DrumItem.h"/>
     <ClInclude Include="..\..\Source\DrumKit.h"/>
