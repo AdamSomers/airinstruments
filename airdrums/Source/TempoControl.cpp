@@ -50,7 +50,7 @@ void TempoControl::draw()
 void TempoControl::setBounds(const HUDRect &b)
 {
     HUDView::setBounds(b);
-    float buttonHeight = b.h * 0.6;
+    float buttonHeight = b.h * 0.6f;
     TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("left");
     float aspectRatio = td.imageW / (float)td.imageH;
     float buttonWidth = aspectRatio * buttonHeight;
@@ -109,7 +109,7 @@ void TempoControl::Icon::draw()
         g.drawText(String((int)tempoValue), 0, -20, (int) (getBounds().w*4), (int) (line1H*4), Justification::centred, true);
         g.setColour(Colour(128,128,128));
         g.setFont(Font(Environment::instance().getDefaultFont(), (line2H * .75f) * 4.0f, Font::plain));
-        g.drawText("BPM", 0, (line1H * .75f) * 4.0f - 20, (int) (getBounds().w*4), (int) (line2H*4), Justification::centred, true);
+        g.drawText("BPM", 0, (int) ((line1H * .75f) * 4.0f - 20), (int) (getBounds().w*4), (int) (line2H*4), Justification::centred, true);
 
         if (textureDesc.textureId != 0)
             glDeleteTextures(1, &textureDesc.textureId);
