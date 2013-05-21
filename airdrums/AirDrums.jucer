@@ -203,14 +203,14 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
                externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirBeats.app/Contents/Resources"
+               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirBeats_LM.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirBeats_LM.app/Contents/Resources"
                extraCompilerFlags="" smallIcon="" bigIcon="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
+                       isDebug="1" optimisation="1" targetName="AirBeats_LM" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
         <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="2" targetName="AirBeats" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
+                       isDebug="0" optimisation="2" targetName="AirBeats_LM" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
       </CONFIGURATIONS>
     </XCODE_MAC>
@@ -218,12 +218,12 @@
             externalLibraries="Leap.lib&#10;" smallIcon="" bigIcon="Ig1XGD">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="AirBeats" useRuntimeLibDLL="1"
+                       isDebug="1" optimisation="1" targetName="AirBeats_LM" useRuntimeLibDLL="1"
                        wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
                        defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"
                        postbuildCommand="call copyResources.bat $(TargetDir)"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="AirBeats" useRuntimeLibDLL="1"
+                       isDebug="0" optimisation="3" targetName="AirBeats_LM" useRuntimeLibDLL="1"
                        wholeProgramOptimisation="1" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
                        defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;" libraryPath="../../../LeapSDK/win/lib/x86&#10;"
                        postbuildCommand="call copyResources.bat $(TargetDir)"/>
