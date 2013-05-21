@@ -108,6 +108,9 @@
             file="Source/AudioSettingsDialog.cpp"/>
       <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
             file="Source/AudioSettingsDialog.h"/>
+      <FILE id="wGPexN" name="BeatCountView.cpp" compile="1" resource="0"
+            file="Source/BeatCountView.cpp"/>
+      <FILE id="HgnhIZ" name="BeatCountView.h" compile="0" resource="0" file="Source/BeatCountView.h"/>
       <FILE id="mXgtFu" name="ButtonBar.cpp" compile="1" resource="0" file="Source/ButtonBar.cpp"/>
       <FILE id="OlLNDr" name="ButtonBar.h" compile="0" resource="0" file="Source/ButtonBar.h"/>
       <FILE id="JSRMF6" name="DrumItem.cpp" compile="1" resource="0" file="Source/DrumItem.cpp"/>

@@ -17,6 +17,8 @@ DrumsToolbar::DrumsToolbar()
 
     addChild(&metronomeButton);
     metronomeButton.addListener(this);
+    
+    addChild(&beatCountView);
 
     Drums::instance().addTransportListener(this);
     Drums::instance().getTransportState().sendChangeMessage();
@@ -60,6 +62,15 @@ void DrumsToolbar::layoutControls()
     recordButton.setBounds(HUDRect(r.x, r.y, recordButtonWith, h));
     r.x += w + buttonSpacing + 15;
     metronomeButton.setBounds(HUDRect(r.x, r.y, metronomeButtonWidth, h));
+    
+    const GLfloat ledWidth = 7.f;
+    const GLfloat ledSpacing = 3.f;
+    const GLfloat beatCountViewWidth = ledWidth * 16 + ledSpacing * 15;
+    const GLfloat beatCountViewHeight = ledWidth*2 + ledSpacing;
+    beatCountView.setBounds(HUDRect(getBounds().w - beatCountViewWidth - 20,
+                                    y + (h / 2.f - beatCountViewHeight / 2.f) + 3,
+                                    beatCountViewWidth,
+                                    beatCountViewHeight));
 }
 
 void DrumsToolbar::draw()

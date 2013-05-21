@@ -44,11 +44,12 @@ public:
 	SharedPtr<DrumPattern> getPattern() const { return pattern; }
 	void setDrumKit(SharedPtr<DrumKit> aKit);
 	void setPattern(SharedPtr<DrumPattern> aPattern);
-	float getTempo(void);
+	float getTempo(void) const;
 	void setTempo(float tempo);
 	TempoSource getTempoSource(void);
 	void setTempoSource(TempoSource source);
 	void registerTempoSlider(Slider* slider);
+    int getCurrentStep() const;
     
     static Drums& instance(void)
     {

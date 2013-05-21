@@ -370,7 +370,7 @@ void Drums::removeTransportListener(ChangeListener* listener)
 }
 
 
-float Drums::getTempo(void)
+float Drums::getTempo(void) const
 {
 	switch (tempoSource)
 	{
@@ -474,4 +474,13 @@ void Drums::setTempoSlider(float tempo)
 {
 	jassert(tempoSlider != nullptr);
 	tempoSlider->setValue((double) tempo, dontSendNotification);
+}
+
+int Drums::getCurrentStep() const
+{
+    float bps = getTempo() / 60.0f;
+    float sixteenthsPerSecond = bps * 4.0f;
+    float samplesPerSixteenth = (float) (sampleRate / sixteenthsPerSecond);
+    float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
+    return sixteenthsIntoPattern;
 }
