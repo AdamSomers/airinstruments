@@ -165,13 +165,17 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 void Drums::AdjustMidiBuffers(void)
 {
     midiBufferLock.enter();
+    
+    double position = sampleCounter / (double)maxRecordSamples;
 
     float bps = getTempo() / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
     float samples = (float) (sampleRate * seconds);
     maxRecordSamples = (long) samples;
-    
+
+    sampleCounter = maxRecordSamples * position;
+
     // Adjust the metronome buffer
     long metronomePos = 0;
     metronomeBuffer.clear();
