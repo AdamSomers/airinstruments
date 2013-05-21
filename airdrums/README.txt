@@ -1,7 +1,5 @@
 AirBeats - Release Notes
 
-Note that the HipHop kits are still in progress.  The one in this build is temporary.  All other kits are nearly final.
-
 Please send all comments to adam@handwavy.co.  Thanks!
 
 Usage:
@@ -29,6 +27,22 @@ Usage:
 - You can export your pattern to an audio file from the file menu.
 
 - If you dismiss the tutorial with the "Don't show again" button, you can bring it back with the 'h' key on your keyboard.
+
+==================
+v0.5 - 5/20/2013
+
+Completed features:
+
+- Timeline visualization
+- Relocate transport controls to center
+- More minimal look for tempo control
+- Added Analog Hip Hop kit
+
+Currently in development:
+
+- Linear lists instead of 'wheels'
+- "New Pattern" function
+- Management of user vs. factory patterns
 
 ==================
 v0.4 - 5/17/2013
