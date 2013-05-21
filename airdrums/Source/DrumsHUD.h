@@ -17,6 +17,7 @@ public:
     // HUDView overrides
     void setup();
     void draw();
+    void setBounds(const HUDRect& b);
 
     // ChangeListener overrides
     void changeListenerCallback(ChangeBroadcaster* source);
@@ -28,7 +29,7 @@ public:
     void timerCallback();
 
     void layoutControls();
-    
+
 private:
     HUDButton resetButton;
     HUDButton playButton;

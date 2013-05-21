@@ -33,22 +33,33 @@ void DrumsToolbar::setup()
     layoutControls();
 }
 
+void DrumsToolbar::setBounds(const HUDRect& b)
+{
+    HUDView::setBounds(b);
+    layoutControls();
+}
+
 void DrumsToolbar::layoutControls()
 {
     float buttonSpacing = 25;
 
     float w = 25;
     float h = 40;
-    float x = bounds.w - (w + buttonSpacing) * 4 - 20;
+    const GLfloat tempoControlHeight = 45;
+    const GLfloat tempoControlWidth = 115;
+    const GLfloat recordButtonWith = 40;
+    const GLfloat metronomeButtonWidth = 36;
+    float totalWidth = w + w + recordButtonWith + metronomeButtonWidth + tempoControlWidth;
+    float x = bounds.w / 2.f - (totalWidth + (buttonSpacing * 4)) / 2.f;
     float y = 110 + 70 / 2.f - h / 2.f;
     HUDRect r(x, y, w, h);
     resetButton.setBounds(r);
     r.x += w + buttonSpacing;
     playButton.setBounds(r);
     r.x += w + buttonSpacing;
-    recordButton.setBounds(HUDRect(r.x, r.y, 40, 40));
+    recordButton.setBounds(HUDRect(r.x, r.y, recordButtonWith, h));
     r.x += w + buttonSpacing + 15;
-    metronomeButton.setBounds(HUDRect(r.x, r.y, 36, 40));
+    metronomeButton.setBounds(HUDRect(r.x, r.y, metronomeButtonWidth, h));
 }
 
 void DrumsToolbar::draw()

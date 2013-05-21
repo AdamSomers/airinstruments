@@ -617,8 +617,8 @@ void MainContentComponent::renderOpenGL()
                                            (GLfloat) side));
         
         if (tempoControl)
-            tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f - tempoControlWidth / 2.f,
-                                            (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
+            tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f + 60,
+                                            (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f,
                                             (GLfloat) tempoControlWidth,
                                             (GLfloat) tempoControlHeight));
         
