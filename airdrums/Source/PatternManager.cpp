@@ -99,6 +99,8 @@ PatternManager::Status PatternManager::SavePatternAs(void)
 
 PatternManager::Status PatternManager::LoadPattern(void)
 {
+	SaveDirtyPatternPrompt();
+
 	AirHarpApplication::MainWindow* mainWindow = AirHarpApplication::getInstance()->GetMainWindow();
 	jassert(mainWindow != nullptr);
 
@@ -117,6 +119,7 @@ PatternManager::Status PatternManager::LoadPattern(void)
 	drums.setPattern(pattern);
 
 	UpdatePrefsLastPattern(pattern);
+	UpdatePatternWheel();
 
 	return kNoError;
 }
@@ -136,6 +139,8 @@ PatternManager::Status PatternManager::UsePatternTempo(bool usePatternTempo)
 
 PatternManager::Status PatternManager::CreateNewPattern(void)
 {
+	SaveDirtyPatternPrompt();
+
 	Drums& drums = Drums::instance();
 	SharedPtr<DrumPattern> pattern(new DrumPattern);
 	pattern->SetModifiable(true);
@@ -173,4 +178,39 @@ void PatternManager::UpdatePatternWheel(void)
 
     AirHarpApplication::PatternAddedMessage* m = new AirHarpApplication::PatternAddedMessage;
     ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
+}
+
+
+PatternManager::Status PatternManager::SaveDirtyPatternPrompt(void)
+{
+	Drums& drums = Drums::instance();
+	SharedPtr<DrumPattern> pattern = drums.getPattern();
+	jassert(pattern.get() != nullptr);
+	if (!pattern->GetDirty())
+		return kCancelled;
+
+	AirHarpApplication::MainWindow* mainWindow = AirHarpApplication::getInstance()->GetMainWindow();
+	jassert(mainWindow != nullptr);
+
+	int dlgStatus;
+	{	// Limit scope, so alert dialog destructs prior to save
+		AlertWindow alert("Save modified pattern", "The current pattern is modified.\r\nDo you wish to save it before proceeding ?", AlertWindow::QuestionIcon, mainWindow);
+		alert.addButton("Yes", 1, KeyPress(KeyPress::returnKey));
+		alert.addButton("No", 0, KeyPress(KeyPress::escapeKey));
+		dlgStatus = alert.runModalLoop();
+	}
+
+	Status saveStatus;
+	if (dlgStatus == 1)
+		saveStatus = SavePattern();
+	else
+		saveStatus = kNoError;
+
+	if ((dlgStatus == 0) || (saveStatus == kCancelled))
+	{
+		pattern->RevertToClean();
+		return kCancelled;
+	}
+
+	return saveStatus;
 }
