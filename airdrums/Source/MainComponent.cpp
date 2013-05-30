@@ -52,7 +52,7 @@ MainContentComponent::MainContentComponent()
 , lastDrumSelection(-1)
 , resizeCursor(false)
 {
-    setSize (1200, 750);
+    setSize (1280, 720);
     MotionDispatcher::zLimit = -100;
     setWantsKeyboardFocus(true);
 
@@ -452,8 +452,8 @@ void MainContentComponent::renderOpenGL()
         const int toolbarHeight = 180;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
-        const int tempoControlWidth = 260;
-        const int tempoControlHeight = 36;
+        const int tempoControlWidth = 115;
+        const int tempoControlHeight = 45;
         const float tutorialWidth = 800.f;
         const float tutorialHeight = 500.f;
 
@@ -617,8 +617,8 @@ void MainContentComponent::renderOpenGL()
                                            (GLfloat) side));
         
         if (tempoControl)
-            tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f - tempoControlWidth / 2.f,
-                                            (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f + 5,
+            tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f + 60,
+                                            (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f,
                                             (GLfloat) tempoControlWidth,
                                             (GLfloat) tempoControlHeight));
         

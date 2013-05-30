@@ -165,13 +165,17 @@ void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 void Drums::AdjustMidiBuffers(void)
 {
     midiBufferLock.enter();
+    
+    double position = sampleCounter / (double)maxRecordSamples;
 
     float bps = getTempo() / 60.f;
     int numBeats = 8;
     float seconds = numBeats / bps;
     float samples = (float) (sampleRate * seconds);
     maxRecordSamples = (long) samples;
-    
+
+    sampleCounter = (long)(maxRecordSamples * position);
+
     // Adjust the metronome buffer
     long metronomePos = 0;
     metronomeBuffer.clear();
@@ -370,7 +374,7 @@ void Drums::removeTransportListener(ChangeListener* listener)
 }
 
 
-float Drums::getTempo(void)
+float Drums::getTempo(void) const
 {
 	switch (tempoSource)
 	{
@@ -474,4 +478,13 @@ void Drums::setTempoSlider(float tempo)
 {
 	jassert(tempoSlider != nullptr);
 	tempoSlider->setValue((double) tempo, dontSendNotification);
+}
+
+int Drums::getCurrentStep() const
+{
+    float bps = getTempo() / 60.0f;
+    float sixteenthsPerSecond = bps * 4.0f;
+    float samplesPerSixteenth = (float) (sampleRate / sixteenthsPerSecond);
+    float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
+    return (int)sixteenthsIntoPattern;
 }

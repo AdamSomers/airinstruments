@@ -379,6 +379,9 @@
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\BeatCountView.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ButtonBar.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1726,6 +1729,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BeatCountView.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ButtonBar.h">
