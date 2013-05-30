@@ -36,7 +36,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
     // This method is where you should put your application's initialisation code..
     
     Time t = Time::getCurrentTime();
-    Time thresh(2013, 5, 1, 0, 0); // Month is zero-indexed
+    Time thresh(2013, 6, 22, 0, 0); // Month is zero-indexed
     
     if (t > thresh)
     {
