@@ -12,7 +12,7 @@
 #define __DRUMITEM_H_87D00F4E__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "../common/Types.h"
+#include "Types.h"
 
 
 // This is the base class from which DrumKit and DrumPattern derive.
