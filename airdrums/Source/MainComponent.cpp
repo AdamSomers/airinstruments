@@ -989,6 +989,9 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
             pad->setSelectedMidiNote(pad->getSelectedMidiNote());
     }
     else if (selector == patternSelector) {
+		PatternManager& pmgr = PatternManager::GetInstance();
+		pmgr.SaveDirtyPatternPrompt();
+
         int selection = patternSelector->getSelection();
         std::shared_ptr<DrumPattern> selectedPattern = PatternManager::GetInstance().GetItem(selection);
         String name = selectedPattern->GetName();

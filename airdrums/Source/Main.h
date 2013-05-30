@@ -70,6 +70,8 @@ public:
     
     class InitializeMessage : public Message {};
 
+	MainWindow* GetMainWindow()					{ return mainWindow; }
+
 private:
 	bool perform (const InvocationInfo &info);
 

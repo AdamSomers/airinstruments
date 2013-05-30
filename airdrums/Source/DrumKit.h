@@ -21,7 +21,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 
-class DrumKit : public DrumItem
+class DrumKit : public DrumItem<DrumKit>
 {
 public:
 	DrumKit();

@@ -164,7 +164,9 @@
     <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
     <ClCompile Include="..\..\Source\BeatCountView.cpp"/>
     <ClCompile Include="..\..\Source\ButtonBar.cpp"/>
-    <ClCompile Include="..\..\Source\DrumItem.cpp"/>
+    <ClCompile Include="..\..\Source\DrumItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DrumKit.cpp"/>
     <ClCompile Include="..\..\Source\DrumPattern.cpp"/>
     <ClCompile Include="..\..\Source\Drums.cpp"/>
