@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kit name="HipHop 3" image="" uuid="89df8cf2b7e02e2b73f9fc833cb46175">
+<kit name="HipHop Acoustic" image="" uuid="89df8cf2b7e02e2b73f9fc833cb46175">
     <sample note="0" category="BassDrum" image="" file="BassDrum.aif" />
 	<sample note="1" category="Snare" image="" file="Snare.aif" />
 	<sample note="2" category="Clap" image="" file="Clap.aif" />

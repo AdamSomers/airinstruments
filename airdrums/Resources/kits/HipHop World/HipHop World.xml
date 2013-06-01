@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kit name="HipHop 2" image="" uuid="caf4a1ee54676d9999a40a1a7b363cc7">
+<kit name="HipHop World" image="" uuid="caf4a1ee54676d9999a40a1a7b363cc7">
     <sample note="0" category="BassDrum" image="" file="BassKick.aif" />
 	<sample note="1" category="Snare" image="">
         <layer minVelocity="0" maxVelocity="42" file="Snare_layer0.aif" />
