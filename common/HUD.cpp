@@ -361,14 +361,14 @@ void HUDButton::setup()
 
 void HUDButton::mouseDown(float /*x*/, float /*y*/)
 {
-    if (!isVisible)
+    if (!isVisible())
         return;
     setState(!state, true);
 }
 
 void HUDButton::updatePointedState(FingerView* /*fv*/)
 {
-    if (!isVisible)
+    if (!isVisible())
         return;
     if (prevNumPointers == 0 && pointers.size() > 0)
         setState(!state, true);
@@ -410,7 +410,7 @@ void HUDButton::setTimeout(int newTimeout)
 
 void HUDButton::cursorEntered(float, float)
 {
-    if (!isVisible)
+    if (!isVisible())
         return;
     lastTimerStartTime = Time::getCurrentTime();
     startTimer(hoverTimeout);

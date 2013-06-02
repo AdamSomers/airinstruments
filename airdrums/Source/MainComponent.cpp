@@ -822,9 +822,12 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
     
-    for (PlayArea* pad : playAreas)
-        if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
-            Drums::instance().NoteOn(pad->getSelectedMidiNote(), 1.f);
+    if (tutorial && !tutorial->isVisible())
+    {
+        for (PlayArea* pad : playAreas)
+            if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
+                Drums::instance().NoteOn(pad->getSelectedMidiNote(), 1.f);
+    }
     
     if (tutorial)
         tutorial->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
@@ -1067,12 +1070,15 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
         
-        std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
-//        if (insertResult.second)
-//            Logger::outputDebugString("Inserted detector for hand id " + String(hand.id()));
-        StrikeDetectorMap::iterator iter = insertResult.first;
-        StrikeDetector& detector = (*iter).second;
-        detector.handMotion(hand);
+        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+        {
+            std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
+            //if (insertResult.second)
+            //    Logger::outputDebugString("Inserted detector for hand id " + String(hand.id()));
+            StrikeDetectorMap::iterator iter = insertResult.first;
+            StrikeDetector& detector = (*iter).second;
+            detector.handMotion(hand);
+        }
     }
     
     StrikeDetectorMap::iterator iter = strikeDetectors.begin();

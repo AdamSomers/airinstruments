@@ -12,7 +12,7 @@
 View2d::View2d()
 : didSetup(false)
 , defaultColorSet(false)
-, isVisible(true)
+, visible(true)
 , opacity(1.f)
 , fadeTime(0)
 , needsSetup(false)
@@ -44,14 +44,14 @@ void View2d::draw()
         needsSetup = false;
     }
 
-    if (isVisible && opacity < 1.f)
+    if (visible && opacity < 1.f)
     {
         RelativeTime timeSinceLateVisibiltyChange = Time::getCurrentTime() - lastVisibilityChange;
         float deltaTime = timeSinceLateVisibiltyChange.inMilliseconds() / (float)fadeTime;
         opacity = deltaTime*deltaTime;
         if (opacity > 1.f) opacity = 1.f;
     }
-    else if (!isVisible && opacity > 0.f)
+    else if (!visible && opacity > 0.f)
     {
         RelativeTime timeSinceLateVisibiltyChange = Time::getCurrentTime() - lastVisibilityChange;
         float deltaTime = timeSinceLateVisibiltyChange.inMilliseconds() / (float)fadeTime;
@@ -158,7 +158,7 @@ void View2d::setDefaultColor(GLfloat* color)
 
 void View2d::setVisible(bool shouldBeVisible, int fadeTimeMs /* = 500 */)
 {
-    isVisible = shouldBeVisible;
+    visible = shouldBeVisible;
     lastVisibilityChange = Time::getCurrentTime();
     fadeTime = fadeTimeMs;
 }
