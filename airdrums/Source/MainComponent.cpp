@@ -5,6 +5,7 @@
 
   ==============================================================================
 */
+#include "GL/glew.h"
 #include <GLTools.h>
 #include <GLFrustum.h>
 #include <GLMatrixStack.h>
@@ -179,15 +180,17 @@ void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    glewInit();
+    if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
+        Logger::outputDebugString("VAOs Supported");
+    else
+        Logger::outputDebugString("VAOs Not Supported");
+
     Logger::outputDebugString("newOpenGLContextCreated()");
     
     Drums::instance().playbackState.addListener(this);
     Drums::instance().registerTempoSlider(&tempoSlider);
     tempoSlider.addListener(&Drums::instance());
-
-#ifdef _WIN32
-	glewInit();		// Not sure if this is in the right place, but it seems to work for now.
-#endif // _WIN32
 
     SkinManager::instance().loadResources();
     KitManager::GetInstance().LoadTextures();
