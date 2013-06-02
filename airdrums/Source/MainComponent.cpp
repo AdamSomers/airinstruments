@@ -826,7 +826,8 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
         if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
             Drums::instance().NoteOn(pad->getSelectedMidiNote(), 1.f);
     
-    tutorial->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
+    if (tutorial)
+        tutorial->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
