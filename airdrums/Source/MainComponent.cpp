@@ -118,7 +118,7 @@ void MainContentComponent::paint (Graphics& g)
 
     splashImage = Image(Image::ARGB, getWidth(), getHeight(), true);
     Graphics offscreen(splashImage);
-    g.fillAll (Colour (0x00000ff));
+    g.fillAll (Colour (0x000000));
     g.setFont (Font (16.0f));
     g.setColour (Colours::black);
     g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
@@ -465,6 +465,12 @@ void MainContentComponent::renderOpenGL()
                                      (GLfloat) (Environment::instance().screenH / 2 - tutorialHeight / 2),
                                      tutorialWidth,
                                      tutorialHeight));
+        
+        if (splashBgView)
+            splashBgView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+        
+        if (splashTitleView)
+            splashBgView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,
