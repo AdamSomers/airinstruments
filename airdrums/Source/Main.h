@@ -81,6 +81,7 @@ private:
     ApplicationProperties properties;
 	MainMenu* mainMenu;
 	WeakReference<AudioSettingsDialog> settingsDialog;
+    ScopedPointer<FileLogger> fileLogger;
 };
 
 #endif

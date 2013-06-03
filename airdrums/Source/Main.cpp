@@ -26,6 +26,9 @@ AirHarpApplication::AirHarpApplication()
     for (int i = 0; i < 16; ++i)
         Logger::outputDebugString(Uuid::Uuid().toString());
 #endif
+    fileLogger = FileLogger::createDateStampedLogger("AirBeats", "AirBeats", ".txt", "AirBeats Log - please send this file to info@handwavy.co if you have encountered an error.  Thanks!");
+    Logger::setCurrentLogger(fileLogger);
+    Logger::writeToLog("AirHarpApplication instantiated");
 }
 
 
@@ -79,6 +82,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 #if JUCE_MAC
     postMessage(new GrabFocusMessage);
 #endif
+    Logger::writeToLog("AirHarpApplication initialized");
 }
 
 void AirHarpApplication::shutdown()
@@ -106,6 +110,9 @@ void AirHarpApplication::shutdown()
 
     //audioDeviceManager.removeAudioCallback(this);
 	KitManager::Destruct();
+    
+    Logger::writeToLog("AirBeats Shutdown");
+    Logger::setCurrentLogger(nullptr);
 }
 
 
