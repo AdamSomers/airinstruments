@@ -61,7 +61,7 @@ void Drums::NoteOn(int note, float velocity)
         float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
         long quantizedPosition = (long) sixteenthsIntoPattern;
         float diff = sixteenthsIntoPattern - quantizedPosition;
-        Logger::outputDebugString(String::formatted("%f\n", diff));
+        Logger::writeToLog(String::formatted("%f\n", diff));
         if (diff >= 0.5) {
             quantizedPosition++;
             if (quantizedPosition >= 32)
@@ -231,7 +231,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
         i.setNextSamplePosition(sampleCounter);
         while (i.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
         {
-            //Logger::outputDebugString(String::formatted("%d\n", samplePos));
+            //Logger::writeToLog(String::formatted("%d\n", samplePos));
             incomingMidi.addEvent(message, samplePos - sampleCounter);
 		    if (!transportState.exporting)
 	            playbackState.noteOn(1, message.getNoteNumber(),1);
@@ -242,7 +242,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
             metronomeIterator.setNextSamplePosition(sampleCounter);
             while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
             {
-                //Logger::outputDebugString(String::formatted("%d\n", samplePos));
+                //Logger::writeToLog(String::formatted("%d\n", samplePos));
                 incomingMidi.addEvent(message, 0);
             }
         }

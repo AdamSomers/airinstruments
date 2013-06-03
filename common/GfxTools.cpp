@@ -84,7 +84,7 @@ namespace GfxTools
                 {
                     heightToUse = nextPowerOfTwo(heightToUse);
                 }
-                //Logger::outputDebugString("Old size: " + String(image.getWidth()) + "x" + String(image.getHeight()) + " new size: " + String(widthToUse) + "x" +  String(heightToUse));
+                //Logger::writeToLog("Old size: " + String(image.getWidth()) + "x" + String(image.getHeight()) + " new size: " + String(widthToUse) + "x" +  String(heightToUse));
                 Image newImage(image.getFormat(), widthToUse, heightToUse, true);
                 Graphics g(newImage);
                 g.drawImageAt(image, 0, 0);
@@ -126,25 +126,25 @@ namespace GfxTools
         Array<TextureDescription> textures;
 
         if (!atlasXml.exists()) {
-            Logger::outputDebugString("Error: " + atlasXml.getFileName() + " does not exist!");
+            Logger::writeToLog("Error: " + atlasXml.getFileName() + " does not exist!");
             return textures;
         }
         
         UniquePtr<XmlElement> document(XmlDocument::parse(atlasXml));
         if (document == nullptr) {
-            Logger::outputDebugString("Error: Could not parse " + atlasXml.getFileName());
+            Logger::writeToLog("Error: Could not parse " + atlasXml.getFileName());
             return textures;
         }
         
         if (!document->hasTagName("TextureAtlas")) {
-            Logger::outputDebugString("Error: TextureAtlas tag not found in " + atlasXml.getFileName());
+            Logger::writeToLog("Error: TextureAtlas tag not found in " + atlasXml.getFileName());
             return textures;
         }
         
         String atlasFileNmae = document->getStringAttribute("imagePath");
         File atlasImageFile(atlasXml.getParentDirectory().getChildFile(atlasFileNmae));
         if (!atlasImageFile.exists()) {
-            Logger::outputDebugString("Error: " + atlasFileNmae + " not found");
+            Logger::writeToLog("Error: " + atlasFileNmae + " not found");
             return textures;
         }
         

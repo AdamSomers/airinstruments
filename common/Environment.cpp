@@ -19,11 +19,11 @@ const String Environment::getDefaultFont() const
     String fontName = "Futura";
     StringArray typefaceNames = Font::findAllTypefaceNames();
     if (!typefaceNames.contains(fontName)) {
-        Logger::outputDebugString("Did not find " + fontName + ", trying Trebuchet MS");
+        Logger::writeToLog("Did not find " + fontName + ", trying Trebuchet MS");
         fontName = "Trebuchet MS";
     }
     if (!typefaceNames.contains(fontName)) {
-        Logger::outputDebugString("Did not find " + fontName + ", trying Verdana");
+        Logger::writeToLog("Did not find " + fontName + ", trying Verdana");
         fontName = "Verdana";
     }
     return fontName;

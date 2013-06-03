@@ -37,7 +37,7 @@ DrumSample::Status DrumSample::LoadFromXml(XmlElement* element, File& directory)
         if (imageFile.existsAsFile())
             mImage = ImageFileFormat::loadFrom(imageFile);
         else
-            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+            Logger::writeToLog("Sample image " + imageFilename + " not found");
     }
 	String filename = element->getStringAttribute("file", "");
 	if (filename != "")
@@ -88,7 +88,7 @@ DrumSample::Status DrumSample::CreateFromMemory(const char* data, int size, int 
         if (imageFile.existsAsFile())
             mImage = ImageFileFormat::loadFrom(imageFile);
         else
-            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+            Logger::writeToLog("Sample image " + imageFilename + " not found");
     }
 */
 

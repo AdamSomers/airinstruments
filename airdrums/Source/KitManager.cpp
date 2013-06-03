@@ -30,7 +30,7 @@ KitManager::~KitManager()
 
 KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*= true*/)
 {
-    Logger::outputDebugString("KitManager::BuildKitList()");
+    Logger::writeToLog("KitManager::BuildKitList()");
 
 	if (clear)
 	{
@@ -159,7 +159,7 @@ KitManager::Status KitManager::AddBuiltInKit(void)
 
 void KitManager::LoadTextures()
 {
-    Logger::outputDebugString("KitManager::LoadTextures()");
+    Logger::writeToLog("KitManager::LoadTextures()");
 	int count = GetItemCount();
     for (int i = 0; i < count; ++i)
     {
@@ -177,7 +177,7 @@ void KitManager::LoadTextures()
     File directory(folder);
     
 	if (!directory.isDirectory()) {
-		Logger::outputDebugString("Error: " + folder.getFileName() + " not a directory");
+		Logger::writeToLog("Error: " + folder.getFileName() + " not a directory");
         return;
     }
     

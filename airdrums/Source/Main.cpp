@@ -24,7 +24,7 @@ AirHarpApplication::AirHarpApplication()
 {
 #if 0
     for (int i = 0; i < 16; ++i)
-        Logger::outputDebugString(Uuid::Uuid().toString());
+        Logger::writeToLog(Uuid::Uuid().toString());
 #endif
     fileLogger = FileLogger::createDateStampedLogger("AirBeats", "AirBeats", ".txt", "AirBeats Log - please send this file to info@handwavy.co if you have encountered an error.  Thanks!");
     Logger::setCurrentLogger(fileLogger);
@@ -237,7 +237,7 @@ void AirHarpApplication::handleMessage(const juce::Message& m)
         //audioDeviceManager.addAudioCallback(this);
         audioSourcePlayer.setSource (&Drums::instance());
         StartAudioDevice();
-        Logger::outputDebugString(audioDeviceManager.getCurrentAudioDevice()->getName());
+        Logger::writeToLog(audioDeviceManager.getCurrentAudioDevice()->getName());
         
         PatternManager& pmgr = PatternManager::GetInstance();
         /*PatternManager::Status pstatus =*/ pmgr.BuildPatternList();
@@ -252,7 +252,7 @@ void AirHarpApplication::handleMessage(const juce::Message& m)
             Uuid kitUuid(kitUuidString);
             SharedPtr<DrumKit> kit = KitManager::GetInstance().GetItem(kitUuid);
             if (!kit) {
-                Logger::outputDebugString("Did not find saved kit with name " + kitName + "and uuid " + kitUuidString);
+                Logger::writeToLog("Did not find saved kit with name " + kitName + "and uuid " + kitUuidString);
                 AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", KitManager::GetInstance().GetItem(0)->GetUuid().toString());
             }
         }

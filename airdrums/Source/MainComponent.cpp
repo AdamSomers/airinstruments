@@ -79,12 +79,12 @@ MainContentComponent::MainContentComponent()
     if (bgImageFile.exists())
         splashBgImage = ImageFileFormat::loadFrom(bgImageFile);
     else
-        Logger::outputDebugString("ERROR: splash_bg.png not found!");
+        Logger::writeToLog("ERROR: splash_bg.png not found!");
     
     if (splashTitleImageFile.exists())
         splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
     else
-        Logger::outputDebugString("ERROR: splash_title.png not found!");
+        Logger::writeToLog("ERROR: splash_title.png not found!");
 }
 
 MainContentComponent::~MainContentComponent()
@@ -140,7 +140,7 @@ void MainContentComponent::paint (Graphics& g)
     g.drawImage(splashImage, 0, 0, getWidth(), getHeight(), 0, 0, splashImage.getWidth(), splashImage.getHeight());
     
     if (firstTime) {
-        Logger::outputDebugString("painted once, sending InitGLMessage");
+        Logger::writeToLog("painted once, sending InitGLMessage");
         postMessage(new InitGLMessage);
     }
     firstTime = false;
@@ -168,13 +168,13 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
-    Logger::outputDebugString("Focus Gained");
+    Logger::writeToLog("Focus Gained");
     MotionDispatcher::instance().resume();
 }
 
 void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
-    Logger::outputDebugString("Focus Lost");
+    Logger::writeToLog("Focus Lost");
     MotionDispatcher::instance().pause();
 }
 
@@ -182,11 +182,11 @@ void MainContentComponent::newOpenGLContextCreated()
 {
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
-        Logger::outputDebugString("VAOs Supported");
+        Logger::writeToLog("VAOs Supported");
     else
-        Logger::outputDebugString("VAOs Not Supported");
+        Logger::writeToLog("VAOs Not Supported");
 
-    Logger::outputDebugString("newOpenGLContextCreated()");
+    Logger::writeToLog("newOpenGLContextCreated()");
     
     Drums::instance().playbackState.addListener(this);
     Drums::instance().registerTempoSlider(&tempoSlider);
@@ -290,8 +290,8 @@ void MainContentComponent::newOpenGLContextCreated()
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid");
     Uuid kitUuid(kitUuidString);
     String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName");
-    Logger::outputDebugString("Selected kit: " + kitUuidString);
-    Logger::outputDebugString("Selected kit: " + kitName);
+    Logger::writeToLog("Selected kit: " + kitUuidString);
+    Logger::writeToLog("Selected kit: " + kitName);
     int selectedKitIndex = 0;
     for (int i = 0; i < numKits; ++i)
     {
@@ -301,7 +301,7 @@ void MainContentComponent::newOpenGLContextCreated()
             break;
         }
     }
-    Logger::outputDebugString("Selected kit: " + String(selectedKitIndex));
+    Logger::writeToLog("Selected kit: " + String(selectedKitIndex));
     kitSelector->setSelection(selectedKitIndex);
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
 
@@ -377,7 +377,7 @@ void MainContentComponent::populatePatternSelector()
     int numPatterns = PatternManager::GetInstance().GetItemCount();
     if (numPatterns == 0)
     {
-        Logger::outputDebugString("no patterns!");
+        Logger::writeToLog("no patterns!");
         return;
     }
     for (int i = 0; i < numPatterns; ++i)
@@ -404,8 +404,8 @@ void MainContentComponent::selectCurrentPattern()
     String patternUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("patternUuid");
     Uuid patternUuid(patternUuidString);
     String patternName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("patternName");
-    Logger::outputDebugString("Selected pattern: " + patternUuidString);
-    Logger::outputDebugString("Selected pattern: " + patternName);
+    Logger::writeToLog("Selected pattern: " + patternUuidString);
+    Logger::writeToLog("Selected pattern: " + patternName);
     int selectedpatternIndex = 0;
     int numPatterns = PatternManager::GetInstance().GetItemCount();
     for (int i = 0; i < numPatterns; ++i)
@@ -416,7 +416,7 @@ void MainContentComponent::selectCurrentPattern()
             break;
         }
     }
-    Logger::outputDebugString("Selected pattern: " + String(selectedpatternIndex));
+    Logger::writeToLog("Selected pattern: " + String(selectedpatternIndex));
     patternSelector->setSelection(selectedpatternIndex);
     Drums::instance().setPattern(PatternManager::GetInstance().GetItem(selectedpatternIndex));
 }
@@ -992,7 +992,7 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         int selection = kitSelector->getSelection();
         std::shared_ptr<DrumKit> selectedKit = KitManager::GetInstance().GetItem(selection);
         String name = selectedKit->GetName();
-        Logger::outputDebugString("kitSelectorChanged - index: " + String(selection) + " name: " + name);
+        Logger::writeToLog("kitSelectorChanged - index: " + String(selection) + " name: " + name);
         Uuid uuid = selectedKit->GetUuid();
         String uuidString = uuid.toString();
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", name);
@@ -1008,7 +1008,7 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         int selection = patternSelector->getSelection();
         std::shared_ptr<DrumPattern> selectedPattern = PatternManager::GetInstance().GetItem(selection);
         String name = selectedPattern->GetName();
-        Logger::outputDebugString("patternSelectorChanged - index: " + String(selection) + " name: " + name);
+        Logger::writeToLog("patternSelectorChanged - index: " + String(selection) + " name: " + name);
         Uuid uuid = selectedPattern->GetUuid();
         String uuidString = uuid.toString();
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
@@ -1030,7 +1030,7 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         }
         else
         {
-            Logger::outputDebugString("Pattern selected with unknown kit");
+            Logger::writeToLog("Pattern selected with unknown kit");
         }
     }
 }
@@ -1074,7 +1074,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         {
             std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
             //if (insertResult.second)
-            //    Logger::outputDebugString("Inserted detector for hand id " + String(hand.id()));
+            //    Logger::writeToLog("Inserted detector for hand id " + String(hand.id()));
             StrikeDetectorMap::iterator iter = insertResult.first;
             StrikeDetector& detector = (*iter).second;
             detector.handMotion(hand);
@@ -1263,7 +1263,7 @@ void MainContentComponent::handleMessage(const juce::Message &m)
     InitGLMessage* initGLMessage = dynamic_cast<InitGLMessage*>(inMsg);
     if (initGLMessage)
     {
-        Logger::outputDebugString("Got InitGLMessage");
+        Logger::writeToLog("Got InitGLMessage");
         openGLContext.setRenderer (this);
         openGLContext.setComponentPaintingEnabled (true);
         openGLContext.attachTo (*this);

@@ -42,7 +42,7 @@ SampleLayer::Status SampleLayer::LoadFromFile(int note, String filename, File& d
 		return kFilenameError;
 	File file = directory.getChildFile(filename);
 	if (!file.existsAsFile()) {
-        Logger::outputDebugString("Sample file " + file.getFileName() + " not found");
+        Logger::writeToLog("Sample file " + file.getFileName() + " not found");
 		return kFileNotFoundError;
     }
 

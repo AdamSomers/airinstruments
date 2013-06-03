@@ -414,18 +414,18 @@ void HUDButton::cursorEntered(float, float)
         return;
     lastTimerStartTime = Time::getCurrentTime();
     startTimer(hoverTimeout);
-    //Logger::outputDebugString("Entered");
+    //Logger::writeToLog("Entered");
 }
 
 void HUDButton::cursorExited(float, float)
 {
     stopTimer();
-    //Logger::outputDebugString("Exited");
+    //Logger::writeToLog("Exited");
 }
 
 void HUDButton::timerCallback()
 {
-    //Logger::outputDebugString("Boom");
+    //Logger::writeToLog("Boom");
     if (!enabled)
         return;
 

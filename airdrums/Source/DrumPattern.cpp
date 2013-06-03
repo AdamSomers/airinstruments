@@ -72,13 +72,13 @@ DrumPattern::Status DrumPattern::LoadFromXml(XmlElement* element, File& /*direct
     if (kit.get() == nullptr) {
         kit = mgr.GetItem(0);
         if (kit.get() == nullptr) {
-            Logger::outputDebugString("ERROR: No kits to load with pattern!");
+            Logger::writeToLog("ERROR: No kits to load with pattern!");
             return kNoKitError;
         }
         else {
-            Logger::outputDebugString("WARNING: Pattern loaded with unknown kit!");
-            Logger::outputDebugString("Pattern: " + GetName() + " " + GetUuid().toString());
-            Logger::outputDebugString("Kit: " + kitInfo.GetName() + " " + kitInfo.GetUuid().toString() + "\n");
+            Logger::writeToLog("WARNING: Pattern loaded with unknown kit!");
+            Logger::writeToLog("Pattern: " + GetName() + " " + GetUuid().toString());
+            Logger::writeToLog("Kit: " + kitInfo.GetName() + " " + kitInfo.GetUuid().toString() + "\n");
         }
     }
 	mDrumKit = kit;
