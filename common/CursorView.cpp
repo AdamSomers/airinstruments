@@ -10,8 +10,13 @@
 #include "MotionServer.h"
 
 CursorView::CursorView()
-: targetX(0.f)
+: x(0.f)
+, y(0.f)
+, targetX(0.f)
 , targetY(0.f)
+, prevX(0.f)
+, prevY(0.f)
+, filterCoeff(0.3f)
 , enabled(true)
 , fingerId(-1)
 {
@@ -20,13 +25,15 @@ CursorView::CursorView()
 
 void CursorView::draw()
 {
-    if (!enabled)
-        return;
+    x = prevX * filterCoeff + targetX * (1.f - filterCoeff);
+    y = prevY * filterCoeff + targetY * (1.f - filterCoeff);
+    prevX = x;
+    prevY = y;
 
-    if (getBounds().x != targetX)
-        setBounds(HUDRect(targetX, getBounds().y, getBounds().w, getBounds().h));
-    if (getBounds().y != targetY)
-        setBounds(HUDRect(getBounds().x, targetY, getBounds().w, getBounds().h));
+    if (getBounds().x != x)
+        setBounds(HUDRect(x, getBounds().y, getBounds().w, getBounds().h));
+    if (getBounds().y != y)
+        setBounds(HUDRect(getBounds().x, y, getBounds().w, getBounds().h));
     
     View2d::draw();
 }
@@ -36,13 +43,11 @@ CursorView::~CursorView()
     
 }
 
-void CursorView::setX(float x)
+void CursorView::setPosition(float x, float y)
 {
+    stopTimer(kTimerNoChange);
+    startTimer(kTimerNoChange, 500);
     targetX = x;
-}
-
-void CursorView::setY(float y)
-{
     targetY = y;
 }
 
@@ -64,4 +69,17 @@ CursorView::Listener::Listener()
 CursorView::Listener::~Listener()
 {
     MotionDispatcher::instance().removeCursorListener(*this);
+}
+
+void CursorView::timerCallback(int timerId)
+{
+    switch (timerId)
+    {
+        case kTimerNoChange:
+            setEnabled(false);
+            targetX = prevX = x = 0.f;
+            targetY = prevY = y = 0.f;
+            stopTimer(kTimerNoChange);
+            break;
+    }
 }
