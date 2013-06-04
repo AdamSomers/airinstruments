@@ -77,6 +77,7 @@ PatternManager::Status PatternManager::SavePatternAs(void)
 	SharedPtr<DrumPattern> pattern = drums.getPattern();
 	jassert(pattern.get() != nullptr);
 	SharedPtr<DrumPattern> newPattern(new DrumPattern(*pattern.get()));	// Make a clone of the pattern to be saved with the new name
+    newPattern->SetModifiable(true);
 	pattern->RevertToClean();	// Undo all changes in original pattern
 	Uuid newUuid;	// Create a new Uuid for this new pattern
     newPattern->SetUuid(newUuid);
