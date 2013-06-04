@@ -21,7 +21,8 @@ class KitManager : public ItemManager<KitManager, DrumKit>
 public:
     // call me from OpenGL thread only!
     void LoadTextures();
-	Status	BuildKitList(String path = "", bool clear = true);
+	Status	BuildKitList(StringArray paths, bool clear = true);
+    Status	BuildKitList();
     const TextureDescription& getTextureAtlas() const;
 
 private:

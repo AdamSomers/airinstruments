@@ -47,10 +47,11 @@ public:
 
 	//void	SetPathToItemFolder(String path);
 
-	String& GetDefaultPath(void);
+	String& GetFactoryPath(void);
+    String& GetUserPath(void);
 
 protected:
-	Status	BuildItemList(String fileExtension, String xmlTag, String path = "", bool clear = true);
+	Status	BuildItemList(String fileExtension, String xmlTag, StringArray paths, bool clear = true);
 
 private:
 	friend Manager;
@@ -64,7 +65,8 @@ private:
 	typedef	typename Container::iterator	Iterator;
 
 	Container	mItems;
-	String		mDefaultPath;
+	String		mFactoryPath;
+    String      mUserPath;
 };
 
 // I dislike code in header files, so I put all definition in a cpp file and include it here.

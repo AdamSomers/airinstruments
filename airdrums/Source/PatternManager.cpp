@@ -21,7 +21,18 @@ PatternManager::PatternManager()
 #elif JUCE_MAC
 	File folder = special.getChildFile("Contents/Resources/patterns");
 #endif
-	mDefaultPath = folder.getFullPathName();
+	mFactoryPath = folder.getFullPathName();
+    
+    folder = File::getSpecialLocation(File::userDocumentsDirectory);
+    folder = folder.getChildFile("AirBeats Patterns");
+    if (!folder.isDirectory())
+    {
+        Result result = folder.createDirectory();
+        if (result.failed())
+            jassertfalse;
+    }
+    
+    mUserPath = folder.getFullPathName();
 }
 
 
@@ -29,10 +40,16 @@ PatternManager::~PatternManager()
 {
 }
 
-
-PatternManager::Status PatternManager::BuildPatternList(String path /* = ""*/, bool clear /*= true*/)
+PatternManager::Status PatternManager::BuildPatternList()
 {
-	return ItemManager<PatternManager, DrumPattern>::BuildItemList("*.xml", "pattern", path, clear);
+    StringArray paths(mFactoryPath);
+    paths.add(mUserPath);
+	return BuildPatternList(paths);
+}
+
+PatternManager::Status PatternManager::BuildPatternList(StringArray paths, bool clear /*= true*/)
+{
+	return ItemManager<PatternManager, DrumPattern>::BuildItemList("*.xml", "pattern", paths, clear);
 }
 
 
@@ -48,8 +65,7 @@ PatternManager::Status PatternManager::SavePattern(void)
 
 	String fileName = pattern->GetName();
 	fileName = File::createLegalFileName(fileName);
-	// For now, use the default path
-	File directory = GetDefaultPath();
+	File directory = GetUserPath();
 
 	DrumPattern::Status saveStatus = pattern->SaveToXml(fileName, directory);
 	if (saveStatus != DrumPattern::kNoError)
@@ -71,7 +87,7 @@ PatternManager::Status PatternManager::SavePatternAs(void)
 	String fileName = dlg->GetFileName();
 	fileName = File::createLegalFileName(fileName);
 	// For now, use the default path
-	File directory = GetDefaultPath();
+	File directory = GetUserPath();
 
 	Drums& drums = Drums::instance();
 	SharedPtr<DrumPattern> pattern = drums.getPattern();

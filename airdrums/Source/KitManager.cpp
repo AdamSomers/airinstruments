@@ -19,7 +19,7 @@ KitManager::KitManager()
 #elif JUCE_MAC
 	File folder = special.getChildFile("Contents/Resources/kits");
 #endif
-	mDefaultPath = folder.getFullPathName();
+	mFactoryPath = folder.getFullPathName();
 }
 
 
@@ -27,8 +27,13 @@ KitManager::~KitManager()
 {
 }
 
+KitManager::Status KitManager::BuildKitList()
+{
+    StringArray paths(mFactoryPath);
+    return BuildKitList(paths);
+}
 
-KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*= true*/)
+KitManager::Status KitManager::BuildKitList(StringArray paths, bool clear /*= true*/)
 {
     Logger::writeToLog("KitManager::BuildKitList()");
 
@@ -39,7 +44,7 @@ KitManager::Status KitManager::BuildKitList(String path /* = ""*/, bool clear /*
 		//if (status != kNoError)
 		//	return status;
 	}
-	return ItemManager<KitManager, DrumKit>::BuildItemList("*.xml", "kit", path, false);
+	return ItemManager<KitManager, DrumKit>::BuildItemList("*.xml", "kit", paths, false);
 }
 
 

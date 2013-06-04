@@ -21,7 +21,8 @@
 class PatternManager : public ItemManager<PatternManager, DrumPattern>
 {
 public:
-	Status	BuildPatternList(String path = "", bool clear = true);
+	Status	BuildPatternList(StringArray paths, bool clear = true);
+    Status	BuildPatternList();
 	Status	SavePattern(void);
 	Status	SavePatternAs(void);
 	Status	LoadPattern(void);
