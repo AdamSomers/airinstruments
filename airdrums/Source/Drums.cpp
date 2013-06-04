@@ -295,6 +295,8 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 {
 	jassert(aPattern.get() != nullptr);
+    
+    aPattern->PrepareToModify();
 
     midiBufferLock.enter();
 
