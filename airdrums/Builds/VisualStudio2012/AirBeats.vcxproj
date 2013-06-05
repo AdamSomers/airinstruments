@@ -61,7 +61,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;../../../LeapSDK/win/include;../../../GLTools/include;../../../common;../../../asiosdk2.2/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;DEBUG;_DEBUG;TIMEBOMB=1;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -107,7 +107,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;../../../LeapSDK/win/include;../../../GLTools/include;../../../common;../../../asiosdk2.2/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;TIMEBOMB=1;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;JUCER_VS2012_78A501F=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -1254,8 +1254,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\BinaryData2.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\BinaryData3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_audio_basics.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_audio_devices.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_audio_formats.cpp"/>
@@ -1760,23 +1758,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\icon.png"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLV.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL BKICK.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CHH.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLAP.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CYM.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL HTOM.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL KICK.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL LTOM.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL MTOM.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL OHH.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL PAD.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL PHH.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL RIDE.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL SFX.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL SN 1.aif"/>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL VERB.aif"/>
     <None Include="..\..\Resources\icon.icns"/>
+    <None Include="..\..\Resources\TMD CHIL CLV.aif"/>
     <None Include="..\..\..\common\testShader.fs"/>
     <None Include="..\..\..\common\testShader.vs"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>

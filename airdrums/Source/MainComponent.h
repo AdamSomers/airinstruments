@@ -142,6 +142,9 @@ private:
     Image splashTitleImage;
     Image splashImage;
     Time lastRender;
+    
+    // for beta check
+    Time startTime;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
