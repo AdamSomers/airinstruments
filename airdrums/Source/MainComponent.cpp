@@ -467,10 +467,10 @@ void MainContentComponent::renderOpenGL()
                                      tutorialHeight));
         
         if (splashBgView)
-            splashBgView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+            splashBgView->setBounds(HUDRect(0.f,0.f,(GLfloat)Environment::instance().screenW,(GLfloat)Environment::instance().screenH));
         
         if (splashTitleView)
-            splashBgView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+            splashBgView->setBounds(HUDRect(0.f,0.f,(GLfloat)Environment::instance().screenW,(GLfloat)Environment::instance().screenH));
         
         if (toolbar)
             toolbar->setBounds(HUDRect(0.0f,
