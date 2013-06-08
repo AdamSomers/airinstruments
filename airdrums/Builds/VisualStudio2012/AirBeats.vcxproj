@@ -179,6 +179,7 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\KitManager.cpp"/>
+    <ClCompile Include="..\..\Source\ListSelector.cpp"/>
     <ClCompile Include="..\..\Source\LayeredSamplerSound.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
@@ -1310,6 +1311,7 @@
     <ClInclude Include="..\..\Source\ExportComponent.h"/>
     <ClInclude Include="..\..\Source\ItemManager.h"/>
     <ClInclude Include="..\..\Source\KitManager.h"/>
+    <ClInclude Include="..\..\Source\ListSelector.h"/>
     <ClInclude Include="..\..\Source\LayeredSamplerSound.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
