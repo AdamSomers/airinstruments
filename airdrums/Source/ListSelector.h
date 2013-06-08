@@ -34,19 +34,19 @@ public:
     void setEnabled(bool shouldBeEnabled);
     bool isEnabled() const { return enabled; }
     
-    class Icon : public HUDView
+    class Icon : public HUDButton
     {
     public:
         Icon(int id);
         ~Icon();
         void draw();
         void setBounds(const HUDRect& b);
+        int getId() const { return id; }
     private:
         void updateBounds();
         int id;
         HUDRect targetBounds;
         HUDRect tempBounds;
-        HUDView imageView;
     };
     
     void addIcon(Icon* icon);
@@ -69,6 +69,7 @@ private:
     HUDButton displayToggleButton;
     HUDButton upButton;
     HUDButton downButton;
+    HUDView highlightView;
     
     Time displayChangeStart;
 };

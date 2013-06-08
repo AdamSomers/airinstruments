@@ -285,7 +285,9 @@ void MainContentComponent::newOpenGLContextCreated()
     {
         ListSelector::Icon* icon = new ListSelector::Icon(i);
         icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
+        icon->setTextures(KitManager::GetInstance().GetItem(i)->GetTexture(), KitManager::GetInstance().GetItem(i)->GetTexture());
         kitSelector->addIcon(icon);
+        icon->addListener(kitSelector);
     }
 
     views.push_back(kitSelector);
@@ -407,6 +409,8 @@ void MainContentComponent::populatePatternSelector()
         textureDesc.imageW = im.getWidth();
         textureDesc.imageH = im.getHeight();
         icon->setDefaultTexture(textureDesc);
+        icon->setTextures(textureDesc,textureDesc);
+        icon->addListener(patternSelector);
         
         patternSelector->addIcon(icon);
     }

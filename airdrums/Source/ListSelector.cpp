@@ -44,6 +44,9 @@ ListSelector::ListSelector(bool left)
                          SkinManager::instance().getSelectedSkin().getTexture("arrow_up"));
     downButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_down"),
                            SkinManager::instance().getSelectedSkin().getTexture("arrow_down"));
+    
+    addChild(&highlightView);
+    highlightView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("highlight"));
 }
 
 ListSelector::~ListSelector()
@@ -132,6 +135,8 @@ void ListSelector::layoutIcons()
         buttonRect.w = icons.at(i)->getBounds().w;
         Icon* icon = icons.at(i);
         icon->setBounds(buttonRect);
+        if (i == getSelection())
+            highlightView.setBounds(buttonRect);
         buttonRect.y -= iconHeight + iconSpacing;
     }
 }
@@ -208,6 +213,15 @@ void ListSelector::buttonStateChanged(HUDButton *b)
     else if (b == &downButton)
     {
     }
+    else
+    {
+        Icon* icon = dynamic_cast<Icon*>(b);
+        if (icon)
+        {
+            setSelection(icon->getId());
+            sendChangeMessage();
+        }
+    }
 }
 
 void ListSelector::setXRange(float shown, float hidden)
@@ -234,12 +248,12 @@ ListSelector::Icon::~Icon()
 
 void ListSelector::Icon::draw()
 {
-    HUDView::draw();
+    HUDButton::draw();
 }
 
 void ListSelector::Icon::setBounds(const HUDRect &b)
 {
-    HUDView::setBounds(b);
+    HUDButton::setBounds(b);
 }
 
 
