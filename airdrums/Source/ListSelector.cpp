@@ -19,6 +19,7 @@ ListSelector::ListSelector(bool left)
 , enabled(false)
 , iconSpacing(0.f)
 , iconHeight(0.f)
+, maxVisibleIcons(20)
 {
     //setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("listSelectorBg"));
     
@@ -44,9 +45,17 @@ ListSelector::ListSelector(bool left)
                          SkinManager::instance().getSelectedSkin().getTexture("arrow_up"));
     downButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_down"),
                            SkinManager::instance().getSelectedSkin().getTexture("arrow_down"));
+
+    upButton.setVisible(false);
+    upButton.setButtonType(HUDButton::kMomentary);
+    upButton.setTimeout(250);
+    downButton.setVisible(false);
+    downButton.setButtonType(HUDButton::kMomentary);
+    downButton.setTimeout(250);
     
     addChild(&highlightView);
     highlightView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("highlight"));
+    highlightView.setMultiplyAlpha(true);
 }
 
 ListSelector::~ListSelector()
@@ -61,11 +70,11 @@ void ListSelector::setBounds(const HUDRect &b)
 {
     HUDView::setBounds(b);
     
-    float buttonWidth = 75.f;
-    float buttonHeight = 75.f;
+    float buttonWidth = 50.f;
+    float buttonHeight = 50.f;
     float x = leftHanded ? b.w + 10 : -buttonWidth - 10;
     displayToggleButton.setBounds(HUDRect(x,
-                                          b.y + b.h / 2.f - buttonHeight / 2.f,
+                                          b.h / 2.f - buttonHeight / 2.f,
                                           buttonWidth,
                                           buttonHeight));
     upButton.setBounds(HUDRect(b.w / 2.f - buttonWidth / 2.f,
@@ -77,13 +86,10 @@ void ListSelector::setBounds(const HUDRect &b)
                                  0,                                 
                                  buttonWidth,
                                  buttonHeight));
-    
-    
+
+    float maxIconWidth = getBounds().w - 10;
+    iconHeight = 50.f;
     iconSpacing = 10.f;
-    float availableHeight = b.h - buttonHeight * 2.f - iconSpacing * icons.size();
-    float maxIconHeight = availableHeight / (float) icons.size();
-    float maxIconWidth = b.w - 10;
-    iconHeight = maxIconHeight;
     
     // if any item exceeds max width, need to re-adjust height for all
     for (int i = 0; i < (int) icons.size(); ++i)
@@ -98,9 +104,9 @@ void ListSelector::setBounds(const HUDRect &b)
         }
     }
     
-    float usedHeight = iconHeight * 10;
-    iconSpacing = jmax(iconSpacing, (availableHeight - usedHeight) / (float)icons.size());
-    
+    maxVisibleIcons = jmax(1, (int)((b.h - buttonHeight * 2) / (iconHeight + iconSpacing)));
+    updateVisibleIcons();
+
     // setup the icons' size
     for (int i = 0; i < (int) icons.size(); ++i)
     {
@@ -117,28 +123,61 @@ void ListSelector::setBounds(const HUDRect &b)
                                 width,
                                 height));
     }
-
     // place the icons in the correct positions
     layoutIcons();
 }
 
 void ListSelector::layoutIcons()
 {
-    int N = icons.size();
+    iconSpacing = 10.f;
+
+    int N = visibleIcons.size();
     
     HUDRect buttonRect(5,
                        upButton.getBounds().y - iconHeight,
-                       icons.at(0)->getBounds().w,
+                       visibleIcons.at(0)->getBounds().w,
                        iconHeight);
+    bool showHighlightView = false;
     for (int i = 0; i < N; ++i)
     {
-        buttonRect.w = icons.at(i)->getBounds().w;
-        Icon* icon = icons.at(i);
+        buttonRect.w = visibleIcons.at(i)->getBounds().w;
+        Icon* icon = visibleIcons.at(i);
         icon->setBounds(buttonRect);
-        if (i == getSelection())
-            highlightView.setBounds(buttonRect);
+        if (icon->getId() == getSelection()) {
+            showHighlightView = true;
+            highlightView.setBounds(HUDRect(buttonRect.x - 5, buttonRect.y - 5, getBounds().w, buttonRect.h + 10));
+        }
         buttonRect.y -= iconHeight + iconSpacing;
     }
+    highlightView.setVisible(showHighlightView, 50);
+
+}
+
+void ListSelector::updateVisibleIcons()
+{
+    if (visibleIcons.size() == 0)
+        return;
+    int first = visibleIcons.front()->getId();
+    if (first + maxVisibleIcons > (int)icons.size())
+        first = jmax(0, first - ((first + maxVisibleIcons) - (int)icons.size()));
+    int last = jmin(first + maxVisibleIcons, (int)icons.size());
+    for (auto iter = visibleIcons.begin(); iter != visibleIcons.end(); ++iter)
+        removeChild(*iter);
+    visibleIcons.clear();
+    for (int i = first; i < last; ++i)
+    {
+        visibleIcons.push_back(icons.at(i));
+        addChild(icons.at(i));
+    }
+    if (icons.size() > maxVisibleIcons) {
+        upButton.setVisible(true);
+        downButton.setVisible(true);
+    }
+    else {
+        upButton.setVisible(false);
+        downButton.setVisible(false);
+    }
+        
 }
 
 void ListSelector::updateBounds()
@@ -165,7 +204,15 @@ void ListSelector::updateBounds()
 void ListSelector::addIcon(Icon *icon)
 {
     icons.push_back(icon);
-    addChild(icon);
+    if (visibleIcons.size() < maxVisibleIcons) {
+        visibleIcons.push_back(icon);
+        addChild(icon);
+    }
+
+    if (icons.size() > maxVisibleIcons) {
+        upButton.setVisible(true);
+        downButton.setVisible(true);
+    }
 }
 
 void ListSelector::removeAllIcons()
@@ -178,6 +225,7 @@ void ListSelector::removeAllIcons()
         delete i;
     }
     icons.clear();
+    visibleIcons.clear();
 }
 
 void ListSelector::draw()
@@ -198,6 +246,37 @@ void ListSelector::setSelection(int sel)
     if (sel < 0) sel = icons.size() - 1;
     if (sel >= (int) icons.size()) sel = 0;
     selection = sel;
+    
+    int first = visibleIcons.front()->getId();
+    int last = visibleIcons.back()->getId();
+    if (icons.size() > visibleIcons.size() &&
+        (selection < first ||
+         selection > last))
+    {
+        for (auto iter = visibleIcons.begin(); iter != visibleIcons.end(); ++iter)
+            removeChild(*iter);
+        visibleIcons.clear();
+        if (selection < first)
+        {
+            jassert(selection + maxVisibleIcons < icons.size());
+            for (int i = selection; i < selection + maxVisibleIcons; ++i)
+            {
+                visibleIcons.push_back(icons.at(i));
+                addChild(icons.at(i));
+            }
+        }
+        else if (selection > last)
+        {
+            int start = selection - maxVisibleIcons;
+            jassert(start + maxVisibleIcons < icons.size());
+            for (int i = start; i < start + maxVisibleIcons; ++i)
+            {
+                visibleIcons.push_back(icons.at(i));
+                addChild(icons.at(i));
+            }
+        }
+    }
+    
     needsLayout = true;
 }
 
@@ -209,9 +288,25 @@ void ListSelector::buttonStateChanged(HUDButton *b)
     }
     else if (b == &upButton)
     {
+        if (visibleIcons.front()->getId() > 0)
+        {
+            visibleIcons.push_front(icons.at(visibleIcons.front()->getId() - 1));
+            addChild(visibleIcons.front());
+            removeChild(visibleIcons.back());
+            visibleIcons.pop_back();
+            needsLayout = true;
+        }
     }
     else if (b == &downButton)
     {
+        if (visibleIcons.back()->getId() < icons.size() - 1)
+        {
+            visibleIcons.push_back(icons.at(visibleIcons.back()->getId() + 1));
+            addChild(visibleIcons.back());
+            removeChild(visibleIcons.front());
+            visibleIcons.pop_front();
+            needsLayout = true;
+        }
     }
     else
     {

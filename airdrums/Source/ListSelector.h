@@ -10,6 +10,7 @@
 #define __AirBeats__ListSelector__
 
 #include "HUD.h"
+#include <deque>
 
 class ListSelector : public HUDView
                    , public HUDButton::Listener
@@ -55,6 +56,7 @@ public:
 private:
     void updateBounds();
     void layoutIcons();
+    void updateVisibleIcons();
 
     int selection;
     bool needsLayout;
@@ -64,8 +66,11 @@ private:
     bool enabled;
     float iconSpacing;
     float iconHeight;
-
+    int maxVisibleIcons;
+    
     std::vector<Icon*> icons;
+    std::deque<Icon*> visibleIcons;
+
     HUDButton displayToggleButton;
     HUDButton upButton;
     HUDButton downButton;

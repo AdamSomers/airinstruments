@@ -613,29 +613,7 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenH-70,
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toolbarHeight));
-        
-        float height = drumSelector->getBounds().y - statusBarHeight;
-        float width = (GLfloat) Environment::instance().screenW / 6.f;
-        float hiddenX = -width;
-        float shownX = 0;
-        if (kitSelector) {
-            kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? shownX : hiddenX,
-                                           (GLfloat) statusBarHeight,
-                                           width,
-                                           height));
-            kitSelector->setXRange(shownX, hiddenX);
-        }
-        
-        hiddenX = Environment::instance().screenW;
-        shownX = Environment::instance().screenW - width;
-        if (patternSelector) {
-            patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
-                                              (GLfloat) statusBarHeight,
-                                              width,
-                                              height));
-            patternSelector->setXRange(shownX, hiddenX);
-        }
-        
+
         if (tempoControl)
             tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f + 60,
                                             (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f,
@@ -647,6 +625,29 @@ void MainContentComponent::renderOpenGL()
                                          (GLfloat) (statusBarHeight + 10),
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat)100));
+        
+        float height = drumSelector->getBounds().y - (buttonBar->getBounds().y + buttonBar->getBounds().h) - 50;
+        float width = (GLfloat) Environment::instance().screenW / 6.f;
+        float hiddenX = -width;
+        float shownX = 0;
+        if (kitSelector) {
+            kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? shownX : hiddenX,
+                                           (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                           width,
+                                           height));
+            kitSelector->setXRange(shownX, hiddenX);
+        }
+        
+        hiddenX = Environment::instance().screenW;
+        shownX = Environment::instance().screenW - width;
+        if (patternSelector) {
+            patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
+                                               (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                               width,
+                                               height));
+            patternSelector->setXRange(shownX, hiddenX);
+        }
+
         
 
 #if 0
