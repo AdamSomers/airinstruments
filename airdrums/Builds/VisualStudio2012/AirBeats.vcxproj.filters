@@ -418,6 +418,9 @@
     <ClCompile Include="..\..\Source\KitManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ListSelector.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LayeredSamplerSound.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1762,6 +1765,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\KitManager.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ListSelector.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LayeredSamplerSound.h">

@@ -160,7 +160,7 @@ void View2d::setVisible(bool shouldBeVisible, int fadeTimeMs /* = 500 */)
 {
     visible = shouldBeVisible;
     lastVisibilityChange = Time::getCurrentTime();
-    fadeTime = fadeTimeMs;
+    fadeTime = jmax(fadeTimeMs, 1);
 }
 
 void View2d::setDefaultBlendMode(GLint inSrc, GLint inDst)

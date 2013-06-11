@@ -108,6 +108,9 @@
       <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
       <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
+      <FILE id="ilz4h2" name="ListSelector.cpp" compile="1" resource="0"
+            file="Source/ListSelector.cpp"/>
+      <FILE id="Ng9825" name="ListSelector.h" compile="0" resource="0" file="Source/ListSelector.h"/>
       <FILE id="pyUpKY" name="LayeredSamplerSound.cpp" compile="1" resource="0"
             file="Source/LayeredSamplerSound.cpp"/>
       <FILE id="PizL5x" name="LayeredSamplerSound.h" compile="0" resource="0"

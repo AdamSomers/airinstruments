@@ -279,23 +279,29 @@ void MainContentComponent::newOpenGLContextCreated()
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
-    kitSelector = new WheelSelector(true);
+    kitSelector = new ListSelector("Kits", true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
     {
-        WheelSelector::Icon* icon = new WheelSelector::Icon(i, true);
+        ListSelector::Icon* icon = new ListSelector::Icon(i);
         icon->setDefaultTexture(KitManager::GetInstance().GetItem(i)->GetTexture());
+        icon->setTextures(KitManager::GetInstance().GetItem(i)->GetTexture(), KitManager::GetInstance().GetItem(i)->GetTexture());
         kitSelector->addIcon(icon);
+        icon->addListener(kitSelector);
     }
 
-    kitSelector->addListener(this);
     views.push_back(kitSelector);
     
-    patternSelector = new WheelSelector;
+    patternSelector = new ListSelector("Patterns");
     populatePatternSelector();
     
-    patternSelector->addListener(this);
     views.push_back(patternSelector);
+    
+    {
+        MessageManagerLock mml;
+        kitSelector->addChangeListener(this);
+        patternSelector->addChangeListener(this);
+    }
     
     String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid");
     Uuid kitUuid(kitUuidString);
@@ -392,7 +398,7 @@ void MainContentComponent::populatePatternSelector()
     }
     for (int i = 0; i < numPatterns; ++i)
     {
-        WheelSelector::Icon* icon = new WheelSelector::Icon(i);
+        ListSelector::Icon* icon = new ListSelector::Icon(i);
         Image im(Image::PixelFormat::ARGB, 2000, 200, true);
         Graphics g (im);
         g.setColour(Colour::fromRGBA(60, 60, 60, 255));
@@ -403,6 +409,8 @@ void MainContentComponent::populatePatternSelector()
         textureDesc.imageW = im.getWidth();
         textureDesc.imageH = im.getHeight();
         icon->setDefaultTexture(textureDesc);
+        icon->setTextures(textureDesc,textureDesc);
+        icon->addListener(patternSelector);
         
         patternSelector->addIcon(icon);
     }
@@ -440,24 +448,6 @@ void MainContentComponent::renderOpenGL()
                                                                newCursorW,
                                                                newCursorH));
         resizeCursor = false;
-    }
-
-    if (!showKitSelector && kitSelector->isEnabled()) {
-        showKitSelector = true;
-        sizeChanged = true;
-    }
-    else if (showKitSelector && !kitSelector->isEnabled()) {
-        showKitSelector = false;
-        sizeChanged = true;
-    }
-    
-    if (!showPatternSelector && patternSelector->isEnabled()) {
-        showPatternSelector = true;
-        sizeChanged = true;
-    }
-    else if (showPatternSelector && !patternSelector->isEnabled()) {
-        showPatternSelector = false;
-        sizeChanged = true;
     }
     
     if (sizeChanged)
@@ -623,24 +613,7 @@ void MainContentComponent::renderOpenGL()
                                             (GLfloat) Environment::instance().screenH-70,
                                             (GLfloat) Environment::instance().screenW / 4,
                                             (GLfloat) toolbarHeight));
-        
-        int side = jmin((int)drumSelector->getBounds().y - statusBarHeight, Environment::instance().screenW);
-        int hiddenX = (int) (-side * .85);
-        int shownX = (int) (-side / 2.f);
-        if (kitSelector)
-            kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? (GLfloat) shownX : (GLfloat) hiddenX,
-                                           (GLfloat) statusBarHeight,
-                                           (GLfloat) side,
-                                           (GLfloat) side));
-        
-        hiddenX = (int) ((GLfloat) Environment::instance().screenW - side * .15);
-        shownX = (int) ((GLfloat) Environment::instance().screenW - side / 2.f);
-        if (patternSelector)
-            patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? (GLfloat) shownX : (GLfloat) hiddenX,
-                                           (GLfloat) statusBarHeight,
-                                           (GLfloat) side,
-                                           (GLfloat) side));
-        
+
         if (tempoControl)
             tempoControl->setBounds(HUDRect((GLfloat) Environment::instance().screenW / 2.f + 60,
                                             (GLfloat) Environment::instance().screenH - 70 / 2.f - tempoControlHeight / 2.f,
@@ -652,6 +625,29 @@ void MainContentComponent::renderOpenGL()
                                          (GLfloat) (statusBarHeight + 10),
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat)100));
+        
+        float height = drumSelector->getBounds().y - (buttonBar->getBounds().y + buttonBar->getBounds().h) - 50;
+        float width = (GLfloat) Environment::instance().screenW / 6.f;
+        float hiddenX = -width;
+        float shownX = 0;
+        if (kitSelector) {
+            kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? shownX : hiddenX,
+                                           (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                           width,
+                                           height));
+            kitSelector->setXRange(shownX, hiddenX);
+        }
+        
+        hiddenX = Environment::instance().screenW;
+        shownX = Environment::instance().screenW - width;
+        if (patternSelector) {
+            patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
+                                               (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                               width,
+                                               height));
+            patternSelector->setXRange(shownX, hiddenX);
+        }
+
         
 
 #if 0
@@ -1008,9 +1004,10 @@ void MainContentComponent::incPadAssociation(int padNumber, int inc)
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(padNumber), drumSelector->getNoteForPad(padNumber));
 }
 
-void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
+void MainContentComponent::changeListenerCallback(ChangeBroadcaster *source)
 {
-    if (selector == kitSelector) {
+    ListSelector* selector = dynamic_cast<ListSelector*>(source);
+    if (selector && selector == kitSelector) {
         int selection = kitSelector->getSelection();
         std::shared_ptr<DrumKit> selectedKit = KitManager::GetInstance().GetItem(selection);
         String name = selectedKit->GetName();
@@ -1023,7 +1020,7 @@ void MainContentComponent::wheelSelectorChanged(WheelSelector* selector)
         for (PlayArea* pad : playAreas)
             pad->setSelectedMidiNote(pad->getSelectedMidiNote());
     }
-    else if (selector == patternSelector) {
+    else if (selector && selector == patternSelector) {
 		PatternManager& pmgr = PatternManager::GetInstance();
 		pmgr.SaveDirtyPatternPrompt();
 

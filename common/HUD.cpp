@@ -63,6 +63,9 @@ void HUDView::loadTextures()
 
 void HUDView::setVisible(bool shouldBeVisible, int fadeTimeMs /*= 500*/)
 {
+    if (shouldBeVisible == isVisible())
+        return;
+
     View2d::setVisible(shouldBeVisible, fadeTimeMs);
 
     for (HUDView* child : children)
@@ -295,7 +298,7 @@ void HUDButton::draw()
         if (fade < 0.f) fade = 0.f;
     }
     
-    if (enabled && isTimerRunning()) {
+    if (enabled && isTimerRunning() && ringTextureDesc.textureId != 0) {
         GLfloat circleColor[4] = { 1.f, 1.f, 1.f, 1.f };
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor);
         glBindTexture(GL_TEXTURE_2D, ringTextureDesc.textureId);
@@ -395,7 +398,7 @@ void HUDButton::setTextures(TextureDescription on, TextureDescription off)
     desc.texY = on.texY;
     desc.texW = on.texW;
     desc.texH = on.texH;
-    setDefaultTexture(desc);
+    setDefaultTexture(on);
 }
 
 void HUDButton::setRingTexture(TextureDescription tex)
