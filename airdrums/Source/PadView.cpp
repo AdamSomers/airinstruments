@@ -183,7 +183,11 @@ void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
         wobble = sinf(4*3.14159f*(1-fade)) * fade * 0.03;
 
     float top = padHeight / 4.f + padHeight / 10.f + wobble;
-    float bottom = -padHeight / 4.f - wobble;
+    float bottom = -padHeight / 4.f + padHeight / 10.f - wobble;
+    
+    //deliberately stretch the icon vertically to compensate for perspective compression
+    bottom -= + padHeight / 10.f;
+
     float left = -padWidth / 4.f - wobble;
     float right = padWidth / 4.f + wobble;
     float depth = 0.1f;
@@ -212,10 +216,14 @@ void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 void PadView::makeTextMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 {
     float bottom = -padHeight / 2.f + padHeight / 20.f;
-    float aspectRatio = textTexture.imageW / textTexture.imageH;
+    float aspectRatio = textTexture.imageW / (float)textTexture.imageH;
     float top = bottom + padHeight / 10.f;
 
     float width = (padHeight / 10.f) * aspectRatio;
+
+    // deliberately stretch the text vertically to compensade for perspective compression
+    top += padHeight / 40.f;
+
     float left = -width / 2.f;
     float right = width / 2.f;
     float depth = 0.1f;
