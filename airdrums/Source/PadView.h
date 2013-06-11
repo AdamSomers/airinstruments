@@ -45,6 +45,7 @@ private:
     GLBatch     padBatch;
     float fade;
     float hoverFade;
+    float iconRotation;
     float padDepth;
     GLBatch bgBatch;
     TextureDescription backgroundOnTexture;

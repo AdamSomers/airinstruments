@@ -10,6 +10,7 @@ PadView::PadView() :
 , padHeight(0.1f)
 , fade(1.f)
 , hoverFade(0.f)
+, iconRotation(0.f)
 , padDepth(0.025f)
 , selectedMidiNote(0)
 , hovering(false)
@@ -177,10 +178,14 @@ void PadView::makeSurfaceMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 
 void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 {
-    float top = padHeight / 4.f + padHeight / 10.f;
-    float bottom = -padHeight / 4.f;
-    float left = -padWidth / 4.f;
-    float right = padWidth / 4.f;
+    float wobble = 0.f;
+    if (fade > 0.f)
+        wobble = sinf(4*3.14159f*(1-fade)) * fade * 0.03;
+
+    float top = padHeight / 4.f + padHeight / 10.f + wobble;
+    float bottom = -padHeight / 4.f - wobble;
+    float left = -padWidth / 4.f - wobble;
+    float right = padWidth / 4.f + wobble;
     float depth = 0.1f;
     float front = -depth / 4.f;
     float back = depth / 4.f;
@@ -373,9 +378,12 @@ void PadView::draw()
 
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
+    Environment::instance().modelViewMatrix.PushMatrix();
+    Environment::instance().modelViewMatrix.Rotate(iconRotation * fade, 0.0f, 0.0f, 1.f);
     glBindTexture(GL_TEXTURE_2D, iconTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), iconColor, 0);
     iconBatch.Draw();
+    Environment::instance().modelViewMatrix.PopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, textTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
@@ -392,6 +400,7 @@ void PadView::draw()
 void PadView::triggerDisplay(float amount)
 {
     fade = amount;
+    iconRotation = (Random::getSystemRandom().nextFloat() * 2.f - 1.f) * 2;
 }
 
 void PadView::setSelectedMidiNote(int note)
