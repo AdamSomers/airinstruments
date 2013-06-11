@@ -22,6 +22,7 @@ public:
     void setSelectedMidiNote(int note);
     int getSelectedMidiNote() const { return selectedMidiNote; }
     void setColor(const Colour& color);
+    void setHovering(bool hover) { hovering = hover; }
 
     GLFrame objectFrame;
     int padNum;
@@ -43,6 +44,7 @@ private:
 
     GLBatch     padBatch;
     float fade;
+    float hoverFade;
     float padDepth;
     GLBatch bgBatch;
     TextureDescription backgroundOnTexture;
@@ -53,6 +55,8 @@ private:
     GLBatch iconBatch;
     TextureDescription iconTexture;
     GLfloat iconColor[4];
+    
+    bool hovering;
 };
 
 #endif // h_PadView

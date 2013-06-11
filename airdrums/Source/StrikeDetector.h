@@ -39,7 +39,8 @@ public:
     StrikeDetector();
     
     void handMotion(const Leap::Hand& hand);
-    
+    int getNoteForHand(const Leap::Hand& hand);
+
     const Time& getLastStrikeTime() const;
     
 private:
@@ -64,7 +65,6 @@ private:
 #endif
 	int64_t timestampHistory[kHistoryDepth];
     
-    int getNoteForHand(const Leap::Hand& hand);
 	void SmoothData(float& velocity, float& position, int64_t timestamp);
 };
 

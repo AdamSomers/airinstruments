@@ -1102,6 +1102,11 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     const Leap::HandList& hands = frame.hands();
     const size_t numHands = hands.count();
     
+    for (int i = 0; i < NUM_PADS; ++i)
+    {
+        pads.at(i)->setHovering(false);
+    }
+    
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
         
@@ -1113,6 +1118,12 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             StrikeDetectorMap::iterator iter = insertResult.first;
             StrikeDetector& detector = (*iter).second;
             detector.handMotion(hand);
+            int midiNote = detector.getNoteForHand(hand);
+            for (int i = 0; i < NUM_PADS; ++i)
+            {
+                if (pads.at(i)->getSelectedMidiNote() == midiNote)
+                    pads.at(i)->setHovering(true);
+            }
         }
     }
     

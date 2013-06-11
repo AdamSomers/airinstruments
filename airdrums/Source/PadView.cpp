@@ -9,8 +9,10 @@ PadView::PadView() :
 , padWidth(0.1f)
 , padHeight(0.1f)
 , fade(1.f)
+, hoverFade(0.f)
 , padDepth(0.025f)
 , selectedMidiNote(0)
+, hovering(false)
 {
     backgroundOnTexture = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
     backgroundOffTexture = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
@@ -340,21 +342,31 @@ void PadView::draw()
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     
     GLfloat padColor [] = { 1.f, 1.f, 1.f, 0.3f + fade * 0.25f };
-//    if (pointers.size() > 0) {
-//        if (fade < 1.f)
-//            fade += 0.3f;
-//    }
+    if (hovering) {
+        if (hoverFade < 1.f)
+            hoverFade += 0.3f;
+    }
+    else if (hoverFade > 0.f)
+        hoverFade -= 0.05f;
+    
     if (fade > 0.f)
         fade -= 0.05f;
     
-    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), padColor);
+    padBatch.Draw();
+    
+    glDisable(GL_DEPTH_TEST);
+    
     GLfloat bgOffColor [] = { 1.f, 1.f, 1.f, 1.f };
     glBindTexture(GL_TEXTURE_2D, backgroundOffTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
     bgBatch.Draw();
 
-    GLfloat bgOnColor [] = { 1.f, 1.f, 1.f, fade };
+    GLfloat bgOnColor [] = { 1.f, 1.f, 1.f, jmin(1.f, fade + hoverFade * 0.5f)};
     glBindTexture(GL_TEXTURE_2D, backgroundOnTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOnColor, 0);
     bgBatch.Draw();
@@ -369,15 +381,10 @@ void PadView::draw()
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
     textBatch.Draw();
     
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glEnable(GL_DEPTH_TEST);
 
     
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), padColor);
-    
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    padBatch.Draw();
 
     Environment::instance().modelViewMatrix.PopMatrix();
 }
