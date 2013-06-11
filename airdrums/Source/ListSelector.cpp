@@ -10,6 +10,8 @@
 #include "SkinManager.h"
 #include "Main.h"
 
+static const float sIconSpacing = 15.f;
+
 ListSelector::ListSelector(String name, bool left)
 : selection(0)
 , needsLayout(false)
@@ -17,7 +19,6 @@ ListSelector::ListSelector(String name, bool left)
 , hiddenX(0.f)
 , leftHanded(left)
 , enabled(false)
-, iconSpacing(0.f)
 , iconHeight(0.f)
 , maxVisibleIcons(20)
 {
@@ -51,10 +52,10 @@ ListSelector::ListSelector(String name, bool left)
         displayToggleButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_right"),
                                         SkinManager::instance().getSelectedSkin().getTexture("arrow_left"));
     
-    upButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_up"),
-                         SkinManager::instance().getSelectedSkin().getTexture("arrow_up"));
-    downButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_down"),
-                           SkinManager::instance().getSelectedSkin().getTexture("arrow_down"));
+    upButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_up_white"),
+                         SkinManager::instance().getSelectedSkin().getTexture("arrow_up_white"));
+    downButton.setTextures(SkinManager::instance().getSelectedSkin().getTexture("arrow_down_white"),
+                           SkinManager::instance().getSelectedSkin().getTexture("arrow_down_white"));
 
     upButton.setVisible(false);
     upButton.setButtonType(HUDButton::kMomentary);
@@ -91,8 +92,8 @@ void ListSelector::setBounds(const HUDRect &b)
                                           buttonWidth,
                                           buttonHeight));
 
-    buttonWidth = 50;
-    buttonHeight = 50;
+    buttonWidth = 35;
+    buttonHeight = 35;
 
     upButton.setBounds(HUDRect(b.w / 2.f - buttonWidth / 2.f,
                                b.h-buttonHeight,
@@ -106,7 +107,6 @@ void ListSelector::setBounds(const HUDRect &b)
 
     float maxIconWidth = getBounds().w - 10;
     iconHeight = 50.f;
-    iconSpacing = 10.f;
     
     // if any item exceeds max width, need to re-adjust height for all
     for (int i = 0; i < (int) icons.size(); ++i)
@@ -121,7 +121,8 @@ void ListSelector::setBounds(const HUDRect &b)
         }
     }
     
-    maxVisibleIcons = jmax(1, (int)((b.h - buttonHeight * 2) / (iconHeight + iconSpacing)));
+    iconHeight += sIconSpacing;
+    maxVisibleIcons = jmax(1, (int)((b.h - buttonHeight * 2) / iconHeight));
     updateVisibleIcons();
 
     // setup the icons' size
@@ -133,7 +134,7 @@ void ListSelector::setBounds(const HUDRect &b)
         if (td.imageH != 0)
             aspectRatio = (float)td.imageW / (float)td.imageH;
         
-        float width = iconHeight * aspectRatio;
+        float width = b.w;
         float height = iconHeight;
         icon->setBounds(HUDRect(0,
                                 0,
@@ -146,12 +147,10 @@ void ListSelector::setBounds(const HUDRect &b)
 
 void ListSelector::layoutIcons()
 {
-    iconSpacing = 10.f;
-
     int N = visibleIcons.size();
     
     HUDRect buttonRect(5,
-                       upButton.getBounds().y - iconHeight,
+                       upButton.getBounds().y - iconHeight - 5,
                        visibleIcons.at(0)->getBounds().w,
                        iconHeight);
     for (int i = 0; i < N; ++i)
@@ -165,7 +164,7 @@ void ListSelector::layoutIcons()
         else {
             icon->isSelected = false;
         }
-        buttonRect.y -= iconHeight + iconSpacing;
+        buttonRect.y -= iconHeight;
     }
 }
 
@@ -356,6 +355,8 @@ ListSelector::Icon::Icon(int inId)
     highlightView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("highlight"));
     highlightView.setMultiplyAlpha(true);
     highlightView.setVisible(false, 0);
+    
+    addChild(&imageView);
 }
 
 ListSelector::Icon::~Icon()
@@ -369,24 +370,36 @@ void ListSelector::Icon::draw()
         RelativeTime elapsed = Time::getCurrentTime() - lastTimerStartTime;
         float progress = elapsed.inMilliseconds() / (float)hoverTimeout;
         highlightView.setVisible(true,0);
-        highlightView.setBounds(HUDRect(-getBounds().x, -5, getParent()->getBounds().w * progress, getBounds().h + 10));
+        highlightView.setBounds(HUDRect(-getBounds().x, 0, getParent()->getBounds().w * progress, getBounds().h));
     }
     else
     {
         highlightView.setVisible(isSelected,0);
-        highlightView.setBounds(HUDRect(-getBounds().x, -5, (int)isSelected * getParent()->getBounds().w, getBounds().h + 10));
+        highlightView.setBounds(HUDRect(-getBounds().x, 0, (int)isSelected * getParent()->getBounds().w, getBounds().h));
     }
     
-    HUDButton::draw();
+    HUDView::draw();
 }
 
 void ListSelector::Icon::setBounds(const HUDRect &b)
 {
     HUDButton::setBounds(b);
     if (getParent())
-        highlightView.setBounds(HUDRect(-b.x,0,getParent()->getBounds().w,b.h));
+        highlightView.setBounds(HUDRect(0,0,b.w,b.h));
+    
+    TextureDescription td = imageView.getDefaultTexture();
+    float aspectRatio = td.imageW / (float)td.imageH;
+    float h = b.h - sIconSpacing;
+    float w = h * aspectRatio;
+    w -= 10.f;
+    h = w / aspectRatio;
+    imageView.setBounds(HUDRect(5,sIconSpacing / 2.f,w,h));
 }
 
+void ListSelector::Icon::setTextures(TextureDescription on, TextureDescription off)
+{
+    imageView.setDefaultTexture(on);
+}
 
 void ListSelector::Icon::updateBounds()
 {

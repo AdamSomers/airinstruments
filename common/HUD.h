@@ -86,7 +86,7 @@ public:
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }
-    void setTextures(TextureDescription on, TextureDescription off);
+    virtual void setTextures(TextureDescription on, TextureDescription off);
     void setRingTexture(TextureDescription tex);
     void loadTextures();
     void setTimeout(int newTimeout);

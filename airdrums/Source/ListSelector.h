@@ -43,6 +43,7 @@ public:
         ~Icon();
         void draw();
         void setBounds(const HUDRect& b);
+        void setTextures(TextureDescription on, TextureDescription off);
         int getId() const { return id; }
         HUDView highlightView;
         bool isSelected;
@@ -52,6 +53,7 @@ public:
         int id;
         HUDRect targetBounds;
         HUDRect tempBounds;
+        HUDView imageView;
     };
     
     void addIcon(Icon* icon);
@@ -68,7 +70,6 @@ private:
     float shownX;
     float hiddenX;
     bool enabled;
-    float iconSpacing;
     float iconHeight;
     int maxVisibleIcons;
     
