@@ -62,10 +62,6 @@ ListSelector::ListSelector(String name, bool left)
     downButton.setVisible(false);
     downButton.setButtonType(HUDButton::kMomentary);
     downButton.setTimeout(250);
-    
-    addChild(&highlightView);
-    highlightView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("highlight"));
-    highlightView.setMultiplyAlpha(true);
 }
 
 ListSelector::~ListSelector()
@@ -158,20 +154,19 @@ void ListSelector::layoutIcons()
                        upButton.getBounds().y - iconHeight,
                        visibleIcons.at(0)->getBounds().w,
                        iconHeight);
-    bool showHighlightView = false;
     for (int i = 0; i < N; ++i)
     {
         buttonRect.w = visibleIcons.at(i)->getBounds().w;
         Icon* icon = visibleIcons.at(i);
         icon->setBounds(buttonRect);
         if (icon->getId() == getSelection()) {
-            showHighlightView = true;
-            highlightView.setBounds(HUDRect(buttonRect.x - 5, buttonRect.y - 5, getBounds().w, buttonRect.h + 10));
+            icon->isSelected = true;
+        }
+        else {
+            icon->isSelected = false;
         }
         buttonRect.y -= iconHeight + iconSpacing;
     }
-    highlightView.setVisible(showHighlightView, 50);
-
 }
 
 void ListSelector::updateVisibleIcons()
@@ -355,7 +350,12 @@ void ListSelector::setEnabled(bool shouldBeEnabled)
 
 ListSelector::Icon::Icon(int inId)
 : id(inId)
+, isSelected(false)
 {
+    addChild(&highlightView);
+    highlightView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("highlight"));
+    highlightView.setMultiplyAlpha(true);
+    highlightView.setVisible(false, 0);
 }
 
 ListSelector::Icon::~Icon()
@@ -364,12 +364,27 @@ ListSelector::Icon::~Icon()
 
 void ListSelector::Icon::draw()
 {
+    if (isTimerRunning())
+    {
+        RelativeTime elapsed = Time::getCurrentTime() - lastTimerStartTime;
+        float progress = elapsed.inMilliseconds() / (float)hoverTimeout;
+        highlightView.setVisible(true,0);
+        highlightView.setBounds(HUDRect(-getBounds().x, -5, getParent()->getBounds().w * progress, getBounds().h + 10));
+    }
+    else
+    {
+        highlightView.setVisible(isSelected,0);
+        highlightView.setBounds(HUDRect(-getBounds().x, -5, (int)isSelected * getParent()->getBounds().w, getBounds().h + 10));
+    }
+    
     HUDButton::draw();
 }
 
 void ListSelector::Icon::setBounds(const HUDRect &b)
 {
     HUDButton::setBounds(b);
+    if (getParent())
+        highlightView.setBounds(HUDRect(-b.x,0,getParent()->getBounds().w,b.h));
 }
 
 

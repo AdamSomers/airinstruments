@@ -63,6 +63,9 @@ void HUDView::loadTextures()
 
 void HUDView::setVisible(bool shouldBeVisible, int fadeTimeMs /*= 500*/)
 {
+    if (shouldBeVisible == isVisible())
+        return;
+
     View2d::setVisible(shouldBeVisible, fadeTimeMs);
 
     for (HUDView* child : children)

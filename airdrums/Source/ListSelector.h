@@ -44,6 +44,9 @@ public:
         void draw();
         void setBounds(const HUDRect& b);
         int getId() const { return id; }
+        HUDView highlightView;
+        bool isSelected;
+
     private:
         void updateBounds();
         int id;
@@ -75,7 +78,6 @@ private:
     TextHUDButton displayToggleButton;
     HUDButton upButton;
     HUDButton downButton;
-    HUDView highlightView;
     HUDView tabView;
     
     Time displayChangeStart;

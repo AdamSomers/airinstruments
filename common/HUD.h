@@ -119,6 +119,10 @@ public:
     
     void timerCallback();
     
+protected:
+    Time lastTimerStartTime;
+    int hoverTimeout;
+    
 private:
     bool state;
     std::vector<Listener*> listeners;
@@ -132,9 +136,7 @@ private:
     TextureDescription offTextureDesc;
     float fade;
     GLBatch circleBatch;
-    Time lastTimerStartTime;
     TextureDescription ringTextureDesc;
-    int hoverTimeout;
     bool enabled;
     int buttonType;
 };
