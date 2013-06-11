@@ -10,6 +10,7 @@
 #define __AirBeats__ListSelector__
 
 #include "HUD.h"
+#include "TextButton.h"
 #include <deque>
 
 class ListSelector : public HUDView
@@ -17,7 +18,7 @@ class ListSelector : public HUDView
                    , public ChangeBroadcaster
 {
 public:
-    ListSelector(bool left = false);
+    ListSelector(String name, bool left = false);
     ~ListSelector();
     
     // HUDView overrides
@@ -71,10 +72,11 @@ private:
     std::vector<Icon*> icons;
     std::deque<Icon*> visibleIcons;
 
-    HUDButton displayToggleButton;
+    TextHUDButton displayToggleButton;
     HUDButton upButton;
     HUDButton downButton;
     HUDView highlightView;
+    HUDView tabView;
     
     Time displayChangeStart;
 };

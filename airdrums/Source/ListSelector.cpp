@@ -10,7 +10,7 @@
 #include "SkinManager.h"
 #include "Main.h"
 
-ListSelector::ListSelector(bool left)
+ListSelector::ListSelector(String name, bool left)
 : selection(0)
 , needsLayout(false)
 , shownX(0.f)
@@ -24,8 +24,18 @@ ListSelector::ListSelector(bool left)
     //setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("listSelectorBg"));
     
     displayToggleButton.addListener(this);
+    displayToggleButton.setText(StringArray(name), StringArray(name));
+    displayToggleButton.setTextColor(Colour::fromFloatRGBA(0.f,0.f,0.f,1.f));
+    displayToggleButton.setBackgroundColor(Colour::fromFloatRGBA(0.f,0.f,0.f,0.f));
     upButton.addListener(this);
     downButton.addListener(this);
+
+    addChild(&tabView);
+    if (leftHanded)
+        tabView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("tableft"));
+    else
+        tabView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("tabright"));
+    
     addChild(&displayToggleButton);
     addChild(&upButton);
     addChild(&downButton);
@@ -70,13 +80,24 @@ void ListSelector::setBounds(const HUDRect &b)
 {
     HUDView::setBounds(b);
     
-    float buttonWidth = 50.f;
-    float buttonHeight = 50.f;
-    float x = leftHanded ? b.w + 10 : -buttonWidth - 10;
-    displayToggleButton.setBounds(HUDRect(x,
+    float tabHeight = b.h/2.f;
+    float tabWidth = tabHeight/2.f;
+    float tabX = leftHanded ? b.w : -tabWidth;
+    
+    tabView.setBounds(HUDRect(tabX, b.h / 2.f - tabHeight / 2.f, tabWidth, tabHeight));
+    
+    float buttonWidth = tabWidth;
+    float buttonHeight = tabWidth;
+    float buttonX = leftHanded ? b.w : -buttonWidth;
+    
+    displayToggleButton.setBounds(HUDRect(buttonX,
                                           b.h / 2.f - buttonHeight / 2.f,
                                           buttonWidth,
                                           buttonHeight));
+
+    buttonWidth = 50;
+    buttonHeight = 50;
+
     upButton.setBounds(HUDRect(b.w / 2.f - buttonWidth / 2.f,
                                b.h-buttonHeight,
                                buttonWidth,

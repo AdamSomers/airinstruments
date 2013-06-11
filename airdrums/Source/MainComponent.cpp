@@ -279,7 +279,7 @@ void MainContentComponent::newOpenGLContextCreated()
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
-    kitSelector = new ListSelector(true);
+    kitSelector = new ListSelector("Kits", true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
     {
@@ -292,7 +292,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     views.push_back(kitSelector);
     
-    patternSelector = new ListSelector;
+    patternSelector = new ListSelector("Patterns");
     populatePatternSelector();
     
     views.push_back(patternSelector);
