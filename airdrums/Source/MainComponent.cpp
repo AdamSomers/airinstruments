@@ -23,7 +23,7 @@
 
 #include "MainComponent.h"
 
-#define NUM_PADS 16
+#define NUM_PADS 6
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
 #define SPLASH_FADE 1500
@@ -221,20 +221,31 @@ void MainContentComponent::newOpenGLContextCreated()
     //glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
+    
+    const String defaultPadColors[6] = { "ff8080ff", "ffff8080", "ff080ff80", "ff80ffff", "ffff80ff", "ffffff80" };
 
-#if 0
+#if 1
     for (int i = 0; i < NUM_PADS; ++i)
     {
         PadView* pv = new PadView;
         pv->setup();
         pv->padNum = i;
         pads.push_back(pv);
+
+        int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNote" + String(i), i);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
+        pv->setSelectedMidiNote(midiNote);
+        
+        String color = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("padColor" + String(i), defaultPadColors[i]);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("padColor" + String(i), color);
+        
+        pv->setColor(Colour::fromString(color));
     }
-    layoutPadsLinear();
+    layoutPadsGrid();
 #endif
     
-    Environment::instance().cameraFrame.TranslateWorld(0, -.75, 0);
-    Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
+    Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
+    //Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
     PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-50), 1, 0, 0);
 
     glEnable(GL_DEPTH_TEST);
@@ -254,9 +265,7 @@ void MainContentComponent::newOpenGLContextCreated()
     drumSelector = new DrumSelector;
     drumSelector->addActionListener(this);
     views.push_back(drumSelector);
-    
-    const String defaultPadColors[6] = { "ff8080ff", "ffff8080", "ff080ff80", "ff80ffff", "ffff80ff", "ffffff80" };
-    
+
     for (int i = 0; i < 6; ++i)
     {
         PlayArea* pad = new PlayArea(i);
@@ -270,7 +279,7 @@ void MainContentComponent::newOpenGLContextCreated()
         pad->setColor(Colour::fromString(color));
 
         playAreas.push_back(pad);
-        views.push_back(pad);
+        //views.push_back(pad);
         pad->addActionListener(this);
         
         drumSelector->setPadAssociation(midiNote, i);
@@ -650,8 +659,8 @@ void MainContentComponent::renderOpenGL()
 
         
 
-#if 0
-        layoutPadsLinear();
+#if 1
+        layoutPadsGrid();
 #endif
         sizeChanged = false;
     }
@@ -664,17 +673,7 @@ void MainContentComponent::renderOpenGL()
     
     if ((Time::getCurrentTime() - startTime).inMinutes() > 30)
         BETA_CHECK_RANDOM_2014()
-    
-    glEnable(GL_MULTISAMPLE);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    
+
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -682,7 +681,7 @@ void MainContentComponent::renderOpenGL()
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
 
-#if 0
+#if 1
     Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mCamera;
@@ -722,6 +721,16 @@ void MainContentComponent::renderOpenGL()
     Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
     Environment::instance().modelViewMatrix.PopMatrix(); // camera
 #endif
+    
+    glEnable(GL_MULTISAMPLE);
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     
     // go 2d
 	Environment::instance().viewFrustum.SetOrthographic(0, (GLfloat) Environment::instance().screenW, 0.0f, (GLfloat) Environment::instance().screenH, 800.0f, -800.0f);
@@ -775,23 +784,25 @@ void MainContentComponent::layoutPadsGrid()
     float bottom = -1.2f;
     float width = right - left;
     float height = top - bottom - .2f;
-    float padWidth = width / 4.f;
-    float padHeight = height / 4.f;
+    float padWidth = width / 3.f;
+    float padHeight = height / 2.f;
+    padWidth = padHeight;
     float initialX = left + padWidth / 2.f;
     float initialY = top;
-    for (int i = 0; i < NUM_PADS; ++i)
+    for (int i = NUM_PADS; i > 0; --i)
     {
-        int padInRow = i % 4;
-        int row = i / 4;
+        int padInRow = (i-1) % 3;
+        int row = (i-1) / 3;
         float xpos = padWidth * padInRow + initialX;
         float ypos = -padHeight * row + initialY;
-        pads.at(i)->objectFrame.SetOrigin(xpos, ypos, 0);
-        pads.at(i)->padWidth = padWidth-0.05f;
-        pads.at(i)->padHeight = padHeight-0.05f;
-        pads.at(i)->update();
+        pads.at(NUM_PADS-i)->objectFrame.SetOrigin(xpos, ypos, 0);
+        pads.at(NUM_PADS-i)->padWidth = padWidth-0.05f;
+        pads.at(NUM_PADS-i)->padHeight = padHeight-0.05f;
+        pads.at(NUM_PADS-i)->update();
     }
     // Move the pads back -12
-    PadView::padSurfaceFrame.SetOrigin(0,0,-12);
+    //PadView::padSurfaceFrame.SetOrigin(0,0,-12);
+    PadView::padSurfaceFrame.SetOrigin(.3,0,-10);
 }
 
 void MainContentComponent::layoutPadsLinear()
@@ -1001,6 +1012,7 @@ void MainContentComponent::incPadAssociation(int padNumber, int inc)
 
     drumSelector->setPadAssociation(note, padNumber);
     playAreas.at(padNumber)->setSelectedMidiNote(drumSelector->getNoteForPad(padNumber));
+    pads.at(padNumber)->setSelectedMidiNote(drumSelector->getNoteForPad(padNumber));
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(padNumber), drumSelector->getNoteForPad(padNumber));
 }
 
@@ -1018,6 +1030,8 @@ void MainContentComponent::changeListenerCallback(ChangeBroadcaster *source)
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", uuidString);
         Drums::instance().setDrumKit(selectedKit);
         for (PlayArea* pad : playAreas)
+            pad->setSelectedMidiNote(pad->getSelectedMidiNote());
+        for (PadView* pad : pads)
             pad->setSelectedMidiNote(pad->getSelectedMidiNote());
     }
     else if (selector && selector == patternSelector) {
@@ -1045,6 +1059,8 @@ void MainContentComponent::changeListenerCallback(ChangeBroadcaster *source)
             AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", kit->GetName());
             AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", kit->GetUuid().toString());
             for (PlayArea* pad : playAreas)
+                pad->setSelectedMidiNote(pad->getSelectedMidiNote());
+            for (PadView* pad : pads)
                 pad->setSelectedMidiNote(pad->getSelectedMidiNote());
         }
         else
@@ -1298,6 +1314,8 @@ void MainContentComponent::actionListenerCallback(const String& message)
         jassert(padNumber >= 0 && padNumber < (int)playAreas.size());
         PlayArea* playArea = playAreas.at(padNumber);
         playArea->setSelectedMidiNote(drumSelector->getSelection());
+        PadView* pv = pads.at(padNumber);
+        pv->setSelectedMidiNote(drumSelector->getSelection());
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
         drumSelector->setPadAssociation(drumSelector->getSelection(), playArea->getId());
         for (PlayArea* pad : playAreas)

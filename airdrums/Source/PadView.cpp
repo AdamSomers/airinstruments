@@ -1,4 +1,6 @@
 #include "PadView.h"
+#include "SkinManager.h"
+#include "Main.h"
 
 GLFrame PadView::padSurfaceFrame;
 
@@ -7,16 +9,23 @@ PadView::PadView() :
 , padWidth(0.1f)
 , padHeight(0.1f)
 , fade(1.f)
-, redFade(0.f)
 , padDepth(0.025f)
+, selectedMidiNote(0)
 {
+    backgroundOnTexture = SkinManager::instance().getSelectedSkin().getTexture("pad_on");
+    backgroundOffTexture = SkinManager::instance().getSelectedSkin().getTexture("pad_off");
+    setSelectedMidiNote(0);
+    iconColor[0] = 1.f;
+    iconColor[1] = 1.f;
+    iconColor[2] = 1.f;
+    iconColor[3] = 1.f;
 }
 
 PadView::~PadView()
 {
 }
 
-void PadView::makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
+void PadView::makePadMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 {
     float top = padHeight / 2.f;
     float bottom = -padHeight / 2.f;
@@ -135,25 +144,192 @@ void PadView::makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
     memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
 }
 
+void PadView::makeSurfaceMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
+{
+    float top = padHeight / 2.f;
+    float bottom = -padHeight / 2.f;
+    float left = -padWidth / 2.f;
+    float right = padWidth / 2.f;
+    float depth = 0.1f;
+    float front = -depth / 2.f;
+    float back = depth / 2.f;
+    
+    M3DVector3f verts[4] = {
+        left, bottom, back,
+        right, bottom, back,
+        left, top, back,
+        right, top, back
+    };
+    
+    M3DVector3f normals[4] = {
+        // top
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f
+    };
+    
+    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+}
+
+void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
+{
+    float top = padHeight / 4.f + padHeight / 10.f;
+    float bottom = -padHeight / 4.f;
+    float left = -padWidth / 4.f;
+    float right = padWidth / 4.f;
+    float depth = 0.1f;
+    float front = -depth / 4.f;
+    float back = depth / 4.f;
+    
+    M3DVector3f verts[4] = {
+        left, bottom, back,
+        right, bottom, back,
+        left, top, back,
+        right, top, back
+    };
+    
+    M3DVector3f normals[4] = {
+        // top
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f
+    };
+    
+    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+}
+
+void PadView::makeTextMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
+{
+    float bottom = -padHeight / 2.f + padHeight / 20.f;
+    float aspectRatio = textTexture.imageW / textTexture.imageH;
+    float top = bottom + padHeight / 10.f;
+
+    float width = (padHeight / 10.f) * aspectRatio;
+    float left = -width / 2.f;
+    float right = width / 2.f;
+    float depth = 0.1f;
+    float front = -depth / 2.f;
+    float back = depth / 2.f;
+    
+    M3DVector3f verts[4] = {
+        left, bottom, back,
+        right, bottom, back,
+        left, top, back,
+        right, top, back
+    };
+    
+    M3DVector3f normals[4] = {
+        // top
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f
+    };
+    
+    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+}
+
 void PadView::setup()
 {
  
     M3DVector3f verts[numVerts];
     M3DVector3f normals[numVerts];
-    makeMesh(verts, normals);
+    makePadMesh(verts, normals);
     padBatch.Begin(GL_TRIANGLES, numVerts);
     padBatch.CopyVertexData3f(verts);
     padBatch.CopyNormalDataf(normals);
     padBatch.End();
+    
+    M3DVector3f bgVerts[4];
+    M3DVector3f bgNormals[4];
+    M3DVector2f bgTexCoords[4] = {
+        backgroundOnTexture.texX, backgroundOnTexture.texY + backgroundOnTexture.texH,
+        backgroundOnTexture.texX + backgroundOnTexture.texW, backgroundOnTexture.texY + backgroundOnTexture.texH,
+        backgroundOnTexture.texX, backgroundOnTexture.texY,
+        backgroundOnTexture.texX + backgroundOnTexture.texW, backgroundOnTexture.texY
+    };
+    makeSurfaceMesh(bgVerts, bgNormals);
+    bgBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    bgBatch.CopyVertexData3f(bgVerts);
+    bgBatch.CopyNormalDataf(bgNormals);
+    bgBatch.CopyTexCoordData2f(bgTexCoords, 0);
+    bgBatch.End();
+    
+    M3DVector3f iconVerts[4];
+    M3DVector3f iconNormals[4];
+    M3DVector2f iconTexCoords[4] = {
+        iconTexture.texX, iconTexture.texY + iconTexture.texH,
+        iconTexture.texX + iconTexture.texW, iconTexture.texY + iconTexture.texH,
+        iconTexture.texX, iconTexture.texY,
+        iconTexture.texX + iconTexture.texW, iconTexture.texY
+    };
+    makeIconMesh(iconVerts, iconNormals);
+    iconBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    iconBatch.CopyVertexData3f(iconVerts);
+    iconBatch.CopyNormalDataf(iconNormals);
+    iconBatch.CopyTexCoordData2f(iconTexCoords, 0);
+    iconBatch.End();
+    
+    M3DVector3f textVerts[4];
+    M3DVector3f textnNormals[4];
+    M3DVector2f textTexCoords[4] = {
+        textTexture.texX, textTexture.texY + textTexture.texH,
+        textTexture.texX + textTexture.texW, textTexture.texY + textTexture.texH,
+        textTexture.texX, textTexture.texY,
+        textTexture.texX + textTexture.texW, textTexture.texY
+    };
+    makeTextMesh(textVerts, textnNormals);
+    textBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
+    textBatch.CopyVertexData3f(textVerts);
+    textBatch.CopyNormalDataf(textnNormals);
+    textBatch.CopyTexCoordData2f(textTexCoords, 0);
+    textBatch.End();
 }
 
 void PadView::update()
 {
-    M3DVector3f verts[numVerts];
-    M3DVector3f normals[numVerts];
-    makeMesh(verts, normals);
-    padBatch.CopyVertexData3f(verts);
-    padBatch.CopyNormalDataf(normals);
+    M3DVector3f padVerts[numVerts];
+    M3DVector3f padNormals[numVerts];
+    makePadMesh(padVerts, padNormals);
+    padBatch.CopyVertexData3f(padVerts);
+    padBatch.CopyNormalDataf(padNormals);
+    
+    M3DVector3f bgVerts[4];
+    M3DVector3f bgNormals[4];
+    makeSurfaceMesh(bgVerts, bgNormals);
+    bgBatch.CopyVertexData3f(bgVerts);
+    bgBatch.CopyNormalDataf(bgNormals);
+    
+    M3DVector3f iconVerts[4];
+    M3DVector3f iconNormals[4];
+    makeIconMesh(iconVerts, iconNormals);
+    M3DVector2f iconTexCoords[4] = {
+        iconTexture.texX, iconTexture.texY + iconTexture.texH,
+        iconTexture.texX + iconTexture.texW, iconTexture.texY + iconTexture.texH,
+        iconTexture.texX, iconTexture.texY,
+        iconTexture.texX + iconTexture.texW, iconTexture.texY
+    };
+    iconBatch.CopyVertexData3f(iconVerts);
+    iconBatch.CopyNormalDataf(iconNormals);
+    iconBatch.CopyTexCoordData2f(iconTexCoords, 0);
+    
+    M3DVector3f textVerts[4];
+    M3DVector3f textnNormals[4];
+    M3DVector2f textTexCoords[4] = {
+        textTexture.texX, textTexture.texY + textTexture.texH,
+        textTexture.texX + textTexture.texW, textTexture.texY + textTexture.texH,
+        textTexture.texX, textTexture.texY,
+        textTexture.texX + textTexture.texW, textTexture.texY
+    };
+    makeTextMesh(textVerts, textnNormals);
+    textBatch.CopyVertexData3f(textVerts);
+    textBatch.CopyNormalDataf(textnNormals);
+    textBatch.CopyTexCoordData2f(textTexCoords, 0);
 }
 
 void PadView::draw()
@@ -163,27 +339,85 @@ void PadView::draw()
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     
-    GLfloat padColor [] = { 0.7f + redFade, 0.7f, 1.f, 0.3f + fade * 0.5f };
-    if (pointers.size() > 0) {
-        if (fade < 1.f)
-            fade += 0.3f;
-    }
-    else if (fade > 0.f)
+    GLfloat padColor [] = { 1.f, 1.f, 1.f, 0.3f + fade * 0.25f };
+//    if (pointers.size() > 0) {
+//        if (fade < 1.f)
+//            fade += 0.3f;
+//    }
+    if (fade > 0.f)
         fade -= 0.05f;
     
-    if (redFade > 0.f)
-        redFade -= 0.05f;
+    glDisable(GL_DEPTH_TEST);
+
+    GLfloat bgOffColor [] = { 1.f, 1.f, 1.f, 1.f };
+    glBindTexture(GL_TEXTURE_2D, backgroundOffTexture.textureId);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
+    bgBatch.Draw();
+
+    GLfloat bgOnColor [] = { 1.f, 1.f, 1.f, fade };
+    glBindTexture(GL_TEXTURE_2D, backgroundOnTexture.textureId);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOnColor, 0);
+    bgBatch.Draw();
+
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
+    glBindTexture(GL_TEXTURE_2D, iconTexture.textureId);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), iconColor, 0);
+    iconBatch.Draw();
+
+    glBindTexture(GL_TEXTURE_2D, textTexture.textureId);
+    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
+    textBatch.Draw();
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glEnable(GL_DEPTH_TEST);
+
     
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), padColor);
-
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     padBatch.Draw();
+
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
 void PadView::triggerDisplay(float amount)
 {
     fade = amount;
+}
+
+void PadView::setSelectedMidiNote(int note)
+{
+    if (note >= Drums::instance().getNumNotes())
+        note = 0;
+    else if (note < 0)
+        note = Drums::instance().getNumNotes() - 1;
+    selectedMidiNote = note;
+    
+    TextureDescription iconTextureDesc;
+    TextureDescription categoryTextureDesc;
+    String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
+    if (kitUuidString != "Default") {
+        Uuid kitUuid(kitUuidString);
+        iconTexture = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(kitUuid)->GetSample(selectedMidiNote)->GetCategory();
+        textTexture = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+        
+    }
+    else {
+        iconTexture = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetTexture(true);
+        String category = KitManager::GetInstance().GetItem(0)->GetSample(selectedMidiNote)->GetCategory();
+        textTexture = SkinManager::instance().getSelectedSkin().getTexture("Text_" + category);
+    }
+}
+
+void PadView::setColor(const Colour& color)
+{
+    iconColor[0] = color.getFloatRed();
+    iconColor[1] = color.getFloatGreen();
+    iconColor[2] = color.getFloatBlue();
+    iconColor[3] = color.getFloatAlpha();
 }
 
 bool PadView::hitTest(const M3DVector3f& point)
@@ -203,79 +437,4 @@ bool PadView::hitTest(const M3DVector3f& point)
         return true;
     else
         return false;
-}
-
-void PadView::tap(float velocity)
-{
-    Drums::instance().NoteOn(padNum,velocity);
-}
-
-void PadView::circleBack()
-{
-    redFade = 1.f;
-    Drums::instance().clearTrack(padNum);
-}
-
-void PadView::updatePointedState(FingerView* inFingerView)
-{
-    M3DVector3f point;
-    M3DVector3f ray;
-    inFingerView->objectFrame.GetOrigin(point);
-    inFingerView->objectFrame.GetForwardVector(ray);
-    
-    M3DVector3f prevPoint;
-    inFingerView->prevFrame.GetOrigin(prevPoint);
-
-    M3DVector3f center;
-    objectFrame.GetOrigin(center);
-    M3DVector3f transformedCenter;
-    M3DMatrix44f cameraMatrix;
-    Environment::instance().cameraFrame.GetMatrix(cameraMatrix);
-    m3dTransformVector3(transformedCenter, center, cameraMatrix);
-
-    if (fabsf(point[0] - transformedCenter[0]) < padWidth / 2.f ) {
-        fingerPointing(inFingerView);
-        //triggerDisplay(0.5f);
-    }
-    else
-        fingerNotPointing(inFingerView);
-    
-    
-    for (int i = 0; i < 6; ++i)
-    {
-        // TODO
-#if 0
-        // Get surface rect
-        
-        // Calculate collision distance of finger ray with surface rect
-        M3DVector3f collisionPoint;
-        M3DVector3f pNormal = { 0.f, 0.f, -1.f };
-        m3dNormalizeVector3(ray);
-        transformedCenter[0] -= padWidth / 2.f;
-        GfxTools::collide(point, ray, transformedCenter, pNormal, collisionPoint);
-        float distance = fabsf(collisionPoint[0] - transformedCenter[0]);
-        // check that distance is within rect
-        if (distance < padWidth / 2.f)
-        {
-            fingerPointing(inFingerView);
-            triggerDisplay();
-        }
-        else
-        {
-            fingerNotPointing(inFingerView);
-        }
-#endif
-    }
-
-#if 0
-    // When finger passes through pad volume, play the note
-    if (hitTest(point) && !hitTest(prevPoint) &&
-        prevPoint[1] > point[1])
-    {
-        //fade = 1.f;
-        printf("trigger %d\n", padNum);
-        Drums::instance().NoteOn(padNum,1.f);
-    }
-    
-#endif
 }
