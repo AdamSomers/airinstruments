@@ -9,6 +9,11 @@
 #include "CursorView.h"
 #include "MotionServer.h"
 
+#if JUCE_WINDOWS
+   #include <float.h>
+   #define isnan _isnan
+#endif
+
 CursorView::CursorView()
 : x(0.f)
 , y(0.f)
