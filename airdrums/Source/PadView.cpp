@@ -173,8 +173,8 @@ void PadView::makeSurfaceMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
         0.0f, 0.0f, -1.0f
     };
     
-    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
-    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+    memcpy(inVerts, verts, 4*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, 4*sizeof(M3DVector3f));
 }
 
 void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
@@ -210,8 +210,8 @@ void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
         0.0f, 0.0f, -1.0f
     };
     
-    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
-    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+    memcpy(inVerts, verts, 4*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, 4*sizeof(M3DVector3f));
 }
 
 void PadView::makeTextMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
@@ -246,8 +246,8 @@ void PadView::makeTextMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
         0.0f, 0.0f, -1.0f
     };
     
-    memcpy(inVerts, verts, numVerts*sizeof(M3DVector3f));
-    memcpy(inNorms, normals, numVerts*sizeof(M3DVector3f));
+    memcpy(inVerts, verts, 4*sizeof(M3DVector3f));
+    memcpy(inNorms, normals, 4*sizeof(M3DVector3f));
 }
 
 void PadView::setup()
