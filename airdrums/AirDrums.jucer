@@ -122,6 +122,8 @@
       <FILE id="JWGoNP" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="Z24b7x" name="MainMenu.cpp" compile="1" resource="0" file="Source/MainMenu.cpp"/>
       <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
+      <FILE id="H2eVXq" name="MainView.cpp" compile="1" resource="0" file="Source/MainView.cpp"/>
+      <FILE id="zz0ZNC" name="MainView.h" compile="0" resource="0" file="Source/MainView.h"/>
       <FILE id="njk3KC" name="PadView.cpp" compile="1" resource="0" file="Source/PadView.cpp"/>
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
       <FILE id="Z4tGU6" name="PatternLoadDialog.cpp" compile="1" resource="0"

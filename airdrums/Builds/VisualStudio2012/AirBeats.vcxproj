@@ -184,6 +184,7 @@
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainMenu.cpp"/>
+    <ClCompile Include="..\..\Source\MainView.cpp"/>
     <ClCompile Include="..\..\Source\PadView.cpp"/>
     <ClCompile Include="..\..\Source\PatternLoadDialog.cpp"/>
     <ClCompile Include="..\..\Source\PatternManager.cpp"/>
@@ -1316,6 +1317,7 @@
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainMenu.h"/>
+    <ClInclude Include="..\..\Source\MainView.h"/>
     <ClInclude Include="..\..\Source\PadView.h"/>
     <ClInclude Include="..\..\Source\PatternLoadDialog.h"/>
     <ClInclude Include="..\..\Source\PatternManager.h"/>

@@ -10,7 +10,7 @@
 #include "Drums.h"
 #include "GfxTools.h"
 
-class PadView : public FingerView::Listener
+class PadView
 {
 public:
     PadView();
@@ -19,11 +19,12 @@ public:
     void update();
     void draw();
     void triggerDisplay(float amount = 1.f);
-    
-    // FingerView::Listener overrides
-    void updatePointedState(FingerView* inFingerView);
-    void tap(float velocity);
-    void circleBack();
+    void setSelectedMidiNote(int note);
+    int getSelectedMidiNote() const { return selectedMidiNote; }
+    void setColor(const Colour& color);
+    void setHovering(bool hover) { hovering = hover; }
+    void getScreenPos(M3DVector2f& inVec);
+    void tap(int midiNote);
 
     GLFrame objectFrame;
     int padNum;
@@ -35,12 +36,32 @@ public:
 private:
     bool hitTest(const M3DVector3f& point);
     
+    int selectedMidiNote;
+    int id;
+    
     static const int numVerts = 36;
-    void makeMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
+    void makePadMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
+    void makeSurfaceMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
+    void makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
+    void makeTextMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);
+
     GLBatch     padBatch;
     float fade;
-    float redFade;
+    Time fadeStartTime;
+    float hoverFade;
+    float iconRotation;
     float padDepth;
+    GLBatch bgBatch;
+    TextureDescription backgroundOnTexture;
+    TextureDescription backgroundOffTexture;
+    
+    GLBatch textBatch;
+    TextureDescription textTexture;
+    GLBatch iconBatch;
+    TextureDescription iconTexture;
+    GLfloat iconColor[4];
+    
+    bool hovering;
 };
 
 #endif // h_PadView
