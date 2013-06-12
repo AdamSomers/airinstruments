@@ -433,6 +433,9 @@
     <ClCompile Include="..\..\Source\MainMenu.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\MainView.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PadView.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1780,6 +1783,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainMenu.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainView.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">
