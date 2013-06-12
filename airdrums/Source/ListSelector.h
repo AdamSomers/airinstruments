@@ -16,6 +16,7 @@
 class ListSelector : public HUDView
                    , public HUDButton::Listener
                    , public ChangeBroadcaster
+                   , public MessageListener
 {
 public:
     ListSelector(String name, bool left = false);
@@ -35,6 +36,12 @@ public:
     
     void setEnabled(bool shouldBeEnabled);
     bool isEnabled() const { return enabled; }
+
+    // MessageListener override
+    void handleMessage(const Message& m);
+
+    class ScrollUpMessage : public Message {};
+    class ScrollDownMessage : public Message {};
     
     class Icon : public HUDButton
     {

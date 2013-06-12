@@ -305,22 +305,14 @@ void ListSelector::buttonStateChanged(HUDButton *b)
     {
         if (visibleIcons.front()->getId() > 0)
         {
-            visibleIcons.push_front(icons.at(visibleIcons.front()->getId() - 1));
-            addChild(visibleIcons.front());
-            removeChild(visibleIcons.back());
-            visibleIcons.pop_back();
-            needsLayout = true;
+             postMessage(new ScrollUpMessage);
         }
     }
     else if (b == &downButton)
     {
         if (visibleIcons.back()->getId() < icons.size() - 1)
         {
-            visibleIcons.push_back(icons.at(visibleIcons.back()->getId() + 1));
-            addChild(visibleIcons.back());
-            removeChild(visibleIcons.front());
-            visibleIcons.pop_front();
-            needsLayout = true;
+            postMessage(new ScrollDownMessage);
         }
     }
     else
@@ -346,7 +338,29 @@ void ListSelector::setEnabled(bool shouldBeEnabled)
     displayChangeStart = Time::getCurrentTime();
 }
 
-
+void ListSelector::handleMessage(const juce::Message &m)
+{
+    Message* inMsg = const_cast<Message*>(&m);
+    ScrollUpMessage* scrollUpMessage = dynamic_cast<ScrollUpMessage*>(inMsg);
+    if (scrollUpMessage)
+    {
+         visibleIcons.push_front(icons.at(visibleIcons.front()->getId() - 1));
+         addChild(visibleIcons.front());
+         removeChild(visibleIcons.back());
+         visibleIcons.pop_back();
+         needsLayout = true;
+    }
+    
+    ScrollDownMessage* scrollDownMessage = dynamic_cast<ScrollDownMessage*>(inMsg);
+    if (scrollDownMessage)
+    {
+         visibleIcons.push_back(icons.at(visibleIcons.back()->getId() + 1));
+         addChild(visibleIcons.back());
+         removeChild(visibleIcons.front());
+         visibleIcons.pop_front();
+         needsLayout = true;
+    }
+}
 ListSelector::Icon::Icon(int inId)
 : id(inId)
 , isSelected(false)
