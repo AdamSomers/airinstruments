@@ -43,12 +43,14 @@ CursorView::~CursorView()
     
 }
 
-void CursorView::setPosition(float x, float y)
+void CursorView::setPosition(float inX, float inY)
 {
     stopTimer(kTimerNoChange);
     startTimer(kTimerNoChange, 500);
-    targetX = x;
-    targetY = y;
+    if (isnan(inX)) inX = 0;
+    if (isnan(inY)) inY = 0;
+    targetX = inX;
+    targetY = inY;
 }
 
 void CursorView::setEnabled(bool shouldBeEnabled)
