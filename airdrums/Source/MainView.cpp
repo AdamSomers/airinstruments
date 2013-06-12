@@ -55,12 +55,12 @@ void MainView::setBounds(const HUDRect& b)
 
 void MainView::buttonStateChanged(HUDButton* b)
 {
-    for (int i = 0; i < assignButtons.size(); ++i)
+    for (int i = 0; i < (int)assignButtons.size(); ++i)
     {
         if (b == assignButtons.at(i).get())
             sendActionMessage("assign/" + String(b->getId()));
     }
-    for (int i = 0; i < clearButtons.size(); ++i)
+    for (int i = 0; i < (int)clearButtons.size(); ++i)
     {
         if (b == clearButtons.at(i).get())
             sendActionMessage("clear/" + String(b->getId()));
@@ -69,7 +69,7 @@ void MainView::buttonStateChanged(HUDButton* b)
 
 void MainView::setPadPos(int padIndex, GLfloat x, GLfloat y)
 {
-    if (padIndex < 0 || padIndex >= assignButtons.size()) {
+    if (padIndex < 0 || padIndex >= (int)assignButtons.size()) {
         Logger::writeToLog("Error: tried to set pad pos out of range");
         return;
     }

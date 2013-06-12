@@ -184,7 +184,7 @@ void ListSelector::updateVisibleIcons()
         visibleIcons.push_back(icons.at(i));
         addChild(icons.at(i));
     }
-    if (icons.size() > maxVisibleIcons) {
+    if ((int)icons.size() > maxVisibleIcons) {
         upButton.setVisible(true);
         downButton.setVisible(true);
     }
@@ -197,7 +197,7 @@ void ListSelector::updateVisibleIcons()
 
 void ListSelector::updateBounds()
 {
-    int elapsed = (Time::getCurrentTime() - displayChangeStart).inMilliseconds();
+    int elapsed = (int)(Time::getCurrentTime() - displayChangeStart).inMilliseconds();
     float progress = elapsed / 500.f;
     float ease = 0.5f * sinf(3.14159f*progress - 3.14159f/2.f) + 0.5f;
     float x = 0.f;
@@ -219,12 +219,12 @@ void ListSelector::updateBounds()
 void ListSelector::addIcon(Icon *icon)
 {
     icons.push_back(icon);
-    if (visibleIcons.size() < maxVisibleIcons) {
+    if ((int)visibleIcons.size() < maxVisibleIcons) {
         visibleIcons.push_back(icon);
         addChild(icon);
     }
 
-    if (icons.size() > maxVisibleIcons) {
+    if ((int)icons.size() > maxVisibleIcons) {
         upButton.setVisible(true);
         downButton.setVisible(true);
     }
@@ -273,7 +273,7 @@ void ListSelector::setSelection(int sel)
         visibleIcons.clear();
         if (selection < first)
         {
-            jassert(selection + maxVisibleIcons < icons.size());
+            jassert(selection + maxVisibleIcons < (int)icons.size());
             for (int i = selection; i < selection + maxVisibleIcons; ++i)
             {
                 visibleIcons.push_back(icons.at(i));
@@ -283,7 +283,7 @@ void ListSelector::setSelection(int sel)
         else if (selection > last)
         {
             int start = selection - maxVisibleIcons;
-            jassert(start + maxVisibleIcons < icons.size());
+            jassert(start + maxVisibleIcons < (int)icons.size());
             for (int i = start; i < start + maxVisibleIcons; ++i)
             {
                 visibleIcons.push_back(icons.at(i));
@@ -314,7 +314,7 @@ void ListSelector::buttonStateChanged(HUDButton *b)
     }
     else if (b == &downButton)
     {
-        if (visibleIcons.back()->getId() < icons.size() - 1)
+        if (visibleIcons.back()->getId() < (int)icons.size() - 1)
         {
             visibleIcons.push_back(icons.at(visibleIcons.back()->getId() + 1));
             addChild(visibleIcons.back());

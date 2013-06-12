@@ -23,6 +23,8 @@
 
 #include "MainComponent.h"
 
+#include <algorithm>
+
 #define NUM_PADS 6
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
@@ -469,7 +471,7 @@ void MainContentComponent::renderOpenGL()
     }
     
     // arrange clear/assign buttons.  should happen only when size changed but that isn't initing correctly
-    for (int i = 0; i < pads.size(); ++i)
+    for (int i = 0; i < (int)pads.size(); ++i)
     {
         Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
         M3DVector2f padScreenPos;
@@ -493,7 +495,7 @@ void MainContentComponent::renderOpenGL()
         const float tutorialHeight = 500.f;
         
         if (mainView) {
-            mainView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+            mainView->setBounds(HUDRect(0.f,0.f,(float)Environment::instance().screenW,(float)Environment::instance().screenH));
         }
 
         if (tutorial)
@@ -674,7 +676,7 @@ void MainContentComponent::renderOpenGL()
             kitSelector->setXRange(shownX, hiddenX);
         }
         
-        hiddenX = Environment::instance().screenW;
+        hiddenX = (float)Environment::instance().screenW;
         shownX = Environment::instance().screenW - width;
         if (patternSelector) {
             patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
@@ -821,7 +823,7 @@ void MainContentComponent::layoutPadsGrid()
     }
     // Move the pads back -12
     //PadView::padSurfaceFrame.SetOrigin(0,0,-12);
-    PadView::padSurfaceFrame.SetOrigin(.3,-.40,-10);
+    PadView::padSurfaceFrame.SetOrigin(.3f,-.40f,-10.f);
 }
 
 void MainContentComponent::layoutPadsLinear()
@@ -905,7 +907,7 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
 //    prevMouseX = (float) e.getPosition().x;
 }
 
-void MainContentComponent::mouseWheelMove (const MouseEvent& /*e*/, const MouseWheelDetails& wheel)
+void MainContentComponent::mouseWheelMove (const MouseEvent& /*e*/, const MouseWheelDetails& /*wheel*/)
 {
 //    Environment::instance().cameraFrame.TranslateWorld(0, wheel.deltaY*4,wheel.deltaY*4);
 }

@@ -155,7 +155,7 @@ void PadView::makeSurfaceMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
     float left = -padWidth / 2.f;
     float right = padWidth / 2.f;
     float depth = 0.1f;
-    float front = -depth / 2.f;
+    //float front = -depth / 2.f;
     float back = depth / 2.f;
     
     M3DVector3f verts[4] = {
@@ -181,7 +181,7 @@ void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 {
     float wobble = 0.f;
     if (fade > 0.f)
-        wobble = sinf(4*3.14159f*(1-fade)) * fade * 0.03;
+        wobble = sinf(4*3.14159f*(1-fade)) * fade * 0.03f;
 
     float top = padHeight / 4.f + padHeight / 10.f + wobble;
     float bottom = -padHeight / 4.f + padHeight / 10.f - wobble;
@@ -192,7 +192,7 @@ void PadView::makeIconMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
     float left = -padWidth / 4.f - wobble;
     float right = padWidth / 4.f + wobble;
     float depth = 0.1f;
-    float front = -depth / 4.f;
+    //float front = -depth / 4.f;
     float back = depth / 4.f;
     
     M3DVector3f verts[4] = {
@@ -228,7 +228,7 @@ void PadView::makeTextMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
     float left = -width / 2.f;
     float right = width / 2.f;
     float depth = 0.1f;
-    float front = -depth / 2.f;
+    //float front = -depth / 2.f;
     float back = depth / 2.f;
     
     M3DVector3f verts[4] = {
