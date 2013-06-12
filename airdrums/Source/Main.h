@@ -6,6 +6,67 @@
 #include "MainMenu.h"
 #include "AudioSettingsDialog.h"
 
+#if defined(TIMEBOMB)
+
+#define BETA_CHECK(month,day) \
+{ \
+ Time t = Time::getCurrentTime(); \
+ Time thresh(2013, month, day, 0, 0); \
+ if (t > thresh) \
+ { \
+    AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v" + String(ProjectInfo::versionString) + " Expired", "Thank you for testing this build"); \
+    AirHarpApplication::getInstance()->quit(); \
+    return; \
+} \
+}
+
+#define BETA_CHECK_RET(month,day) \
+{ \
+Time t = Time::getCurrentTime(); \
+Time thresh(2013, month, day, 0, 0); \
+if (t > thresh) \
+{ \
+AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v" + String(ProjectInfo::versionString) + " Expired", "Thank you for testing this build"); \
+AirHarpApplication::getInstance()->quit(); \
+return 0; \
+} \
+}
+
+#define BETA_CHECK_RANDOM_2013() \
+{ \
+int month = Random::getSystemRandom().nextInt(5) + 7; \
+int day = Random::getSystemRandom().nextInt() % 31; \
+Time t = Time::getCurrentTime(); \
+Time thresh(2013, month, day, 0, 0); \
+if (t > thresh) \
+{ \
+AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v" + String(ProjectInfo::versionString) + " Expired r13" + String(month) + String(day), "Thank you for testing this build"); \
+AirHarpApplication::getInstance()->quit(); \
+return; \
+} \
+}
+
+#define BETA_CHECK_RANDOM_2014() \
+{ \
+int month = Random::getSystemRandom().nextInt(12); \
+int day = Random::getSystemRandom().nextInt() % 31; \
+Time t = Time::getCurrentTime(); \
+Time thresh(2014, month, day, 0, 0); \
+if (t > thresh) \
+{ \
+AlertWindow::showMessageBox(AlertWindow::WarningIcon, "v" + String(ProjectInfo::versionString) + " Expired", "Thank you for testing this build"); \
+AirHarpApplication::getInstance()->quit(); \
+return; \
+} \
+}
+
+#else
+#define BETA_CHECK(month,day)
+#define BETA_CHECK_RET(month,day)
+#define BETA_CHECK_RANDOM_2013() 
+#define BETA_CHECK_RANDOM_2014()
+#endif
+
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication
                           , public MessageListener
@@ -70,6 +131,8 @@ public:
     
     class InitializeMessage : public Message {};
 
+	MainWindow* GetMainWindow()					{ return mainWindow; }
+
 private:
 	bool perform (const InvocationInfo &info);
 
@@ -79,6 +142,7 @@ private:
     ApplicationProperties properties;
 	MainMenu* mainMenu;
 	WeakReference<AudioSettingsDialog> settingsDialog;
+    ScopedPointer<FileLogger> fileLogger;
 };
 
 #endif

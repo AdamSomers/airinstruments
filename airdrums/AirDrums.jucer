@@ -1,44 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.5"
+<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.6"
               bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.1.0"
-              companyName="Handwavy">
+              companyName="Handwavy" defines="TIMEBOMB=1">
   <MAINGROUP id="qE7qno" name="AirBeats">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
       <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
-      <FILE id="CyktGR" name="TMD CHIL CLV.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL CLV.aif"/>
-      <FILE id="MRjN4y" name="TMD CHIL BKICK.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL BKICK.aif"/>
-      <FILE id="DiKxkY" name="TMD CHIL CHH.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL CHH.aif"/>
-      <FILE id="YJvlP5" name="TMD CHIL CLAP.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL CLAP.aif"/>
-      <FILE id="uWBUj6" name="TMD CHIL CYM.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL CYM.aif"/>
-      <FILE id="VRJBD9" name="TMD CHIL HTOM.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL HTOM.aif"/>
-      <FILE id="ApwuGo" name="TMD CHIL KICK.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL KICK.aif"/>
-      <FILE id="C8h3Ga" name="TMD CHIL LTOM.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL LTOM.aif"/>
-      <FILE id="Yd3eMI" name="TMD CHIL MTOM.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL MTOM.aif"/>
-      <FILE id="X2nGvk" name="TMD CHIL OHH.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL OHH.aif"/>
-      <FILE id="gw0HNA" name="TMD CHIL PAD.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL PAD.aif"/>
-      <FILE id="qG2nxM" name="TMD CHIL PHH.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL PHH.aif"/>
-      <FILE id="BQZI5q" name="TMD CHIL RIDE.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL RIDE.aif"/>
-      <FILE id="HNhXIs" name="TMD CHIL SFX.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL SFX.aif"/>
-      <FILE id="XV7h3x" name="TMD CHIL SN 1.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL SN 1.aif"/>
-      <FILE id="sPwsQo" name="TMD CHIL VERB.aif" compile="0" resource="1"
-            file="Resources/kits/Electro/TMD CHIL VERB.aif"/>
       <FILE id="TwV3n6" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
+      <FILE id="pWtX57" name="TMD CHIL CLV.aif" compile="0" resource="1"
+            file="Resources/TMD CHIL CLV.aif"/>
       <FILE id="sHVH9p" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
     </GROUP>
@@ -113,7 +83,7 @@
       <FILE id="HgnhIZ" name="BeatCountView.h" compile="0" resource="0" file="Source/BeatCountView.h"/>
       <FILE id="mXgtFu" name="ButtonBar.cpp" compile="1" resource="0" file="Source/ButtonBar.cpp"/>
       <FILE id="OlLNDr" name="ButtonBar.h" compile="0" resource="0" file="Source/ButtonBar.h"/>
-      <FILE id="JSRMF6" name="DrumItem.cpp" compile="1" resource="0" file="Source/DrumItem.cpp"/>
+      <FILE id="JSRMF6" name="DrumItem.cpp" compile="0" resource="0" file="Source/DrumItem.cpp"/>
       <FILE id="PzAZWh" name="DrumItem.h" compile="0" resource="0" file="Source/DrumItem.h"/>
       <FILE id="jENlwl" name="DrumKit.cpp" compile="1" resource="0" file="Source/DrumKit.cpp"/>
       <FILE id="K27Jhn" name="DrumKit.h" compile="0" resource="0" file="Source/DrumKit.h"/>
@@ -138,6 +108,9 @@
       <FILE id="jbfJ0W" name="ItemManager.h" compile="0" resource="0" file="Source/ItemManager.h"/>
       <FILE id="FAEcBL" name="KitManager.cpp" compile="1" resource="0" file="Source/KitManager.cpp"/>
       <FILE id="sEyXmd" name="KitManager.h" compile="0" resource="0" file="Source/KitManager.h"/>
+      <FILE id="ilz4h2" name="ListSelector.cpp" compile="1" resource="0"
+            file="Source/ListSelector.cpp"/>
+      <FILE id="Ng9825" name="ListSelector.h" compile="0" resource="0" file="Source/ListSelector.h"/>
       <FILE id="pyUpKY" name="LayeredSamplerSound.cpp" compile="1" resource="0"
             file="Source/LayeredSamplerSound.cpp"/>
       <FILE id="PizL5x" name="LayeredSamplerSound.h" compile="0" resource="0"
@@ -149,6 +122,8 @@
       <FILE id="JWGoNP" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="Z24b7x" name="MainMenu.cpp" compile="1" resource="0" file="Source/MainMenu.cpp"/>
       <FILE id="OvxN2J" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
+      <FILE id="H2eVXq" name="MainView.cpp" compile="1" resource="0" file="Source/MainView.cpp"/>
+      <FILE id="zz0ZNC" name="MainView.h" compile="0" resource="0" file="Source/MainView.h"/>
       <FILE id="njk3KC" name="PadView.cpp" compile="1" resource="0" file="Source/PadView.cpp"/>
       <FILE id="qO6AFr" name="PadView.h" compile="0" resource="0" file="Source/PadView.h"/>
       <FILE id="Z4tGU6" name="PatternLoadDialog.cpp" compile="1" resource="0"

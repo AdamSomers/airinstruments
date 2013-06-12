@@ -76,6 +76,7 @@ SharedPtr<Managed> ItemManager<Manager, Managed>::GetItem(Uuid& uuid)
 	return SharedPtr<Managed>();
 }
 
+
 template <typename Manager, typename Managed>
 int ItemManager<Manager, Managed>::GetIndexOfItem(SharedPtr<Managed> item)
 {
@@ -87,45 +88,72 @@ int ItemManager<Manager, Managed>::GetIndexOfItem(SharedPtr<Managed> item)
     return -1;
 }
 
+
 template <typename Manager, typename Managed>
-String& ItemManager<Manager, Managed>::GetDefaultPath(void)
+void ItemManager<Manager, Managed>::AddItem(SharedPtr<Managed> item)
 {
-	return mDefaultPath;
+	mItems.push_back(item);
 }
 
 
 template <typename Manager, typename Managed>
-typename ItemManager<Manager, Managed>::Status ItemManager<Manager, Managed>::BuildItemList(String fileExtension, String xmlTag, String path /* = ""*/, bool clear /*= true*/)
+String& ItemManager<Manager, Managed>::GetFactoryPath(void)
 {
-	if (path == "")
-		path = mDefaultPath;
+	return mFactoryPath;
+}
 
-	File directory(path);
+template <typename Manager, typename Managed>
+String& ItemManager<Manager, Managed>::GetUserPath(void)
+{
+	return mUserPath;
+}
 
-	if (!directory.isDirectory())
-		return kPathNotFoundError;
+template <typename Manager, typename Managed>
+typename ItemManager<Manager, Managed>::Status ItemManager<Manager, Managed>::BuildItemList(String fileExtension, String xmlTag, StringArray paths, bool clear /*= true*/)
+{
+	if (paths.size() == 0)
+		paths.add(mFactoryPath);
+    
+    if (clear)
+        mItems.clear();
 
-	if (clear)
-		mItems.clear();
+    for (int i = 0; i < paths.size(); ++i)
+    {
+        String path = paths[i];
+        File directory(path);
+        Logger::writeToLog("ItemManager::BuildItemList looking in " + path);
 
-	DirectoryIterator it(directory, true, fileExtension);
-	while (it.next())
-	{
-		File file(it.getFile());
-		UniquePtr<XmlElement> document(XmlDocument::parse(file));
-		if (document == nullptr)
-			return kXmlParseError;
-		if (!document->hasTagName(xmlTag))
-			return kXmlParseError;
 
-		SharedPtr<Managed> item(new Managed);
-		File folder = file.getParentDirectory();
-		typename Managed::Status status = item->LoadFromXml(document.get(), folder);
-		if (status != Managed::kNoError)
-			return kItemLoadError;
+        if (!directory.isDirectory()) {
+            Logger::writeToLog("ERROR: ItemManager::BuildItemList could not find directory " + path);
+        }
 
-		mItems.push_back(item);
-	}
+        DirectoryIterator it(directory, true, fileExtension);
+        while (it.next())
+        {
+            File file(it.getFile());
+            UniquePtr<XmlElement> document(XmlDocument::parse(file));
+            if (document == nullptr) {
+                Logger::writeToLog("ERROR: ItemManager::BuildItemList failed to parse " + file.getFileName());
+                return kXmlParseError;
+            }
+            if (!document->hasTagName(xmlTag)) {
+                Logger::writeToLog("ERROR: ItemManager::BuildItemList did not find tag " + xmlTag + " in " + file.getFileName());
+                return kXmlParseError;
+            }
+
+            SharedPtr<Managed> item(new Managed);
+            File folder = file.getParentDirectory();
+            typename Managed::Status status = item->LoadFromXml(document.get(), folder);
+            if (status != Managed::kNoError) {
+                Logger::writeToLog("ERROR: ItemManager::BuildItemList failed to load " + file.getFileName());
+                return kItemLoadError;
+            }
+            item->SetFile(file);
+
+            mItems.push_back(item);
+        }
+    }
 
 	if (GetItemCount() == 0)
 		return kNoItemsError;

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="HipHop World" image="" uuid="caf4a1ee54676d9999a40a1a7b363cc7">
+    <sample note="0" category="BassDrum" image="" file="BassKick.aif" />
+	<sample note="1" category="Snare" image="">
+        <layer minVelocity="0" maxVelocity="42" file="Snare_layer0.aif" />
+        <layer minVelocity="43" maxVelocity="85" file="Snare_layer43.aif" />
+        <layer minVelocity="86" maxVelocity="127" file="Snare_layer86.aif" />
+    </sample>
+	<sample note="2" category="Clap" image="" file="Clap.aif" />
+	<sample note="3" category="Stick" image="">
+        <layer minVelocity="0" maxVelocity="42" file="Stick_layer0.aif" />
+        <layer minVelocity="43" maxVelocity="85" file="Stick_layer43.aif" />
+        <layer minVelocity="86" maxVelocity="127" file="Stick_layer86.aif" />
+    </sample>
+
+    <sample note="4" category="ClosedHiHat" image="" file="HiHatClosed.aif" />
+	<sample note="5" category="OpenHiHat" image="" file="HiHatOpen.aif" />
+
+	<sample note="6" category="LowTom" image="">
+        <layer minVelocity="0" maxVelocity="42" file="LowPerc_layer0.aif" />
+        <layer minVelocity="43" maxVelocity="85" file="LowPerc_layer43.aif" />
+        <layer minVelocity="86" maxVelocity="127" file="LowPerc_layer86.aif" />
+    </sample>
+	<sample note="7" category="MidTom" image="">
+        <layer minVelocity="0" maxVelocity="42" file="MidPerc_layer0.aif" />
+        <layer minVelocity="43" maxVelocity="85" file="MidPerc_layer43.aif" />
+        <layer minVelocity="86" maxVelocity="127" file="MidPerc_layer86.aif" />
+    </sample>
+	<sample note="8" category="HiTom" image="">
+        <layer minVelocity="0" maxVelocity="42" file="HiPerc_layer0.aif" />
+        <layer minVelocity="43" maxVelocity="85" file="HiPerc_layer43.aif" />
+        <layer minVelocity="86" maxVelocity="127" file="HiPerc_layer86.aif" />
+    </sample>
+
+	<sample note="9" category="Crash" image="" file="Crash.aif" />
+	<sample note="10" category="Ride" image="">
+        <layer minVelocity="0" maxVelocity="42" file="Ride_layer0.aif" />
+        <layer minVelocity="43" maxVelocity="85" file="Ride_layer43.aif" />
+        <layer minVelocity="86" maxVelocity="127" file="Ride_layer86.aif" />
+    </sample>
+
+    <sample note="11" category="Vocal" image="" file="Vox_CyberSexy.aif" />
+    <sample note="12" category="Pad" image="" file="Pad_India.aif" />
+	<sample note="13" category="Shaker" image="" file="Shaker.aif" />
+	<sample note="14" category="FX" image="" file="FX_RevCym.aif" />
+    <sample note="15" category="Bass" image="" file="BassDrop.aif" />
+</kit>

@@ -13,6 +13,8 @@ TextHUDButton::TextHUDButton(StringArray on /*= "on"*/, StringArray off /*= "off
 : onText(on)
 , offText(off)
 , textChanged(false)
+, textColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f))
+, backgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .25f))
 {
     
 }
@@ -39,10 +41,10 @@ void TextHUDButton::loadTextures()
     Image imOn(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOn (imOn);
     
-    gOn.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .25f));
+    gOn.setColour(backgroundColor);
     gOn.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
-    gOn.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
+    gOn.setColour(textColor);
     float textSize = jmin(imageH, imageW) * .22f;
     gOn.setFont(textSize);
     gOn.setFont(Font(fontName, textSize, Font::plain));
@@ -64,10 +66,10 @@ void TextHUDButton::loadTextures()
     Image imOff(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOff (imOff);
     
-    gOff.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .25f));
+    gOff.setColour(backgroundColor);
     gOff.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
-    gOff.setColour(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
+    gOff.setColour(textColor);
     gOff.setFont(textSize);
     gOff.setFont(Font(fontName, textSize, Font::plain));
 
@@ -92,5 +94,17 @@ void TextHUDButton::setText(StringArray on, StringArray off)
 {
     onText = on;
     offText = off;
+    textChanged = true;
+}
+
+void TextHUDButton::setTextColor(const Colour& newColor)
+{
+    textColor = newColor;
+    textChanged = true;
+}
+
+void TextHUDButton::setBackgroundColor(const Colour& newColor)
+{
+    backgroundColor = newColor;
     textChanged = true;
 }

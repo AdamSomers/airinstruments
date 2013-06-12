@@ -149,24 +149,28 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             const Leap::Vector& v = s.intersect(pointables[0], true);
             x = v.x * Environment::instance().screenW;
             y = v.y * Environment::instance().screenH;
-            cursor->setFingerId(pointables[0].id());
+            int closestIndex = 0;
+            for (int i = 0; i < pointables.count(); ++i)
+            {
+                const Leap::Pointable& p = pointables[i];
+                if (p.tipPosition().z < pointables[closestIndex].tipPosition().z)
+                    closestIndex = i;
+            }
+            cursor->setFingerId(pointables[closestIndex].id());
         }
 
         
         if (!cursor->isEnabled())
             x = y = 0.f;
         
-        cursor->setX(x);
-        cursor->setY(y);
+        cursor->setPosition(x, y);
 		ScopedLock lock(listenerLock);
         for (CursorView::Listener* l : cursorViewListeners)
             l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
     }
     else
     {
-        cursor->setEnabled(false);
-        cursor->setX(0);
-        cursor->setY(0);
+        // cursor handles disabling itself via timer
     }
 
     return;

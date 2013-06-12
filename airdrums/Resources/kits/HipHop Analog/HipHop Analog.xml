@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="HipHop Analog" image="" uuid="f0aa49b3ff35ba753f932c6b435bf848">
+    <sample note="0" category="BassDrum" image="" file="AnalogKik.aif" />
+	<sample note="1" category="Snare" image="" file="AnalogSnare.aif" />
+	<sample note="2" category="Clap" image="" file="AnalogClap.aif" />
+	<sample note="3" category="Stick" image="" file="AnalogStik.aif" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="AnalogCHH.aif" />
+	<sample note="5" category="PedalHiHat" image="" file="AnalogPHH.aif" />
+	<sample note="6" category="OpenHiHat" image="" file="AnalogOHH.aif" />
+
+	<sample note="7" category="LowTom" image="" file="AnalogPerc-Lo.aif" />
+	<sample note="8" category="MidTom" image="" file="AnalogPerc-Mid.aif" />
+	<sample note="9" category="HiTom" image="" file="AnalogPerc-Hi.aif" />
+
+	<sample note="10" category="Crash" image="" file="AnalogCrash.aif" />
+	<sample note="11" category="Ride" image="" file="AnalogRide.aif" />
+
+    <sample note="12" category="Shaker" image="" file="AnalogShaker.aif" />
+	<sample note="13" category="FX" image="" file="AnalogFX.aif" />
+	<sample note="14" category="Vocal" image="" file="CrunkVoc.aif" />
+    <sample note="15" category="Bass" image="" file="AnalogBassDrop.aif" />
+</kit>

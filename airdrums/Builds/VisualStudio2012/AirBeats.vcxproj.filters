@@ -418,6 +418,9 @@
     <ClCompile Include="..\..\Source\KitManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ListSelector.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LayeredSamplerSound.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -428,6 +431,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainMenu.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainView.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PadView.cpp">
@@ -1600,12 +1606,6 @@
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JuceLibraryCode\BinaryData2.cpp">
-      <Filter>Juce Library Code</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JuceLibraryCode\BinaryData3.cpp">
-      <Filter>Juce Library Code</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_audio_basics.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
@@ -1770,6 +1770,9 @@
     <ClInclude Include="..\..\Source\KitManager.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\ListSelector.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LayeredSamplerSound.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
@@ -1780,6 +1783,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainMenu.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainView.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PadView.h">
@@ -3110,55 +3116,10 @@
     <None Include="..\..\Resources\icon.png">
       <Filter>AirBeats\resources</Filter>
     </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLV.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL BKICK.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CHH.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CLAP.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL CYM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL HTOM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL KICK.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL LTOM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL MTOM.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL OHH.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL PAD.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL PHH.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL RIDE.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL SFX.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL SN 1.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
-    <None Include="..\..\Resources\kits\Electro\TMD CHIL VERB.aif">
-      <Filter>AirBeats\resources</Filter>
-    </None>
     <None Include="..\..\Resources\icon.icns">
+      <Filter>AirBeats\resources</Filter>
+    </None>
+    <None Include="..\..\Resources\TMD CHIL CLV.aif">
       <Filter>AirBeats\resources</Filter>
     </None>
     <None Include="..\..\..\common\testShader.fs">

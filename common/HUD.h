@@ -86,7 +86,8 @@ public:
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }
-    void setTextures(TextureDescription on, TextureDescription off);
+    void setId(int newId) { buttonId = newId; }
+    virtual void setTextures(TextureDescription on, TextureDescription off);
     void setRingTexture(TextureDescription tex);
     void loadTextures();
     void setTimeout(int newTimeout);
@@ -119,6 +120,10 @@ public:
     
     void timerCallback();
     
+protected:
+    Time lastTimerStartTime;
+    int hoverTimeout;
+    
 private:
     bool state;
     std::vector<Listener*> listeners;
@@ -132,9 +137,7 @@ private:
     TextureDescription offTextureDesc;
     float fade;
     GLBatch circleBatch;
-    Time lastTimerStartTime;
     TextureDescription ringTextureDesc;
-    int hoverTimeout;
     bool enabled;
     int buttonType;
 };

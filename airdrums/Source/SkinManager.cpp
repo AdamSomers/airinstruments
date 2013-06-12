@@ -19,7 +19,7 @@ const TextureDescription Skin::getTexture(String name) const
         tex = textures.at(name);
     }
     catch (const std::out_of_range& /*oor*/) {
-        Logger::outputDebugString("No texture for " + name);
+        Logger::writeToLog("No texture for " + name);
     }
     return tex;
 }
@@ -28,7 +28,7 @@ void Skin::addTexture(String name, TextureDescription texture)
 {
     auto iter = textures.find(name);
     if (iter != textures.end())
-        Logger::outputDebugString("Warning: overwriting texture " + String(iter->second.textureId) + " for " + name + " with " + String(texture.textureId));
+        Logger::writeToLog("Warning: overwriting texture " + String(iter->second.textureId) + " for " + name + " with " + String(texture.textureId));
     textures.insert(std::make_pair(name, texture));
 }
 
@@ -57,7 +57,7 @@ void SkinManager::loadResources()
         File skinDir = iter.getFile();
         String skinName = skinDir.getFileName();
         Skin s(skinName);
-        //Logger::outputDebugString("\t" + skinName);
+        //Logger::writeToLog("\t" + skinName);
         DirectoryIterator skinImagesIter(skinDir, true, "*.png", File::findFiles);
         while (skinImagesIter.next())
         {
@@ -68,7 +68,7 @@ void SkinManager::loadResources()
             File atlasXml = imageFile.getParentDirectory().getChildFile(imageName + ".xml");
             if (atlasXml.exists())
             {
-                Logger::outputDebugString(imageFile.getFileName() + " is an atlas!");
+                Logger::writeToLog(imageFile.getFileName() + " is an atlas!");
                 
                 Array<TextureDescription> textures = GfxTools::loadTextureAtlas(atlasXml);
                 for (int i = 0; i < textures.size(); ++i)
@@ -81,7 +81,7 @@ void SkinManager::loadResources()
             {
                 s.addTexture(imageName, textureDesc);
             }
-            //Logger::outputDebugString("\t\t" + imageName);
+            //Logger::writeToLog("\t\t" + imageName);
         }
         skins.insert(std::make_pair(skinName, s));
     }
@@ -94,7 +94,7 @@ const Skin& SkinManager::getSkin(String name) const
         return skins.at(name);
     }
     catch (const std::out_of_range& /*oor*/) {
-        Logger::outputDebugString("No skin named " + name);
+        Logger::writeToLog("No skin named " + name);
         return skins.begin()->second;
     }
 }

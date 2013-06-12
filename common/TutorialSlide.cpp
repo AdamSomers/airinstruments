@@ -67,18 +67,18 @@ void TutorialSlide::loadTextures()
     
     File tutorialXml = tutorialDir.getChildFile("tutorial.xml");
     if (!tutorialXml.exists()) {
-        Logger::outputDebugString("Error: tutorial.xml not found!");
+        Logger::writeToLog("Error: tutorial.xml not found!");
         return;
     }
     
     UniquePtr<XmlElement> document(XmlDocument::parse(tutorialXml));
     if (document == nullptr) {
-        Logger::outputDebugString("Error: Could not parse " + tutorialXml.getFileName());
+        Logger::writeToLog("Error: Could not parse " + tutorialXml.getFileName());
         return;
     }
     
     if (!document->hasTagName("Tutorial")) {
-        Logger::outputDebugString("Error: Tutorial tag not found in " + tutorialXml.getFileName());
+        Logger::writeToLog("Error: Tutorial tag not found in " + tutorialXml.getFileName());
         return;
     }
     
@@ -90,7 +90,7 @@ void TutorialSlide::loadTextures()
         String imageFileName = slideElement->getStringAttribute("image");
         File imageFile = tutorialDir.getChildFile(imageFileName);
         if (!imageFile.exists()) {
-            Logger::outputDebugString("Error: image not found: " + imageFileName);
+            Logger::writeToLog("Error: image not found: " + imageFileName);
             return;
         }
         slide->imageView.setDefaultTexture(GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom(imageFile)));
@@ -202,7 +202,7 @@ void TutorialSlide::SlideContents::draw()
 {
     jassert(text.size() == (int)textViews.size());
 
-    if (boundsChanged && isVisible)
+    if (boundsChanged && isVisible())
     {
         for (int i = 0; i < text.size(); ++i)
         {

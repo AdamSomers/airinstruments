@@ -18,9 +18,12 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class DrumPattern : public DrumItem
+
+class DrumPattern : public DrumItem<DrumPattern>
 {
 public:
+	using DrumItem<DrumPattern>::RevertToClean;
+
 	enum
 	{
 		kDefaultTempo = 118,
@@ -28,6 +31,7 @@ public:
 	};
 
 	DrumPattern();
+	DrumPattern(const DrumPattern& source);	// Copy construct a modifiable pattern from the source
 	~DrumPattern();
 
 	// Initialization
@@ -37,13 +41,18 @@ public:
 
 	// This pattern object owns and manages the lifetime of the returned buffer object.
 	// The caller should not store this reference, but use it only for the duration of the function in which it is obtained.
-	MidiBuffer&	GetMidiBuffer(void);
-	SharedPtr<DrumKit> GetDrumKit(void);
-	float GetTempo(void);
+	MidiBuffer&	GetMidiBuffer(void) const;
+	SharedPtr<DrumKit> GetDrumKit(void) const;
+	float GetTempo(void) const;
+	float GetConformTempo(void) const;
 	void SetTempo(float tempo);				// Set the pattern's tempo, and conform the midi buffer to it
 	void Conform(float tempo, double rate);	// Conform the pattern to the passed in (global) tempo and sample rate, also sets pattern sample rate
 	void SetSampleRate(double rate);		// Set the pattern's sample rate, and conform the midi buffer to it
-	double GetSampleRate(void);
+	double GetSampleRate(void) const;
+
+protected:
+	friend class DrumItem<DrumPattern>;
+	void	RevertToClean(const DrumPattern* clean);
 
 private:
 	void Conform(MidiBuffer& buffer, float tempo, double rate);

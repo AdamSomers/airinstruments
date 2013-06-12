@@ -65,6 +65,7 @@ public:
     const TextureDescription& getDefaultTexture() const { return defaultTexture; }
     void setDefaultColor(GLfloat* color);
     virtual void setVisible(bool shouldBeVisible, int fadeTimeMs = 500);
+    bool isVisible() const { return visible; }
     void setDefaultBlendMode(GLint inSrc, GLint inDst);
     void setMultiplyAlpha(bool shouldMultiplyAlpha) { multiplyAlpha = shouldMultiplyAlpha; }
     
@@ -72,7 +73,7 @@ protected:
     HUDRect bounds;
     bool didSetup;
     GLBatch defaultBatch;
-    bool isVisible;
+    bool visible;
     float opacity;
     Time lastVisibilityChange;
     int fadeTime;

@@ -9,6 +9,7 @@
 #ifndef __MAINCOMPONENT_H_115FADC5__
 #define __MAINCOMPONENT_H_115FADC5__
 
+#include "MainView.h"
 #include "DrumsHUD.h"
 #include "PadView.h"
 #include "Leap.h"
@@ -16,7 +17,7 @@
 #include "TrigView.h"
 #include "DrumSelector.h"
 #include "SkinManager.h"
-#include "WheelSelector.h"
+#include "ListSelector.h"
 #include "TutorialSlide.h"
 #include "TempoControl.h"
 #include "StrikeDetector.h"
@@ -34,7 +35,7 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public MidiKeyboardStateListener,
                                public Leap::Listener,
-                               public WheelSelector::Listener,
+                               public ChangeListener,
                                public MultiTimer,
                                public MessageListener,
                                public ActionListener
@@ -67,8 +68,8 @@ public:
     // DrumSelector::Listener override
     void drumSelectorChanged(int selectedItem);
     
-    // KitSelector::Listener override
-    void wheelSelectorChanged(WheelSelector* selector);
+    // ChangeListener override
+    void changeListenerCallback(ChangeBroadcaster *source);
 
     // Leap::Listener override
     virtual void onFrame(const Leap::Controller&);
@@ -103,14 +104,16 @@ private:
     class InitGLMessage : public Message {};
     
     OpenGLContext openGLContext;
+    
+    MainView* mainView;
     TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
     std::vector<PlayArea*> playAreas;
     DrumSelector* drumSelector;
     TrigViewBank* trigViewBank;
-    WheelSelector* kitSelector;
-    WheelSelector* patternSelector;
+    ListSelector* kitSelector;
+    ListSelector* patternSelector;
     TempoControl* tempoControl;
     ButtonBar* buttonBar;
     std::vector<PadView*> pads;
@@ -142,6 +145,9 @@ private:
     Image splashTitleImage;
     Image splashImage;
     Time lastRender;
+    
+    // for beta check
+    Time startTime;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -108,7 +108,7 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 
 				// play the note
 				Drums::instance().NoteOn(midiNote, vel);
-//				Logger::outputDebugString(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
+//				Logger::writeToLog(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
 
 #if kDebugHistory
 				noteCount++;

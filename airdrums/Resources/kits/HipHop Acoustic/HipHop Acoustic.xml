@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kit name="HipHop Acoustic" image="" uuid="89df8cf2b7e02e2b73f9fc833cb46175">
+    <sample note="0" category="BassDrum" image="" file="BassDrum.aif" />
+	<sample note="1" category="Snare" image="" file="Snare.aif" />
+	<sample note="2" category="Clap" image="" file="Clap.aif" />
+	<sample note="3" category="Stick" image="" file="Stick.aif" />
+
+    <sample note="4" category="ClosedHiHat" image="" file="HiHatClosed.aif" />
+	<sample note="5" category="PedalHiHat" image="" file="PedalHH.aif" />
+	<sample note="6" category="OpenHiHat" image="" file="OpenHH.aif" />
+
+	<sample note="7" category="LowTom" image="">
+        <layer minVelocity="0" maxVelocity="63" file="LowTom-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="LowTom-Layer64.aif" />
+    </sample>
+    <sample note="8" category="MidTom" image="">
+        <layer minVelocity="0" maxVelocity="63" file="MidTom-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="MidTom-Layer64.aif" />
+    </sample>
+	<sample note="9" category="HiTom" image="">
+        <layer minVelocity="0" maxVelocity="63" file="HiTom-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="HiTom-Layer64.aif" />
+    </sample>
+	<sample note="10" category="LowPerc" image="">
+        <layer minVelocity="0" maxVelocity="63" file="LoPerc-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="LoPerc-Layer64.aif" />
+    </sample>
+    <sample note="11" category="MidPerc" image="">
+        <layer minVelocity="0" maxVelocity="63" file="MidPerc-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="MidPerc-Layer64.aif" />
+    </sample>
+    <sample note="12" category="HiPerc" image="">
+        <layer minVelocity="0" maxVelocity="63" file="HiPerc-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="HiPerc-Layer64.aif" />
+    </sample>
+
+	<sample note="13" category="Crash" image="" file="Crash.aif" />
+	<sample note="14" category="Ride" image="">
+        <layer minVelocity="0" maxVelocity="63" file="Ride-Layer0.aif" />
+        <layer minVelocity="64" maxVelocity="127" file="Ride-Layer64.aif" />
+    </sample>
+
+	<sample note="15" category="FX" image="" file="FX-Vinyl.aif" />
+</kit>

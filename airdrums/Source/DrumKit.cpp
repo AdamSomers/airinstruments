@@ -29,7 +29,7 @@ DrumKit::Status DrumKit::LoadFromXml(XmlElement* element, File& directory)
 {
 	mSamples.clear();
 
-	Status status = DrumItem::LoadFromXml(element);
+	Status status = DrumItem<DrumKit>::LoadFromXml(element);
 	if (status != kNoError)
 		return status;
     
@@ -40,7 +40,7 @@ DrumKit::Status DrumKit::LoadFromXml(XmlElement* element, File& directory)
         if (imageFile.existsAsFile())
             mImage = ImageFileFormat::loadFrom(imageFile);
         else
-            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+            Logger::writeToLog("Sample image " + imageFilename + " not found");
     }
 
 	XmlElement* child = element->getChildByName("sample");
@@ -76,7 +76,7 @@ DrumKit::Status DrumKit::CreateFromMemory(std::vector<MemorySampleInfo>& samples
         if (imageFile.existsAsFile())
             mImage = ImageFileFormat::loadFrom(imageFile);
         else
-            Logger::outputDebugString("Sample image " + imageFilename + " not found");
+            Logger::writeToLog("Sample image " + imageFilename + " not found");
     }
 */
 

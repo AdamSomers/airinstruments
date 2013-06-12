@@ -63,6 +63,9 @@ void HUDView::loadTextures()
 
 void HUDView::setVisible(bool shouldBeVisible, int fadeTimeMs /*= 500*/)
 {
+    if (shouldBeVisible == isVisible())
+        return;
+
     View2d::setVisible(shouldBeVisible, fadeTimeMs);
 
     for (HUDView* child : children)
@@ -295,7 +298,7 @@ void HUDButton::draw()
         if (fade < 0.f) fade = 0.f;
     }
     
-    if (enabled && isTimerRunning()) {
+    if (enabled && isTimerRunning() && ringTextureDesc.textureId != 0) {
         GLfloat circleColor[4] = { 1.f, 1.f, 1.f, 1.f };
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_FLAT, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor);
         glBindTexture(GL_TEXTURE_2D, ringTextureDesc.textureId);
@@ -361,14 +364,14 @@ void HUDButton::setup()
 
 void HUDButton::mouseDown(float /*x*/, float /*y*/)
 {
-    if (!isVisible)
+    if (!isVisible())
         return;
     setState(!state, true);
 }
 
 void HUDButton::updatePointedState(FingerView* /*fv*/)
 {
-    if (!isVisible)
+    if (!isVisible())
         return;
     if (prevNumPointers == 0 && pointers.size() > 0)
         setState(!state, true);
@@ -395,7 +398,7 @@ void HUDButton::setTextures(TextureDescription on, TextureDescription off)
     desc.texY = on.texY;
     desc.texW = on.texW;
     desc.texH = on.texH;
-    setDefaultTexture(desc);
+    setDefaultTexture(on);
 }
 
 void HUDButton::setRingTexture(TextureDescription tex)
@@ -410,22 +413,22 @@ void HUDButton::setTimeout(int newTimeout)
 
 void HUDButton::cursorEntered(float, float)
 {
-    if (!isVisible)
+    if (!isVisible())
         return;
     lastTimerStartTime = Time::getCurrentTime();
     startTimer(hoverTimeout);
-    //Logger::outputDebugString("Entered");
+    //Logger::writeToLog("Entered");
 }
 
 void HUDButton::cursorExited(float, float)
 {
     stopTimer();
-    //Logger::outputDebugString("Exited");
+    //Logger::writeToLog("Exited");
 }
 
 void HUDButton::timerCallback()
 {
-    //Logger::outputDebugString("Boom");
+    //Logger::writeToLog("Boom");
     if (!enabled)
         return;
 

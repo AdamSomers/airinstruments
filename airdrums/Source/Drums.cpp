@@ -13,6 +13,8 @@ Drums::Drums() :
     sampleRate((double) DrumPattern::kDefaultSampleRate),
 	tempoSlider(nullptr)
 {
+    BETA_CHECK(6, 28)
+
 	AirHarpApplication* app = AirHarpApplication::getInstance();
 	ApplicationProperties& props = app->getProperties();
 	globalTempo = (float) props.getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
@@ -61,7 +63,7 @@ void Drums::NoteOn(int note, float velocity)
         float sixteenthsIntoPattern = sampleCounter / samplesPerSixteenth;
         long quantizedPosition = (long) sixteenthsIntoPattern;
         float diff = sixteenthsIntoPattern - quantizedPosition;
-        Logger::outputDebugString(String::formatted("%f\n", diff));
+        Logger::writeToLog(String::formatted("%f\n", diff));
         if (diff >= 0.5) {
             quantizedPosition++;
             if (quantizedPosition >= 32)
@@ -79,7 +81,10 @@ void Drums::NoteOn(int note, float velocity)
         MidiMessage existingMessage;
         bool found = i.getNextEvent(existingMessage, position);
         if (!found || position != quantizedPosition || existingMessage.getNoteNumber() != note)
+		{
             recordBuffer.addEvent(m, quantizedPosition);
+			pattern->SetDirty(true);
+		}
         else /*if (found && position == quantizedPosition && existingMessage.getNoteNumber() == note)*/	// Redundant test
             replaceNoteVelocity(m, quantizedPosition);
         
@@ -102,10 +107,14 @@ void Drums::AllNotesOff(void)
 
 void Drums::clear()
 {
+    BETA_CHECK(6, 29)
+
     midiBufferLock.enter();
 	jassert(pattern.get() != nullptr);
+	pattern->PrepareToModify();
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     recordBuffer.clear();
+	pattern->SetDirty(true);
     midiBufferLock.exit();
 }
 
@@ -113,6 +122,7 @@ void Drums::clearTrack(int note)
 {
     midiBufferLock.enter();
 	jassert(pattern.get() != nullptr);
+	pattern->PrepareToModify();
 	MidiBuffer& recordBuffer = pattern->GetMidiBuffer();
     MidiBuffer::Iterator i(recordBuffer);
     int samplePos = 0;
@@ -122,6 +132,8 @@ void Drums::clearTrack(int note)
     {
         if (message.getNoteNumber() != note)
             newBuffer.addEvent(message, samplePos);
+		else
+			pattern->SetDirty(true);
     }
     recordBuffer = newBuffer;
     midiBufferLock.exit();
@@ -141,6 +153,7 @@ void Drums::replaceNoteVelocity(MidiMessage& inMessage, int inSamplePos)
         if (inMessage.getNoteNumber() == message.getNoteNumber() && samplePos == inSamplePos)
         {
             message.setVelocity(inMessage.getVelocity() / 127.f);
+			pattern->SetDirty(true);
         }
         newBuffer.addEvent(message, samplePos);
     }
@@ -155,6 +168,8 @@ void Drums::resetToZero()
 
 void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 {
+    BETA_CHECK(6, 30)
+
     sampleRate = inSampleRate;
     midiCollector.reset (sampleRate);
     synth.setCurrentPlaybackSampleRate(sampleRate);
@@ -183,7 +198,9 @@ void Drums::AdjustMidiBuffers(void)
         metronomeBuffer.addEvent(MidiMessage::noteOn(1, 16, 1.f), metronomePos);
         metronomePos += (long)(samples / numBeats);
     }
-    
+
+    BETA_CHECK(7, 1)
+
     // Adjust sample positions of all events in record buffer
 	if (pattern.get() != nullptr)
 	{
@@ -222,7 +239,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
         i.setNextSamplePosition(sampleCounter);
         while (i.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
         {
-            //Logger::outputDebugString(String::formatted("%d\n", samplePos));
+            //Logger::writeToLog(String::formatted("%d\n", samplePos));
             incomingMidi.addEvent(message, samplePos - sampleCounter);
 		    if (!transportState.exporting)
 	            playbackState.noteOn(1, message.getNoteNumber(),1);
@@ -233,7 +250,7 @@ void Drums::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
             metronomeIterator.setNextSamplePosition(sampleCounter);
             while (metronomeIterator.getNextEvent(message, samplePos) && samplePos < sampleCounter + bufferToFill.numSamples)
             {
-                //Logger::outputDebugString(String::formatted("%d\n", samplePos));
+                //Logger::writeToLog(String::formatted("%d\n", samplePos));
                 incomingMidi.addEvent(message, 0);
             }
         }
@@ -273,6 +290,8 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 		}
 	}
     
+    BETA_CHECK(7, 2)
+
 	SharedPtr<DrumSample> sample = kit->GetMetronome();
 	for (int j = 0; j < sample->GetLayerCount(); ++j)
 	{
@@ -286,10 +305,14 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 {
 	jassert(aPattern.get() != nullptr);
+    
+    aPattern->PrepareToModify();
 
     midiBufferLock.enter();
 
 	resetToZero();
+
+    BETA_CHECK(7, 3)
 
 	pattern = aPattern;
 	if (tempoSource == kPatternTempo) {
@@ -313,6 +336,8 @@ Drums::TransportState::TransportState(bool record, bool play, bool exportState, 
 
 void Drums::TransportState::play()
 {
+    BETA_CHECK_RANDOM_2013()
+
     playing = true;
 	if (!exporting)
 	    sendChangeMessage();
@@ -334,10 +359,22 @@ void Drums::TransportState::doExport()
 
 void Drums::TransportState::record(bool state)
 {
+    BETA_CHECK_RANDOM_2013()
+
+	if (state)
+	{
+		Drums& drums = Drums::instance();
+		SharedPtr<DrumPattern> pattern = drums.getPattern();
+		jassert(pattern.get() != nullptr);
+		pattern->PrepareToModify();
+	}
     recording = state;
     if (recording && !playing)
         playing = true;
     sendChangeMessage();
+
+    BETA_CHECK_RANDOM_2013()
+    BETA_CHECK_RANDOM_2014()
 }
 
 void Drums::TransportState::metronome(bool state)
@@ -348,6 +385,8 @@ void Drums::TransportState::metronome(bool state)
 
 void Drums::TransportState::toggleRecording()
 {
+    BETA_CHECK_RANDOM_2013()
+
     record(!recording);
 }
 
@@ -397,6 +436,8 @@ void Drums::setTempo(float tempo)
 {
 	ScopedLock lock(midiBufferLock);
 
+    BETA_CHECK(7, 5)
+    
 	switch (tempoSource)
 	{
 		default :
@@ -405,6 +446,8 @@ void Drums::setTempo(float tempo)
 		case kPatternTempo :
 			if (pattern.get() != nullptr)
 			{
+				if (pattern->GetTempo() != tempo)
+					pattern->PrepareToModify();
 				pattern->SetTempo(tempo);
 				break;
 			}
