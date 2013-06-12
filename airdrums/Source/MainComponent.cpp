@@ -30,7 +30,8 @@
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
-: tutorial(NULL)
+: mainView(NULL)
+, tutorial(NULL)
 , toolbar(NULL)
 , statusBar(NULL)
 , prevMouseY(0.f)
@@ -94,6 +95,7 @@ MainContentComponent::~MainContentComponent()
 	openGLContext.detach();
 //    openGLContext.deactivateCurrentContext();
     views.clear();
+    delete mainView;
     delete tutorial;
     delete toolbar;
     delete statusBar;
@@ -108,6 +110,9 @@ MainContentComponent::~MainContentComponent()
     
     for (PlayArea* pad : playAreas)
         delete pad;
+    
+    for (PadView* pv : pads)
+        delete pv;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -169,7 +174,7 @@ void MainContentComponent::resized()
     
     Environment::instance().screenW = w;
     Environment::instance().screenH = h;
-    
+
     sizeChanged = true;
 }
 
@@ -244,13 +249,17 @@ void MainContentComponent::newOpenGLContextCreated()
     layoutPadsGrid();
 #endif
     
-    Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
+    //Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
     //Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
     PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-50), 1, 0, 0);
 
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
 
+    mainView = new MainView;
+    views.push_back(mainView);
+    mainView->addActionListener(this);
+    
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
@@ -279,7 +288,7 @@ void MainContentComponent::newOpenGLContextCreated()
         pad->setColor(Colour::fromString(color));
 
         playAreas.push_back(pad);
-        //views.push_back(pad);
+//        views.push_back(pad);
         pad->addActionListener(this);
         
         drumSelector->setPadAssociation(midiNote, i);
@@ -459,8 +468,22 @@ void MainContentComponent::renderOpenGL()
         resizeCursor = false;
     }
     
+    // arrange clear/assign buttons.  should happen only when size changed but that isn't initing correctly
+    for (int i = 0; i < pads.size(); ++i)
+    {
+        Environment::instance().modelViewMatrix.PushMatrix(PadView::padSurfaceFrame);
+        M3DVector2f padScreenPos;
+        pads.at(i)->getScreenPos(padScreenPos);
+        mainView->setPadPos(i, padScreenPos[0], padScreenPos[1]);
+        Environment::instance().modelViewMatrix.PopMatrix();
+    }
+    
     if (sizeChanged)
     {
+#if 1
+        layoutPadsGrid();
+#endif
+
         const int toolbarHeight = 180;
         const int statusBarHeight = 20;
         const int drumSelectorHeight = 100;
@@ -468,6 +491,10 @@ void MainContentComponent::renderOpenGL()
         const int tempoControlHeight = 45;
         const float tutorialWidth = 800.f;
         const float tutorialHeight = 500.f;
+        
+        if (mainView) {
+            mainView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+        }
 
         if (tutorial)
             tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - tutorialWidth / 2),
@@ -657,11 +684,6 @@ void MainContentComponent::renderOpenGL()
             patternSelector->setXRange(shownX, hiddenX);
         }
 
-        
-
-#if 1
-        layoutPadsGrid();
-#endif
         sizeChanged = false;
     }
     
@@ -761,12 +783,9 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
-
+    
     for (PadView* pv : pads)
         pv->update();
-
-//    glDisable(GL_CULL_FACE);
-//	tempoSlider.repaint();
 }
 
 void MainContentComponent::openGLContextClosing()
@@ -802,7 +821,7 @@ void MainContentComponent::layoutPadsGrid()
     }
     // Move the pads back -12
     //PadView::padSurfaceFrame.SetOrigin(0,0,-12);
-    PadView::padSurfaceFrame.SetOrigin(.3,0,-10);
+    PadView::padSurfaceFrame.SetOrigin(.3,-.40,-10);
 }
 
 void MainContentComponent::layoutPadsLinear()
@@ -867,28 +886,28 @@ void MainContentComponent::mouseDrag(const MouseEvent& e)
     for (HUDView* v : views)
         v->motion((float) e.getPosition().x, (float) e.getPosition().y);
     
-    float normPosY = (e.getPosition().y - prevMouseY) / (float)Environment::instance().screenH;
-    float normPosX = (e.getPosition().x - prevMouseX) / (float)Environment::instance().screenW;
+//    float normPosY = (e.getPosition().y - prevMouseY) / (float)Environment::instance().screenH;
+//    float normPosX = (e.getPosition().x - prevMouseX) / (float)Environment::instance().screenW;
     
-    Environment::instance().cameraFrame.TranslateWorld(normPosX*2, 0, 0);
-    Environment::instance().cameraFrame.TranslateWorld(0, 0,-normPosY*2);
+//    Environment::instance().cameraFrame.TranslateWorld(normPosX*2, 0, 0);
+//    Environment::instance().cameraFrame.TranslateWorld(0, 0,-normPosY*2);
     
 //    float angle = M_PI * 2 * normPosY;
-//    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosY*720), 1, 0, 0);
+//    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosY*45), 1, 0, 0);
 //    angle = M_PI * 2 * normPosX;
-//    PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosX*720), 0, 1, 0);
+//    //PadView::padSurfaceFrame.RotateWorld(m3dDegToRad(normPosX*720), 0, 1, 0);
 //    for (int i = 0; i < 16; ++i)
 //    {
 //        //pads.at(i)->objectFrame.RotateWorld(m3dDegToRad(-0.5), 1, 0, 0);
 //    }
     
-    prevMouseY = (float) e.getPosition().y;
-    prevMouseX = (float) e.getPosition().x;
+//    prevMouseY = (float) e.getPosition().y;
+//    prevMouseX = (float) e.getPosition().x;
 }
 
 void MainContentComponent::mouseWheelMove (const MouseEvent& /*e*/, const MouseWheelDetails& wheel)
 {
-    Environment::instance().cameraFrame.TranslateWorld(0, wheel.deltaY*4,wheel.deltaY*4);
+//    Environment::instance().cameraFrame.TranslateWorld(0, wheel.deltaY*4,wheel.deltaY*4);
 }
 
 bool MainContentComponent::keyPressed(const KeyPress& kp)
@@ -1072,10 +1091,8 @@ void MainContentComponent::changeListenerCallback(ChangeBroadcaster *source)
 
 void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*midiChannel*/, int midiNoteNumber, float /*velocity*/)
 {
-    if ((unsigned int) midiNoteNumber < pads.size())
-    {
-        pads.at(midiNoteNumber)->triggerDisplay();
-    }
+    for (PadView* pv : pads)
+        pv->tap(midiNoteNumber);
 
     for (PlayArea* pad : playAreas)
         pad->tap(midiNoteNumber);
@@ -1327,10 +1344,11 @@ void MainContentComponent::actionListenerCallback(const String& message)
         playArea->setSelectedMidiNote(drumSelector->getSelection());
         PadView* pv = pads.at(padNumber);
         pv->setSelectedMidiNote(drumSelector->getSelection());
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(playArea->getId()), drumSelector->getSelection());
-        drumSelector->setPadAssociation(drumSelector->getSelection(), playArea->getId());
-        for (PlayArea* pad : playAreas)
-            pad->enableAssignButton(false);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(pv->padNum), drumSelector->getSelection());
+        drumSelector->setPadAssociation(drumSelector->getSelection(), pv->padNum);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableAssignButton(false);
+        mainView->enableAssignButtons(false);
         drumSelector->setSelection(-1);
         lastDrumSelection = -1;
         MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
@@ -1345,8 +1363,9 @@ void MainContentComponent::actionListenerCallback(const String& message)
         jassert(drumNumber >= 0 && drumNumber < 16);
 
         // disable clear mode if we're in it
-        for (PlayArea* pad : playAreas)
-            pad->enableClearButton(false);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableClearButton(false);
+        mainView->enableClearButtons(false);
         
         bool enableAsignMode = true;
         if (lastDrumSelection == drumNumber)
@@ -1375,8 +1394,9 @@ void MainContentComponent::actionListenerCallback(const String& message)
             }
         }
         
-        for (PlayArea* pad : playAreas)
-            pad->enableAssignButton(enableAsignMode);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableAssignButton(enableAsignMode);
+        mainView->enableAssignButtons(enableAsignMode);
         
         buttonBar->resetClearButton();
     }
@@ -1390,18 +1410,21 @@ void MainContentComponent::actionListenerCallback(const String& message)
         jassert(padNumber >= 0 && padNumber < (int)playAreas.size());
         PlayArea* playArea = playAreas.at(padNumber);
         Drums::instance().clearTrack(playArea->getSelectedMidiNote());
-        for (PlayArea* pad : playAreas)
-            pad->enableClearButton(false);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableClearButton(false);
+        mainView->enableClearButtons(false);
         buttonBar->resetClearButton();
     }
     else if (message == "clearTrack")
     {
-        for (PlayArea* pad : playAreas)
-            pad->enableClearButton(true);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableClearButton(true);
+         mainView->enableClearButtons(true);
         
         // disable assign mode if we're in it
-        for (PlayArea* pad : playAreas)
-            pad->enableAssignButton(false);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableAssignButton(false);
+        mainView->enableAssignButtons(false);
         drumSelector->setSelection(-1);
         lastDrumSelection = -1;
         MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
@@ -1411,8 +1434,9 @@ void MainContentComponent::actionListenerCallback(const String& message)
     }
     else if (message == "cancelClear")
     {
-        for (PlayArea* pad : playAreas)
-            pad->enableClearButton(false);
+//        for (PlayArea* pad : playAreas)
+//            pad->enableClearButton(false);
+        mainView->enableClearButtons(false);
     }
     else if (message == "tutorialDone")
     {

@@ -4,7 +4,8 @@
 
 GLFrame PadView::padSurfaceFrame;
 
-PadView::PadView() :
+PadView::PadView()
+:
   padNum(0)
 , padWidth(0.1f)
 , padHeight(0.1f)
@@ -442,6 +443,34 @@ void PadView::setColor(const Colour& color)
     iconColor[1] = color.getFloatGreen();
     iconColor[2] = color.getFloatBlue();
     iconColor[3] = color.getFloatAlpha();
+}
+
+void PadView::getScreenPos(M3DVector2f& inVec)
+{
+    GLint viewport[4];
+    viewport[0] = 0;
+    viewport[1] = 0;
+    viewport[2] = Environment::instance().screenW;
+    viewport[3] = Environment::instance().screenH;
+    
+    M3DVector2f win;
+    M3DVector3f origin;
+    objectFrame.GetOrigin(origin);
+    m3dProjectXY(win,
+                 Environment::instance().transformPipeline.GetModelViewMatrix(),
+                 Environment::instance().transformPipeline.GetProjectionMatrix(),
+                 viewport,
+                 origin);
+    //printf("win %f %f\n", win[0], win[1]);
+    inVec[0] = win[0];
+    inVec[1] = win[1];
+}
+
+void PadView::tap(int midiNote)
+{
+    if (midiNote == selectedMidiNote) {
+        triggerDisplay();
+    }
 }
 
 bool PadView::hitTest(const M3DVector3f& point)

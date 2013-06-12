@@ -23,6 +23,8 @@ public:
     int getSelectedMidiNote() const { return selectedMidiNote; }
     void setColor(const Colour& color);
     void setHovering(bool hover) { hovering = hover; }
+    void getScreenPos(M3DVector2f& inVec);
+    void tap(int midiNote);
 
     GLFrame objectFrame;
     int padNum;
@@ -35,6 +37,7 @@ private:
     bool hitTest(const M3DVector3f& point);
     
     int selectedMidiNote;
+    int id;
     
     static const int numVerts = 36;
     void makePadMesh(M3DVector3f* inVerts, M3DVector3f* inNorms);

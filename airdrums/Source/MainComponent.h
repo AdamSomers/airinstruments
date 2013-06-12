@@ -9,6 +9,7 @@
 #ifndef __MAINCOMPONENT_H_115FADC5__
 #define __MAINCOMPONENT_H_115FADC5__
 
+#include "MainView.h"
 #include "DrumsHUD.h"
 #include "PadView.h"
 #include "Leap.h"
@@ -103,6 +104,8 @@ private:
     class InitGLMessage : public Message {};
     
     OpenGLContext openGLContext;
+    
+    MainView* mainView;
     TutorialSlide* tutorial;
     DrumsToolbar* toolbar;
     StatusBar* statusBar;
