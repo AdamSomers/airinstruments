@@ -270,7 +270,7 @@ void MainContentComponent::newOpenGLContextCreated()
     views.push_back(sb);
     statusBar = sb;
     
-    int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
+    int layout = StrikeDetector::kLayout3x2;//AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", layout);
     
     drumSelector = new DrumSelector;
@@ -823,7 +823,7 @@ void MainContentComponent::layoutPadsGrid()
     }
     // Move the pads back -12
     //PadView::padSurfaceFrame.SetOrigin(0,0,-12);
-    PadView::padSurfaceFrame.SetOrigin(.3f,-.40f,-10.f);
+    PadView::padSurfaceFrame.SetOrigin(.35f,-.40f,-10.f);
 }
 
 void MainContentComponent::layoutPadsLinear()
@@ -936,26 +936,26 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         Drums::instance().clear();
         ret = true;
     }
-    else if (kp.getTextCharacter() == '1') {
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout2x1);
-        sizeChanged = true;
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == '2') {
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout3x1);
-        sizeChanged = true;
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == '3') {
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout2x2);
-        sizeChanged = true;
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == '4') {
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout3x2);
-        sizeChanged = true;
-        ret = true;
-    }
+//    else if (kp.getTextCharacter() == '1') {
+//        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout2x1);
+//        sizeChanged = true;
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == '2') {
+//        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout3x1);
+//        sizeChanged = true;
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == '3') {
+//        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout2x2);
+//        sizeChanged = true;
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == '4') {
+//        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout3x2);
+//        sizeChanged = true;
+//        ret = true;
+//    }
     else if (kp.getTextCharacter() == 'q') {
         incPadAssociation(0, -1);
         ret = true;
