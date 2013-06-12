@@ -2,6 +2,8 @@
 #include "SkinManager.h"
 #include "Main.h"
 
+#define FADE_TIME 300
+
 GLFrame PadView::padSurfaceFrame;
 
 PadView::PadView()
@@ -9,7 +11,7 @@ PadView::PadView()
   padNum(0)
 , padWidth(0.1f)
 , padHeight(0.1f)
-, fade(1.f)
+, fade(0.f)
 , hoverFade(0.f)
 , iconRotation(0.f)
 , padDepth(0.025f)
@@ -363,8 +365,11 @@ void PadView::draw()
     else if (hoverFade > 0.f)
         hoverFade -= 0.05f;
     
-    if (fade > 0.f)
-        fade -= 0.05f;
+    RelativeTime diff = Time::getCurrentTime() - fadeStartTime;
+    if (diff < RelativeTime::milliseconds(FADE_TIME))
+        fade = 1.f - diff.inMilliseconds() / (float)FADE_TIME;
+    else
+        fade = 0;
     
     glEnable(GL_DEPTH_TEST);
     
@@ -409,6 +414,8 @@ void PadView::draw()
 void PadView::triggerDisplay(float amount)
 {
     fade = amount;
+    fadeStartTime = Time::getCurrentTime();
+
     iconRotation = (Random::getSystemRandom().nextFloat() * 2.f - 1.f) * 2;
 }
 

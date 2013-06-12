@@ -47,6 +47,7 @@ private:
 
     GLBatch     padBatch;
     float fade;
+    Time fadeStartTime;
     float hoverFade;
     float iconRotation;
     float padDepth;
