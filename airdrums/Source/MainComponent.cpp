@@ -356,8 +356,6 @@ void MainContentComponent::newOpenGLContextCreated()
     
     for (HUDView* v : views) {
         v->loadTextures();
-        if (showTutorial)
-            v->setVisible(false);
     }
     
     tutorial = new TutorialSlide;
@@ -1295,6 +1293,8 @@ void MainContentComponent::timerCallback(int timerId)
         case kTimerShowTutorial:
             tutorial->setVisible(true, 2000);
             stopTimer(kTimerShowTutorial);
+            for (HUDView* v : views)
+                v->setVisible(false);
             break;
         case kTimerLeftHandTap:
             stopTimer(kTimerLeftHandTap);
