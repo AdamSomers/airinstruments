@@ -12,4 +12,16 @@
         <line text="You can strike the zones with open hands,"/>
         <line text="extended fingers, fists, and pencils."/>
     </slide>
+    <slide image="tutorial_drums.png">
+        <line text="Select a drum icon to assign a drum to a pad."/>
+        <line text="Then select the desired pad to complete the assignment."/>
+    </slide>
+    <slide image="tutorial_transport.png">
+        <line text="The transport controls are at the top of the screen."/>
+        <line text="Use them to control rewind, play, record, metronome, and tempo."/>
+    </slide>
+    <slide image="tutorial_lists.png">
+        <line text="There is a list at the left and right edge of the screen."/>
+        <line text="Use these lists to select drum kits and patterns."/>
+    </slide>
 </Tutorial>
