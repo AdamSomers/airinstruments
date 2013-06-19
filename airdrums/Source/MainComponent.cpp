@@ -347,7 +347,19 @@ void MainContentComponent::newOpenGLContextCreated()
 
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
-    tempoControl->setTempo(tempo);
+    if (tempo < 30) {
+        tempo = 30;
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("tempo", tempo);
+    }
+    if (tempo > 300) {
+        tempo = 300;
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("tempo", tempo);
+    }
+
+    if (Drums::instance().getTempoSource() == Drums::kGlobalTempo)
+        tempoControl->setTempo(tempo);
+    else
+        tempoControl->setTempo(Drums::instance().getTempo());
     views.push_back(tempoControl);
     
     buttonBar = new ButtonBar;
@@ -1375,6 +1387,12 @@ void MainContentComponent::handleMessage(const juce::Message &m)
         openGLContext.setRenderer (this);
         openGLContext.setComponentPaintingEnabled (true);
         openGLContext.attachTo (*this);
+    }
+    
+    TempoSourceChangedMessage* tempoSourceChangedMessage = dynamic_cast<TempoSourceChangedMessage*>(inMsg);
+    if (tempoSourceChangedMessage)
+    {
+        tempoControl->setTempo(Drums::instance().getTempo());
     }
 }
 

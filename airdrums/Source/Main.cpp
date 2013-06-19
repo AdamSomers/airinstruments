@@ -196,6 +196,9 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			bool usePatternTempo = mainMenu->GetUsePatternTempo();
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.UsePatternTempo(usePatternTempo);
+            MainContentComponent* content = dynamic_cast<MainContentComponent*>(mainWindow->getContentComponent());
+            if (content)
+                content->postMessage(new MainContentComponent::TempoSourceChangedMessage);
 			break;
 		}
 		case MainMenu::kExportCmd :
@@ -225,6 +228,10 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			break;
 		}
 	}
+
+#if JUCE_MAC
+    MenuBarModel::setMacMainMenu(mainMenu);
+#endif
 
 	return true;
 }

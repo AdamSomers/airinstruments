@@ -84,6 +84,8 @@ public:
     
     // ActionListener override
     void actionListenerCallback(const String& message);
+    
+    class TempoSourceChangedMessage : public Message {};
 
 private:
     void layoutPadsGrid();
@@ -105,7 +107,7 @@ private:
     };
     
     class InitGLMessage : public Message {};
-    
+
     OpenGLContext openGLContext;
     
     MainView* mainView;
