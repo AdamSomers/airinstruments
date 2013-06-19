@@ -24,6 +24,7 @@
 #include "MainComponent.h"
 
 #include <algorithm>
+#include <set>
 
 #define NUM_PADS 6
 #define TUTORIAL_TIMEOUT 30000
@@ -1160,6 +1161,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         pads.at(i)->setHovering(false);
     }
     
+    std::set<int> hoveredNotes;
+    
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
         
@@ -1172,6 +1175,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             StrikeDetector& detector = (*iter).second;
             detector.handMotion(hand);
             int midiNote = detector.getNoteForHand(hand);
+            hoveredNotes.insert(midiNote);
             for (int i = 0; i < NUM_PADS; ++i)
             {
                 if (pads.at(i)->getSelectedMidiNote() == midiNote)
@@ -1179,7 +1183,33 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             }
         }
     }
-    
+
+    const Leap::PointableList& pointables = frame.pointables();
+    const size_t numPointables = pointables.count();
+    for (unsigned int p = 0; p < numPointables; ++p) {
+        const Leap::Pointable& pointable = pointables[p];
+        if (!pointable.hand().isValid())
+        {
+            if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+            {
+                std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
+                StrikeDetectorMap::iterator iter = insertResult.first;
+                StrikeDetector& detector = (*iter).second;
+                int midiNote = detector.getNoteForPointable(pointable);
+                if (hoveredNotes.find(midiNote) == hoveredNotes.end())
+                    detector.pointableMotion(pointable);
+                else
+                    toolStrikeDetectors.erase(iter);
+            }
+        }
+        else
+        {
+            StrikeDetectorMap::iterator iter = toolStrikeDetectors.find(pointable.id());
+            if (iter != toolStrikeDetectors.end())
+                toolStrikeDetectors.erase(iter);
+        }
+    }
+
     StrikeDetectorMap::iterator iter = strikeDetectors.begin();
     bool useCursor = true;
     while (iter != strikeDetectors.end())

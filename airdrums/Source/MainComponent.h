@@ -131,6 +131,7 @@ private:
 
     typedef std::map<int, StrikeDetector> StrikeDetectorMap;
     StrikeDetectorMap strikeDetectors;
+    StrikeDetectorMap toolStrikeDetectors;
     
     float prevMouseY;
     float prevMouseX;
