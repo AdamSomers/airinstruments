@@ -56,6 +56,9 @@ private:
 
     int slideIndex;
     std::vector<SharedPtr<SlideContents> > slides;
+    
+    std::vector<SharedPtr<HUDView> > offDots;
+    std::vector<SharedPtr<HUDView> > onDots;
 };
 
 #endif // h_TutorialSlide

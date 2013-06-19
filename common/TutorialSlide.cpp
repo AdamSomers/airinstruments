@@ -7,6 +7,7 @@
 
 #include "TutorialSlide.h"
 #include "GfxTools.h"
+#include "SkinManager.h"
 
 TutorialSlide::TutorialSlide()
 : slideIndex(0)
@@ -53,6 +54,25 @@ void TutorialSlide::setBounds(const HUDRect &b)
                                  buttonHeight));
     for (SharedPtr<SlideContents> slide : slides)
         slide->setBounds(HUDRect(0,0,b.w,b.h));
+    
+    int numDots = offDots.size();
+    float dotW = 10.f;
+    float dotH = 10.f;
+    float dotSpacing = 30.f;
+    float totalW = dotW * numDots + dotSpacing * (numDots - 2);
+    float x = b.w / 2.f - totalW / 2.f;
+    float y = b.y - 100;
+    for (SharedPtr<HUDView> dot : offDots)
+    {
+        dot->setBounds(HUDRect(x, y, dotW, dotH));
+        x += dotW + dotSpacing;
+    }
+    x = b.w / 2.f - totalW / 2.f;
+    for (SharedPtr<HUDView> dot : onDots)
+    {
+        dot->setBounds(HUDRect(x, y, dotW, dotH));
+        x += dotW + dotSpacing;
+    }
 }
 
 void TutorialSlide::loadTextures()
@@ -113,6 +133,21 @@ void TutorialSlide::loadTextures()
     
     if (slides.size() > 0)
         slides.front()->setVisible(true, 2000);
+    
+    for (int i = 0; i < slides.size(); ++i)
+    {
+        SharedPtr<HUDView> offDot(new HUDView);
+        SharedPtr<HUDView> onDot(new HUDView);
+        offDot->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("dot_black"));
+        onDot->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("dot_white"));
+        onDot->setMultiplyAlpha(true);
+        addChild(offDot.get());
+        addChild(onDot.get());
+        if (i != 0)
+            onDot->setVisible(false, 0);
+        offDots.push_back(offDot);
+        onDots.push_back(onDot);
+    }
 }
 
 void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
@@ -130,6 +165,14 @@ void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
         nextButton.setText(StringArray("done"), StringArray("done"));
     else
         nextButton.setText(StringArray("next"), StringArray("next"));
+    
+    for (int i = 0; i < onDots.size(); ++i)
+    {
+        if (i == slideIndex)
+            onDots.at(i)->setVisible(true);
+        else
+            onDots.at(i)->setVisible(false);
+    }
 }
 
 void TutorialSlide::buttonStateChanged(HUDButton* b)
@@ -166,7 +209,13 @@ void TutorialSlide::setSlideIndex(int newSlideIndex)
         else
             prevButton.setVisible(false);
     }
-    
+    for (int i = 0; i < onDots.size(); ++i)
+    {
+        if (i == newSlideIndex)
+            onDots.at(i)->setVisible(true);
+        else
+            onDots.at(i)->setVisible(false);
+    }
 }
 
 void TutorialSlide::setButtonRingTexture(TextureDescription texture)
