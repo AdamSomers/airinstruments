@@ -163,12 +163,15 @@ void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
     else
         nextButton.setText(StringArray("next"), StringArray("next"));
     
-    for (int i = 0; i < (int)onDots.size(); ++i)
+    if (shouldBeVisible)
     {
-        if (i == slideIndex)
-            onDots.at(i)->setVisible(true);
-        else
-            onDots.at(i)->setVisible(false);
+        for (int i = 0; i < (int)onDots.size(); ++i)
+        {
+            if (i == slideIndex)
+                onDots.at(i)->setVisible(true);
+            else
+                onDots.at(i)->setVisible(false);
+        }
     }
 }
 
