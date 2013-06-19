@@ -29,7 +29,7 @@
 StrikeDetector::StrikeDetector() :
  state(kStateStrikeBegin)
 , maxVel(0.f)
-, midiNote(0)
+, midiNote(-1)
 {
 	for (int i = 0; i < kHistoryDepth; ++i)
 	{
@@ -121,7 +121,8 @@ void StrikeDetector::motion(float position, float velocity, int64_t timestamp)
 				float vel = (val - rangeLow) / (rangeHigh - rangeLow);
 
 				// play the note
-				Drums::instance().NoteOn(midiNote, vel);
+                if (midiNote != -1)
+                    Drums::instance().NoteOn(midiNote, vel);
 //				Logger::writeToLog(String(leftHand ? "Left" : "Right") + " Hand " + String::formatted("%1.2f", vel));
 
 #if kDebugHistory
@@ -167,7 +168,7 @@ int StrikeDetector::getNoteForHand(const Leap::Hand &hand)
         return getNoteForPointable(pointables[pointableClosestToScreen]);
     }
     
-    return 0;
+    return -1;
 }
 
 int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
@@ -176,7 +177,7 @@ int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
     jassert(layout != -1);
 
     PropertiesFile* settings = AirHarpApplication::getInstance()->getProperties().getUserSettings();
-    int midiNote = 0;
+    int midiNote = -1;
     
     float pointableX = pointable.tipPosition().x;
     float pointableZ = pointable.tipPosition().z;
@@ -234,8 +235,7 @@ int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
             break;
     }
     
-    midiNote = settings->getIntValue("selectedNote" + String(padNumber), 0);
-
+    midiNote = settings->getIntValue("selectedNote" + String(padNumber), -1);
     
     return midiNote;
 }
