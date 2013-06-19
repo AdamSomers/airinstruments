@@ -1236,6 +1236,9 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         MotionDispatcher::instance().cursor->setEnabled(false);
     }
     
+    if (statusBar)
+        statusBar->setCursorMode(!useCursor);
+    
     
 }
 

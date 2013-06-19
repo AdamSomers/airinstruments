@@ -51,12 +51,15 @@ public:
     
     void layoutControls();
     
+    void setCursorMode(bool isPlaying);
+    
     // Leap overrides
     void onInit(const Leap::Controller& controller);
     void onConnect(const Leap::Controller& controller);
     void onDisconnect(const Leap::Controller& controller);
 private:
     HUDButton indicator;
+    HUDView cursorModeView;
 };
 
 #endif

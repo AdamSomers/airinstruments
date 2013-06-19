@@ -145,6 +145,9 @@ StatusBar::StatusBar()
     addChild(&indicator);
     GLfloat color [] = { 0.95f, 0.95f, 0.95f, 1.f };
     setDefaultColor(color);
+    
+    addChild(&cursorModeView);
+    cursorModeView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("Pointing"));
 }
 
 StatusBar::~StatusBar()
@@ -169,6 +172,11 @@ void StatusBar::layoutControls()
     float y = bounds.h / 2.f - h / 2.f;
     HUDRect r(x, y, w, h);
     indicator.setBounds(r);
+    
+    float aspectRatio = cursorModeView.getDefaultTexture().imageW / (float)cursorModeView.getDefaultTexture().imageH;
+    h = bounds.h;
+    w = h * aspectRatio;
+    cursorModeView.setBounds(HUDRect(bounds.w / 2.f - w / 2.f,0,w,h));
 }
 
 void StatusBar::draw()
@@ -190,4 +198,12 @@ void StatusBar::onConnect(const Leap::Controller& /*controller*/)
 void StatusBar::onDisconnect(const Leap::Controller& /*controller*/)
 {
     indicator.setState(false);
+}
+
+void StatusBar::setCursorMode(bool isPlaying)
+{
+    if (isPlaying)
+        cursorModeView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("Playing"));
+    else
+        cursorModeView.setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("Pointing"));
 }
