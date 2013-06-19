@@ -1218,6 +1218,15 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             useCursor = false;
         ++iter;
     }
+    
+    iter = toolStrikeDetectors.begin();
+    while (iter != toolStrikeDetectors.end())
+    {
+        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
+            useCursor = false;
+        ++iter;
+    }
+
     if (useCursor)
     {
         MotionDispatcher::instance().cursor->setEnabled(true);
