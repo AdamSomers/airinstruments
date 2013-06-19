@@ -35,6 +35,7 @@ public:
     void setSlideIndex(int newSlideIndex);
     
     void setButtonRingTexture(TextureDescription texture);
+    void setDotTextures(TextureDescription on, TextureDescription off);
 
 private:
     TextHUDButton nextButton;

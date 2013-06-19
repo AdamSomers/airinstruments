@@ -378,6 +378,8 @@ void MainContentComponent::newOpenGLContextCreated()
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    tutorial->setDotTextures(SkinManager::instance().getSelectedSkin().getTexture("dot_white"),
+                             SkinManager::instance().getSelectedSkin().getTexture("dot_black"));
     tutorial->addActionListener(this);
     tutorial->setVisible(false, 0);
     if (showTutorial)

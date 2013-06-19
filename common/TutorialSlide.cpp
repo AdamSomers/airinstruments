@@ -7,7 +7,6 @@
 
 #include "TutorialSlide.h"
 #include "GfxTools.h"
-#include "SkinManager.h"
 
 TutorialSlide::TutorialSlide()
 : slideIndex(0)
@@ -134,12 +133,10 @@ void TutorialSlide::loadTextures()
     if (slides.size() > 0)
         slides.front()->setVisible(true, 2000);
     
-    for (int i = 0; i < slides.size(); ++i)
+    for (int i = 0; i < (int)slides.size(); ++i)
     {
         SharedPtr<HUDView> offDot(new HUDView);
         SharedPtr<HUDView> onDot(new HUDView);
-        offDot->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("dot_black"));
-        onDot->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("dot_white"));
         onDot->setMultiplyAlpha(true);
         addChild(offDot.get());
         addChild(onDot.get());
@@ -166,7 +163,7 @@ void TutorialSlide::setVisible(bool shouldBeVisible, int fadeTimeMs)
     else
         nextButton.setText(StringArray("next"), StringArray("next"));
     
-    for (int i = 0; i < onDots.size(); ++i)
+    for (int i = 0; i < (int)onDots.size(); ++i)
     {
         if (i == slideIndex)
             onDots.at(i)->setVisible(true);
@@ -209,7 +206,7 @@ void TutorialSlide::setSlideIndex(int newSlideIndex)
         else
             prevButton.setVisible(false);
     }
-    for (int i = 0; i < onDots.size(); ++i)
+    for (int i = 0; i < (int)onDots.size(); ++i)
     {
         if (i == newSlideIndex)
             onDots.at(i)->setVisible(true);
@@ -223,6 +220,14 @@ void TutorialSlide::setButtonRingTexture(TextureDescription texture)
     nextButton.setRingTexture(texture);
     prevButton.setRingTexture(texture);
     skipButton.setRingTexture(texture);
+}
+
+void TutorialSlide::setDotTextures(TextureDescription on, TextureDescription off)
+{
+   for (SharedPtr<HUDView> onDot : onDots)
+      onDot->setDefaultTexture(on);
+   for (SharedPtr<HUDView> offDot : offDots)
+      offDot->setDefaultTexture(off);
 }
 
 TutorialSlide::SlideContents::SlideContents()
