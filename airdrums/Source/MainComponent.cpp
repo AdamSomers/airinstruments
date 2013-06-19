@@ -47,6 +47,7 @@ MainContentComponent::MainContentComponent()
 , buttonBar(NULL)
 , splashBgView(NULL)
 , splashTitleView(NULL)
+, leapDisconnectedView(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
@@ -88,6 +89,8 @@ MainContentComponent::MainContentComponent()
         splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
     else
         Logger::writeToLog("ERROR: splash_title.png not found!");
+    
+    startTimer(kTimerCheckLeapConnection, 500);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -109,6 +112,7 @@ MainContentComponent::~MainContentComponent()
     delete buttonBar;
     delete splashBgView;
     delete splashTitleView;
+    delete leapDisconnectedView;
     
     for (PlayArea* pad : playAreas)
         delete pad;
@@ -380,6 +384,10 @@ void MainContentComponent::newOpenGLContextCreated()
     splashTitleView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
     splashTitleView->setVisible(false, SPLASH_FADE);
+    
+    leapDisconnectedView = new HUDView;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(false, 0);
 
     MotionDispatcher::instance().addListener(*this);
     
@@ -674,6 +682,17 @@ void MainContentComponent::renderOpenGL()
             kitSelector->setXRange(shownX, hiddenX);
         }
         
+        if (leapDisconnectedView) {
+            TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected");
+            float aspectRatio = td.imageH / (float)td.imageW;
+            float w = Environment::instance().screenW / 2.f;
+            float h = w * aspectRatio;
+            leapDisconnectedView->setBounds(HUDRect(Environment::instance().screenW / 2.f - w / 2.f,
+                                                    Environment::instance().screenH / 2.f - h / 2.f,
+                                                    w,
+                                                    h));
+        }
+        
         hiddenX = (float)Environment::instance().screenW;
         shownX = Environment::instance().screenW - width;
         if (patternSelector) {
@@ -767,6 +786,9 @@ void MainContentComponent::renderOpenGL()
     splashTitleView->draw();
     
     tutorial->draw();
+    
+    leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    leapDisconnectedView->draw();
 
     if ((Time::getCurrentTime() - startTime).inMinutes() > 40)
         BETA_CHECK_RANDOM_2013()
@@ -1100,6 +1122,8 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    lastFrame = Time::getCurrentTime();
+
     if (!Environment::instance().ready)
         return;
     
@@ -1162,6 +1186,14 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     }
     
     
+}
+
+void MainContentComponent::onConnect(const Leap::Controller&)
+{
+}
+
+void MainContentComponent::onDisconnect(const Leap::Controller&)
+{
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
@@ -1301,6 +1333,17 @@ void MainContentComponent::timerCallback(int timerId)
             break;
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
+            break;
+        case kTimerCheckLeapConnection:
+            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
+                if (hasKeyboardFocus(true))
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+                else
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+                leapDisconnectedView->setVisible(true);
+            }
+            else if (leapDisconnectedView)
+                leapDisconnectedView->setVisible(false);
             break;
             
         default:

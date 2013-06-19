@@ -73,6 +73,8 @@ public:
 
     // Leap::Listener override
     virtual void onFrame(const Leap::Controller&);
+    virtual void onConnect(const Leap::Controller&);
+    virtual void onDisconnect(const Leap::Controller&);
     
     // MultiTimer override
     void timerCallback(int timerId);
@@ -98,7 +100,8 @@ private:
     {
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
-        kTimerRightHandTap
+        kTimerRightHandTap,
+        kTimerCheckLeapConnection
     };
     
     class InitGLMessage : public Message {};
@@ -116,6 +119,7 @@ private:
     ListSelector* patternSelector;
     TempoControl* tempoControl;
     ButtonBar* buttonBar;
+    HUDView* leapDisconnectedView;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;
@@ -145,6 +149,8 @@ private:
     Image splashTitleImage;
     Image splashImage;
     Time lastRender;
+
+    Time lastFrame;
     
     // for beta check
     Time startTime;
