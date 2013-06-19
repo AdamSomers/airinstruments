@@ -30,6 +30,85 @@ Usage:
 - If you dismiss the tutorial with the "Don't show again" button, you can bring it back with the 'h' key on your keyboard.
 
 
+v0.7 - 6/19/2013
+==================
+
+Resolved the following issues:
+
+ISSUE 2672 - App does not inform the user when the Leap Motion Controller is disconnected or software is not running.
+ISSUE 2691 - Some pads cannot be hit using the Leap Motion Controller.
+ISSUE 2685 - Minimizing and then Restoring the window causes the screen to go black.
+ISSUE 2683 - Using small objects such as pencils do not function well.
+ISSUE 2651 - User is able lower the BPM to a negative number.
+ISSUE 2679 - The tutorial only covers the playing of the set pads, there is no mention of all the other functions.
+ISSUE 2649 - "Clear" text appears over "Assign" text when first starting App.
+ISSUE 2647 - There is a selectable Kit that has no label and several unselectable Kit spots.
+
+Other changes in this release
+
+- Display whether app is in "pointing" or "playing" mode.
+- Add dots to tutorial to indicate progress.
+
+These issues require further information:
+
+ISSUE 2693 - User cannot close the App from the taskbar (Windows).
+
+    Not seeing this on my system, Win 7 64Bit in Parallels 7 on 2008 Mac Pro,
+    Win 7 64Bit 2008 MacBook Pro Boot Camp. Please provide system specs.
+    Context menu and icon "x" button work as expected.
+
+ISSUE 2650 - Strange line through images (Windows).
+
+    Not seeing this on my machine Win 7 64Bit in Parallels 7, Win 7 64Bit on
+    2008 MacBook Pro Bootcamp. Please provide screenshots and system specs.
+
+Responses to recommendations:
+
+FEEDBACK 2657 - Several drum icons are identical.
+
+    Further labeling is possible but would detract from the minimalist
+    aesthetic. Some commercial drum machine apps display the wave file name on
+    the pad, and some display no iconography whatsoever (just blank pads). My
+    hope is that the kits' specific layout will be committed to memory as the
+    user masters the app. If this turns out to be a problem for users I will
+    either resort to labeling or some programmatic variation of drum icons.
+    The app is capable of custom icons for each and every sound, which would
+    be the optimal solution given ample time & resources.
+
+FEEDBACK 2653 - User should be able to increase and decreas the BPM using the keyboard.
+
+    Agreed, and planned for a future release.
+
+FEEDBACK 2684 - It would be a nice feature if the user could have more items assigned at once.
+
+    Six was determined to be maximum number of pads that could be easily
+    accessed given the Leap Motion Controller's field of a view. I like the
+    idea of switching to alternate sets of items, though using open/closed
+    hand for this presents interaction collisions (the current set of pads
+    should be playable with closed hands, open hands, or tools). A button or
+    gesture to pan to the next set of icons would be ideal. The current drum
+    icon row can be repurposed to facilitate this, though I would keep the
+    random-access select-ability as an 'advanced' option. Note that this is a
+    low priority enhancement and probably won't make it in until a future
+    release, post-shipment.
+
+FEEDBACK 2674 - It would be useful to show an icon on screen so that the user can see which pads they will hit.
+
+    Currently the pad lights up slightly when the hand is hovering over it. I
+    plan to create an alternate indication of this to a) make it more obvious
+    and b) better distinguish from the trigger light up animation.
+
+FEEDBACK 2655 - Drum icons do not have labels unless assigned.
+
+    I agree that icons alone could bewilder novice users, so I plan to add
+    labels over the drum icons during the hover state. This will at least
+    provide information about the icon's identity during the assignment
+    operation. Note also that the icons and their labels will be documented in
+    a help file. Further labeling will add clutter that detracts from the
+    minimalist aesthetic. The drum icons serve as a visual identity for each
+    drum sound, which should suffice once the user has interacted with the app
+    for some time. However,
+
 ==================
 v0.6 - 6/12/2013
 
