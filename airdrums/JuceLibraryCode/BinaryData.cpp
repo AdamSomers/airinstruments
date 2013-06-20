@@ -8,7 +8,7 @@ namespace BinaryData
 {
 
 //================== TMD CHIL CLV.aif ==================
-static const unsigned char temp_a282e97a[] =
+static const unsigned char temp_b5eec7cd[] =
 { 70,79,82,77,0,1,6,38,65,73,70,70,67,79,77,84,0,0,1,194,0,1,0,0,0,0,0,0,0,18,67,114,101,97,116,111,114,58,32,76,111,103,105,99,32,80,114,111,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -836,10 +836,10 @@ static const unsigned char temp_a282e97a[] =
 244,10,249,12,248,9,249,10,251,5,251,7,248,6,250,3,254,5,254,6,254,4,254,3,254,1,254,2,255,2,255,1,255,1,255,1,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
-const char* TMD_CHIL_CLV_aif = (const char*) temp_a282e97a;
+const char* TMD_CHIL_CLV_aif = (const char*) temp_b5eec7cd;
 
 //================== testShader.fs ==================
-static const unsigned char temp_bffafd96[] =
+static const unsigned char temp_3176a3a3[] =
 "#ifdef OPENGL_ES\n"
 "precision mediump float;\n"
 "#endif\n"
@@ -849,10 +849,10 @@ static const unsigned char temp_bffafd96[] =
 "    gl_FragColor = vFragColor; \n"
 "}";
 
-const char* testShader_fs = (const char*) temp_bffafd96;
+const char* testShader_fs = (const char*) temp_3176a3a3;
 
 //================== testShader.vs ==================
-static const unsigned char temp_bffaff86[] =
+static const unsigned char temp_3176a593[] =
 "uniform mat4 mvMatrix;\n"
 "uniform mat4 pMatrix;\n"
 "varying vec4 vFragColor;\n"
@@ -875,7 +875,7 @@ static const unsigned char temp_bffaff86[] =
 "     gl_Position = mvpMatrix * vVertex; \n"
 "}";
 
-const char* testShader_vs = (const char*) temp_bffaff86;
+const char* testShader_vs = (const char*) temp_3176a593;
 
 
 const char* getNamedResource (const char*, int&) throw();
