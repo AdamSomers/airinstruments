@@ -58,7 +58,7 @@ MainContentComponent::MainContentComponent()
 , lastDrumSelection(-1)
 , resizeCursor(false)
 {
-    setSize (1280, 720);
+    setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
     setWantsKeyboardFocus(true);
 
