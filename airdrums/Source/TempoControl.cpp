@@ -72,6 +72,8 @@ void TempoControl::setTempo(float tempo)
 
 void TempoControl::increment(int direction)
 {
+    if ((direction == -1 && icon->getTempo() <= 30) || (direction == 1 && icon->getTempo() >= 300))
+        return;
     icon->setTempo(icon->getTempo() + direction);   
     Drums::instance().setTempo(icon->getTempo());
 }

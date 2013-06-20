@@ -53,6 +53,13 @@ void MainView::setBounds(const HUDRect& b)
         button->setBounds(HUDRect(0,0,buttonWidth,buttonHeight));
 }
 
+void MainView::setVisible(bool shouldBeVisible, int fadeTimeMs)
+{
+    HUDView::setVisible(shouldBeVisible, fadeTimeMs);
+    enableAssignButtons(false);
+    enableClearButtons(false);
+}
+
 void MainView::buttonStateChanged(HUDButton* b)
 {
     for (int i = 0; i < (int)assignButtons.size(); ++i)

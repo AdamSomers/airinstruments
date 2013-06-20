@@ -35,6 +35,7 @@ public:
     void setSlideIndex(int newSlideIndex);
     
     void setButtonRingTexture(TextureDescription texture);
+    void setDotTextures(TextureDescription on, TextureDescription off);
 
 private:
     TextHUDButton nextButton;
@@ -56,6 +57,9 @@ private:
 
     int slideIndex;
     std::vector<SharedPtr<SlideContents> > slides;
+    
+    std::vector<SharedPtr<HUDView> > offDots;
+    std::vector<SharedPtr<HUDView> > onDots;
 };
 
 #endif // h_TutorialSlide

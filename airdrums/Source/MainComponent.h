@@ -73,6 +73,8 @@ public:
 
     // Leap::Listener override
     virtual void onFrame(const Leap::Controller&);
+    virtual void onConnect(const Leap::Controller&);
+    virtual void onDisconnect(const Leap::Controller&);
     
     // MultiTimer override
     void timerCallback(int timerId);
@@ -82,6 +84,8 @@ public:
     
     // ActionListener override
     void actionListenerCallback(const String& message);
+    
+    class TempoSourceChangedMessage : public Message {};
 
 private:
     void layoutPadsGrid();
@@ -98,11 +102,12 @@ private:
     {
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
-        kTimerRightHandTap
+        kTimerRightHandTap,
+        kTimerCheckLeapConnection
     };
     
     class InitGLMessage : public Message {};
-    
+
     OpenGLContext openGLContext;
     
     MainView* mainView;
@@ -116,6 +121,7 @@ private:
     ListSelector* patternSelector;
     TempoControl* tempoControl;
     ButtonBar* buttonBar;
+    HUDView* leapDisconnectedView;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;
@@ -125,6 +131,7 @@ private:
 
     typedef std::map<int, StrikeDetector> StrikeDetectorMap;
     StrikeDetectorMap strikeDetectors;
+    StrikeDetectorMap toolStrikeDetectors;
     
     float prevMouseY;
     float prevMouseX;
@@ -145,6 +152,8 @@ private:
     Image splashTitleImage;
     Image splashImage;
     Time lastRender;
+
+    Time lastFrame;
     
     // for beta check
     Time startTime;

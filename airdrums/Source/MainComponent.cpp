@@ -24,6 +24,7 @@
 #include "MainComponent.h"
 
 #include <algorithm>
+#include <set>
 
 #define NUM_PADS 6
 #define TUTORIAL_TIMEOUT 30000
@@ -47,6 +48,7 @@ MainContentComponent::MainContentComponent()
 , buttonBar(NULL)
 , splashBgView(NULL)
 , splashTitleView(NULL)
+, leapDisconnectedView(NULL)
 , lastCircleId(0)
 , showKitSelector(false)
 , tempoSlider(Slider::LinearHorizontal, Slider:: NoTextBox)
@@ -56,7 +58,7 @@ MainContentComponent::MainContentComponent()
 , lastDrumSelection(-1)
 , resizeCursor(false)
 {
-    setSize (1280, 720);
+    setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
     setWantsKeyboardFocus(true);
 
@@ -88,6 +90,8 @@ MainContentComponent::MainContentComponent()
         splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
     else
         Logger::writeToLog("ERROR: splash_title.png not found!");
+    
+    startTimer(kTimerCheckLeapConnection, 500);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -109,6 +113,7 @@ MainContentComponent::~MainContentComponent()
     delete buttonBar;
     delete splashBgView;
     delete splashTitleView;
+    delete leapDisconnectedView;
     
     for (PlayArea* pad : playAreas)
         delete pad;
@@ -343,7 +348,19 @@ void MainContentComponent::newOpenGLContextCreated()
 
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
-    tempoControl->setTempo(tempo);
+    if (tempo < 30) {
+        tempo = 30;
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("tempo", tempo);
+    }
+    if (tempo > 300) {
+        tempo = 300;
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("tempo", tempo);
+    }
+
+    if (Drums::instance().getTempoSource() == Drums::kGlobalTempo)
+        tempoControl->setTempo(tempo);
+    else
+        tempoControl->setTempo(Drums::instance().getTempo());
     views.push_back(tempoControl);
     
     buttonBar = new ButtonBar;
@@ -356,13 +373,13 @@ void MainContentComponent::newOpenGLContextCreated()
     
     for (HUDView* v : views) {
         v->loadTextures();
-        if (showTutorial)
-            v->setVisible(false);
     }
     
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    tutorial->setDotTextures(SkinManager::instance().getSelectedSkin().getTexture("dot_white"),
+                             SkinManager::instance().getSelectedSkin().getTexture("dot_black"));
     tutorial->addActionListener(this);
     tutorial->setVisible(false, 0);
     if (showTutorial)
@@ -382,6 +399,10 @@ void MainContentComponent::newOpenGLContextCreated()
     splashTitleView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
     splashTitleView->setVisible(false, SPLASH_FADE);
+    
+    leapDisconnectedView = new HUDView;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(false, 0);
 
     MotionDispatcher::instance().addListener(*this);
     
@@ -676,6 +697,17 @@ void MainContentComponent::renderOpenGL()
             kitSelector->setXRange(shownX, hiddenX);
         }
         
+        if (leapDisconnectedView) {
+            TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected");
+            float aspectRatio = td.imageH / (float)td.imageW;
+            float w = Environment::instance().screenW / 2.f;
+            float h = w * aspectRatio;
+            leapDisconnectedView->setBounds(HUDRect(Environment::instance().screenW / 2.f - w / 2.f,
+                                                    Environment::instance().screenH / 2.f - h / 2.f,
+                                                    w,
+                                                    h));
+        }
+        
         hiddenX = (float)Environment::instance().screenW;
         shownX = Environment::instance().screenW - width;
         if (patternSelector) {
@@ -769,6 +801,9 @@ void MainContentComponent::renderOpenGL()
     splashTitleView->draw();
     
     tutorial->draw();
+    
+    leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    leapDisconnectedView->draw();
 
     if ((Time::getCurrentTime() - startTime).inMinutes() > 40)
         BETA_CHECK_RANDOM_2013()
@@ -1102,6 +1137,8 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    lastFrame = Time::getCurrentTime();
+
     if (!Environment::instance().ready)
         return;
     
@@ -1126,6 +1163,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         pads.at(i)->setHovering(false);
     }
     
+    std::set<int> hoveredNotes;
+    
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
         
@@ -1138,6 +1177,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             StrikeDetector& detector = (*iter).second;
             detector.handMotion(hand);
             int midiNote = detector.getNoteForHand(hand);
+            hoveredNotes.insert(midiNote);
             for (int i = 0; i < NUM_PADS; ++i)
             {
                 if (pads.at(i)->getSelectedMidiNote() == midiNote)
@@ -1145,7 +1185,33 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             }
         }
     }
-    
+
+    const Leap::PointableList& pointables = frame.pointables();
+    const size_t numPointables = pointables.count();
+    for (unsigned int p = 0; p < numPointables; ++p) {
+        const Leap::Pointable& pointable = pointables[p];
+        if (!pointable.hand().isValid())
+        {
+            if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+            {
+                std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
+                StrikeDetectorMap::iterator iter = insertResult.first;
+                StrikeDetector& detector = (*iter).second;
+                int midiNote = detector.getNoteForPointable(pointable);
+                if (hoveredNotes.find(midiNote) == hoveredNotes.end())
+                    detector.pointableMotion(pointable);
+                else
+                    toolStrikeDetectors.erase(iter);
+            }
+        }
+        else
+        {
+            StrikeDetectorMap::iterator iter = toolStrikeDetectors.find(pointable.id());
+            if (iter != toolStrikeDetectors.end())
+                toolStrikeDetectors.erase(iter);
+        }
+    }
+
     StrikeDetectorMap::iterator iter = strikeDetectors.begin();
     bool useCursor = true;
     while (iter != strikeDetectors.end())
@@ -1154,6 +1220,15 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             useCursor = false;
         ++iter;
     }
+    
+    iter = toolStrikeDetectors.begin();
+    while (iter != toolStrikeDetectors.end())
+    {
+        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
+            useCursor = false;
+        ++iter;
+    }
+
     if (useCursor)
     {
         MotionDispatcher::instance().cursor->setEnabled(true);
@@ -1163,7 +1238,18 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         MotionDispatcher::instance().cursor->setEnabled(false);
     }
     
+    if (statusBar)
+        statusBar->setCursorMode(!useCursor);
     
+    
+}
+
+void MainContentComponent::onConnect(const Leap::Controller&)
+{
+}
+
+void MainContentComponent::onDisconnect(const Leap::Controller&)
+{
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
@@ -1295,12 +1381,25 @@ void MainContentComponent::timerCallback(int timerId)
         case kTimerShowTutorial:
             tutorial->setVisible(true, 2000);
             stopTimer(kTimerShowTutorial);
+            for (HUDView* v : views)
+                v->setVisible(false);
             break;
         case kTimerLeftHandTap:
             stopTimer(kTimerLeftHandTap);
             break;
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
+            break;
+        case kTimerCheckLeapConnection:
+            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
+                if (hasKeyboardFocus(true))
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+                else
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+                leapDisconnectedView->setVisible(true);
+            }
+            else if (leapDisconnectedView)
+                leapDisconnectedView->setVisible(false);
             break;
             
         default:
@@ -1332,6 +1431,12 @@ void MainContentComponent::handleMessage(const juce::Message &m)
         openGLContext.setRenderer (this);
         openGLContext.setComponentPaintingEnabled (true);
         openGLContext.attachTo (*this);
+    }
+    
+    TempoSourceChangedMessage* tempoSourceChangedMessage = dynamic_cast<TempoSourceChangedMessage*>(inMsg);
+    if (tempoSourceChangedMessage)
+    {
+        tempoControl->setTempo(Drums::instance().getTempo());
     }
 }
 

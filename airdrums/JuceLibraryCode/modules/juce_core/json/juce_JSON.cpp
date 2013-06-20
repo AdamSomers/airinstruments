@@ -1,24 +1,27 @@
 /*
   ==============================================================================
 
-   This file is part of the JUCE library - "Jules' Utility Class Extensions"
-   Copyright 2004-11 by Raw Material Software Ltd.
+   This file is part of the juce_core module of the JUCE library.
+   Copyright (c) 2013 - Raw Material Software Ltd.
 
-  ------------------------------------------------------------------------------
+   Permission to use, copy, modify, and/or distribute this software for any purpose with
+   or without fee is hereby granted, provided that the above copyright notice and this
+   permission notice appear in all copies.
 
-   JUCE can be redistributed and/or modified under the terms of the GNU General
-   Public License (Version 2), as published by the Free Software Foundation.
-   A copy of the license is included in the JUCE distribution, or can be found
-   online at www.gnu.org/licenses.
+   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD
+   TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN
+   NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+   DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+   IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+   CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+   ------------------------------------------------------------------------------
 
-  ------------------------------------------------------------------------------
+   NOTE! This permissive ISC license applies ONLY to files within the juce_core module!
+   All other JUCE modules are covered by a dual GPL/commercial license, so if you are
+   using any other modules, be sure to check that you also comply with their license.
 
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.rawmaterialsoftware.com/juce for more information.
+   For more details, visit www.juce.com
 
   ==============================================================================
 */
@@ -26,6 +29,21 @@
 class JSONParser
 {
 public:
+    static Result parseObjectOrArray (String::CharPointerType t, var& result)
+    {
+        t = t.findEndOfWhitespace();
+
+        switch (t.getAndAdvance())
+        {
+            case 0:      result = var::null; return Result::ok();
+            case '{':    return parseObject (t, result);
+            case '[':    return parseArray  (t, result);
+        }
+
+        return createFail ("Expected '{' or '['", &t);
+    }
+
+private:
     static Result parseAny (String::CharPointerType& t, var& result)
     {
         t = t.findEndOfWhitespace();
@@ -34,7 +52,7 @@ public:
         switch (t2.getAndAdvance())
         {
             case '{':    t = t2; return parseObject (t, result);
-            case '[':    t = t2; return parseArray (t, result);
+            case '[':    t = t2; return parseArray  (t, result);
             case '"':    t = t2; return parseString (t, result);
 
             case '-':
@@ -84,7 +102,6 @@ public:
         return createFail ("Syntax error", &t);
     }
 
-private:
     static Result createFail (const char* const message, const String::CharPointerType* location = nullptr)
     {
         String m (message);
@@ -483,8 +500,8 @@ private:
 var JSON::parse (const String& text)
 {
     var result;
-    String::CharPointerType t (text.getCharPointer());
-    if (! JSONParser::parseAny (t, result))
+
+    if (! JSONParser::parseObjectOrArray (text.getCharPointer(), result))
         result = var::null;
 
     return result;
@@ -502,8 +519,7 @@ var JSON::parse (const File& file)
 
 Result JSON::parse (const String& text, var& result)
 {
-    String::CharPointerType t (text.getCharPointer());
-    return JSONParser::parseAny (t, result);
+    return JSONParser::parseObjectOrArray (text.getCharPointer(), result);
 }
 
 String JSON::toString (const var& data, const bool allOnOneLine)
@@ -606,12 +622,12 @@ public:
         expect (JSON::parse (String::empty) == var::null);
         expect (JSON::parse ("{}").isObject());
         expect (JSON::parse ("[]").isArray());
-        expect (JSON::parse ("1234").isInt());
-        expect (JSON::parse ("12345678901234").isInt64());
-        expect (JSON::parse ("1.123e3").isDouble());
-        expect (JSON::parse ("-1234").isInt());
-        expect (JSON::parse ("-12345678901234").isInt64());
-        expect (JSON::parse ("-1.123e3").isDouble());
+        expect (JSON::parse ("[ 1234 ]")[0].isInt());
+        expect (JSON::parse ("[ 12345678901234 ]")[0].isInt64());
+        expect (JSON::parse ("[ 1.123e3 ]")[0].isDouble());
+        expect (JSON::parse ("[ -1234]")[0].isInt());
+        expect (JSON::parse ("[-12345678901234]")[0].isInt64());
+        expect (JSON::parse ("[-1.123e3]")[0].isDouble());
 
         for (int i = 100; --i >= 0;)
         {
@@ -622,7 +638,7 @@ public:
 
             const bool oneLine = r.nextBool();
             String asString (JSON::toString (v, oneLine));
-            var parsed = JSON::parse (asString);
+            var parsed = JSON::parse ("[" + asString + "]")[0];
             String parsedString (JSON::toString (parsed, oneLine));
             expect (asString.isNotEmpty() && parsedString == asString);
         }

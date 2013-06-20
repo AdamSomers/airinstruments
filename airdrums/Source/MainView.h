@@ -23,6 +23,7 @@ public:
     
     // HUDView overrides
     void setBounds(const HUDRect& b);
+    void setVisible(bool shouldBeVisible, int fadeTimeMs);
     
     // HUDButton::Listener override
     void buttonStateChanged(HUDButton* b);

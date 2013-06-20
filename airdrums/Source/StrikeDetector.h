@@ -39,7 +39,11 @@ public:
     StrikeDetector();
     
     void handMotion(const Leap::Hand& hand);
+    void pointableMotion(const Leap::Pointable& pointable);
+    void motion(float position, float velocity, int64_t timestamp);
+
     int getNoteForHand(const Leap::Hand& hand);
+    int getNoteForPointable(const Leap::Pointable& pointable);
 
     const Time& getLastStrikeTime() const;
     
@@ -66,6 +70,8 @@ private:
 	int64_t timestampHistory[kHistoryDepth];
     
 	void SmoothData(float& velocity, float& position, int64_t timestamp);
+    
+    int midiNote;
 };
 
 #endif /* defined(__AirBeats__StrikeDetector__) */
