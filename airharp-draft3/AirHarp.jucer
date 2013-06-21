@@ -99,6 +99,7 @@
         <FILE id="kncYmg" name="Interpolators.h" compile="0" resource="0" file="../../muskit/src/Interpolators.h"/>
         <FILE id="mor7ue" name="MathHelpers.h" compile="0" resource="0" file="../../muskit/src/MathHelpers.h"/>
         <FILE id="rSbZUg" name="MidiServer.h" compile="0" resource="0" file="../../muskit/src/MidiServer.h"/>
+        <FILE id="VhEP3U" name="MidiServer.cpp" compile="1" resource="0" file="../../muskit/src/MidiServer.cpp"/>
         <FILE id="s6VMl4" name="ParameterAPI.cpp" compile="1" resource="0"
               file="../../muskit/src/ParameterAPI.cpp"/>
         <FILE id="vYExmd" name="ParameterAPI.h" compile="0" resource="0" file="../../muskit/src/ParameterAPI.h"/>
