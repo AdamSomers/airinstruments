@@ -38,6 +38,8 @@ public:
             return;
         }
         audioDeviceManager.addAudioCallback(this);
+        
+        MotionDispatcher::instance().setUseHandsAndFingers(true);
     }
 
     void shutdown()

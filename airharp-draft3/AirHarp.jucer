@@ -23,10 +23,17 @@
         <FILE id="AcCvP2" name="stringBg0.png" compile="0" resource="0" file="Resources/skin0/stringBg0.png"/>
       </GROUP>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
-      <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
-      <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
+      <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
+      <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="RlyAyP" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
+      <FILE id="J96Ifr" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
+      <FILE id="ztLejZ" name="TextButton.cpp" compile="1" resource="0" file="../common/TextButton.cpp"/>
+      <FILE id="P2cOQG" name="TextButton.h" compile="0" resource="0" file="../common/TextButton.h"/>
+      <FILE id="vKGyI4" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
+      <FILE id="xzwPs7" name="View2d.cpp" compile="1" resource="0" file="../common/View2d.cpp"/>
+      <FILE id="OCmpXR" name="View2d.h" compile="0" resource="0" file="../common/View2d.h"/>
       <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>
       <FILE id="S3Vl7E" name="Environment.h" compile="0" resource="0" file="../common/Environment.h"/>
       <FILE id="pp8MMQ" name="FingerView.cpp" compile="1" resource="0" file="../common/FingerView.cpp"/>

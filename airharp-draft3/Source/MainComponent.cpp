@@ -142,10 +142,10 @@ void MainContentComponent::newOpenGLContextCreated()
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
 
-    slide = new TutorialSlide;
-    views.push_back(slide);
-    slide->begin();
-    startTimer(TUTORIAL_TIMEOUT);
+//    slide = new TutorialSlide;
+//    views.push_back(slide);
+//    slide->begin();
+//    startTimer(TUTORIAL_TIMEOUT);
     
     HarpToolbar* tb = new HarpToolbar;
     views.push_back(tb);
@@ -377,7 +377,7 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     printf("%d\n", kp.getTextDescription().getIntValue());
     if (kp.getTextCharacter() == 'h')
     {
-        slide->begin();
+//        slide->begin();
         ret = true;
     }
     else if (kp.getTextCharacter() == 'a')
@@ -465,10 +465,10 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 
                 bool isClockwise = circle.normal().z < 0;
                 
-                if (isClockwise && circle.state() == Leap::Gesture::STATE_STOP)
-                    slide->end();
-                else if (!slide->isDone() && circle.state() == Leap::Gesture::STATE_STOP)
-                    slide->back();
+//                if (isClockwise && circle.state() == Leap::Gesture::STATE_STOP)
+//                    slide->end();
+//                else if (!slide->isDone() && circle.state() == Leap::Gesture::STATE_STOP)
+//                    slide->back();
             }
                 break;
                 
@@ -480,17 +480,17 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 {
-    if (!slide->isDone())
-        slide->next();
+//    if (!slide->isDone())
+//        slide->next();
 }
 
 void MainContentComponent::timerCallback()
 {
-    Harp* h = HarpManager::instance().getHarp(0);
-    if (h->checkIdle())
-        slide->begin();
-    else {
-        stopTimer();
-        startTimer(TUTORIAL_TIMEOUT);
-    }
+//    Harp* h = HarpManager::instance().getHarp(0);
+//    if (h->checkIdle())
+//        slide->begin();
+//    else {
+//        stopTimer();
+//        startTimer(TUTORIAL_TIMEOUT);
+//    }
 }

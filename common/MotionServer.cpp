@@ -5,6 +5,7 @@ MotionDispatcher* MotionDispatcher::s_instance = nullptr;
 
 MotionDispatcher::MotionDispatcher()
 : paused(false)
+, useHandsAndFingers(false)
 {
     addListener(*this);
     controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
@@ -173,9 +174,9 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         // cursor handles disabling itself via timer
     }
 
-    return;
+    if (!useHandsAndFingers)
+        return;
 
-#if 0	// Unreachable code due to return above
     if (!Environment::instance().ready)
         return;
     
@@ -311,7 +312,6 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             //printf("Removed hand %d\n", hv->id);
         }
     }
-#endif
 }
 
 void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)

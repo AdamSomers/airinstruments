@@ -55,7 +55,7 @@ void HarpToolbar::draw()
     GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
 
     setDefaultColor(color);
-    setDefaultTexture(SkinManager::instance().getSkin().bezelTop);
+//    setDefaultTexture(SkinManager::instance().getSkin().bezelTop);
 
     HUDView::draw();
 }
@@ -67,8 +67,8 @@ void HarpToolbar::loadTextures()
 
 void HarpToolbar::setButtonTextures(GLuint on, GLuint off)
 {
-    for (HUDButton* b : buttons)
-        b->setTextures(on, off);
+//    for (HUDButton* b : buttons)
+//        b->setTextures(on, off);
 }
 
 void HarpToolbar::buttonStateChanged(HUDButton* b)
@@ -158,14 +158,14 @@ void StatusBar::layoutControls()
 
 void StatusBar::setIndicatorTextures(GLuint on, GLuint off)
 {
-    indicator.setTextures(on, off);
+//    indicator.setTextures(on, off);
 }
 
 void StatusBar::draw()
 {
     GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
     setDefaultColor(color);
-    setDefaultTexture(SkinManager::instance().getSkin().bezelBottom);
+//    setDefaultTexture(SkinManager::instance().getSkin().bezelBottom);
 
     HUDView::draw();
 }

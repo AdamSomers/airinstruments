@@ -172,7 +172,7 @@ void Harp::NoteOn(int num, int note, int velocity)
 {
     ScopedLock sl(lock);
     
-    strings.at(num)->NoteOn(note, velocity);
+    strings.at(num)->NoteOn(note, velocity, NULL);
     idle = false;
 }
 

@@ -1,24 +1,23 @@
 /*
   ==============================================================================
 
-   This file is part of the JUCE library - "Jules' Utility Class Extensions"
-   Copyright 2004-11 by Raw Material Software Ltd.
+   This file is part of the JUCE library.
+   Copyright (c) 2013 - Raw Material Software Ltd.
 
-  ------------------------------------------------------------------------------
+   Permission is granted to use this software under the terms of either:
+   a) the GPL v2 (or any later version)
+   b) the Affero GPL v3
 
-   JUCE can be redistributed and/or modified under the terms of the GNU General
-   Public License (Version 2), as published by the Free Software Foundation.
-   A copy of the license is included in the JUCE distribution, or can be found
-   online at www.gnu.org/licenses.
+   Details of these licenses can be found at: www.gnu.org/licenses
 
    JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
    A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-  ------------------------------------------------------------------------------
+   ------------------------------------------------------------------------------
 
    To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.rawmaterialsoftware.com/juce for more information.
+   available: visit www.juce.com for more information.
 
   ==============================================================================
 */
@@ -584,16 +583,6 @@ public:
         SetWindowText (hwnd, title.toWideCharPointer());
     }
 
-    void setPosition (int x, int y)
-    {
-        offsetWithinParent (x, y);
-        SetWindowPos (hwnd, 0,
-                      x - windowBorder.getLeft(),
-                      y - windowBorder.getTop(),
-                      0, 0,
-                      SWP_NOACTIVATE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
-    }
-
     void repaintNowIfTransparent()
     {
         if (isUsingUpdateLayeredWindow() && lastPaintTime > 0 && Time::getMillisecondCounter() > lastPaintTime + 30)
@@ -619,33 +608,37 @@ public:
        #endif
     }
 
-    void setSize (int w, int h)
-    {
-        SetWindowPos (hwnd, 0, 0, 0,
-                      w + windowBorder.getLeftAndRight(),
-                      h + windowBorder.getTopAndBottom(),
-                      SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER);
-
-        if (isValidPeer (this))
-        {
-            updateBorderSize();
-            repaintNowIfTransparent();
-        }
-    }
-
-    void setBounds (int x, int y, int w, int h, bool isNowFullScreen)
+    void setBounds (const Rectangle<int>& bounds, bool isNowFullScreen)
     {
         fullScreen = isNowFullScreen;
-        offsetWithinParent (x, y);
+
+        Rectangle<int> newBounds (windowBorder.addedTo (bounds));
+
+        if (isUsingUpdateLayeredWindow())
+        {
+            if (HWND parentHwnd = GetParent (hwnd))
+            {
+                RECT parentRect;
+                GetWindowRect (parentHwnd, &parentRect);
+                newBounds.translate (parentRect.left, parentRect.top);
+            }
+        }
+
+        const Rectangle<int> oldBounds (getBounds());
+        const bool hasMoved = (oldBounds.getPosition() != bounds.getPosition());
+        const bool hasResized = (oldBounds.getWidth() != bounds.getWidth()
+                                  || oldBounds.getHeight() != bounds.getHeight());
+
+        DWORD flags = SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOOWNERZORDER;
+        if (! hasMoved)    flags |= SWP_NOMOVE;
+        if (! hasResized)  flags |= SWP_NOSIZE;
 
         SetWindowPos (hwnd, 0,
-                      x - windowBorder.getLeft(),
-                      y - windowBorder.getTop(),
-                      w + windowBorder.getLeftAndRight(),
-                      h + windowBorder.getTopAndBottom(),
-                      SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOOWNERZORDER);
+                      newBounds.getX(), newBounds.getY(),
+                      newBounds.getWidth(), newBounds.getHeight(),
+                      flags);
 
-        if (isValidPeer (this))
+        if (hasResized && isValidPeer (this))
         {
             updateBorderSize();
             repaintNowIfTransparent();
@@ -741,13 +734,7 @@ public:
                     ShowWindow (hwnd, SW_SHOWNORMAL);
 
                 if (! boundsCopy.isEmpty())
-                {
-                    setBounds (boundsCopy.getX(),
-                               boundsCopy.getY(),
-                               boundsCopy.getWidth(),
-                               boundsCopy.getHeight(),
-                               false);
-                }
+                    setBounds (boundsCopy, false);
             }
             else
             {
@@ -1392,20 +1379,6 @@ private:
         return GetFocus();
     }
 
-    void offsetWithinParent (int& x, int& y) const
-    {
-        if (isUsingUpdateLayeredWindow())
-        {
-            if (HWND parentHwnd = GetParent (hwnd))
-            {
-                RECT parentRect;
-                GetWindowRect (parentHwnd, &parentRect);
-                x += parentRect.left;
-                y += parentRect.top;
-            }
-        }
-    }
-
     bool isUsingUpdateLayeredWindow() const
     {
         return ! component.isOpaque();
@@ -1581,7 +1554,7 @@ private:
     }
 
     //==============================================================================
-    void doMouseEvent (const Point<int>& position)
+    void doMouseEvent (Point<int> position)
     {
         handleMouseEvent (0, position, currentModifiers, getMouseEventTime());
     }
@@ -1639,7 +1612,7 @@ private:
                 && (flags & 0x80) != 0; // (bit 7 = 0 for pen events, 1 for touch)
     }
 
-    void doMouseMove (const Point<int>& position)
+    void doMouseMove (Point<int> position)
     {
         if (! isCurrentEventFromTouchScreen())
         {
@@ -1678,7 +1651,7 @@ private:
         }
     }
 
-    void doMouseDown (const Point<int>& position, const WPARAM wParam)
+    void doMouseDown (Point<int> position, const WPARAM wParam)
     {
         if (! isCurrentEventFromTouchScreen())
         {
@@ -1694,7 +1667,7 @@ private:
         }
     }
 
-    void doMouseUp (const Point<int>& position, const WPARAM wParam)
+    void doMouseUp (Point<int> position, const WPARAM wParam)
     {
         if (! isCurrentEventFromTouchScreen())
         {
@@ -2383,7 +2356,8 @@ private:
                 if (doAppCommand (lParam))
                     return TRUE;
 
-                break;
+            case WM_MENUCHAR: // triggered when alt+something is pressed
+                return MNC_CLOSE << 16; // (avoids making the default system beep)
 
             //==============================================================================
             case WM_SETFOCUS:
@@ -3051,7 +3025,7 @@ Point<int> MouseInputSource::getCurrentMousePosition()
     return Point<int> (mousePos.x, mousePos.y);
 }
 
-void Desktop::setMousePosition (const Point<int>& newPosition)
+void Desktop::setMousePosition (Point<int> newPosition)
 {
     SetCursorPos (newPosition.x, newPosition.y);
 }
