@@ -6,27 +6,6 @@
 
 namespace BinaryData
 {
-    extern const char*   _1_png;
-    const int            _1_pngSize = 4547;
-
-    extern const char*   _2_png;
-    const int            _2_pngSize = 4549;
-
-    extern const char*   _3_png;
-    const int            _3_pngSize = 4554;
-
-    extern const char*   _4_png;
-    const int            _4_pngSize = 8059;
-
-    extern const char*   _5_png;
-    const int            _5_pngSize = 8311;
-
-    extern const char*   _6_png;
-    const int            _6_pngSize = 8058;
-
-    extern const char*   _7_png;
-    const int            _7_pngSize = 8065;
-
     extern const char*   testShader_fs;
     const int            testShader_fsSize = 127;
 

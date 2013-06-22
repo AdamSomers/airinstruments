@@ -111,6 +111,9 @@ void MainContentComponent::setupBackground()
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    SkinManager::instance().loadResources();
+    SkinManager::instance().setSelectedSkin("skin0");
+    
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     
@@ -128,6 +131,10 @@ void MainContentComponent::newOpenGLContextCreated()
     //glEnable(GL_MULTISAMPLE);
     
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
+    
+    for (auto iter : MotionDispatcher::instance().fingerViews)
+        iter.second->setup();
+    
 
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
@@ -187,9 +194,9 @@ void MainContentComponent::newOpenGLContextCreated()
     
     setupBackground();
     
-    SkinManager::instance().getSkin();
-    toolbar->setButtonTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
-    statusBar->setIndicatorTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
+//    SkinManager::instance().getSkin();
+    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
+    statusBar->setIndicatorTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     Environment::instance().ready = true;
@@ -226,7 +233,7 @@ void MainContentComponent::renderOpenGL()
         layoutChordRegions();
         chordRegionsNeedUpdate = false;
     }
-    
+
     // Hack to move a particular slide.  This should be factored into the TutorialSlide class 
     if (slide && slide->getSlideIndex() == 3)
         slide->setBounds(HUDRect(80,
@@ -244,14 +251,14 @@ void MainContentComponent::renderOpenGL()
     glDisable(GL_CULL_FACE);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor(0.f, 0.f, 0.f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     
-    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().background);
+    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("background0").textureId);
     GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
     glEnable(GL_BLEND);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
@@ -286,7 +293,7 @@ void MainContentComponent::renderOpenGL()
     
     for (auto iter : MotionDispatcher::instance().handViews)
         if (iter.second->inUse)
-            ;//iter.second->draw();
+            iter.second->draw();
 
     for (HarpView* hv : harps)
         hv->update();
@@ -414,9 +421,9 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     }
     else if (kp.getTextDescription().getIntValue() > 0)
     {
-        SkinManager::instance().setSkinIndex(kp.getTextDescription().getIntValue()-1);
-        toolbar->setButtonTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
-        statusBar->setIndicatorTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
+//        SkinManager::instance().setSkinIndex(kp.getTextDescription().getIntValue()-1);
+//        toolbar->setButtonTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
+//        statusBar->setIndicatorTextures(SkinManager::instance().getSkin().buttonOn, SkinManager::instance().getSkin().buttonOff);
         ret = true;
     }
 

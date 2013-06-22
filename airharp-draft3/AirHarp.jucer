@@ -5,23 +5,6 @@
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
-      <GROUP id="{E13753B2-2DE5-FF85-0EAC-7C1902F6CBD1}" name="skin0">
-        <FILE id="EF5JZa" name="1.png" compile="0" resource="1" file="Resources/skin0/1.png"/>
-        <FILE id="thlqg6" name="2.png" compile="0" resource="1" file="Resources/skin0/2.png"/>
-        <FILE id="odoAHn" name="3.png" compile="0" resource="1" file="Resources/skin0/3.png"/>
-        <FILE id="ViFVzV" name="4.png" compile="0" resource="1" file="Resources/skin0/4.png"/>
-        <FILE id="aGLGha" name="5.png" compile="0" resource="1" file="Resources/skin0/5.png"/>
-        <FILE id="sMyQiH" name="6.png" compile="0" resource="1" file="Resources/skin0/6.png"/>
-        <FILE id="WgG9zT" name="7.png" compile="0" resource="1" file="Resources/skin0/7.png"/>
-        <FILE id="pzJy3s" name="background0.png" compile="0" resource="0" file="Resources/skin0/background0.png"/>
-        <FILE id="Yv0x5G" name="bezel_bottom0.png" compile="0" resource="0"
-              file="Resources/skin0/bezel_bottom0.png"/>
-        <FILE id="K4GshE" name="bezel_top0.png" compile="0" resource="0" file="Resources/skin0/bezel_top0.png"/>
-        <FILE id="yT805i" name="button_off0.png" compile="0" resource="0" file="Resources/skin0/button_off0.png"/>
-        <FILE id="B0F7o7" name="button_on0.png" compile="0" resource="0" file="Resources/skin0/button_on0.png"/>
-        <FILE id="QpgVEA" name="string0.png" compile="0" resource="0" file="Resources/skin0/string0.png"/>
-        <FILE id="AcCvP2" name="stringBg0.png" compile="0" resource="0" file="Resources/skin0/stringBg0.png"/>
-      </GROUP>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
       <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
@@ -51,6 +34,8 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
+      <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
+      <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
             file="../common/TutorialSlide.cpp"/>
       <FILE id="whakCI" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
@@ -130,8 +115,6 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
-      <FILE id="scaKFY" name="airharp-gltools.cpp" compile="1" resource="0"
-            file="Source/airharp-gltools.cpp"/>
       <FILE id="QyjiF3" name="Harp.cpp" compile="1" resource="0" file="Source/Harp.cpp"/>
       <FILE id="B3eka9" name="Harp.h" compile="0" resource="0" file="Source/Harp.h"/>
       <FILE id="vaw2gZ" name="HarpView.cpp" compile="1" resource="0" file="Source/HarpView.cpp"/>
@@ -143,8 +126,6 @@
       <FILE id="KOoxeY" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JeEtSL" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="uGuNaH" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>
-      <FILE id="JBCsk7" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
       <FILE id="lNNe7M" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
@@ -166,7 +147,7 @@
   </MODULES>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
-               externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
+               externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
                postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/Resources"
                extraCompilerFlags="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>

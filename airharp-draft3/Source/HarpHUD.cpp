@@ -52,10 +52,10 @@ void HarpToolbar::layoutControls()
 
 void HarpToolbar::draw()
 {
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    GLfloat color [] = { 1.f, 1.f, 1.f, 1.f };
 
     setDefaultColor(color);
-//    setDefaultTexture(SkinManager::instance().getSkin().bezelTop);
+    setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("bezel_top0"));
 
     HUDView::draw();
 }
@@ -65,10 +65,10 @@ void HarpToolbar::loadTextures()
     HUDView::loadTextures();
 }
 
-void HarpToolbar::setButtonTextures(GLuint on, GLuint off)
+void HarpToolbar::setButtonTextures(TextureDescription on, TextureDescription off)
 {
-//    for (HUDButton* b : buttons)
-//        b->setTextures(on, off);
+    for (HUDButton* b : buttons)
+        b->setTextures(on, off);
 }
 
 void HarpToolbar::buttonStateChanged(HUDButton* b)
@@ -156,16 +156,16 @@ void StatusBar::layoutControls()
     indicator.setBounds(r);
 }
 
-void StatusBar::setIndicatorTextures(GLuint on, GLuint off)
+void StatusBar::setIndicatorTextures(TextureDescription on, TextureDescription off)
 {
 //    indicator.setTextures(on, off);
 }
 
 void StatusBar::draw()
 {
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    GLfloat color [] = { 1.f, 1.f, 1.f, 1.f };
     setDefaultColor(color);
-//    setDefaultTexture(SkinManager::instance().getSkin().bezelBottom);
+    setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("bezel_bottom0"));
 
     HUDView::draw();
 }
@@ -245,34 +245,7 @@ void ChordRegion::draw()
 
 void ChordRegion::loadTextures()
 {
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    
-    switch (id) {
-        case 0:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_1_png, BinaryData::_1_pngSize));
-            break;
-        case 1:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_2_png, BinaryData::_2_pngSize));
-            break;
-        case 2:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_3_png, BinaryData::_3_pngSize));
-            break;
-        case 3:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_4_png, BinaryData::_4_pngSize));
-            break;
-        case 4:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_5_png, BinaryData::_5_pngSize));
-            break;
-        case 5:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_6_png, BinaryData::_6_pngSize));
-            break;
-        case 6:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_7_png, BinaryData::_7_pngSize));
-            break;
-        default:
-            break;
-    }
+    textureID = SkinManager::instance().getSelectedSkin().getTexture(String(id+1)).textureId;
 }
 
 void ChordRegion::setActive(bool shouldBeActive)

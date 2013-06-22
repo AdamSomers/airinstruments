@@ -193,7 +193,7 @@ public:
 
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), bgRectColor);
         bgBatch.Draw();
-        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().stringBackground);
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("stringBg0").textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgTexColor, 0);
         bgBatch.Draw();
         
@@ -201,7 +201,7 @@ public:
         glDisable(GL_DEPTH_TEST);
         glLineWidth(1.f);
         
-        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().string);
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("string0").textureId);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
