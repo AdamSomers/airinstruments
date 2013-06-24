@@ -8,6 +8,8 @@ var classcom_1_1leapmotion_1_1leap_1_1_listener =
     [ "onConnect", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#a46b9ec2670695d44d4e9ddf77c8301c3", null ],
     [ "onDisconnect", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#a860bf64a24bcb4ac5bce4e8d35c48783", null ],
     [ "onExit", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#a78fa3b1a0850e3d8410b7200f3d813af", null ],
+    [ "onFocusGained", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#a583f06440d8676fcc808a1acbd6680cd", null ],
+    [ "onFocusLost", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#a312bfdfa2ed0f85d357006eb492b4cee", null ],
     [ "onFrame", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#afb0bdc73f5b4edf164a4b1134557f975", null ],
     [ "onInit", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#a9350b36122e690e20078ba284701bed0", null ],
     [ "swigDirectorDisconnect", "classcom_1_1leapmotion_1_1leap_1_1_listener.html#af47f445444ec5eb2acb54c6492e1a338", null ],

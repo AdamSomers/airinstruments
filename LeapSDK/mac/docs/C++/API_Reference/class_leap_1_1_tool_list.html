@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap API Reference: Leap::ToolList Class Reference</title>
+<title>Leap Motion C++ API Reference: Leap::ToolList Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion C++ API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -82,14 +82,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7e5df033c5f217fb173613339fc78cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of tools in this list.  <a href="#a7e5df033c5f217fb173613339fc78cda"></a><br/></td></tr>
 <tr class="separator:a7e5df033c5f217fb173613339fc78cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64586106af4e4c13021e488c6091acd4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#a64586106af4e4c13021e488c6091acd4">empty</a> () const </td></tr>
-<tr class="memdesc:a64586106af4e4c13021e488c6091acd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports whether the list is empty.  <a href="#a64586106af4e4c13021e488c6091acd4"></a><br/></td></tr>
+<tr class="memdesc:a64586106af4e4c13021e488c6091acd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deprecated.  <a href="#a64586106af4e4c13021e488c6091acd4"></a><br/></td></tr>
 <tr class="separator:a64586106af4e4c13021e488c6091acd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60b8b7262fbd1ac0980b2d493c6e4e5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_tool_list.html#a7f52ee5561016e8d42512e2adbc820de">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#a60b8b7262fbd1ac0980b2d493c6e4e5c">end</a> () const </td></tr>
 <tr class="memdesc:a60b8b7262fbd1ac0980b2d493c6e4e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The C++ iterator set to the end of this <a class="el" href="class_leap_1_1_tool_list.html" title="The ToolList class represents a list of Tool objects.">ToolList</a>.  <a href="#a60b8b7262fbd1ac0980b2d493c6e4e5c"></a><br/></td></tr>
 <tr class="separator:a60b8b7262fbd1ac0980b2d493c6e4e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac94179ceaffd2d1deb87c452517b9fdd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_tool.html">Tool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#ac94179ceaffd2d1deb87c452517b9fdd">frontmost</a> () const </td></tr>
+<tr class="memdesc:ac94179ceaffd2d1deb87c452517b9fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The member of the list that is farthest to the front within the standard Leap Motion frame of reference (i.e has the smallest Z coordinate).  <a href="#ac94179ceaffd2d1deb87c452517b9fdd"></a><br/></td></tr>
+<tr class="separator:ac94179ceaffd2d1deb87c452517b9fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd70b38dbeddb37c5be77ee6b9336666"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#abd70b38dbeddb37c5be77ee6b9336666">isEmpty</a> () const </td></tr>
+<tr class="memdesc:abd70b38dbeddb37c5be77ee6b9336666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports whether the list is empty.  <a href="#abd70b38dbeddb37c5be77ee6b9336666"></a><br/></td></tr>
+<tr class="separator:abd70b38dbeddb37c5be77ee6b9336666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a105bec25ad4366959e8f02c383ff2313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_tool.html">Tool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#a105bec25ad4366959e8f02c383ff2313">leftmost</a> () const </td></tr>
+<tr class="memdesc:a105bec25ad4366959e8f02c383ff2313"><td class="mdescLeft">&#160;</td><td class="mdescRight">The member of the list that is farthest to the left within the standard Leap Motion frame of reference (i.e has the smallest X coordinate).  <a href="#a105bec25ad4366959e8f02c383ff2313"></a><br/></td></tr>
+<tr class="separator:a105bec25ad4366959e8f02c383ff2313"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae04777b465395513a71fa1e67729691e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_tool.html">Tool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#ae04777b465395513a71fa1e67729691e">operator[]</a> (int index) const </td></tr>
 <tr class="memdesc:ae04777b465395513a71fa1e67729691e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access a list member by its position in the list.  <a href="#ae04777b465395513a71fa1e67729691e"></a><br/></td></tr>
 <tr class="separator:ae04777b465395513a71fa1e67729691e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45a79c09b6690eac76985a2b883af3d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_tool.html">Tool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#a45a79c09b6690eac76985a2b883af3d1">rightmost</a> () const </td></tr>
+<tr class="memdesc:a45a79c09b6690eac76985a2b883af3d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The member of the list that is farthest to the right within the standard Leap Motion frame of reference (i.e has the largest X coordinate).  <a href="#a45a79c09b6690eac76985a2b883af3d1"></a><br/></td></tr>
+<tr class="separator:a45a79c09b6690eac76985a2b883af3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6878221b6eeaa99bb64840d5186493e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_tool_list.html#a6878221b6eeaa99bb64840d5186493e3">ToolList</a> ()</td></tr>
 <tr class="memdesc:a6878221b6eeaa99bb64840d5186493e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty list of tools.  <a href="#a6878221b6eeaa99bb64840d5186493e3"></a><br/></td></tr>
 <tr class="separator:a6878221b6eeaa99bb64840d5186493e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,8 +215,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reports whether the list is empty. </p>
-<dl class="section return"><dt>Returns</dt><dd>True, if the list has no members. </dd></dl>
+<p>Deprecated. </p>
+<p>Use <a class="el" href="class_leap_1_1_tool_list.html#abd70b38dbeddb37c5be77ee6b9336666" title="Reports whether the list is empty.">ToolList::isEmpty()</a> instead. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_leap_1_1_tool_list.html#abd70b38dbeddb37c5be77ee6b9336666" title="Reports whether the list is empty.">ToolList::isEmpty()</a> </dd></dl>
 
 </div>
 </div>
@@ -222,6 +235,60 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The C++ iterator set to the end of this <a class="el" href="class_leap_1_1_tool_list.html" title="The ToolList class represents a list of Tool objects.">ToolList</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac94179ceaffd2d1deb87c452517b9fdd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_leap_1_1_tool.html">Tool</a> Leap::ToolList::frontmost </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The member of the list that is farthest to the front within the standard Leap Motion frame of reference (i.e has the smallest Z coordinate). </p>
+<dl class="section return"><dt>Returns</dt><dd>The frontmost tool, or invalid if list is empty. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abd70b38dbeddb37c5be77ee6b9336666"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Leap::ToolList::isEmpty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reports whether the list is empty. </p>
+<dl class="section return"><dt>Returns</dt><dd>True, if the list has no members. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a105bec25ad4366959e8f02c383ff2313"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_leap_1_1_tool.html">Tool</a> Leap::ToolList::leftmost </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The member of the list that is farthest to the left within the standard Leap Motion frame of reference (i.e has the smallest X coordinate). </p>
+<dl class="section return"><dt>Returns</dt><dd>The leftmost tool, or invalid if list is empty. </dd></dl>
 
 </div>
 </div>
@@ -247,6 +314,24 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_leap_1_1_tool.html" title="The Tool class represents a tracked tool.">Tool</a> object at the specified index. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a45a79c09b6690eac76985a2b883af3d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_leap_1_1_tool.html">Tool</a> Leap::ToolList::rightmost </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The member of the list that is farthest to the right within the standard Leap Motion frame of reference (i.e has the largest X coordinate). </p>
+<dl class="section return"><dt>Returns</dt><dd>The rightmost tool, or invalid if list is empty. </dd></dl>
 
 </div>
 </div>

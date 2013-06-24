@@ -17,6 +17,8 @@ class SampleListener : public Listener {
     virtual void onDisconnect(const Controller&);
     virtual void onExit(const Controller&);
     virtual void onFrame(const Controller&);
+    virtual void onFocusGained(const Controller&);
+    virtual void onFocusLost(const Controller&);
 };
 
 void SampleListener::onInit(const Controller& controller) {
@@ -32,6 +34,7 @@ void SampleListener::onConnect(const Controller& controller) {
 }
 
 void SampleListener::onDisconnect(const Controller& controller) {
+  //Note: not dispatched when running in a debugger.
   std::cout << "Disconnected" << std::endl;
 }
 
@@ -147,6 +150,14 @@ void SampleListener::onFrame(const Controller& controller) {
   if (!frame.hands().empty() || !gestures.empty()) {
     std::cout << std::endl;
   }
+}
+
+void SampleListener::onFocusGained(const Controller& controller) {
+  std::cout << "Focus Gained" << std::endl;
+}
+
+void SampleListener::onFocusLost(const Controller& controller) {
+  std::cout << "Focus Lost" << std::endl;
 }
 
 int main() {
