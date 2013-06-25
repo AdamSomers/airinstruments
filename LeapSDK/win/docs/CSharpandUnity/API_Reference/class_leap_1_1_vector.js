@@ -1,5 +1,6 @@
 var class_leap_1_1_vector =
 [
+    [ "Vector", "class_leap_1_1_vector.html#a0b2751135ecc9611818ebddb9634cd9b", null ],
     [ "Vector", "class_leap_1_1_vector.html#a13959b97b618f3a8dc5614095d182745", null ],
     [ "Vector", "class_leap_1_1_vector.html#aae5a032d4997836525756b6ba5b1de4f", null ],
     [ "Vector", "class_leap_1_1_vector.html#a1058e5cc80c4eb8f521f485269f7b614", null ],
@@ -9,6 +10,7 @@ var class_leap_1_1_vector =
     [ "DistanceTo", "class_leap_1_1_vector.html#a9a192946523c91fc5aec3541cc09b762", null ],
     [ "Dot", "class_leap_1_1_vector.html#a9177e8852525449bc0817f77de9a9804", null ],
     [ "Equals", "class_leap_1_1_vector.html#abf404fbea17d069c6a2d61175520b4c9", null ],
+    [ "getCPtr", "class_leap_1_1_vector.html#ac300bca6fc35a31168df9f8632a3a0c1", null ],
     [ "IsValid", "class_leap_1_1_vector.html#aae57324c0e393fc8f8b799092964efbb", null ],
     [ "operator*", "class_leap_1_1_vector.html#ae9ea760f46fe7cdc348ced8b49220360", null ],
     [ "operator*", "class_leap_1_1_vector.html#a9f79a3d85f4de6c0d16759b59f0d1a5d", null ],

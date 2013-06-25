@@ -1,9 +1,11 @@
 var class_leap_1_1_screen =
 [
+    [ "Screen", "class_leap_1_1_screen.html#a6f733c6a4f888106aff16beaf890d4c7", null ],
     [ "Screen", "class_leap_1_1_screen.html#a0ce5ac82b59d2926c18aa9ecc6309b70", null ],
     [ "Dispose", "class_leap_1_1_screen.html#aaa49dc6e96fb1005c4064a5e2b60a7af", null ],
     [ "DistanceToPoint", "class_leap_1_1_screen.html#a4fc1ad8d65dadd9cb31c37946dd3294c", null ],
     [ "Equals", "class_leap_1_1_screen.html#a8a982ce17f4938e5afb0315ce7edd6b2", null ],
+    [ "getCPtr", "class_leap_1_1_screen.html#a251da48f669589b6ae65454701d93b83", null ],
     [ "Intersect", "class_leap_1_1_screen.html#a635433499c30e8e920c83242ddf7b178", null ],
     [ "Intersect", "class_leap_1_1_screen.html#af0e489deb0139acb4fff007e8473687f", null ],
     [ "Intersect", "class_leap_1_1_screen.html#ae83d0871d0e2344030e35cff7201ce13", null ],

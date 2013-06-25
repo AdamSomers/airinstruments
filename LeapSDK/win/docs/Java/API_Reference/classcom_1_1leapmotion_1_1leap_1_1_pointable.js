@@ -1,5 +1,6 @@
 var classcom_1_1leapmotion_1_1leap_1_1_pointable =
 [
+    [ "Zone", "enumcom_1_1leapmotion_1_1leap_1_1_pointable_1_1_zone.html", "enumcom_1_1leapmotion_1_1leap_1_1_pointable_1_1_zone" ],
     [ "Pointable", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#ad5e0cc39f620718a50710fa6c3ab2812", null ],
     [ "Pointable", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#af2d1ea38d8b44a706cc86c32769b7cb5", null ],
     [ "delete", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#acc8e04c2c6a6ec147238a2ede42b56b9", null ],
@@ -15,8 +16,11 @@ var classcom_1_1leapmotion_1_1leap_1_1_pointable =
     [ "isTool", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#a1a939138ab33f2d76e0aebdbdc28861e", null ],
     [ "isValid", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#ac2a70d69d57a21766312bb0b42fc114a", null ],
     [ "length", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#aa8f442aa58b8694384327f29111a0c41", null ],
+    [ "stabilizedTipPosition", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#abaef2cfbf5ababa9047588e10d82d420", null ],
     [ "tipPosition", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#a34729c90d3c4b38a6f5994ae1ad14ee2", null ],
     [ "tipVelocity", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#af7389a76398c7928d339c73f5af02d9e", null ],
     [ "toString", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#a91c99f0961d34be8d67ea4124ca238c5", null ],
+    [ "touchDistance", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#a2f4e846aef906fd968b91fae6b8083ea", null ],
+    [ "touchZone", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#a8be266fcaa8ff9d119af8edd26680230", null ],
     [ "width", "classcom_1_1leapmotion_1_1leap_1_1_pointable.html#abba55cfb2de52af88b5a1faec2b1923b", null ]
 ];

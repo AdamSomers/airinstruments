@@ -53,7 +53,8 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
 
 	float position = hand.palmPosition().y;
 	float velocity = hand.palmVelocity().y;
-	int64_t timestamp = hand.frame().timestamp();
+    //int64_t timestamp = hand.frame().timestamp(); // causes crash
+	int64_t timestamp = Time::getCurrentTime().currentTimeMillis() * 1000;
     motion(position, velocity, timestamp);
 }
 
@@ -63,7 +64,8 @@ void StrikeDetector::pointableMotion(const Leap::Pointable& pointable)
 
 	float position = pointable.tipPosition().y;
 	float velocity = pointable.tipVelocity().y;
-	int64_t timestamp = pointable.frame().timestamp();
+    //pointable.frame().timestamp(); // causes crash
+	int64_t timestamp = Time::getCurrentTime().currentTimeMillis() * 1000;
     motion(position, velocity, timestamp);
 }
 

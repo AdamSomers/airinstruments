@@ -9,5 +9,6 @@ var classcom_1_1leapmotion_1_1leap_1_1_gesture_list =
     [ "finalize", "classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#aaae8d3543a8eaeb2f825dd6634a5d882", null ],
     [ "get", "classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#af3708ee5e8ced81bebbd74299378e30a", null ],
     [ "getCPtr", "classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#a46f277641093e072f1b072e7e7c1b708", null ],
+    [ "isEmpty", "classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#aa685d4d5c0635cf8f97314a1e337d0ee", null ],
     [ "iterator", "classcom_1_1leapmotion_1_1leap_1_1_gesture_list.html#a1b0b4718267734f07630c4a5c6c3d51d", null ]
 ];

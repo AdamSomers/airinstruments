@@ -325,7 +325,7 @@ ul.auto-toc {
 <div class="document" id="understanding-the-python-sample-application">
 <h1 class="title">Understanding the Python Sample Application</h1>
 
-<p>This article discusses the Python sample application included with the Leap SDK. After reading this article, you should be ready to access Leap hand tracking data from your own Python applications.</p>
+<p>This article discusses the Python sample application included with the Leap Motion SDK. After reading this article, you should be ready to access Leap Motion hand tracking data from your own Python applications.</p>
 <div class="contents topic" id="topics">
 <p class="topic-title first">Topics:</p>
 <ul class="simple">
@@ -337,15 +337,15 @@ ul.auto-toc {
 <li><a class="reference internal" href="#running-the-sample" id="id6">Running the sample</a></li>
 </ul>
 </div>
-<p>In the Leap SDK folder, you can find the following files used for this article:</p>
+<p>In the Leap Motion SDK folder, you can find the following files used for this article:</p>
 <p>Windows:</p>
 <ul class="simple">
 <li><tt class="docutils literal">LeapSDK/sample/Sample.py</tt> — Python sample application</li>
-<li><tt class="docutils literal">LeapSDK/lib/Leap.py</tt> — Leap Python API class definitions</li>
-<li><tt class="docutils literal">LeapSDK/lib/x86/LeapPython.pyd</tt> — 32-bit Leap Python library for Windows</li>
-<li><tt class="docutils literal">LeapSDK/lib/x64/LeapPython.pyd</tt> — 64-bit Leap Python library for Windows</li>
-<li><tt class="docutils literal">LeapSDK/lib/x86/Leap.dll</tt> — 32-bit Leap library for Windows</li>
-<li><tt class="docutils literal">LeapSDK/lib/x64/Leap.dll</tt> — 64-bit Leap library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/Leap.py</tt> — Leap Motion Python API class definitions</li>
+<li><tt class="docutils literal">LeapSDK/lib/x86/LeapPython.pyd</tt> — 32-bit Leap Motion Python library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/x64/LeapPython.pyd</tt> — 64-bit Leap Motion Python library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/x86/Leap.dll</tt> — 32-bit Leap Motion library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/x64/Leap.dll</tt> — 64-bit Leap Motion library for Windows</li>
 <li><tt class="docutils literal">LeapSDK/lib/x86/msvcp100.dll</tt> — 32-bit Visual C++ runtime library</li>
 <li><tt class="docutils literal">LeapSDK/lib/x64/msvcp100.dll</tt> — 64-bit Visual C++ runtime library</li>
 <li><tt class="docutils literal">LeapSDK/lib/x86/msvcp100d.dll</tt> — 32-bit debug Visual C++ runtime library</li>
@@ -358,18 +358,18 @@ ul.auto-toc {
 <p>Mac:</p>
 <ul class="simple">
 <li><tt class="docutils literal">LeapSDK/sample/Sample.py</tt> — Python sample application</li>
-<li><tt class="docutils literal">LeapSDK/lib/Leap.py</tt> — Leap Python API class definitions</li>
-<li><tt class="docutils literal">LeapSDK/lib/LeapPython.so</tt> — Leap Python library for Mac</li>
-<li><tt class="docutils literal">LeapSDK/lib/libLeap.dylib</tt> — Leap library for Mac</li>
+<li><tt class="docutils literal">LeapSDK/lib/Leap.py</tt> — Leap Motion Python API class definitions</li>
+<li><tt class="docutils literal">LeapSDK/lib/LeapPython.so</tt> — Leap Motion Python library for Mac</li>
+<li><tt class="docutils literal">LeapSDK/lib/libLeap.dylib</tt> — Leap Motion library for Mac</li>
 </ul>
-<p>Also note that you can find the Leap API reference documentation at <a class="reference external" href="API_Reference/annotated.html">LeapSDK/docs/API_Reference/annotated.html</a>.</p>
+<p>Also note that you can find the Leap Motion API reference documentation at <a class="reference external" href="API_Reference/annotated.html">LeapSDK/docs/API_Reference/annotated.html</a>.</p>
 <div class="section" id="overview">
 <h1><a class="toc-backref" href="#id1">Overview</a></h1>
-<p>In a nutshell, the Leap motion tracking device detects and tracks hands and fingers placed within its field of view. The Leap captures this data one <em>frame</em> at a time. Your applications can use the Leap API to access this data.</p>
-<p>The sample application demonstrates how to use the Leap API to listen for frame events dispatched by the Leap and how to access the hand and finger data in each frame. The application is a small command-line program that prints information about detected hands and fingers to standard output. The application is contained in a single file, <tt class="docutils literal">Sample.py</tt>.</p>
-<p>The sample application uses most of the key classes in the Leap API, including:</p>
+<p>In a nutshell, the Leap Motion controller detects and tracks hands and fingers placed within its field of view. The Leap Motion captures this data one <em>frame</em> at a time. Your applications can use the Leap Motion API to access this data.</p>
+<p>The sample application demonstrates how to use the Leap Motion API to listen for frame events dispatched by the Leap Motion and how to access the hand and finger data in each frame. The application is a small command-line program that prints information about detected hands and fingers to standard output. The application is contained in a single file, <tt class="docutils literal">Sample.py</tt>.</p>
+<p>The sample application uses most of the key classes in the Leap Motion API, including:</p>
 <ul class="simple">
-<li><tt class="docutils literal">Leap.Controller</tt> — the interface between the Leap and your application</li>
+<li><tt class="docutils literal">Leap.Controller</tt> — the interface between the Leap Motion software and your application</li>
 <li><tt class="docutils literal">Leap.Listener</tt> — used to handle events dispatched by the Leap</li>
 <li><tt class="docutils literal">Leap.Frame</tt> — contains a set of hand and finger tracking data</li>
 <li><tt class="docutils literal">Leap.Hand</tt> — contains tracking data for a detected hand</li>
@@ -377,12 +377,12 @@ ul.auto-toc {
 <li><tt class="docutils literal">Leap.Vector</tt> — represents a 3D position or directional vector</li>
 <li><tt class="docutils literal">Leap.Gesture</tt> — represents a recognized gesture.</li>
 </ul>
-<p>For more detailed information about these classes, pleases refer to the Leap API reference documentation.</p>
+<p>For more detailed information about these classes, pleases refer to the Leap Motion API reference documentation.</p>
 </div>
 <div class="section" id="creating-a-controller-object">
 <h1><a class="toc-backref" href="#id2">Creating a Controller object</a></h1>
-<p>The <tt class="docutils literal">Controller</tt> class provides the main interface between the Leap and your application. When you create a Controller object, it connects to the Leap software running on the computer and makes hand tracking data available through <tt class="docutils literal">Frame</tt> objects. You can access these Frame objects by instantiating a Controller object and calling the <tt class="docutils literal">Controller.frame</tt> function.</p>
-<p>If your application has a natural update loop or frame rate, then you can call <tt class="docutils literal">Controller.frame</tt> as part of this update. Otherwise, you can add a listener to the controller object. The controller object invokes the callback functions defined in your <tt class="docutils literal">Listener</tt> subclass whenever a new frame of tracking data is available (and also for a few other Leap events).</p>
+<p>The <tt class="docutils literal">Controller</tt> class provides the main interface between the Leap Motion software and your application. When you create a Controller object, it connects to the Leap Motion software running on the computer and makes hand tracking data available through <tt class="docutils literal">Frame</tt> objects. You can access these Frame objects by instantiating a Controller object and calling the <tt class="docutils literal">Controller.frame</tt> function.</p>
+<p>If your application has a natural update loop or frame rate, then you can call <tt class="docutils literal">Controller.frame</tt> as part of this update. Otherwise, you can add a listener to the controller object. The controller object invokes the callback functions defined in your <tt class="docutils literal">Listener</tt> subclass whenever a new frame of tracking data is available (and also for a few other Leap Motion events).</p>
 <p>The sample application creates a Controller object in its <tt class="docutils literal">main</tt> function and adds an instance of a Listener subclass to the Controller with the <tt class="docutils literal">Controller.add_listener</tt> function:</p>
 <pre class="python literal-block">
 def main():
@@ -407,7 +407,7 @@ def main():
 <p>The sample application defines a <tt class="docutils literal">Listener</tt> subclass, SampleListener, which implements callback functions to handle events dispatched by the Leap. The events include:</p>
 <ul class="simple">
 <li><tt class="docutils literal">on_init</tt> — dispatched once, when the controller to which the listener is registered is initialized.</li>
-<li><tt class="docutils literal">on_connect</tt> — dispatched when the controller connects to the Leap and is ready to begin sending frames of motion tracking data.</li>
+<li><tt class="docutils literal">on_connect</tt> — dispatched when the controller connects to the Leap Motion software and is ready to begin sending frames of motion tracking data.</li>
 <li><tt class="docutils literal">on_disconnect</tt> — dispatched if the controller disconnects from the Leap (for example, if you unplug the Leap device or shut down the Leap software).</li>
 <li><tt class="docutils literal">on_exit</tt> — dispatched to a listener when it is removed from a controller.</li>
 <li><tt class="docutils literal">on_frame</tt> — dispatched when a new frame of motion tracking data is available.</li>

@@ -325,8 +325,9 @@ ul.auto-toc {
 <div class="document" id="screen-location">
 <h1 class="title">Screen Location</h1>
 
-<p>A user can register the position and orientation of their monitor screens using the Leap application. When screen locations are known, you can use the Leap API Screen class to get the physical position and size of that screen in terms of the Leap coordinate system and to find where on the screen a finger or tool is pointing.</p>
-<p>Registering the screen location with the Screen Locator utility is not needed for most functions of the Leap to work properly. Registration is required only when your application uses the Leap::Screen class.</p>
+<p>A user can register the position and orientation of their monitor screens using the Leap Motion Settings dialog. When screen locations are known, you can use the Leap Motion API Screen class to get the physical position and size of that screen in terms of the Leap Motion coordinate system and to find where on the screen a finger or tool is pointing.</p>
+<p>Registering the screen location with the Screen Locator utility is not needed for most functions of the Leap Motion system to work properly. Registration is required only when your application uses the Leap::Screen class.</p>
+<p><em>Note:</em> The Screen Locator tool and Screen location API are not currently supported on Linux.</p>
 <div class="contents topic" id="topics">
 <p class="topic-title first">Topics:</p>
 <ul class="simple">
@@ -337,14 +338,14 @@ ul.auto-toc {
 </li>
 <li><a class="reference internal" href="#find-the-closest-screen" id="id5">Find the closest screen</a></li>
 <li><a class="reference internal" href="#find-the-pixel-coordinates-of-an-intersection-point" id="id6">Find the pixel coordinates of an intersection point</a></li>
-<li><a class="reference internal" href="#find-the-leap-coordinates-of-a-projection-point" id="id7">Find the Leap coordinates of a projection point</a></li>
+<li><a class="reference internal" href="#find-the-leap-motion-coordinates-of-a-projection-point" id="id7">Find the Leap Motion coordinates of a projection point</a></li>
 <li><a class="reference internal" href="#set-the-interaction-area-larger-or-smaller" id="id8">Set the interaction area larger or smaller</a></li>
 <li><a class="reference internal" href="#find-the-distance-between-the-pointing-finger-or-tool-and-the-screen" id="id9">Find the distance between the pointing finger or tool and the screen</a></li>
 </ul>
 </div>
 <div class="section" id="overview">
 <h1><a class="toc-backref" href="#id2">Overview</a></h1>
-<p>The Screen class provides the position and orientation of a display screen within the Leap frame of reference. The <tt class="docutils literal"><span class="pre">Screen::intersect()</span></tt> function calculates the position of a point at the intersection between the screen plane and a ray emanating from a finger or tool. Additionally, the <tt class="docutils literal"><span class="pre">Screen::project()</span></tt> function calculates the position of a point projected onto the screen plane.</p>
+<p>The Screen class provides the position and orientation of a display screen within the Leap Motion frame of reference. The <tt class="docutils literal"><span class="pre">Screen::intersect()</span></tt> function calculates the position of a point at the intersection between the screen plane and a ray emanating from a finger or tool. Additionally, the <tt class="docutils literal"><span class="pre">Screen::project()</span></tt> function calculates the position of a point projected onto the screen plane.</p>
 <p>Before using the Screen class, however, consider that registering the screen location takes a certain amount of effort by the user and that the registered location is only valid until the user moves the monitor or the Leap. Your application's use of the API must be sufficiently valuable that the user feels their effort is worthwhile. We recommend that you make it clear to your users why you need them to register their screen locations and that you provide a quick test for the user to check whether the screen location is still accurate.</p>
 <p>For instructions on using the Screen Locator utility, see <a class="reference external" href="Leap_Application.html#screen-location">Screen location</a>.</p>
 <div class="section" id="screen-coordinates">
@@ -382,7 +383,7 @@ ul.auto-toc {
 </ul>
 </div>
 </div>
-<p>You can request the intersection and projection points in terms of the Leap coordinate system. The coordinates returned form a 3D Vector representing the point in space measured in millimeters from the Leap origin. Alternately, you can request 2D, normalized coordinates, which define the intersection and projection point relative to the bottom, left-hand corner of the screen and within the plane of the screen.</p>
+<p>You can request the intersection and projection points in terms of the Leap Motion coordinate system. The coordinates returned form a 3D Vector representing the point in space measured in millimeters from the Leap Motion origin. Alternately, you can request 2D, normalized coordinates, which define the intersection and projection point relative to the bottom, left-hand corner of the screen and within the plane of the screen.</p>
 <p>When using normalized coordinates, the origin point is (0, 0, 0) and the opposite, top, right-hand corner is (1, 1, 0). The x and y values for points within the screen plane are always between 0 and 1 and represent the ratio of that point between one side of the screen and another (z values are always zero when using normalized coordinates). For example, the point at the center of the screen has normalized coordinates (0.5, 0.5, 0). Normalized coordinates for intersection and projection points outside the screen border can be less than 0 or greater than 1.</p>
 <p>By default, the <tt class="docutils literal">intersect()</tt> and <tt class="docutils literal">project()</tt> functions clamp the normalized coordinates to the range (0..1, 0..1, 0). This means that any intersection or projection points outside the screen border are effectively moved onto the border. You can change the default clamping area by setting the <tt class="docutils literal">clampRatio</tt> parameter when calling the <tt class="docutils literal">intersect()</tt> or <tt class="docutils literal">project()</tt> functions. The default clamp ratio is 1.0. Use a smaller value to decrease the clamping area, and a larger value to increase the area. For example, setting <tt class="docutils literal">clampRatio</tt> to 0.5 limits the interaction area to the center 50% of the screen and clamps all point coordinates between 0.25 and 0.75. Likewise, setting <tt class="docutils literal">clampRatio</tt> to 2.0 doubles the interaction area and clamps point coordinates between -0.5 and 1.5. The resulting interaction area is always centered on the screen's center.</p>
 </div>
@@ -437,8 +438,8 @@ if (frame.pointables().count() &gt; 0) {
 }
 </pre>
 </div>
-<div class="section" id="find-the-leap-coordinates-of-a-projection-point">
-<h1><a class="toc-backref" href="#id7">Find the Leap coordinates of a projection point</a></h1>
+<div class="section" id="find-the-leap-motion-coordinates-of-a-projection-point">
+<h1><a class="toc-backref" href="#id7">Find the Leap Motion coordinates of a projection point</a></h1>
 <p>You can find the coordinates of a point projected onto the screen plane using the <tt class="docutils literal">project()</tt> function. For example, you may want to project a finger or tool's position onto the closest screen, ignoring its direction:</p>
 <!-- class::cpp -->
 <pre class="literal-block">
