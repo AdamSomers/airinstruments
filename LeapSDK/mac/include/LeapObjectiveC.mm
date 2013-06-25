@@ -56,7 +56,7 @@
 {
     self = [super init];
     if (self) {
-        Leap::Vector *v = (Leap::Vector *)leapVector;
+        const Leap::Vector *v = (Leap::Vector *)leapVector;
         _x = v->x;
         _y = v->y;
         _z = v->z;
@@ -147,16 +147,16 @@
 
 - (LeapVector *)cross:(const LeapVector *)vector
 {
-    Leap::Vector me(_x, _y, _z);
-    Leap::Vector other([vector x], [vector y], [vector z]);
-    Leap::Vector product = me.cross(other);
+    const Leap::Vector me(_x, _y, _z);
+    const Leap::Vector other([vector x], [vector y], [vector z]);
+    const Leap::Vector product = me.cross(other);
     return [[LeapVector alloc] initWithX:product.x y:product.y z:product.z];
 }
 
 - (LeapVector *)normalized
 {
-    Leap::Vector me(_x, _y, _z);
-    Leap::Vector norm = me.normalized();
+    const Leap::Vector me(_x, _y, _z);
+    const Leap::Vector norm = me.normalized();
     return [[LeapVector alloc] initWithX:norm.x y:norm.y z:norm.z];
 }
 
@@ -321,17 +321,17 @@
 
 - (LeapVector *)transformPoint:(const LeapVector *)point
 {
-    LeapVector *a = [_xBasis times:[point x]];
-    LeapVector *b = [_yBasis times:[point y]];
-    LeapVector *c = [_zBasis times:[point z]];
+    const LeapVector *a = [_xBasis times:[point x]];
+    const LeapVector *b = [_yBasis times:[point y]];
+    const LeapVector *c = [_zBasis times:[point z]];
     return [[[a plus:b] plus:c] plus:_origin];
 }
 
 - (LeapVector *)transformDirection:(const LeapVector *)direction
 {
-    LeapVector *a = [_xBasis times:[direction x]];
-    LeapVector *b = [_yBasis times:[direction y]];
-    LeapVector *c = [_zBasis times:[direction z]];
+    const LeapVector *a = [_xBasis times:[direction x]];
+    const LeapVector *b = [_yBasis times:[direction y]];
+    const LeapVector *c = [_zBasis times:[direction z]];
     return [[a plus:b] plus:c];
 }
 
@@ -504,6 +504,22 @@
 - (BOOL)isValid
 {
     return _interfacePointable->isValid();
+}
+
+- (LeapPointableZone)touchZone
+{
+    return (LeapPointableZone)_interfacePointable->touchZone();
+}
+
+- (float)touchDistance
+{
+    return _interfacePointable->touchDistance();
+}
+
+- (LeapVector *)stabilizedTipPosition
+{
+    const Leap::Vector leapVector = _interfacePointable->stabilizedTipPosition();
+    return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
 }
 
 - (LeapFrame *)frame
@@ -709,6 +725,11 @@
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
+- (float)translationProbability:(const LeapFrame *)sinceFrame
+{
+    return _interfaceHand->translationProbability(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
 - (LeapVector *)rotationAxis:(const LeapFrame *)sinceFrame
 {
     Leap::Vector v = _interfaceHand->rotationAxis(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
@@ -722,7 +743,7 @@
 
 - (float)rotationAngle:(const LeapFrame *)sinceFrame axis:(const LeapVector *)axis
 {
-    Leap::Vector v([axis x], [axis y], [axis z]);
+    const Leap::Vector v([axis x], [axis y], [axis z]);
     return _interfaceHand->rotationAngle(*(const Leap::Frame *)[sinceFrame interfaceFrame], v);
 }
 
@@ -732,9 +753,19 @@
     return [[LeapMatrix alloc] initWithLeapMatrix:&m];
 }
 
+- (float)rotationProbability:(const LeapFrame *)sinceFrame
+{
+    return _interfaceHand->rotationProbability(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
 - (float)scaleFactor:(const LeapFrame *)sinceFrame
 {
     return _interfaceHand->scaleFactor(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
+- (float)scaleProbability:(const LeapFrame *)sinceFrame
+{
+    return _interfaceHand->scaleProbability(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
 }
 
 + (LeapHand *)invalid
@@ -764,7 +795,7 @@
 
 - (NSString *)description
 {
-    std::string str = _interfaceScreen->toString();
+    const std::string str = _interfaceScreen->toString();
     return [NSString stringWithCString:str.c_str() encoding:[NSString defaultCStringEncoding]];
 }
 
@@ -787,15 +818,15 @@
 
 - (LeapVector *)intersect:(LeapVector *)position direction:(LeapVector *)direction normalize:(BOOL)normalize clampRatio:(float)clampRatio
 {
-    Leap::Vector leapPosition([position x], [position y], [position z]);
-    Leap::Vector leapDirection([direction x], [direction y], [direction z]);
+    const Leap::Vector leapPosition([position x], [position y], [position z]);
+    const Leap::Vector leapDirection([direction x], [direction y], [direction z]);
     Leap::Vector v = _interfaceScreen->intersect(leapPosition, leapDirection, normalize, clampRatio);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
 - (LeapVector *)project:(LeapVector *)position normalize:(BOOL)normalize clampRatio:(float)clampRatio
 {
-    Leap::Vector leapPosition([position x], [position y], [position z]);
+    const Leap::Vector leapPosition([position x], [position y], [position z]);
     Leap::Vector v = _interfaceScreen->project(leapPosition, normalize, clampRatio);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
@@ -836,7 +867,7 @@
 
 - (float)distanceToPoint:(const LeapVector *)point
 {
-    Leap::Vector p([point x], [point y], [point z]);
+    const Leap::Vector p([point x], [point y], [point z]);
     return _interfaceScreen->distanceToPoint(p);
 }
 
@@ -862,6 +893,155 @@
 }
 
 @end;
+
+
+//////////////////////////////////////////////////////////////////////////
+//DEVICE
+@implementation LeapDevice
+{
+    Leap::Device *_interfaceDevice;
+}
+
+- (id)initWithDevice:(void *)device
+{
+    self = [super init];
+    if (self) {
+        _interfaceDevice = new Leap::Device(*(const Leap::Device *)device);
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    std::string str = _interfaceDevice->toString();
+    return [NSString stringWithCString:str.c_str() encoding:[NSString defaultCStringEncoding]];
+}
+
+- (void *)interfaceDevice
+{
+    return (void *)_interfaceDevice;
+}
+
+- (float)horizontalViewAngle
+{
+    return _interfaceDevice->horizontalViewAngle();
+}
+
+- (float)verticalViewAngle
+{
+    return _interfaceDevice->verticalViewAngle();
+}
+
+- (float)range
+{
+    return _interfaceDevice->range();
+}
+
+- (float)distanceToBoundary:(const LeapVector *)position;
+{
+    Leap::Vector v([position x], [position y], [position z]);
+    return _interfaceDevice->distanceToBoundary(v);
+}
+
+- (BOOL)isValid
+{
+    return _interfaceDevice->isValid();
+}
+
+- (BOOL)equals:(const LeapDevice *)other
+{
+    return *_interfaceDevice == *(const Leap::Device *)[other interfaceDevice];
+}
+
++ (LeapDevice *)invalid
+{
+    static const Leap::Device &invalid_device = Leap::Device::invalid();
+    return [[LeapDevice alloc] initWithDevice:(void *)&invalid_device];
+}
+
+@end
+
+
+//////////////////////////////////////////////////////////////////////////
+//INTERACTIONBOX
+@implementation LeapInteractionBox
+{
+    Leap::InteractionBox *_interfaceInteractionBox;
+}
+
+- (id)initWithInteractionBox:(void *)interactionBox
+{
+    self = [super init];
+    if (self) {
+        _interfaceInteractionBox = new Leap::InteractionBox(*(const Leap::InteractionBox *)interactionBox);
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    std::string str = _interfaceInteractionBox->toString();
+    return [NSString stringWithCString:str.c_str() encoding:[NSString defaultCStringEncoding]];
+}
+
+- (void *)interfaceInteractionBox
+{
+    return (void *)_interfaceInteractionBox;
+}
+
+- (LeapVector *)normalizePoint:(const LeapVector *)position clamp:(BOOL)clamp
+{
+    const Leap::Vector v([position x], [position y], [position z]);
+    const Leap::Vector leapVector = _interfaceInteractionBox->normalizePoint(v, clamp);
+    return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
+}
+
+- (LeapVector *)denormalizePoint:(const LeapVector *)position
+{
+    const Leap::Vector v([position x], [position y], [position z]);
+    const Leap::Vector leapVector = _interfaceInteractionBox->denormalizePoint(v);
+    return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
+}
+
+- (LeapVector *)center
+{
+    const Leap::Vector leapVector = _interfaceInteractionBox->center();
+    return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
+}
+
+- (float)width
+{
+    return _interfaceInteractionBox->width();
+}
+
+- (float)height
+{
+    return _interfaceInteractionBox->height();
+}
+
+- (float)depth
+{
+    return _interfaceInteractionBox->depth();
+}
+
+- (BOOL)isValid
+{
+    return _interfaceInteractionBox->isValid();
+}
+
+- (BOOL)equals:(const LeapInteractionBox *)other
+{
+    return *_interfaceInteractionBox == *(const Leap::InteractionBox *)[other interfaceInteractionBox];
+}
+
++ (LeapInteractionBox *)invalid
+{
+    static const Leap::InteractionBox &invalid_interaction_box = Leap::InteractionBox::invalid();
+    return [[LeapInteractionBox alloc] initWithInteractionBox:(void *)&invalid_interaction_box];
+}
+
+@end
+
 
 /////////////////////////////////////////////////////////////////////////
 //GESTURE
@@ -1310,6 +1490,11 @@
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
+- (float)translationProbability:(const LeapFrame *)sinceFrame
+{
+    return _interfaceFrame->translationProbability(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
 - (LeapVector *)rotationAxis:(const LeapFrame *)sinceFrame
 {
     Leap::Vector v = _interfaceFrame->rotationAxis(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
@@ -1333,9 +1518,25 @@
     return [[LeapMatrix alloc] initWithLeapMatrix:&m];
 }
 
+- (float)rotationProbability:(const LeapFrame *)sinceFrame
+{
+    return _interfaceFrame->rotationProbability(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
 - (float)scaleFactor:(const LeapFrame *)sinceFrame
 {
     return _interfaceFrame->scaleFactor(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
+- (float)scaleProbability:(const LeapFrame *)sinceFrame
+{
+    return _interfaceFrame->scaleProbability(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
+}
+
+- (LeapInteractionBox *)interactionBox
+{
+    const Leap::InteractionBox leapInteractionBox = _interfaceFrame->interactionBox();
+    return [[LeapInteractionBox alloc] initWithInteractionBox:(void *)&leapInteractionBox];
 }
 
 - (BOOL)isValid
@@ -1376,16 +1577,8 @@
             return TYPE_BOOLEAN;
         case Leap::Config::ValueType::TYPE_INT32:
             return TYPE_INT32;
-        case Leap::Config::ValueType::TYPE_UINT32:
-            return TYPE_UINT32;
-        case Leap::Config::ValueType::TYPE_INT64:
-            return TYPE_INT64;
-        case Leap::Config::ValueType::TYPE_UINT64:
-            return TYPE_UINT64;
         case Leap::Config::ValueType::TYPE_FLOAT:
             return TYPE_FLOAT;
-        case Leap::Config::ValueType::TYPE_DOUBLE:
-            return TYPE_DOUBLE;
         case Leap::Config::ValueType::TYPE_STRING:
             return TYPE_STRING;
         default:
@@ -1397,7 +1590,7 @@
 {
     std::string *keyString = new std::string([key UTF8String]);
     Leap::Config::ValueType val = _config.type(*keyString);
-    free(keyString);
+    delete keyString;
     return [self convertFromLeapValueType:val];
 }
 
@@ -1405,56 +1598,48 @@
 {
     std::string *keyString = new std::string([key UTF8String]);
     BOOL val = _config.getBool(*keyString);
-    free(keyString);
+    delete keyString;
     return val;
+}
+
+- (BOOL)setBool:(NSString *)key value:(BOOL)value
+{
+    std::string *keyString = new std::string([key UTF8String]);
+    BOOL success = _config.setBool(*keyString, bool(value));
+    delete keyString;
+    return success;
 }
 
 - (int32_t)getInt32:(NSString *)key
 {
     std::string *keyString = new std::string([key UTF8String]);
     int32_t val = _config.getInt32(*keyString);
-    free(keyString);
+    delete keyString;
     return val;
 }
 
-- (int64_t)getInt64:(NSString *)key
+- (BOOL)setInt32:(NSString *)key value:(int32_t)value
 {
     std::string *keyString = new std::string([key UTF8String]);
-    int64_t val = _config.getInt64(*keyString);
-    free(keyString);
-    return val;
-}
-
-- (uint32_t)getUInt32:(NSString *)key
-{
-    std::string *keyString = new std::string([key UTF8String]);
-    uint32_t val = _config.getUInt32(*keyString);
-    free(keyString);
-    return val;
-}
-
-- (uint64_t)getUInt64:(NSString *)key
-{
-    std::string *keyString = new std::string([key UTF8String]);
-    uint64_t val = _config.getUInt64(*keyString);
-    free(keyString);
-    return val;
+    BOOL success = _config.setInt32(*keyString, value);
+    delete keyString;
+    return success;
 }
 
 - (float)getFloat:(NSString *)key
 {
     std::string *keyString = new std::string([key UTF8String]);
     float val = _config.getFloat(*keyString);
-    free(keyString);
+    delete keyString;
     return val;
 }
 
-- (float)getDouble:(NSString *)key
+- (BOOL)setFloat:(NSString *)key value:(float)value
 {
     std::string *keyString = new std::string([key UTF8String]);
-    float val = _config.getDouble(*keyString);
-    free(keyString);
-    return val;
+    BOOL success = _config.setFloat(*keyString, value);
+    delete keyString;
+    return success;
 }
 
 - (NSString *)getString:(NSString *)key
@@ -1462,8 +1647,23 @@
     std::string *keyString = new std::string([key UTF8String]);
     std::string str = _config.getString(*keyString);
     NSString *val = [[NSString alloc] initWithUTF8String:str.c_str()];
-    free(keyString);
+    delete keyString;
     return val;
+}
+
+- (BOOL)setString:(NSString *)key value:(NSString *)value
+{
+    std::string *keyString = new std::string([key UTF8String]);
+    std::string *valueString = new std::string([value UTF8String]);
+    BOOL success = _config.setString(*keyString, *valueString);
+    delete keyString;
+    delete valueString;
+    return success;
+}
+
+- (BOOL)save
+{
+    return BOOL(_config.save());
 }
 
 @end;
@@ -1505,6 +1705,20 @@ public:
     {
         @autoreleasepool {
             [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:@"OnFrame" object:_controller];
+        }
+    }
+
+    virtual void onFocusGained(const Leap::Controller& leapController)
+    {
+        @autoreleasepool {
+            [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:@"OnFocusGained" object:_controller];
+        }
+    }
+
+    virtual void onFocusLost(const Leap::Controller& leapController)
+    {
+        @autoreleasepool {
+            [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:@"OnFocusLost" object:_controller];
         }
     }
 
@@ -1566,7 +1780,25 @@ public:
             }
         }
     }
-    
+
+    virtual void onFocusGained(const Leap::Controller& leapController)
+    {
+        @autoreleasepool {
+            if ([_delegate respondsToSelector:@selector(onFocusGained:)]) {
+                [_delegate onFocusGained:_controller];
+            }
+        }
+    }
+
+    virtual void onFocusLost(const Leap::Controller& leapController)
+    {
+        @autoreleasepool {
+            if ([_delegate respondsToSelector:@selector(onFocusLost:)]) {
+                [_delegate onFocusLost:_controller];
+            }
+        }
+    }
+
     void setController(LeapController *controller)
     {
         _controller = controller;
@@ -1639,11 +1871,27 @@ private:
         if ([leapListener respondsToSelector:@selector(onFrame:)]) {
             [nc addObserver:leapListener selector:@selector(onFrame:) name:@"OnFrame" object:self];
         }
+        if ([leapListener respondsToSelector:@selector(onFocusGained:)]) {
+            [nc addObserver:leapListener selector:@selector(onFocusGained:) name:@"OnFocusGained" object:self];
+        }
+        if ([leapListener respondsToSelector:@selector(onFocusLost:)]) {
+            [nc addObserver:leapListener selector:@selector(onFocusLost:) name:@"OnFocusLost" object:self];
+        }
 
     }
     return self;
 }
 
+- (LeapPolicyFlag)policyFlags
+{
+    return (LeapPolicyFlag)_controller->policyFlags();
+}
+
+- (void)setPolicyFlags:(LeapPolicyFlag)flags
+{
+    _controller->setPolicyFlags((Leap::Controller::PolicyFlag)flags);
+}
+ 
 - (BOOL)addListener:(id<LeapListener>)listener
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -1661,6 +1909,12 @@ private:
     }
     if ([listener respondsToSelector:@selector(onFrame:)]) {
         [nc addObserver:listener selector:@selector(onFrame:) name:@"OnFrame" object:self];
+    }
+    if ([listener respondsToSelector:@selector(onFocusGained:)]) {
+        [nc addObserver:listener selector:@selector(onFocusGained:) name:@"OnFocusGained" object:self];
+    }
+    if ([listener respondsToSelector:@selector(onFocusLost:)]) {
+        [nc addObserver:listener selector:@selector(onFocusLost:) name:@"OnFocusLost" object:self];
     }
 
     if (!_listener) {
@@ -1727,9 +1981,26 @@ private:
     return config;
 }
 
+- (NSArray *)devices
+{
+    Leap::DeviceList leapDevices = _controller->devices();
+    NSMutableArray *devices_ar = [NSMutableArray array];
+    for (Leap::DeviceList::const_iterator it = leapDevices.begin(); it != leapDevices.end(); ++it) {
+        Leap::Device leapDevice = *it;
+        LeapDevice *device = [[LeapDevice alloc] initWithDevice:(void *)&leapDevice];
+        [devices_ar addObject:device];
+    }
+    return [NSArray arrayWithArray:devices_ar];
+}
+
 - (BOOL)isConnected
 {
     return _controller->isConnected();
+}
+
+- (BOOL)hasFocus
+{
+    return _controller->hasFocus();
 }
 
 - (void)enableGesture:(LeapGestureType)gesture_type enable:(BOOL)enable
@@ -1742,9 +2013,9 @@ private:
     return _controller->isGestureEnabled(Leap::Gesture::Type(gesture_type));
 }
 
-- (NSArray *)calibratedScreens
+- (NSArray *)locatedScreens
 {
-    Leap::ScreenList leapScreens = _controller->calibratedScreens();
+    Leap::ScreenList leapScreens = _controller->locatedScreens();
     NSMutableArray *screens_ar = [NSMutableArray array];
     for (Leap::ScreenList::const_iterator it = leapScreens.begin(); it != leapScreens.end(); ++it) {
         Leap::Screen leapScreen = *it;
@@ -1757,7 +2028,9 @@ private:
 - (void)dealloc
 {
     if (_listener) {
-        _controller->removeListener(*_listener);
+        if (_controller) {
+            _controller->removeListener(*_listener);
+        }
         delete _listener;
     }
     if (_controller) {
@@ -1772,16 +2045,82 @@ private:
 
 - (void)postNotificationOnMainThread:(NSNotification *)notification
 {
-	[self performSelectorOnMainThread:@selector(postNotification:) withObject:notification waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(postNotification:) withObject:notification waitUntilDone:NO];
 }
 
 - (void)postNotificationOnMainThreadName:(NSString *)aName object:(id)anObject
 {
-	NSNotification *notification = [NSNotification notificationWithName:aName object:anObject];
-	[self postNotificationOnMainThread:notification];
+    NSNotification *notification = [NSNotification notificationWithName:aName object:anObject];
+    [self postNotificationOnMainThread:notification];
 }
 
 @end
+
+
+@implementation NSArray (LeapPointableOrHandList)
+
+- (id)leftmost
+{
+    if ([self count] == 0) {
+        return nil;
+    }
+    float minX = FLT_MAX;
+    NSUInteger minPosition = NSUIntegerMax;
+    for (NSUInteger i = 0; i < [self count]; i++) {
+        id obj = [self objectAtIndex:i];
+        float x = (([obj isKindOfClass:[LeapHand class]] == YES) ?
+                   [[obj palmPosition] x] :
+                   [[obj tipPosition ] x]);
+        if (x < minX) {
+            minPosition = i;
+            minX = x;
+        }
+    }
+    return [self objectAtIndex:minPosition];
+}
+
+- (id)rightmost
+{
+    if ([self count] == 0) {
+        return nil;
+    }
+    float maxX = -FLT_MAX;
+    NSUInteger maxPosition = NSUIntegerMax;
+    for (NSUInteger i = 0; i < [self count]; i++) {
+        id obj = [self objectAtIndex:i];
+        float x = (([obj isKindOfClass:[LeapHand class]] == YES) ?
+                   [[obj palmPosition] x] :
+                   [[obj tipPosition ] x]);
+        if (x > maxX) {
+            maxPosition = i;
+            maxX = x;
+        }
+    }
+    return [self objectAtIndex:maxPosition];
+}
+
+- (id)frontmost
+{
+    if ([self count] == 0) {
+        return nil;
+    }
+    float minZ = FLT_MAX;
+    NSUInteger minPosition = NSUIntegerMax;
+    for (NSUInteger i = 0; i < [self count]; i++) {
+        id obj = [self objectAtIndex:i];
+        float z = (([obj isKindOfClass:[LeapHand class]] == YES) ?
+                   [[obj palmPosition] z] :
+                   [[obj tipPosition ] z]);
+        if (z < minZ) {
+            minPosition = i;
+            minZ = z;
+        }
+    }
+    return [self objectAtIndex:minPosition];
+}
+
+@end
+
 
 @implementation NSArray (LeapScreenList)
 - (LeapScreen *)closestScreenHit:(LeapPointable *)pointable
@@ -1790,60 +2129,58 @@ private:
 }
 - (LeapScreen *)closestScreenHit:(const LeapVector *)position direction:(const LeapVector *)direction
 {
-    static const float dotThresh = 0.999f;
+    static const float epsilon = 1e-6f;
     float minDistSq = FLT_MAX;
-    int minDistIdx = -1;
-    float maxDot = -FLT_MAX;
-    int maxDotIdx = -1;
+    float minErrorSq = FLT_MAX;
+    int bestIndex = -1;
     NSUInteger num = [self count];
     for (int i=0; i<num; i++) {
+        LeapScreen *screen = [self objectAtIndex:i];
         // Perform a ray-cast projection onto each screen in the given direction
-        LeapScreen *screen =[self objectAtIndex:i];
         LeapVector *result = [screen intersect:position direction:direction normalize:NO clampRatio:1.0f];
-        LeapVector *diff = [result minus:position];
-        // Find the projected point closest to the direction ray
-        float curDot = [[diff normalized] dot:direction];
-        if (curDot > maxDot) {
-            maxDotIdx = i;
-            maxDot = curDot;
-        }
-        // Find the projected screen point closest to the position
-        float curDistSq = [diff magnitudeSquared];
-        if (curDistSq < minDistSq && curDot > dotThresh) {
-            minDistIdx = i;
+        LeapVector *unclamped = [screen intersect:position direction:direction normalize:NO clampRatio:1000.0f];
+        float curErrorSq = [[result minus:unclamped] magnitudeSquared];
+        float curDistSq = [[result minus:position] magnitudeSquared];
+        // Find the projected screen point closest to the unclamped projection
+        // In equality cases, break ties using distance from the original position
+        if (curErrorSq < minErrorSq ||
+            ((curErrorSq - minErrorSq < epsilon) && curDistSq < minDistSq)) {
+            minErrorSq = curErrorSq;
             minDistSq = curDistSq;
+            bestIndex = i;
         }
     }
-    // This case means no screen was directly hit
-    if (maxDot >= 0 && maxDot < dotThresh) {
-        return [self objectAtIndex:maxDotIdx];
-    }
-    // This case means we directly hit a screen
-    else if (minDistSq < FLT_MAX) {
-        return [self objectAtIndex:minDistIdx];
+    if (bestIndex >= 0) {
+        return [self objectAtIndex:bestIndex];
     }
     return [LeapScreen invalid];
 }
 
 - (LeapScreen *)closestScreen:(LeapVector *)position
 {
+    static const float epsilon = 1e-6f;
     float minDistSq = FLT_MAX;
-    int minDistIdx = -1;
+    float minErrorSq = FLT_MAX;
+    int bestIndex = -1;
     NSUInteger num = [self count];
     for (int i=0; i<num; i++) {
-        // Perform a perpendicular projection onto each screen
         LeapScreen *screen =[self objectAtIndex:i];
+        // Perform a perpendicular projection onto each screen
         LeapVector *result = [screen project:position normalize:NO clampRatio:1.0f];
-        // Find the projected screen point closest to the position
+        LeapVector *unclamped = [screen project:position normalize:NO clampRatio:1000.0f];
+        float curErrorSq = [[result minus:unclamped] magnitudeSquared];
         float curDistSq = [[result minus:position] magnitudeSquared];
-        if (curDistSq < minDistSq) {
-            minDistIdx = i;
+        // Find the projected screen point closest to the unclamped projection
+        // In equality cases, break ties using distance from the original position
+        if (curErrorSq < minErrorSq ||
+            ((curErrorSq - minErrorSq < epsilon) && curDistSq < minDistSq)) {
+            minErrorSq = curErrorSq;
             minDistSq = curDistSq;
+            bestIndex = i;
         }
     }
-    // Sanity check -- should always be true
-    if (minDistSq < FLT_MAX) {
-        return [self objectAtIndex:minDistIdx];
+    if (bestIndex >= 0) {
+        return [self objectAtIndex:bestIndex];
     }
     return [LeapScreen invalid];
 }

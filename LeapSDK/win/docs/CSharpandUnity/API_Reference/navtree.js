@@ -1,13 +1,19 @@
 var NAVTREE =
 [
-  [ "Leap C# API Reference", "index.html", [
+  [ "Leap Motion C# API Reference", "index.html", [
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ]
     ] ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
       [ "Data Structure Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ]
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Data Fields", "functions.html", [
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Properties", "functions_prop.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
@@ -15,9 +21,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"class_leap_1_1_hand.html#a10288a6a0fc042cd21cd21ff9a80b58f",
-"class_leap_1_1_leap_p_i_n_v_o_k_e.html#a744175139c5729c74aa0559585b637a1",
-"class_leap_1_1_pointable.html#acbefa0bb766051ea46e9182bb02e6b39"
+"class_leap_1_1_listener.html#a09a582d82eb0204100411360c0f143f3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

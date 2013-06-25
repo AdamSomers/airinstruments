@@ -12,7 +12,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (nonatomic, strong, readonly)IBOutlet NSWindow *window;
-@property (nonatomic, strong, readonly)Sample *sample;
+@property (nonatomic, strong, readwrite)IBOutlet NSWindow *window;
+@property (nonatomic, strong, readwrite)Sample *sample;
 
 @end

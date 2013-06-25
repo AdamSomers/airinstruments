@@ -519,7 +519,7 @@ span.tooltip:hover span.tooltip {
 }
 
 .method-title {
-	margin-bottom: 1.5em;
+	margin-bottom: 1.1em;
 }
 
 .method-subtitle {
@@ -582,6 +582,34 @@ span.tooltip:hover span.tooltip {
 	border: 0px solid black;
 	top: 0px;
 	left: 0px;
+}
+
+/* @end */
+
+
+/* @group Constant section */
+
+pre.constant-declaration {
+	background:none;
+	border:none;
+	margin: 0 .333em 1em .5em;
+	padding:0;
+}
+
+dl.constant-definitions {
+	margin-top: 0;
+	margin-bottom: .8em;
+}
+
+.constant-definitions dd {
+	margin-left: 1.25em;
+	margin-top: .08em;
+	margin-bottom: .5em;
+}
+
+.constant-definitions dd p {
+	margin-top: -0.083em;
+	margin-bottom: .5em;
 }
 
 /* @end */

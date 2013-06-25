@@ -36,6 +36,7 @@ class SampleListener : Listener
 
 	public override void OnDisconnect (Controller controller)
 	{
+        //Note: not dispatched when running in a debugger.
 		SafeWriteLine ("Disconnected");
 	}
 

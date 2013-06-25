@@ -24,58 +24,58 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	
-	
-	<option value="class_methods">Class Methods</option>
-	
-	<option value="//api/name/invalid">&nbsp;&nbsp;&nbsp;&nbsp;+ invalid</option>
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/bottomLeftCorner">&nbsp;&nbsp;&nbsp;&nbsp;- bottomLeftCorner</option>
-	
-	<option value="//api/name/distanceToPoint:">&nbsp;&nbsp;&nbsp;&nbsp;- distanceToPoint:</option>
-	
-	<option value="//api/name/equals:">&nbsp;&nbsp;&nbsp;&nbsp;- equals:</option>
-	
-	<option value="//api/name/heightPixels">&nbsp;&nbsp;&nbsp;&nbsp;- heightPixels</option>
-	
-	<option value="//api/name/horizontalAxis">&nbsp;&nbsp;&nbsp;&nbsp;- horizontalAxis</option>
-	
-	<option value="//api/name/id">&nbsp;&nbsp;&nbsp;&nbsp;- id</option>
-	
-	<option value="//api/name/intersect:direction:normalize:clampRatio:">&nbsp;&nbsp;&nbsp;&nbsp;- intersect:direction:normalize:clampRatio:</option>
-	
-	<option value="//api/name/intersect:normalize:clampRatio:">&nbsp;&nbsp;&nbsp;&nbsp;- intersect:normalize:clampRatio:</option>
-	
-	<option value="//api/name/isValid">&nbsp;&nbsp;&nbsp;&nbsp;- isValid</option>
-	
-	<option value="//api/name/normal">&nbsp;&nbsp;&nbsp;&nbsp;- normal</option>
-	
-	<option value="//api/name/project:normalize:clampRatio:">&nbsp;&nbsp;&nbsp;&nbsp;- project:normalize:clampRatio:</option>
-	
-	<option value="//api/name/verticalAxis">&nbsp;&nbsp;&nbsp;&nbsp;- verticalAxis</option>
-	
-	<option value="//api/name/widthPixels">&nbsp;&nbsp;&nbsp;&nbsp;- widthPixels</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+
+
+<option value="class_methods">Class Methods</option>
+
+<option value="//api/name/invalid">&nbsp;&nbsp;&nbsp;&nbsp;+ invalid</option>
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/bottomLeftCorner">&nbsp;&nbsp;&nbsp;&nbsp;- bottomLeftCorner</option>
+
+<option value="//api/name/distanceToPoint:">&nbsp;&nbsp;&nbsp;&nbsp;- distanceToPoint:</option>
+
+<option value="//api/name/equals:">&nbsp;&nbsp;&nbsp;&nbsp;- equals:</option>
+
+<option value="//api/name/heightPixels">&nbsp;&nbsp;&nbsp;&nbsp;- heightPixels</option>
+
+<option value="//api/name/horizontalAxis">&nbsp;&nbsp;&nbsp;&nbsp;- horizontalAxis</option>
+
+<option value="//api/name/id">&nbsp;&nbsp;&nbsp;&nbsp;- id</option>
+
+<option value="//api/name/intersect:direction:normalize:clampRatio:">&nbsp;&nbsp;&nbsp;&nbsp;- intersect:direction:normalize:clampRatio:</option>
+
+<option value="//api/name/intersect:normalize:clampRatio:">&nbsp;&nbsp;&nbsp;&nbsp;- intersect:normalize:clampRatio:</option>
+
+<option value="//api/name/isValid">&nbsp;&nbsp;&nbsp;&nbsp;- isValid</option>
+
+<option value="//api/name/normal">&nbsp;&nbsp;&nbsp;&nbsp;- normal</option>
+
+<option value="//api/name/project:normalize:clampRatio:">&nbsp;&nbsp;&nbsp;&nbsp;- project:normalize:clampRatio:</option>
+
+<option value="//api/name/verticalAxis">&nbsp;&nbsp;&nbsp;&nbsp;- verticalAxis</option>
+
+<option value="//api/name/widthPixels">&nbsp;&nbsp;&nbsp;&nbsp;- widthPixels</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -137,6 +137,8 @@
 </ul></li>
 
 
+
+
 			</ul>
 		</nav>
 		<article>
@@ -144,8 +146,8 @@
 				<a title="LeapScreen Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -157,11 +159,11 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">NSObject</td>
+<td class="specification-title">Inherits from</td>
+<td class="specification-value">NSObject</td>
 </tr><tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -182,6 +184,12 @@ Screen Locator for the Leap to report these characteristics accurately.<br/>
 The LeapScreen class also reports the size of the screen in pixels, using<br/>
 information obtained from the operating system. (Run the Screen Locator<br/>
 from the Leap Application Settings dialog, on the Screen page.)</p>
+
+<p>Get an array containing the available LeapScreen objects from a connected<br/>
+LeapController object:</p>
+
+<pre><code>    NSArray *screens = [controller locatedScreens];  
+</code></pre>
 
 <p>You can get the point of intersection between the screen and a ray<br/>
 projected from a <a href="../Classes/LeapPointable.html">LeapPointable</a> object using the LeapScreen<br/>
@@ -489,6 +497,16 @@ the plane this LeapScreen lies in to the specified point.</p>
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The shortest distance from the specified point to the plane in which this<br/>
 LeapScreen lies.</p>
+
+<pre><code>    if ([frame.pointables count] &gt; 0) {  
+        LeapPointable *pointable = [[frame pointables] objectAtIndex:0];  
+        NSArray *screens = [controller locatedScreens];  
+        LeapScreen *screen = [screens closestScreenHit:pointable];  
+        float normalDistance = [screen distanceToPoint:pointable.tipPosition];  
+
+        NSLog(@"Normal distance: %f", normalDistance);  
+    }
+</code></pre>
 	</div>
 	
 	
@@ -898,6 +916,18 @@ Pointable object.</p>
 <p>The projected ray emanates from the <a href="../Classes/LeapPointable.html#//api/name/tipPosition">[LeapPointable tipPosition]</a> along the<br/>
 pointable&rsquo;s direction vector.</p>
 
+<pre><code>    if ([frame.pointables count] &gt; 0) {  
+        LeapPointable *pointable = [frame.pointables objectAtIndex:0];  
+        NSArray *screens = controller.calibratedScreens;  
+        LeapScreen *screen = [screens closestScreenHit:pointable];  
+
+        LeapVector *normalizedCoordinates = [screen intersect:pointable normalize:YES clampRatio:2.0];  
+        int xPixel = normalizedCoordinates.x * screen.widthPixels;  
+        int yPixel = screen.heightPixels - normalizedCoordinates.y * screen.heightPixels;  
+        NSLog(@"Normalized coordinates: (%d, %d)", xPixel, yPixel);  
+    }  
+</code></pre>
+
 <p>Set the normalize parameter to true to request the intersection point in<br/>
 normalized screen coordinates. Normalized screen coordinates are usually<br/>
 values between 0 and 1, where 0 represents the screen&rsquo;s origin at the<br/>
@@ -929,6 +959,24 @@ border are unaffected by clamping.</p>
 <p>If the LeapPointable object does not point toward the plane of the screen<br/>
 (i.e. it is pointing parallel to or away from the screen), then the<br/>
 components of the returned vector are all set to NaN (not-a-number).</p>
+
+<p>To get the physical distance from the tip of a pointable object to the<br/>
+screen intersection point, set the normalize parameter to NO to get the<br/>
+intersection coordinates in terms of the Leap coordinate system and then<br/>
+calculate the distance between the two points:</p>
+
+<pre><code>    if ([frame.pointables count] &gt; 0) {  
+        LeapPointable *pointable = [frame.pointables objectAtIndex:0];  
+        NSArray *screens = controller.calibratedScreens;  
+        LeapScreen *screen = [screens closestScreenHit:pointable];  
+
+        LeapVector *leapCoordinates = [screen intersect:pointable normalize:NO clampRatio:0.0];  
+        LeapVector *tipToScreen = [leapCoordinates minus:pointable.tipPosition];  
+        float pointingDistance = tipToScreen.magnitude;  
+
+        NSLog(@"Distance: %f", pointingDistance);  
+    }
+</code></pre>
 	</div>
 	
 	
@@ -1114,6 +1162,15 @@ screen along its normal vector.</p>
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Returns the projection from the specified position onto this screen.</p>
 
+<pre><code>    if ([frame.pointables count] &gt; 0) {  
+        LeapPointable *pointable = [[frame pointables] objectAtIndex:0];  
+        NSArray *screens = controller.calibratedScreens;  
+        LeapScreen *screen = [screens closestScreen:pointable.tipPosition];  
+        LeapVector *leapCoordinates = [screen project:pointable.tipPosition normalize:NO clampRatio:1.0];  
+        NSLog(@"Leap coordinates: (%f, %f, %f)", leapCoordinates.x, leapCoordinates.y, leapCoordinates.z);  
+    }  
+</code></pre>
+
 <p>Set the normalize parameter to true to request the projection point in<br/>
 normalized screen coordinates. Normalized screen coordinates are usually<br/>
 values between 0 and 1, where 0 represents the screen&rsquo;s origin at the<br/>
@@ -1260,17 +1317,19 @@ describe the physical position, size and orientation of this screen.</p>
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-06-10)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -1360,6 +1419,7 @@ describe the physical position, size and orientation of this screen.</p>
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

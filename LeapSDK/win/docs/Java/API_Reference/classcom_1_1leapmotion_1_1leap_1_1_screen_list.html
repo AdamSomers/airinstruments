@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap Java API Reference: com.leapmotion.leap.ScreenList Class Reference</title>
+<title>Leap Motion Java API Reference: com.leapmotion.leap.ScreenList Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap Java API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion Java API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -91,8 +91,8 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen_list.html" title="The ScreenList class represents a list of Screen objects.">ScreenList</a> class represents a list of <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> objects. </p>
-<p>The list always contains at least one entry representing the default screen. If the user has not registered the location of this default screen, then the coordinates, directions, and other values reported by the functions in its <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> object will not be accurate. Other monitor screens only appear in the list if their positions have been registered using the Leap <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> Locator.</p>
-<p>Get a <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen_list.html" title="The ScreenList class represents a list of Screen objects.">ScreenList</a> object by calling <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_controller.html#a041138fe32fa123fe6fb95964af16fc2" title="The list of screens whose positions have been identified by using the Leap application Screen Locator...">Controller::locatedScreens()</a>.</p>
+<p>The list always contains at least one entry representing the default screen. If the user has not registered the location of this default screen, then the coordinates, directions, and other values reported by the functions in its <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> object will not be accurate. Other monitor screens only appear in the list if their positions have been registered using the Leap Motion <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> Locator.</p>
+<p>Get a <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen_list.html" title="The ScreenList class represents a list of Screen objects.">ScreenList</a> object by calling <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_controller.html#a041138fe32fa123fe6fb95964af16fc2" title="The list of screens whose positions have been identified by using the Leap Motion Screen Locator...">Controller::locatedScreens()</a>.</p>
 <div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_screen_list.html#a30c583c3e258baa3177e26d7f79887e1" title="Constructs an empty list of screens.">ScreenList</a> screens = this.controller.locatedScreens();</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a30c583c3e258baa3177e26d7f79887e1"></a>
@@ -160,7 +160,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the closest <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> intercepting a ray projecting from the specified <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a> object. </p>
-<p>The projected ray emanates from the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a> tipPosition along the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a>'s direction vector. If the projected ray does not intersect any screen surface directly, then the Leap checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
+<p>The projected ray emanates from the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a> tipPosition along the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a>'s direction vector. If the projected ray does not intersect any screen surface directly, then the Leap Motion software checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
 <div class="fragment"><div class="line">        Frame frame = this.controller.frame();</div>
 <div class="line">        <span class="keywordflow">if</span> (frame.pointables().count() &gt; 0) {</div>
 <div class="line">            Pointable pointable = frame.pointables().get(0);</div>
@@ -204,7 +204,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the closest <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> intercepting a ray projecting from the specified position in the specified direction. </p>
-<p>The projected ray emanates from the position along the direction vector. If the projected ray does not intersect any screen surface directly, then the Leap checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
+<p>The projected ray emanates from the position along the direction vector. If the projected ray does not intersect any screen surface directly, then the Leap Motion software checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
 <div class="fragment"><div class="line">        Frame frame = this.controller.frame();</div>
 <div class="line">        <span class="keywordflow">if</span> (frame.pointables().count() &gt; 0) {</div>
 <div class="line">            Pointable pointable = frame.pointables().get(0);</div>
@@ -310,7 +310,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>com</b></li><li class="navelem"><b>leapmotion</b></li><li class="navelem"><b>leap</b></li><li class="navelem"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_screen_list.html">ScreenList</a></li>
-    <li class="footer">Generated on Thu Apr 11 2013 19:37:30 for Leap Java API Reference by
+    <li class="footer">Generated on Mon Jun 10 2013 10:32:10 for Leap Motion Java API Reference by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>
