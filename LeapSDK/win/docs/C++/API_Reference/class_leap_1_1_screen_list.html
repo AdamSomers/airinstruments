@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap API Reference: Leap::ScreenList Class Reference</title>
+<title>Leap Motion C++ API Reference: Leap::ScreenList Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion C++ API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -105,8 +105,8 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_leap_1_1_screen_list.html" title="The ScreenList class represents a list of Screen objects.">ScreenList</a> class represents a list of <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> objects. </p>
-<p>The list always contains at least one entry representing the default screen. If the user has not registered the location of this default screen, then the coordinates, directions, and other values reported by the functions in its <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> object will not be accurate. Other monitor screens only appear in the list if their positions have been registered using the Leap <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> Locator.</p>
-<p>Get a <a class="el" href="class_leap_1_1_screen_list.html" title="The ScreenList class represents a list of Screen objects.">ScreenList</a> object by calling <a class="el" href="class_leap_1_1_controller.html#a5c3110560c979061c8a3fcc0029e2623" title="The list of screens whose positions have been identified by using the Leap application Screen Locator...">Controller::locatedScreens()</a>.</p>
+<p>The list always contains at least one entry representing the default screen. If the user has not registered the location of this default screen, then the coordinates, directions, and other values reported by the functions in its <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> object will not be accurate. Other monitor screens only appear in the list if their positions have been registered using the Leap Motion <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> Locator.</p>
+<p>Get a <a class="el" href="class_leap_1_1_screen_list.html" title="The ScreenList class represents a list of Screen objects.">ScreenList</a> object by calling <a class="el" href="class_leap_1_1_controller.html#a5c3110560c979061c8a3fcc0029e2623" title="The list of screens whose positions have been identified by using the Leap Motion Screen Locator...">Controller::locatedScreens()</a>.</p>
 <div class="fragment"><div class="line">    <a class="code" href="class_leap_1_1_screen_list.html#af233b44c1a71602bc38c8af27089b71d" title="Constructs an empty list of screens.">ScreenList</a> screens = controller.locatedScreens();</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="aa5375d780cb454e661f94096dcefd431"></a>
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the closest <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> intercepting a ray projecting from the specified <a class="el" href="class_leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a> object. </p>
-<p>The projected ray emanates from the <a class="el" href="class_leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a> tipPosition along the <a class="el" href="class_leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a>'s direction vector. If the projected ray does not intersect any screen surface directly, then the Leap checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
+<p>The projected ray emanates from the <a class="el" href="class_leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a> tipPosition along the <a class="el" href="class_leap_1_1_pointable.html" title="The Pointable class reports the physical characteristics of a detected finger or tool.">Pointable</a>'s direction vector. If the projected ray does not intersect any screen surface directly, then the Leap Motion software checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
 <div class="fragment"><div class="line">    Frame frame = controller.frame();</div>
 <div class="line">    <span class="keywordflow">if</span> (frame.pointables().count() &gt; 0) {</div>
 <div class="line">        Pointable pointable = frame.pointables()[0];</div>
@@ -250,7 +250,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the closest <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> intercepting a ray projecting from the specified position in the specified direction. </p>
-<p>The projected ray emanates from the position along the direction vector. If the projected ray does not intersect any screen surface directly, then the Leap checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
+<p>The projected ray emanates from the position along the direction vector. If the projected ray does not intersect any screen surface directly, then the Leap Motion software checks for intersection with the planes extending from the surfaces of the known screens and returns the <a class="el" href="class_leap_1_1_screen.html" title="The Screen class represents a computer monitor screen.">Screen</a> with the closest intersection.</p>
 <div class="fragment"><div class="line">    Frame frame = controller.frame();</div>
 <div class="line">    <span class="keywordflow">if</span> (frame.pointables().count() &gt; 0) {</div>
 <div class="line">        Pointable pointable = frame.pointables()[0];</div>

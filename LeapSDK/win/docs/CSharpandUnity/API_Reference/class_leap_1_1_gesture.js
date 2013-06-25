@@ -13,10 +13,12 @@ var class_leap_1_1_gesture =
       [ "TYPESCREENTAP", "class_leap_1_1_gesture.html#a2bf26e135ffe45b249ed6c197e7ccbb4", null ],
       [ "TYPEKEYTAP", "class_leap_1_1_gesture.html#a2bf26e135ffe45b249ed6c197e7ccbb4", null ]
     ] ],
+    [ "Gesture", "class_leap_1_1_gesture.html#aafafe69dea2c34625e18873cd05b5eb3", null ],
     [ "Gesture", "class_leap_1_1_gesture.html#a912ce0eb0319977c52c36e88e0144c4f", null ],
     [ "Gesture", "class_leap_1_1_gesture.html#a7cfae93a684f89501a6eed81594db331", null ],
     [ "Dispose", "class_leap_1_1_gesture.html#ab16a63fdb18e460ee1873329f84d41b5", null ],
     [ "Equals", "class_leap_1_1_gesture.html#ada35797346613a4734c02b5947acb005", null ],
+    [ "getCPtr", "class_leap_1_1_gesture.html#a73d406bf405670a490b859118e110db7", null ],
     [ "ToString", "class_leap_1_1_gesture.html#a45818d6c93e5ce7b434527253a963883", null ],
     [ "Duration", "class_leap_1_1_gesture.html#a585b41ffafc469b2482b8c6eeeac50f7", null ],
     [ "DurationSeconds", "class_leap_1_1_gesture.html#ae0659044aeef9ba67d57b78f7afeb12b", null ],

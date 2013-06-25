@@ -325,11 +325,11 @@ ul.auto-toc {
 <div class="document" id="setting-up-a-java-project">
 <h1 class="title">Setting up a Java project</h1>
 
-<p>The Leap Java SDK uses a standard Jar file for Leap API class definitions and a set of native libraries that allow your Leap-enabled Java programs to exchange data with the Leap. Setting up a Java project typically involves adding the LeapJava.jar file to your application's classpath and setting the JVM library path parameter so that your JVM can find the native libraries.</p>
+<p>The Leap Motion Java SDK uses a standard Jar file for Leap Motion API class definitions and a set of native libraries that allow your Leap-enabled Java programs to exchange data with the Leap. Setting up a Java project typically involves adding the LeapJava.jar file to your application's classpath and setting the JVM library path parameter so that your JVM can find the native libraries.</p>
 <div class="contents topic" id="topics">
 <p class="topic-title first">Topics:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#leap-java-libraries" id="id1">Leap Java libraries</a></li>
+<li><a class="reference internal" href="#leap-motion-java-libraries" id="id1">Leap Motion Java libraries</a></li>
 <li><a class="reference internal" href="#compile-from-the-command-line" id="id2">Compile from the command line</a></li>
 <li><a class="reference internal" href="#run-from-the-command-line" id="id3">Run from the command line</a></li>
 <li><a class="reference internal" href="#eclipse" id="id4">Eclipse</a></li>
@@ -337,47 +337,47 @@ ul.auto-toc {
 <li><a class="reference internal" href="#netbeans" id="id6">NetBeans</a></li>
 </ul>
 </div>
-<div class="section" id="leap-java-libraries">
-<h1><a class="toc-backref" href="#id1">Leap Java libraries</a></h1>
-<p>The Leap Jar file is cross-platform, but the native libraries must match the platform and architecture of the  JVM used to run the program.</p>
-<p>To use the Leap SDK in a Java program, you must add the LeapJava.jar file to the classpath and set the java.library.path to the location of the Leap native libraries.</p>
-<p>Use the following Java and native libraries with the Leap Java SDK:</p>
+<div class="section" id="leap-motion-java-libraries">
+<h1><a class="toc-backref" href="#id1">Leap Motion Java libraries</a></h1>
+<p>The Leap Motion Jar file is cross-platform, but the native libraries must match the platform and architecture of the  JVM used to run the program.</p>
+<p>To use the Leap Motion SDK in a Java program, you must add the LeapJava.jar file to the classpath and set the java.library.path to the location of the Leap Motion native libraries.</p>
+<p>Use the following Java and native libraries with the Leap Motion Java SDK:</p>
 <ul class="simple">
 <li>32-bit Windows:<ul>
-<li><tt class="docutils literal">LeapSDK/lib/LeapJava.jar</tt> — Leap Java API class definitions</li>
-<li><tt class="docutils literal">LeapSDK/lib/x86/LeapJava.dll</tt> — 32-bit Leap Java library for Windows</li>
-<li><tt class="docutils literal">LeapSDK/lib/x86/Leap.dll</tt> — 32-bit Leap library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/LeapJava.jar</tt> — Leap Motion Java API class definitions</li>
+<li><tt class="docutils literal">LeapSDK/lib/x86/LeapJava.dll</tt> — 32-bit Leap Motion Java library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/x86/Leap.dll</tt> — 32-bit Leap Motion library for Windows</li>
 <li><tt class="docutils literal">LeapSDK/lib/x86/msvcp100.dll</tt> — 32-bit Visual C++ runtime library</li>
 <li><tt class="docutils literal">LeapSDK/lib/x86/msvcr100.dll</tt> — 32-bit Visual C++ runtime library</li>
 </ul>
 </li>
 <li>64-bit Windows:<ul>
-<li><tt class="docutils literal">LeapSDK/lib/LeapJava.jar</tt> — Leap Java API class definitions</li>
-<li><tt class="docutils literal">LeapSDK/lib/x64/LeapJava.dll</tt> — 64-bit Leap Java library for Windows</li>
-<li><tt class="docutils literal">LeapSDK/lib/x64/Leap.dll</tt> — 64-bit Leap library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/LeapJava.jar</tt> — Leap Motion Java API class definitions</li>
+<li><tt class="docutils literal">LeapSDK/lib/x64/LeapJava.dll</tt> — 64-bit Leap Motion Java library for Windows</li>
+<li><tt class="docutils literal">LeapSDK/lib/x64/Leap.dll</tt> — 64-bit Leap Motion library for Windows</li>
 <li><tt class="docutils literal">LeapSDK/lib/x64/msvcp100.dll</tt> — 64-bit Visual C++ runtime library</li>
 <li><tt class="docutils literal">LeapSDK/lib/x64/msvcr100.dll</tt> — 64-bit Visual C++ runtime library</li>
 </ul>
 </li>
 <li>32- or 64-bit Mac OS:<ul>
-<li><tt class="docutils literal">LeapSDK/lib/LeapJava.jar</tt> — Leap Java API class definitions</li>
-<li><tt class="docutils literal">LeapSDK/lib/libLeapJava.dylib</tt> — Leap Java library for Mac</li>
-<li><tt class="docutils literal">LeapSDK/lib/libLeap.dylib</tt> — Leap library for Mac</li>
+<li><tt class="docutils literal">LeapSDK/lib/LeapJava.jar</tt> — Leap Motion Java API class definitions</li>
+<li><tt class="docutils literal">LeapSDK/lib/libLeapJava.dylib</tt> — Leap Motion Java library for Mac</li>
+<li><tt class="docutils literal">LeapSDK/lib/libLeap.dylib</tt> — Leap Motion library for Mac</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="compile-from-the-command-line">
 <h1><a class="toc-backref" href="#id2">Compile from the command line</a></h1>
-<p>Use the Java compiler, <tt class="docutils literal">javac</tt> to compile, setting the classpath option to specify the LeapJar file. For example, to compile the Sample.java program included in the Leap SDK, you could use the following command:</p>
+<p>Use the Java compiler, <tt class="docutils literal">javac</tt> to compile, setting the classpath option to specify the LeapJar file. For example, to compile the Sample.java program included in the Leap Motion SDK, you could use the following command:</p>
 <pre class="literal-block">
 javac -classpath &lt;LeapSDK&gt;/lib/LeapJava.jar Sample.java
 </pre>
-<p>(where <tt class="docutils literal">&lt;LeapSDK&gt;</tt> is the location of your Leap SDK folder.)</p>
+<p>(where <tt class="docutils literal">&lt;LeapSDK&gt;</tt> is the location of your Leap Motion SDK folder.)</p>
 </div>
 <div class="section" id="run-from-the-command-line">
 <h1><a class="toc-backref" href="#id3">Run from the command line</a></h1>
-<p>To launch a Leap-enabled program, Java needs to find the Leap native libraries at runtime. LeapJava.jar must also be on the classpath. You can set Java's <tt class="docutils literal">java.library.path</tt> parameter to identify the native library. The command line syntax is slightly different between Mac and Windows. More importantly, on Windows, you have to specify either the 32-bit or the 64-bit libraries to match the architecture of the JVM you are using.</p>
+<p>To launch a Leap-enabled program, Java needs to find the Leap Motion native libraries at runtime. LeapJava.jar must also be on the classpath. You can set Java's <tt class="docutils literal">java.library.path</tt> parameter to identify the native library. The command line syntax is slightly different between Mac and Windows. More importantly, on Windows, you have to specify either the 32-bit or the 64-bit libraries to match the architecture of the JVM you are using.</p>
 <p>On Mac, you could run the Sample program using the following command:</p>
 <pre class="literal-block">
 java -classpath &quot;.:&lt;LeapSDK&gt;/lib/LeapJava.jar&quot; -Djava.library.path=&lt;LeapSDK&gt;/lib Sample
@@ -389,10 +389,10 @@ java -classpath &quot;.;&lt;LeapSDK&gt;/lib/LeapJava.jar&quot; -Djava.library.pa
 </div>
 <div class="section" id="eclipse">
 <h1><a class="toc-backref" href="#id4">Eclipse</a></h1>
-<p>In the Eclipse IDE, you add the LeapJava.jar file to a project as an external Jar and then set the path to the appropriate native Leap libraries as a property of the Jar file.</p>
+<p>In the Eclipse IDE, you add the LeapJava.jar file to a project as an external Jar and then set the path to the appropriate native Leap Motion libraries as a property of the Jar file.</p>
 <ol class="arabic simple">
 <li>Select <em>New &gt; Java Project</em> from the Eclipse File menu.</li>
-<li>Assign a name to the project on the Create Java Project page and set other properties as desired. (The Leap SDK supports Java 6 and 7.)</li>
+<li>Assign a name to the project on the Create Java Project page and set other properties as desired. (The Leap Motion SDK supports Java 6 and 7.)</li>
 <li>Click <em>Next</em> to advance to the Java Settings page.</li>
 <li>Select the <em>Libraries</em> tab.</li>
 <li>Click the <em>Add External Jars...</em> button.</li>
@@ -406,55 +406,55 @@ java -classpath &quot;.;&lt;LeapSDK&gt;/lib/LeapJava.jar&quot; -Djava.library.pa
 <ol class="arabic simple" start="9">
 <li>Select the <em>Native library location</em> item.</li>
 <li>Click the <em>Edit</em> button.</li>
-<li>Navigate to the folder containing the Leap native libraries.</li>
+<li>Navigate to the folder containing the Leap Motion native libraries.</li>
 </ol>
 <blockquote>
-On Windows, be sure to select the folder containing the correct libraries for your target architecture. If you are targeting a 32-bit JVM, use the Leap libraries in the x86 folder of the SDK. If you are targeting a 64-bit JVM, use the libraries in the x64 folder. On Mac, the Leap library files each support both architectures.</blockquote>
+On Windows, be sure to select the folder containing the correct libraries for your target architecture. If you are targeting a 32-bit JVM, use the Leap Motion libraries in the x86 folder of the SDK. If you are targeting a 64-bit JVM, use the libraries in the x64 folder. On Mac, the Leap Motion library files each support both architectures.</blockquote>
 <ol class="arabic simple" start="12">
 <li>Click <em>Ok</em> to set the path.</li>
 </ol>
-<p><em>Note: you can also add the Leap libraries to an existing project from the Project Properties dialog.</em></p>
+<p><em>Note: you can also add the Leap Motion libraries to an existing project from the Project Properties dialog.</em></p>
 </div>
 <div class="section" id="intellij">
 <h1><a class="toc-backref" href="#id5">IntelliJ</a></h1>
-<p>In the IntelliJ IDE, you add the LeapJava.jar file to a project as a library. You separately set the path to the Leap native libraries using the JVM parameter, <tt class="docutils literal">java.library.path</tt>. The JVM parameters can be set using an IntelliJ Run/Debug configuration.</p>
+<p>In the IntelliJ IDE, you add the LeapJava.jar file to a project as a library. You separately set the path to the Leap Motion native libraries using the JVM parameter, <tt class="docutils literal">java.library.path</tt>. The JVM parameters can be set using an IntelliJ Run/Debug configuration.</p>
 <p>To add LeapJava.jar to the project:</p>
 <ol class="arabic simple">
 <li>After creating a project in the usual way, select the <em>File &gt; Project Structure</em> menu command to open the settings dialog.</li>
 <li>Click <em>Libraries</em> under project settings.</li>
 <li>Click the small <tt class="docutils literal">+</tt> button at the top of the library list to open the <em>Select Library Files</em> dialog.</li>
-<li>Add <tt class="docutils literal">LeapJava.jar</tt> from your Leap SDK.</li>
+<li>Add <tt class="docutils literal">LeapJava.jar</tt> from your Leap Motion SDK.</li>
 </ol>
-<p>To set the path to the native Leap libraries by creating a <em>Run/Debug configuration</em>:</p>
+<p>To set the path to the native Leap Motion libraries by creating a <em>Run/Debug configuration</em>:</p>
 <ol class="arabic simple">
 <li>Select the <em>Run &gt; Edit Configurations…</em> menu command.</li>
 <li>Click the small <tt class="docutils literal">+</tt> button above the Configuration list.</li>
 <li>Choose Application to create a new application configuration.</li>
 <li>Assign a name.</li>
-<li>Set the VM Options field to set the <tt class="docutils literal"><span class="pre">-Djava.library.path</span></tt> parameter to the path to the proper folder containing the Leap native libraries.</li>
+<li>Set the VM Options field to set the <tt class="docutils literal"><span class="pre">-Djava.library.path</span></tt> parameter to the path to the proper folder containing the Leap Motion native libraries.</li>
 <li>Click Ok.</li>
 </ol>
 <div class="figure">
 <img alt="images/Setup_IntelliJ_Properties.png" src="images/Setup_IntelliJ_Properties.png" />
-<p class="caption">On Windows, be sure to select the folder containing the correct libraries for your target architecture. If you are targeting a 32-bit JVM, use the Leap libraries in the x86 folder of the SDK. If you are targeting a 64-bit JVM, use the libraries in the x64 folder. On Mac, the Leap library files each support both architectures.</p>
+<p class="caption">On Windows, be sure to select the folder containing the correct libraries for your target architecture. If you are targeting a 32-bit JVM, use the Leap Motion libraries in the x86 folder of the SDK. If you are targeting a 64-bit JVM, use the libraries in the x64 folder. On Mac, the Leap Motion library files each support both architectures.</p>
 </div>
 </div>
 <div class="section" id="netbeans">
 <h1><a class="toc-backref" href="#id6">NetBeans</a></h1>
-<p>In the NetBeans IDE, you add the LeapJava.jar file to a project as a library. You separately set the path to the Leap native libraries using the JVM parameter, <tt class="docutils literal">java.library.path</tt>. The JVM parameters can be set using a NetBeans Run configuration.</p>
+<p>In the NetBeans IDE, you add the LeapJava.jar file to a project as a library. You separately set the path to the Leap Motion native libraries using the JVM parameter, <tt class="docutils literal">java.library.path</tt>. The JVM parameters can be set using a NetBeans Run configuration.</p>
 <p>To add the LeapJava.jar to a project and set the path to the native libraries:</p>
 <ol class="arabic simple">
 <li>After creating a project in the usual way, select the <em>File &gt; Project Properties</em> menu command to open the Project Properties dialog.</li>
 <li>Click the <em>Libraries</em> item.</li>
 <li>Click <em>Add Jar/Folder</em> button.</li>
-<li>Find the <tt class="docutils literal">LeapJava.jar</tt> file in your Leap SDK.</li>
+<li>Find the <tt class="docutils literal">LeapJava.jar</tt> file in your Leap Motion SDK.</li>
 <li>Click <em>Ok</em> to add the Jar file to your project.</li>
 <li>Next, click the <em>Run</em> item in the Project properties list</li>
-<li>Set the VM Options field to set the <tt class="docutils literal"><span class="pre">-Djava.library.path</span></tt> parameter to the path to the proper folder containing the Leap native libraries.</li>
+<li>Set the VM Options field to set the <tt class="docutils literal"><span class="pre">-Djava.library.path</span></tt> parameter to the path to the proper folder containing the Leap Motion native libraries.</li>
 </ol>
 <div class="figure">
 <img alt="images/Setup_Netbeans_Properties.png" src="images/Setup_Netbeans_Properties.png" />
-<p class="caption">On Windows, be sure to select the folder containing the correct libraries for your target architecture. If you are targeting a 32-bit JVM, use the Leap libraries in the x86 folder of the SDK. If you are targeting a 64-bit JVM, use the libraries in the x64 folder. On Mac, the Leap library files each support both architectures.</p>
+<p class="caption">On Windows, be sure to select the folder containing the correct libraries for your target architecture. If you are targeting a 32-bit JVM, use the Leap Motion libraries in the x86 folder of the SDK. If you are targeting a 64-bit JVM, use the libraries in the x64 folder. On Mac, the Leap Motion library files each support both architectures.</p>
 </div>
 <hr class="docutils" />
 <p>Copyright © 2012-2013 Leap Motion, Inc. All rights reserved.</p>
