@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils 0.9.1: http://docutils.sourceforge.net/" />
-<title>Leap Overview</title>
+<title>Leap Motion Overview</title>
 <style type="text/css">
 
 /*
@@ -322,11 +322,11 @@ ul.auto-toc {
 </style>
 </head>
 <body>
-<div class="document" id="leap-overview">
-<h1 class="title">Leap Overview</h1>
+<div class="document" id="leap-motion-overview">
+<h1 class="title">Leap Motion Overview</h1>
 
-<p>The Leap detects and tracks hands, fingers and finger-like tools. The device operates in an intimate proximity with high precision and tracking frame rate.</p>
-<p>The Leap software analyzes the objects observed in the device field of view. It recognizes hands, fingers, and tools, reporting both discrete positions, gestures, and motion. The Leap field of view is an inverted pyramid centered on the device. The effective range of the Leap extends from approximately 25 to 600 millimeters above the device (1 inch to 2 feet).</p>
+<p>The Leap Motion system detects and tracks hands, fingers and finger-like tools. The device operates in an intimate proximity with high precision and tracking frame rate.</p>
+<p>The Leap Motion software analyzes the objects observed in the device field of view. It recognizes hands, fingers, and tools, reporting both discrete positions, gestures, and motion. The Leap Motion field of view is an inverted pyramid centered on the device. The effective range of the Leap Motion device extends from approximately 25 to 600 millimeters above the device (1 inch to 2 feet).</p>
 <div class="contents topic" id="topics">
 <p class="topic-title first">Topics:</p>
 <ul class="simple">
@@ -358,20 +358,19 @@ ul.auto-toc {
 </div>
 <div class="section" id="coordinate-system">
 <h1><a class="toc-backref" href="#id1">Coordinate system</a></h1>
-<p>The Leap employs a right-handed Cartesian coordinate system. Values reported are in units of real-world millimeters. The origin is centered at the center of the Leap Motion Controller. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</p>
+<p>The Leap Motion system employs a right-handed Cartesian coordinate system. Values reported are in units of real-world millimeters. The origin is centered at the center of the Leap Motion Controller. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</p>
 <div class="figure">
 <img alt="images/Leap_Axes.png" src="images/Leap_Axes.png" />
-<p class="caption">The Leap right-handed coordinate system.</p>
+<p class="caption">The Leap Motion right-handed coordinate system.</p>
 </div>
 </div>
 <div class="section" id="motion-tracking-data">
 <h1><a class="toc-backref" href="#id2">Motion tracking data</a></h1>
-<p>As the Leap tracks hands, fingers, and tools in its field of view, it provides updates as a set, or frame, of data. Each frame contains lists of the basic tracking data, such as hands, fingers, and tools, as well as recognized gestures and factors describing the overall motion in the scene.</p>
-<p>When it detects a hand, finger, tool, or gesture, the Leap assigns it a unique ID designator. The ID remains the same as long as that entity remains visible within the device's field of view. If tracking is lost and regained, the Leap may assign a new ID (the software may not know that the hand or finger is the same as the one visible earlier).</p>
-<p><em>Note: We plan to enhance the motion tracking data provided to your application before the Leap is released to consumers. In future releases of the Leap SDK, we plan to introduce a skeletal hand model to provide more detailed tracking data and continuity through time.</em></p>
+<p>As the Leap Motion device tracks hands, fingers, and tools in its field of view, it provides updates as a set, or frame, of data. Each frame contains lists of the basic tracking data, such as hands, fingers, and tools, as well as recognized gestures and factors describing the overall motion in the scene.</p>
+<p>When it detects a hand, finger, tool, or gesture, the Leap Motion software assigns it a unique ID designator. The ID remains the same as long as that entity remains visible within the device's field of view. If tracking is lost and regained, the Leap Motion software may assign a new ID (the software may not know that the hand or finger is the same as the one visible earlier).</p>
 <div class="section" id="frames">
 <h2><a class="toc-backref" href="#id3">Frames</a></h2>
-<p>A <tt class="docutils literal">Frame</tt> object provides lists of the tracking data, gestures, and factors describing the overall motion observed in the Leap field of view.</p>
+<p>A <tt class="docutils literal">Frame</tt> object provides lists of the tracking data, gestures, and factors describing the overall motion observed in the Leap Motion field of view.</p>
 <div class="section" id="lists-of-tracking-data">
 <h3><a class="toc-backref" href="#id4">Lists of tracking data</a></h3>
 <ul class="simple">
@@ -381,48 +380,41 @@ ul.auto-toc {
 <li><tt class="docutils literal">Tools</tt> — All the tools.</li>
 <li><tt class="docutils literal">Gestures</tt> — All the gestures that started, ended, or which had an update.</li>
 </ul>
-<p>The three pointables lists (<tt class="docutils literal">Pointables</tt>, <tt class="docutils literal">Fingers</tt>, and <tt class="docutils literal">Tools</tt>) contain every pointable object detected in a frame. You can access the pointables associated with a hand through the Hand objects in the list of hands. Note that a finger or tool may not be associated with a hand if the user's hand is only partially within the Leap field of view.</p>
-<p>If you are tracking an individual object, such as a finger, from frame to frame, you can use the ID associated with that object to look it up in each new frame. Use the following functions to look up specific object types by ID:</p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">Frame::hand()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">Frame::finger()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">Frame::tool()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">Frame::pointable()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">Frame::gesture()</span></tt></li>
-</ul>
-<p>These functions return a reference to the corresponding object if it exists in the current frame. If the object no longer exists, then a special invalid object is returned. Invalid objects are well-defined, but do not contain valid tracking data. This technique helps reduce the amount of null checking you have to do to when accessing Leap tracking data.</p>
+<p>The three pointables lists (<tt class="docutils literal">Pointables</tt>, <tt class="docutils literal">Fingers</tt>, and <tt class="docutils literal">Tools</tt>) contain every pointable object detected in a frame. You can access the pointables associated with a hand through the Hand objects in the list of hands. Note that a finger or tool may not be associated with a hand if the user's hand is only partially within the Leap Motion field of view.</p>
+<p>If you are tracking an individual object, such as a finger, from frame to frame, you can use the ID associated with that object to look it up in each new frame. You can look up Hand, Finger, Tool, Pointable, and Gesture objects by ID. The lookup functions return a reference to the corresponding object if it exists in the current frame. If the object no longer exists, then a special invalid object is returned. Invalid objects are well-defined, but do not contain valid tracking data. This technique helps reduce the amount of null checking you have to do to when accessing Leap Motion tracking data.</p>
 </div>
 <div class="section" id="frame-motion">
 <h3><a class="toc-backref" href="#id5">Frame motion</a></h3>
-<p>The Leap analyzes the overall motion which occurred since an earlier frame and synthesizes representative translation, rotation, and scale factors. For example, if you move both hands to the left in the Leap field of view the frame contains translation. If you twist your hands as if turning a ball, the frame contains rotation. If you move your hands towards or away from each other, the frame contains scaling. The Leap uses all of the objects within the field of view when analyzing motion. If it only detects one hand, then the Leap bases the frame motion factors on the movement of that hand. If it detects two hands, then the Leap bases the frame motion factors on the movement of both hands together. You can also get independent motion factors for each hand from a Hand object.</p>
+<p>The Leap Motion software analyzes the overall motion which occurred since an earlier frame and synthesizes representative translation, rotation, and scale factors. For example, if you move both hands to the left in the Leap Motion field of view the frame contains translation. If you twist your hands as if turning a ball, the frame contains rotation. If you move your hands towards or away from each other, the frame contains scaling. The Leap Motion software uses all of the objects within the field of view when analyzing motion. If it only detects one hand, then the Leap Motion software bases the frame motion factors on the movement of that hand. If it detects two hands, then the Leap Motion software ases the frame motion factors on the movement of both hands together. You can also get independent motion factors for each hand from a Hand object.</p>
 <p>Frame motions are derived by comparing the current frame with a specified earlier frame. The attributes describing the synthesized motion include:</p>
 <ul class="simple">
-<li><tt class="docutils literal">rotationAxis</tt> — A direction vector expressing the axis of rotation.</li>
-<li><tt class="docutils literal">rotationAngle</tt> — The angle of rotation clockwise around the rotation axis (using the right-hand rule).</li>
-<li><tt class="docutils literal">rotationMatrix</tt> — A transform matrix expressing the rotation.</li>
-<li><tt class="docutils literal">scaleFactor</tt> — A factor expressing expansion or contraction.</li>
-<li><tt class="docutils literal">translation</tt> — A vector expressing the linear movement.</li>
+<li><tt class="docutils literal">Rotation Axis</tt> — A direction vector expressing the axis of rotation.</li>
+<li><tt class="docutils literal">Rotation Angle</tt> — The angle of rotation clockwise around the rotation axis (using the right-hand rule).</li>
+<li><tt class="docutils literal">Rotation Matrix</tt> — A transform matrix expressing the rotation.</li>
+<li><tt class="docutils literal">Scale Factor</tt> — A factor expressing expansion or contraction.</li>
+<li><tt class="docutils literal">Translation</tt> — A vector expressing the linear movement.</li>
 </ul>
 <p>You can apply the motion factors to manipulate objects in your application's scene without having to track individual hands and fingers over multiple frames.</p>
+<p>The frame includes estimates that the motion in a frame is intended to be a particular type of motion. For example, if the scale probability factor is high, then you can ignore any rotations or translations in the frame (if that makes sense for your application). Filtering unwanted motions using the probabliity estimates can make your application easier to use.</p>
 </div>
 </div>
 <div class="section" id="hand-model">
 <h2><a class="toc-backref" href="#id6">Hand model</a></h2>
 <p>The hand model provides information about the position, characteristics, and movement of a detected hand as well as lists of the fingers and tools associated with the hand.</p>
-<p>The Leap API provides as much information about a hand as possible. However, the Leap may not be able to determine all hand attributes in every frame. For example, when a hand is clenched into a fist, its fingers are not visible to the Leap so the finger list will be empty. Your code should handle the cases where an attribute in the model is not available.</p>
-<p>The Leap does not determine whether a hand is a left or right hand. More than two hands can appear in the hand list for a frame if more than one person's hands or other hand-like objects are in view. However, we recommend keeping at most two hands in the Leap Motion Controller's field of view for optimal motion tracking quality.</p>
+<p>The Leap Motion API provides as much information about a hand as possible. However, the Leap Motion software may not be able to determine all hand attributes in every frame. For example, when a hand is clenched into a fist, its fingers are not visible to the Leap Motion device so the finger list will be empty. Your code should handle the cases where an attribute in the model is not available.</p>
+<p>The Leap Motion software does not determine whether a hand is a left or right hand. More than two hands can appear in the hand list for a frame if more than one person's hands or other hand-like objects are in view. However, we recommend keeping at most two hands in the Leap Motion Controller's field of view for optimal motion tracking quality.</p>
 <div class="section" id="hand-attributes">
 <h3><a class="toc-backref" href="#id7">Hand attributes</a></h3>
 <p>The Hand object provides several attributes reporting the physical characteristics of a detected hand:</p>
 <ul class="simple">
-<li><tt class="docutils literal">palmPosition</tt> — The center of the palm measured in millimeters from the Leap origin.</li>
-<li><tt class="docutils literal">palmVelocity</tt> — The speed of the palm in millimeters per second.</li>
-<li><tt class="docutils literal">palmNormal</tt> — A vector perpendicular to the plane formed by the palm of the hand. The vector points downward out of the palm.</li>
-<li><tt class="docutils literal">direction</tt> — A vector pointing from the center of the palm toward the fingers.</li>
-<li><tt class="docutils literal">sphereCenter</tt> — The center of a sphere fit to the curvature of the hand (as if it were holding a ball).</li>
-<li><tt class="docutils literal">sphereRadius</tt> — The radius of a sphere fit to the curvature of the hand. The radius changes with the shape of the hand.</li>
+<li><tt class="docutils literal">Palm Position</tt> — The center of the palm measured in millimeters from the Leap Motion origin.</li>
+<li><tt class="docutils literal">Palm Velocity</tt> — The speed of the palm in millimeters per second.</li>
+<li><tt class="docutils literal">Palm Normal</tt> — A vector perpendicular to the plane formed by the palm of the hand. The vector points downward out of the palm.</li>
+<li><tt class="docutils literal">Direction</tt> — A vector pointing from the center of the palm toward the fingers.</li>
+<li><tt class="docutils literal">Sphere Center</tt> — The center of a sphere fit to the curvature of the hand (as if it were holding a ball).</li>
+<li><tt class="docutils literal">Sphere Radius</tt> — The radius of a sphere fit to the curvature of the hand. The radius changes with the shape of the hand.</li>
 </ul>
-<p>The <tt class="docutils literal">direction</tt> and <tt class="docutils literal">palmNormal</tt> are unit direction vectors describing the orientation of the hand with respect to the Leap coordinate system.</p>
+<p>The <tt class="docutils literal">direction</tt> and <tt class="docutils literal">palmNormal</tt> are unit direction vectors describing the orientation of the hand with respect to the Leap Motion coordinate system.</p>
 <div class="figure">
 <img alt="images/Leap_Palm_Vectors.png" src="images/Leap_Palm_Vectors.png" />
 <p class="caption">The normal vector points perpendicularly out of the hand; the direction vector points forward.</p>
@@ -435,15 +427,16 @@ ul.auto-toc {
 </div>
 <div class="section" id="hand-motion">
 <h3><a class="toc-backref" href="#id8">Hand motion</a></h3>
-<p>The Hand object also provides several attributes reporting the motion of a detected hand between frames. The Leap analyzes the motion of the hand, as well as its associated fingers and tools and reports representative translation, rotation, and scale factors. Moving your hand around the Leap field of view produces translation. Turning, twisting, or tilting your hand produces rotation. Moving fingers or tools toward or away from each other produces scaling.</p>
+<p>The Hand object also provides several attributes reporting the motion of a detected hand between frames. The Leap Motion software analyzes the motion of the hand, as well as its associated fingers and tools and reports representative translation, rotation, and scale factors. Moving your hand around the Leap Motion field of view produces translation. Turning, twisting, or tilting your hand produces rotation. Moving fingers or tools toward or away from each other produces scaling.</p>
 <p>Hand motions are derived by comparing the characteristics of the hand in the current frame to those in a specified earlier frame. The attributes describing the synthesized motion include:</p>
 <ul class="simple">
-<li><tt class="docutils literal">rotationAxis</tt> — A direction vector expressing the axis of rotation.</li>
-<li><tt class="docutils literal">rotationAngle</tt> — The angle of rotation clockwise around the rotation axis (using the right-hand rule).</li>
-<li><tt class="docutils literal">rotationMatrix</tt> — A transform matrix expressing the rotation.</li>
-<li><tt class="docutils literal">scaleFactor</tt> — A factor expressing expansion or contraction.</li>
-<li><tt class="docutils literal">translation</tt> — A vector expressing the linear movement.</li>
+<li><tt class="docutils literal">Rotation Axis</tt> — A direction vector expressing the axis of rotation.</li>
+<li><tt class="docutils literal">Rotation Angle</tt> — The angle of rotation clockwise around the rotation axis (using the right-hand rule).</li>
+<li><tt class="docutils literal">Rotation Matrix</tt> — A transform matrix expressing the rotation.</li>
+<li><tt class="docutils literal">Scale Factor</tt> — A factor expressing expansion or contraction.</li>
+<li><tt class="docutils literal">Translation</tt> — A vector expressing the linear movement.</li>
 </ul>
+<p>The Hand object includes estimates that the motion associated with the hand is intended to be a particular type of motion. For example, if the scale probability factor is high, then you can ignore any rotations or translations in the frame (if that makes sense for your application). Filtering unwanted motions using the probabliity estimates can make your application easier to use.</p>
 </div>
 <div class="section" id="finger-and-tool-lists">
 <h3><a class="toc-backref" href="#id9">Finger and Tool lists</a></h3>
@@ -458,20 +451,20 @@ ul.auto-toc {
 </div>
 <div class="section" id="finger-and-tool-models">
 <h2><a class="toc-backref" href="#id10">Finger and Tool models</a></h2>
-<p>The Leap detects and tracks both fingers and tools within its field of view. The Leap classifies finger-like objects according to shape. A tool is longer, thinner, and straighter than a finger.</p>
-<p>In the Leap model, the physical characteristics of fingers and tools are abstracted into a <tt class="docutils literal">Pointable</tt> object. Fingers and tools are types of pointable objects. The physical characteristics of pointable objects include:</p>
+<p>The Leap Motion device detects and tracks both fingers and tools within its field of view. The Leap Motion software classifies finger-like objects according to shape. A tool is longer, thinner, and straighter than a finger.</p>
+<p>In the Leap Motion model, the physical characteristics of fingers and tools are abstracted into a <tt class="docutils literal">Pointable</tt> object. Fingers and tools are types of pointable objects. The physical characteristics of pointable objects include:</p>
 <ul class="simple">
-<li><tt class="docutils literal">length</tt> — The length of the visible portion of the object (from where it extends out of the hand to the tip).</li>
-<li><tt class="docutils literal">width</tt> — The average width of the visible portion of the object.</li>
-<li><tt class="docutils literal">direction</tt> — A unit direction vector pointing in the same direction as the object (i.e. from base to tip).</li>
-<li><tt class="docutils literal">tipPosition</tt> — The position of the tip in millimeters from the Leap origin.</li>
-<li><tt class="docutils literal">tipVelocity</tt> — The speed of the tip in millimeters per second.</li>
+<li><tt class="docutils literal">Length</tt> — The length of the visible portion of the object (from where it extends out of the hand to the tip).</li>
+<li><tt class="docutils literal">Width</tt> — The average width of the visible portion of the object.</li>
+<li><tt class="docutils literal">Direction</tt> — A unit direction vector pointing in the same direction as the object (i.e. from base to tip).</li>
+<li><tt class="docutils literal">Tip Position</tt> — The position of the tip in millimeters from the Leap Motion origin.</li>
+<li><tt class="docutils literal">Tip Velocity</tt> — The speed of the tip in millimeters per second.</li>
 </ul>
 <div class="figure">
 <img alt="images/Leap_Finger_Model.png" src="images/Leap_Finger_Model.png" />
 <p class="caption">Finger <tt class="docutils literal">tipPosition</tt> and <tt class="docutils literal">direction</tt> vectors provide the positions of the finger tips and the directions in which the fingers are pointing.</p>
 </div>
-<p>The Leap classifies a detected pointable object as either a finger or a tool. Use the <tt class="docutils literal"><span class="pre">Pointable::isTool()</span></tt> function to determine which one a Pointable object represents.</p>
+<p>The Leap Motion software classifies a detected pointable object as either a finger or a tool. Use the <tt class="docutils literal"><span class="pre">Pointable::isTool()</span></tt> function to determine which one a Pointable object represents.</p>
 <div class="figure">
 <img alt="images/Leap_Tool.png" src="images/Leap_Tool.png" />
 <p class="caption">A tool is longer, thinner, and straighter than a finger.</p>
@@ -479,45 +472,45 @@ ul.auto-toc {
 </div>
 <div class="section" id="gestures">
 <h2><a class="toc-backref" href="#id11">Gestures</a></h2>
-<p>The Leap recognizes certain movement patterns as gestures which could indicate a user intent or command. The Leap reports gestures observed in a frame the in the same way that it reports other motion tracking data like fingers and hands. For each gesture observed, the Leap adds a Gesture object to the frame. You can get these Gesture objects from the Frame <tt class="docutils literal">gestures</tt> list.</p>
+<p>The Leap Motion software recognizes certain movement patterns as gestures which could indicate a user intent or command. The Leap Motion software reports gestures observed in a frame the in the same way that it reports other motion tracking data like fingers and hands. For each gesture observed, the Leap Motion software adds a Gesture object to the frame. You can get these Gesture objects from the Frame <tt class="docutils literal">gestures</tt> list.</p>
 <blockquote>
-The following movement patterns are recognized by the Leap:</blockquote>
+The following movement patterns are recognized by the Leap Motion software:</blockquote>
 <ul class="simple">
 <li>Circle — A single finger tracing a circle.</li>
 <li>Swipe — A linear movement of the hand.</li>
 <li>Key Tap — A tapping movement by a finger as if tapping a keyboard key.</li>
 <li>Screen Tap — A tapping movement by the finger as if tapping a vertical computer screen.</li>
 </ul>
-<p>When the Leap first classifies a movement pattern as a gesture, it adds a Gesture object to the frame. If the gesture continues over time, the Leap adds updated Gesture objects to subsequent frame. The gestures Circle and Swipe are continuous. The Leap updates the  progress of these gestures each frame. Taps are discrete gestures. The Leap reports each tap with a single Gesture object.</p>
+<p>When the Leap Motion software first classifies a movement pattern as a gesture, it adds a Gesture object to the frame. If the gesture continues over time, the Leap Motion software adds updated Gesture objects to subsequent frame. The gestures Circle and Swipe are continuous. The Leap Motion software updates the  progress of these gestures each frame. Taps are discrete gestures. The Leap Motion software reports each tap with a single Gesture object.</p>
 <p><strong>Important:</strong> before using gestures in your application, you must enable recognition for each gesture you intend to use. The Controller class  has an <cite>enableGesture()</cite> method that you can use to enable recognition for the types of gestures you use.</p>
 <div class="section" id="circle">
 <h3><a class="toc-backref" href="#id12">Circle</a></h3>
-<p>The Leap recognizes the motion of a finger tracing a circle in space as a <em>Circle</em> gesture.</p>
+<p>The Leap Motion software recognizes the motion of a finger tracing a circle in space as a <em>Circle</em> gesture.</p>
 <div class="figure">
 <img alt="images/Leap_Gesture_Circle.png" src="images/Leap_Gesture_Circle.png" />
 <p class="caption">A circle gesture with the forefinger.</p>
 </div>
-<p>You can make a circle with any finger or tool. Circle gestures are continuous. Once the gesture starts, the Leap will update the progress until the gesture ends. A circle gesture ends when the circling finger or tool departs from the circle locus or moves too slow.</p>
+<p>You can make a circle with any finger or tool. Circle gestures are continuous. Once the gesture starts, the Leap Motion software will update the progress until the gesture ends. A circle gesture ends when the circling finger or tool departs from the circle locus or moves too slow.</p>
 <p>See <cite>CircleGesture</cite> in the API reference for more information.</p>
 </div>
 <div class="section" id="swipe">
 <h3><a class="toc-backref" href="#id13">Swipe</a></h3>
-<p>The Leap recognizes a linear movement of a finger as a <em>Swipe</em> gesture.</p>
+<p>The Leap Motion software recognizes a linear movement of a finger as a <em>Swipe</em> gesture.</p>
 <div class="figure">
 <img alt="images/Leap_Gesture_Swipe.png" src="images/Leap_Gesture_Swipe.png" />
 <p class="caption">A horizontal swipe gesture.</p>
 </div>
-<p>You can make a swipe gesture with any finger and in any direction. Swipe gestures are continuous. Once the gesture starts, the Leap will update the progress until the gesture ends. A swipe gesture ends when the finger changes directions or moves too slow.</p>
+<p>You can make a swipe gesture with any finger and in any direction. Swipe gestures are continuous. Once the gesture starts, the Leap Motion software will update the progress until the gesture ends. A swipe gesture ends when the finger changes directions or moves too slow.</p>
 <p>See <cite>SwipeGesture</cite> in the API reference for more information.</p>
 </div>
 <div class="section" id="taps">
 <h3><a class="toc-backref" href="#id14">Taps</a></h3>
-<p>The Leap recognizes two types of taps: the downward <em>Key Tap</em> and the forward <em>Screen Tap</em>.</p>
+<p>The Leap Motion software recognizes two types of taps: the downward <em>Key Tap</em> and the forward <em>Screen Tap</em>.</p>
 </div>
 </div>
 <div class="section" id="key-taps">
 <h2><a class="toc-backref" href="#id15">Key Taps</a></h2>
-<p>The Leap recognizes a quick, downward tapping movement by a finger or tool as a <em>Key Tap</em> gesture.</p>
+<p>The Leap Motion software recognizes a quick, downward tapping movement by a finger or tool as a <em>Key Tap</em> gesture.</p>
 <div class="figure">
 <img alt="images/Leap_Gesture_Tap.png" src="images/Leap_Gesture_Tap.png" />
 <p class="caption">A key tap gesture with the forefinger.</p>
@@ -527,7 +520,7 @@ The following movement patterns are recognized by the Leap:</blockquote>
 </div>
 <div class="section" id="screen-taps">
 <h2><a class="toc-backref" href="#id16">Screen Taps</a></h2>
-<p>The Leap recognizes a quick, forward tapping movement by a finger or tool as a <em>Screen Tap</em> gesture.</p>
+<p>The Leap Motion software recognizes a quick, forward tapping movement by a finger or tool as a <em>Screen Tap</em> gesture.</p>
 <div class="figure">
 <img alt="images/Leap_Gesture_Tap2.png" src="images/Leap_Gesture_Tap2.png" />
 <p class="caption">A screen tap gesture with the forefinger.</p>

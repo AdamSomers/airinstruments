@@ -22,11 +22,14 @@ var classcom_1_1leapmotion_1_1leap_1_1_hand =
     [ "rotationAngle", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a21ec8e3a4ed177370c41c707cd787cf9", null ],
     [ "rotationAxis", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a62ee64b2c9d3fd5684f5fb3f5d7055a5", null ],
     [ "rotationMatrix", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a4c320c5331e950c8ec0bf86080356501", null ],
+    [ "rotationProbability", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a4c80451963a7342b1c382fd952d8f764", null ],
     [ "scaleFactor", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a6253f8161a8bf73c3958aa75f721aef0", null ],
+    [ "scaleProbability", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a74c79eea31a67e307a8fa22ef7c4833c", null ],
     [ "sphereCenter", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a7bd24ab161e5291abd466453a8c58cc8", null ],
     [ "sphereRadius", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a720d093f7c2855cfee31310b02742a3a", null ],
     [ "tool", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a338bf536f09a445af8698fe7e83b8eaa", null ],
     [ "tools", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a039f8706c09259d29e43a861acb29fe9", null ],
     [ "toString", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a6c2f2f399bb6179b4156549d2f436eaa", null ],
-    [ "translation", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a6a6cda94ce7e5952f036e52e3f217ec5", null ]
+    [ "translation", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a6a6cda94ce7e5952f036e52e3f217ec5", null ],
+    [ "translationProbability", "classcom_1_1leapmotion_1_1leap_1_1_hand.html#a341491be04537205193993d3d852638b", null ]
 ];

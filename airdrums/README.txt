@@ -30,6 +30,12 @@ Usage:
 - If you dismiss the tutorial with the "Don't show again" button, you can bring it back with the 'h' key on your keyboard.
 
 
+v0.7.1 - 6/24/2013
+==================
+
+Update to Leap SDK 0.8.0
+
+
 v0.7 - 6/19/2013
 ==================
 

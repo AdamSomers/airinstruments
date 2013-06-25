@@ -24,55 +24,55 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	<option value="properties">Properties</option>
-	
-	<option value="//api/name/frame">&nbsp;&nbsp;&nbsp;&nbsp;frame</option>
-	
-	<option value="//api/name/hands">&nbsp;&nbsp;&nbsp;&nbsp;hands</option>
-	
-	<option value="//api/name/pointables">&nbsp;&nbsp;&nbsp;&nbsp;pointables</option>
-	
-	
-	
-	
-	<option value="class_methods">Class Methods</option>
-	
-	<option value="//api/name/invalid">&nbsp;&nbsp;&nbsp;&nbsp;+ invalid</option>
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/duration">&nbsp;&nbsp;&nbsp;&nbsp;- duration</option>
-	
-	<option value="//api/name/durationSeconds">&nbsp;&nbsp;&nbsp;&nbsp;- durationSeconds</option>
-	
-	<option value="//api/name/equals:">&nbsp;&nbsp;&nbsp;&nbsp;- equals:</option>
-	
-	<option value="//api/name/id">&nbsp;&nbsp;&nbsp;&nbsp;- id</option>
-	
-	<option value="//api/name/isValid">&nbsp;&nbsp;&nbsp;&nbsp;- isValid</option>
-	
-	<option value="//api/name/state">&nbsp;&nbsp;&nbsp;&nbsp;- state</option>
-	
-	<option value="//api/name/type">&nbsp;&nbsp;&nbsp;&nbsp;- type</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+<option value="properties">Properties</option>
+
+<option value="//api/name/frame">&nbsp;&nbsp;&nbsp;&nbsp;frame</option>
+
+<option value="//api/name/hands">&nbsp;&nbsp;&nbsp;&nbsp;hands</option>
+
+<option value="//api/name/pointables">&nbsp;&nbsp;&nbsp;&nbsp;pointables</option>
+
+
+
+
+<option value="class_methods">Class Methods</option>
+
+<option value="//api/name/invalid">&nbsp;&nbsp;&nbsp;&nbsp;+ invalid</option>
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/duration">&nbsp;&nbsp;&nbsp;&nbsp;- duration</option>
+
+<option value="//api/name/durationSeconds">&nbsp;&nbsp;&nbsp;&nbsp;- durationSeconds</option>
+
+<option value="//api/name/equals:">&nbsp;&nbsp;&nbsp;&nbsp;- equals:</option>
+
+<option value="//api/name/id">&nbsp;&nbsp;&nbsp;&nbsp;- id</option>
+
+<option value="//api/name/isValid">&nbsp;&nbsp;&nbsp;&nbsp;- isValid</option>
+
+<option value="//api/name/state">&nbsp;&nbsp;&nbsp;&nbsp;- state</option>
+
+<option value="//api/name/type">&nbsp;&nbsp;&nbsp;&nbsp;- type</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -132,6 +132,8 @@
 </ul></li>
 
 
+
+
 			</ul>
 		</nav>
 		<article>
@@ -139,8 +141,8 @@
 				<a title="LeapGesture Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -152,11 +154,11 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">NSObject</td>
+<td class="specification-title">Inherits from</td>
+<td class="specification-value">NSObject</td>
 </tr><tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -213,6 +215,83 @@ using <code>[LeapFrame gesture:]</code>, and there is no gesture with that ID in
 frame, then <code>gesture:</code> returns an Invalid LeapGesture object (rather than a null<br/>
 value). Always check object validity in situations where a gesture might be<br/>
 invalid.</p>
+
+<p>The following keys can be used with the LeapConfig class to configure the gesture<br/>
+recognizer:</p>
+
+<table>
+<thead>
+<tr>
+<th>Key string </th>
+<th> Value type </th>
+<th> Default value </th>
+<th> Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gesture.Circle.MinRadius </td>
+<td> float </td>
+<td> 5.0 </td>
+<td> mm</td>
+</tr>
+<tr>
+<td>Gesture.Circle.MinArc </td>
+<td> float </td>
+<td> 1.5*pi </td>
+<td> radians</td>
+</tr>
+<tr>
+<td>Gesture.Swipe.MinLength </td>
+<td> float </td>
+<td> 150 </td>
+<td> mm</td>
+</tr>
+<tr>
+<td>Gesture.Swipe.MinVelocity </td>
+<td> float </td>
+<td> 1000 </td>
+<td> mm/s</td>
+</tr>
+<tr>
+<td>Gesture.KeyTap.MinDownVelocity </td>
+<td> float </td>
+<td> 50 </td>
+<td> mm/s</td>
+</tr>
+<tr>
+<td>Gesture.KeyTap.HistorySeconds </td>
+<td> float </td>
+<td> 0.1 </td>
+<td> s</td>
+</tr>
+<tr>
+<td>Gesture.KeyTap.MinDistance </td>
+<td> float </td>
+<td> 5.0 </td>
+<td> mm</td>
+</tr>
+<tr>
+<td>Gesture.ScreenTap.MinForwardVelocity  </td>
+<td> float </td>
+<td> 50 </td>
+<td> mm/s</td>
+</tr>
+<tr>
+<td>Gesture.ScreenTap.HistorySeconds </td>
+<td> float </td>
+<td> 0.1 </td>
+<td> s</td>
+</tr>
+<tr>
+<td>Gesture.ScreenTap.MinDistance </td>
+<td> float </td>
+<td> 3.0 </td>
+<td> mm</td>
+</tr>
+</tbody>
+</table>
+
 					</div>
 					
 					
@@ -904,17 +983,19 @@ LeapGesture object falls.</p>
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-06-10)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -1004,6 +1085,7 @@ LeapGesture object falls.</p>
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

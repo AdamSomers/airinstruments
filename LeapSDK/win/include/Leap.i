@@ -33,6 +33,8 @@
 %ignore Leap::Screen::Screen(ScreenImplementation*);
 %ignore Leap::Frame::Frame(FrameImplementation*);
 %ignore Leap::Controller::Controller(ControllerImplementation*);
+%ignore Leap::Device::Device(DeviceImplementation*);
+%ignore Leap::InteractionBox::InteractionBox(InteractionBoxImplementation*);
 
 #####################################################################################
 # Set Attributes (done after functions are uppercased, but before vars are lowered) #
@@ -90,6 +92,9 @@
 %constattrib( Leap::Pointable, bool, isTool );
 %constattrib( Leap::Pointable, bool, isFinger );
 %constattrib( Leap::Pointable, bool, isValid );
+%constattrib( Leap::Pointable, Leap::Pointable::Zone, touchZone )
+%constattrib( Leap::Pointable, float, touchDistance )
+%leapattrib( Leap::Pointable, Vector, stabilizedTipPosition )
 %leapattrib( Leap::Pointable, Frame, frame );
 
 %constattrib( Leap::Hand, int, id );
@@ -141,6 +146,7 @@
 %constattrib( Leap::HandList, int, count );
 %constattrib( Leap::GestureList, int, count );
 %constattrib( Leap::ScreenList, int, count );
+%constattrib( Leap::DeviceList, int, count );
 #endif
 
 %constattrib( Leap::PointableList, bool, isEmpty );
@@ -149,6 +155,7 @@
 %constattrib( Leap::HandList, bool, isEmpty );
 %constattrib( Leap::GestureList, bool, isEmpty );
 %constattrib( Leap::ScreenList, bool, isEmpty );
+%constattrib( Leap::DeviceList, bool, isEmpty );
 
 %constattrib( Leap::PointableList, bool, empty );
 %constattrib( Leap::FingerList, bool, empty );
@@ -177,6 +184,7 @@
 %leapattrib( Leap::Frame, ToolList, tools );
 %leapattrib( Leap::Frame, HandList, hands );
 %constattrib( Leap::Frame, bool, isValid );
+%leapattrib( Leap::Frame, InteractionBox, interactionBox );
 
 %constattrib( Leap::Screen, int32_t, id );
 %leapattrib( Leap::Screen, Vector, horizontalAxis );
@@ -185,6 +193,17 @@
 %constattrib( Leap::Screen, int, widthPixels );
 %constattrib( Leap::Screen, int, heightPixels );
 %constattrib( Leap::Screen, bool, isValid );
+
+%constattrib( Leap::Device, float, horizontalViewAngle );
+%constattrib( Leap::Device, float, verticalViewAngle );
+%constattrib( Leap::Device, float, range );
+%constattrib( Leap::Device, bool, isValid );
+
+%leapattrib( Leap::InteractionBox, Vector, center );
+%constattrib( Leap::InteractionBox, float, width );
+%constattrib( Leap::InteractionBox, float, height );
+%constattrib( Leap::InteractionBox, float, depth );
+%constattrib( Leap::InteractionBox, bool, isValid );
 
 #if SWIGCSHARP
 %csmethodmodifiers Leap::Finger::invalid "public new";
@@ -196,6 +215,8 @@
 %staticattrib( Leap::Hand, static const Hand&, invalid);
 %staticattrib( Leap::Gesture, static const Gesture&, invalid);
 %staticattrib( Leap::Screen, static const Screen&, invalid );
+%staticattrib( Leap::Device, static const Device&, invalid );
+%staticattrib( Leap::InteractionBox, static const Device&, invalid );
 %staticattrib( Leap::Frame, static const Frame&, invalid);
 
 %constattrib( Leap::Vector, float, magnitude );
@@ -207,9 +228,11 @@
 
 %constattrib( Leap::Controller, bool, isConnected );
 %constattrib( Leap::Controller, bool, hasFocus );
+%constattrib( Leap::Controller, Controller::PolicyFlag, policyFlags );
 %leapattrib( Leap::Controller, Config, config );
 %leapattrib( Leap::Controller, ScreenList, locatedScreens );
 %leapattrib( Leap::Controller, ScreenList, calibratedScreens );
+%leapattrib( Leap::Controller, DeviceList, devices );
 
 %staticattrib( Leap::Vector, static const Vector&, zero );
 %staticattrib( Leap::Vector, static const Vector&, xAxis );
@@ -233,6 +256,8 @@
 %ignore Leap::RAD_TO_DEG;
 %ignore Leap::PI;
 
+SWIG_CSBODY_PROXY(public, public, SWIGTYPE)
+
 #elif SWIGPYTHON
 
 %rename("%(camelcase)s", %$isclass) "";
@@ -247,6 +272,8 @@
 # Use proper Java enums
 %include "enums.swg"
 %javaconst(1);
+
+SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
 
 #endif
 
@@ -382,48 +409,60 @@ extern "C" BOOL WINAPI DllMain(
 
 %typemap(cscode) Leap::Vector
 %{
+  /** Add vectors component-wise. */
   public static Vector operator + (Vector v1, Vector v2) {
     return v1._operator_add(v2);
   }
+  /** Subtract vectors component-wise. */
   public static Vector operator - (Vector v1, Vector v2) {
     return v1._operator_sub(v2);
   }
+  /** Multiply vector by a scalar. */
   public static Vector operator * (Vector v1, float scalar) {
     return v1._operator_mul(scalar);
   }
+  /** Multiply vector by a scalar on the left-hand side. */
   public static Vector operator * (float scalar, Vector v1) {
     return v1._operator_mul(scalar);
   }
+  /** Divide vector by a scalar. */
   public static Vector operator / (Vector v1, float scalar) {
     return v1._operator_div(scalar);
   }
+  /** Negate a vector. */
   public static Vector operator - (Vector v1) {
     return v1._operator_sub();
   }
+  /** Convert this vector to an array of three float values: [x,y,z]. */
   public float[] ToFloatArray() {
     return new float[] {x, y, z};
   }
 %}
 %typemap(cscode) Leap::Matrix
 %{
+  /** Multiply two matrices. */ 
   public static Matrix operator * (Matrix m1, Matrix m2) {
     return m1._operator_mul(m2);
   }
+  /** Copy this matrix to the specified array of 9 float values in row-major order. */
   public float[] ToArray3x3(float[] output) {
     output[0] = xBasis.x; output[1] = xBasis.y; output[2] = xBasis.z;
     output[3] = yBasis.x; output[4] = yBasis.y; output[5] = yBasis.z;
     output[6] = zBasis.x; output[7] = zBasis.y; output[8] = zBasis.z;
     return output;
   }
+  /** Copy this matrix to the specified array containing 9 double values in row-major order. */
   public double[] ToArray3x3(double[] output) {
     output[0] = xBasis.x; output[1] = xBasis.y; output[2] = xBasis.z;
     output[3] = yBasis.x; output[4] = yBasis.y; output[5] = yBasis.z;
     output[6] = zBasis.x; output[7] = zBasis.y; output[8] = zBasis.z;
     return output;
   }
+  /** Convert this matrix to an array containing 9 float values in row-major order. */
   public float[] ToArray3x3() {
     return ToArray3x3(new float[9]);
   }
+  /** Copy this matrix to the specified array of 16 float values in row-major order. */
   public float[] ToArray4x4(float[] output) {
     output[0]  = xBasis.x; output[1]  = xBasis.y; output[2]  = xBasis.z; output[3]  = 0.0f;
     output[4]  = yBasis.x; output[5]  = yBasis.y; output[6]  = yBasis.z; output[7]  = 0.0f;
@@ -431,6 +470,7 @@ extern "C" BOOL WINAPI DllMain(
     output[12] = origin.x; output[13] = origin.y; output[14] = origin.z; output[15] = 1.0f;
     return output;
   }
+  /** Copy this matrix to the specified array of 16 double values in row-major order. */
   public double[] ToArray4x4(double[] output) {
     output[0]  = xBasis.x; output[1]  = xBasis.y; output[2]  = xBasis.z; output[3]  = 0.0f;
     output[4]  = yBasis.x; output[5]  = yBasis.y; output[6]  = yBasis.z; output[7]  = 0.0f;
@@ -438,6 +478,7 @@ extern "C" BOOL WINAPI DllMain(
     output[12] = origin.x; output[13] = origin.y; output[14] = origin.z; output[15] = 1.0f;
     return output;
   }
+  /** Convert this matrix to an array containing 16 float values in row-major order. */
   public float[] ToArray4x4() {
     return ToArray4x4(new float[16]);
   }
@@ -650,6 +691,7 @@ extern "C" BOOL WINAPI DllMain(
 %leap_list_helper(Gesture);
 %leap_list_helper(Hand);
 %leap_list_helper(Screen);
+%leap_list_helper(Device);
 
 ################################################################################
 # Config Helpers                                                               #

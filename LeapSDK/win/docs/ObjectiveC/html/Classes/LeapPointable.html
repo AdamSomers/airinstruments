@@ -64,9 +64,15 @@
 
 <option value="//api/name/length">&nbsp;&nbsp;&nbsp;&nbsp;- length</option>
 
+<option value="//api/name/stabilizedTipPosition">&nbsp;&nbsp;&nbsp;&nbsp;- stabilizedTipPosition</option>
+
 <option value="//api/name/tipPosition">&nbsp;&nbsp;&nbsp;&nbsp;- tipPosition</option>
 
 <option value="//api/name/tipVelocity">&nbsp;&nbsp;&nbsp;&nbsp;- tipVelocity</option>
+
+<option value="//api/name/touchDistance">&nbsp;&nbsp;&nbsp;&nbsp;- touchDistance</option>
+
+<option value="//api/name/touchZone">&nbsp;&nbsp;&nbsp;&nbsp;- touchZone</option>
 
 <option value="//api/name/width">&nbsp;&nbsp;&nbsp;&nbsp;- width</option>
 
@@ -120,9 +126,15 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/length">length</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stabilizedTipPosition">stabilizedTipPosition</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tipPosition">tipPosition</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tipVelocity">tipVelocity</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/touchDistance">touchDistance</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/touchZone">touchZone</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/width">width</a></span></li>
 	
@@ -172,6 +184,13 @@
 represents a finger. Use the [LeapPointable isTool] function to determine<br/>
 whether a pointable object represents a tool. The Leap classifies a detected<br/>
 entity as a tool when it is thinner, straighter, and longer than a typical finger.</p>
+
+<p>To provide touch emulation, the Leap Motion software associates a floating touch<br/>
+plane that adapts to the user&rsquo;s finger movement and hand posture. The Leap Motion<br/>
+interprets purposeful movements toward this plane as potential touch points. The<br/>
+logic used by the LeapPointable class is the same as that used by the Leap Motion<br/>
+software for OS-level touch and mouse input emulation. The LeapPointable class reports<br/>
+touch state with the touchZone and touchDistance properties.</p>
 
 <p>Note that LeapPointable objects can be invalid, which means that they do not contain<br/>
 valid tracking data and do not correspond to a physical entity. Invalid LeapPointable<br/>
@@ -260,6 +279,28 @@ Tools are generally longer, thinner, and straighter than fingers.</p></span>
 	<span class="tooltip">
 		<code><a href="#//api/name/isValid">&ndash;&nbsp;isValid</a></code>
 		<span class="tooltip"><p>Reports whether this is a valid LeapPointable object.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/touchZone">&ndash;&nbsp;touchZone</a></code>
+		<span class="tooltip"><p>The current touch zone of this LeapPointable object.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/touchDistance">&ndash;&nbsp;touchDistance</a></code>
+		<span class="tooltip"><p>A value proportional to the distance between this LeapPointable object and the<br/>
+adaptive touch plane.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/stabilizedTipPosition">&ndash;&nbsp;stabilizedTipPosition</a></code>
+		<span class="tooltip"><p>The stabilized tip position of this LeapPointable.</p></span>
 	</span>
 	
 	
@@ -752,6 +793,50 @@ hand to tip. If the length isn&rsquo;t known, then a value of 0 is returned.</p>
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/stabilizedTipPosition" title="stabilizedTipPosition"></a>
+	<h3 class="subsubtitle method-title">stabilizedTipPosition</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The stabilized tip position of this LeapPointable.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (LeapVector *)stabilizedTipPosition</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The stabilized tip position of this LeapPointable.</p>
+
+<p>Smoothing and stabilization is performed in order to make<br/>
+this value more suitable for interaction with 2D content.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/tipPosition" title="tipPosition"></a>
 	<h3 class="subsubtitle method-title">tipPosition</h3>
 	
@@ -844,6 +929,119 @@ hand to tip. If the length isn&rsquo;t known, then a value of 0 is returned.</p>
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/touchDistance" title="touchDistance"></a>
+	<h3 class="subsubtitle method-title">touchDistance</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A value proportional to the distance between this LeapPointable object and the<br/>
+adaptive touch plane.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (float)touchDistance</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>A value proportional to the distance between this LeapPointable object and the<br/>
+adaptive touch plane.</p>
+
+<p>The touch distance is a value in the range [-1, 1]. The value 1.0 indicates the<br/>
+LeapPointable is at the far edge of the hovering zone. The value 0 indicates the<br/>
+LeapPointable is just entering the touching zone. A value of -1.0 indicates the<br/>
+LeapPointable is firmly within the touching zone. Values in between are<br/>
+proportional to the distance from the plane. Thus, the touchDistance of 0.5<br/>
+indicates that the LeapPointable is halfway into the hovering zone.</p>
+
+<p>You can use the touchDistance value to modulate visual feedback given to the<br/>
+user as their fingers close in on a touch target, such as a button.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/touchZone" title="touchZone"></a>
+	<h3 class="subsubtitle method-title">touchZone</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The current touch zone of this LeapPointable object.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (LeapPointableZone)touchZone</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The current touch zone of this LeapPointable object.</p>
+
+<p>The Leap Motion software computes the touch zone based on a floating touch<br/>
+plane that adapts to the user&rsquo;s finger movement and hand posture. The Leap<br/>
+Motion interprets purposeful movements toward this plane as potential touch<br/>
+points. When a LeapPointable moves close to the adaptive touch plane, it enters the<br/>
+&ldquo;hovering&rdquo; zone. When a LeapPointable reaches or passes through the plane, it enters<br/>
+the &ldquo;touching&rdquo; zone.</p>
+
+<p>The possible states are present in the Zone enum:</p>
+
+<ul>
+<li>Zone.NONE &ndash; The LeapPointable is outside the hovering zone.</li>
+<li>Zone.HOVERING &ndash; The LeapPointable is close to, but not touching the touch plane.</li>
+<li>Zone.TOUCHING &ndash; The LeapPointable has penetrated the touch plane.</li>
+</ul>
+
+
+<p>The touchDistance property provides a normalized indication of the distance to<br/>
+the touch plane when the LeapPointable is in the hovering or touching zones.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/width" title="width"></a>
 	<h3 class="subsubtitle method-title">width</h3>
 	
@@ -908,7 +1106,7 @@ then a value of 0 is returned.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-04-11)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-06-10)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						

@@ -1,7 +1,9 @@
 var class_leap_1_1_listener =
 [
+    [ "Listener", "class_leap_1_1_listener.html#ace8b0113c4f2ded86ab147f69b6b0389", null ],
     [ "Listener", "class_leap_1_1_listener.html#a624d538dc3d2b1cd886a4e276be170d9", null ],
     [ "Dispose", "class_leap_1_1_listener.html#a23b4be730b1a75ef8446f2fbbe508bdb", null ],
+    [ "getCPtr", "class_leap_1_1_listener.html#a97922d3b493c4df05ca22fceae9a51a6", null ],
     [ "OnConnect", "class_leap_1_1_listener.html#addbcdc07495654aacc50aca2bbbcd673", null ],
     [ "OnDisconnect", "class_leap_1_1_listener.html#ae4ca34304b881264b4def68f55970cac", null ],
     [ "OnExit", "class_leap_1_1_listener.html#a61ad9f31a94d4e5c26f25b8b0dccde1d", null ],

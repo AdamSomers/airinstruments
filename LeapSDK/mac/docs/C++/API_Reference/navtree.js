@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "Leap API Reference", "index.html", [
+  [ "Leap Motion C++ API Reference", "index.html", [
     [ "Classes", null, [
       [ "Class List", "annotated.html", "annotated" ],
       [ "Class Index", "classes.html", null ],
@@ -21,7 +21,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"class_leap_1_1_screen_list.html#a7ce73ebf3b8f5d85f456417a3fd5227c"
+"class_leap_1_1_pointable.html#a508745ae2e3402b4f754028197575457"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

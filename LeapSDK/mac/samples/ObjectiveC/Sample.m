@@ -27,7 +27,7 @@
     NSLog(@"Initialized");
 }
 
-- (void)onConnect:(NSNotification *)notification;
+- (void)onConnect:(NSNotification *)notification
 {
     NSLog(@"Connected");
     LeapController *aController = (LeapController *)[notification object];
@@ -37,17 +37,18 @@
     [aController enableGesture:LEAP_GESTURE_TYPE_SWIPE enable:YES];
 }
 
-- (void)onDisconnect:(NSNotification *)notification;
+- (void)onDisconnect:(NSNotification *)notification
 {
+    //Note: not dispatched when running in a debugger.
     NSLog(@"Disconnected");
 }
 
-- (void)onExit:(NSNotification *)notification;
+- (void)onExit:(NSNotification *)notification
 {
     NSLog(@"Exited");
 }
 
-- (void)onFrame:(NSNotification *)notification;
+- (void)onFrame:(NSNotification *)notification
 {
     LeapController *aController = (LeapController *)[notification object];
 
@@ -148,6 +149,16 @@
     if (([[frame hands] count] > 0) || [[frame gestures:nil] count] > 0) {
         NSLog(@" ");
     }
+}
+
+- (void)onFocusGained:(NSNotification *)notification
+{
+    NSLog(@"Focus Gained");
+}
+
+- (void)onFocusLost:(NSNotification *)notification
+{
+    NSLog(@"Focus Lost");
 }
 
 + (NSString *)stringForState:(LeapGestureState)state

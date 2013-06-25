@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap API Reference: Leap::CircleGesture Class Reference</title>
+<title>Leap Motion C++ API Reference: Leap::CircleGesture Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion C++ API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -66,7 +66,7 @@ $(document).ready(function(){initNavTree('class_leap_1_1_circle_gesture.html',''
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a55686ae51b4e02d6cd1303011bcdbae5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_circle_gesture.html#a55686ae51b4e02d6cd1303011bcdbae5">center</a> () const </td></tr>
-<tr class="memdesc:a55686ae51b4e02d6cd1303011bcdbae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The center point of the circle within the Leap frame of reference.  <a href="#a55686ae51b4e02d6cd1303011bcdbae5"></a><br/></td></tr>
+<tr class="memdesc:a55686ae51b4e02d6cd1303011bcdbae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The center point of the circle within the Leap Motion frame of reference.  <a href="#a55686ae51b4e02d6cd1303011bcdbae5"></a><br/></td></tr>
 <tr class="separator:a55686ae51b4e02d6cd1303011bcdbae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a971f5a7e5122e296b882b583eec84851"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_circle_gesture.html#a971f5a7e5122e296b882b583eec84851">CircleGesture</a> ()</td></tr>
 <tr class="memdesc:a971f5a7e5122e296b882b583eec84851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_leap_1_1_circle_gesture.html" title="The CircleGesture classes represents a circular finger movement.">CircleGesture</a> object.  <a href="#a971f5a7e5122e296b882b583eec84851"></a><br/></td></tr>
@@ -164,7 +164,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_leap_1_1_circle_gesture.html" title="The CircleGesture classes represents a circular finger movement.">CircleGesture</a> classes represents a circular finger movement. </p>
-<p>A circle movement is recognized when the tip of a finger draws a circle within the Leap field of view.</p>
+<p>A circle movement is recognized when the tip of a finger draws a circle within the Leap Motion device field of view.</p>
 <div class="image">
 <img src="Leap_Gesture_Circle.png" alt="Leap_Gesture_Circle.png"/>
 </div>
@@ -183,7 +183,7 @@ Additional Inherited Members</h2></td></tr>
 <tr>
 <td>Gesture.Circle.MinRadius </td><td>float </td><td>5.0 </td><td>mm </td></tr>
 <tr>
-<td>Gesture.Circle.MinArc </td><td>float </td><td>1.5 </td><td>radians </td></tr>
+<td>Gesture.Circle.MinArc </td><td>float </td><td>1.5*pi </td><td>radians </td></tr>
 </table>
 <p>The following example demonstrates how to set the circle configuration parameters:</p>
 <div class="fragment"><div class="line">    <span class="keywordflow">if</span>(controller.config().setFloat(<span class="stringliteral">&quot;Gesture.Circle.MinRadius&quot;</span>, 10.0) &amp;&amp;</div>
@@ -246,8 +246,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The center point of the circle within the Leap frame of reference. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> The center of the circle in mm from the Leap origin. </dd></dl>
+<p>The center point of the circle within the Leap Motion frame of reference. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> The center of the circle in mm from the Leap Motion origin. </dd></dl>
 
 </div>
 </div>
@@ -292,8 +292,15 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Returns the normal vector for the circle being traced. </p>
 <p>If you draw the circle clockwise, the normal vector points in the same general direction as the pointable object drawing the circle. If you draw the circle counterclockwise, the normal points back toward the pointable. If the angle between the normal and the pointable object drawing the circle is less than 90 degrees, then the circle is clockwise.</p>
-<p>std::string clockwiseness; if (circle.pointable().direction().angleTo(circle.normal()) &lt;= PI/4) { clockwiseness = "clockwise"; } else { clockwiseness = "counterclockwise"; }</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> the normal vector for the circle being traced </dd></dl>
+<div class="fragment"><div class="line">    std::string clockwiseness;</div>
+<div class="line">    <span class="keywordflow">if</span> (circle.pointable().direction().angleTo(circle.normal()) &lt;= PI/2) {</div>
+<div class="line">            clockwiseness = <span class="stringliteral">&quot;clockwise&quot;</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        clockwiseness = <span class="stringliteral">&quot;counterclockwise&quot;</span>;</div>
+<div class="line">    }</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> the normal vector for the circle being traced </dd></dl>
 
 </div>
 </div>
@@ -330,7 +337,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The number of times the finger tip has traversed the circle. </p>
 <p>Progress is reported as a positive number of the number. For example, a progress value of .5 indicates that the finger has gone halfway around, while a value of 3 indicates that the finger has gone around the the circle three times.</p>
-<p>Progress starts where the circle gesture began. Since it the circle must be partially formed before the Leap can recognize it, progress will be greater than zero when a circle gesture first appears in the frame.</p>
+<p>Progress starts where the circle gesture began. Since the circle must be partially formed before the Leap Motion software can recognize it, progress will be greater than zero when a circle gesture first appears in the frame.</p>
 <dl class="section return"><dt>Returns</dt><dd>float A positive number indicating the gesture progress. </dd></dl>
 
 </div>
