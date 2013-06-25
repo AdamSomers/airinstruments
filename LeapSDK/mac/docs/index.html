@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script language="javascript">
-		var shown = "cplusplus";
+		var shown = "initialmenu";
 		 
         function show(divName){
 
@@ -12,6 +12,10 @@
             oldDiv.style.display = 'none'; 
         }
 
+        //show menu div
+            var langMenuDiv = document.getElementById("langmenu"); 
+            langMenuDiv.style.display = 'block';
+			
         //show div
             var tempDiv = document.getElementById(divName); 
             tempDiv.style.display = 'block';              
@@ -41,11 +45,21 @@
 			-moz-box-shadow: none;
 			box-shadow: none;
 		}
+		img.upperright{
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 60px;
+			height: 60px;
+		}
+		img.iconmenu{
+			cursor:pointer;
+		}
 	</style>
 </head>
 <body>
 	<h1>Leap Motion API Library</h1>
-	<div id="langmenu" class="menu" style="float:right; padding 30px;">
+	<div id="langmenu" class="menu" style="float:right; padding 30px;display:none;">
 		<h2>Language Menu</h2>
 		<ul>
 			<li><a href="#cplusplus" onClick="show('cplusplus'); return false;">C++</a></li>
@@ -56,84 +70,104 @@
 			<li><a href="#javascript" onClick="show('javascript'); return false;">JavaScript</a></li>
 		</ul>
 	</div>
-	<div id="cplusplus">
+	<div id="initialmenu" style="width:400px;">
+		<img class="iconmenu" src="Common/images/cplusplus.png" onClick="show('cplusplus')"/>
+		<img class="iconmenu" src="Common/images/csharp.png" onClick="show('csharp')"/>
+		<img class="iconmenu" src="Common/images/java.png" onClick="show('java')"/>
+		<img class="iconmenu" src="Common/images/python.png" onClick="show('python')"/>
+		<img class="iconmenu" src="Common/images/objectivec.png" onClick="show('objectivec')"/>
+		<img class="iconmenu" src="Common/images/javascript.png" onClick="show('javascript')"/>
+	</div>
+	<div id="cplusplus"  style="display:none">
+		<img class="upperright" src="Common/images/cplusplus.png"/>
 		<h2>C++ Documentation</h2><a name="cplusplus"></a>
 		<ul>
 			<li><a href="C++/Leap_Overview.html">Overview</a></li>
+            <li><a href="Common/Leap_Architecture.html">Leap Motion Architecture</a></li>
 			<li><a href="C++/API_Reference/index.html">API Reference</a></li>
 			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
 			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
-			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
-			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
-			<li><a href="C++/Leap_Screen_Location.html">Leap Screen Location</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Motion Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Motion Control Application</a></li>
+			<li><a href="C++/Leap_Screen_Location.html">Leap Motion Screen Location</a></li>
 			<li><a href="C++/Sample_C++_Tutorial.html">Hello World</a></li>
 		</ul>
 	</div>
 	<div id="csharp" style="display:none">
+		<img class="upperright" src="Common/images/csharp.png"/>
 		<h2>C# and Unity Documentation</h2><a name="csharp"></a>
 		<ul>
 			<li><a href="CSharpandUnity/Leap_Overview.html">Overview</a></li>
+            <li><a href="Common/Leap_Architecture.html">Leap Motion Architecture</a></li>
 			<li><a href="CSharpandUnity/API_Reference/index.html">API Reference</a></li>
 			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
 			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
-			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
-			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Motion Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Motion Control Application</a></li>
 			<li><a href="CSharpandUnity/Sample_Csharp_Tutorial.html">Hello World</a></li>
 			<li><a href="CSharpandUnity/Setup_Unity.html">Setting up a Unity project</a></li>
 		</ul>
 		
 	</div>
 	<div id="java" style="display:none">
+		<img class="upperright" src="Common/images/java.png"/>
 		<h2>Java Documentation</h2><a name="java"></a>
 		<ul>
-			<li><a href="java/Leap_Overview.html">Overview</a></li>
-			<li><a href="java/API_Reference/index.html">API Reference</a></li>
+			<li><a href="Java/Leap_Overview.html">Overview</a></li>
+            <li><a href="Common/Leap_Architecture.html">Leap Motion Architecture</a></li>
+			<li><a href="Java/API_Reference/index.html">API Reference</a></li>
 			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
 			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
-			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
-			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
-			<li><a href="java/Sample_Java_Tutorial.html">Hello World</a></li>
-			<li><a href="java/Setup_Java.html">Setting up a Java project</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Motion Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Motion Control Application</a></li>
+			<li><a href="Java/Sample_Java_Tutorial.html">Hello World</a></li>
+			<li><a href="Java/Setup_Java.html">Setting up a Java project</a></li>
 		</ul>
 		
 		
 	</div>
 	<div id="python" style="display:none">
+		<img class="upperright" src="Common/images/python.png"/>
 		<h2>Python Documentation</h2><a name="python"></a>
 		<ul>
-			<li><a href="python/Leap_Overview.html">Overview</a></li>
-			<li><a href="python/Leap.html">API Reference</a></li>
+			<li><a href="Python/Leap_Overview.html">Overview</a></li>
+            <li><a href="Common/Leap_Architecture.html">Leap Motion Architecture</a></li>
+			<li><a href="Python/Leap.html">API Reference</a></li>
 			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
 			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
-			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
-			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
-			<li><a href="python/Sample_Python_Tutorial.html">Hello World</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Motion Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Motion Control Application</a></li>
+			<li><a href="Python/Sample_Python_Tutorial.html">Hello World</a></li>
 		</ul>
 		
 	</div>
 	<div id="objectivec" style="display:none">
+		<img class="upperright" src="Common/images/objectivec.png"/>
 		<h2>Objective C Documentation</h2><a name="objectivec"></a>
 		<ul>
 			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Overview.html">Overview</a></li>
+            <li><a href="Common/Leap_Architecture.html">Leap Motion Architecture</a></li>
 			<li><a href="ObjectiveC/html/index.html">API Reference</a></li>
 			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
 			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
-			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Visualizer.html">Leap Visualizer</a></li>
-			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Application.html">Leap Application</a></li>
+			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Visualizer.html">Leap Motion Visualizer</a></li>
+			<li><a href="ObjectiveC/html/docs/objCdocset/Leap_Application.html">Leap Motion Control Application</a></li>
 			<li><a href="ObjectiveC/html/docs/objCdocset/Sample_ObjectiveC_Tutorial.html">Hello World</a></li>
 		</ul>
 		
 	</div>
 	<div id="javascript" style="display:none">
+		<img class="upperright" src="Common/images/javascript.png"/>
 		<h2>JavaScript Documentation</h2><a name="javascript"></a>
 		<ul>
-			<li><a href="javascript/Leap_Overview.html">Overview</a></li>
-			<li><a href="javascript/API_Reference/index.html">API Reference</a></li>
+			<li><a href="Javascript/Leap_Overview.html">Overview</a></li>
+            <li><a href="Common/Leap_Architecture.html">Leap Motion Architecture</a></li>
+			<li><a href="Javascript/API_Reference/index.html">API Reference</a></li>
 			<li><a href="Common/Leap_UX_Guidelines.html">UX Guidelines</a></li>
 			<li><a href="Leap_SDK_Release_Notes.html">SDK Release Notes</a></li>
-			<li><a href="Common/Leap_Visualizer.html">Leap Visualizer</a></li>
-			<li><a href="Common/Leap_Application.html">Leap Application</a></li>
-			<li><a href="javascript/Sample_javaScript_Tutorial.html">Hello World</a></li>
+			<li><a href="Common/Leap_Visualizer.html">Leap Motion Visualizer</a></li>
+			<li><a href="Common/Leap_Application.html">Leap Motion Control Application</a></li>
+			<li><a href="JavaScript/Sample_JavaScript_Tutorial.html">Hello World</a></li>
 		</ul>
 		
 	</div>

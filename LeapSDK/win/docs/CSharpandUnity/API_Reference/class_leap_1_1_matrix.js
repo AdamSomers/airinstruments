@@ -1,5 +1,6 @@
 var class_leap_1_1_matrix =
 [
+    [ "Matrix", "class_leap_1_1_matrix.html#ac574bf487a6eee74b0f7b63abf71391b", null ],
     [ "Matrix", "class_leap_1_1_matrix.html#a06deda65cedcb55c84fad209054fd257", null ],
     [ "Matrix", "class_leap_1_1_matrix.html#a0070eab9ad17515aec4d27e93c8037bb", null ],
     [ "Matrix", "class_leap_1_1_matrix.html#a433b187e56b863b85a65537cf51a5721", null ],
@@ -8,9 +9,10 @@ var class_leap_1_1_matrix =
     [ "Matrix", "class_leap_1_1_matrix.html#a8c05bb05e8ed2e16cd546aa059dbc717", null ],
     [ "Dispose", "class_leap_1_1_matrix.html#af90f91614a93a37f26b5dd9631c6ec60", null ],
     [ "Equals", "class_leap_1_1_matrix.html#a304a036cbf1b9389e6566ae2820337b9", null ],
+    [ "getCPtr", "class_leap_1_1_matrix.html#a332cd6c9272096d267300605fe1c0d96", null ],
     [ "operator*", "class_leap_1_1_matrix.html#a3d47ecb315d80a795ecb395ac7356f08", null ],
     [ "RigidInverse", "class_leap_1_1_matrix.html#a5871fb349967846eab0d702d54d32ead", null ],
-    [ "SetRotation", "class_leap_1_1_matrix.html#a7357bcdfca6e8b916613e7ea8cb98a01", null ],
+    [ "SetRotation", "class_leap_1_1_matrix.html#a16f32d54d64ff6ed670844ede0dd7720", null ],
     [ "ToArray3x3", "class_leap_1_1_matrix.html#a474eb2aa4ad08d234f7fc0242108ec0b", null ],
     [ "ToArray3x3", "class_leap_1_1_matrix.html#a5d9c2654aaaf9db5a9a2d7a89835d0c8", null ],
     [ "ToArray3x3", "class_leap_1_1_matrix.html#a8eb2abbd6d9fe31e37b62db08271b004", null ],

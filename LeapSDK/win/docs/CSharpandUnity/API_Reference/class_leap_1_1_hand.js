@@ -1,9 +1,11 @@
 var class_leap_1_1_hand =
 [
+    [ "Hand", "class_leap_1_1_hand.html#aa594334246b7768b584ced3ecd2ca381", null ],
     [ "Hand", "class_leap_1_1_hand.html#a80199f766e3002861153afefa3d19650", null ],
     [ "Dispose", "class_leap_1_1_hand.html#a566015f935c3a20ac35ac484733e6e60", null ],
     [ "Equals", "class_leap_1_1_hand.html#a1a1fd7f91a99054e7426814b43935e9a", null ],
     [ "Finger", "class_leap_1_1_hand.html#a34ce0ba3c66bc5a83dabbd10341da536", null ],
+    [ "getCPtr", "class_leap_1_1_hand.html#a8d76b2c2609052f84339b851cb6bc3ed", null ],
     [ "Pointable", "class_leap_1_1_hand.html#ab23c4d6b1ecae5bcbded63409d8863bb", null ],
     [ "RotationAngle", "class_leap_1_1_hand.html#a1f9673e311f3651fb3715428d318801b", null ],
     [ "RotationAngle", "class_leap_1_1_hand.html#a698583d434b7763fe0df3cd5d06bebe0", null ],

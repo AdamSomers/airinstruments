@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap API Reference: Leap::GestureList Class Reference</title>
+<title>Leap Motion C++ API Reference: Leap::GestureList Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion C++ API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -82,7 +82,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7fd2abc6c504c38ecf217c42f1328103"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of this list.  <a href="#a7fd2abc6c504c38ecf217c42f1328103"></a><br/></td></tr>
 <tr class="separator:a7fd2abc6c504c38ecf217c42f1328103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb95e998b2f3a71091a9392ded444c62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_gesture_list.html#afb95e998b2f3a71091a9392ded444c62">empty</a> () const </td></tr>
-<tr class="memdesc:afb95e998b2f3a71091a9392ded444c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports whether the list is empty.  <a href="#afb95e998b2f3a71091a9392ded444c62"></a><br/></td></tr>
+<tr class="memdesc:afb95e998b2f3a71091a9392ded444c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deprecated.  <a href="#afb95e998b2f3a71091a9392ded444c62"></a><br/></td></tr>
 <tr class="separator:afb95e998b2f3a71091a9392ded444c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad978f4f77b0a17cfcb4e489f4b0c49c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_gesture_list.html#aaf2fd030e686892a0da42d81fc0cad88">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_gesture_list.html#ad978f4f77b0a17cfcb4e489f4b0c49c7">end</a> () const </td></tr>
 <tr class="memdesc:ad978f4f77b0a17cfcb4e489f4b0c49c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The C++ iterator set to the end of this <a class="el" href="class_leap_1_1_gesture_list.html" title="The GestureList class represents a list of Gesture objects.">GestureList</a>.  <a href="#ad978f4f77b0a17cfcb4e489f4b0c49c7"></a><br/></td></tr>
@@ -90,6 +90,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae7a397b4a893d9e372bc31547a1c756d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_gesture_list.html#ae7a397b4a893d9e372bc31547a1c756d">GestureList</a> ()</td></tr>
 <tr class="memdesc:ae7a397b4a893d9e372bc31547a1c756d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty gesture list.  <a href="#ae7a397b4a893d9e372bc31547a1c756d"></a><br/></td></tr>
 <tr class="separator:ae7a397b4a893d9e372bc31547a1c756d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b4fd056601ae5eda1934a2323d474f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_gesture_list.html#a48b4fd056601ae5eda1934a2323d474f">isEmpty</a> () const </td></tr>
+<tr class="memdesc:a48b4fd056601ae5eda1934a2323d474f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports whether the list is empty.  <a href="#a48b4fd056601ae5eda1934a2323d474f"></a><br/></td></tr>
+<tr class="separator:a48b4fd056601ae5eda1934a2323d474f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcdda555621593f26e812786c9eb05c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_leap_1_1_gesture.html">Gesture</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_leap_1_1_gesture_list.html#afcdda555621593f26e812786c9eb05c0">operator[]</a> (int index) const </td></tr>
 <tr class="memdesc:afcdda555621593f26e812786c9eb05c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access a list member by its position in the list.  <a href="#afcdda555621593f26e812786c9eb05c0"></a><br/></td></tr>
 <tr class="separator:afcdda555621593f26e812786c9eb05c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,8 +206,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reports whether the list is empty. </p>
-<dl class="section return"><dt>Returns</dt><dd>True, if the list has no members. </dd></dl>
+<p>Deprecated. </p>
+<p>Use <a class="el" href="class_leap_1_1_gesture_list.html#a48b4fd056601ae5eda1934a2323d474f" title="Reports whether the list is empty.">GestureList::isEmpty()</a> instead. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_leap_1_1_gesture_list.html#a48b4fd056601ae5eda1934a2323d474f" title="Reports whether the list is empty.">GestureList::isEmpty()</a> </dd></dl>
 
 </div>
 </div>
@@ -222,6 +226,24 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The C++ iterator set to the end of this <a class="el" href="class_leap_1_1_gesture_list.html" title="The GestureList class represents a list of Gesture objects.">GestureList</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a48b4fd056601ae5eda1934a2323d474f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Leap::GestureList::isEmpty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reports whether the list is empty. </p>
+<dl class="section return"><dt>Returns</dt><dd>True, if the list has no members. </dd></dl>
 
 </div>
 </div>

@@ -9,8 +9,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Leap JavaScript Sample</title>
-<script src="leap.js"></script>
+<title>Leap Motion JavaScript Sample</title>
+<script src="./leap.js"></script>
 <script>
 // Store frame for motion functions
 var previousFrame;
@@ -195,9 +195,9 @@ function vectorToString(vector, digits) {
   if (typeof digits === "undefined") {
     digits = 1;
   }
-  return "(" + vector[0].toFixed(digits) + ", "
-             + vector[1].toFixed(digits) + ", "
-             + vector[2].toFixed(digits) + ")";
+  return "(" + vector.x.toFixed(digits) + ", "
+             + vector.y.toFixed(digits) + ", "
+             + vector.z.toFixed(digits) + ")";
 }
 
 function togglePause() {
@@ -220,14 +220,14 @@ function pauseForGestures() {
 
 function checkLibrary() {
   if (typeof Leap === "undefined") {
-    document.getElementById("main").innerHTML = "The Leap JavaScript client library (leap.js file) was not found. Please download the library from the GitHub project at <a href='https://github.com/leapmotion/leapjs'>https://github.com/leapmotion/leapjs</a>."
-    alert("The Leap JavaScript client library (leap.js file) was not found. Please download the latest version from the GitHub project at https://github.com/leapmotion/leapjs");
+    document.getElementById("main").innerHTML = "The Leap Motion JavaScript client library (leap.js file) was not found. Please download the library from the GitHub project at <a href='https://github.com/leapmotion/leapjs'>https://github.com/leapmotion/leapjs</a>."
+    alert("The Leap Motion JavaScript client library (leap.js file) was not found. Please download the latest version from the GitHub project at https://github.com/leapmotion/leapjs");
   }
 }
 </script>
 </head>
 <body onload="checkLibrary()">
-<h1>Leap JavaScript Sample</h1>
+<h1>Leap Motion JavaScript Sample</h1>
 <div id="main">
   <button id="pause" onclick="togglePause()">Pause</button>
   <input type="checkbox" id="pauseOnGesture" onclick="pauseForGestures()">Pause on gesture</input>

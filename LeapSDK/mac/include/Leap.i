@@ -19,28 +19,22 @@
 %include "stdint.i"
 %include "attribute.i"
 
+################################################################################
+# Ignore constructors for internal use only                                    #
+################################################################################
+
 %ignore Leap::Pointable::Pointable(PointableImplementation*);
 %ignore Leap::Pointable::Pointable(FingerImplementation*);
 %ignore Leap::Pointable::Pointable(ToolImplementation*);
 %ignore Leap::Finger::Finger(FingerImplementation*);
 %ignore Leap::Tool::Tool(ToolImplementation*);
 %ignore Leap::Hand::Hand(HandImplementation*);
+%ignore Leap::Gesture::Gesture(GestureImplementation*);
+%ignore Leap::Screen::Screen(ScreenImplementation*);
 %ignore Leap::Frame::Frame(FrameImplementation*);
-%ignore Leap::Controller(ControllerImplementation*);
-%ignore Leap::Screen(ScreenImplementation*);
-%ignore Leap::ConstListIterator::operator++;
-%ignore Leap::Interface::operator=;
-
-# Due to issues with the SWIG generated code for these functions, remove them for now
-%ignore Leap::Config::getInt64Array(const std::string&) const;
-%ignore Leap::Config::getUInt64Array(const std::string&) const;
-
-%template(BoolArray) std::vector<bool>;
-%template(Int32Array) std::vector<int32_t>;
-%template(UInt32Array) std::vector<uint32_t>;
-%template(FloatArray) std::vector<float>;
-%template(DoubleArray) std::vector<double>;
-%template(StringArray) std::vector<std::string>;
+%ignore Leap::Controller::Controller(ControllerImplementation*);
+%ignore Leap::Device::Device(DeviceImplementation*);
+%ignore Leap::InteractionBox::InteractionBox(InteractionBoxImplementation*);
 
 #####################################################################################
 # Set Attributes (done after functions are uppercased, but before vars are lowered) #
@@ -98,6 +92,9 @@
 %constattrib( Leap::Pointable, bool, isTool );
 %constattrib( Leap::Pointable, bool, isFinger );
 %constattrib( Leap::Pointable, bool, isValid );
+%constattrib( Leap::Pointable, Leap::Pointable::Zone, touchZone )
+%constattrib( Leap::Pointable, float, touchDistance )
+%leapattrib( Leap::Pointable, Vector, stabilizedTipPosition )
 %leapattrib( Leap::Pointable, Frame, frame );
 
 %constattrib( Leap::Hand, int, id );
@@ -141,29 +138,53 @@
 %constattrib( Leap::KeyTapGesture, float, progress );
 %leapattrib( Leap::KeyTapGesture, Pointable, pointable );
 
-
+# Count is made a const attribute in C# but renamed to __len__ in Python
 #if SWIGCSHARP
 %constattrib( Leap::PointableList, int, count );
 %constattrib( Leap::FingerList, int, count );
 %constattrib( Leap::ToolList, int, count );
-%constattrib( Leap::GestureList, int, count );
 %constattrib( Leap::HandList, int, count );
+%constattrib( Leap::GestureList, int, count );
 %constattrib( Leap::ScreenList, int, count );
+%constattrib( Leap::DeviceList, int, count );
 #endif
+
+%constattrib( Leap::PointableList, bool, isEmpty );
+%constattrib( Leap::FingerList, bool, isEmpty );
+%constattrib( Leap::ToolList, bool, isEmpty );
+%constattrib( Leap::HandList, bool, isEmpty );
+%constattrib( Leap::GestureList, bool, isEmpty );
+%constattrib( Leap::ScreenList, bool, isEmpty );
+%constattrib( Leap::DeviceList, bool, isEmpty );
+
 %constattrib( Leap::PointableList, bool, empty );
 %constattrib( Leap::FingerList, bool, empty );
 %constattrib( Leap::ToolList, bool, empty );
-%constattrib( Leap::GestureList, bool, empty );
 %constattrib( Leap::HandList, bool, empty );
+%constattrib( Leap::GestureList, bool, empty );
 %constattrib( Leap::ScreenList, bool, empty );
+
+%leapattrib( Leap::PointableList, Pointable, leftmost );
+%leapattrib( Leap::PointableList, Pointable, rightmost );
+%leapattrib( Leap::PointableList, Pointable, frontmost );
+%leapattrib( Leap::FingerList, Finger, leftmost );
+%leapattrib( Leap::FingerList, Finger, rightmost );
+%leapattrib( Leap::FingerList, Finger, frontmost );
+%leapattrib( Leap::ToolList, Tool, leftmost );
+%leapattrib( Leap::ToolList, Tool, rightmost );
+%leapattrib( Leap::ToolList, Tool, frontmost );
+%leapattrib( Leap::HandList, Hand, leftmost );
+%leapattrib( Leap::HandList, Hand, rightmost );
+%leapattrib( Leap::HandList, Hand, frontmost );
 
 %constattrib( Leap::Frame, int64_t, id );
 %constattrib( Leap::Frame, int64_t, timestamp );
-%leapattrib( Leap::Frame, HandList, hands );
 %leapattrib( Leap::Frame, PointableList, pointables );
 %leapattrib( Leap::Frame, FingerList, fingers );
 %leapattrib( Leap::Frame, ToolList, tools );
+%leapattrib( Leap::Frame, HandList, hands );
 %constattrib( Leap::Frame, bool, isValid );
+%leapattrib( Leap::Frame, InteractionBox, interactionBox );
 
 %constattrib( Leap::Screen, int32_t, id );
 %leapattrib( Leap::Screen, Vector, horizontalAxis );
@@ -173,6 +194,17 @@
 %constattrib( Leap::Screen, int, heightPixels );
 %constattrib( Leap::Screen, bool, isValid );
 
+%constattrib( Leap::Device, float, horizontalViewAngle );
+%constattrib( Leap::Device, float, verticalViewAngle );
+%constattrib( Leap::Device, float, range );
+%constattrib( Leap::Device, bool, isValid );
+
+%leapattrib( Leap::InteractionBox, Vector, center );
+%constattrib( Leap::InteractionBox, float, width );
+%constattrib( Leap::InteractionBox, float, height );
+%constattrib( Leap::InteractionBox, float, depth );
+%constattrib( Leap::InteractionBox, bool, isValid );
+
 #if SWIGCSHARP
 %csmethodmodifiers Leap::Finger::invalid "public new";
 %csmethodmodifiers Leap::Tool::invalid "public new";
@@ -180,10 +212,12 @@
 %staticattrib( Leap::Pointable, static const Pointable&, invalid);
 %staticattrib( Leap::Finger, static const Finger&, invalid);
 %staticattrib( Leap::Tool, static const Tool&, invalid);
-%staticattrib( Leap::Gesture, static const Gesture&, invalid);
 %staticattrib( Leap::Hand, static const Hand&, invalid);
-%staticattrib( Leap::Frame, static const Frame&, invalid);
+%staticattrib( Leap::Gesture, static const Gesture&, invalid);
 %staticattrib( Leap::Screen, static const Screen&, invalid );
+%staticattrib( Leap::Device, static const Device&, invalid );
+%staticattrib( Leap::InteractionBox, static const Device&, invalid );
+%staticattrib( Leap::Frame, static const Frame&, invalid);
 
 %constattrib( Leap::Vector, float, magnitude );
 %constattrib( Leap::Vector, float, magnitudeSquared );
@@ -193,8 +227,12 @@
 %leapattrib( Leap::Vector, Vector, normalized );
 
 %constattrib( Leap::Controller, bool, isConnected );
+%constattrib( Leap::Controller, bool, hasFocus );
+%constattrib( Leap::Controller, Controller::PolicyFlag, policyFlags );
 %leapattrib( Leap::Controller, Config, config );
+%leapattrib( Leap::Controller, ScreenList, locatedScreens );
 %leapattrib( Leap::Controller, ScreenList, calibratedScreens );
+%leapattrib( Leap::Controller, DeviceList, devices );
 
 %staticattrib( Leap::Vector, static const Vector&, zero );
 %staticattrib( Leap::Vector, static const Vector&, xAxis );
@@ -218,6 +256,8 @@
 %ignore Leap::RAD_TO_DEG;
 %ignore Leap::PI;
 
+SWIG_CSBODY_PROXY(public, public, SWIGTYPE)
+
 #elif SWIGPYTHON
 
 %rename("%(camelcase)s", %$isclass) "";
@@ -232,6 +272,8 @@
 # Use proper Java enums
 %include "enums.swg"
 %javaconst(1);
+
+SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
 
 #endif
 
@@ -349,6 +391,7 @@ extern "C" BOOL WINAPI DllMain(
 %ignore Leap::Vector::toFloatPointer;
 %ignore Leap::Matrix::toArray3x3;
 %ignore Leap::Matrix::toArray4x4;
+%ignore Leap::FloatArray;
 
 %rename(Equals) *::operator ==;
 %rename(_operator_add) *::operator +;
@@ -366,48 +409,60 @@ extern "C" BOOL WINAPI DllMain(
 
 %typemap(cscode) Leap::Vector
 %{
+  /** Add vectors component-wise. */
   public static Vector operator + (Vector v1, Vector v2) {
     return v1._operator_add(v2);
   }
+  /** Subtract vectors component-wise. */
   public static Vector operator - (Vector v1, Vector v2) {
     return v1._operator_sub(v2);
   }
+  /** Multiply vector by a scalar. */
   public static Vector operator * (Vector v1, float scalar) {
     return v1._operator_mul(scalar);
   }
+  /** Multiply vector by a scalar on the left-hand side. */
   public static Vector operator * (float scalar, Vector v1) {
     return v1._operator_mul(scalar);
   }
+  /** Divide vector by a scalar. */
   public static Vector operator / (Vector v1, float scalar) {
     return v1._operator_div(scalar);
   }
+  /** Negate a vector. */
   public static Vector operator - (Vector v1) {
     return v1._operator_sub();
   }
+  /** Convert this vector to an array of three float values: [x,y,z]. */
   public float[] ToFloatArray() {
     return new float[] {x, y, z};
   }
 %}
 %typemap(cscode) Leap::Matrix
 %{
+  /** Multiply two matrices. */ 
   public static Matrix operator * (Matrix m1, Matrix m2) {
     return m1._operator_mul(m2);
   }
+  /** Copy this matrix to the specified array of 9 float values in row-major order. */
   public float[] ToArray3x3(float[] output) {
     output[0] = xBasis.x; output[1] = xBasis.y; output[2] = xBasis.z;
     output[3] = yBasis.x; output[4] = yBasis.y; output[5] = yBasis.z;
     output[6] = zBasis.x; output[7] = zBasis.y; output[8] = zBasis.z;
     return output;
   }
+  /** Copy this matrix to the specified array containing 9 double values in row-major order. */
   public double[] ToArray3x3(double[] output) {
     output[0] = xBasis.x; output[1] = xBasis.y; output[2] = xBasis.z;
     output[3] = yBasis.x; output[4] = yBasis.y; output[5] = yBasis.z;
     output[6] = zBasis.x; output[7] = zBasis.y; output[8] = zBasis.z;
     return output;
   }
+  /** Convert this matrix to an array containing 9 float values in row-major order. */
   public float[] ToArray3x3() {
     return ToArray3x3(new float[9]);
   }
+  /** Copy this matrix to the specified array of 16 float values in row-major order. */
   public float[] ToArray4x4(float[] output) {
     output[0]  = xBasis.x; output[1]  = xBasis.y; output[2]  = xBasis.z; output[3]  = 0.0f;
     output[4]  = yBasis.x; output[5]  = yBasis.y; output[6]  = yBasis.z; output[7]  = 0.0f;
@@ -415,6 +470,7 @@ extern "C" BOOL WINAPI DllMain(
     output[12] = origin.x; output[13] = origin.y; output[14] = origin.z; output[15] = 1.0f;
     return output;
   }
+  /** Copy this matrix to the specified array of 16 double values in row-major order. */
   public double[] ToArray4x4(double[] output) {
     output[0]  = xBasis.x; output[1]  = xBasis.y; output[2]  = xBasis.z; output[3]  = 0.0f;
     output[4]  = yBasis.x; output[5]  = yBasis.y; output[6]  = yBasis.z; output[7]  = 0.0f;
@@ -422,14 +478,23 @@ extern "C" BOOL WINAPI DllMain(
     output[12] = origin.x; output[13] = origin.y; output[14] = origin.z; output[15] = 1.0f;
     return output;
   }
+  /** Convert this matrix to an array containing 16 float values in row-major order. */
   public float[] ToArray4x4() {
     return ToArray4x4(new float[16]);
   }
 %}
 
-%ignore Leap::FloatArray;
-
 #elif SWIGJAVA
+
+%ignore *::operator+=;
+%ignore *::operator-=;
+%ignore *::operator*=;
+%ignore *::operator/=;
+%ignore *::operator!=;
+%ignore Leap::Vector::toFloatPointer;
+%ignore Leap::Matrix::toArray3x3;
+%ignore Leap::Matrix::toArray4x4;
+%ignore Leap::FloatArray;
 
 %rename(plus) *::operator+;
 %rename(minus) *::operator-;
@@ -439,15 +504,6 @@ extern "C" BOOL WINAPI DllMain(
 %rename(get) *::operator [];
 %rename(equals) *::operator==;
 
-%ignore Leap::Vector::toFloatPointer;
-%ignore Leap::Matrix::toArray3x3;
-%ignore Leap::Matrix::toArray4x4;
-%ignore *::operator+=;
-%ignore *::operator-=;
-%ignore *::operator*=;
-%ignore *::operator/=;
-%ignore *::operator!=;
-%ignore Leap::FloatArray;
 %typemap(javacode) Leap::Vector
 %{
   public float[] toFloatArray() {
@@ -492,11 +548,15 @@ extern "C" BOOL WINAPI DllMain(
 
 #elif SWIGPYTHON
 
-%rename(__getitem__) *::operator [];
+%ignore Leap::Interface::operator=;
+%ignore Leap::ConstListIterator::operator++;
 %ignore Leap::Vector::toFloatPointer;
 %ignore Leap::Matrix::toArray3x3;
 %ignore Leap::Matrix::toArray4x4;
 %ignore Leap::FloatArray;
+
+%rename(__getitem__) *::operator [];
+
 %extend Leap::Vector {
 %pythoncode {
   def to_float_array(self): return [self.x, self.y, self.z]
@@ -631,6 +691,7 @@ extern "C" BOOL WINAPI DllMain(
 %leap_list_helper(Gesture);
 %leap_list_helper(Hand);
 %leap_list_helper(Screen);
+%leap_list_helper(Device);
 
 ################################################################################
 # Config Helpers                                                               #
@@ -638,64 +699,42 @@ extern "C" BOOL WINAPI DllMain(
 
 #if SWIGPYTHON
 
+// Use dynamic typing to get or set any type of config value with one function
 %extend Leap::Config {
 %pythoncode {
   def get(self, *args):
     type = LeapPython.Config_type(self, *args)
-    if LeapPython.Config_is_array(self, *args):
-      if type == LeapPython.Config_TYPE_BOOLEAN:
-        return LeapPython.Config_get_bool_array(self, *args)
-      elif type == LeapPython.Config_TYPE_INT32:
-        return LeapPython.Config_get_int_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_INT64:
-        return LeapPython.Config_get_int_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT32:
-        return LeapPython.Config_get_uint_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT64:
-        return LeapPython.Config_get_uint_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_FLOAT:
-        return LeapPython.Config_get_float_array(self, *args)
-      elif type == LeapPython.Config_TYPE_DOUBLE:
-        return LeapPython.Config_get_double_array(self, *args)
-      elif type == LeapPython.Config_TYPE_STRING:
-        return LeapPython.Config_get_string_array(self, *args)
-    else:
-      if type == LeapPython.Config_TYPE_BOOLEAN:
-        return LeapPython.Config_get_bool(self, *args)
-      elif type == LeapPython.Config_TYPE_INT32:
-        return LeapPython.Config_get_int_32(self, *args)
-      elif type == LeapPython.Config_TYPE_INT64:
-        return LeapPython.Config_get_int_64(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT32:
-        return LeapPython.Config_get_uint_32(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT64:
-        return LeapPython.Config_get_uint_64(self, *args)
-      elif type == LeapPython.Config_TYPE_FLOAT:
-        return LeapPython.Config_get_float(self, *args)
-      elif type == LeapPython.Config_TYPE_DOUBLE:
-        return LeapPython.Config_get_double(self, *args)
-      elif type == LeapPython.Config_TYPE_STRING:
-        return LeapPython.Config_get_string(self, *args)
+    if type == LeapPython.Config_TYPE_BOOLEAN:
+      return LeapPython.Config_get_bool(self, *args)
+    elif type == LeapPython.Config_TYPE_INT32:
+      return LeapPython.Config_get_int_32(self, *args)
+    elif type == LeapPython.Config_TYPE_FLOAT:
+      return LeapPython.Config_get_float(self, *args)
+    elif type == LeapPython.Config_TYPE_STRING:
+      return LeapPython.Config_get_string(self, *args)
     return None
+  def set(self, *args):
+    type = LeapPython.Config_type(self, *args[:-1])  # Do not pass value through
+    if type == LeapPython.Config_TYPE_BOOLEAN:
+      return LeapPython.Config_set_bool(self, *args)
+    elif type == LeapPython.Config_TYPE_INT32:
+      return LeapPython.Config_set_int_32(self, *args)
+    elif type == LeapPython.Config_TYPE_FLOAT:
+      return LeapPython.Config_set_float(self, *args)
+    elif type == LeapPython.Config_TYPE_STRING:
+      return LeapPython.Config_set_string(self, *args)
+    return False
 %}}
+// Ignore methods that are unnecessary due to get and set functions defined above
 %feature("shadow") Leap::Config::type(const std::string& key) const %{%}
-%feature("shadow") Leap::Config::isArray(const std::string& key) const %{%}
-%feature("shadow") Leap::Config::getBool(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt32(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt64(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt32(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt64(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getFloat(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getDouble(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getString(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getBoolArray(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt32Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt64Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt32Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt64Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getFloatArray(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getDoubleArray(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getStringArray(const std::string&) const %{%}
+%feature("shadow") Leap::Config::getBool(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setBool(const std::string& key, bool value) %{%}
+%feature("shadow") Leap::Config::getInt32(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setInt32(const std::string& key, int32_t value) %{%}
+%feature("shadow") Leap::Config::getFloat(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setFloat(const std::string& key, float value) %{%}
+%feature("shadow") Leap::Config::getString(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setString(const std::string& key, const std::string& value) %{%}
 
 #endif
 

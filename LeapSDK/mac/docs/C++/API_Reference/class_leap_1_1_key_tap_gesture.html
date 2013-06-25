@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap API Reference: Leap::KeyTapGesture Class Reference</title>
+<title>Leap Motion C++ API Reference: Leap::KeyTapGesture Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion C++ API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -165,10 +165,26 @@ Additional Inherited Members</h2></td></tr>
 <div class="image">
 <img src="Leap_Gesture_Tap.png" alt="Leap_Gesture_Tap.png"/>
 </div>
-<p><b>Important:</b> To use key tap gestures in your application, you must enable recognition of the key tap gesture. You can enable recognition with: </p>
-<pre class="fragment">Controller::enableGesture(Gesture::TYPE_KEY_TAP);
-</pre><p>Key tap gestures are discrete. The <a class="el" href="class_leap_1_1_key_tap_gesture.html" title="The KeyTapGesture class represents a tapping gesture by a finger or tool.">KeyTapGesture</a> object representing a tap always has the state, STATE_STOP. Only one <a class="el" href="class_leap_1_1_key_tap_gesture.html" title="The KeyTapGesture class represents a tapping gesture by a finger or tool.">KeyTapGesture</a> object is created for each key tap gesture recognized. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p><b>Important:</b> To use key tap gestures in your application, you must enable recognition of the key tap gesture. You can enable recognition with:</p>
+<div class="fragment"><div class="line">    controller.enableGesture(<a class="code" href="class_leap_1_1_gesture.html#a6fa6dd4f28c502f0d55abc6b71c6f9b1a4db232d45dfde82ff0c319f623cc3471" title="A downward tapping movement by a finger.">Gesture::TYPE_KEY_TAP</a>);</div>
+</div><!-- fragment --><p>Key tap gestures are discrete. The <a class="el" href="class_leap_1_1_key_tap_gesture.html" title="The KeyTapGesture class represents a tapping gesture by a finger or tool.">KeyTapGesture</a> object representing a tap always has the state, STATE_STOP. Only one <a class="el" href="class_leap_1_1_key_tap_gesture.html" title="The KeyTapGesture class represents a tapping gesture by a finger or tool.">KeyTapGesture</a> object is created for each key tap gesture recognized.</p>
+<p>You can set the minimum finger movement and velocity required for a movement to be recognized as a key tap as well as adjust the detection window for evaluating the movement using the config attribute of a connected <a class="el" href="class_leap_1_1_controller.html" title="The Controller class is your main interface to the Leap Motion Controller.">Controller</a> object. Use the following configuration keys to configure key tap recognition:</p>
+<table class="doxtable">
+<tr>
+<th>Key string </th><th>Value type </th><th>Default value </th><th>Units</th></tr>
+<tr>
+<td>Gesture.KeyTap.MinDownVelocity </td><td>float </td><td>50 </td><td>mm/s </td></tr>
+<tr>
+<td>Gesture.KeyTap.HistorySeconds </td><td>float </td><td>0.1 </td><td>s </td></tr>
+<tr>
+<td>Gesture.KeyTap.MinDistance </td><td>float </td><td>5.0 </td><td>mm </td></tr>
+</table>
+<p>The following example demonstrates how to set the key tap configuration parameters:</p>
+<div class="fragment"><div class="line">    <span class="keywordflow">if</span>(controller.config().setFloat(<span class="stringliteral">&quot;Gesture.KeyTap.MinDownVelocity&quot;</span>, 40.0) &amp;&amp;</div>
+<div class="line">       controller.config().setFloat(<span class="stringliteral">&quot;Gesture.KeyTap.HistorySeconds&quot;</span>, .2) &amp;&amp;</div>
+<div class="line">       controller.config().setFloat(<span class="stringliteral">&quot;Gesture.KeyTap.MinDistance&quot;</span>, 8.0))</div>
+<div class="line">        controller.config().save();</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9505eb03eeb41fb46ebe0d32ed648a98"></a>
 <div class="memitem">
 <div class="memproto">

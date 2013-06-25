@@ -11,5 +11,6 @@ var classcom_1_1leapmotion_1_1leap_1_1_screen_list =
     [ "finalize", "classcom_1_1leapmotion_1_1leap_1_1_screen_list.html#ae37ee59ccc4082a6907ea45ac61b89d8", null ],
     [ "get", "classcom_1_1leapmotion_1_1leap_1_1_screen_list.html#ad6142d20a2b1547b10fd9c3126dfa74f", null ],
     [ "getCPtr", "classcom_1_1leapmotion_1_1leap_1_1_screen_list.html#af905fad7fd42f83af64e5adee30d1e64", null ],
+    [ "isEmpty", "classcom_1_1leapmotion_1_1leap_1_1_screen_list.html#a1d855c070a1d2e5cc7338bf6d154d554", null ],
     [ "iterator", "classcom_1_1leapmotion_1_1leap_1_1_screen_list.html#af44cb8be45d0afd7934f5d3f392d2463", null ]
 ];

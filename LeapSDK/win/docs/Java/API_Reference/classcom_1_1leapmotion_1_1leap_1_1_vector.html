@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Leap Java API Reference: com.leapmotion.leap.Vector Class Reference</title>
+<title>Leap Motion Java API Reference: com.leapmotion.leap.Vector Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,8 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="leapmotion-logo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Leap Java API Reference
-   &#160;<span id="projectnumber">0.7.6</span>
+   <div id="projectname">Leap Motion Java API Reference
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -97,10 +97,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6805632ab99d332b121883beb8ac015a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if all of the vector's components are finite.  <a href="#a6805632ab99d332b121883beb8ac015a"></a><br/></td></tr>
 <tr class="separator:a6805632ab99d332b121883beb8ac015a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b713b087c4a1550d2892751daa6b9ab"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#a6b713b087c4a1550d2892751daa6b9ab">magnitude</a> ()</td></tr>
-<tr class="memdesc:a6b713b087c4a1550d2892751daa6b9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">*The magnitude, or length, of this vector.  <a href="#a6b713b087c4a1550d2892751daa6b9ab"></a><br/></td></tr>
+<tr class="memdesc:a6b713b087c4a1550d2892751daa6b9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">The magnitude, or length, of this vector.  <a href="#a6b713b087c4a1550d2892751daa6b9ab"></a><br/></td></tr>
 <tr class="separator:a6b713b087c4a1550d2892751daa6b9ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29b3635fc135833a7809b5a5197108a5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#a29b3635fc135833a7809b5a5197108a5">magnitudeSquared</a> ()</td></tr>
-<tr class="memdesc:a29b3635fc135833a7809b5a5197108a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">*The square of the magnitude, or length, of this vector.  <a href="#a29b3635fc135833a7809b5a5197108a5"></a><br/></td></tr>
+<tr class="memdesc:a29b3635fc135833a7809b5a5197108a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The square of the magnitude, or length, of this vector.  <a href="#a29b3635fc135833a7809b5a5197108a5"></a><br/></td></tr>
 <tr class="separator:a29b3635fc135833a7809b5a5197108a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b0b1e6f5ab30a65aedbf6b8dc0a9ee2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#a8b0b1e6f5ab30a65aedbf6b8dc0a9ee2">minus</a> (<a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html">Vector</a> other)</td></tr>
 <tr class="memdesc:a8b0b1e6f5ab30a65aedbf6b8dc0a9ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract vectors component-wise.  <a href="#a8b0b1e6f5ab30a65aedbf6b8dc0a9ee2"></a><br/></td></tr>
@@ -183,7 +183,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> struct represents a three-component mathematical vector or point such as a direction or position in three-dimensional space. </p>
-<p>The Leap software employs a right-handed Cartesian coordinate system. Values given are in units of real-world millimeters. The origin is centered at the center of the Leap device. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</p>
+<p>The Leap Motion software employs a right-handed Cartesian coordinate system. Values given are in units of real-world millimeters. The origin is centered at the center of the Leap Motion device. The x- and z-axes lie in the horizontal plane, with the x-axis running parallel to the long edge of the device. The y-axis is vertical, with positive values increasing upwards (in contrast to the downward orientation of most computer graphics coordinate systems). The z-axis has positive values increasing away from the computer screen.</p>
 <div class="image">
 <img src="Leap_Axes.png" alt="Leap_Axes.png"/>
 </div>
@@ -236,7 +236,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a new <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> with the specified component values. </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> newVector = <span class="keyword">new</span> <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>(0.5f, 200.3f, 67f);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a245e59cfd1e1b6a37b2fd93c42ce58c9"></a>
@@ -254,7 +255,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copies the specified <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a>. </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> copiedVector = <span class="keyword">new</span> <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>(otherVector);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -278,7 +280,9 @@ Static Public Member Functions</h2></td></tr>
 <div class="image">
 <img src="Math_AngleTo.png" alt="Math_AngleTo.png"/>
 </div>
-<dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> angleInRadians = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.xAxis().angleTo(<a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.yAxis());</div>
+<div class="line">        <span class="comment">// angleInRadians = PI/2 (90 degrees)</span></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">other</td><td>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </td></tr>
   </table>
@@ -310,7 +314,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The unit vector pointing backward along the positive z-axis: (0, 0, 1) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> backwardVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.backward();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="ae24246a28023db7f459c3218938b504c"></a>
@@ -332,7 +337,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="image">
 <img src="Math_Cross.png" alt="Math_Cross.png"/>
 </div>
-<dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> crossProduct = thisVector.cross(thatVector);</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">other</td><td>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </td></tr>
   </table>
@@ -357,7 +363,10 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The distance between the point represented by this <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object and a point represented by the specified <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> aPoint = <span class="keyword">new</span> <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>(10f, 0f, 0f);</div>
+<div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> origin = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.zero();</div>
+<div class="line">        <span class="keywordtype">float</span> distance = origin.distanceTo(aPoint); <span class="comment">// distance = 10</span></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">other</td><td>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </td></tr>
   </table>
@@ -382,7 +391,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Divide vector by a scalar. </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> quotient = thisVector.divide(2.5f);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="ad499bd83e3676b2b79f4be138454c479"></a>
@@ -404,7 +414,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="image">
 <img src="Math_Dot.png" alt="Math_Dot.png"/>
 </div>
-<dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> dotProduct = thisVector.dot(thatVector);</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">other</td><td>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </td></tr>
   </table>
@@ -436,7 +447,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The unit vector pointing down along the negative y-axis: (0, -1, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> downVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.down();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a65dd586b063eba3e16e7ef079b4bb819"></a>
@@ -454,7 +466,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Compare <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> equality component-wise. </p>
-
+<div class="fragment"><div class="line">        <span class="keywordtype">boolean</span> vectorsAreEqual = thisVector == thatVector;</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a71e39596252837897bfb4e522f81a471"></a>
@@ -479,7 +492,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The unit vector pointing forward along the negative z-axis: (0, 0, -1) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> forwardVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.forward();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="aace71cfbe3547910ff60e7748bef4a1f"></a>
@@ -498,8 +512,11 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Index vector components numerically. </p>
 <p>Index 0 is x, index 1 is y, and index 2 is z. </p>
-<dl class="section return"><dt>Returns</dt><dd>The x, y, or z component of this <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a>, if the specified index value is at least 0 and at most 2; otherwise, returns zero. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The x, y, or z component of this <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a>, if the specified index value is at least 0 and at most 2; otherwise, returns zero.</dd></dl>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> x = thisVector.get(0);</div>
+<div class="line">        <span class="keywordtype">float</span> y = thisVector.get(1);</div>
+<div class="line">        <span class="keywordtype">float</span> z = thisVector.get(2);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a7901d72a1490c333a7192d3bcd93b069"></a>
@@ -567,8 +584,9 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns true if all of the vector's components are finite. </p>
-<p>If any component is NaN or infinite, then this returns false. </p>
-
+<p>If any component is NaN or infinite, then this returns false.</p>
+<div class="fragment"><div class="line">        <span class="keywordtype">boolean</span> vectorsIsValid = thisVector.isValid();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a26372f7c8299ad958849033272e9000f"></a>
@@ -593,7 +611,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The unit vector pointing left along the negative x-axis: (-1, 0, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> leftVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.left();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a6b713b087c4a1550d2892751daa6b9ab"></a>
@@ -609,9 +628,10 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>*The magnitude, or length, of this vector. </p>
+<p>The magnitude, or length, of this vector. </p>
 <p>The magnitude is the L2 norm, or Euclidean distance between the origin and the point represented by the (x, y, z) components of this <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object.</p>
-<dl class="section return"><dt>Returns</dt><dd>The length of this vector. </dd></dl>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> length = thisVector.magnitude();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>The length of this vector. </dd></dl>
 
 </div>
 </div>
@@ -628,8 +648,9 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>*The square of the magnitude, or length, of this vector. </p>
-<dl class="section return"><dt>Returns</dt><dd>The square of the length of this vector. </dd></dl>
+<p>The square of the magnitude, or length, of this vector. </p>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> lengthSquared = thisVector.magnitudeSquared();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>The square of the length of this vector. </dd></dl>
 
 </div>
 </div>
@@ -648,7 +669,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Subtract vectors component-wise. </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> difference = thisVector.minus(thatVector);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a6af23209bd1dd0c52209079eed289ce8"></a>
@@ -666,7 +688,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>A normalized copy of this vector. </p>
 <p>A normalized vector has the same direction as the original vector, but with a length of one.</p>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object with a length of one, pointing in the same direction as this <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </dd></dl>
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> normalizedVector = otherVector.normalized();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object with a length of one, pointing in the same direction as this <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object. </dd></dl>
 
 </div>
 </div>
@@ -684,7 +707,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>A copy of this vector pointing in the opposite direction. </p>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object with all components negated. </dd></dl>
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> negation = thisVector.opposite();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html" title="The Vector struct represents a three-component mathematical vector or point such as a direction or po...">Vector</a> object with all components negated. </dd></dl>
 
 </div>
 </div>
@@ -706,7 +730,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="image">
 <img src="Math_Pitch_Angle.png" alt="Math_Pitch_Angle.png"/>
 </div>
-<dl class="section return"><dt>Returns</dt><dd>The angle of this vector above or below the horizon (x-z plane). </dd></dl>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> pitchInRadians = thisVector.pitch();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>The angle of this vector above or below the horizon (x-z plane). </dd></dl>
 
 </div>
 </div>
@@ -725,7 +750,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Add vectors component-wise. </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> sum = thisVector.plus(thatVector);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a1824792398f794deacf1631ca217d69d"></a>
@@ -750,7 +776,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The unit vector pointing right along the positive x-axis: (1, 0, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> rightVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.right();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="aac1844b328ff263d881171c362d71837"></a>
@@ -772,7 +799,8 @@ Static Public Member Functions</h2></td></tr>
 <img src="Math_Roll_Angle.png" alt="Math_Roll_Angle.png"/>
 </div>
 <p>Use this function to get roll angle of the plane to which this vector is a normal. For example, if this vector represents the normal to the palm, then this function returns the tilt or roll of the palm plane compared to the horizontal (x-z) plane.</p>
-<dl class="section return"><dt>Returns</dt><dd>The angle of this vector to the right or left of the y-axis. </dd></dl>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> rollInRadians = thatVector.roll();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>The angle of this vector to the right or left of the y-axis. </dd></dl>
 
 </div>
 </div>
@@ -845,7 +873,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Multiply vector by a scalar. </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> product = thisVector.times(5.0f);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="aba41477e3082659ec7987429bccd845b"></a>
@@ -887,7 +916,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The unit vector pointing up along the positive y-axis: (0, 1, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> upVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.up();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a3265f33265cd45bfc25a8d4cbb735240"></a>
@@ -912,7 +942,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The x-axis unit vector: (1, 0, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> xAxisVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.xAxis();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a94015d7ce48ab69adebbdf7414b462e8"></a>
@@ -933,7 +964,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="image">
 <img src="Math_Yaw_Angle.png" alt="Math_Yaw_Angle.png"/>
 </div>
-<dl class="section return"><dt>Returns</dt><dd>The angle of this vector to the right or left of the negative z-axis. </dd></dl>
+<div class="fragment"><div class="line">        <span class="keywordtype">float</span> yawInRadians = thisVector.yaw();</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>The angle of this vector to the right or left of the negative z-axis. </dd></dl>
 
 </div>
 </div>
@@ -959,7 +991,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The y-axis unit vector: (0, 1, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> yAxisVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.yAxis();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a2c009c83c79ce5f571b9bc25fc229b8b"></a>
@@ -984,7 +1017,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The z-axis unit vector: (0, 0, 1) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> zAxisVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.zAxis();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="afbf55f5415064edba5044edd1f208f5b"></a>
@@ -1009,7 +1043,8 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The zero vector: (0, 0, 0) </p>
-
+<div class="fragment"><div class="line">        <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a> zeroVector = <a class="code" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html#ab1f1d78560fa93b47c77d731b643f65e" title="Creates a new Vector with all components set to zero.">Vector</a>.zero();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
@@ -1018,7 +1053,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>com</b></li><li class="navelem"><b>leapmotion</b></li><li class="navelem"><b>leap</b></li><li class="navelem"><a class="el" href="classcom_1_1leapmotion_1_1leap_1_1_vector.html">Vector</a></li>
-    <li class="footer">Generated on Thu Apr 11 2013 19:37:30 for Leap Java API Reference by
+    <li class="footer">Generated on Mon Jun 10 2013 10:32:10 for Leap Motion Java API Reference by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>

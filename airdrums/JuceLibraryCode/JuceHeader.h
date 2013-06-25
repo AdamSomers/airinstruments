@@ -39,8 +39,8 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "AirBeats";
-    const char* const  versionString  = "0.7";
-    const int          versionNumber  = 0x700;
+    const char* const  versionString  = "0.7.1";
+    const int          versionNumber  = 0x701;
 }
 
 #endif   // __APPHEADERFILE_LSBNFZ__

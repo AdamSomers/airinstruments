@@ -245,6 +245,9 @@ class Pointable(Interface):
     for _s in [Interface]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Pointable, name)
     __repr__ = _swig_repr
+    ZONE_NONE = LeapPython.Pointable_ZONE_NONE
+    ZONE_HOVERING = LeapPython.Pointable_ZONE_HOVERING
+    ZONE_TOUCHING = LeapPython.Pointable_ZONE_TOUCHING
     def __init__(self): 
         this = LeapPython.new_Pointable()
         try: self.this.append(this)
@@ -272,6 +275,12 @@ class Pointable(Interface):
     if _newclass:is_finger = _swig_property(LeapPython.Pointable_is_finger_get)
     __swig_getmethods__["is_valid"] = LeapPython.Pointable_is_valid_get
     if _newclass:is_valid = _swig_property(LeapPython.Pointable_is_valid_get)
+    __swig_getmethods__["touch_zone"] = LeapPython.Pointable_touch_zone_get
+    if _newclass:touch_zone = _swig_property(LeapPython.Pointable_touch_zone_get)
+    __swig_getmethods__["touch_distance"] = LeapPython.Pointable_touch_distance_get
+    if _newclass:touch_distance = _swig_property(LeapPython.Pointable_touch_distance_get)
+    __swig_getmethods__["stabilized_tip_position"] = LeapPython.Pointable_stabilized_tip_position_get
+    if _newclass:stabilized_tip_position = _swig_property(LeapPython.Pointable_stabilized_tip_position_get)
     __swig_getmethods__["frame"] = LeapPython.Pointable_frame_get
     if _newclass:frame = _swig_property(LeapPython.Pointable_frame_get)
     __swig_destroy__ = LeapPython.delete_Pointable
@@ -589,6 +598,36 @@ Screen_swigregister = LeapPython.Screen_swigregister
 Screen_swigregister(Screen)
 Screen.invalid = LeapPython.cvar.Screen_invalid
 
+class Device(Interface):
+    __swig_setmethods__ = {}
+    for _s in [Interface]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Device, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Interface]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, Device, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = LeapPython.new_Device()
+        try: self.this.append(this)
+        except: self.this = this
+    def distance_to_boundary(self, *args): return LeapPython.Device_distance_to_boundary(self, *args)
+    def __eq__(self, *args): return LeapPython.Device___eq__(self, *args)
+    def __ne__(self, *args): return LeapPython.Device___ne__(self, *args)
+    def __str__(self): return LeapPython.Device___str__(self)
+    __swig_getmethods__["horizontal_view_angle"] = LeapPython.Device_horizontal_view_angle_get
+    if _newclass:horizontal_view_angle = _swig_property(LeapPython.Device_horizontal_view_angle_get)
+    __swig_getmethods__["vertical_view_angle"] = LeapPython.Device_vertical_view_angle_get
+    if _newclass:vertical_view_angle = _swig_property(LeapPython.Device_vertical_view_angle_get)
+    __swig_getmethods__["range"] = LeapPython.Device_range_get
+    if _newclass:range = _swig_property(LeapPython.Device_range_get)
+    __swig_getmethods__["is_valid"] = LeapPython.Device_is_valid_get
+    if _newclass:is_valid = _swig_property(LeapPython.Device_is_valid_get)
+    __swig_destroy__ = LeapPython.delete_Device
+    __del__ = lambda self : None;
+Device_swigregister = LeapPython.Device_swigregister
+Device_swigregister(Device)
+Device.invalid = LeapPython.cvar.Device_invalid
+
 class PointableList(Interface):
     __swig_setmethods__ = {}
     for _s in [Interface]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -794,6 +833,67 @@ class ScreenList(Interface):
 ScreenList_swigregister = LeapPython.ScreenList_swigregister
 ScreenList_swigregister(ScreenList)
 
+class DeviceList(Interface):
+    __swig_setmethods__ = {}
+    for _s in [Interface]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, DeviceList, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Interface]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, DeviceList, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = LeapPython.new_DeviceList()
+        try: self.this.append(this)
+        except: self.this = this
+    def __len__(self): return LeapPython.DeviceList___len__(self)
+    def __getitem__(self, *args): return LeapPython.DeviceList___getitem__(self, *args)
+    def append(self, *args): return LeapPython.DeviceList_append(self, *args)
+    __swig_getmethods__["is_empty"] = LeapPython.DeviceList_is_empty_get
+    if _newclass:is_empty = _swig_property(LeapPython.DeviceList_is_empty_get)
+    def __iter__(self):
+      _pos = 0
+      while _pos < len(self):
+        yield self[_pos]
+        _pos += 1
+
+    __swig_destroy__ = LeapPython.delete_DeviceList
+    __del__ = lambda self : None;
+DeviceList_swigregister = LeapPython.DeviceList_swigregister
+DeviceList_swigregister(DeviceList)
+
+class InteractionBox(Interface):
+    __swig_setmethods__ = {}
+    for _s in [Interface]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, InteractionBox, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Interface]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, InteractionBox, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = LeapPython.new_InteractionBox()
+        try: self.this.append(this)
+        except: self.this = this
+    def normalize_point(self, *args): return LeapPython.InteractionBox_normalize_point(self, *args)
+    def denormalize_point(self, *args): return LeapPython.InteractionBox_denormalize_point(self, *args)
+    def __eq__(self, *args): return LeapPython.InteractionBox___eq__(self, *args)
+    def __ne__(self, *args): return LeapPython.InteractionBox___ne__(self, *args)
+    def __str__(self): return LeapPython.InteractionBox___str__(self)
+    __swig_getmethods__["center"] = LeapPython.InteractionBox_center_get
+    if _newclass:center = _swig_property(LeapPython.InteractionBox_center_get)
+    __swig_getmethods__["width"] = LeapPython.InteractionBox_width_get
+    if _newclass:width = _swig_property(LeapPython.InteractionBox_width_get)
+    __swig_getmethods__["height"] = LeapPython.InteractionBox_height_get
+    if _newclass:height = _swig_property(LeapPython.InteractionBox_height_get)
+    __swig_getmethods__["depth"] = LeapPython.InteractionBox_depth_get
+    if _newclass:depth = _swig_property(LeapPython.InteractionBox_depth_get)
+    __swig_getmethods__["is_valid"] = LeapPython.InteractionBox_is_valid_get
+    if _newclass:is_valid = _swig_property(LeapPython.InteractionBox_is_valid_get)
+    __swig_destroy__ = LeapPython.delete_InteractionBox
+    __del__ = lambda self : None;
+InteractionBox_swigregister = LeapPython.InteractionBox_swigregister
+InteractionBox_swigregister(InteractionBox)
+InteractionBox.invalid = LeapPython.cvar.InteractionBox_invalid
+
 class Frame(Interface):
     __swig_setmethods__ = {}
     for _s in [Interface]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -837,6 +937,8 @@ class Frame(Interface):
     if _newclass:hands = _swig_property(LeapPython.Frame_hands_get)
     __swig_getmethods__["is_valid"] = LeapPython.Frame_is_valid_get
     if _newclass:is_valid = _swig_property(LeapPython.Frame_is_valid_get)
+    __swig_getmethods__["interaction_box"] = LeapPython.Frame_interaction_box_get
+    if _newclass:interaction_box = _swig_property(LeapPython.Frame_interaction_box_get)
     __swig_destroy__ = LeapPython.delete_Frame
     __del__ = lambda self : None;
 Frame_swigregister = LeapPython.Frame_swigregister
@@ -912,6 +1014,9 @@ class Controller(Interface):
         this = LeapPython.new_Controller(*args)
         try: self.this.append(this)
         except: self.this = this
+    POLICY_DEFAULT = LeapPython.Controller_POLICY_DEFAULT
+    POLICY_BACKGROUND_FRAMES = LeapPython.Controller_POLICY_BACKGROUND_FRAMES
+    def set_policy_flags(self, *args): return LeapPython.Controller_set_policy_flags(self, *args)
     def add_listener(self, *args): return LeapPython.Controller_add_listener(self, *args)
     def remove_listener(self, *args): return LeapPython.Controller_remove_listener(self, *args)
     def frame(self, history=0): return LeapPython.Controller_frame(self, history)
@@ -921,12 +1026,16 @@ class Controller(Interface):
     if _newclass:is_connected = _swig_property(LeapPython.Controller_is_connected_get)
     __swig_getmethods__["has_focus"] = LeapPython.Controller_has_focus_get
     if _newclass:has_focus = _swig_property(LeapPython.Controller_has_focus_get)
+    __swig_getmethods__["policy_flags"] = LeapPython.Controller_policy_flags_get
+    if _newclass:policy_flags = _swig_property(LeapPython.Controller_policy_flags_get)
     __swig_getmethods__["config"] = LeapPython.Controller_config_get
     if _newclass:config = _swig_property(LeapPython.Controller_config_get)
     __swig_getmethods__["located_screens"] = LeapPython.Controller_located_screens_get
     if _newclass:located_screens = _swig_property(LeapPython.Controller_located_screens_get)
     __swig_getmethods__["calibrated_screens"] = LeapPython.Controller_calibrated_screens_get
     if _newclass:calibrated_screens = _swig_property(LeapPython.Controller_calibrated_screens_get)
+    __swig_getmethods__["devices"] = LeapPython.Controller_devices_get
+    if _newclass:devices = _swig_property(LeapPython.Controller_devices_get)
 Controller_swigregister = LeapPython.Controller_swigregister
 Controller_swigregister(Controller)
 

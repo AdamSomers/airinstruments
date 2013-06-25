@@ -14,6 +14,7 @@ var classcom_1_1leapmotion_1_1leap_1_1_frame =
     [ "hand", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a75d80b1d6c46b04fc6c446c79ce3cc19", null ],
     [ "hands", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#ae95881f0ce37c72e4e74b0bd46e02cc7", null ],
     [ "id", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#add4aa27e1b4181fb8c9bae5feaf4139d", null ],
+    [ "interactionBox", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#af7d5e6da9decf7f718fcb533c31c7c6e", null ],
     [ "invalid", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a0aa54564365f6e4cb849bee2a2df4a73", null ],
     [ "isValid", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a895c3c63566e8987a11fcaee4f875829", null ],
     [ "pointable", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a91c0d83c637fb367e72216d22dac8fb7", null ],
@@ -22,10 +23,13 @@ var classcom_1_1leapmotion_1_1leap_1_1_frame =
     [ "rotationAngle", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a0812b9f900b648e20dc36529c353f3d3", null ],
     [ "rotationAxis", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a84c9f63c0cf256ec3de2c375586e5eba", null ],
     [ "rotationMatrix", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#ac7cfc29107e6bd94ecd4e851a40f88af", null ],
+    [ "rotationProbability", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a3dbfe02b80b3d206d94a699d2c1a0374", null ],
     [ "scaleFactor", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a9d09300fae5e7b7f243758d1a1d44d2a", null ],
+    [ "scaleProbability", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a02f3a37977f155a1203c6480e27c4827", null ],
     [ "timestamp", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#abf56bd79f7143e5e51a9c830bf0a5fbe", null ],
     [ "tool", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a8b35e3a0bb912a2a9904bee41f6373da", null ],
     [ "tools", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a1d4d3ca18d34b4df7422f18a735527ad", null ],
     [ "toString", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a9c0392d98f61df3c560c9895cbb41fcc", null ],
-    [ "translation", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a2248c1409975aa689bd63bc3970a8656", null ]
+    [ "translation", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a2248c1409975aa689bd63bc3970a8656", null ],
+    [ "translationProbability", "classcom_1_1leapmotion_1_1leap_1_1_frame.html#a9a8e95306a331c15bb11235acc639288", null ]
 ];

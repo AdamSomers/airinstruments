@@ -24,33 +24,33 @@
 				</li>
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
-	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
-	
-	
-	
-	
-	<option value="tasks">Tasks</option>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/closestScreen:">&nbsp;&nbsp;&nbsp;&nbsp;- closestScreen:</option>
-	
-	<option value="//api/name/closestScreenHit:">&nbsp;&nbsp;&nbsp;&nbsp;- closestScreenHit:</option>
-	
-	<option value="//api/name/closestScreenHit:direction:">&nbsp;&nbsp;&nbsp;&nbsp;- closestScreenHit:direction:</option>
-	
-	
-	
+<option value="top">Jump To&#133;</option>
+
+<option value="overview">Overview</option>
+
+
+
+
+<option value="tasks">Tasks</option>
+
+
+
+
+
+
+
+
+
+<option value="instance_methods">Instance Methods</option>
+
+<option value="//api/name/closestScreen:">&nbsp;&nbsp;&nbsp;&nbsp;- closestScreen:</option>
+
+<option value="//api/name/closestScreenHit:">&nbsp;&nbsp;&nbsp;&nbsp;- closestScreenHit:</option>
+
+<option value="//api/name/closestScreenHit:direction:">&nbsp;&nbsp;&nbsp;&nbsp;- closestScreenHit:direction:</option>
+
+
+
 </select>
 				</li>
 			</ul>
@@ -86,6 +86,8 @@
 </ul></li>
 
 
+
+
 			</ul>
 		</nav>
 		<article>
@@ -93,8 +95,8 @@
 				<a title="NSArray(LeapScreenList) Category Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="header">
@@ -106,8 +108,8 @@
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Declared in</td>
-	<td class="specification-value">LeapObjectiveC.h</td>
+<td class="specification-title">Declared in</td>
+<td class="specification-value">LeapObjectiveC.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -119,7 +121,7 @@
 						<h2 class="subtitle subtitle-overview">Overview</h2>
 						<p>The LeapScreenList category supplies methods for getting a screen from<br/>
 an NSArray containing <a href="../Classes/LeapScreen.html">LeapScreen</a> objects based on the relationship between<br/>
-the screen and a Pointable object or point.</p>
+the screens and a LeapPointable object or point.</p>
 					</div>
 					
 					
@@ -216,9 +218,18 @@ position in the specified direction.</p></span>
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Gets the <a href="../Classes/LeapScreen.html">LeapScreen</a> closest to the specified position.</p>
 
+<pre><code>    if ([frame.pointables count] &gt; 0) {  
+        LeapPointable *pointable = [frame.pointables objectAtIndex:0];  
+        NSArray *screens = controller.calibratedScreens;  
+
+        LeapScreen *screen = [screens closestScreen:pointable.tipPosition];  
+        NSLog(@"ClosestScreen(ortho) ID: %d; Size: %d, %d", screen.id, screen.widthPixels, screen.heightPixels);  
+    }  
+</code></pre>
+
 <p>The specified position is projected along each screen&rsquo;s normal vector<br/>
 onto the screen&rsquo;s plane. The screen whose projected point is closest to<br/>
-the specified position is returned. Call <a href="../Classes/LeapScreen.html#//api/name/project:normalize:clampRatio:">[LeapScreen project:normalize:clampRatio:]</a><br/>
+the specified position is returned. Call &lt;[LeapScreen project:position normalize:NO clampRatio:1.0f]><br/>
 on the returned LeapScreen object to find the projected point.</p>
 	</div>
 	
@@ -267,7 +278,7 @@ Pointable object.</p>
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The closest &lt;<a href="../Classes/LeapScreen.html">LeapScreen</a>> toward which the specified LeapPointable object<br/>
+		<p>The closest <a href="../Classes/LeapScreen.html">LeapScreen</a> toward which the specified LeapPointable object<br/>
 is pointing, or, if the pointable is not pointing in the direction of<br/>
 any known screen, an invalid LeapScreen object.</p>
 	</div>
@@ -286,6 +297,14 @@ Pointable&rsquo;s direction vector. If the projected ray does not intersect<br/>
 any screen surface directly, then the Leap checks for intersection with<br/>
 the planes extending from the surfaces of the known screens<br/>
 and returns the LeapScreen with the closest intersection.</p>
+
+<pre><code>    if ([frame.pointables count] &gt; 0) {  
+        LeapPointable *pointable = [frame.pointables objectAtIndex:0];  
+        NSArray *screens = controller.calibratedScreens;  
+        LeapScreen *screen = [screens closestScreenHit:pointable];  
+        NSLog(@"ClosestScreenHit ID: %d; Size: %d, %d", screen.id, screen.widthPixels, screen.heightPixels);  
+    }  
+</code></pre>
 
 <p>If no intersections are found (i.e. the ray is directed parallel to or<br/>
 away from all known screens), then an invalid LeapScreen object is returned.</p>
@@ -390,17 +409,19 @@ incorrect results.</p>
 					</div>
 					
 					
+					
+					
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
-	<li><a href="../index.html">Index</a></li>
-	<li><a href="../hierarchy.html">Hierarchy</a></li>
+<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
 </ul>
 				</div>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-03-25)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-06-10)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
@@ -490,6 +511,7 @@ incorrect results.</p>
 			}
 			
 			window.onload = init;
+
 			
 			// If showing in Xcode, hide the TOC and Header
 			if (navigator.userAgent.match(/xcode/i)) {

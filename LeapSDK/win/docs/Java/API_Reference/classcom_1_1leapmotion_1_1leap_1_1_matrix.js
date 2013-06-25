@@ -18,7 +18,7 @@ var classcom_1_1leapmotion_1_1leap_1_1_matrix =
     [ "identity", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#ae913d8d9ae2a7b3fd392d377aa857b52", null ],
     [ "rigidInverse", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#afa9c1bd198e2c79335102f984803dd04", null ],
     [ "setOrigin", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#aaadcba5062752797ca57e4ff85ceb824", null ],
-    [ "setRotation", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#a9bfabbe6d014993280fb3d32567f6566", null ],
+    [ "setRotation", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#abfbeb24192e3aab3226acd083306ebed", null ],
     [ "setXBasis", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#a91a2189aed5e3bbc0ed194527003cc74", null ],
     [ "setYBasis", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#a0830cf554cf505a9e8f702c39c5d2921", null ],
     [ "setZBasis", "classcom_1_1leapmotion_1_1leap_1_1_matrix.html#aaa0663d2830fd305ed802cce9eb09b66", null ],

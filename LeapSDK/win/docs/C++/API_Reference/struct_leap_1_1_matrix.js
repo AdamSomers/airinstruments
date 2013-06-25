@@ -12,7 +12,7 @@ var struct_leap_1_1_matrix =
     [ "operator*=", "struct_leap_1_1_matrix.html#a44df5bc99d32339961cd0f923c516dcd", null ],
     [ "operator==", "struct_leap_1_1_matrix.html#aa68d4cb00dbb94ce05e59529cb2906ca", null ],
     [ "rigidInverse", "struct_leap_1_1_matrix.html#a735ebc49019c01ea410fe57bae028b65", null ],
-    [ "setRotation", "struct_leap_1_1_matrix.html#aa9d781aebee7d137835d40eb1ec4958a", null ],
+    [ "setRotation", "struct_leap_1_1_matrix.html#ac48ea6588487ef4be20a31a663f58be6", null ],
     [ "toArray3x3", "struct_leap_1_1_matrix.html#a21df9755f18951876d85b23c5a9cc5dd", null ],
     [ "toArray3x3", "struct_leap_1_1_matrix.html#a17f08b5c73e7fe7bbe7687c640f2cd36", null ],
     [ "toArray4x4", "struct_leap_1_1_matrix.html#a2a381fc85634accb9e3d5e0ffece00b1", null ],

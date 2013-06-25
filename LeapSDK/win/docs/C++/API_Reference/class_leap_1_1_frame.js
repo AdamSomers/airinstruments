@@ -10,6 +10,7 @@ var class_leap_1_1_frame =
     [ "hand", "class_leap_1_1_frame.html#a409b9167f74bf050f1ad3581ee1519f2", null ],
     [ "hands", "class_leap_1_1_frame.html#a9ade2b61ca62872c109700c96271a0b6", null ],
     [ "id", "class_leap_1_1_frame.html#a40ce7477ea1738ee54beaeed0a848117", null ],
+    [ "interactionBox", "class_leap_1_1_frame.html#aa421c11d2dff00dc5492c19a36bd690f", null ],
     [ "invalid", "class_leap_1_1_frame.html#a49a7e70bb258d0425081be04a8f4908a", null ],
     [ "isValid", "class_leap_1_1_frame.html#aeda8e1d1fad05f656458c3d625d4bc93", null ],
     [ "operator!=", "class_leap_1_1_frame.html#a854c0133487466df3ef66f73b0a9f130", null ],

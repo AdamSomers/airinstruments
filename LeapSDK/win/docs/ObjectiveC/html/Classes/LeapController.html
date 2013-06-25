@@ -52,6 +52,10 @@
 
 <option value="//api/name/addListener:">&nbsp;&nbsp;&nbsp;&nbsp;- addListener:</option>
 
+<option value="//api/name/config">&nbsp;&nbsp;&nbsp;&nbsp;- config</option>
+
+<option value="//api/name/devices">&nbsp;&nbsp;&nbsp;&nbsp;- devices</option>
+
 <option value="//api/name/enableGesture:enable:">&nbsp;&nbsp;&nbsp;&nbsp;- enableGesture:enable:</option>
 
 <option value="//api/name/frame:">&nbsp;&nbsp;&nbsp;&nbsp;- frame:</option>
@@ -70,9 +74,13 @@
 
 <option value="//api/name/locatedScreens">&nbsp;&nbsp;&nbsp;&nbsp;- locatedScreens</option>
 
+<option value="//api/name/policyFlags">&nbsp;&nbsp;&nbsp;&nbsp;- policyFlags</option>
+
 <option value="//api/name/removeDelegate">&nbsp;&nbsp;&nbsp;&nbsp;- removeDelegate</option>
 
 <option value="//api/name/removeListener:">&nbsp;&nbsp;&nbsp;&nbsp;- removeListener:</option>
+
+<option value="//api/name/setPolicyFlags:">&nbsp;&nbsp;&nbsp;&nbsp;- setPolicyFlags:</option>
 
 
 
@@ -112,6 +120,10 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addListener:">addListener:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/config">config</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/devices">devices</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/enableGesture:enable:">enableGesture:enable:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/frame:">frame:</a></span></li>
@@ -130,9 +142,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/locatedScreens">locatedScreens</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/policyFlags">policyFlags</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeDelegate">removeDelegate</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeListener:">removeListener:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setPolicyFlags:">setPolicyFlags:</a></span></li>
 	
 </ul></li>
 
@@ -266,6 +282,20 @@ and <code>onExit</code> in the same manner.</p>
 	
 </li><li>
 	<span class="tooltip">
+		<code><a href="#//api/name/policyFlags">&ndash;&nbsp;policyFlags</a></code>
+		<span class="tooltip"><p>Gets the active policy settings.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setPolicyFlags:">&ndash;&nbsp;setPolicyFlags:</a></code>
+		<span class="tooltip"><p>Requests a change in policy.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/addListener:">&ndash;&nbsp;addListener:</a></code>
 		<span class="tooltip"><p>Adds a listener to this LeapController.</p></span>
 	</span>
@@ -308,6 +338,22 @@ history parameter to specify which frame to retrieve. Call<br/>
 <code>[controller frame:1]</code> to access the previous frame, and so on. If you use a<br/>
 history value greater than the number of stored frames, then the controller<br/>
 returns an invalid frame.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/config">&ndash;&nbsp;config</a></code>
+		<span class="tooltip"><p>Returns a Config object, which you can use to query the Leap system for<br/>
+configuration information.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/devices">&ndash;&nbsp;devices</a></code>
+		<span class="tooltip"><p>Returns a list of currently attached devices.  Devices can be queried for<br/>
+device-specific information such as field of view.</p></span>
 	</span>
 	
 	
@@ -524,6 +570,94 @@ the controller automatically subscribes the listener to NSNotifications<br/>
 dispatched for the Leap events.</p>
 
 <p><em>Note:</em> You cannot add a listener when there is already a delegate assigned.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/config" title="config"></a>
+	<h3 class="subsubtitle method-title">config</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a Config object, which you can use to query the Leap system for<br/>
+configuration information.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (LeapConfig *)config</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Returns a Config object, which you can use to query the Leap system for<br/>
+configuration information.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/devices" title="devices"></a>
+	<h3 class="subsubtitle method-title">devices</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a list of currently attached devices.  Devices can be queried for<br/>
+device-specific information such as field of view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)devices</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Returns a list of currently attached devices.  Devices can be queried for<br/>
+device-specific information such as field of view.</p>
+
+<p>Currently the Leap controller only recognizes a single device at a time.</p>
 	</div>
 	
 	
@@ -1098,6 +1232,62 @@ monitor screen remain constant.</p>
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/policyFlags" title="policyFlags"></a>
+	<h3 class="subsubtitle method-title">policyFlags</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Gets the active policy settings.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (LeapPolicyFlag)policyFlags</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The current policy flags.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Gets the active policy settings.</p>
+
+<p>Use this function to determine the current policy state.<br/>
+Keep in mind that setting a policy flag is asynchronous, so changes are<br/>
+not effective immediately after calling [LeapController setPolicyFlag]. In addition, a<br/>
+policy request can be declined by the user. You should always set the<br/>
+policy flags required by your application at startup and check that the<br/>
+policy change request was successful after an appropriate interval.</p>
+
+<p>If the controller object is not connected to the Leap, then the default<br/>
+policy state is returned.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/removeDelegate" title="removeDelegate"></a>
 	<h3 class="subsubtitle method-title">removeDelegate</h3>
 	
@@ -1199,6 +1389,90 @@ monitor screen remain constant.</p>
 	
 </div>
 						
+						<div class="section-method">
+	<a name="//api/name/setPolicyFlags:" title="setPolicyFlags:"></a>
+	<h3 class="subsubtitle method-title">setPolicyFlags:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Requests a change in policy.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setPolicyFlags:(LeapPolicyFlag)<em>flags</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>flags</em></dt>
+			<dd><p>A PolicyFlag value indicating the policies to request. Must be<br/>
+a member of the LeapPolicyFlags enumeration:</p>
+
+<ul>
+<li>LEAP_POLICY_DEFAULT &ndash; restore the default policy configuration for this<br/>
+application (do not receive frames while in the background).</li>
+<li>LEAP_POLICY_BACKGROUND_FRAMES &ndash; the application should receive frames of<br/>
+motion tracking data while in the background.</li>
+</ul>
+</dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Requests a change in policy.</p>
+
+<p>A request to change a policy is subject to user approval and a policy<br/>
+can be changed by the user at any time (using the Leap settings window).<br/>
+The desired policy flags must be set every time an application runs.</p>
+
+<p>Policy changes are completed asynchronously and, because they are subject<br/>
+to user approval, may not complete successfully. Call<br/>
+<a href="#//api/name/policyFlags">[LeapController policyFlags]</a> after a suitable interval to test whether<br/>
+the change was accepted.</p>
+
+<p>Currently, the background frames policy is the only policy supported.<br/>
+The background frames policy determines whether an application<br/>
+receives frames of tracking data while in the background. By<br/>
+default, the Leap only sends tracking data to the foreground application.<br/>
+Only applications that need this ability should request the background<br/>
+frames policy.</p>
+
+<p>At this time, you can use the Leap applications Settings window to<br/>
+globally enable or disable the background frames policy. However,<br/>
+each application that needs tracking data while in the background<br/>
+must also set the policy flag using this function.</p>
+
+<p>This function can be called before the LeapController object is connected,<br/>
+but the request will be sent to the Leap after the controller connects.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">LeapObjectiveC.h</code><br />
+	</div>				
+	
+	
+</div>
+						
 					</div>
 					
 					
@@ -1214,7 +1488,7 @@ monitor screen remain constant.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-04-11)</span><br />
+						<p><span class="copyright">&copy; 2013 Leap Motion. All rights reserved. (Last updated: 2013-06-10)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
