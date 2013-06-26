@@ -959,7 +959,7 @@
 		F51BF045B37DFAB32E1BA82C = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_AudioProcessorGraph.cpp"; path = "../../JuceLibraryCode/modules/juce_audio_processors/processors/juce_AudioProcessorGraph.cpp"; sourceTree = "SOURCE_ROOT"; };
 		F7077718F59A037BF6F48F13 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_XmlElement.h"; path = "../../JuceLibraryCode/modules/juce_core/xml/juce_XmlElement.h"; sourceTree = "SOURCE_ROOT"; };
 		F752939851CE9C78A030ED27 = { isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
-		DE4259D2359C81036D6EE3F9 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHarp.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
+		DE4259D2359C81036D6EE3F9 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AirHarp_LM.app"; sourceTree = "BUILT_PRODUCTS_DIR"; };
 		F5355853E7FE69931F107F39 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_Point.h"; path = "../../JuceLibraryCode/modules/juce_graphics/geometry/juce_Point.h"; sourceTree = "SOURCE_ROOT"; };
 		F585A63B94BA524C9CAE6940 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_FileBrowserComponent.h"; path = "../../JuceLibraryCode/modules/juce_gui_basics/filebrowser/juce_FileBrowserComponent.h"; sourceTree = "SOURCE_ROOT"; };
 		F6838138D3851A12F6115832 = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_OpenGL_osx.h"; path = "../../JuceLibraryCode/modules/juce_opengl/native/juce_OpenGL_osx.h"; sourceTree = "SOURCE_ROOT"; };
@@ -2213,7 +2213,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				ZERO_LINK = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
-				PRODUCT_NAME = "AirHarp"; }; name = Debug; };
+				PRODUCT_NAME = "AirHarp_LM"; }; name = Debug; };
 		86BA0B5783FB741673A940CE = { isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2228,7 +2228,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				ZERO_LINK = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
-				PRODUCT_NAME = "AirHarp"; }; name = Release; };
+				PRODUCT_NAME = "AirHarp_LM"; }; name = Release; };
 		E80842573BA9709D724F4EA2 = { isa = XCConfigurationList; buildConfigurations = (
 				6BAC05C050D957FFAC75A840,
 				86BA0B5783FB741673A940CE ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
@@ -2302,7 +2302,7 @@
 				C35D985ADF11065A4803C1FC,
 				F763EC654E374FBB4249B9FD,
 				CFE1EE4402DE7327B3375F15 ); runOnlyForDeploymentPostprocessing = 0; };
-		02F0EE1B19BD4579F9DD526C = { isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/MacOS;\ncp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/Resources"; };
+		02F0EE1B19BD4579F9DD526C = { isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirHarp_LM.app/Contents/MacOS;\ncp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirHarp_LM.app/Contents/Resources"; };
 		E6EFC6DCAAB7441250DD0451 = { isa = PBXNativeTarget; buildConfigurationList = C88FAB169C9E8C378A8FAFA4; buildPhases = (
 				96BCA203FE507FF0C89E5220,
 				C43C33FE1C13953BEB80DE16,
