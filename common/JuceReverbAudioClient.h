@@ -13,7 +13,7 @@ public:
     JuceReverbAudioClient();
     ~JuceReverbAudioClient();
 	// AudioClient override
-	void Render(float* buffer, int frames);
+	void Render(float* buffer, const int frames);
     
     void AddInput(AudioClient* c);
 	void RemoveInput(AudioClient* c);

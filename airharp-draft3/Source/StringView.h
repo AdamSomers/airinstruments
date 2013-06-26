@@ -21,6 +21,11 @@ public:
     StringView()
     : stringNum(0)
     , numSamples(NUM_SAMPLES)
+    , harpNum(0)
+    , stringWidth(0.06)
+    , stringHeight(2.f)
+    , yScale(1)
+    , fade(0.f)
     {
         numSampleVerts = 1800;//numSamples*2;
     }
@@ -56,8 +61,8 @@ public:
         float w = gStringLineWidth;
         
         sampleVerts = new M3DVector3f[numSampleVerts];
-        M3DVector3f stringNormals[numSampleVerts];
-        M3DVector2f stringTexCoords[numSampleVerts];
+        M3DVector3f *stringNormals = new M3DVector3f[numSampleVerts];
+        M3DVector2f *stringTexCoords = new M3DVector2f[numSampleVerts];
         float yMin = -stringHeight / 2.f;
         float yMax = stringHeight / 2.f;
         float step = (yMax - yMin) / ((float)numSampleVerts / 2.f);
@@ -103,6 +108,9 @@ public:
         stringBatch.CopyVertexData3f(sampleVerts);
         stringBatch.CopyNormalDataf(stringNormals);
         stringBatch.End();
+
+        delete[] stringNormals;
+        delete[] stringTexCoords;
     }
     
     void update()
@@ -175,7 +183,7 @@ public:
         //Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
         GLfloat stringColor [] = { 1.f, 1.f, 1.f, 1.f };
-        if (stringNum % Harp::gScale.size() == 0) {
+        if (stringNum % sizeof(Harp::gScale) == 0) {
             stringColor[0] = 1.f;
             stringColor[1] = 1.f;
             stringColor[2] = .5f;
@@ -288,12 +296,12 @@ public:
     
     void pluck(float position, float velocity = 1.f)
     {
-        int idx = stringNum % Harp::gScale.size();
-        int mult = (stringNum / (float)Harp::gScale.size());
-        int octaveSpan = (ScaleDegrees::getChromatic(Harp::gScale.at(Harp::gScale.size()-1)) / 12) + 1;
+        int idx = stringNum % sizeof(Harp::gScale);
+        int mult = (stringNum / (float)sizeof(Harp::gScale));
+        int octaveSpan = (ScaleDegrees::getChromatic(Harp::gScale[sizeof(Harp::gScale)-1]) / 12) + 1;
         int base = 32 + 12*octaveSpan*mult;
-        int note = base + ScaleDegrees::getChromatic(Harp::gScale.at(idx));
-        int bufferSize = 512;
+        int note = base + ScaleDegrees::getChromatic(Harp::gScale[idx]);
+        const int bufferSize = 512;
         float buffer[bufferSize];
         memset(buffer, 0, bufferSize);
         int midpoint = position * bufferSize;
@@ -313,10 +321,10 @@ public:
     
     GLFrame objectFrame;
     int stringNum;
-    int harpNum = 0;
-    float stringWidth = 0.06;
-    float stringHeight = 2.f;
-    float yScale = 1;
+    int harpNum;
+    float stringWidth;
+    float stringHeight;
+    float yScale;
     
 private:
     inline float linterp(float v0,float v1,float t) { return v0+(v1-v0)*t; }
@@ -330,7 +338,7 @@ private:
     M3DVector3f* sampleVerts;
     SampleAccumulator::PeakSample prevSamp;
 
-    float fade = 0.f;
+    float fade;
 };
 
 

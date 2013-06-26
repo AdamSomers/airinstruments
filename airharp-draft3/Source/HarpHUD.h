@@ -77,9 +77,9 @@ private:
     GLBatch batch;
     GLBatch imageBatch;
     GLuint textureID;
-    int id = 0;
-    bool isActive = false;
-    float fade = 0.f;
+    int id;
+    bool isActive;
+    float fade;
 };
 
 #endif /* defined(__AirHarp__HarpHUD__) */

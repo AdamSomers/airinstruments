@@ -61,13 +61,13 @@ private:
     void setupBackground();
     void layoutStrings();
     void layoutChordRegions();
-    bool chordRegionsNeedUpdate = false;
+    bool chordRegionsNeedUpdate;
     
     void handleTapGesture(const Leap::Pointable& p);
     
-    TutorialSlide* slide = NULL;
-    HarpToolbar* toolbar = NULL;
-    StatusBar* statusBar = NULL;
+    TutorialSlide* slide;
+    HarpToolbar* toolbar;
+    StatusBar* statusBar;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
@@ -76,7 +76,7 @@ private:
     GLuint backgroundTextureId;
     GLBatch backgroundBatch;
     
-    bool sizeChanged = false;
+    bool sizeChanged;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

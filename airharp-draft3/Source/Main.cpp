@@ -8,9 +8,10 @@
   ==============================================================================
 */
 
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
 #include "MotionServer.h"
+#include "MainComponent.h"
+
+#include "../JuceLibraryCode/JuceHeader.h"
 
 //==============================================================================
 class AirHarpApplication  : public JUCEApplication

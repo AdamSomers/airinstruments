@@ -30,6 +30,11 @@
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
+: chordRegionsNeedUpdate(false)
+, slide(NULL)
+, toolbar(NULL)
+, statusBar(NULL)
+, sizeChanged(false)
 {
     Environment::openGLContext.setRenderer (this);
     Environment::openGLContext.setComponentPaintingEnabled (true);

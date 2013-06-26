@@ -185,6 +185,9 @@ void StatusBar::onDisconnect(const Leap::Controller& controller)
 }
 
 ChordRegion::ChordRegion()
+: id(0)
+, isActive(false)
+, fade(0.f)
 {
     
 }

@@ -1,5 +1,6 @@
-#include "Harp.h"
 #include "MotionServer.h"
+
+#include "Harp.h"
 
 
 #define MAX_STRINGS 30
@@ -7,7 +8,7 @@
 #define FILTER_FREQ 150.f
 #define FILTER_RES 0.f
 
-std::vector<std::string> Harp::gScale = gPentatonicMajor;
+const std::string* Harp::gScale = gPentatonicMajor;
 
 Harp::Harp()
 : numStrings(1)
@@ -21,6 +22,9 @@ Harp::Harp()
 , wetLevel(0.3f)
 , dryLevel(0.7f)
 , idle(true)
+, active(false)
+, chordMode(false)
+, selectedScale(0)
 {
     Init();
 }
