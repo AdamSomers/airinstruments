@@ -5,6 +5,7 @@
 
   ==============================================================================
 */
+#include "GL/glew.h"
 #include <GLTools.h>
 #include <GLFrustum.h>
 #include <GLMatrixStack.h>
