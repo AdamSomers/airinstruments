@@ -160,14 +160,14 @@
       </CONFIGURATIONS>
     </XCODE_MAC>
     <VS2012 targetFolder="Builds/VisualStudio2012" juceFolder="../../juce/modules"
-            externalLibraries="Leap.lib&#10;">
+            externalLibraries="Leap.lib&#10;" extraCompilerFlags="" extraDefs="__WINDOWS_MM__=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
+                       isDebug="1" optimisation="1" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;../../../../muskit/src&#10;../../../../muskit/ThirdParty"
                        libraryPath="../../../LeapSDK/win/lib/x86&#10;" defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;"
                        useRuntimeLibDLL="1" wholeProgramOptimisation="1" postbuildCommand="call copyResources.bat $(TargetDir)"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;"
+                       isDebug="0" optimisation="3" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;../../../../muskit/src&#10;../../../../muskit/ThirdParty"
                        libraryPath="../../../LeapSDK/win/lib/x86&#10;" defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;"
                        useRuntimeLibDLL="1" wholeProgramOptimisation="1" postbuildCommand="call copyResources.bat $(TargetDir)"/>
       </CONFIGURATIONS>
