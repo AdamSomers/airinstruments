@@ -116,6 +116,14 @@ void MainContentComponent::setupBackground()
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    glewInit();
+    if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
+        Logger::writeToLog("VAOs Supported");
+    else
+        Logger::writeToLog("VAOs Not Supported");
+
+    MotionDispatcher::instance().setUseHandsAndFingers(true);
+
     SkinManager::instance().loadResources();
     SkinManager::instance().setSelectedSkin("skin0");
     
