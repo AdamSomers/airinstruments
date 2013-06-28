@@ -80,7 +80,6 @@ private:
     void Init();
     
     std::vector<SampleAccumulator*> accumulators;
-    std::vector<StateVariable*> filters;
     std::vector<Karplus*> strings;
     Adder* mixer;
     Multiplier* outputGain;
@@ -89,6 +88,7 @@ private:
     Multiplier* dryGain;
     Adder* wetDryMix;
     StateVariable* filter;
+    StateVariable* preVerbFilter;
     int numStrings;
     float wetLevel;
     float dryLevel;

@@ -40,13 +40,8 @@ void Harp::Init()
     for (int i = 0; i < numStrings; ++i)
     {
         strings.push_back(new Karplus(0.009));
-        filters.push_back(new StateVariable);
-        filters.back()->SetInput(strings.back());
-        filters.back()->setType(StateVariable::kHighpass);
-        filters.back()->setFreq(FILTER_FREQ);
-        filters.back()->setRes(FILTER_RES);
         accumulators.push_back(new SampleAccumulator());
-        accumulators.back()->SetInput(filters.back());
+        accumulators.back()->SetInput(strings.back());
         accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     }
     
@@ -59,18 +54,23 @@ void Harp::Init()
     
     filter = new StateVariable;
     filter->SetInput(mixer);
-    filter->setFreq(1000);
-    filter->setType(StateVariable::kLowpass);
+    filter->setFreq(80);
+    filter->setType(StateVariable::kHighpass);
+
+    preVerbFilter = new StateVariable;
+    preVerbFilter->SetInput(filter);
+    preVerbFilter->setFreq(1000.f);
+    preVerbFilter->setType(StateVariable::kLowpass);
     
     reverbGain = new Multiplier;
-    reverbGain->SetA(filter);
+    reverbGain->SetA(preVerbFilter);
     reverbGain->SetVal(wetLevel);
     
     reverb = new JuceReverbAudioClient;
-    reverb->AddInput(filter);
+    reverb->AddInput(reverbGain);
     
     dryGain = new Multiplier;
-    dryGain->SetA(mixer);
+    dryGain->SetA(filter);
     dryGain->SetVal(0.8f);
     
     wetDryMix = new Adder;
@@ -95,9 +95,7 @@ void Harp::Cleanup()
     for (int i = 0; i < strings.size(); ++i)
     {
         AudioServer::GetInstance()->EnterLock();
-        mixer->RemoveInput(filters.at(i));
         AudioServer::GetInstance()->ExitLock();
-        delete filters.at(i);
         delete accumulators.at(i);
         delete strings.at(i);
     }
@@ -108,6 +106,9 @@ void Harp::Cleanup()
     }
     if (filter)
         delete filter;
+    
+    if (preVerbFilter)
+        delete preVerbFilter;
     
     if (reverb)
         delete reverb;
@@ -126,7 +127,6 @@ void Harp::Cleanup()
     
     strings.clear();
     accumulators.clear();
-    filters.clear();
 }
 
 void Harp::AddString()
@@ -137,13 +137,8 @@ void Harp::AddString()
         return;
     
     strings.push_back(new Karplus(0.009));
-    filters.push_back(new StateVariable);
-    filters.back()->SetInput(strings.back());
-    filters.back()->setType(StateVariable::kHighpass);
-    filters.back()->setFreq(FILTER_FREQ);
-    filters.back()->setRes(FILTER_RES);
     accumulators.push_back(new SampleAccumulator());
-    accumulators.back()->SetInput(filters.back());
+    accumulators.back()->SetInput(strings.back());
     accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     AudioServer::GetInstance()->EnterLock();
     mixer->AddInput(accumulators.back());
@@ -161,9 +156,7 @@ void Harp::RemoveString()
     AudioServer::GetInstance()->EnterLock();
     mixer->RemoveInput(accumulators.back());
     AudioServer::GetInstance()->ExitLock();
-    
-    delete filters.back();
-    filters.pop_back();
+
     delete accumulators.back();
     accumulators.pop_back();
     delete strings.back();
@@ -322,8 +315,9 @@ void Harp::onFrame(const Leap::Controller& controller)
             mix = zAvg / 250.f;
         if (mix > 1.f) mix = 1.f;
         if (mix < 0.f) mix = 0.f;
-        setWetLevel(mix);
-        setDryLevel(1-mix);
+        mix = jmax(0.5f, mix);
+        setWetLevel(sqrt(mix));
+        setDryLevel(sqrt(1-mix));
     }
     
 }
