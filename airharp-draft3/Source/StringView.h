@@ -12,7 +12,7 @@
 #include "GfxTools.h"
 #include "SkinManager.h"
 
-#define NUM_SAMPLES 128
+#define NUM_SAMPLES 64
 static float gStringLineWidth = 0.015;
 
 class StringView : public FingerView::Listener
@@ -27,7 +27,7 @@ public:
     , yScale(1)
     , fade(0.f)
     {
-        numSampleVerts = 1800;//numSamples*2;
+        numSampleVerts = numSamples*2;
     }
     void setup()
     {
@@ -148,7 +148,7 @@ public:
 
             val *= scale;
             float x1 = stringWidth/2.f + w/2 + fabsf(val);
-            float x2 = stringWidth/2.f - w/2 - fabsf(val);
+            float x2 = x1;//stringWidth/2.f - w/2 + fabsf(val);
             sampleVerts[i * 2][0] = x1;
             sampleVerts[i * 2 + 1][0] = x2;
         }
@@ -200,19 +200,19 @@ public:
             fade -= 0.1f;
 
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), bgRectColor);
-        bgBatch.Draw();
+        //bgBatch.Draw();
         glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("stringBg0").textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgTexColor, 0);
-        bgBatch.Draw();
+        //bgBatch.Draw();
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDisable(GL_DEPTH_TEST);
-        glLineWidth(1.f);
+        glLineWidth(3.f);
         
         glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("string0").textureId);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
-        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
