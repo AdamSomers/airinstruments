@@ -5,7 +5,7 @@
 
 #define MAX_STRINGS 30
 #define SAMPS_PER_PIXEL 6
-#define FILTER_FREQ 150.f
+#define FILTER_FREQ 20.f
 #define FILTER_RES 0.f
 
 const std::string* Harp::gScale = gPentatonicMajor;
