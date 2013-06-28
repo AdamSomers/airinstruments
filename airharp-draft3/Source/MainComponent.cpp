@@ -242,6 +242,8 @@ void MainContentComponent::renderOpenGL()
         
         if (Environment::instance().ready)
             setupBackground();
+        
+        sizeChanged = false;
     }
     if (chordRegionsNeedUpdate) {
         layoutChordRegions();
