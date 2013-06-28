@@ -274,6 +274,8 @@ public:
                  prevDistanceX < 0))) //&&
                 //distanceY < stringHeight * (1.f / (float)numChords) / 2.f)
             {
+                
+                int direction = distanceX > 0.f ? -1 : 1;
                 float pos = point[1];
                 pos += 1.f;
                 pos /= 2.f;
@@ -284,7 +286,7 @@ public:
                     h->setChord(chordNum);
                     pos = 0.5;
                 }
-                pluck(pos);
+                pluck(pos, 1, direction);
             }
         }
     }
@@ -294,7 +296,7 @@ public:
         pluck(0.5f, velocity);
     }
     
-    void pluck(float position, float velocity = 1.f)
+    void pluck(float position, float velocity = 1.f, int direction = 1)
     {
         int idx = stringNum % sizeof(Harp::gScale);
         int mult = (stringNum / (float)sizeof(Harp::gScale));
@@ -311,10 +313,10 @@ public:
                 buffer[x] = -x / (float)midpoint;
             else
                 buffer[x] = -(1.f - (x - midpoint) / (float)(bufferSize - midpoint));
-            
-            //if (fingerPrevX > t)
-            //    buffer[x] = -buffer[x];
+
+            buffer[x] *= direction;
         }
+
         HarpManager::instance().getHarp(harpNum)->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
         //HarpManager::instance().getHarp(harpNum)->NoteOn(stringNum, note, 127.f * velocity);
     }
