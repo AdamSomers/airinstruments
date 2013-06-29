@@ -147,7 +147,7 @@ public:
             val = linterp(prevVal, val, fSampleIndex - iSampleIndex);
 
             val *= scale;
-            float x1 = stringWidth/2.f + w/2 + fabsf(val);
+            float x1 = stringWidth/2.f + w/2 + val;
             float x2 = x1;//stringWidth/2.f - w/2 + fabsf(val);
             sampleVerts[i * 2][0] = x1;
             sampleVerts[i * 2 + 1][0] = x2;
@@ -275,7 +275,7 @@ public:
                 //distanceY < stringHeight * (1.f / (float)numChords) / 2.f)
             {
                 
-                int direction = distanceX > 0.f ? -1 : 1;
+                int direction = distanceX > 0.f ? 1 : -1;
                 float pos = point[1];
                 pos += 1.f;
                 pos /= 2.f;
