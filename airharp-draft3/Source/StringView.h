@@ -183,7 +183,7 @@ public:
         //Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
         GLfloat stringColor [] = { 1.f, 1.f, 1.f, 1.f };
-        if (stringNum % sizeof(Harp::gScale) == 0) {
+        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
             stringColor[0] = 1.f;
             stringColor[1] = 1.f;
             stringColor[2] = .5f;
@@ -298,11 +298,13 @@ public:
     
     void pluck(float position, float velocity = 1.f, int direction = 1)
     {
-        int idx = stringNum % sizeof(Harp::gScale);
-        int mult = (stringNum / (float)sizeof(Harp::gScale));
-        int octaveSpan = (ScaleDegrees::getChromatic(Harp::gScale[sizeof(Harp::gScale)-1]) / 12) + 1;
+        Harp* harp = HarpManager::instance().getHarp(0);
+        std::vector<std::string>& scale = harp->getScale();
+        int idx = stringNum % scale.size();
+        int mult = (stringNum / (float)scale.size());
+        int octaveSpan = (ScaleDegrees::getChromatic(scale[scale.size()-1]) / 12) + 1;
         int base = 32 + 12*octaveSpan*mult;
-        int note = base + ScaleDegrees::getChromatic(Harp::gScale[idx]);
+        int note = base + ScaleDegrees::getChromatic(scale[idx]);
         const int bufferSize = 512;
         float buffer[bufferSize];
         memset(buffer, 0, bufferSize);

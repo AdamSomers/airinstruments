@@ -10,34 +10,6 @@
 #include "JuceReverbAudioClient.h"
 #include "Leap.h"
 
-const std::string gPentatonicMajor[] = { "1", "2", "4", "5", "6" };
-const std::string gPentatonicMinor[] = {"1", "b3", "4", "5", "b7" };
-const std::string gWholeTone[] = { "1", "2", "3", "#4", "#5", "#6" };
-const std::string gDiatonic[] = { "1", "2", "3", "4", "5", "6", "7"};
-const std::string gMinor[] = { "1", "2", "b3", "4", "5", "b6", "b7" };
-// Slendro?
-const std::string gExotic1[] = { "1", "3", "4", "5", "7"};
-// Chinese mystery
-const std::string gExotic2[] = { "1", "3", "#4", "5", "7" };
-
-const std::string I[]     = { "1", "3", "5" };
-const std::string ii[]    = { "2", "4", "6" };
-const std::string iii[]   = { "3", "5", "7" };
-const std::string IV[]    = { "1", "4", "6" };
-const std::string V[]     = { "2", "5", "7" };
-const std::string vi[]    = { "1", "3", "6" };
-const std::string VII[]   = { "2", "4", "b7" };
-const std::string vii_d[] = { "2", "4", "7" };
-
-const std::string i[]     = { "1", "b3", "5" };
-const std::string ii_d[]  = { "2", "4", "b6" };
-const std::string III[]   = { "b3", "5", "b7" };
-const std::string iv[]    = { "1", "4", "b6" };
-const std::string v[]     = { "2", "5", "b7" };
-const std::string VI[]    = { "1", "b3", "b6" };
-
-const std::string gDiminishedChord[] = { "1", "b3", "b5" };
-
 class Harp : public Leap::Listener
 {
 public:
@@ -71,13 +43,14 @@ public:
     std::vector<Karplus*>& GetStrings() { return strings; }
     void SetScale(int scaleIndex);
     
-    static const std::string* gScale;
+    std::vector<std::string>& getScale();
     
     CriticalSection lock;
 
 private:
     void Cleanup();
     void Init();
+    void BuildDefaultScales();
     
     std::vector<SampleAccumulator*> accumulators;
     std::vector<Karplus*> strings;
@@ -95,6 +68,11 @@ private:
     bool active;
     bool chordMode;
     std::vector<int> selectedChords;
+
+    typedef std::map<std::string, std::vector<std::string> > ScaleMap;
+    ScaleMap scales;
+    
+    std::string selectedScaleName;
     int selectedScale;
     bool idle;
 };

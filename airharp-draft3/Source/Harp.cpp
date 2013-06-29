@@ -8,8 +8,6 @@
 #define FILTER_FREQ 20.f
 #define FILTER_RES 0.f
 
-const std::string* Harp::gScale = gPentatonicMajor;
-
 Harp::Harp()
 : numStrings(1)
 , mixer(NULL)
@@ -37,6 +35,8 @@ Harp::~Harp()
 
 void Harp::Init()
 {
+    BuildDefaultScales();
+
     Cleanup();
     for (int i = 0; i < numStrings; ++i)
     {
@@ -130,6 +130,148 @@ void Harp::Cleanup()
     accumulators.clear();
 }
 
+void Harp::BuildDefaultScales()
+{
+    const std::string pentatonicMajor[] = { "1", "2", "4", "5", "6" };
+    const std::string pentatonicMinor[] = {"1", "b3", "4", "5", "b7" };
+    const std::string wholeTone[] = { "1", "2", "3", "#4", "#5", "#6" };
+    const std::string diatonic[] = { "1", "2", "3", "4", "5", "6", "7"};
+    const std::string minor[] = { "1", "2", "b3", "4", "5", "b6", "b7" };
+    // Slendro?
+    const std::string exotic1[] = { "1", "3", "4", "5", "7"};
+    // Chinese mystery
+    const std::string exotic2[] = { "1", "3", "#4", "5", "7" };
+    
+    const std::string I[]     = { "1", "3", "5" };
+    const std::string ii[]    = { "2", "4", "6" };
+    const std::string iii[]   = { "3", "5", "7" };
+    const std::string IV[]    = { "1", "4", "6" };
+    const std::string V[]     = { "2", "5", "7" };
+    const std::string vi[]    = { "1", "3", "6" };
+    const std::string VII[]   = { "2", "4", "b7" };
+    const std::string vii_d[] = { "2", "4", "7" };
+    
+    const std::string i[]     = { "1", "b3", "5" };
+    const std::string ii_d[]  = { "2", "4", "b6" };
+    const std::string III[]   = { "b3", "5", "b7" };
+    const std::string iv[]    = { "1", "4", "b6" };
+    const std::string v[]     = { "2", "5", "b7" };
+    const std::string VI[]    = { "1", "b3", "b6" };
+    
+    std::vector<std::string> scale;
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(pentatonicMajor[i]);
+    scales.insert(std::make_pair("pentatonicMajor", scale));
+    scale.clear();
+
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(pentatonicMinor[i]);
+    scales.insert(std::make_pair("pentatonicMinor", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  6; ++i)
+        scale.push_back(wholeTone[i]);
+    scales.insert(std::make_pair("wholeTone", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  7; ++i)
+        scale.push_back(diatonic[i]);
+    scales.insert(std::make_pair("diatonic", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  7; ++i)
+        scale.push_back(minor[i]);
+    scales.insert(std::make_pair("minor", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(exotic1[i]);
+    scales.insert(std::make_pair("exotic1", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(exotic2[i]);
+    scales.insert(std::make_pair("exotic2", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(I[i]);
+    scales.insert(std::make_pair("I", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(ii[i]);
+    scales.insert(std::make_pair("ii", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(iii[i]);
+    scales.insert(std::make_pair("iii", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(IV[i]);
+    scales.insert(std::make_pair("IV", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(V[i]);
+    scales.insert(std::make_pair("V", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(vi[i]);
+    scales.insert(std::make_pair("vi", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(VII[i]);
+    scales.insert(std::make_pair("VII", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(vii_d[i]);
+    scales.insert(std::make_pair("vii_d", scale));
+    scale.clear();
+    
+    for (int j = 0; j < 3; ++j)
+        scale.push_back(i[j]);
+    scales.insert(std::make_pair("i", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(ii_d[i]);
+    scales.insert(std::make_pair("ii_d", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(III[i]);
+    scales.insert(std::make_pair("III", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(iv[i]);
+    scales.insert(std::make_pair("iv", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(v[i]);
+    scales.insert(std::make_pair("v", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(VI[i]);
+    scales.insert(std::make_pair("VI", scale));
+    scale.clear();
+}
+
+std::vector<std::string>& Harp::getScale()
+{
+    ScaleMap::iterator i = scales.find(selectedScaleName);
+    jassert(i != scales.end());
+    return (*i).second;
+}
+
 void Harp::AddString()
 {
     ScopedLock sl(lock);
@@ -189,25 +331,25 @@ void Harp::SetScale(int scaleIndex)
         selectedScale  = scaleIndex;
         switch (scaleIndex) {
             case 0:
-                gScale = gDiatonic;
+                selectedScaleName = "diatonic";
                 break;
             case 1:
-                gScale = gMinor;
+                selectedScaleName = "minor";
                 break;
             case 2:
-                gScale = gPentatonicMajor;
+                selectedScaleName = "pentatonicMajor";
                 break;
             case 3:
-                gScale = gPentatonicMinor;
+                selectedScaleName = "pentatonicMinor";
                 break;
             case 4:
-                gScale = gWholeTone;
+                selectedScaleName = "wholeTone";
                 break;
             case 5:
-                gScale = gExotic1;
+                selectedScaleName = "exotic1";
                 break;
             case 6:
-                gScale = gExotic2;
+                selectedScaleName = "exotic2";
                 break;
             default:
                 break;
@@ -218,25 +360,25 @@ void Harp::SetScale(int scaleIndex)
         bool minor = false;
         switch (scaleIndex) {
             case 0:
-                gScale = minor ? i : I;
+                selectedScaleName = minor ? "i" : "I";
                 break;
             case 1:
-                gScale = minor ? ii_d : ii;
+                selectedScaleName = minor ? "ii_d" : "ii";
                 break;
             case 2:
-                gScale = minor ? III : iii;
+                selectedScaleName = minor ? "III" : "iii";
                 break;
             case 3:
-                gScale = minor ? iv : IV;
+                selectedScaleName = minor ? "iv" : "IV";
                 break;
             case 4:
-                gScale = minor ? v : V;
+                selectedScaleName = minor ? "v" : "V";
                 break;
             case 5:
-                gScale = minor ? VI : vi;
+                selectedScaleName = minor ? "VI" : "vi";
                 break;
             case 6:
-                gScale = minor ? VII : vii_d;
+                selectedScaleName = minor ? "VII" : "vii_d";
                 break;
             default:
                 break;
