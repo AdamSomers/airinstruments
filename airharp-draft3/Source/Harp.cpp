@@ -85,7 +85,7 @@ void Harp::Init()
     AudioServer::GetInstance()->AddClient(outputGain, 0);
     AudioServer::GetInstance()->AddClient(outputGain, 1);
     
-    MotionDispatcher::instance().controller.addListener(*this);
+    MotionDispatcher::instance().addListener(*this);
     
     for (int i = 0; i < 7; ++i)
         selectChord(i);
@@ -93,6 +93,9 @@ void Harp::Init()
 
 void Harp::Cleanup()
 {
+    // Removing here causes a Juce memory leak.  Could be static deallocation order issue.
+    //MotionDispatcher::instance().removeListener(*this);
+
     for (int i = 0; i < strings.size(); ++i)
     {
         AudioServer::GetInstance()->EnterLock();
@@ -462,7 +465,6 @@ void Harp::onFrame(const Leap::Controller& controller)
         setWetLevel(sqrt(mix));
         setDryLevel(sqrt(1-mix));
     }
-    
 }
 
 void Harp::setActive(bool shouldBeActive)

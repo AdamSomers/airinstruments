@@ -38,7 +38,7 @@ MotionDispatcher::MotionDispatcher()
 
 MotionDispatcher::~MotionDispatcher()
 {
-    removeAllListeners();
+    removeListener(*this);
     fingerViewListeners.clear();
     handViewListeners.clear();
 	cursorViewListeners.clear();
@@ -64,13 +64,6 @@ void MotionDispatcher::removeListener(Leap::Listener& l)
 	}
 }
 
-void MotionDispatcher::removeAllListeners()
-{
-    for (Leap::Listener* l : listeners)
-        controller.removeListener(*l);
-    listeners.clear();
-}
-
 void MotionDispatcher::pause()
 {
     if (!paused)
@@ -93,7 +86,7 @@ void MotionDispatcher::resume()
 
 void MotionDispatcher::stop()
 {
-    removeListener(*this);
+    controller.removeListener(*this);
 }
 
 void MotionDispatcher::addCursorListener(CursorView::Listener& listener)

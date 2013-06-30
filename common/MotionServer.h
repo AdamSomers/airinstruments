@@ -33,7 +33,6 @@ public:
     
     void addListener(Leap::Listener& l);
     void removeListener(Leap::Listener& l);
-    void removeAllListeners();
     void pause();
     void resume();
 	void stop();

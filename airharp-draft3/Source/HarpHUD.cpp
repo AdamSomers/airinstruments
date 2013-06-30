@@ -136,6 +136,7 @@ StatusBar::StatusBar()
 
 StatusBar::~StatusBar()
 {
+    MotionDispatcher::instance().removeListener(*this);
 }
 
 // HUDView overrides
@@ -143,7 +144,8 @@ void StatusBar::setup()
 {
     HUDView::setup();
     layoutControls();
-    MotionDispatcher::instance().controller.addListener(*this);
+    
+    MotionDispatcher::instance().addListener(*this);
 }
 
 void StatusBar::layoutControls()

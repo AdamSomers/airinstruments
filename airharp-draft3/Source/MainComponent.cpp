@@ -327,6 +327,7 @@ void MainContentComponent::renderOpenGL()
 
 void MainContentComponent::openGLContextClosing()
 {
+    MotionDispatcher::instance().removeListener(*this);
 }
 
 void MainContentComponent::layoutStrings()
