@@ -207,7 +207,7 @@ public:
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDisable(GL_DEPTH_TEST);
-        glLineWidth(3.f);
+        glLineWidth(((1.f - (this->stringNum / 30.f)) * 8) / 2.f);
         
         glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("string0").textureId);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
