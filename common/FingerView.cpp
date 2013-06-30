@@ -30,10 +30,6 @@ void FingerView::draw()
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     GLfloat color [] = { 0.f, 1.f, 0.f, 1.f };
     
-    glEnable(GL_DEPTH_TEST);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-    
     glUseProgram((GLuint)shaderId);
     GLint iModelViewMatrix = glGetUniformLocation(shaderId, "mvMatrix");
     glUniformMatrix4fv(iModelViewMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetModelViewMatrix());

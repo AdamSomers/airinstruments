@@ -234,13 +234,18 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             float dirY = hand.direction().y;
             float dirZ = hand.direction().z;
             
+            float upX = hand.palmNormal().x;
+            float upY = hand.palmNormal().y;
+            float upZ = hand.palmNormal().z;
+            
             M3DVector3f prev;
             hv->objectFrame.GetForwardVector(prev);
             hv->prevFrame.SetForwardVector(prev);
             hv->objectFrame.GetOrigin(prev);
             hv->prevFrame.SetOrigin(prev);
             
-            hv->objectFrame.SetForwardVector(dirX,dirY,-dirZ);
+            hv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
+            hv->objectFrame.SetUpVector(upX,upY,upZ);
             float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
             float scaledY = (y-.5f)*4;
             if (z < zLimit) z = 0;

@@ -302,15 +302,15 @@ void MainContentComponent::renderOpenGL()
     Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
-
-    for (auto iter : MotionDispatcher::instance().fingerViews)
-        if (iter.second->inUse)
-            iter.second->draw();
     
     for (auto iter : MotionDispatcher::instance().handViews)
         if (iter.second->inUse)
             iter.second->draw();
 
+    for (auto iter : MotionDispatcher::instance().fingerViews)
+        if (iter.second->inUse)
+            iter.second->draw();
+    
     for (HarpView* hv : harps)
         hv->update();
     

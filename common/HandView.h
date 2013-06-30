@@ -42,7 +42,8 @@ public:
     int id;
     bool invalid;
 private:
-    GLTriangleBatch     batch;
+    int shaderId;
+    GLBatch batch;
 };
 
 #endif // h_HandView
