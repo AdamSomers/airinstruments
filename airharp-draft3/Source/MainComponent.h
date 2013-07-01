@@ -78,6 +78,7 @@ private:
     
     View2d fingersImage;
     int bloomShaderId;
+    int shaderId;
     
     bool sizeChanged;
 

@@ -18,7 +18,7 @@ public:
     void draw();
     void getScreenPos(M3DVector2f& inVec);
     
-    void drawToTexture(const TextureDescription& td);
+    void drawWithShader(int shaderId);
 
     class Listener
     {
@@ -48,7 +48,6 @@ public:
 private:
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
-    int shaderId;
 };
 
 #endif // h_FingerView

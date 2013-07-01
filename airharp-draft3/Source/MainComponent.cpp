@@ -212,15 +212,20 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     statusBar->setIndicatorTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
-    int imageW = 512;
-    int imageH = 512;
-    Image im(Image::PixelFormat::ARGB, imageW, imageH, true);
+    // Load shaders for finger rendering
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
+                                                                                     GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
+    jassert(shaderId != 0);
     
     bloomShaderId = gltLoadShaderPairSrcWithAttributes(BinaryData::bloom_vs, BinaryData::bloom_fs, 2,
                                                        GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_TEXTURE0, "vTexCoord0");
     
     jassert(bloomShaderId != 0);
     
+    // setup the offscreen finger texture
+    int imageW = 512;
+    int imageH = 512;
+    Image im(Image::PixelFormat::ARGB, imageW, imageH, true);
     TextureDescription td = GfxTools::loadTextureFromJuceImage(im);
     td.texX = 0.f;
     td.texY = 1.f;
@@ -291,10 +296,18 @@ void MainContentComponent::renderOpenGL()
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
-    
+
+    // Draw fingers to offscreen texture
+    const TextureDescription& td = fingersImage.getDefaultTexture();
+    glViewport(0,0,td.imageW,td.imageH);
+    glUseProgram((GLuint)shaderId);
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
-            iter.second->drawToTexture(fingersImage.getDefaultTexture());
+            iter.second->drawWithShader(shaderId);
+    glBindTexture(GL_TEXTURE_2D,td.textureId);
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, td.imageW, td.imageH, 0);
+    glViewport(0,0,Environment::instance().screenW,Environment::instance().screenH);
+
 
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
@@ -332,38 +345,21 @@ void MainContentComponent::renderOpenGL()
         if (iter.second->inUse)
             iter.second->draw();
 
-//    for (auto iter : MotionDispatcher::instance().fingerViews)
-//        if (iter.second->inUse)
-//            iter.second->draw();
-
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    
-    glDisable(GL_DEPTH_TEST);                   // Disable Depth Testing
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE);               // Set Blending Mode
-    glEnable(GL_BLEND);                     // Enable Blending
-    
-    GLfloat imageColor[4] = { 1.f, 1.f, 1.f, 1.f };
-    //imageView.setDefaultColor(imageColor);
+
+    // Render the offscreen fingers image using bloom shader
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
     fingersImage.setDefaultBlendMode(GL_SRC_ALPHA,GL_ONE);
-    
-    //imageView.draw();
     glBindTexture(GL_TEXTURE_2D, fingersImage.getDefaultTexture().textureId);
-    
     glUseProgram((GLuint)bloomShaderId);
     GLint iModelViewMatrix = glGetUniformLocation(bloomShaderId, "mvpMatrix");
     glUniformMatrix4fv(iModelViewMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetModelViewMatrix());
-    //GLint iProjMatrix = glGetUniformLocation(shaderId, "pMatrix");
-    //glUniformMatrix4fv(iProjMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetProjectionMatrix());
+    GLfloat imageColor[4] = { 1.f, 1.f, 1.f, 1.f };
     GLint iColor = glGetUniformLocation(bloomShaderId, "vColor");
     glUniform4fv(iColor, 1, imageColor);
     GLint iTextureUnit = glGetUniformLocation(bloomShaderId, "textureUnit0");
     glUniform1i(iTextureUnit, 0);
-    //GLint iTextureUniform = glGetUniformLocation(shaderId, "bgl_RenderedTexture");
-    //glUniform1i(iTextureUniform, imageView.getDefaultTexture().textureId);
-    
-    //   Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), color, 0);
-    
     fingersImage.defaultBatch.Draw();
     
     Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
