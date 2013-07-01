@@ -6,10 +6,10 @@
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
-      <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
-      <FILE id="RntTTZ" name="bloom.fs" compile="0" resource="1" file="../common/bloom.fs"/>
-      <FILE id="GDIyZb" name="bloom.vs" compile="0" resource="1" file="../common/bloom.vs"/>
-      <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
+      <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
+      <FILE id="RntTTZ" name="bloom.fs" compile="0" resource="0" file="../common/bloom.fs"/>
+      <FILE id="GDIyZb" name="bloom.vs" compile="0" resource="0" file="../common/bloom.vs"/>
+      <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
       <FILE id="RlyAyP" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
