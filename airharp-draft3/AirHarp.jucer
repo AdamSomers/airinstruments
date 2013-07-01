@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.6.0"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
+      <FILE id="RntTTZ" name="bloom.fs" compile="0" resource="1" file="../common/bloom.fs"/>
+      <FILE id="GDIyZb" name="bloom.vs" compile="0" resource="1" file="../common/bloom.vs"/>
       <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
@@ -160,7 +162,8 @@
       </CONFIGURATIONS>
     </XCODE_MAC>
     <VS2012 targetFolder="Builds/VisualStudio2012" juceFolder="../../juce/modules"
-            externalLibraries="Leap.lib&#10;" extraCompilerFlags="" extraDefs="__WINDOWS_MM__=1">
+            externalLibraries="Leap.lib&#10;" extraCompilerFlags="" extraDefs="__WINDOWS_MM__=1"
+            libraryType="1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;../../../../muskit/src&#10;../../../../muskit/ThirdParty"

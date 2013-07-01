@@ -270,7 +270,14 @@ void MainContentComponent::renderOpenGL()
     glClearColor(0.f, 0.f, 0.f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    Environment::instance().modelViewMatrix.LoadIdentity();
     
+    for (auto iter : MotionDispatcher::instance().fingerViews)
+        if (iter.second->inUse)
+            iter.second->drawToTexture();
+
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     
