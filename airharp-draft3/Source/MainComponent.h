@@ -76,6 +76,10 @@ private:
     GLuint backgroundTextureId;
     GLBatch backgroundBatch;
     
+    View2d fingersImage;
+    int bloomShaderId;
+    int shaderId;
+    
     bool sizeChanged;
 
     //==============================================================================

@@ -2,6 +2,8 @@
 #include "GfxTools.h"
 #include "MotionServer.h"
 
+#include "../JuceLibraryCode/JuceHeader.h"
+
 HandView::HandView()
 : inUse(false)
 , id(-1)
@@ -11,8 +13,23 @@ HandView::HandView()
 
 void HandView::setup()
 {
-    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
+    // Load shaders for finger rendering
+    File special = File::getSpecialLocation(File::currentApplicationFile);
+#if JUCE_WINDOWS
+    File resources = special.getChildFile("..");
+#elif JUCE_MAC
+    File resources = special.getChildFile("Contents/Resources");
+#endif
+    File vsFile = resources.getChildFile("testShader.vs");
+    File fsFile = resources.getChildFile("testShader.fs");
+    
+    jassert(vsFile.exists());
+    jassert(fsFile.exists());
+
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
                                                                                      GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
+    jassert(shaderId != 0);
+
 /*/
     M3DVector3f verts[4] = {
         -.25f, 0.f, -.25f,

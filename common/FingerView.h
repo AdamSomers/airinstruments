@@ -7,6 +7,7 @@
 #include <GLGeometryTransform.h>
 
 #include "Environment.h"
+#include "View2d.h"
 #include "Leap.h"
 
 class FingerView
@@ -17,6 +18,8 @@ public:
     void draw();
     void getScreenPos(M3DVector2f& inVec);
     
+    void drawWithShader(int shaderId);
+
     class Listener
     {
     public:
@@ -45,7 +48,6 @@ public:
 private:
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
-    int shaderId;
 };
 
 #endif // h_FingerView
