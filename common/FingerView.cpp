@@ -12,8 +12,9 @@ FingerView::FingerView()
 
 void FingerView::setup()
 {
-    gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
-    gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
+    //gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
+    //gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
+    gltMakeSphere(cylinderBatch, .03, 10, 10);
 }
 
 void FingerView::drawWithShader(int shaderId)
@@ -36,7 +37,7 @@ void FingerView::drawWithShader(int shaderId)
     GLint iColor = glGetUniformLocation(shaderId, "vColor");
     glUniform4fv(iColor, 1, color);
     GfxTools::drawBatch(&cylinderBatch);
-    GfxTools::drawBatch(&coneBatch);
+    //GfxTools::drawBatch(&coneBatch);
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 

@@ -9,9 +9,9 @@ void main(void)
     int j;
     int i;
     
-    for( i= -5 ;i < 5; i++)
+    for( i= -4 ;i < 4; i++)
     {
-        for (j = -5; j < 5; j++)
+        for (j = -3; j < 3; j++)
         {
             sum += texture2D(textureUnit0, texcoord + vec2(j, i)*0.004) * 0.25;
         }
