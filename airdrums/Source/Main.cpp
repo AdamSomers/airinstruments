@@ -36,7 +36,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 {
     // This method is where you should put your application's initialisation code..
     
-    BETA_CHECK(6, 22)
+    
 
 	PropertiesFile::Options options;
 	options.applicationName = "AirBeats";
@@ -57,7 +57,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 		MenuBarModel::setMacMainMenu(mainMenu);
 	#endif
     
-    BETA_CHECK(8, 1)
+    
     
 	XmlElement* audioState = properties.getUserSettings()->getXmlValue(AudioSettingsDialog::getPropertiesName());
     String audioStatus = audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
@@ -70,7 +70,7 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
         return;
     }
     
-    BETA_CHECK(9, 1)
+    
 
     postMessage(new InitializeMessage);
 
@@ -169,9 +169,9 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 
 			settingsDialog = new AudioSettingsDialog(mainWindow, audioDeviceManager, properties);
 
-            BETA_CHECK_RET(6, 22)
-            BETA_CHECK_RET(7, 1)
-            BETA_CHECK_RET(8, 1)
+            
+            
+            
 
 			break;
 		}
@@ -180,9 +180,9 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.SavePatternAs();
 
-            BETA_CHECK_RET(6, 23)
-            BETA_CHECK_RET(7, 2)
-            BETA_CHECK_RET(8, 2)
+            
+            
+            
 			break;
 		}
 		case MainMenu::kLoadPatternCmd :
@@ -203,9 +203,9 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 		}
 		case MainMenu::kExportCmd :
 		{
-            BETA_CHECK_RET(6, 24)
-            BETA_CHECK_RET(7, 5)
-            BETA_CHECK_RET(8, 5)
+            
+            
+            
 
 			UniquePtr<AudioExporter> exporter(new AudioExporter(mainWindow));
 			exporter->Export();
@@ -219,9 +219,9 @@ bool AirHarpApplication::perform (const InvocationInfo &info)
 		}
 		case MainMenu::kSavePatternCmd :
 		{
-            BETA_CHECK_RET(6, 25)
-            BETA_CHECK_RET(7, 3)
-            BETA_CHECK_RET(8, 3)
+            
+            
+            
 
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.SavePattern();
@@ -263,7 +263,7 @@ void AirHarpApplication::handleMessage(const juce::Message& m)
         
         //Drums::instance().setPattern(SharedPtr<DrumPattern>(new DrumPattern));	// No longer a need to start with an empty pattern, use the last used pattern from the prefs
         
-        BETA_CHECK(9, 2)
+        
 
         String kitUuidString = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitUuid", "Default");
         String kitName = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("kitName", "Default");

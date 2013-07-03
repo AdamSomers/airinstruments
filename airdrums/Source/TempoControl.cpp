@@ -91,8 +91,8 @@ void TempoControl::buttonStateChanged(HUDButton* b)
     if (b == &rightButton)
         increment(1);
 
-    BETA_CHECK(7, 11)
-    BETA_CHECK(8, 1)
+    
+    
 }
 
 TempoControl::Icon::Icon()

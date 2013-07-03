@@ -124,11 +124,6 @@ MainContentComponent::~MainContentComponent()
 
 void MainContentComponent::paint (Graphics& g)
 {
-    BETA_CHECK(6, 24)
-    
-    if ((Time::getCurrentTime() - startTime).inMinutes() > 20)
-        BETA_CHECK_RANDOM_2013()
-
     static bool firstTime = true;
     if (Environment::instance().ready)
         return;
@@ -160,7 +155,7 @@ void MainContentComponent::paint (Graphics& g)
         Logger::writeToLog("painted once, sending InitGLMessage");
         postMessage(new InitGLMessage);
 
-        BETA_CHECK(6, 25)
+        
     }
     firstTime = false;
 }
@@ -199,9 +194,6 @@ void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 
 void MainContentComponent::newOpenGLContextCreated()
 {
-    startTime = Time::getCurrentTime();
-    BETA_CHECK(6, 23)
-
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
@@ -659,13 +651,7 @@ void MainContentComponent::renderOpenGL()
                 }
                     break;
             }
-            
-            if ((Time::getCurrentTime() - startTime).inMinutes() > 30)
-                BETA_CHECK(6, 29)
-        }        
-
-        if ((Time::getCurrentTime() - startTime).inMinutes() > 30)
-            BETA_CHECK_RANDOM_2013()
+        }
         
         if (trigViewBank)
             trigViewBank->setBounds(HUDRect(0.0f,
@@ -726,9 +712,6 @@ void MainContentComponent::renderOpenGL()
         needsPatternListUpdate = false;
         sizeChanged = true;
     }
-    
-    if ((Time::getCurrentTime() - startTime).inMinutes() > 30)
-        BETA_CHECK_RANDOM_2014()
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -804,9 +787,6 @@ void MainContentComponent::renderOpenGL()
     
     leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     leapDisconnectedView->draw();
-
-    if ((Time::getCurrentTime() - startTime).inMinutes() > 40)
-        BETA_CHECK_RANDOM_2013()
     
     MotionDispatcher::instance().cursor->draw();
     
