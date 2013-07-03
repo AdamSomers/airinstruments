@@ -8,6 +8,7 @@ HandView::HandView()
 : inUse(false)
 , id(-1)
 , invalid(false)
+, didSetup(false)
 {
 }
 
@@ -87,6 +88,12 @@ void HandView::setup()
 
 void HandView::draw()
 {
+    if (!didSetup)
+    {
+        setup();
+        didSetup = true;
+    }
+
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);

@@ -45,6 +45,7 @@ public:
     bool inUse;
     int id;
     bool invalid;
+    bool didSetup;
 private:
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;

@@ -41,6 +41,7 @@ public:
     bool inUse;
     int id;
     bool invalid;
+    bool didSetup;
 private:
     int shaderId;
     GLBatch batch;

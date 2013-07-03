@@ -6,6 +6,7 @@ FingerView::FingerView()
 : inUse(false)
 , id(-1)
 , invalid(false)
+, didSetup(false)
 {
 }
 
@@ -17,6 +18,12 @@ void FingerView::setup()
 
 void FingerView::drawWithShader(int shaderId)
 {
+    if (!didSetup)
+    {
+        setup();
+        didSetup = true;
+    }
+
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);
@@ -35,6 +42,11 @@ void FingerView::drawWithShader(int shaderId)
 
 void FingerView::draw()
 {
+    if (!didSetup)
+    {
+        setup();
+        didSetup = true;
+    }
 }
 
 void FingerView::getScreenPos(M3DVector2f& inVec)

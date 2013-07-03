@@ -12,20 +12,6 @@ MotionDispatcher::MotionDispatcher()
     controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
     
-    for (int i = 0; i < 50; ++i)
-    {
-        SharedPtr<FingerView> fv(new FingerView);
-        fingerViews.insert(std::make_pair(i, fv));
-        fv->id = i;
-    }
-    
-    for (int i = 0; i < 50; ++i)
-    {
-        SharedPtr<HandView> hv(new HandView);
-        handViews.insert(std::make_pair(i, hv));
-        hv->id = i;
-    }
-    
     cursor = SharedPtr<CursorView>(new CursorView);
     cursor->setBounds(HUDRect(0, 0, 20, 20));
     
@@ -210,9 +196,16 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             auto iter = handViews.find(hand.id());
             if (iter == handViews.end())
             {
-                // Finger map is pre-allocated, if we don't find one too bad!
-                printf("Error! No hand in map for id %d\n", hand.id());
-                continue;
+                printf("Adding hand %d to map\n", hand.id());
+                SharedPtr<HandView> newHv(new HandView);
+                newHv->inUse = true;
+                newHv->invalid = false;
+                newHv->hand = hand;
+                newHv->id = hand.id();
+                handViews.insert(std::make_pair(hand.id(), newHv));
+                hv = newHv;
+                inserted = true;
+
             }
             else
             {
@@ -319,9 +312,14 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     auto iter = fingerViews.find(f.id());
     if (iter == fingerViews.end())
     {
-        // Finger map is pre-allocated, if we don't find one too bad!
-        printf("Error! No finger in map for id %d\n", f.id());
-        return;
+        printf("Adding finger %d to map\n", f.id());
+        SharedPtr<FingerView> newFv(new FingerView);
+        newFv->inUse = true;
+        newFv->invalid = false;
+        newFv->finger = f;
+        newFv->id = f.id();
+        fingerViews.insert(std::make_pair(f.id(), newFv));
+        fv = newFv;
     }
     else
     {
