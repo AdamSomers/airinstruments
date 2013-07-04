@@ -22,8 +22,8 @@ public:
     
     void setText(StringArray onText, StringArray offText);
     
-    void setTextColor(const Colour& newColor);
-    void setBackgroundColor(const Colour& newColor);
+    void setTextColor(const Colour& onColor, const Colour& offColour);
+    void setBackgroundColor(const Colour& onColor, const Colour& offColour);
 
 private:
     StringArray onText;
@@ -31,9 +31,10 @@ private:
     bool textChanged;
     TextureDescription onTextureDesc;
     TextureDescription offTextureDesc;
-    Colour textColor;
-    Colour backgroundColor;
-    
+    Colour onTextColor;
+    Colour offTextColor;
+    Colour onBackgroundColor;
+    Colour offBackgroundColor;
 };
 
 #endif /* defined(__AirBeats__TextButton__) */
