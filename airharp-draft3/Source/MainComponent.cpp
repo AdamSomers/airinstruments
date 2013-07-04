@@ -35,6 +35,7 @@ MainContentComponent::MainContentComponent()
 , slide(NULL)
 , toolbar(NULL)
 , statusBar(NULL)
+, settingsScreen(NULL)
 , sizeChanged(false)
 {
     Environment::openGLContext.setRenderer (this);
@@ -50,6 +51,7 @@ MainContentComponent::~MainContentComponent()
     Environment::openGLContext.detach();
     delete toolbar;
     delete statusBar;
+    delete settingsScreen;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -172,6 +174,7 @@ void MainContentComponent::newOpenGLContextCreated()
     views.push_back(tb);
     toolbar = tb;
     toolbar->updateButtons();
+    toolbar->addActionListener(this);
     
     {
     MessageManagerLock mml;
@@ -181,6 +184,11 @@ void MainContentComponent::newOpenGLContextCreated()
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
+    
+    settingsScreen = new SettingsScreen;
+    settingsScreen->addActionListener(this);
+    settingsScreen->setVisible(false);
+    views.push_back(settingsScreen);
     
     for (int i = 0; i < 7; ++i)
     {
@@ -209,7 +217,7 @@ void MainContentComponent::newOpenGLContextCreated()
     setupBackground();
     
 //    SkinManager::instance().getSkin();
-    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
+//    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
     // Load shaders for finger rendering
     File special = File::getSpecialLocation(File::currentApplicationFile);
@@ -266,6 +274,8 @@ void MainContentComponent::renderOpenGL()
             toolbar->setBounds(HUDRect(0,Environment::instance().screenH-70,Environment::instance().screenW,70));
         if (statusBar)
             statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,35));
+        if (settingsScreen)
+            settingsScreen->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
         
         layoutStrings();
         chordRegionsNeedUpdate = true;
@@ -386,7 +396,7 @@ void MainContentComponent::renderOpenGL()
     
     for (ChordRegion* cr : chordRegions)
         cr->draw();
-    
+
     //openGLContext.triggerRepaint();
 }
 
@@ -582,4 +592,16 @@ void MainContentComponent::timerCallback()
 //        stopTimer();
 //        startTimer(TUTORIAL_TIMEOUT);
 //    }
+}
+
+void MainContentComponent::actionListenerCallback(const String& message)
+{
+    if (message == "playMode")
+    {
+        settingsScreen->setVisible(false);
+    }
+    else if (message == "settingsMode")
+    {
+        settingsScreen->setVisible(true);
+    }
 }

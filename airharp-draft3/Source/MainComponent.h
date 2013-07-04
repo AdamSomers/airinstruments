@@ -13,6 +13,7 @@
 #include "StringView.h"
 #include "HarpView.h"
 #include "TutorialSlide.h"
+#include "SettingsScreen.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -27,7 +28,8 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public ChangeListener,
                                public Leap::Listener,
-                               public Timer
+                               public Timer,
+                               public ActionListener
 {
 public:
     //==============================================================================
@@ -55,6 +57,8 @@ public:
     void onFrame(const Leap::Controller&);
     
     void timerCallback();
+    
+    void actionListenerCallback(const String& message);
 private:
     void go2d();
     void go3d();
@@ -68,10 +72,11 @@ private:
     TutorialSlide* slide;
     HarpToolbar* toolbar;
     StatusBar* statusBar;
+    SettingsScreen* settingsScreen;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
-    std::vector<HUDView*> views;
+    std::vector<HUDView*> views;    
     
     GLuint backgroundTextureId;
     GLBatch backgroundBatch;

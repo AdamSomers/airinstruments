@@ -19,6 +19,15 @@ HarpToolbar::HarpToolbar()
         buttons.push_back(b);
         addChild(b);
     }
+    
+    settingsButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    settingsButton.setBackgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .8f),
+                          Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
+    settingsButton.setTextColor(Colour::fromFloatRGBA(.2f, .2f, .2f, 1.f),
+                    Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
+    settingsButton.addListener(this);
+    settingsButton.setText(StringArray("Settings"), StringArray("Settings"));
+    addChild(&settingsButton);
 }
 
 HarpToolbar::~HarpToolbar()
@@ -54,6 +63,10 @@ void HarpToolbar::layoutControls()
         r.x += step;
     }
     
+    settingsButton.setBounds(HUDRect(getBounds().w - buttonWidth - 10,
+                                     y,
+                                     buttonWidth,
+                                     buttonHeight));
 }
 
 void HarpToolbar::draw()
@@ -80,31 +93,37 @@ void HarpToolbar::setButtonTextures(TextureDescription on, TextureDescription of
 void HarpToolbar::buttonStateChanged(HUDButton* b)
 {
     bool state = b->getState();
-    Harp* h = HarpManager::instance().getHarp(0);
     
-    if (h->getChordMode())
-    {
-        if (state)
-            h->selectChord(b->getId());
-        else if (h->getNumSelectedChords() > 1)
-            h->deSelectChord(b->getId());
-    }
+    if (b == &settingsButton)
+        sendActionMessage("settingsMode");
     else
-    {
-        if (state)
+    {    
+        Harp* h = HarpManager::instance().getHarp(0);
+        
+        if (h->getChordMode())
         {
-            for (TextHUDButton* button : buttons)
-            {
-                if (button != b)
-                    button->setState(false, false);
-            }
+            if (state)
+                h->selectChord(b->getId());
+            else if (h->getNumSelectedChords() > 1)
+                h->deSelectChord(b->getId());
         }
         else
-            b->setState(true, false);
-        
-        h->SetScale(b->getId());
+        {
+            if (state)
+            {
+                for (TextHUDButton* button : buttons)
+                {
+                    if (button != b)
+                        button->setState(false, false);
+                }
+            }
+            else
+                b->setState(true, false);
+            
+            h->SetScale(b->getId());
+        }
+        sendChangeMessage();
     }
-    sendChangeMessage();
 }
 
 void HarpToolbar::updateButtons()

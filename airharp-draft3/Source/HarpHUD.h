@@ -9,6 +9,7 @@
 class HarpToolbar : public HUDView
                   , public HUDButton::Listener
                   , public ChangeBroadcaster
+                  , public ActionBroadcaster
 
 {
 public:
@@ -31,6 +32,7 @@ private:
     void updateButtonText();
 
     std::vector<TextHUDButton*> buttons;
+    TextHUDButton settingsButton;
     //    HUDSlider s1;
     //    HUDSlider s2;
     //    HUDSwitch sw1;

@@ -36,6 +36,10 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
+      <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
+            file="Source/SettingsScreen.cpp"/>
+      <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"
+            file="Source/SettingsScreen.h"/>
       <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
