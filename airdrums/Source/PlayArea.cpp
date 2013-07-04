@@ -141,7 +141,7 @@ void PlayArea::tap(int midiNote)
         iconRotation = (Random::getSystemRandom().nextFloat() * 2.f - 1.f) * 5;
     }
     
-    BETA_CHECK(7, 6)
+    
 }
 
 void PlayArea::setSelectedMidiNote(int note)
@@ -205,7 +205,7 @@ void PlayArea::enableAssignButton(bool shouldBeEnabled)
 
 void PlayArea::enableClearButton(bool shouldBeEnabled)
 {
-    BETA_CHECK(7, 7)
+    
 
     clearButton.setVisible(shouldBeEnabled);
     clearButton.setEnabled(shouldBeEnabled);
