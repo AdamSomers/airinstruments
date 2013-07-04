@@ -268,6 +268,12 @@ void HUDButton::draw()
 {
     HUDView::draw();
 
+    GLint blendSrc;
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+    GLint blendDst;
+    glGetIntegerv(GL_BLEND_DST, &blendDst);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    
     if (isTimerRunning())
         setup();
     
@@ -319,6 +325,8 @@ void HUDButton::draw()
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), circleColor, 0);
         circleBatch.Draw();
     }
+
+    glBlendFunc(blendSrc, blendDst);
 }
 
 void HUDButton::setup()
