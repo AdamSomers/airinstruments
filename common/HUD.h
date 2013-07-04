@@ -112,7 +112,10 @@ public:
     void removeListener(Listener* l);
     
     // FingerView::Listener override
-    virtual void updatePointedState(FingerView* fv);
+    virtual void updatePointedState(FingerView* fv) {}
+    virtual void fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/);
+    virtual void fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/);
+
     
     virtual void updateCursorState(float, float) {}
     virtual void cursorEntered(float x, float y);

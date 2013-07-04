@@ -143,6 +143,7 @@ void HUDView::updatePointedState(FingerView* fv)
         if (iter == hoveringFingers.end())
         {
             fingerEntered(x, y, fv);
+            //Logger::outputDebugString("Finger entered " + String(x) + " " + String(y));
             hoveringFingers.push_back(fv);
         }
         fingerMotion(x, y, fv);
@@ -153,6 +154,7 @@ void HUDView::updatePointedState(FingerView* fv)
         if (iter != hoveringFingers.end())
         {
             fingerExited(x, y, fv);
+            //Logger::outputDebugString("Finger exit " + String(x) + " " + String(y));
             hoveringFingers.erase(iter);
         }
     }
@@ -164,10 +166,22 @@ void HUDView::updatePointedState(FingerView* fv)
         //printf("%f %f %f %f\n",x, y, localX,localY);
         if (child->bounds.contains(localX,localY))
         {
+            auto iter = std::find(child->hoveringFingers.begin(), child->hoveringFingers.end(), fv);
+            if (iter == child->hoveringFingers.end())
+            {
+                child->fingerEntered(x, y, fv);
+                child->hoveringFingers.push_back(fv);
+            }
             child->fingerPointing(fv);
         }
         else
         {
+            auto iter = std::find(child->hoveringFingers.begin(), child->hoveringFingers.end(), fv);
+            if (iter != child->hoveringFingers.end())
+            {
+                child->fingerExited(x, y, fv);
+                child->hoveringFingers.erase(iter);
+            }
             child->fingerNotPointing(fv);
         }
     }
@@ -369,14 +383,32 @@ void HUDButton::mouseDown(float /*x*/, float /*y*/)
     setState(!state, true);
 }
 
-void HUDButton::updatePointedState(FingerView* /*fv*/)
+//void HUDButton::updatePointedState(FingerView* /*fv*/)
+//{
+//    if (!isVisible())
+//        return;
+//    if (prevNumPointers == 0 && pointers.size() > 0)
+//        setState(!state, true);
+//
+//    prevNumPointers = pointers.size();
+//}
+
+void HUDButton::fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/)
 {
+//    Logger::outputDebugString("FingerEntered");
     if (!isVisible())
         return;
-    if (prevNumPointers == 0 && pointers.size() > 0)
-        setState(!state, true);
+    lastTimerStartTime = Time::getCurrentTime();
+    startTimer(hoverTimeout);
+}
 
-    prevNumPointers = pointers.size();
+void HUDButton::fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/)
+{
+//    Logger::outputDebugString("FingerExited");
+    if (!isVisible())
+        return;
+    lastTimerStartTime = Time::getCurrentTime();
+    stopTimer();
 }
 
 void HUDButton::loadTextures()
