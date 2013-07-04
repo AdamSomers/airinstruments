@@ -361,7 +361,8 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     
     for (FingerView::Listener* listener : fingerViewListeners)
     {
-        listener->updatePointedState(fv.get());
+        if (fv->inUse)
+            listener->updatePointedState(fv.get());
     }
     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
     
