@@ -8,7 +8,13 @@ HarpToolbar::HarpToolbar()
 {
     for (int i = 0; i < 7; ++i)
     {
-        HUDButton* b = new HUDButton(i);
+        TextHUDButton* b = new TextHUDButton();
+        b->setId(i);
+        b->setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+        b->setBackgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .8f),
+                              Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
+        b->setTextColor(Colour::fromFloatRGBA(.2f, .2f, .2f, 1.f),
+                        Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
         b->addListener(this);
         buttons.push_back(b);
         addChild(b);
@@ -17,7 +23,7 @@ HarpToolbar::HarpToolbar()
 
 HarpToolbar::~HarpToolbar()
 {
-    for (HUDButton* b : buttons)
+    for (TextHUDButton* b : buttons)
         delete b;
 }
 
@@ -31,8 +37,8 @@ void HarpToolbar::setup()
 void HarpToolbar::layoutControls()
 {
     int numButtons = buttons.size();
-    float buttonWidth = 30;
-    float buttonHeight = 30;
+    float buttonWidth = 50;
+    float buttonHeight = 50;
     float xmin = 50;
     float xmax = 400;
     float totalButtonWidth = numButtons * buttonWidth;
@@ -42,7 +48,7 @@ void HarpToolbar::layoutControls()
         step = buttonWidth + 1;
     float y = (bounds.h / 2.f + 10)- buttonHeight / 2.f;
     HUDRect r(xmin, y, buttonWidth, buttonHeight);
-    for (HUDButton* b : buttons)
+    for (TextHUDButton* b : buttons)
     {
         b->setBounds(r);
         r.x += step;
@@ -87,7 +93,7 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
     {
         if (state)
         {
-            for (HUDButton* button : buttons)
+            for (TextHUDButton* button : buttons)
             {
                 if (button != b)
                     button->setState(false, false);
@@ -107,7 +113,7 @@ void HarpToolbar::updateButtons()
     
     if (h->getChordMode())
     {
-        for (HUDButton* b : buttons)
+        for (TextHUDButton* b : buttons)
         {
             if (h->isChordSelected(b->getId()))
                 b->setState(true);
@@ -117,13 +123,49 @@ void HarpToolbar::updateButtons()
     }
     else
     {
-        for (HUDButton* b : buttons)
+        for (TextHUDButton* b : buttons)
         {
             if (h->getSelectedScale() == b->getId())
                 b->setState(true);
             else
                 b->setState(false);
         }
+    }
+    
+    updateButtonText();
+}
+
+void HarpToolbar::updateButtonText()
+{
+    Harp* h = HarpManager::instance().getHarp(0);
+    if (h->getChordMode())
+    {
+        buttons.at(0)->setText(StringArray("I"),StringArray("I"));
+        buttons.at(1)->setText(StringArray("II"),StringArray("II"));
+        buttons.at(2)->setText(StringArray("III"),StringArray("III"));
+        buttons.at(3)->setText(StringArray("IV"),StringArray("IV"));
+        buttons.at(4)->setText(StringArray("V"),StringArray("V"));
+        buttons.at(5)->setText(StringArray("VI"),StringArray("VI"));
+        buttons.at(6)->setText(StringArray("VII"),StringArray("VII"));
+    }
+    else
+    {
+        StringArray arr;
+        buttons.at(0)->setText(StringArray("Major"),StringArray("Major"));
+        buttons.at(1)->setText(StringArray("Minor"),StringArray("Minor"));
+        arr.add("Pent.");
+        arr.add("Major");
+        buttons.at(2)->setText(arr,arr);
+        arr.clear();
+        arr.add("Pent.");
+        arr.add("Minor");
+        buttons.at(3)->setText(arr,arr);
+        arr.clear();
+        arr.add("Whole");
+        arr.add("Tone");
+        buttons.at(4)->setText(arr,arr);
+        buttons.at(5)->setText(StringArray("Chinese"),StringArray("Chinese"));
+        buttons.at(6)->setText(StringArray("Exotic"),StringArray("Exotic"));
     }
 }
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "HUD.h"
 #include "Leap.h"
+#include "TextButton.h"
 
 class HarpToolbar : public HUDView
                   , public HUDButton::Listener
@@ -27,7 +28,9 @@ public:
     void buttonStateChanged(HUDButton* b);
     
 private:
-    std::vector<HUDButton*> buttons;
+    void updateButtonText();
+
+    std::vector<TextHUDButton*> buttons;
     //    HUDSlider s1;
     //    HUDSlider s2;
     //    HUDSwitch sw1;
