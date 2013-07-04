@@ -25,6 +25,8 @@ void FingerView::drawWithShader(int shaderId)
         didSetup = true;
     }
 
+    updateScreenPos();
+    
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);
@@ -43,6 +45,7 @@ void FingerView::drawWithShader(int shaderId)
 
 void FingerView::draw()
 {
+    updateScreenPos();
     if (!didSetup)
     {
         setup();
@@ -51,6 +54,12 @@ void FingerView::draw()
 }
 
 void FingerView::getScreenPos(M3DVector2f& inVec)
+{
+    inVec[0] = screenPos[0];
+    inVec[1] = screenPos[1];
+}
+
+void FingerView::updateScreenPos()
 {
     GLint viewport[4];
     viewport[0] = 0;
@@ -67,8 +76,8 @@ void FingerView::getScreenPos(M3DVector2f& inVec)
                  viewport,
                  origin);
     //printf("win %f %f\n", win[0], win[1]);
-    inVec[0] = win[0];
-    inVec[1] = Environment::instance().screenH - win[1];
+    screenPos[0] = win[0];
+    screenPos[1] = Environment::instance().screenH - win[1];
 }
 
 FingerView::Listener::Listener()

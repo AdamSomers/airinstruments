@@ -47,8 +47,10 @@ public:
     bool invalid;
     bool didSetup;
 private:
+    void updateScreenPos();
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
+    M3DVector2f screenPos;
 };
 
 #endif // h_FingerView
