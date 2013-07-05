@@ -5,6 +5,8 @@
 
 HarpView::HarpView(int num)
 : harpNum(num)
+, height(2.f)
+, numHarps(1)
 {
     for (int i = 0; i < NUM_STRINGS; ++i)
     {

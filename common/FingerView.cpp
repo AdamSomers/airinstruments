@@ -6,49 +6,60 @@ FingerView::FingerView()
 : inUse(false)
 , id(-1)
 , invalid(false)
-, shaderId(-1)
+, didSetup(false)
 {
 }
 
 void FingerView::setup()
 {
-    gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
-    gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
-    
-    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
-                                                                                            GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
+    //gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
+    //gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
+    gltMakeSphere(cylinderBatch, .03, 10, 10);
 }
 
-void FingerView::draw()
+void FingerView::drawWithShader(int shaderId)
 {
-    if (shaderId == -1)
-        return;
+    if (!didSetup)
+    {
+        setup();
+        didSetup = true;
+    }
+
+    updateScreenPos();
     
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     GLfloat color [] = { 0.f, 1.f, 0.f, 1.f };
-    
-    glEnable(GL_DEPTH_TEST);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-    
-    glUseProgram((GLuint)shaderId);
     GLint iModelViewMatrix = glGetUniformLocation(shaderId, "mvMatrix");
     glUniformMatrix4fv(iModelViewMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetModelViewMatrix());
     GLint iProjMatrix = glGetUniformLocation(shaderId, "pMatrix");
     glUniformMatrix4fv(iProjMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetProjectionMatrix());
     GLint iColor = glGetUniformLocation(shaderId, "vColor");
     glUniform4fv(iColor, 1, color);
-//    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), color);
     GfxTools::drawBatch(&cylinderBatch);
-    GfxTools::drawBatch(&coneBatch);
-    
+    //GfxTools::drawBatch(&coneBatch);
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 
+void FingerView::draw()
+{
+    updateScreenPos();
+    if (!didSetup)
+    {
+        setup();
+        didSetup = true;
+    }
+}
+
 void FingerView::getScreenPos(M3DVector2f& inVec)
+{
+    inVec[0] = screenPos[0];
+    inVec[1] = screenPos[1];
+}
+
+void FingerView::updateScreenPos()
 {
     GLint viewport[4];
     viewport[0] = 0;
@@ -65,8 +76,8 @@ void FingerView::getScreenPos(M3DVector2f& inVec)
                  viewport,
                  origin);
     //printf("win %f %f\n", win[0], win[1]);
-    inVec[0] = win[0];
-    inVec[1] = Environment::instance().screenH - win[1];
+    screenPos[0] = win[0];
+    screenPos[1] = Environment::instance().screenH - win[1];
 }
 
 FingerView::Listener::Listener()

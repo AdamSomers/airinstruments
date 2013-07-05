@@ -26,8 +26,10 @@ ListSelector::ListSelector(String name, bool left)
     
     displayToggleButton.addListener(this);
     displayToggleButton.setText(StringArray(name), StringArray(name));
-    displayToggleButton.setTextColor(Colour::fromFloatRGBA(0.f,0.f,0.f,1.f));
-    displayToggleButton.setBackgroundColor(Colour::fromFloatRGBA(0.f,0.f,0.f,0.f));
+    displayToggleButton.setTextColor(Colour::fromFloatRGBA(0.f,0.f,0.f,1.f),
+                                     Colour::fromFloatRGBA(0.f,0.f,0.f,1.f));
+    displayToggleButton.setBackgroundColor(Colour::fromFloatRGBA(0.f,0.f,0.f,0.f),
+                                           Colour::fromFloatRGBA(0.f,0.f,0.f,0.f));
     upButton.addListener(this);
     downButton.addListener(this);
 

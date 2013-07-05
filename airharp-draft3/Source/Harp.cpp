@@ -1,13 +1,12 @@
-#include "Harp.h"
 #include "MotionServer.h"
+
+#include "Harp.h"
 
 
 #define MAX_STRINGS 30
 #define SAMPS_PER_PIXEL 6
-#define FILTER_FREQ 150.f
+#define FILTER_FREQ 20.f
 #define FILTER_RES 0.f
-
-std::vector<std::string> Harp::gScale = gPentatonicMajor;
 
 Harp::Harp()
 : numStrings(1)
@@ -15,12 +14,16 @@ Harp::Harp()
 , outputGain(NULL)
 , reverb(NULL)
 , filter(NULL)
+, preVerbFilter(NULL)
 , reverbGain(NULL)
 , dryGain(NULL)
 , wetDryMix(NULL)
 , wetLevel(0.3f)
 , dryLevel(0.7f)
 , idle(true)
+, active(false)
+, chordMode(false)
+, selectedScale(0)
 {
     Init();
 }
@@ -32,17 +35,14 @@ Harp::~Harp()
 
 void Harp::Init()
 {
+    BuildDefaultScales();
+
     Cleanup();
     for (int i = 0; i < numStrings; ++i)
     {
         strings.push_back(new Karplus(0.009));
-        filters.push_back(new StateVariable);
-        filters.back()->SetInput(strings.back());
-        filters.back()->setType(StateVariable::kHighpass);
-        filters.back()->setFreq(FILTER_FREQ);
-        filters.back()->setRes(FILTER_RES);
         accumulators.push_back(new SampleAccumulator());
-        accumulators.back()->SetInput(filters.back());
+        accumulators.back()->SetInput(strings.back());
         accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     }
     
@@ -55,18 +55,23 @@ void Harp::Init()
     
     filter = new StateVariable;
     filter->SetInput(mixer);
-    filter->setFreq(1000);
-    filter->setType(StateVariable::kLowpass);
+    filter->setFreq(80);
+    filter->setType(StateVariable::kHighpass);
+
+    preVerbFilter = new StateVariable;
+    preVerbFilter->SetInput(filter);
+    preVerbFilter->setFreq(1000.f);
+    preVerbFilter->setType(StateVariable::kLowpass);
     
     reverbGain = new Multiplier;
-    reverbGain->SetA(filter);
+    reverbGain->SetA(preVerbFilter);
     reverbGain->SetVal(wetLevel);
     
     reverb = new JuceReverbAudioClient;
-    reverb->AddInput(filter);
+    reverb->AddInput(reverbGain);
     
     dryGain = new Multiplier;
-    dryGain->SetA(mixer);
+    dryGain->SetA(filter);
     dryGain->SetVal(0.8f);
     
     wetDryMix = new Adder;
@@ -80,7 +85,7 @@ void Harp::Init()
     AudioServer::GetInstance()->AddClient(outputGain, 0);
     AudioServer::GetInstance()->AddClient(outputGain, 1);
     
-    MotionDispatcher::instance().controller.addListener(*this);
+    MotionDispatcher::instance().addListener(*this);
     
     for (int i = 0; i < 7; ++i)
         selectChord(i);
@@ -88,12 +93,13 @@ void Harp::Init()
 
 void Harp::Cleanup()
 {
+    // Removing here causes a Juce memory leak.  Could be static deallocation order issue.
+    //MotionDispatcher::instance().removeListener(*this);
+
     for (int i = 0; i < strings.size(); ++i)
     {
         AudioServer::GetInstance()->EnterLock();
-        mixer->RemoveInput(filters.at(i));
         AudioServer::GetInstance()->ExitLock();
-        delete filters.at(i);
         delete accumulators.at(i);
         delete strings.at(i);
     }
@@ -104,6 +110,9 @@ void Harp::Cleanup()
     }
     if (filter)
         delete filter;
+    
+    if (preVerbFilter)
+        delete preVerbFilter;
     
     if (reverb)
         delete reverb;
@@ -122,7 +131,148 @@ void Harp::Cleanup()
     
     strings.clear();
     accumulators.clear();
-    filters.clear();
+}
+
+void Harp::BuildDefaultScales()
+{
+    const std::string pentatonicMajor[] = { "1", "2", "4", "5", "6" };
+    const std::string pentatonicMinor[] = {"1", "b3", "4", "5", "b7" };
+    const std::string wholeTone[] = { "1", "2", "3", "#4", "#5", "#6" };
+    const std::string diatonic[] = { "1", "2", "3", "4", "5", "6", "7"};
+    const std::string minor[] = { "1", "2", "b3", "4", "5", "b6", "b7" };
+    // Slendro?
+    const std::string exotic1[] = { "1", "3", "4", "5", "7"};
+    // Chinese mystery
+    const std::string exotic2[] = { "1", "3", "#4", "5", "7" };
+    
+    const std::string I[]     = { "1", "3", "5" };
+    const std::string ii[]    = { "2", "4", "6" };
+    const std::string iii[]   = { "3", "5", "7" };
+    const std::string IV[]    = { "1", "4", "6" };
+    const std::string V[]     = { "2", "5", "7" };
+    const std::string vi[]    = { "1", "3", "6" };
+    const std::string VII[]   = { "2", "4", "b7" };
+    const std::string vii_d[] = { "2", "4", "7" };
+    
+    const std::string i[]     = { "1", "b3", "5" };
+    const std::string ii_d[]  = { "2", "4", "b6" };
+    const std::string III[]   = { "b3", "5", "b7" };
+    const std::string iv[]    = { "1", "4", "b6" };
+    const std::string v[]     = { "2", "5", "b7" };
+    const std::string VI[]    = { "1", "b3", "b6" };
+    
+    std::vector<std::string> scale;
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(pentatonicMajor[i]);
+    scales.insert(std::make_pair("pentatonicMajor", scale));
+    scale.clear();
+
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(pentatonicMinor[i]);
+    scales.insert(std::make_pair("pentatonicMinor", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  6; ++i)
+        scale.push_back(wholeTone[i]);
+    scales.insert(std::make_pair("wholeTone", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  7; ++i)
+        scale.push_back(diatonic[i]);
+    scales.insert(std::make_pair("diatonic", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  7; ++i)
+        scale.push_back(minor[i]);
+    scales.insert(std::make_pair("minor", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(exotic1[i]);
+    scales.insert(std::make_pair("exotic1", scale));
+    scale.clear();
+    
+    for (int i = 0; i <  5; ++i)
+        scale.push_back(exotic2[i]);
+    scales.insert(std::make_pair("exotic2", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(I[i]);
+    scales.insert(std::make_pair("I", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(ii[i]);
+    scales.insert(std::make_pair("ii", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(iii[i]);
+    scales.insert(std::make_pair("iii", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(IV[i]);
+    scales.insert(std::make_pair("IV", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(V[i]);
+    scales.insert(std::make_pair("V", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(vi[i]);
+    scales.insert(std::make_pair("vi", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(VII[i]);
+    scales.insert(std::make_pair("VII", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(vii_d[i]);
+    scales.insert(std::make_pair("vii_d", scale));
+    scale.clear();
+    
+    for (int j = 0; j < 3; ++j)
+        scale.push_back(i[j]);
+    scales.insert(std::make_pair("i", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(ii_d[i]);
+    scales.insert(std::make_pair("ii_d", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(III[i]);
+    scales.insert(std::make_pair("III", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(iv[i]);
+    scales.insert(std::make_pair("iv", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(v[i]);
+    scales.insert(std::make_pair("v", scale));
+    scale.clear();
+    
+    for (int i = 0; i < 3; ++i)
+        scale.push_back(VI[i]);
+    scales.insert(std::make_pair("VI", scale));
+    scale.clear();
+}
+
+std::vector<std::string>& Harp::getScale()
+{
+    ScaleMap::iterator i = scales.find(selectedScaleName);
+    jassert(i != scales.end());
+    return (*i).second;
 }
 
 void Harp::AddString()
@@ -133,13 +283,8 @@ void Harp::AddString()
         return;
     
     strings.push_back(new Karplus(0.009));
-    filters.push_back(new StateVariable);
-    filters.back()->SetInput(strings.back());
-    filters.back()->setType(StateVariable::kHighpass);
-    filters.back()->setFreq(FILTER_FREQ);
-    filters.back()->setRes(FILTER_RES);
     accumulators.push_back(new SampleAccumulator());
-    accumulators.back()->SetInput(filters.back());
+    accumulators.back()->SetInput(strings.back());
     accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     AudioServer::GetInstance()->EnterLock();
     mixer->AddInput(accumulators.back());
@@ -157,9 +302,7 @@ void Harp::RemoveString()
     AudioServer::GetInstance()->EnterLock();
     mixer->RemoveInput(accumulators.back());
     AudioServer::GetInstance()->ExitLock();
-    
-    delete filters.back();
-    filters.pop_back();
+
     delete accumulators.back();
     accumulators.pop_back();
     delete strings.back();
@@ -172,7 +315,7 @@ void Harp::NoteOn(int num, int note, int velocity)
 {
     ScopedLock sl(lock);
     
-    strings.at(num)->NoteOn(note, velocity);
+    strings.at(num)->NoteOn(note, velocity, NULL);
     idle = false;
 }
 
@@ -191,25 +334,25 @@ void Harp::SetScale(int scaleIndex)
         selectedScale  = scaleIndex;
         switch (scaleIndex) {
             case 0:
-                gScale = gDiatonic;
+                selectedScaleName = "diatonic";
                 break;
             case 1:
-                gScale = gMinor;
+                selectedScaleName = "minor";
                 break;
             case 2:
-                gScale = gPentatonicMajor;
+                selectedScaleName = "pentatonicMajor";
                 break;
             case 3:
-                gScale = gPentatonicMinor;
+                selectedScaleName = "pentatonicMinor";
                 break;
             case 4:
-                gScale = gWholeTone;
+                selectedScaleName = "wholeTone";
                 break;
             case 5:
-                gScale = gExotic1;
+                selectedScaleName = "exotic1";
                 break;
             case 6:
-                gScale = gExotic2;
+                selectedScaleName = "exotic2";
                 break;
             default:
                 break;
@@ -220,25 +363,25 @@ void Harp::SetScale(int scaleIndex)
         bool minor = false;
         switch (scaleIndex) {
             case 0:
-                gScale = minor ? i : I;
+                selectedScaleName = minor ? "i" : "I";
                 break;
             case 1:
-                gScale = minor ? ii_d : ii;
+                selectedScaleName = minor ? "ii_d" : "ii";
                 break;
             case 2:
-                gScale = minor ? III : iii;
+                selectedScaleName = minor ? "III" : "iii";
                 break;
             case 3:
-                gScale = minor ? iv : IV;
+                selectedScaleName = minor ? "iv" : "IV";
                 break;
             case 4:
-                gScale = minor ? v : V;
+                selectedScaleName = minor ? "v" : "V";
                 break;
             case 5:
-                gScale = minor ? VI : vi;
+                selectedScaleName = minor ? "VI" : "vi";
                 break;
             case 6:
-                gScale = minor ? VII : vii_d;
+                selectedScaleName = minor ? "VII" : "vii_d";
                 break;
             default:
                 break;
@@ -318,10 +461,10 @@ void Harp::onFrame(const Leap::Controller& controller)
             mix = zAvg / 250.f;
         if (mix > 1.f) mix = 1.f;
         if (mix < 0.f) mix = 0.f;
-        setWetLevel(mix);
-        setDryLevel(1-mix);
+        mix = jmax(0.5f, mix);
+        setWetLevel(sqrt(mix));
+        setDryLevel(sqrt(1-mix));
     }
-    
 }
 
 void Harp::setActive(bool shouldBeActive)

@@ -15,9 +15,9 @@ public:
     void removeString();
     void loadTextures();
     
-    float height = 2.f;
-    int numHarps = 1;
-    int harpNum = -1;
+    float height;
+    int numHarps;
+    int harpNum;
 
 private:
     std::vector<StringView*> strings;

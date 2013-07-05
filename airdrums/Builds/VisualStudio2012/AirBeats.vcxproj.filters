@@ -346,6 +346,9 @@
     <ClCompile Include="..\..\..\common\MotionServer.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\SkinManager.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
@@ -452,9 +455,6 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SampleLayer.cpp">
-      <Filter>AirBeats\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\SkinManager.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp">
@@ -1683,10 +1683,13 @@
     <ClInclude Include="..\..\..\common\MotionServer.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\common\TutorialSlide.h">
+    <ClInclude Include="..\..\..\common\SkinManager.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\Types.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\TutorialSlide.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\TextButton.h">
@@ -1816,9 +1819,6 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SampleLayer.h">
-      <Filter>AirBeats\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\SkinManager.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StrikeDetector.h">

@@ -41,8 +41,10 @@ public:
     bool inUse;
     int id;
     bool invalid;
+    bool didSetup;
 private:
-    GLTriangleBatch     batch;
+    int shaderId;
+    GLBatch batch;
 };
 
 #endif // h_HandView
