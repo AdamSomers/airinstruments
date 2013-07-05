@@ -154,9 +154,6 @@ private:
     Time lastRender;
 
     Time lastFrame;
-    
-    // for beta check
-    Time startTime;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

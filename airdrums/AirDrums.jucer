@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.7.1"
-              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.1.0"
-              companyName="Handwavy" defines="TIMEBOMB=1">
+<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.7.2"
+              bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
+              companyName="Handwavy" defines="">
   <MAINGROUP id="qE7qno" name="AirBeats">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
       <FILE id="Ig1XGD" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
