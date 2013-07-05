@@ -60,11 +60,11 @@ void ButtonBar::buttonStateChanged(HUDButton* b)
     {
         Drums::instance().clear();
 
-        BETA_CHECK(7, 9)
+        
     }
     else if (b == &clearTrackButton)
     {
-        BETA_CHECK(7, 10)
+        
 
         sendActionMessage(b->getState() ? "clearTrack" : "cancelClear");
     }

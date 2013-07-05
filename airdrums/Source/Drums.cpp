@@ -13,7 +13,7 @@ Drums::Drums() :
     sampleRate((double) DrumPattern::kDefaultSampleRate),
 	tempoSlider(nullptr)
 {
-    BETA_CHECK(6, 28)
+    
 
 	AirHarpApplication* app = AirHarpApplication::getInstance();
 	ApplicationProperties& props = app->getProperties();
@@ -107,7 +107,7 @@ void Drums::AllNotesOff(void)
 
 void Drums::clear()
 {
-    BETA_CHECK(6, 29)
+    
 
     midiBufferLock.enter();
 	jassert(pattern.get() != nullptr);
@@ -168,7 +168,7 @@ void Drums::resetToZero()
 
 void Drums::prepareToPlay (int /*samplesPerBlockExpected*/, double inSampleRate)
 {
-    BETA_CHECK(6, 30)
+    
 
     sampleRate = inSampleRate;
     midiCollector.reset (sampleRate);
@@ -199,7 +199,7 @@ void Drums::AdjustMidiBuffers(void)
         metronomePos += (long)(samples / numBeats);
     }
 
-    BETA_CHECK(7, 1)
+    
 
     // Adjust sample positions of all events in record buffer
 	if (pattern.get() != nullptr)
@@ -290,7 +290,7 @@ void Drums::setDrumKit(SharedPtr<DrumKit> aKit)
 		}
 	}
     
-    BETA_CHECK(7, 2)
+    
 
 	SharedPtr<DrumSample> sample = kit->GetMetronome();
 	for (int j = 0; j < sample->GetLayerCount(); ++j)
@@ -312,7 +312,7 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 
 	resetToZero();
 
-    BETA_CHECK(7, 3)
+    
 
 	pattern = aPattern;
 	if (tempoSource == kPatternTempo) {
@@ -336,7 +336,7 @@ Drums::TransportState::TransportState(bool record, bool play, bool exportState, 
 
 void Drums::TransportState::play()
 {
-    BETA_CHECK_RANDOM_2013()
+    
 
     playing = true;
 	if (!exporting)
@@ -359,7 +359,7 @@ void Drums::TransportState::doExport()
 
 void Drums::TransportState::record(bool state)
 {
-    BETA_CHECK_RANDOM_2013()
+    
 
 	if (state)
 	{
@@ -373,8 +373,8 @@ void Drums::TransportState::record(bool state)
         playing = true;
     sendChangeMessage();
 
-    BETA_CHECK_RANDOM_2013()
-    BETA_CHECK_RANDOM_2014()
+    
+    
 }
 
 void Drums::TransportState::metronome(bool state)
@@ -385,7 +385,7 @@ void Drums::TransportState::metronome(bool state)
 
 void Drums::TransportState::toggleRecording()
 {
-    BETA_CHECK_RANDOM_2013()
+    
 
     record(!recording);
 }
@@ -436,7 +436,7 @@ void Drums::setTempo(float tempo)
 {
 	ScopedLock lock(midiBufferLock);
 
-    BETA_CHECK(7, 5)
+    
     
 	switch (tempoSource)
 	{
