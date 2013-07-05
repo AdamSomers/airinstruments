@@ -12,7 +12,7 @@
 #include "GfxTools.h"
 #include "SkinManager.h"
 
-#define NUM_SAMPLES 128
+#define NUM_SAMPLES 64
 static float gStringLineWidth = 0.015;
 
 class StringView : public FingerView::Listener
@@ -21,8 +21,13 @@ public:
     StringView()
     : stringNum(0)
     , numSamples(NUM_SAMPLES)
+    , harpNum(0)
+    , stringWidth(0.06)
+    , stringHeight(2.f)
+    , yScale(1)
+    , fade(0.f)
     {
-        numSampleVerts = 1800;//numSamples*2;
+        numSampleVerts = numSamples*2;
     }
     void setup()
     {
@@ -56,8 +61,8 @@ public:
         float w = gStringLineWidth;
         
         sampleVerts = new M3DVector3f[numSampleVerts];
-        M3DVector3f stringNormals[numSampleVerts];
-        M3DVector2f stringTexCoords[numSampleVerts];
+        M3DVector3f *stringNormals = new M3DVector3f[numSampleVerts];
+        M3DVector2f *stringTexCoords = new M3DVector2f[numSampleVerts];
         float yMin = -stringHeight / 2.f;
         float yMax = stringHeight / 2.f;
         float step = (yMax - yMin) / ((float)numSampleVerts / 2.f);
@@ -103,6 +108,9 @@ public:
         stringBatch.CopyVertexData3f(sampleVerts);
         stringBatch.CopyNormalDataf(stringNormals);
         stringBatch.End();
+
+        delete[] stringNormals;
+        delete[] stringTexCoords;
     }
     
     void update()
@@ -139,8 +147,8 @@ public:
             val = linterp(prevVal, val, fSampleIndex - iSampleIndex);
 
             val *= scale;
-            float x1 = stringWidth/2.f + w/2 + fabsf(val);
-            float x2 = stringWidth/2.f - w/2 - fabsf(val);
+            float x1 = stringWidth/2.f + w/2 + val;
+            float x2 = x1;//stringWidth/2.f - w/2 + fabsf(val);
             sampleVerts[i * 2][0] = x1;
             sampleVerts[i * 2 + 1][0] = x2;
         }
@@ -175,7 +183,7 @@ public:
         //Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
         GLfloat stringColor [] = { 1.f, 1.f, 1.f, 1.f };
-        if (stringNum % Harp::gScale.size() == 0) {
+        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
             stringColor[0] = 1.f;
             stringColor[1] = 1.f;
             stringColor[2] = .5f;
@@ -192,19 +200,19 @@ public:
             fade -= 0.1f;
 
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), bgRectColor);
-        bgBatch.Draw();
-        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().stringBackground);
+        //bgBatch.Draw();
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("stringBg0").textureId);
         Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgTexColor, 0);
-        bgBatch.Draw();
+        //bgBatch.Draw();
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDisable(GL_DEPTH_TEST);
-        glLineWidth(1.f);
+        glLineWidth(((1.f - (this->stringNum / 30.f)) * 8) / 2.f);
         
-        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSkin().string);
+        glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("string0").textureId);
         //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_REPLACE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), 0);
-        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
-        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
+        //Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), stringColor, 0);
+        Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), stringColor);
         stringBatch.Draw();
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -266,6 +274,8 @@ public:
                  prevDistanceX < 0))) //&&
                 //distanceY < stringHeight * (1.f / (float)numChords) / 2.f)
             {
+                
+                int direction = distanceX > 0.f ? 1 : -1;
                 float pos = point[1];
                 pos += 1.f;
                 pos /= 2.f;
@@ -276,7 +286,7 @@ public:
                     h->setChord(chordNum);
                     pos = 0.5;
                 }
-                pluck(pos);
+                pluck(pos, 1, direction);
             }
         }
     }
@@ -286,14 +296,16 @@ public:
         pluck(0.5f, velocity);
     }
     
-    void pluck(float position, float velocity = 1.f)
+    void pluck(float position, float velocity = 1.f, int direction = 1)
     {
-        int idx = stringNum % Harp::gScale.size();
-        int mult = (stringNum / (float)Harp::gScale.size());
-        int octaveSpan = (ScaleDegrees::getChromatic(Harp::gScale.at(Harp::gScale.size()-1)) / 12) + 1;
+        Harp* harp = HarpManager::instance().getHarp(0);
+        std::vector<std::string>& scale = harp->getScale();
+        int idx = stringNum % scale.size();
+        int mult = (stringNum / (float)scale.size());
+        int octaveSpan = (ScaleDegrees::getChromatic(scale[scale.size()-1]) / 12) + 1;
         int base = 32 + 12*octaveSpan*mult;
-        int note = base + ScaleDegrees::getChromatic(Harp::gScale.at(idx));
-        int bufferSize = 512;
+        int note = base + ScaleDegrees::getChromatic(scale[idx]);
+        const int bufferSize = 512;
         float buffer[bufferSize];
         memset(buffer, 0, bufferSize);
         int midpoint = position * bufferSize;
@@ -303,20 +315,20 @@ public:
                 buffer[x] = -x / (float)midpoint;
             else
                 buffer[x] = -(1.f - (x - midpoint) / (float)(bufferSize - midpoint));
-            
-            //if (fingerPrevX > t)
-            //    buffer[x] = -buffer[x];
+
+            buffer[x] *= direction;
         }
+
         HarpManager::instance().getHarp(harpNum)->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
         //HarpManager::instance().getHarp(harpNum)->NoteOn(stringNum, note, 127.f * velocity);
     }
     
     GLFrame objectFrame;
     int stringNum;
-    int harpNum = 0;
-    float stringWidth = 0.06;
-    float stringHeight = 2.f;
-    float yScale = 1;
+    int harpNum;
+    float stringWidth;
+    float stringHeight;
+    float yScale;
     
 private:
     inline float linterp(float v0,float v1,float t) { return v0+(v1-v0)*t; }
@@ -330,7 +342,7 @@ private:
     M3DVector3f* sampleVerts;
     SampleAccumulator::PeakSample prevSamp;
 
-    float fade = 0.f;
+    float fade;
 };
 
 

@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.6.0"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
-      <GROUP id="{E13753B2-2DE5-FF85-0EAC-7C1902F6CBD1}" name="skin0">
-        <FILE id="EF5JZa" name="1.png" compile="0" resource="1" file="Resources/skin0/1.png"/>
-        <FILE id="thlqg6" name="2.png" compile="0" resource="1" file="Resources/skin0/2.png"/>
-        <FILE id="odoAHn" name="3.png" compile="0" resource="1" file="Resources/skin0/3.png"/>
-        <FILE id="ViFVzV" name="4.png" compile="0" resource="1" file="Resources/skin0/4.png"/>
-        <FILE id="aGLGha" name="5.png" compile="0" resource="1" file="Resources/skin0/5.png"/>
-        <FILE id="sMyQiH" name="6.png" compile="0" resource="1" file="Resources/skin0/6.png"/>
-        <FILE id="WgG9zT" name="7.png" compile="0" resource="1" file="Resources/skin0/7.png"/>
-        <FILE id="pzJy3s" name="background0.png" compile="0" resource="0" file="Resources/skin0/background0.png"/>
-        <FILE id="Yv0x5G" name="bezel_bottom0.png" compile="0" resource="0"
-              file="Resources/skin0/bezel_bottom0.png"/>
-        <FILE id="K4GshE" name="bezel_top0.png" compile="0" resource="0" file="Resources/skin0/bezel_top0.png"/>
-        <FILE id="yT805i" name="button_off0.png" compile="0" resource="0" file="Resources/skin0/button_off0.png"/>
-        <FILE id="B0F7o7" name="button_on0.png" compile="0" resource="0" file="Resources/skin0/button_on0.png"/>
-        <FILE id="QpgVEA" name="string0.png" compile="0" resource="0" file="Resources/skin0/string0.png"/>
-        <FILE id="AcCvP2" name="stringBg0.png" compile="0" resource="0" file="Resources/skin0/stringBg0.png"/>
-      </GROUP>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
       <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
+      <FILE id="RntTTZ" name="bloom.fs" compile="0" resource="0" file="../common/bloom.fs"/>
+      <FILE id="GDIyZb" name="bloom.vs" compile="0" resource="0" file="../common/bloom.vs"/>
       <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="RlyAyP" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
+      <FILE id="J96Ifr" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
+      <FILE id="ztLejZ" name="TextButton.cpp" compile="1" resource="0" file="../common/TextButton.cpp"/>
+      <FILE id="P2cOQG" name="TextButton.h" compile="0" resource="0" file="../common/TextButton.h"/>
+      <FILE id="vKGyI4" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
+      <FILE id="xzwPs7" name="View2d.cpp" compile="1" resource="0" file="../common/View2d.cpp"/>
+      <FILE id="OCmpXR" name="View2d.h" compile="0" resource="0" file="../common/View2d.h"/>
       <FILE id="o0Mrmn" name="Environment.cpp" compile="1" resource="0" file="../common/Environment.cpp"/>
       <FILE id="S3Vl7E" name="Environment.h" compile="0" resource="0" file="../common/Environment.h"/>
       <FILE id="pp8MMQ" name="FingerView.cpp" compile="1" resource="0" file="../common/FingerView.cpp"/>
@@ -44,6 +36,12 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
+      <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
+            file="Source/SettingsScreen.cpp"/>
+      <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"
+            file="Source/SettingsScreen.h"/>
+      <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
+      <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
             file="../common/TutorialSlide.cpp"/>
       <FILE id="whakCI" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
@@ -92,6 +90,7 @@
         <FILE id="kncYmg" name="Interpolators.h" compile="0" resource="0" file="../../muskit/src/Interpolators.h"/>
         <FILE id="mor7ue" name="MathHelpers.h" compile="0" resource="0" file="../../muskit/src/MathHelpers.h"/>
         <FILE id="rSbZUg" name="MidiServer.h" compile="0" resource="0" file="../../muskit/src/MidiServer.h"/>
+        <FILE id="VhEP3U" name="MidiServer.cpp" compile="1" resource="0" file="../../muskit/src/MidiServer.cpp"/>
         <FILE id="s6VMl4" name="ParameterAPI.cpp" compile="1" resource="0"
               file="../../muskit/src/ParameterAPI.cpp"/>
         <FILE id="vYExmd" name="ParameterAPI.h" compile="0" resource="0" file="../../muskit/src/ParameterAPI.h"/>
@@ -122,8 +121,6 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
-      <FILE id="scaKFY" name="airharp-gltools.cpp" compile="1" resource="0"
-            file="Source/airharp-gltools.cpp"/>
       <FILE id="QyjiF3" name="Harp.cpp" compile="1" resource="0" file="Source/Harp.cpp"/>
       <FILE id="B3eka9" name="Harp.h" compile="0" resource="0" file="Source/Harp.h"/>
       <FILE id="vaw2gZ" name="HarpView.cpp" compile="1" resource="0" file="Source/HarpView.cpp"/>
@@ -135,8 +132,6 @@
       <FILE id="KOoxeY" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JeEtSL" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="uGuNaH" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>
-      <FILE id="JBCsk7" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
       <FILE id="lNNe7M" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
@@ -158,18 +153,32 @@
   </MODULES>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
-               externalLibraries="Leap" extraFrameworks="GLUT" extraDefs="__MACOSX_CORE__"
-               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirHarp.app/Contents/Resources"
+               externalLibraries="Leap" extraFrameworks="" extraDefs="__MACOSX_CORE__"
+               postbuildCommand="cp ../../../LeapSDK/mac/lib/libLeap.dylib $CONFIGURATION_BUILD_DIR/AirHarp_LM.app/Contents/MacOS;&#10;cp -r ../../Resources/ $CONFIGURATION_BUILD_DIR/AirHarp_LM.app/Contents/Resources"
                extraCompilerFlags="" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;       &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;       &lt;string&gt;icon.icns&lt;/string&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="AirHarp" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include ../../../../muskit/src"
+                       isDebug="1" optimisation="1" targetName="AirHarp_LM" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include ../../../../muskit/src"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
         <CONFIGURATION name="Release" osxSDK="10.7 SDK" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="0" optimisation="2" targetName="AirHarp" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include ../../../../muskit/src"
+                       isDebug="0" optimisation="2" targetName="AirHarp_LM" headerPath="../../../GLTools/include ../../../LeapSDK/mac/include ../../../../muskit/src"
                        cppLibType="libc++" libraryPath="../../../LeapSDK/mac/lib"/>
       </CONFIGURATIONS>
     </XCODE_MAC>
+    <VS2012 targetFolder="Builds/VisualStudio2012" juceFolder="../../juce/modules"
+            externalLibraries="Leap.lib&#10;" extraCompilerFlags="" extraDefs="__WINDOWS_MM__=1"
+            libraryType="1">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;../../../../muskit/src&#10;../../../../muskit/ThirdParty"
+                       libraryPath="../../../LeapSDK/win/lib/x86&#10;" defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;"
+                       useRuntimeLibDLL="1" wholeProgramOptimisation="1" postbuildCommand="call copyResources.bat $(TargetDir)"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="3" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;../../../../muskit/src&#10;../../../../muskit/ThirdParty"
+                       libraryPath="../../../LeapSDK/win/lib/x86&#10;" defines="_CRT_SECURE_NO_WARNINGS&#10;GLEW_STATIC&#10;"
+                       useRuntimeLibDLL="1" wholeProgramOptimisation="1" postbuildCommand="call copyResources.bat $(TargetDir)"/>
+      </CONFIGURATIONS>
+    </VS2012>
   </EXPORTFORMATS>
   <JUCEOPTIONS/>
 </JUCERPROJECT>

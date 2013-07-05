@@ -8,16 +8,31 @@ HarpToolbar::HarpToolbar()
 {
     for (int i = 0; i < 7; ++i)
     {
-        HUDButton* b = new HUDButton(i);
+        TextHUDButton* b = new TextHUDButton();
+        b->setId(i);
+        b->setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+        b->setBackgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .8f),
+                              Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
+        b->setTextColor(Colour::fromFloatRGBA(.2f, .2f, .2f, 1.f),
+                        Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
         b->addListener(this);
         buttons.push_back(b);
         addChild(b);
     }
+    
+    settingsButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    settingsButton.setBackgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .8f),
+                          Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
+    settingsButton.setTextColor(Colour::fromFloatRGBA(.2f, .2f, .2f, 1.f),
+                    Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
+    settingsButton.addListener(this);
+    settingsButton.setText(StringArray("Settings"), StringArray("Settings"));
+    addChild(&settingsButton);
 }
 
 HarpToolbar::~HarpToolbar()
 {
-    for (HUDButton* b : buttons)
+    for (TextHUDButton* b : buttons)
         delete b;
 }
 
@@ -31,8 +46,8 @@ void HarpToolbar::setup()
 void HarpToolbar::layoutControls()
 {
     int numButtons = buttons.size();
-    float buttonWidth = 30;
-    float buttonHeight = 30;
+    float buttonWidth = 50;
+    float buttonHeight = 50;
     float xmin = 50;
     float xmax = 400;
     float totalButtonWidth = numButtons * buttonWidth;
@@ -42,20 +57,24 @@ void HarpToolbar::layoutControls()
         step = buttonWidth + 1;
     float y = (bounds.h / 2.f + 10)- buttonHeight / 2.f;
     HUDRect r(xmin, y, buttonWidth, buttonHeight);
-    for (HUDButton* b : buttons)
+    for (TextHUDButton* b : buttons)
     {
         b->setBounds(r);
         r.x += step;
     }
     
+    settingsButton.setBounds(HUDRect(getBounds().w - buttonWidth - 10,
+                                     y,
+                                     buttonWidth,
+                                     buttonHeight));
 }
 
 void HarpToolbar::draw()
 {
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    GLfloat color [] = { 1.f, 1.f, 1.f, 1.f };
 
     setDefaultColor(color);
-    setDefaultTexture(SkinManager::instance().getSkin().bezelTop);
+    setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("bezel_top0"));
 
     HUDView::draw();
 }
@@ -65,7 +84,7 @@ void HarpToolbar::loadTextures()
     HUDView::loadTextures();
 }
 
-void HarpToolbar::setButtonTextures(GLuint on, GLuint off)
+void HarpToolbar::setButtonTextures(TextureDescription on, TextureDescription off)
 {
     for (HUDButton* b : buttons)
         b->setTextures(on, off);
@@ -74,31 +93,37 @@ void HarpToolbar::setButtonTextures(GLuint on, GLuint off)
 void HarpToolbar::buttonStateChanged(HUDButton* b)
 {
     bool state = b->getState();
-    Harp* h = HarpManager::instance().getHarp(0);
     
-    if (h->getChordMode())
-    {
-        if (state)
-            h->selectChord(b->getId());
-        else if (h->getNumSelectedChords() > 1)
-            h->deSelectChord(b->getId());
-    }
+    if (b == &settingsButton)
+        sendActionMessage("settingsMode");
     else
-    {
-        if (state)
+    {    
+        Harp* h = HarpManager::instance().getHarp(0);
+        
+        if (h->getChordMode())
         {
-            for (HUDButton* button : buttons)
-            {
-                if (button != b)
-                    button->setState(false, false);
-            }
+            if (state)
+                h->selectChord(b->getId());
+            else if (h->getNumSelectedChords() > 1)
+                h->deSelectChord(b->getId());
         }
         else
-            b->setState(true, false);
-        
-        h->SetScale(b->getId());
+        {
+            if (state)
+            {
+                for (TextHUDButton* button : buttons)
+                {
+                    if (button != b)
+                        button->setState(false, false);
+                }
+            }
+            else
+                b->setState(true, false);
+            
+            h->SetScale(b->getId());
+        }
+        sendChangeMessage();
     }
-    sendChangeMessage();
 }
 
 void HarpToolbar::updateButtons()
@@ -107,7 +132,7 @@ void HarpToolbar::updateButtons()
     
     if (h->getChordMode())
     {
-        for (HUDButton* b : buttons)
+        for (TextHUDButton* b : buttons)
         {
             if (h->isChordSelected(b->getId()))
                 b->setState(true);
@@ -117,13 +142,49 @@ void HarpToolbar::updateButtons()
     }
     else
     {
-        for (HUDButton* b : buttons)
+        for (TextHUDButton* b : buttons)
         {
             if (h->getSelectedScale() == b->getId())
                 b->setState(true);
             else
                 b->setState(false);
         }
+    }
+    
+    updateButtonText();
+}
+
+void HarpToolbar::updateButtonText()
+{
+    Harp* h = HarpManager::instance().getHarp(0);
+    if (h->getChordMode())
+    {
+        buttons.at(0)->setText(StringArray("I"),StringArray("I"));
+        buttons.at(1)->setText(StringArray("II"),StringArray("II"));
+        buttons.at(2)->setText(StringArray("III"),StringArray("III"));
+        buttons.at(3)->setText(StringArray("IV"),StringArray("IV"));
+        buttons.at(4)->setText(StringArray("V"),StringArray("V"));
+        buttons.at(5)->setText(StringArray("VI"),StringArray("VI"));
+        buttons.at(6)->setText(StringArray("VII"),StringArray("VII"));
+    }
+    else
+    {
+        StringArray arr;
+        buttons.at(0)->setText(StringArray("Major"),StringArray("Major"));
+        buttons.at(1)->setText(StringArray("Minor"),StringArray("Minor"));
+        arr.add("Pent.");
+        arr.add("Major");
+        buttons.at(2)->setText(arr,arr);
+        arr.clear();
+        arr.add("Pent.");
+        arr.add("Minor");
+        buttons.at(3)->setText(arr,arr);
+        arr.clear();
+        arr.add("Whole");
+        arr.add("Tone");
+        buttons.at(4)->setText(arr,arr);
+        buttons.at(5)->setText(StringArray("Chinese"),StringArray("Chinese"));
+        buttons.at(6)->setText(StringArray("Exotic"),StringArray("Exotic"));
     }
 }
 
@@ -136,6 +197,7 @@ StatusBar::StatusBar()
 
 StatusBar::~StatusBar()
 {
+    MotionDispatcher::instance().removeListener(*this);
 }
 
 // HUDView overrides
@@ -143,7 +205,8 @@ void StatusBar::setup()
 {
     HUDView::setup();
     layoutControls();
-    MotionDispatcher::instance().controller.addListener(*this);
+    
+    MotionDispatcher::instance().addListener(*this);
 }
 
 void StatusBar::layoutControls()
@@ -156,16 +219,16 @@ void StatusBar::layoutControls()
     indicator.setBounds(r);
 }
 
-void StatusBar::setIndicatorTextures(GLuint on, GLuint off)
+void StatusBar::setIndicatorTextures(TextureDescription on, TextureDescription off)
 {
-    indicator.setTextures(on, off);
+//    indicator.setTextures(on, off);
 }
 
 void StatusBar::draw()
 {
-    GLfloat color [] = { 0.67f, 0.67f, 0.67f, 1.f };
+    GLfloat color [] = { 1.f, 1.f, 1.f, 1.f };
     setDefaultColor(color);
-    setDefaultTexture(SkinManager::instance().getSkin().bezelBottom);
+    setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("bezel_bottom0"));
 
     HUDView::draw();
 }
@@ -185,6 +248,9 @@ void StatusBar::onDisconnect(const Leap::Controller& controller)
 }
 
 ChordRegion::ChordRegion()
+: id(0)
+, isActive(false)
+, fade(0.f)
 {
     
 }
@@ -245,34 +311,7 @@ void ChordRegion::draw()
 
 void ChordRegion::loadTextures()
 {
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    
-    switch (id) {
-        case 0:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_1_png, BinaryData::_1_pngSize));
-            break;
-        case 1:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_2_png, BinaryData::_2_pngSize));
-            break;
-        case 2:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_3_png, BinaryData::_3_pngSize));
-            break;
-        case 3:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_4_png, BinaryData::_4_pngSize));
-            break;
-        case 4:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_5_png, BinaryData::_5_pngSize));
-            break;
-        case 5:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_6_png, BinaryData::_6_pngSize));
-            break;
-        case 6:
-            GfxTools::loadTextureFromJuceImage(ImageFileFormat::loadFrom (BinaryData::_7_png, BinaryData::_7_pngSize));
-            break;
-        default:
-            break;
-    }
+    textureID = SkinManager::instance().getSelectedSkin().getTexture(String(id+1)).textureId;
 }
 
 void ChordRegion::setActive(bool shouldBeActive)

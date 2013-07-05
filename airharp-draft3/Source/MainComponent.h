@@ -13,6 +13,7 @@
 #include "StringView.h"
 #include "HarpView.h"
 #include "TutorialSlide.h"
+#include "SettingsScreen.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -27,7 +28,8 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public ChangeListener,
                                public Leap::Listener,
-                               public Timer
+                               public Timer,
+                               public ActionListener
 {
 public:
     //==============================================================================
@@ -55,28 +57,35 @@ public:
     void onFrame(const Leap::Controller&);
     
     void timerCallback();
+    
+    void actionListenerCallback(const String& message);
 private:
     void go2d();
     void go3d();
     void setupBackground();
     void layoutStrings();
     void layoutChordRegions();
-    bool chordRegionsNeedUpdate = false;
+    bool chordRegionsNeedUpdate;
     
     void handleTapGesture(const Leap::Pointable& p);
     
-    TutorialSlide* slide = NULL;
-    HarpToolbar* toolbar = NULL;
-    StatusBar* statusBar = NULL;
+    TutorialSlide* slide;
+    HarpToolbar* toolbar;
+    StatusBar* statusBar;
+    SettingsScreen* settingsScreen;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
-    std::vector<HUDView*> views;
+    std::vector<HUDView*> views;    
     
     GLuint backgroundTextureId;
     GLBatch backgroundBatch;
     
-    bool sizeChanged = false;
+    View2d fingersImage;
+    int bloomShaderId;
+    int shaderId;
+    
+    bool sizeChanged;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
