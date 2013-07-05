@@ -155,6 +155,10 @@ private:
 
     Time lastFrame;
 
+    View2d fingersImage;
+    int bloomShaderId;
+    int shaderId;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

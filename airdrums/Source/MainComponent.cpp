@@ -59,7 +59,7 @@ MainContentComponent::MainContentComponent()
 , resizeCursor(false)
 {
     setSize (1280, 690);
-    MotionDispatcher::zLimit = -100;
+    MotionDispatcher::zLimit = -12;
     setWantsKeyboardFocus(true);
 
 	tempoSlider.setRange(30.0, 300.0, 0.1);
@@ -405,10 +405,45 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
 #endif
 
+    
+    // Load shaders for finger rendering
+    File special = File::getSpecialLocation(File::currentApplicationFile);
+#if JUCE_WINDOWS
+    File resources = special.getChildFile("..");
+#elif JUCE_MAC
+    File resources = special.getChildFile("Contents/Resources");
+#endif
+    File vsFile = resources.getChildFile("testShader.vs");
+    File fsFile = resources.getChildFile("testShader.fs");
+    
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+                                                                                     GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
+    jassert(shaderId != 0);
+    vsFile = resources.getChildFile("bloom.vs");
+    fsFile = resources.getChildFile("bloom.fs");
+    
+    bloomShaderId = gltLoadShaderPairSrcWithAttributes(vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+                                                       GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_TEXTURE0, "vTexCoord0");
+    jassert(bloomShaderId != 0);
+    
+    // setup the offscreen finger texture
+    int imageW = 512;
+    int imageH = 512;
+    Image im(Image::PixelFormat::ARGB, imageW, imageH, true);
+    TextureDescription td = GfxTools::loadTextureFromJuceImage(im);
+    td.texX = 0.f;
+    td.texY = 1.f;
+    td.texW = 1.f;
+    td.texH = -1.f;
+    fingersImage.setDefaultTexture(td);
+
+    
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
+    MotionDispatcher::instance().cursor->setEnabled(false);
+    
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 
     openGLContext.setSwapInterval(1);
@@ -416,6 +451,11 @@ void MainContentComponent::newOpenGLContextCreated()
     MessageManagerLock mml;
     grabKeyboardFocus();
 
+    for (auto iter : MotionDispatcher::instance().fingerViews)
+        iter.second->setup();
+
+    MotionDispatcher::instance().setUseHandsAndFingers(true);
+    
     Environment::instance().ready = true;
 }
 
@@ -703,6 +743,8 @@ void MainContentComponent::renderOpenGL()
                                                height));
             patternSelector->setXRange(shownX, hiddenX);
         }
+        
+        fingersImage.setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
 
         sizeChanged = false;
     }
@@ -713,8 +755,36 @@ void MainContentComponent::renderOpenGL()
         sizeChanged = true;
     }
 
+    glEnable(GL_MULTISAMPLE);
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    Environment::instance().modelViewMatrix.LoadIdentity();
+    
+    // Draw fingers to offscreen texture
+    const TextureDescription& td = fingersImage.getDefaultTexture();
+    glViewport(0,0,td.imageW,td.imageH);
+    glUseProgram((GLuint)shaderId);
+    for (auto iter : MotionDispatcher::instance().fingerViews)
+        if (iter.second->inUse)
+            iter.second->drawWithShader(shaderId);
+    glBindTexture(GL_TEXTURE_2D,td.textureId);
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, td.imageW, td.imageH, 0);
+    glViewport(0,0,Environment::instance().screenW,Environment::instance().screenH);
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
@@ -788,18 +858,31 @@ void MainContentComponent::renderOpenGL()
     leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     leapDisconnectedView->draw();
     
-    MotionDispatcher::instance().cursor->draw();
+//    MotionDispatcher::instance().cursor->draw();
     
-    glEnable(GL_DEPTH_TEST);
-
-    // go 3d
-    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+//    glEnable(GL_DEPTH_TEST);
+//
+//    // go 3d
+//    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+//	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+//    Environment::instance().modelViewMatrix.LoadIdentity();
     
-    for (auto iter : MotionDispatcher::instance().fingerViews)
-        if (iter.second->inUse)
-            iter.second->draw();
+    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    
+    // Render the offscreen fingers image using bloom shader
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+    fingersImage.setDefaultBlendMode(GL_SRC_ALPHA,GL_ONE);
+    glBindTexture(GL_TEXTURE_2D, fingersImage.getDefaultTexture().textureId);
+    glUseProgram((GLuint)bloomShaderId);
+    GLint iModelViewMatrix = glGetUniformLocation(bloomShaderId, "mvpMatrix");
+    glUniformMatrix4fv(iModelViewMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetModelViewMatrix());
+    GLfloat imageColor[4] = { 1.f, 1.f, 1.f, 1.f };
+    GLint iColor = glGetUniformLocation(bloomShaderId, "vColor");
+    glUniform4fv(iColor, 1, imageColor);
+    GLint iTextureUnit = glGetUniformLocation(bloomShaderId, "textureUnit0");
+    glUniform1i(iTextureUnit, 0);
+    fingersImage.defaultBatch.Draw();
     
     for (PadView* pv : pads)
         pv->update();
@@ -1211,11 +1294,11 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
     if (useCursor)
     {
-        MotionDispatcher::instance().cursor->setEnabled(true);
+        //MotionDispatcher::instance().cursor->setEnabled(true);
     }
     else
     {
-        MotionDispatcher::instance().cursor->setEnabled(false);
+        //MotionDispatcher::instance().cursor->setEnabled(false);
     }
     
     if (statusBar)

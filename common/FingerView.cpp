@@ -13,8 +13,8 @@ FingerView::FingerView()
 void FingerView::setup()
 {
     //gltMakeCylinder(coneBatch, 0.f, 0.02f, -.1f, 10, 2);
-    //gltMakeCylinder(cylinderBatch, .001f, .01f, -.2f, 10, 2);
-    gltMakeSphere(cylinderBatch, .03, 10, 10);
+    gltMakeCylinder(cylinderBatch, .025f, .025f, -.5f, 10, 2);
+    //gltMakeSphere(cylinderBatch, .03, 10, 10);
 }
 
 void FingerView::drawWithShader(int shaderId)
