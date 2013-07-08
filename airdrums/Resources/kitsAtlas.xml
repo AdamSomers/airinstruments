@@ -22,9 +22,9 @@ r => 'y' only set if sprite is rotated
     <sprite n="Dub.png" x="2" y="242" w="130" h="46" oX="1" oY="2" oW="536" oH="50"/>
     <sprite n="DubStep.png" x="134" y="242" w="252" h="46" oX="1" oY="2" oW="536" oH="50"/>
     <sprite n="Electro.png" x="2" y="290" w="238" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="HipHop Acoustic.png" x="2" y="338" w="290" h="46" oX="0" oY="2" oW="536" oH="50"/>
+    <sprite n="HipHop Analog.png" x="2" y="338" w="290" h="46" oX="0" oY="2" oW="536" oH="50"/>
     <sprite n="HipHop World.png" x="2" y="386" w="306" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="HipHop Analog.png" x="2" y="434" w="270" h="46" oX="1" oY="2" oW="536" oH="50"/>
+    <sprite n="HipHop Acoustic.png" x="2" y="434" w="270" h="46" oX="1" oY="2" oW="536" oH="50"/>
     <sprite n="IDM.png" x="274" y="434" w="112" h="46" oX="1" oY="2" oW="536" oH="50"/>
     <sprite n="Industrial.png" x="2" y="482" w="342" h="46" oX="1" oY="2" oW="536" oH="50"/>
     <sprite n="Techno 1.png" x="2" y="530" w="276" h="46" oX="0" oY="2" oW="536" oH="50"/>

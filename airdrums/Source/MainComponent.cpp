@@ -1240,10 +1240,11 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             StrikeDetector& detector = (*iter).second;
             detector.handMotion(hand);
             int midiNote = detector.getNoteForHand(hand);
+            int padNumber = detector.getPadNumberForHand(hand);
             hoveredNotes.insert(midiNote);
             for (int i = 0; i < NUM_PADS; ++i)
             {
-                if (pads.at(i)->getSelectedMidiNote() == midiNote)
+                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
                     pads.at(i)->setHovering(true);
             }
         }
@@ -1261,7 +1262,14 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 StrikeDetectorMap::iterator iter = insertResult.first;
                 StrikeDetector& detector = (*iter).second;
                 int midiNote = detector.getNoteForPointable(pointable);
-                if (hoveredNotes.find(midiNote) == hoveredNotes.end())
+                int padNumber = detector.getPadNumberForPointable(pointable);
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                        pads.at(i)->setHovering(true);
+                }
+                if (1)//hoveredNotes.find(midiNote) == hoveredNotes.end())
                     detector.pointableMotion(pointable);
                 else
                     toolStrikeDetectors.erase(iter);

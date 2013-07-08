@@ -44,6 +44,9 @@ public:
 
     int getNoteForHand(const Leap::Hand& hand);
     int getNoteForPointable(const Leap::Pointable& pointable);
+    int getPadNumberForHand(const Leap::Hand& hand);
+    int getPadNumberForPointable(const Leap::Pointable& pointable);
+    int getPadNumberForPosition(float x, float y, float z);
 
     const Time& getLastStrikeTime() const;
     
