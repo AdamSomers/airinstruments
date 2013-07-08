@@ -192,7 +192,7 @@ int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
     if (pointableX < 0.f)
         inLeftHalf = true;
     
-    if (pointableZ > 0)
+    if (pointableZ > -50)
         inFrontHalf = true;
     
     if (pointableX > -50 && pointableX < 50.f)
