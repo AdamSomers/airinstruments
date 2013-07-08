@@ -1186,10 +1186,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                     if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
                         pads.at(i)->setHovering(true);
                 }
-                if (1)//hoveredNotes.find(midiNote) == hoveredNotes.end())
-                    detector.pointableMotion(pointable);
-                else
-                    toolStrikeDetectors.erase(iter);
+                detector.pointableMotion(pointable);
             }
         }
         else

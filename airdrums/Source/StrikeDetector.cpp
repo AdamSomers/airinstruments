@@ -165,8 +165,6 @@ int StrikeDetector::getNoteForHand(const Leap::Hand &hand)
         PropertiesFile* settings = AirHarpApplication::getInstance()->getProperties().getUserSettings();
         return settings->getIntValue("selectedNote" + String(padNumber), -1);
     }
-    
-    return -1;
 }
 
 int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
@@ -200,7 +198,7 @@ int StrikeDetector::getPadNumberForPointable(const Leap::Pointable& pointable)
                                    pointable.tipPosition().z);
 }
 
-int StrikeDetector::getPadNumberForPosition(float x, float y, float z)
+int StrikeDetector::getPadNumberForPosition(float x, float /*y*/, float z)
 {
     int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", -1);
     jassert(layout != -1);
