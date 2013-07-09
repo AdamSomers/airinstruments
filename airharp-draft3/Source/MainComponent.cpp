@@ -36,6 +36,7 @@ MainContentComponent::MainContentComponent()
 , toolbar(NULL)
 , statusBar(NULL)
 , settingsScreen(NULL)
+, leapDisconnectedView(NULL)
 , sizeChanged(false)
 {
     Environment::openGLContext.setRenderer (this);
@@ -44,6 +45,7 @@ MainContentComponent::MainContentComponent()
     //openGLContext.setSwapInterval(2);
     setSize (800, 600);
     setWantsKeyboardFocus(true);
+    startTimer(kTimerCheckLeapConnection, 500);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -52,6 +54,7 @@ MainContentComponent::~MainContentComponent()
     delete toolbar;
     delete statusBar;
     delete settingsScreen;
+    delete leapDisconnectedView;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -250,6 +253,10 @@ void MainContentComponent::newOpenGLContextCreated()
     td.texH = -1.f;
     fingersImage.setDefaultTexture(td);
     
+    leapDisconnectedView = new HUDView;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(false, 0);
+    
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     Environment::instance().ready = true;
         
@@ -276,7 +283,16 @@ void MainContentComponent::renderOpenGL()
             statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,35));
         if (settingsScreen)
             settingsScreen->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
-        
+        if (leapDisconnectedView) {
+            TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected");
+            float aspectRatio = td.imageH / (float)td.imageW;
+            float w = Environment::instance().screenW / 2.f;
+            float h = w * aspectRatio;
+            leapDisconnectedView->setBounds(HUDRect(Environment::instance().screenW / 2.f - w / 2.f,
+                                                    Environment::instance().screenH / 2.f - h / 2.f,
+                                                    w,
+                                                    h));
+        }
         layoutStrings();
         chordRegionsNeedUpdate = true;
         
@@ -396,6 +412,9 @@ void MainContentComponent::renderOpenGL()
     
     for (ChordRegion* cr : chordRegions)
         cr->draw();
+    
+    leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    leapDisconnectedView->draw();
 
     //openGLContext.triggerRepaint();
 }
@@ -529,6 +548,8 @@ void MainContentComponent::changeListenerCallback (ChangeBroadcaster* source)
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    lastFrame = Time::getCurrentTime();
+
     if (!Environment::instance().ready)
         return;
     
@@ -583,7 +604,7 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 //        slide->next();
 }
 
-void MainContentComponent::timerCallback()
+void MainContentComponent::timerCallback(int timerId)
 {
 //    Harp* h = HarpManager::instance().getHarp(0);
 //    if (h->checkIdle())
@@ -592,6 +613,22 @@ void MainContentComponent::timerCallback()
 //        stopTimer();
 //        startTimer(TUTORIAL_TIMEOUT);
 //    }
+    switch (timerId) {
+        case kTimerCheckLeapConnection:
+            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
+                if (hasKeyboardFocus(true))
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+                else
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+                leapDisconnectedView->setVisible(true);
+            }
+            else if (leapDisconnectedView)
+                leapDisconnectedView->setVisible(false);
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void MainContentComponent::actionListenerCallback(const String& message)

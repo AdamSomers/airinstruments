@@ -28,7 +28,7 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public ChangeListener,
                                public Leap::Listener,
-                               public Timer,
+                               public MultiTimer,
                                public ActionListener
 {
 public:
@@ -56,7 +56,12 @@ public:
     
     void onFrame(const Leap::Controller&);
     
-    void timerCallback();
+    void timerCallback(int timeId);
+    
+    enum TimerIds
+    {
+        kTimerCheckLeapConnection = 0
+    };
     
     void actionListenerCallback(const String& message);
 private:
@@ -73,6 +78,7 @@ private:
     HarpToolbar* toolbar;
     StatusBar* statusBar;
     SettingsScreen* settingsScreen;
+    HUDView* leapDisconnectedView;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
@@ -86,6 +92,8 @@ private:
     int shaderId;
     
     bool sizeChanged;
+    
+    Time lastFrame;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
