@@ -144,6 +144,8 @@ void View2d::loadTextures()
 void View2d::setDefaultTexture(TextureDescription texture)
 {
     if (defaultTexture != texture) {
+//        if (defaultTexture.textureId != 0)
+//            glDeleteTextures(1, &defaultTexture.textureId);
         defaultTexture = texture;
         needsSetup = true;
     }

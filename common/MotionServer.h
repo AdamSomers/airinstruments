@@ -33,10 +33,10 @@ public:
     
     void addListener(Leap::Listener& l);
     void removeListener(Leap::Listener& l);
-    void removeAllListeners();
     void pause();
     void resume();
 	void stop();
+    void setUseHandsAndFingers(bool shouldUse) { useHandsAndFingers = shouldUse; }
     
 	void addCursorListener(CursorView::Listener& listener);
 	void removeCursorListener(CursorView::Listener& listener);
@@ -82,6 +82,7 @@ private:
     std::vector<CursorView::Listener*> cursorViewListeners;
     CriticalSection listenerLock;
     bool paused;
+    bool useHandsAndFingers;
 };
 
 #endif // h_MotionDispatcher

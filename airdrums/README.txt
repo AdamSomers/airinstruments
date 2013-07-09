@@ -3,32 +3,61 @@ AirBeats - Release Notes
 Please send all comments to adam@handwavy.co.  Thanks!
 Diagnostic Logs are written ~/Library/Logs/AirBeats (Mac), and C:\Users\<user>\App Data\Roaming\AirBeats (Win).
 
-Usage:
+# AirBeats
+Make awesome sounding beats in the air!  AirBeats captures your natural "air drumming" movements, allowing you to make amazing beats in the styles of Hip Hop, Dubstep, Trance, and more.
 
-- "Air drum" in over the Leap's field of view to play one of six zones.
-
-- The application detects rapid downward movement of your hands.  You can play in a variety of ways: open hands, finger extended, closed fist (imaginary drumstick), or using tools.
-
+## Features & Usage
+- "Air drum" over the Leap Motion Controller to play the six zones.
+- The application detects rapid downward movement of your hands.  You can play in a variety of ways: open hands, finger extended, or using tools.  Pencils and chopsticks recommended!
 - When not drumming, a cursor tacks where you are pointing to on the screen (use one finger or tool to move the cursor).
-
-- The pads illuminate as you wave your hands over them.
-
 - All buttons are activated by hovering the cursor over the button.
-
-- Select kits and patterns by bringing the lists into view with the arrow buttons.  Point at a list item to make your selection.
-
+- Select kits and patterns by bringing the lists into view with the tabs.  Point at the list items to make your selection.
 - Change the tempo using the left/right buttons on either side of the tempo display.
-
 - Control the transport (play/record/metronome) using the transport buttons in the upper-right.
-
 - An audio settings dialog is available in the Options menu, in case you need to use a different audio device.
-
-- Patterns can be saved from the file menu.
-
+- Patterns can be saved, copied, and deleted from the file menu.
 - You can export your pattern to an audio file from the file menu.
-
 - If you dismiss the tutorial with the "Don't show again" button, you can bring it back with the 'h' key on your keyboard.
 
+## Tips
+- Windows users should use an ASIO audio driver for the lowest possible latency.
+- It it helpful to view the Leap Motion Visualizer along side AirBeats to get a feel for the playable zones and proper motions.
+
+## System Requirements
+- Windows 7 or 8
+- AMD Phenom™ II or Intel® Core™ i3, i5, i7 processor
+- 2 GB RAM
+- 150 MB HDD space
+- OpenGL 3.0 capable graphics hardware
+
+v0.8 - 7/9/2013
+==================
+
+What's New
+
+Resolved the following issues:
+
+ISSUE 2970 - User is unable to delete patterns from the patterns list
+ISSUE 2968 - Hip-Hop 1 is listed after Hip-Hop 2 in Kits list
+ISSUE 2967 - If multiple instances of the same drum are assigned, when 1 is highlighted, they are all highlighted
+
+Completed features: 
+
+- Make pad highlight more obvious
+- Filter repeated notes in case of jumpy tracking/detection
+- Improve detection of pointable with no palm present
+- Fix support for playing with closed fists
+- Add key commands to control menu items from keyboard
+- Disable unavailable menu options such as save/delete on a factory pattern
+
+
+v0.7.2 - 7/6/2013
+==================
+
+Resolved the following issues:
+
+ISSUE 3393 - App contains a timer, which causes the user to close the app upon expiration
+ISSUE 3389 - App references Leap Motion Controller incorrectly on the 2nd tutorial screen
 
 v0.7.1 - 6/24/2013
 ==================

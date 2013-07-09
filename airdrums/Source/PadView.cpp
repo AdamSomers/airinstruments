@@ -357,7 +357,10 @@ void PadView::draw()
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
     
-    GLfloat padColor [] = { 1.f, 1.f, 1.f, 0.3f + fade * 0.25f };
+    GLfloat padColor [] = { .5f + fade * 0.25f,
+        .5f + fade * 0.25f,
+        .5f + fade * 0.25f + hoverFade * 0.5f,
+        1.f };
     if (hovering) {
         if (hoverFade < 1.f)
             hoverFade += 0.3f;
@@ -374,22 +377,22 @@ void PadView::draw()
     glEnable(GL_DEPTH_TEST);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_DEFAULT_LIGHT, Environment::instance().transformPipeline.GetModelViewMatrix(), Environment::instance().transformPipeline.GetProjectionMatrix(), padColor);
     padBatch.Draw();
     
     glDisable(GL_DEPTH_TEST);
     
-    GLfloat bgOffColor [] = { 1.f, 1.f, 1.f, 1.f };
+    GLfloat bgOffColor [] = { 1.f, 1.f, 1.f, 1.f - hoverFade };
     glBindTexture(GL_TEXTURE_2D, backgroundOffTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
     bgBatch.Draw();
-
-    GLfloat bgOnColor [] = { 1.f, 1.f, 1.f, jmin(1.f, fade + hoverFade * 0.5f)};
+    
+    GLfloat bgOnColor [] = { 1.f, 1.f, 1.f, jmin(1.f, fade * 0.5f)};
     glBindTexture(GL_TEXTURE_2D, backgroundOnTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOnColor, 0);
     bgBatch.Draw();
-
+    
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
     Environment::instance().modelViewMatrix.PushMatrix();
@@ -398,16 +401,16 @@ void PadView::draw()
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), iconColor, 0);
     iconBatch.Draw();
     Environment::instance().modelViewMatrix.PopMatrix();
-
+    
     glBindTexture(GL_TEXTURE_2D, textTexture.textureId);
     Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewProjectionMatrix(), bgOffColor, 0);
     textBatch.Draw();
     
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
     
-
+    
+    
+    
     Environment::instance().modelViewMatrix.PopMatrix();
 }
 

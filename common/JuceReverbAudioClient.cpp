@@ -17,9 +17,9 @@ JuceReverbAudioClient::~JuceReverbAudioClient()
     
 }
 
-void JuceReverbAudioClient::Render(float* buffer, int frames)
+void JuceReverbAudioClient::Render(float* buffer, const int frames)
 {
-    float tmp[frames];
+    float* tmp = new float[frames];
     memset(tmp, 0.f, frames * sizeof(float));
     
     std::vector<AudioClient*>::iterator i;
@@ -37,7 +37,9 @@ void JuceReverbAudioClient::Render(float* buffer, int frames)
     for (int i = 0; i < frames; ++i)
     {
         buffer[i] = tmp[i];
-    }    
+    }
+
+    delete[] tmp;
 }
 
 void JuceReverbAudioClient::AddInput(AudioClient* c)

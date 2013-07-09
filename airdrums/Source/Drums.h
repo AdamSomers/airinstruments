@@ -103,6 +103,8 @@ private:
     CriticalSection midiBufferLock;
 	SharedPtr<DrumKit> kit;
 	Slider* tempoSlider;
+    
+    Time triggerTimes[128];
 };
 
 #endif

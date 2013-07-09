@@ -29,6 +29,7 @@ public:
 	Status	UsePatternTempo(bool usePatternTempo);
 	Status	CreateNewPattern(void);			// Creates a new, modifiable, default named, empty pattern and sets it as the current pattern in the Drums object
 	Status	SaveDirtyPatternPrompt(void);
+    Status  DeletePattern(void);
 
 private:
 	void	UpdatePrefsLastPattern(SharedPtr<DrumPattern> pattern);

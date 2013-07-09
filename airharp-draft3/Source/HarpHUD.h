@@ -4,10 +4,12 @@
 #include <iostream>
 #include "HUD.h"
 #include "Leap.h"
+#include "TextButton.h"
 
 class HarpToolbar : public HUDView
                   , public HUDButton::Listener
                   , public ChangeBroadcaster
+                  , public ActionBroadcaster
 
 {
 public:
@@ -19,7 +21,7 @@ public:
     void loadTextures();
     
     void updateButtons();
-    void setButtonTextures(GLuint on, GLuint off);
+    void setButtonTextures(TextureDescription on, TextureDescription off);
     
     void layoutControls();
     
@@ -27,7 +29,10 @@ public:
     void buttonStateChanged(HUDButton* b);
     
 private:
-    std::vector<HUDButton*> buttons;
+    void updateButtonText();
+
+    std::vector<TextHUDButton*> buttons;
+    TextHUDButton settingsButton;
     //    HUDSlider s1;
     //    HUDSlider s2;
     //    HUDSwitch sw1;
@@ -48,7 +53,7 @@ public:
     void draw();
     
     void layoutControls();
-    void setIndicatorTextures(GLuint on, GLuint off);
+    void setIndicatorTextures(TextureDescription on, TextureDescription off);
     
     // Leap overrides
     void onInit(const Leap::Controller& controller);
@@ -77,9 +82,9 @@ private:
     GLBatch batch;
     GLBatch imageBatch;
     GLuint textureID;
-    int id = 0;
-    bool isActive = false;
-    float fade = 0.f;
+    int id;
+    bool isActive;
+    float fade;
 };
 
 #endif /* defined(__AirHarp__HarpHUD__) */

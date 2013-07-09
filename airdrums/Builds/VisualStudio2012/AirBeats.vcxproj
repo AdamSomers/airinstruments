@@ -149,6 +149,7 @@
     <ClCompile Include="..\..\..\common\GfxTools.cpp"/>
     <ClCompile Include="..\..\..\common\HUD.cpp"/>
     <ClCompile Include="..\..\..\common\MotionServer.cpp"/>
+    <ClCompile Include="..\..\..\common\SkinManager.cpp"/>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp"/>
     <ClCompile Include="..\..\..\common\TextButton.cpp"/>
     <ClCompile Include="..\..\..\common\View2d.cpp"/>
@@ -189,7 +190,6 @@
     <ClCompile Include="..\..\Source\PatternSaveDialog.cpp"/>
     <ClCompile Include="..\..\Source\PlayArea.cpp"/>
     <ClCompile Include="..\..\Source\SampleLayer.cpp"/>
-    <ClCompile Include="..\..\Source\SkinManager.cpp"/>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp"/>
     <ClCompile Include="..\..\Source\TempoControl.cpp"/>
     <ClCompile Include="..\..\Source\TrigView.cpp"/>
@@ -1289,8 +1289,9 @@
     <ClInclude Include="..\..\..\common\GfxTools.h"/>
     <ClInclude Include="..\..\..\common\HUD.h"/>
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
-    <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
+    <ClInclude Include="..\..\..\common\SkinManager.h"/>
     <ClInclude Include="..\..\..\common\Types.h"/>
+    <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
     <ClInclude Include="..\..\..\common\TextButton.h"/>
     <ClInclude Include="..\..\..\common\View2d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h"/>
@@ -1334,7 +1335,6 @@
     <ClInclude Include="..\..\Source\PatternSaveDialog.h"/>
     <ClInclude Include="..\..\Source\PlayArea.h"/>
     <ClInclude Include="..\..\Source\SampleLayer.h"/>
-    <ClInclude Include="..\..\Source\SkinManager.h"/>
     <ClInclude Include="..\..\Source\StrikeDetector.h"/>
     <ClInclude Include="..\..\Source\TempoControl.h"/>
     <ClInclude Include="..\..\Source\TrigView.h"/>

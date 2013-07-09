@@ -5,25 +5,12 @@ MotionDispatcher* MotionDispatcher::s_instance = nullptr;
 
 MotionDispatcher::MotionDispatcher()
 : paused(false)
+, useHandsAndFingers(false)
 {
     addListener(*this);
     controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
-    
-    for (int i = 0; i < 50; ++i)
-    {
-        SharedPtr<FingerView> fv(new FingerView);
-        fingerViews.insert(std::make_pair(i, fv));
-        fv->id = i;
-    }
-    
-    for (int i = 0; i < 50; ++i)
-    {
-        SharedPtr<HandView> hv(new HandView);
-        handViews.insert(std::make_pair(i, hv));
-        hv->id = i;
-    }
     
     cursor = SharedPtr<CursorView>(new CursorView);
     cursor->setBounds(HUDRect(0, 0, 20, 20));
@@ -37,7 +24,7 @@ MotionDispatcher::MotionDispatcher()
 
 MotionDispatcher::~MotionDispatcher()
 {
-    removeAllListeners();
+    removeListener(*this);
     fingerViewListeners.clear();
     handViewListeners.clear();
 	cursorViewListeners.clear();
@@ -63,13 +50,6 @@ void MotionDispatcher::removeListener(Leap::Listener& l)
 	}
 }
 
-void MotionDispatcher::removeAllListeners()
-{
-    for (Leap::Listener* l : listeners)
-        controller.removeListener(*l);
-    listeners.clear();
-}
-
 void MotionDispatcher::pause()
 {
     if (!paused)
@@ -92,7 +72,7 @@ void MotionDispatcher::resume()
 
 void MotionDispatcher::stop()
 {
-    removeListener(*this);
+    controller.removeListener(*this);
 }
 
 void MotionDispatcher::addCursorListener(CursorView::Listener& listener)
@@ -173,9 +153,9 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
         // cursor handles disabling itself via timer
     }
 
-    return;
+    if (!useHandsAndFingers)
+        return;
 
-#if 0	// Unreachable code due to return above
     if (!Environment::instance().ready)
         return;
     
@@ -216,9 +196,16 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             auto iter = handViews.find(hand.id());
             if (iter == handViews.end())
             {
-                // Finger map is pre-allocated, if we don't find one too bad!
-                printf("Error! No hand in map for id %d\n", hand.id());
-                continue;
+                printf("Adding hand %d to map\n", hand.id());
+                SharedPtr<HandView> newHv(new HandView);
+                newHv->inUse = true;
+                newHv->invalid = false;
+                newHv->hand = hand;
+                newHv->id = hand.id();
+                handViews.insert(std::make_pair(hand.id(), newHv));
+                hv = newHv;
+                inserted = true;
+
             }
             else
             {
@@ -240,13 +227,18 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             float dirY = hand.direction().y;
             float dirZ = hand.direction().z;
             
+            float upX = hand.palmNormal().x;
+            float upY = hand.palmNormal().y;
+            float upZ = hand.palmNormal().z;
+            
             M3DVector3f prev;
             hv->objectFrame.GetForwardVector(prev);
             hv->prevFrame.SetForwardVector(prev);
             hv->objectFrame.GetOrigin(prev);
             hv->prevFrame.SetOrigin(prev);
             
-            hv->objectFrame.SetForwardVector(dirX,dirY,-dirZ);
+            hv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
+            hv->objectFrame.SetUpVector(upX,upY,upZ);
             float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
             float scaledY = (y-.5f)*4;
             if (z < zLimit) z = 0;
@@ -311,7 +303,6 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             //printf("Removed hand %d\n", hv->id);
         }
     }
-#endif
 }
 
 void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)
@@ -321,9 +312,14 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     auto iter = fingerViews.find(f.id());
     if (iter == fingerViews.end())
     {
-        // Finger map is pre-allocated, if we don't find one too bad!
-        printf("Error! No finger in map for id %d\n", f.id());
-        return;
+        printf("Adding finger %d to map\n", f.id());
+        SharedPtr<FingerView> newFv(new FingerView);
+        newFv->inUse = true;
+        newFv->invalid = false;
+        newFv->finger = f;
+        newFv->id = f.id();
+        fingerViews.insert(std::make_pair(f.id(), newFv));
+        fv = newFv;
     }
     else
     {
@@ -365,7 +361,8 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     
     for (FingerView::Listener* listener : fingerViewListeners)
     {
-        listener->updatePointedState(fv.get());
+        if (fv->inUse)
+            listener->updatePointedState(fv.get());
     }
     //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
     

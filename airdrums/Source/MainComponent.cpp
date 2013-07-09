@@ -1083,26 +1083,8 @@ void MainContentComponent::changeListenerCallback(ChangeBroadcaster *source)
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternName", name);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("patternUuid", uuidString);
         Drums::instance().setPattern(selectedPattern);
-        if (Drums::instance().getTempoSource() == Drums::kPatternTempo)
-        {
-            tempoControl->setTempo(Drums::instance().getTempo());
-        }
-        std::shared_ptr<DrumKit> kit = selectedPattern->GetDrumKit();
-        if (kit) {
-            Drums::instance().setDrumKit(kit);
-            int drumKitIndex = KitManager::GetInstance().GetIndexOfItem(selectedPattern->GetDrumKit());
-            kitSelector->setSelection(drumKitIndex);
-            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", kit->GetName());
-            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", kit->GetUuid().toString());
-            for (PlayArea* pad : playAreas)
-                pad->setSelectedMidiNote(pad->getSelectedMidiNote());
-            for (PadView* pad : pads)
-                pad->setSelectedMidiNote(pad->getSelectedMidiNote());
-        }
-        else
-        {
-            Logger::writeToLog("Pattern selected with unknown kit");
-        }
+        
+        this->postMessage(new AirHarpApplication::PatternChangedMessage);
     }
 }
 
@@ -1157,10 +1139,11 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             StrikeDetector& detector = (*iter).second;
             detector.handMotion(hand);
             int midiNote = detector.getNoteForHand(hand);
+            int padNumber = detector.getPadNumberForHand(hand);
             hoveredNotes.insert(midiNote);
             for (int i = 0; i < NUM_PADS; ++i)
             {
-                if (pads.at(i)->getSelectedMidiNote() == midiNote)
+                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
                     pads.at(i)->setHovering(true);
             }
         }
@@ -1178,10 +1161,14 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 StrikeDetectorMap::iterator iter = insertResult.first;
                 StrikeDetector& detector = (*iter).second;
                 int midiNote = detector.getNoteForPointable(pointable);
-                if (hoveredNotes.find(midiNote) == hoveredNotes.end())
-                    detector.pointableMotion(pointable);
-                else
-                    toolStrikeDetectors.erase(iter);
+                int padNumber = detector.getPadNumberForPointable(pointable);
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                        pads.at(i)->setHovering(true);
+                }
+                detector.pointableMotion(pointable);
             }
         }
         else
@@ -1402,6 +1389,38 @@ void MainContentComponent::handleMessage(const juce::Message &m)
     if (patternAddedMessage)
     {
         needsPatternListUpdate = true;
+    }
+    
+    AirHarpApplication::PatternDeletedMessage* patternDeletedMessage = dynamic_cast<AirHarpApplication::PatternDeletedMessage*>(inMsg);
+    if (patternDeletedMessage)
+    {
+        needsPatternListUpdate = true;
+    }
+    
+    AirHarpApplication::PatternChangedMessage* patternChangedMessage = dynamic_cast<AirHarpApplication::PatternChangedMessage*>(inMsg);
+    if (patternChangedMessage)
+    {
+        SharedPtr<DrumPattern> selectedPattern = Drums::instance().getPattern();
+        if (Drums::instance().getTempoSource() == Drums::kPatternTempo)
+        {
+            tempoControl->setTempo(Drums::instance().getTempo());
+        }
+        std::shared_ptr<DrumKit> kit = selectedPattern->GetDrumKit();
+        if (kit) {
+            Drums::instance().setDrumKit(kit);
+            int drumKitIndex = KitManager::GetInstance().GetIndexOfItem(selectedPattern->GetDrumKit());
+            kitSelector->setSelection(drumKitIndex);
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitName", kit->GetName());
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("kitUuid", kit->GetUuid().toString());
+            for (PlayArea* pad : playAreas)
+                pad->setSelectedMidiNote(pad->getSelectedMidiNote());
+            for (PadView* pad : pads)
+                pad->setSelectedMidiNote(pad->getSelectedMidiNote());
+        }
+        else
+        {
+            Logger::writeToLog("Pattern selected with unknown kit");
+        }
     }
     
     InitGLMessage* initGLMessage = dynamic_cast<InitGLMessage*>(inMsg);

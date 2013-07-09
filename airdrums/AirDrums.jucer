@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.7.2"
+<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.8"
               bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
               companyName="Handwavy" defines="">
   <MAINGROUP id="qE7qno" name="AirBeats">
@@ -28,10 +28,12 @@
       <FILE id="Fqy8p2" name="MotionServer.cpp" compile="1" resource="0"
             file="../common/MotionServer.cpp"/>
       <FILE id="uvkMVm" name="MotionServer.h" compile="0" resource="0" file="../common/MotionServer.h"/>
+      <FILE id="Ei28rZ" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
+      <FILE id="b3Jfhk" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
+      <FILE id="PPfLKm" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
       <FILE id="RcloxN" name="TutorialSlide.cpp" compile="1" resource="0"
             file="../common/TutorialSlide.cpp"/>
       <FILE id="SKcLcS" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
-      <FILE id="PPfLKm" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
       <FILE id="zYMXR5" name="TextButton.cpp" compile="1" resource="0" file="../common/TextButton.cpp"/>
       <FILE id="rFkMZa" name="TextButton.h" compile="0" resource="0" file="../common/TextButton.h"/>
       <FILE id="VYKSMK" name="View2d.cpp" compile="1" resource="0" file="../common/View2d.cpp"/>
@@ -142,8 +144,6 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="Sq8qx7" name="SampleLayer.cpp" compile="1" resource="0" file="Source/SampleLayer.cpp"/>
       <FILE id="dj1uwR" name="SampleLayer.h" compile="0" resource="0" file="Source/SampleLayer.h"/>
-      <FILE id="uZdbZi" name="SkinManager.cpp" compile="1" resource="0" file="Source/SkinManager.cpp"/>
-      <FILE id="zf1uwf" name="SkinManager.h" compile="0" resource="0" file="Source/SkinManager.h"/>
       <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"
             file="Source/StrikeDetector.cpp"/>
       <FILE id="Oira0u" name="StrikeDetector.h" compile="0" resource="0"

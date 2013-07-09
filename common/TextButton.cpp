@@ -13,8 +13,10 @@ TextHUDButton::TextHUDButton(StringArray on /*= "on"*/, StringArray off /*= "off
 : onText(on)
 , offText(off)
 , textChanged(false)
-, textColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f))
-, backgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .25f))
+, onTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f))
+, offTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f))
+, onBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f))
+, offBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f))
 {
     
 }
@@ -41,10 +43,10 @@ void TextHUDButton::loadTextures()
     Image imOn(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOn (imOn);
     
-    gOn.setColour(backgroundColor);
+    gOn.setColour(onBackgroundColor);
     gOn.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
-    gOn.setColour(textColor);
+    gOn.setColour(onTextColor);
     float textSize = jmin(imageH, imageW) * .22f;
     gOn.setFont(textSize);
     gOn.setFont(Font(fontName, textSize, Font::plain));
@@ -66,10 +68,10 @@ void TextHUDButton::loadTextures()
     Image imOff(Image::PixelFormat::ARGB, imageW, imageH, true);
     Graphics gOff (imOff);
     
-    gOff.setColour(backgroundColor);
+    gOff.setColour(offBackgroundColor);
     gOff.fillEllipse(0.f, 0.f, (float)imageW, (float)imageH);
     
-    gOff.setColour(textColor);
+    gOff.setColour(offTextColor);
     gOff.setFont(textSize);
     gOff.setFont(Font(fontName, textSize, Font::plain));
 
@@ -97,14 +99,16 @@ void TextHUDButton::setText(StringArray on, StringArray off)
     textChanged = true;
 }
 
-void TextHUDButton::setTextColor(const Colour& newColor)
+void TextHUDButton::setTextColor(const Colour& onColor, const Colour& offColor)
 {
-    textColor = newColor;
+    onTextColor = onColor;
+    offTextColor = offColor;
     textChanged = true;
 }
 
-void TextHUDButton::setBackgroundColor(const Colour& newColor)
+void TextHUDButton::setBackgroundColor(const Colour& onColor, const Colour& offColor)
 {
-    backgroundColor = newColor;
+    onBackgroundColor = onColor;
+    offBackgroundColor = offColor;
     textChanged = true;
 }

@@ -40,10 +40,13 @@ public:
     
     void handMotion(const Leap::Hand& hand);
     void pointableMotion(const Leap::Pointable& pointable);
-    void motion(float position, float velocity, int64_t timestamp);
+    void motion(float position, float velocity, int64_t timestamp, float sensitivity);
 
     int getNoteForHand(const Leap::Hand& hand);
     int getNoteForPointable(const Leap::Pointable& pointable);
+    int getPadNumberForHand(const Leap::Hand& hand);
+    int getPadNumberForPointable(const Leap::Pointable& pointable);
+    int getPadNumberForPosition(float x, float y, float z);
 
     const Time& getLastStrikeTime() const;
     
