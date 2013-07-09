@@ -18,7 +18,8 @@
 
 // 0 -> strike on direction reversal
 // 1 -> strike as soon as threshold is crossed
-#define SENSITIVITY .50f
+#define HAND_SENSITIVITY .50f
+#define TOOL_SENSITIVITY .50f
 
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
 // Also, the pad area upper edge is at about 310
@@ -52,10 +53,10 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
     midiNote = getNoteForHand(hand);
 
 	float position = hand.palmPosition().y;
-	float velocity = hand.palmVelocity().y;
+	float velocity = hand.palmVelocity().y*2;
     //int64_t timestamp = hand.frame().timestamp(); // causes crash
 	int64_t timestamp = Time::getCurrentTime().currentTimeMillis() * 1000;
-    motion(position, velocity, timestamp);
+    motion(position, velocity, timestamp, HAND_SENSITIVITY);
 }
 
 void StrikeDetector::pointableMotion(const Leap::Pointable& pointable)
@@ -66,10 +67,10 @@ void StrikeDetector::pointableMotion(const Leap::Pointable& pointable)
 	float velocity = pointable.tipVelocity().y;
     //pointable.frame().timestamp(); // causes crash
 	int64_t timestamp = Time::getCurrentTime().currentTimeMillis() * 1000;
-    motion(position, velocity, timestamp);
+    motion(position, velocity, timestamp, TOOL_SENSITIVITY);
 }
 
-void StrikeDetector::motion(float position, float velocity, int64_t timestamp)
+void StrikeDetector::motion(float position, float velocity, int64_t timestamp, float sensitivity)
 {
 	SmoothData(velocity, position, timestamp);
 
@@ -112,7 +113,7 @@ void StrikeDetector::motion(float position, float velocity, int64_t timestamp)
 			if (velocity > maxVel)
 				maxVel = velocity;
 
-			bool trigger = direction > 0 || velocity <= (maxVel * SENSITIVITY) /*|| (position <= Y_TRIGGER_BOUNDARY)*/;
+			bool trigger = direction > 0 || velocity <= (maxVel * sensitivity) /*|| (position <= Y_TRIGGER_BOUNDARY)*/;
             
 			if (trigger)
 			{
