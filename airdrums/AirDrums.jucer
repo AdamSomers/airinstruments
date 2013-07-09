@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.7.2"
+<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="0.8"
               bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.0.0"
               companyName="Handwavy" defines="">
   <MAINGROUP id="qE7qno" name="AirBeats">
