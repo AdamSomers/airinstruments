@@ -18,7 +18,8 @@
 
 // 0 -> strike on direction reversal
 // 1 -> strike as soon as threshold is crossed
-#define SENSITIVITY .50f
+#define HAND_SENSITIVITY .50f
+#define TOOL_SENSITIVITY .50f
 
 // Tracking is jittery up at upper edge of field of view, so ignore tracking there
 // Also, the pad area upper edge is at about 310
@@ -52,10 +53,10 @@ void StrikeDetector::handMotion(const Leap::Hand& hand)
     midiNote = getNoteForHand(hand);
 
 	float position = hand.palmPosition().y;
-	float velocity = hand.palmVelocity().y;
+	float velocity = hand.palmVelocity().y*2;
     //int64_t timestamp = hand.frame().timestamp(); // causes crash
 	int64_t timestamp = Time::getCurrentTime().currentTimeMillis() * 1000;
-    motion(position, velocity, timestamp);
+    motion(position, velocity, timestamp, HAND_SENSITIVITY);
 }
 
 void StrikeDetector::pointableMotion(const Leap::Pointable& pointable)
@@ -66,10 +67,10 @@ void StrikeDetector::pointableMotion(const Leap::Pointable& pointable)
 	float velocity = pointable.tipVelocity().y;
     //pointable.frame().timestamp(); // causes crash
 	int64_t timestamp = Time::getCurrentTime().currentTimeMillis() * 1000;
-    motion(position, velocity, timestamp);
+    motion(position, velocity, timestamp, TOOL_SENSITIVITY);
 }
 
-void StrikeDetector::motion(float position, float velocity, int64_t timestamp)
+void StrikeDetector::motion(float position, float velocity, int64_t timestamp, float sensitivity)
 {
 	SmoothData(velocity, position, timestamp);
 
@@ -112,7 +113,7 @@ void StrikeDetector::motion(float position, float velocity, int64_t timestamp)
 			if (velocity > maxVel)
 				maxVel = velocity;
 
-			bool trigger = direction > 0 || velocity <= (maxVel * SENSITIVITY) /*|| (position <= Y_TRIGGER_BOUNDARY)*/;
+			bool trigger = direction > 0 || velocity <= (maxVel * sensitivity) /*|| (position <= Y_TRIGGER_BOUNDARY)*/;
             
 			if (trigger)
 			{
@@ -155,34 +156,56 @@ int StrikeDetector::getNoteForHand(const Leap::Hand &hand)
     const size_t numPointables = pointables.count();
     if (numPointables >= 1)
     {
-        int pointableClosestToScreen = 0;
-        float zMin = 999.f;
-        for (unsigned int i = 0; i < numPointables; ++i)
-        {
-            const Leap::Pointable& p = pointables[i];
-            if (p.tipPosition().z < zMin)
-            {
-                pointableClosestToScreen = i;
-                zMin = p.tipPosition().z;
-            }
-        }
-
-        return getNoteForPointable(pointables[pointableClosestToScreen]);
+        return getNoteForPointable(pointables.frontmost());
     }
-    
-    return -1;
+    else
+    {
+        int padNumber = getPadNumberForPosition(hand.palmPosition().x,
+                                                hand.palmPosition().y,
+                                                hand.palmPosition().z);
+        PropertiesFile* settings = AirHarpApplication::getInstance()->getProperties().getUserSettings();
+        return settings->getIntValue("selectedNote" + String(padNumber), -1);
+    }
 }
 
 int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
 {    
+    int padNumber = getPadNumberForPointable(pointable);
+    PropertiesFile* settings = AirHarpApplication::getInstance()->getProperties().getUserSettings();
+    int midiNote = settings->getIntValue("selectedNote" + String(padNumber), -1);
+    return midiNote;
+}
+
+int StrikeDetector::getPadNumberForHand(const Leap::Hand& hand)
+{
+    const Leap::PointableList& pointables = hand.pointables();
+    const size_t numPointables = pointables.count();
+    if (numPointables >= 1)
+    {
+        return getPadNumberForPointable(pointables.frontmost());
+    }
+    else
+    {
+        return getPadNumberForPosition(hand.palmPosition().x,
+                                       hand.palmPosition().y,
+                                       hand.palmPosition().z);
+    }
+}
+
+int StrikeDetector::getPadNumberForPointable(const Leap::Pointable& pointable)
+{
+    return getPadNumberForPosition(pointable.tipPosition().x,
+                                   pointable.tipPosition().y,
+                                   pointable.tipPosition().z);
+}
+
+int StrikeDetector::getPadNumberForPosition(float x, float /*y*/, float z)
+{
     int layout = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", -1);
     jassert(layout != -1);
-
-    PropertiesFile* settings = AirHarpApplication::getInstance()->getProperties().getUserSettings();
-    int midiNote = -1;
     
-    float pointableX = pointable.tipPosition().x;
-    float pointableZ = pointable.tipPosition().z;
+    float pointableX = x;
+    float pointableZ = z;
     
     int padNumber = 0;
     bool inLeftHalf = false;
@@ -192,7 +215,7 @@ int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
     if (pointableX < 0.f)
         inLeftHalf = true;
     
-    if (pointableZ > 0)
+    if (pointableZ > -50)
         inFrontHalf = true;
     
     if (pointableX > -50 && pointableX < 50.f)
@@ -218,7 +241,7 @@ int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
                 padNumber = 0;
             else
                 padNumber = 1;
-
+            
             if (!inFrontHalf)
                 padNumber += 2;
             break;
@@ -237,9 +260,7 @@ int StrikeDetector::getNoteForPointable(const Leap::Pointable& pointable)
             break;
     }
     
-    midiNote = settings->getIntValue("selectedNote" + String(padNumber), -1);
-    
-    return midiNote;
+    return padNumber;
 }
 
 const Time& StrikeDetector::getLastStrikeTime() const

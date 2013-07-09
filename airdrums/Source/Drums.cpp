@@ -53,6 +53,11 @@ Drums::~Drums()
 
 void Drums::NoteOn(int note, float velocity)
 {
+    if ((Time::getCurrentTime() - triggerTimes[note]).inMilliseconds() < 50)
+        return;
+    else
+        triggerTimes[note] = Time::getCurrentTime();
+
     midiBufferLock.enter();
     if (transportState.recording && transportState.playing) {
 		// Quantize the note to the nearest 16th boundary
@@ -323,6 +328,9 @@ void Drums::setPattern(SharedPtr<DrumPattern> aPattern)
 		AdjustMidiBuffers();	// Conform the buffers to the current global tempo and sample rate
 
     midiBufferLock.exit();
+    
+    // enables or disables certain commands & affects main menu
+    AirHarpApplication::getInstance()->commandManager.commandStatusChanged();
 }
 
 
