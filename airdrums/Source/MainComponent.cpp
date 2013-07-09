@@ -1409,6 +1409,12 @@ void MainContentComponent::handleMessage(const juce::Message &m)
         needsPatternListUpdate = true;
     }
     
+    AirHarpApplication::PatternDeletedMessage* patternDeletedMessage = dynamic_cast<AirHarpApplication::PatternDeletedMessage*>(inMsg);
+    if (patternDeletedMessage)
+    {
+        needsPatternListUpdate = true;
+    }
+    
     InitGLMessage* initGLMessage = dynamic_cast<InitGLMessage*>(inMsg);
     if (initGLMessage)
     {

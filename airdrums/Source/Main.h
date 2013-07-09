@@ -40,6 +40,8 @@ public:
     void anotherInstanceStarted (const String& /*commandLine*/);
 
     void handleMessage(const juce::Message &m);
+
+    ApplicationCommandManager commandManager;
     
     //==============================================================================
     /*
@@ -47,6 +49,8 @@ public:
         our MainContentComponent class.
     */
     class MainWindow    : public DocumentWindow
+                        , public ApplicationCommandTarget
+
     {
     public:
         MainWindow();
@@ -59,21 +63,42 @@ public:
            you really have to override any DocumentWindow methods, make sure your
            subclass also calls the superclass's method.
         */
+        
+        enum CommandIDs
+        {
+            kAudioSettingsCmd = 1,
+            kSavePatternAsCmd = 2,
+            kLoadPatternCmd = 3,
+            kUsePatternTempoCmd = 4,
+            kExportCmd = 5,
+            kNewPatternCmd = 6,
+            kSavePatternCmd = 7,
+            kDeletePatternCmd = 8
+        };
+        
+        void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);
+        void getAllCommands (Array< CommandID>& commands);
+        ApplicationCommandTarget * 	getNextCommandTarget () { return nullptr; }
+        bool perform (const InvocationInfo &info);
+        
 
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 
     class PatternAddedMessage : public Message {};
+
+    class PatternDeletedMessage : public Message {};
     
     class GrabFocusMessage : public Message {};
     
     class InitializeMessage : public Message {};
 
 	MainWindow* GetMainWindow()					{ return mainWindow; }
+    
+    void showAudioSettingsDlg();
 
 private:
-	bool perform (const InvocationInfo &info);
 
     ScopedPointer<MainWindow> mainWindow;
     AudioDeviceManager audioDeviceManager;

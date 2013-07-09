@@ -5,12 +5,6 @@
 
 MainMenu::MainMenu()
 {
-	AirHarpApplication* app = AirHarpApplication::getInstance();
-	ApplicationProperties& props = app->getProperties();
-	if (props.getUserSettings()->getBoolValue("tempoSource", Drums::kGlobalTempo) != Drums::kGlobalTempo)
-		mUsePatternTempo = true;
-	else
-		mUsePatternTempo = false;
 }
 
 
@@ -33,7 +27,7 @@ StringArray  MainMenu::getMenuBarNames ()
 PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*menuName*/)
 {
 	PopupMenu menu;
-
+    ApplicationCommandManager* mgr = &(AirHarpApplication::getInstance()->commandManager);
 	switch (topLevelMenuIndex)
 	{
 		default :
@@ -43,15 +37,19 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 		}
 
 		case kFileMenu :
-			menu.addItem(kNewPatternCmd, "New Pattern");
-			menu.addItem(kLoadPatternCmd, "Load Pattern...");
-			menu.addItem(kSavePatternCmd, "Save Pattern");
-			menu.addItem(kSavePatternAsCmd, "Save Pattern As...");
-			menu.addItem(kExportCmd, "Export Pattern...");
+        {
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kNewPatternCmd, "New Pattern");
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kLoadPatternCmd, "Load Pattern...");
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kSavePatternCmd, "Save Pattern");
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kSavePatternAsCmd, "Save Pattern As...");
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kExportCmd, "Export Pattern...");
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kDeletePatternCmd);
+            
 			break;
+        }
 		case kOptionsMenu :
-			menu.addItem(kUsePatternTempoCmd, "Use Pattern Tempo", true, mUsePatternTempo);
-			menu.addItem(kAudioSettingsCmd, "Audio Settings...");
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kUsePatternTempoCmd, "Use Pattern Tempo");
+			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kAudioSettingsCmd, "Audio Settings...");
 			break;
 	}
 
@@ -62,43 +60,4 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 
 void  MainMenu::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 {
-	jassert(topLevelMenuIndex <= kLastMenu);
-	jassert(topLevelMenuIndex >= 0);
-
-	switch (menuItemID)
-	{
-		default :
-		{
-			jassertfalse;
-			break;
-		}
-
-		case kUsePatternTempoCmd :
-		{
-			mUsePatternTempo = !mUsePatternTempo;
-			// Fall through
-		}
-		case kAudioSettingsCmd :
-		case kSavePatternAsCmd :
-		case kLoadPatternCmd :
-		case kExportCmd :
-		case kNewPatternCmd :
-		case kSavePatternCmd :
-		{
-			ApplicationCommandTarget::InvocationInfo info(menuItemID);
-			info.commandFlags = 0;
-			info.invocationMethod = ApplicationCommandTarget::InvocationInfo::InvocationMethod::fromMenu;
-			info.originatingComponent = nullptr;
-			info.isKeyDown = false;
-			info.millisecsSinceKeyPressed = 0;
-			JUCEApplication::getInstance()->perform(info);
-			break;
-		}
-	}
-}
-
-
-bool MainMenu::GetUsePatternTempo(void)
-{
-	return mUsePatternTempo;
 }

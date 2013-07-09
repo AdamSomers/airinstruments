@@ -231,3 +231,38 @@ PatternManager::Status PatternManager::SaveDirtyPatternPrompt(void)
 
 	return saveStatus;
 }
+
+PatternManager::Status PatternManager::DeletePattern(void)
+{
+    AirHarpApplication::MainWindow* mainWindow = AirHarpApplication::getInstance()->GetMainWindow();
+	jassert(mainWindow != nullptr);
+
+    int dlgStatus;
+	{	// Limit scope, so alert dialog destructs prior to save
+		AlertWindow alert("Delete pattern", "Are you sure you want to delete the current pattern?", AlertWindow::QuestionIcon, mainWindow);
+		alert.addButton("Yes", 1, KeyPress(KeyPress::returnKey));
+		alert.addButton("No", 0, KeyPress(KeyPress::escapeKey));
+		dlgStatus = alert.runModalLoop();
+	}
+    if (dlgStatus == 1)
+    {
+        Drums& drums = Drums::instance();
+        SharedPtr<DrumPattern> pattern = drums.getPattern();
+        jassert(pattern.get() != nullptr);
+        if (!pattern->GetModifiable()) {
+            Logger::writeToLog("Tried to delete read-only file!");
+            return PatternManager::kNoError;
+        }
+        File f = pattern->GetFile();
+        if (f == File::nonexistent) {
+            Logger::writeToLog("Tried to delete nonexistent file!");
+            return PatternManager::kNoError;
+        }
+        
+        f.deleteFile();
+        BuildPatternList();
+        UpdatePatternWheel();
+        
+        return PatternManager::kNoError;
+    }
+}

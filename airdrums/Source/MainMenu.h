@@ -10,13 +10,7 @@ class MainMenu : public MenuBarModel
 public:
 	enum Command
 	{
-		kAudioSettingsCmd = 1,
-		kSavePatternAsCmd = 2,
-		kLoadPatternCmd = 3,
-		kUsePatternTempoCmd = 4,
-		kExportCmd = 5,
-		kNewPatternCmd = 6,
-		kSavePatternCmd = 7
+		
 	};
 	enum TopLevelMenu
 	{
@@ -29,14 +23,11 @@ public:
     MainMenu();
     virtual ~MainMenu();
 
-	bool GetUsePatternTempo(void);
-
 	virtual StringArray  getMenuBarNames ();
 	virtual PopupMenu  getMenuForIndex (int topLevelMenuIndex, const String &menuName);
 	virtual void  menuItemSelected (int menuItemID, int topLevelMenuIndex);
 
 private:
-	bool	mUsePatternTempo;
 };
 
 #endif

@@ -57,7 +57,8 @@ void AirHarpApplication::initialise (const String& /*commandLine*/)
 		MenuBarModel::setMacMainMenu(mainMenu);
 	#endif
     
-    
+    commandManager.registerAllCommandsForTarget (mainWindow);
+    mainMenu->setApplicationCommandManagerToWatch (&commandManager);
     
 	XmlElement* audioState = properties.getUserSettings()->getXmlValue(AudioSettingsDialog::getPropertiesName());
     String audioStatus = audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
@@ -152,87 +153,161 @@ void AirHarpApplication::anotherInstanceStarted (const String& /*commandLine*/)
     // the other instance's command-line arguments were.
 }
 
-bool AirHarpApplication::perform (const InvocationInfo &info)
+void AirHarpApplication::showAudioSettingsDlg()
 {
-	switch(info.commandID)
+    settingsDialog = new AudioSettingsDialog(mainWindow, audioDeviceManager, properties);
+}
+
+void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands)
+{
+    // this returns the set of all commands that this target can perform..
+    const CommandID ids[] = {
+        kAudioSettingsCmd,
+        kSavePatternAsCmd,
+        kLoadPatternCmd,
+        kUsePatternTempoCmd,
+        kExportCmd,
+        kNewPatternCmd,
+        kSavePatternCmd,
+        kDeletePatternCmd
+    };
+    
+    commands.addArray (ids, numElementsInArray (ids));
+
+}
+
+void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, ApplicationCommandInfo &result)
+{
+    switch (commandID)
+    {
+        case kNewPatternCmd:
+            result.setInfo ("New Pattern", "Create a new pattern", "File", 0);
+            result.setActive(true);
+            break;
+        case kLoadPatternCmd:
+            result.setInfo ("Load Pattern", "Load a pattern", "File", 0);
+            result.setActive(true);
+            break;
+        case kSavePatternCmd:
+            result.setInfo ("Save Pattern", "Save the current pattern", "File", 0);
+            result.setActive(true);
+            break;
+        case kSavePatternAsCmd:
+            result.setInfo ("Save Pattern As...", "Save the current pattern as", "File", 0);
+            result.setActive(true);
+            break;
+        case kExportCmd:
+            result.setInfo ("Export Pattern...", "Export pattern as audio", "File", 0);
+            result.setActive(true);
+            break;
+        case kDeletePatternCmd:
+        {
+            result.setInfo ("Delete Pattern", "Delete the active pattern", "File", 0);
+            Drums& drums = Drums::instance();
+            SharedPtr<DrumPattern> pattern = drums.getPattern();
+            result.setActive(pattern.get() != nullptr && pattern->GetModifiable());
+            //result.addDefaultKeypress ('1', ModifierKeys::commandModifier);
+        }
+            break;
+        case kUsePatternTempoCmd:
+        {
+            result.setInfo ("Use Pattern Tempo", "Use BPM from pattern file, or global tempo", "Options", 0);
+            result.setActive(true);
+            AirHarpApplication* app = AirHarpApplication::getInstance();
+            ApplicationProperties& props = app->getProperties();
+            bool tick = false;
+            if (props.getUserSettings()->getBoolValue("tempoSource", Drums::kGlobalTempo) != Drums::kGlobalTempo)
+                tick = true;
+            else
+                tick = false;
+            result.setTicked(tick);
+        }
+            break;
+        case kAudioSettingsCmd:
+            result.setInfo ("Audio Settings", "Change audio configuration settings", "Options", 0);
+            result.setActive(true);
+            break;
+
+    }
+}
+
+bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
+{
+    switch(info.commandID)
 	{
 		default :
 		{
-			jassertfalse;
+			//jassertfalse;
 			break;
 		}
-
-		case MainMenu::kAudioSettingsCmd :
+            
+		case kAudioSettingsCmd :
 		{
-			if (settingsDialog != nullptr)
+			if (AirHarpApplication::getInstance()->settingsDialog != nullptr)
 				break;
-
-			settingsDialog = new AudioSettingsDialog(mainWindow, audioDeviceManager, properties);
-
             
-            
-            
+			AirHarpApplication::getInstance()->showAudioSettingsDlg();
 
 			break;
 		}
-		case MainMenu::kSavePatternAsCmd :
+		case kSavePatternAsCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.SavePatternAs();
-
+            
             
             
             
 			break;
 		}
-		case MainMenu::kLoadPatternCmd :
+		case kLoadPatternCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.LoadPattern();
 			break;
 		}
-		case MainMenu::kUsePatternTempoCmd :
+		case kUsePatternTempoCmd :
 		{
-			bool usePatternTempo = mainMenu->GetUsePatternTempo();
+            AirHarpApplication* app = AirHarpApplication::getInstance();
+            ApplicationProperties& props = app->getProperties();
+            bool usePatternTempo = !(props.getUserSettings()->getBoolValue("tempoSource", Drums::kGlobalTempo) != Drums::kGlobalTempo);
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.UsePatternTempo(usePatternTempo);
-            MainContentComponent* content = dynamic_cast<MainContentComponent*>(mainWindow->getContentComponent());
+            MainContentComponent* content = dynamic_cast<MainContentComponent*>(this->getContentComponent());
             if (content)
                 content->postMessage(new MainContentComponent::TempoSourceChangedMessage);
 			break;
 		}
-		case MainMenu::kExportCmd :
+		case kExportCmd :
 		{
-            
-            
-            
-
-			UniquePtr<AudioExporter> exporter(new AudioExporter(mainWindow));
+			UniquePtr<AudioExporter> exporter(new AudioExporter(this));
 			exporter->Export();
 			break;
 		}
-		case MainMenu::kNewPatternCmd :
+		case kNewPatternCmd :
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.CreateNewPattern();
 			break;
 		}
-		case MainMenu::kSavePatternCmd :
+		case kSavePatternCmd :
 		{
-            
-            
-            
-
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.SavePattern();
 			break;
 		}
+        case kDeletePatternCmd:
+        {
+            PatternManager& mgr = PatternManager::GetInstance();
+            /*PatternManager::Status status =*/ mgr.DeletePattern();
+            break;
+        }
 	}
-
-#if JUCE_MAC
-    MenuBarModel::setMacMainMenu(mainMenu);
-#endif
-
+    
+//#if JUCE_MAC
+//    MenuBarModel::setMacMainMenu(mainMenu);
+//#endif
+    
 	return true;
 }
 
