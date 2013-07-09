@@ -272,6 +272,9 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
 		{
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.LoadPattern();
+            MainContentComponent* content = dynamic_cast<MainContentComponent*>(this->getContentComponent());
+            if (content)
+                content->postMessage(new PatternChangedMessage);
 			break;
 		}
 		case kUsePatternTempoCmd :

@@ -258,11 +258,19 @@ PatternManager::Status PatternManager::DeletePattern(void)
             Logger::writeToLog("Tried to delete nonexistent file!");
             return PatternManager::kNoError;
         }
-        
+
+        int index = GetIndexOfItem(pattern);
+        index = jmax(0, index - 1);
         f.deleteFile();
         BuildPatternList();
+        pattern = GetItem(index);
+        drums.setPattern(pattern);
+        UpdatePrefsLastPattern(pattern);
         UpdatePatternWheel();
-        
+
+        AirHarpApplication::PatternChangedMessage* m = new AirHarpApplication::PatternChangedMessage;
+        ((MainContentComponent*)mainWindow->getContentComponent())->postMessage(m);
+
         return PatternManager::kNoError;
     }
     return PatternManager::kNoError;

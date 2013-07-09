@@ -90,6 +90,8 @@ public:
 
     class PatternDeletedMessage : public Message {};
     
+    class PatternChangedMessage : public Message {};
+    
     class GrabFocusMessage : public Message {};
     
     class InitializeMessage : public Message {};
