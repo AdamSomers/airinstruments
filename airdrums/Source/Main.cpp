@@ -191,9 +191,12 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             result.addDefaultKeypress ('O', ModifierKeys::commandModifier);
             break;
         case kSavePatternCmd:
+        {
             result.setInfo ("Save Pattern", "Save the current pattern", "File", 0);
-            result.setActive(true);
+            SharedPtr<DrumPattern> pattern = Drums::instance().getPattern();
+            result.setActive(pattern != nullptr && pattern->GetModifiable());
             result.addDefaultKeypress ('S', ModifierKeys::commandModifier);
+        }
             break;
         case kSavePatternAsCmd:
             result.setInfo ("Save Pattern As...", "Save the current pattern as a copy", "File", 0);
