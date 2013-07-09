@@ -265,4 +265,5 @@ PatternManager::Status PatternManager::DeletePattern(void)
         
         return PatternManager::kNoError;
     }
+    return PatternManager::kNoError;
 }
