@@ -183,18 +183,22 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
         case kNewPatternCmd:
             result.setInfo ("New Pattern", "Create a new pattern", "File", 0);
             result.setActive(true);
+            result.addDefaultKeypress ('N', ModifierKeys::commandModifier);
             break;
         case kLoadPatternCmd:
             result.setInfo ("Load Pattern", "Load a pattern", "File", 0);
             result.setActive(true);
+            result.addDefaultKeypress ('O', ModifierKeys::commandModifier);
             break;
         case kSavePatternCmd:
             result.setInfo ("Save Pattern", "Save the current pattern", "File", 0);
             result.setActive(true);
+            result.addDefaultKeypress ('S', ModifierKeys::commandModifier);
             break;
         case kSavePatternAsCmd:
-            result.setInfo ("Save Pattern As...", "Save the current pattern as", "File", 0);
+            result.setInfo ("Save Pattern As...", "Save the current pattern as a copy", "File", 0);
             result.setActive(true);
+            result.addDefaultKeypress ('S', ModifierKeys::commandModifier | ModifierKeys::shiftModifier);
             break;
         case kExportCmd:
             result.setInfo ("Export Pattern...", "Export pattern as audio", "File", 0);
@@ -206,7 +210,6 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             Drums& drums = Drums::instance();
             SharedPtr<DrumPattern> pattern = drums.getPattern();
             result.setActive(pattern.get() != nullptr && pattern->GetModifiable());
-            //result.addDefaultKeypress ('1', ModifierKeys::commandModifier);
         }
             break;
         case kUsePatternTempoCmd:
@@ -221,11 +224,13 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             else
                 tick = false;
             result.setTicked(tick);
+            result.addDefaultKeypress ('T', ModifierKeys::commandModifier);
         }
             break;
         case kAudioSettingsCmd:
             result.setInfo ("Audio Settings", "Change audio configuration settings", "Options", 0);
             result.setActive(true);
+            result.addDefaultKeypress (',', ModifierKeys::commandModifier);
             break;
 
     }
@@ -368,6 +373,7 @@ AirHarpApplication::MainWindow::MainWindow()  :
     setUsingNativeTitleBar(true);
     setResizable(true, false);
     setResizeLimits(640, 480, 3840, 1800);
+    addKeyListener (AirHarpApplication::getInstance()->commandManager.getKeyMappings());
 }
 
 void AirHarpApplication::MainWindow::closeButtonPressed()
