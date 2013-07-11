@@ -73,13 +73,13 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
+      <FILE id="BRKkhu" name="AudioSettingsDialog.cpp" compile="1" resource="0"
+            file="Source/AudioSettingsDialog.cpp"/>
+      <FILE id="y9StpN" name="AudioSettingsDialog.h" compile="0" resource="0"
+            file="Source/AudioSettingsDialog.h"/>
       <FILE id="ftb9dR" name="AudioExporter.cpp" compile="1" resource="0"
             file="Source/AudioExporter.cpp"/>
       <FILE id="WkSsxS" name="AudioExporter.h" compile="0" resource="0" file="Source/AudioExporter.h"/>
-      <FILE id="E3neZk" name="AudioSettingsDialog.cpp" compile="1" resource="0"
-            file="Source/AudioSettingsDialog.cpp"/>
-      <FILE id="kDIKAb" name="AudioSettingsDialog.h" compile="0" resource="0"
-            file="Source/AudioSettingsDialog.h"/>
       <FILE id="wGPexN" name="BeatCountView.cpp" compile="1" resource="0"
             file="Source/BeatCountView.cpp"/>
       <FILE id="HgnhIZ" name="BeatCountView.h" compile="0" resource="0" file="Source/BeatCountView.h"/>
