@@ -12,6 +12,10 @@
       <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="lSROfG" name="AudioSettingsDialog.cpp" compile="1" resource="0"
+            file="../common/AudioSettingsDialog.cpp"/>
+      <FILE id="r2Yy4i" name="AudioSettingsDialog.h" compile="0" resource="0"
+            file="../common/AudioSettingsDialog.h"/>
       <FILE id="RlyAyP" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
       <FILE id="J96Ifr" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
       <FILE id="ztLejZ" name="TextButton.cpp" compile="1" resource="0" file="../common/TextButton.cpp"/>

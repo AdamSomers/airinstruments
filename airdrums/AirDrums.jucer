@@ -13,6 +13,10 @@
       <FILE id="umTOBM" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="mplQdS" name="AudioSettingsDialog.cpp" compile="1" resource="0"
+            file="../common/AudioSettingsDialog.cpp"/>
+      <FILE id="eBSQ0c" name="AudioSettingsDialog.h" compile="0" resource="0"
+            file="../common/AudioSettingsDialog.h"/>
       <FILE id="kNn5KQ" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
       <FILE id="w731yX" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
       <FILE id="j5jdNe" name="HandView.cpp" compile="1" resource="0" file="../common/HandView.cpp"/>
@@ -73,10 +77,6 @@
       </GROUP>
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
-      <FILE id="BRKkhu" name="AudioSettingsDialog.cpp" compile="1" resource="0"
-            file="Source/AudioSettingsDialog.cpp"/>
-      <FILE id="y9StpN" name="AudioSettingsDialog.h" compile="0" resource="0"
-            file="Source/AudioSettingsDialog.h"/>
       <FILE id="ftb9dR" name="AudioExporter.cpp" compile="1" resource="0"
             file="Source/AudioExporter.cpp"/>
       <FILE id="WkSsxS" name="AudioExporter.h" compile="0" resource="0" file="Source/AudioExporter.h"/>
