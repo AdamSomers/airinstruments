@@ -14,6 +14,7 @@ public:
     void addString();
     void removeString();
     void loadTextures();
+    void setVisible(bool shouldBeVisible);
     
     float height;
     int numHarps;

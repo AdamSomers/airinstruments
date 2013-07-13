@@ -19,6 +19,7 @@
 #include "MotionServer.h"
 #include "FingerView.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 #include "MainComponent.h"
 
@@ -32,7 +33,6 @@
 //==============================================================================
 MainContentComponent::MainContentComponent()
 : chordRegionsNeedUpdate(false)
-, slide(NULL)
 , toolbar(NULL)
 , statusBar(NULL)
 , settingsScreen(NULL)
@@ -187,7 +187,19 @@ void MainContentComponent::newOpenGLContextCreated()
     
     for (HUDView* v : views)
         v->loadTextures();
-    
+
+    bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
+
+    tutorial = new TutorialSlide;
+    tutorial->loadTextures();
+    tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    tutorial->setDotTextures(SkinManager::instance().getSelectedSkin().getTexture("dot_white"),
+                             SkinManager::instance().getSelectedSkin().getTexture("dot_black"));
+    tutorial->addActionListener(this);
+    tutorial->setVisible(false, 0);
+    if (showTutorial)
+        startTimer(kTimerShowTutorial, 500);
+
     int w = getWidth();
     int h = getHeight();
     toolbar->setBounds(HUDRect(0,h-70,w,70));
@@ -254,14 +266,17 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
+        const float tutorialWidth = 800.f;
+        const float tutorialHeight = 500.f;
+
         if (backgroundView)
             backgroundView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
 
-        if (slide)
-            slide->setBounds(HUDRect(Environment::instance().screenW / 2 - 500 / 2,
-                                     Environment::instance().screenH / 2 - 225 / 2,
-                                     500,
-                                     225));
+        if (tutorial)
+            tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - tutorialWidth / 2),
+                                        (GLfloat) (Environment::instance().screenH / 2 - tutorialHeight / 2),
+                                        tutorialWidth,
+                                        tutorialHeight));
         if (toolbar)
             toolbar->setBounds(HUDRect(0,Environment::instance().screenH-70,Environment::instance().screenW,70));
         if (statusBar)
@@ -289,13 +304,6 @@ void MainContentComponent::renderOpenGL()
         layoutChordRegions();
         chordRegionsNeedUpdate = false;
     }
-
-    // Hack to move a particular slide.  This should be factored into the TutorialSlide class 
-    if (slide && slide->getSlideIndex() == 3)
-        slide->setBounds(HUDRect(80,
-                                 Environment::instance().screenH-80-225,
-                                 500,
-                                 225));
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
@@ -391,6 +399,8 @@ void MainContentComponent::renderOpenGL()
     for (ChordRegion* cr : chordRegions)
         cr->draw();
     
+    tutorial->draw();
+    
     leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     leapDisconnectedView->draw();
 
@@ -458,6 +468,9 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
 {
     for (HUDView* v : views)
         v->mouseDown(e.getPosition().x, e.getPosition().y);
+    
+    if (tutorial)
+        tutorial->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
@@ -473,7 +486,13 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     printf("%d\n", kp.getTextDescription().getIntValue());
     if (kp.getTextCharacter() == 'h')
     {
-//        slide->begin();
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
+        tutorial->setVisible(true);
+        //splashBgView->setVisible(true);
+        for (HUDView* v : views)
+            v->setVisible(false);
+        for (HarpView* hv : harps)
+            hv->setVisible(false);
         ret = true;
     }
     else if (kp.getTextCharacter() == 'a')
@@ -592,6 +611,14 @@ void MainContentComponent::timerCallback(int timerId)
 //        startTimer(TUTORIAL_TIMEOUT);
 //    }
     switch (timerId) {
+        case kTimerShowTutorial:
+            tutorial->setVisible(true, 2000);
+            stopTimer(kTimerShowTutorial);
+            for (HUDView* v : views)
+                v->setVisible(false);
+            for (HarpView* hv : harps)
+                hv->setVisible(false);
+            break;
         case kTimerCheckLeapConnection:
             if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
                 if (hasKeyboardFocus(true))
@@ -618,5 +645,17 @@ void MainContentComponent::actionListenerCallback(const String& message)
     else if (message == "settingsMode")
     {
         settingsScreen->setVisible(true);
+    }
+    else if (message == "tutorialDone")
+    {
+        //splashBgView->setVisible(false, 1000);
+        for (HUDView* v : views)
+            v->setVisible(true);
+        for (HarpView* hv : harps)
+            hv->setVisible(true);
+    }
+    else if (message == "disableTutorial")
+    {
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", false);
     }
 }

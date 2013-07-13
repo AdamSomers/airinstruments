@@ -93,3 +93,11 @@ void HarpView::loadTextures()
     for (StringView* sv : strings)
         sv->loadTextures();
 }
+
+void HarpView::setVisible(bool shouldBeVisible)
+{
+    for (StringView* sv : strings)
+    {
+        sv->setVisible(shouldBeVisible);
+    }
+}

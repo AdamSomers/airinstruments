@@ -6,6 +6,8 @@
 
 HarpToolbar::HarpToolbar()
 {
+    setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     for (int i = 0; i < 7; ++i)
     {
         TextHUDButton* b = new TextHUDButton();
@@ -191,6 +193,8 @@ void HarpToolbar::updateButtonText()
 StatusBar::StatusBar()
 : indicator(HUDButton(0))
 {
+    setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     //indicator.setEditable(false)
     addChild(&indicator);
 }

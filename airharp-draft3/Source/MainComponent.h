@@ -60,7 +60,8 @@ public:
     
     enum TimerIds
     {
-        kTimerCheckLeapConnection = 0
+        kTimerShowTutorial = 0,
+        kTimerCheckLeapConnection
     };
     
     void actionListenerCallback(const String& message);
@@ -73,7 +74,7 @@ private:
     
     void handleTapGesture(const Leap::Pointable& p);
     
-    TutorialSlide* slide;
+    ScopedPointer<TutorialSlide> tutorial;
     HarpToolbar* toolbar;
     StatusBar* statusBar;
     SettingsScreen* settingsScreen;

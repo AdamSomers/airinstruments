@@ -12,6 +12,7 @@
 #include "GfxTools.h"
 #include "SkinManager.h"
 
+#define FADE_TIME 500
 #define NUM_SAMPLES 64
 static float gStringLineWidth = 0.015;
 
@@ -26,6 +27,8 @@ public:
     , stringHeight(2.f)
     , yScale(1)
     , fade(0.f)
+    , opacity(1.f)
+    , visible(true)
     {
         numSampleVerts = numSamples*2;
 
@@ -214,7 +217,15 @@ public:
         GLfloat stringColor [] = { lerp(c1.getFloatRed(),c2.getFloatRed(), t),
             lerp(c1.getFloatGreen(),c2.getFloatGreen(), t),
             lerp(c1.getFloatBlue(),c2.getFloatBlue(), t),
-            1.f };
+            opacity };
+        
+        if ((Time::getCurrentTime() - lastVisibilityChange).inMilliseconds() < FADE_TIME) {
+            opacity = (Time::getCurrentTime() - lastVisibilityChange).inMilliseconds() / (float)FADE_TIME;
+            if (!visible)
+                opacity = 1.f - opacity;
+        }
+        else
+            opacity = (float)visible;
 //        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
 //            stringColor[0] = 1.f;
 //            stringColor[1] = 1.f;
@@ -355,6 +366,15 @@ public:
         //HarpManager::instance().getHarp(harpNum)->NoteOn(stringNum, note, 127.f * velocity);
     }
     
+    void setVisible(bool shouldBeVisible)
+    {
+        if (visible != shouldBeVisible)
+        {
+            visible = shouldBeVisible;
+            lastVisibilityChange = Time::getCurrentTime();
+        }
+    }
+    
     GLFrame objectFrame;
     int stringNum;
     int harpNum;
@@ -377,6 +397,9 @@ private:
     Array<Colour> colors;
 
     float fade;
+    bool visible;
+    float opacity;
+    Time lastVisibilityChange;
 };
 
 

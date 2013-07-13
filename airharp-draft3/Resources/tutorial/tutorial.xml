@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tutorial>
+    <slide image="tutorial1.png">
+        <line text="Welcome to AirHarp."/>
+        <line text="Reach in to strum the strings."/>
+    </slide>
+    <slide image="tutorial2.png">
+        <line text="Change the scale in the top row"/>
+    </slide>
+    <slide image="tutorial3.png">
+        <line text="Advanced settings are available at the top right."/>
+        <line text="You can change the key and make a custom scale."/>
+    </slide>
+    <slide image="tutorial4.png">
+        <line text="Use the question mark to show this help at any time"/>
+    </slide>
+</Tutorial>
