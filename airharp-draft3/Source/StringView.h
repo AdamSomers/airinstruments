@@ -28,6 +28,23 @@ public:
     , fade(0.f)
     {
         numSampleVerts = numSamples*2;
+
+        colors.add(Colour::fromRGB(174, 195, 158));  // 4
+        colors.add(Colour::fromRGB(252, 242, 138));  // 6
+        colors.add(Colour::fromRGB(231, 155, 196));  // 11
+        colors.add(Colour::fromRGB(255, 0, 154));    // 12
+        colors.add(Colour::fromRGB(255, 75, 99));    // 8
+        colors.add(Colour::fromRGB(255, 224, 235));  // 13
+        colors.add(Colour::fromRGB(247, 199, 122));  // 5
+        colors.add(Colour::fromRGB(255, 222, 207));  // 14
+        colors.add(Colour::fromRGB(68, 185, 198));   // 3
+        colors.add(Colour::fromRGB(0, 215, 255));    // 1
+        colors.add(Colour::fromRGB(0, 174, 234));    // 2
+
+
+//        colors.add(Colour::fromRGB(255, 165, 43));   // 7
+//        colors.add(Colour::fromRGB(187, 68, 130));   // 9
+//        colors.add(Colour::fromRGB(139, 75, 135));   // 10
     }
     void setup()
     {
@@ -169,6 +186,10 @@ public:
         bgBatch.CopyVertexData3f(verts);
     }
     
+    float lerp(float v0, float v1, float t) {
+        return v0+(v1-v0)*t;
+    }
+    
     void draw()
     {
         Environment::instance().modelViewMatrix.PushMatrix();
@@ -182,13 +203,24 @@ public:
         m3dScaleMatrix44(mScale, 1.f, yScale, 1.f);
         //Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
-        GLfloat stringColor [] = { 1.f, 1.f, 1.f, 1.f };
-        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
-            stringColor[0] = 1.f;
-            stringColor[1] = 1.f;
-            stringColor[2] = .5f;
-            stringColor[3] = 1.f;
-        }
+        float colorIndex = (stringNum / float(HarpManager::instance().getHarp(0)->GetNumStrings())) * (float)colors.size();
+        Colour c1 = colors[colorIndex];
+        Colour c2 = colors[colorIndex];
+        if (colorIndex < colors.size()-1)
+            c2 = colors[colorIndex+1];
+        
+        float t = colorIndex - floor(colorIndex);
+        
+        GLfloat stringColor [] = { lerp(c1.getFloatRed(),c2.getFloatRed(), t),
+            lerp(c1.getFloatGreen(),c2.getFloatGreen(), t),
+            lerp(c1.getFloatBlue(),c2.getFloatBlue(), t),
+            1.f };
+//        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
+//            stringColor[0] = 1.f;
+//            stringColor[1] = 1.f;
+//            stringColor[2] = .5f;
+//            stringColor[3] = 1.f;
+//        }
         
         GLfloat bgRectColor [] = {0.7f, 0.7f, 1.f, fade * 0.5f };
         GLfloat bgTexColor [] = { 1.0f, 1.f, 1.f, fade * 0.25f };
@@ -341,6 +373,8 @@ private:
     int numSampleVerts;
     M3DVector3f* sampleVerts;
     SampleAccumulator::PeakSample prevSamp;
+    
+    Array<Colour> colors;
 
     float fade;
 };

@@ -135,6 +135,8 @@ void MainContentComponent::newOpenGLContextCreated()
     
     backgroundView = new View2d;
     backgroundView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("background_dark"));
+    GLfloat bgColor[4] = { 0.7f, 0.7f, 0.7f, 1.f };
+    backgroundView->setDefaultColor(bgColor);
 
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
