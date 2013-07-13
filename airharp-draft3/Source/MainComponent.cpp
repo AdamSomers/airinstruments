@@ -51,6 +51,7 @@ MainContentComponent::MainContentComponent()
 MainContentComponent::~MainContentComponent()
 {
     Environment::openGLContext.detach();
+    delete backgroundView;
     delete toolbar;
     delete statusBar;
     delete settingsScreen;
@@ -98,28 +99,6 @@ void MainContentComponent::focusLost(FocusChangeType cause)
     MotionDispatcher::instance().pause();
 }
 
-void MainContentComponent::setupBackground()
-{
-    M3DVector3f verts[4] = {
-        0, 0, 0.f,
-        (float)Environment::instance().screenW, 0.f, 0.f,
-        0.f, (float)Environment::instance().screenH, 0.f,
-        (float)Environment::instance().screenW, (float)Environment::instance().screenH, 0.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    backgroundBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    backgroundBatch.CopyVertexData3f(verts);
-    backgroundBatch.CopyTexCoordData2f(texCoords, 0);
-    backgroundBatch.End();
-}
-
 void MainContentComponent::newOpenGLContextCreated()
 {
     glewInit();
@@ -154,6 +133,8 @@ void MainContentComponent::newOpenGLContextCreated()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         iter.second->setup();
     
+    backgroundView = new View2d;
+    backgroundView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("background_dark"));
 
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
@@ -185,6 +166,7 @@ void MainContentComponent::newOpenGLContextCreated()
     }
     
     StatusBar* sb = new StatusBar;
+    sb->setIndicatorTextures(SkinManager::instance().getSelectedSkin().getTexture("leapStatus_on"), SkinManager::instance().getSelectedSkin().getTexture("leapStatus_off"));
     views.push_back(sb);
     statusBar = sb;
     
@@ -216,9 +198,7 @@ void MainContentComponent::newOpenGLContextCreated()
         cr->setBounds(HUDRect(0,yPos, w, height));
         yPos += height;
     }
-    
-    setupBackground();
-    
+
 //    SkinManager::instance().getSkin();
 //    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
@@ -272,6 +252,9 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
+        if (backgroundView)
+            backgroundView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+
         if (slide)
             slide->setBounds(HUDRect(Environment::instance().screenW / 2 - 500 / 2,
                                      Environment::instance().screenH / 2 - 225 / 2,
@@ -295,10 +278,7 @@ void MainContentComponent::renderOpenGL()
         }
         layoutStrings();
         chordRegionsNeedUpdate = true;
-        
-        if (Environment::instance().ready)
-            setupBackground();
-        
+
         fingersImage.setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
         
         sizeChanged = false;
@@ -346,19 +326,15 @@ void MainContentComponent::renderOpenGL()
 
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    
-    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("background0").textureId);
-    GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
-    glEnable(GL_BLEND);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
-    backgroundBatch.Draw();
+
+    backgroundView->draw();
     
 	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
 	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     Environment::instance().modelViewMatrix.LoadIdentity();
     
     glEnable(GL_DEPTH_TEST);
-    
+
     for (HarpView* hv : harps)
         hv->draw();
     

@@ -67,7 +67,6 @@ public:
 private:
     void go2d();
     void go3d();
-    void setupBackground();
     void layoutStrings();
     void layoutChordRegions();
     bool chordRegionsNeedUpdate;
@@ -79,14 +78,12 @@ private:
     StatusBar* statusBar;
     SettingsScreen* settingsScreen;
     HUDView* leapDisconnectedView;
+    View2d* backgroundView;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
-    std::vector<HUDView*> views;    
-    
-    GLuint backgroundTextureId;
-    GLBatch backgroundBatch;
-    
+    std::vector<HUDView*> views;
+
     View2d fingersImage;
     int bloomShaderId;
     int shaderId;

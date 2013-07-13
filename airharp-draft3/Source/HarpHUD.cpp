@@ -221,7 +221,7 @@ void StatusBar::layoutControls()
 
 void StatusBar::setIndicatorTextures(TextureDescription on, TextureDescription off)
 {
-//    indicator.setTextures(on, off);
+    indicator.setTextures(on, off);
 }
 
 void StatusBar::draw()
