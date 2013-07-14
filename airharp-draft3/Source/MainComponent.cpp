@@ -433,7 +433,7 @@ void MainContentComponent::renderOpenGL()
     
     for (auto iter : MotionDispatcher::instance().handViews)
         if (iter.second->inUse)
-            iter.second->draw();
+            ;//iter.second->draw();
 
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
