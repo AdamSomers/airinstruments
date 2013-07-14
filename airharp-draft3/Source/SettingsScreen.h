@@ -31,6 +31,8 @@ public:
 private:
     TextHUDButton playButton;
     KeySelector keySelector;
+    TextHUDButton chordsButton;
+    TextHUDButton scalesButton;
 };
 
 #endif /* defined(__AirHarp__SettingsScreen__) */

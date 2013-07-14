@@ -750,6 +750,23 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         showTutorial();
     }
+    else if (message == "chordMode")
+    {
+        Harp* h = HarpManager::instance().getHarp(0);
+        h->setChordMode(true);
+        toolbar->updateButtons();
+        chordRegionsNeedUpdate = true;
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", true);
+    }
+    else if (message == "scaleMode")
+    {
+        Harp* h = HarpManager::instance().getHarp(0);
+        h->setChordMode(false);
+        toolbar->updateButtons();
+        for (ChordRegion* cr : chordRegions)
+            cr->setActive(false);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", false);
+    }
 }
 
 void MainContentComponent::showTutorial()

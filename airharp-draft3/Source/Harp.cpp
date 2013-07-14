@@ -1,7 +1,7 @@
 #include "MotionServer.h"
 
 #include "Harp.h"
-
+#include "Main.h"
 
 #define MAX_STRINGS 30
 #define SAMPS_PER_PIXEL 6
@@ -89,6 +89,8 @@ void Harp::Init()
     
     for (int i = 0; i < 7; ++i)
         selectChord(i);
+    
+    setChordMode(AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("chordMode", false));
 }
 
 void Harp::Cleanup()
