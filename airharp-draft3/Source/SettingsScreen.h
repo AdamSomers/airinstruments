@@ -13,6 +13,7 @@
 
 #include "HUD.h"
 #include "TextButton.h"
+#include "KeySelector.h"
 
 class SettingsScreen : public HUDView
                      , public HUDButton::Listener
@@ -29,6 +30,7 @@ public:
 
 private:
     TextHUDButton playButton;
+    KeySelector keySelector;
 };
 
 #endif /* defined(__AirHarp__SettingsScreen__) */

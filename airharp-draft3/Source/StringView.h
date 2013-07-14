@@ -48,6 +48,14 @@ public:
 //        colors.add(Colour::fromRGB(255, 165, 43));   // 7
 //        colors.add(Colour::fromRGB(187, 68, 130));   // 9
 //        colors.add(Colour::fromRGB(139, 75, 135));   // 10
+        
+        baseNotes.add(33);
+        baseNotes.add(35);
+        baseNotes.add(36);
+        baseNotes.add(38);
+        baseNotes.add(40);
+        baseNotes.add(41);
+        baseNotes.add(43);
     }
     void setup()
     {
@@ -339,32 +347,7 @@ public:
         pluck(0.5f, velocity);
     }
     
-    void pluck(float position, float velocity = 1.f, int direction = 1)
-    {
-        Harp* harp = HarpManager::instance().getHarp(0);
-        std::vector<std::string>& scale = harp->getScale();
-        int idx = stringNum % scale.size();
-        int mult = (stringNum / (float)scale.size());
-        int octaveSpan = (ScaleDegrees::getChromatic(scale[scale.size()-1]) / 12) + 1;
-        int base = 32 + 12*octaveSpan*mult;
-        int note = base + ScaleDegrees::getChromatic(scale[idx]);
-        const int bufferSize = 512;
-        float buffer[bufferSize];
-        memset(buffer, 0, bufferSize);
-        int midpoint = position * bufferSize;
-        for (int x = 0; x < bufferSize; ++x)
-        {
-            if (x < midpoint)
-                buffer[x] = -x / (float)midpoint;
-            else
-                buffer[x] = -(1.f - (x - midpoint) / (float)(bufferSize - midpoint));
-
-            buffer[x] *= direction;
-        }
-
-        HarpManager::instance().getHarp(harpNum)->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
-        //HarpManager::instance().getHarp(harpNum)->NoteOn(stringNum, note, 127.f * velocity);
-    }
+    void pluck(float position, float velocity = 1.f, int direction = 1);
     
     void setVisible(bool shouldBeVisible)
     {
@@ -400,6 +383,8 @@ private:
     bool visible;
     float opacity;
     Time lastVisibilityChange;
+    
+    Array<int> baseNotes;
 };
 
 

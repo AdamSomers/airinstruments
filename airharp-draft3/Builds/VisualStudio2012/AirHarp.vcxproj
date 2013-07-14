@@ -85,6 +85,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -131,6 +132,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -142,6 +144,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\AudioSettingsDialog.cpp"/>
     <ClCompile Include="..\..\..\common\CursorView.cpp"/>
     <ClCompile Include="..\..\..\common\TextButton.cpp"/>
     <ClCompile Include="..\..\..\common\View2d.cpp"/>
@@ -152,7 +155,6 @@
     <ClCompile Include="..\..\..\common\HUD.cpp"/>
     <ClCompile Include="..\..\..\common\MotionServer.cpp"/>
     <ClCompile Include="..\..\..\common\JuceReverbAudioClient.cpp"/>
-    <ClCompile Include="..\..\Source\SettingsScreen.cpp"/>
     <ClCompile Include="..\..\..\common\SkinManager.cpp"/>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLBatch.cpp"/>
@@ -164,6 +166,7 @@
     <ClCompile Include="..\..\..\..\muskit\src\AudioClient.cpp"/>
     <ClCompile Include="..\..\..\..\muskit\src\AudioServer.cpp"/>
     <ClCompile Include="..\..\..\..\muskit\src\Interpolators.cpp"/>
+    <ClCompile Include="..\..\Source\MainMenu.cpp"/>
     <ClCompile Include="..\..\..\..\muskit\src\MidiServer.cpp"/>
     <ClCompile Include="..\..\..\..\muskit\src\ParameterAPI.cpp"/>
     <ClCompile Include="..\..\..\..\muskit\src\Waveshaper.cpp"/>
@@ -173,11 +176,13 @@
     <ClCompile Include="..\..\..\..\muskit\ThirdParty\RtAudio.cpp"/>
     <ClCompile Include="..\..\..\..\muskit\ThirdParty\RtMidi.cpp"/>
     <ClCompile Include="..\..\Source\Harp.cpp"/>
+    <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\HarpView.cpp"/>
     <ClCompile Include="..\..\Source\HarpHUD.cpp"/>
+    <ClCompile Include="..\..\Source\KeySelector.cpp"/>
+    <ClCompile Include="..\..\Source\SettingsScreen.cpp"/>
     <ClCompile Include="..\..\Source\StringView.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -389,6 +394,21 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\scanning\juce_PluginListComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioDeviceSelectorComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnail.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnailCache.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.cpp">
@@ -1238,6 +1258,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_audio_devices.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_audio_formats.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\juce_audio_processors.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\juce_audio_utils.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_cryptography\juce_cryptography.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\juce_data_structures.cpp"/>
@@ -1249,6 +1270,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_video\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\AudioSettingsDialog.h"/>
     <ClInclude Include="..\..\..\common\CursorView.h"/>
     <ClInclude Include="..\..\..\common\TextButton.h"/>
     <ClInclude Include="..\..\..\common\Types.h"/>
@@ -1260,7 +1282,6 @@
     <ClInclude Include="..\..\..\common\HUD.h"/>
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
     <ClInclude Include="..\..\..\common\JuceReverbAudioClient.h"/>
-    <ClInclude Include="..\..\Source\SettingsScreen.h"/>
     <ClInclude Include="..\..\..\common\SkinManager.h"/>
     <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h"/>
@@ -1280,6 +1301,8 @@
     <ClInclude Include="..\..\..\..\muskit\src\AudioClient.h"/>
     <ClInclude Include="..\..\..\..\muskit\src\AudioServer.h"/>
     <ClInclude Include="..\..\..\..\muskit\src\Interpolators.h"/>
+    <ClInclude Include="..\..\Source\Main.h"/>
+    <ClInclude Include="..\..\Source\MainMenu.h"/>
     <ClInclude Include="..\..\..\..\muskit\src\MathHelpers.h"/>
     <ClInclude Include="..\..\..\..\muskit\src\MidiServer.h"/>
     <ClInclude Include="..\..\..\..\muskit\src\ParameterAPI.h"/>
@@ -1297,6 +1320,8 @@
     <ClInclude Include="..\..\Source\Harp.h"/>
     <ClInclude Include="..\..\Source\HarpView.h"/>
     <ClInclude Include="..\..\Source\HarpHUD.h"/>
+    <ClInclude Include="..\..\Source\KeySelector.h"/>
+    <ClInclude Include="..\..\Source\SettingsScreen.h"/>
     <ClInclude Include="..\..\Source\StringView.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
@@ -1372,6 +1397,13 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\scanning\juce_PluginDirectoryScanner.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\scanning\juce_PluginListComponent.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\juce_audio_processors.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioDeviceSelectorComponent.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnail.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnailBase.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnailCache.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\juce_audio_utils.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_ASCII.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_UTF16.h"/>
@@ -1736,6 +1768,7 @@
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_processors\juce_module_info"/>
+    <None Include="..\..\JuceLibraryCode\modules\juce_audio_utils\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_core\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_cryptography\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_data_structures\juce_module_info"/>

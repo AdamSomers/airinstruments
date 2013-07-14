@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.6.0"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
@@ -40,10 +40,6 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
-      <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
-            file="Source/SettingsScreen.cpp"/>
-      <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"
-            file="Source/SettingsScreen.h"/>
       <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
@@ -129,17 +125,23 @@
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
       <FILE id="QyjiF3" name="Harp.cpp" compile="1" resource="0" file="Source/Harp.cpp"/>
+      <FILE id="sqcx6p" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="B3eka9" name="Harp.h" compile="0" resource="0" file="Source/Harp.h"/>
       <FILE id="vaw2gZ" name="HarpView.cpp" compile="1" resource="0" file="Source/HarpView.cpp"/>
       <FILE id="J2gDfO" name="HarpView.h" compile="0" resource="0" file="Source/HarpView.h"/>
       <FILE id="NjKuIx" name="HarpHUD.cpp" compile="1" resource="0" file="Source/HarpHUD.cpp"/>
       <FILE id="sN5gM8" name="HarpHUD.h" compile="0" resource="0" file="Source/HarpHUD.h"/>
+      <FILE id="XEYuIY" name="KeySelector.cpp" compile="1" resource="0" file="Source/KeySelector.cpp"/>
+      <FILE id="myJ2gg" name="KeySelector.h" compile="0" resource="0" file="Source/KeySelector.h"/>
+      <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
+            file="Source/SettingsScreen.cpp"/>
+      <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"
+            file="Source/SettingsScreen.h"/>
       <FILE id="frej1K" name="StringView.cpp" compile="1" resource="0" file="Source/StringView.cpp"/>
       <FILE id="ZMsN1N" name="StringView.h" compile="0" resource="0" file="Source/StringView.h"/>
       <FILE id="KOoxeY" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JeEtSL" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="lNNe7M" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

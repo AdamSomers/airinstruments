@@ -359,7 +359,10 @@ void MainContentComponent::renderOpenGL()
         if (statusBar)
             statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,35));
         if (settingsScreen)
-            settingsScreen->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+            settingsScreen->setBounds(HUDRect(0,
+                                              20,
+                                              Environment::instance().screenW,
+                                              Environment::instance().screenH - 70 - 20));
         if (leapDisconnectedView) {
             TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected");
             float aspectRatio = td.imageH / (float)td.imageW;
@@ -537,10 +540,10 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
     for (HUDView* v : views)
-        v->mouseDown(e.getPosition().x, e.getPosition().y);
+        v->mouseDown(e.getPosition().x, Environment::instance().screenH - e.getPosition().y);
     
     if (tutorial)
-        tutorial->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
+        tutorial->mouseDown((float) e.getPosition().x, (float)Environment::instance().screenH - e.getPosition().y);
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)

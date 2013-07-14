@@ -882,7 +882,7 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
     for (HUDView* v : views)
-        v->mouseDown((float) e.getPosition().x, (float) e.getPosition().y);
+        v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y);
     
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
