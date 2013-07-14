@@ -29,7 +29,8 @@ class MainContentComponent   : public Component,
                                public ChangeListener,
                                public Leap::Listener,
                                public MultiTimer,
-                               public ActionListener
+                               public ActionListener,
+                               public MessageListener
 {
 public:
     //==============================================================================
@@ -63,7 +64,11 @@ public:
         kTimerShowTutorial = 0,
         kTimerCheckLeapConnection
     };
+
+    class InitGLMessage : public Message {};
     
+    void handleMessage(const juce::Message &m);
+
     void actionListenerCallback(const String& message);
 private:
     void go2d();
@@ -73,6 +78,8 @@ private:
     bool chordRegionsNeedUpdate;
     
     void handleTapGesture(const Leap::Pointable& p);
+    
+    OpenGLContext openGLContext;
     
     ScopedPointer<TutorialSlide> tutorial;
     HarpToolbar* toolbar;
@@ -91,7 +98,14 @@ private:
     
     bool sizeChanged;
     
+    Image splashBgImage;
+    Image splashTitleImage;
+    Image splashImage;
+    ScopedPointer<View2d> splashBgView;
+    ScopedPointer<View2d> splashTitleView;
+    
     Time lastFrame;
+    Time startTime;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
