@@ -3,6 +3,7 @@
 #include "MotionServer.h"
 #include "GfxTools.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 HarpToolbar::HarpToolbar()
 {
@@ -114,10 +115,14 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
         
         if (h->getChordMode())
         {
-            if (state)
+            if (state) {
                 h->selectChord(b->getId());
-            else if (h->getNumSelectedChords() > 1)
+                AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordSelected"+String(b->getId()), true);
+            }
+            else if (h->getNumSelectedChords() > 1) {
                 h->deSelectChord(b->getId());
+                AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordSelected"+String(b->getId()), false);
+            }
         }
         else
         {
@@ -133,6 +138,7 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
                 b->setState(true, false);
             
             h->SetScale(b->getId());
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedScale", b->getId());
         }
         sendChangeMessage();
     }

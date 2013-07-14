@@ -762,6 +762,8 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         Harp* h = HarpManager::instance().getHarp(0);
         h->setChordMode(false);
+        int selectedScale = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedScale", 0);
+        h->SetScale(selectedScale);
         toolbar->updateButtons();
         for (ChordRegion* cr : chordRegions)
             cr->setActive(false);

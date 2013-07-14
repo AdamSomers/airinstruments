@@ -87,10 +87,20 @@ void Harp::Init()
     
     MotionDispatcher::instance().addListener(*this);
     
-    for (int i = 0; i < 7; ++i)
-        selectChord(i);
+    for (int i = 0; i < 7; ++i) {
+        bool chordSelected = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("chordSelected" + String(i), (i == 0 || i == 3 || i == 4 || i == 5) ? true : false);
+
+        if (chordSelected)
+            selectChord(i);
+        
+        // write the values back to initialize defaults
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordSelected" + String(i), chordSelected);
+    }
     
     setChordMode(AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("chordMode", false));
+    
+    int selectedScale = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedScale", 0);
+    SetScale(selectedScale);
 }
 
 void Harp::Cleanup()
@@ -495,7 +505,7 @@ HarpManager::HarpManager()
 {
     for (int i = 0; i < numHarps; ++i) {
         harps.push_back(new Harp);
-        harps.back()->SetScale(i);
+        //harps.back()->SetScale(i);
     }
 }
 
