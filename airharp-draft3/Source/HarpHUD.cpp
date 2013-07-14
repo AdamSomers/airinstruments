@@ -48,16 +48,12 @@ void HarpToolbar::setup()
 void HarpToolbar::layoutControls()
 {
     int numButtons = buttons.size();
-    float buttonWidth = 50;
-    float buttonHeight = 50;
+    float buttonWidth = 60;
+    float buttonHeight = 60;
     float xmin = 50;
     float xmax = 400;
-    float totalButtonWidth = numButtons * buttonWidth;
-    float emptySpace = (xmax - xmin) - totalButtonWidth;
-    float step = (emptySpace / (numButtons-1)) + buttonWidth;
-    if (step < buttonWidth + 1)
-        step = buttonWidth + 1;
-    float y = (bounds.h / 2.f + 10)- buttonHeight / 2.f;
+    float step = buttonWidth + 5;
+    float y = (bounds.h / 2.f + 15)- buttonHeight / 2.f;
     HUDRect r(xmin, y, buttonWidth, buttonHeight);
     for (TextHUDButton* b : buttons)
     {
@@ -65,7 +61,7 @@ void HarpToolbar::layoutControls()
         r.x += step;
     }
     
-    settingsButton.setBounds(HUDRect(getBounds().w - buttonWidth - 10,
+    settingsButton.setBounds(HUDRect(getBounds().w - buttonWidth - 50,
                                      y,
                                      buttonWidth,
                                      buttonHeight));

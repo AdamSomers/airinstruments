@@ -355,7 +355,7 @@ void MainContentComponent::renderOpenGL()
             splashBgView->setBounds(HUDRect(0.f,0.f,(GLfloat)Environment::instance().screenW,(GLfloat)Environment::instance().screenH));
 
         if (toolbar)
-            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-70,Environment::instance().screenW,70));
+            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-100,Environment::instance().screenW,100));
         if (statusBar)
             statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,35));
         if (settingsScreen)
