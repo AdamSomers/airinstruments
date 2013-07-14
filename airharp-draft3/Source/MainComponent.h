@@ -75,6 +75,7 @@ private:
     void go3d();
     void layoutStrings();
     void layoutChordRegions();
+    void showTutorial();
     bool chordRegionsNeedUpdate;
     
     void handleTapGesture(const Leap::Pointable& p);

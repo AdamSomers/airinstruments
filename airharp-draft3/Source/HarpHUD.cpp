@@ -23,13 +23,22 @@ HarpToolbar::HarpToolbar()
     }
     
     settingsButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
-    settingsButton.setBackgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .8f),
+    settingsButton.setBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f),
                           Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
-    settingsButton.setTextColor(Colour::fromFloatRGBA(.2f, .2f, .2f, 1.f),
+    settingsButton.setTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f),
                     Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
     settingsButton.addListener(this);
     settingsButton.setText(StringArray("Settings"), StringArray("Settings"));
     addChild(&settingsButton);
+    
+    helpButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    helpButton.setBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f),
+                                      Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
+    helpButton.setTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f),
+                                Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
+    helpButton.addListener(this);
+    helpButton.setText(StringArray("Help"), StringArray("Help"));
+    addChild(&helpButton);
 }
 
 HarpToolbar::~HarpToolbar()
@@ -61,10 +70,13 @@ void HarpToolbar::layoutControls()
         r.x += step;
     }
     
-    settingsButton.setBounds(HUDRect(getBounds().w - buttonWidth - 50,
-                                     y,
-                                     buttonWidth,
-                                     buttonHeight));
+    HUDRect buttonRect(getBounds().w - buttonWidth - 50,
+                       y,
+                       buttonWidth,
+                       buttonHeight);
+    settingsButton.setBounds(buttonRect);
+    buttonRect.x -= buttonWidth + 10;
+    helpButton.setBounds(buttonRect);
 }
 
 void HarpToolbar::draw()
@@ -94,6 +106,8 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
     
     if (b == &settingsButton)
         sendActionMessage("settingsMode");
+    else if (b == &helpButton)
+        sendActionMessage("showHelp");
     else
     {    
         Harp* h = HarpManager::instance().getHarp(0);

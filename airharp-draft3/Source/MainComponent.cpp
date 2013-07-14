@@ -556,13 +556,7 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     printf("%d\n", kp.getTextDescription().getIntValue());
     if (kp.getTextCharacter() == 'h')
     {
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
-        tutorial->setVisible(true);
-        splashBgView->setVisible(true);
-        for (HUDView* v : views)
-            v->setVisible(false);
-        for (HarpView* hv : harps)
-            hv->setVisible(false);
+        showTutorial();
         ret = true;
     }
     else if (kp.getTextCharacter() == 'a')
@@ -749,4 +743,19 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", false);
     }
+    else if (message == "showHelp")
+    {
+        showTutorial();
+    }
+}
+
+void MainContentComponent::showTutorial()
+{
+    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
+    tutorial->setVisible(true);
+    splashBgView->setVisible(true);
+    for (HUDView* v : views)
+        v->setVisible(false);
+    for (HarpView* hv : harps)
+        hv->setVisible(false);
 }

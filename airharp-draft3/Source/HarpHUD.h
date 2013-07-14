@@ -33,6 +33,7 @@ private:
 
     std::vector<TextHUDButton*> buttons;
     TextHUDButton settingsButton;
+    TextHUDButton helpButton;
     //    HUDSlider s1;
     //    HUDSlider s2;
     //    HUDSwitch sw1;
