@@ -740,6 +740,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
         splashBgView->setVisible(false, 1000);
         for (HUDView* v : views)
             v->setVisible(true);
+        settingsScreen->setVisible(false, 0);
         for (HarpView* hv : harps)
             hv->setVisible(true);
     }
