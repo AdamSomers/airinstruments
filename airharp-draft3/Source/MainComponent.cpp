@@ -77,6 +77,19 @@ MainContentComponent::~MainContentComponent()
     delete leapDisconnectedView;
 }
 
+void MainContentComponent::go2d()
+{
+    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+}
+
+void MainContentComponent::go3d()
+{
+    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    Environment::instance().modelViewMatrix.LoadIdentity();
+}
+
 void MainContentComponent::paint (Graphics& g)
 {
     static bool firstTime = true;
@@ -382,9 +395,7 @@ void MainContentComponent::renderOpenGL()
     glClearColor(0.f, 0.f, 0.f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+	go3d();
 
     // Draw fingers to offscreen texture
     const TextureDescription& td = fingersImage.getDefaultTexture();
@@ -398,22 +409,18 @@ void MainContentComponent::renderOpenGL()
     glViewport(0,0,Environment::instance().screenW,Environment::instance().screenH);
 
 
-    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    go2d();
 
     backgroundView->draw();
     
-	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+	go3d();
     
     glEnable(GL_DEPTH_TEST);
 
     for (HarpView* hv : harps)
         hv->draw();
     
-	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+	go2d();
     
     glDisable(GL_DEPTH_TEST);
     
@@ -427,16 +434,13 @@ void MainContentComponent::renderOpenGL()
 
     glEnable(GL_DEPTH_TEST);
     
-    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+    go3d();
     
     for (auto iter : MotionDispatcher::instance().handViews)
         if (iter.second->inUse)
             ;//iter.second->draw();
 
-    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    go2d();
     
     glDisable(GL_DEPTH_TEST);
 
@@ -459,17 +463,13 @@ void MainContentComponent::renderOpenGL()
     glUniform1i(iTextureUnit, 0);
     fingersImage.defaultBatch.Draw();
     
-    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
-    
+    go3d();
     
     for (HarpView* hv : harps)
         hv->update();
     
     
-    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    go2d();
     
     for (ChordRegion* cr : chordRegions)
         cr->draw();
