@@ -437,7 +437,14 @@ void MainContentComponent::renderOpenGL()
 
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    
+    glDisable(GL_DEPTH_TEST);
 
+    tutorial->draw();
+    
+    leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    leapDisconnectedView->draw();
+    
     // Render the offscreen fingers image using bloom shader
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
     fingersImage.setDefaultBlendMode(GL_SRC_ALPHA,GL_ONE);
@@ -460,18 +467,12 @@ void MainContentComponent::renderOpenGL()
     for (HarpView* hv : harps)
         hv->update();
     
-    glDisable(GL_DEPTH_TEST);
     
     Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
 	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
     
     for (ChordRegion* cr : chordRegions)
         cr->draw();
-    
-    tutorial->draw();
-    
-    leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    leapDisconnectedView->draw();
 
     //openGLContext.triggerRepaint();
 }
