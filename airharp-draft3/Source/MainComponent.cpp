@@ -313,6 +313,9 @@ void MainContentComponent::newOpenGLContextCreated()
 
     openGLContext.setSwapInterval(1);
 
+    MessageManagerLock mml;
+    grabKeyboardFocus();
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
 
