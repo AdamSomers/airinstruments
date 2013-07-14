@@ -349,7 +349,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     
     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
     float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-    float scaledY = (y-.5f)*4;
+    float scaledY = (y-.5f)*8;
     if (z < zLimit) z = 0;
     float scaledZ = z*5-12;
     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
