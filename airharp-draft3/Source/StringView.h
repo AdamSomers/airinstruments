@@ -307,6 +307,7 @@ public:
         // When finger is on string plane, we can strum
         if (point[2] <= center[2])
         {
+            inFingerView->setColor(Colour::fromRGB(66, 156, 224));
             // calculate collidion distance of previous finger ray with string
             M3DVector3f prevPoint;
             M3DVector3f prevRay;
@@ -340,6 +341,8 @@ public:
                 pluck(pos, 1, direction);
             }
         }
+        else
+            inFingerView->setColor(Colour::fromRGB(248, 236, 129));
     }
     
     void tap(float velocity)
