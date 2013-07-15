@@ -18,8 +18,8 @@ ScaleEditor::ScaleEditor()
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
     
-    addChild(&textView);
-    textView.setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    addChild(&textLabel);
+    textLabel.setText("Custom Scale");
 
     String degrees[] = { "1", "m2", "2", "m3", "M3", "P4", "b5", "P5", "m6", "M6", "m7", "M7" };
     for (int i = 0; i < 12; ++i) {
@@ -56,7 +56,7 @@ ScaleEditor::ScaleEditor()
 void ScaleEditor::setBounds(const HUDRect &r)
 {
     HUDView::setBounds(r);
-    textView.setBounds(HUDRect(0, r.h - 30.f, r.w, 30.f));
+    textLabel.setBounds(HUDRect(0, r.h - 30.f, r.w, 30.f));
     float buttonOffset = 10.f;
     float buttonWidth = (r.w - buttonOffset * 7.f) / 7.f;
     HUDRect buttonRect(0,0,buttonWidth,buttonWidth);
@@ -74,20 +74,6 @@ void ScaleEditor::setBounds(const HUDRect &r)
             yInc = -yInc;
         }
     }
-    
-    createTextLabel();
-}
-
-void ScaleEditor::createTextLabel()
-{
-    Image im(Image::PixelFormat::ARGB, (int) (textView.getBounds().w*4), (int) (textView.getBounds().h*4), true);
-    Graphics g (im);
-    g.setColour(Colours::white);
-    g.setFont(Font(Environment::instance().getDefaultFont(), (textView.getBounds().h * .75f) * 4.0f, Font::plain));
-    g.drawText("Custom Scale", 0, 0, (int) (textView.getBounds().w*4), (int) (textView.getBounds().h*4), Justification::left, true);
-    if (textView.getDefaultTexture().textureId != 0)
-        glDeleteTextures(1, &textView.getDefaultTexture().textureId);
-    textView.setDefaultTexture(GfxTools::loadTextureFromJuceImage(im));
 }
 
 void ScaleEditor::buttonStateChanged(HUDButton *b)

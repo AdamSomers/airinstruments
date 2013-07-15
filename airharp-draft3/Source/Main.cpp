@@ -121,6 +121,7 @@ AirHarpApplication::MainWindow::MainWindow()  : DocumentWindow ("AirHarp",
     setVisible (true);
     setUsingNativeTitleBar(true);
     setResizable(true, false);
+    setResizeLimits(800, 600, 3840, 1800);
 }
 
 void AirHarpApplication::MainWindow::closeButtonPressed()

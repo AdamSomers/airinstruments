@@ -12,6 +12,7 @@
 #include "HUD.h"
 #include "TextButton.h"
 #include "Types.h"
+#include "TextLabel.h"
 
 class ScaleEditor : public HUDView
                   , public HUDButton::Listener
@@ -28,9 +29,8 @@ public:
     
 private:
     void createTextLabel();
-    void saveToXml();
     std::vector<SharedPtr<TextHUDButton> > scaleDegreeButtons;
-    HUDView textView;
+    HUDTextLabel textLabel;
 };
 
 #endif /* defined(__AirHarp__ScaleEditor__) */

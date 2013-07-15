@@ -370,6 +370,9 @@
     <ClCompile Include="..\..\..\common\SkinManager.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\TextLabel.cpp">
+      <Filter>AirHarp\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
@@ -1681,6 +1684,9 @@
       <Filter>AirHarp\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\SkinManager.h">
+      <Filter>AirHarp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\TextLabel.h">
       <Filter>AirHarp\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\TutorialSlide.h">

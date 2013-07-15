@@ -53,7 +53,7 @@ SettingsScreen::~SettingsScreen()
 void SettingsScreen::setBounds(const HUDRect& b)
 {
     HUDView::setBounds(b);
-    float buttonWidth = 100.f;
+    float buttonWidth = 70.f;
     HUDRect buttonRect(b.w / 2.f - buttonWidth / 2.f, buttonWidth / 2.f, buttonWidth, buttonWidth);
     playButton.setBounds(buttonRect);
     float keySelectorHeight = 80;

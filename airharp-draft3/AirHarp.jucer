@@ -42,6 +42,8 @@
             file="../common/JuceReverbAudioClient.h"/>
       <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
+      <FILE id="zr3p0P" name="TextLabel.cpp" compile="1" resource="0" file="../common/TextLabel.cpp"/>
+      <FILE id="QRONx0" name="TextLabel.h" compile="0" resource="0" file="../common/TextLabel.h"/>
       <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
             file="../common/TutorialSlide.cpp"/>
       <FILE id="whakCI" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>

@@ -156,6 +156,7 @@
     <ClCompile Include="..\..\..\common\MotionServer.cpp"/>
     <ClCompile Include="..\..\..\common\JuceReverbAudioClient.cpp"/>
     <ClCompile Include="..\..\..\common\SkinManager.cpp"/>
+    <ClCompile Include="..\..\..\common\TextLabel.cpp"/>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\GLBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\glew.c"/>
@@ -1284,6 +1285,7 @@
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
     <ClInclude Include="..\..\..\common\JuceReverbAudioClient.h"/>
     <ClInclude Include="..\..\..\common\SkinManager.h"/>
+    <ClInclude Include="..\..\..\common\TextLabel.h"/>
     <ClInclude Include="..\..\..\common\TutorialSlide.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glew.h"/>
     <ClInclude Include="..\..\..\GLTools\include\GL\glxew.h"/>
