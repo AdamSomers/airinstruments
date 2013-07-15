@@ -284,24 +284,28 @@ void MainContentComponent::newOpenGLContextCreated()
 //    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
     // Load shaders for finger rendering
-    File special = File::getSpecialLocation(File::currentApplicationFile);
-#if JUCE_WINDOWS
-    File resources = special.getChildFile("..");
-#elif JUCE_MAC
-    File resources = special.getChildFile("Contents/Resources");
-#endif
-   File vsFile = resources.getChildFile("testShader.vs");
-   File fsFile = resources.getChildFile("testShader.fs");
+//    File special = File::getSpecialLocation(File::currentApplicationFile);
+//#if JUCE_WINDOWS
+//    File resources = special.getChildFile("..");
+//#elif JUCE_MAC
+//    File resources = special.getChildFile("Contents/Resources");
+//#endif
+//   File vsFile = resources.getChildFile("testShader.vs");
+//   File fsFile = resources.getChildFile("testShader.fs");
 
-    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
                                                                                      GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
     jassert(shaderId != 0);
-    vsFile = resources.getChildFile("bloom.vs");
-    fsFile = resources.getChildFile("bloom.fs");
+    if (shaderId == 0)
+        Logger::writeToLog("ERROR: failed to load testShader");
+//    vsFile = resources.getChildFile("bloom.vs");
+//    fsFile = resources.getChildFile("bloom.fs");
 
-    bloomShaderId = gltLoadShaderPairSrcWithAttributes(vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+    bloomShaderId = gltLoadShaderPairSrcWithAttributes(BinaryData::bloom_vs, BinaryData::bloom_fs, 2,
                                                        GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_TEXTURE0, "vTexCoord0");
     jassert(bloomShaderId != 0);
+    if (shaderId == 0)
+        Logger::writeToLog("ERROR: failed to load bloom shader");
 
     // setup the offscreen finger texture
     int imageW = 512;
