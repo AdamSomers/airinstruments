@@ -421,10 +421,12 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->drawWithShader(shaderId);
+
     glBindTexture(GL_TEXTURE_2D,td.textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, td.imageW, td.imageH, 0);
     glViewport(0,0,Environment::instance().screenW,Environment::instance().screenH);
-
 
     go2d();
 
@@ -438,9 +440,9 @@ void MainContentComponent::renderOpenGL()
         hv->draw();
     
 	go2d();
-    
+
     glDisable(GL_DEPTH_TEST);
-    
+
     for (HUDView* v : views)
         v->draw();
 
