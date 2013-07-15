@@ -1765,10 +1765,6 @@
   <ItemGroup>
     <None Include="..\..\Resources\icon.png"/>
     <None Include="..\..\Resources\icon.icns"/>
-    <None Include="..\..\..\common\testShader.fs"/>
-    <None Include="..\..\..\common\bloom.fs"/>
-    <None Include="..\..\..\common\bloom.vs"/>
-    <None Include="..\..\..\common\testShader.vs"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_module_info"/>

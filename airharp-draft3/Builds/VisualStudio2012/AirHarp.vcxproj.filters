@@ -3122,18 +3122,6 @@
     <None Include="..\..\Resources\icon.icns">
       <Filter>AirHarp\resources</Filter>
     </None>
-    <None Include="..\..\..\common\testShader.fs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\bloom.fs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\bloom.vs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\testShader.vs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">
       <Filter>Juce Modules\juce_audio_basics</Filter>
     </None>
