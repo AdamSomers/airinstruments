@@ -328,6 +328,8 @@ void MainContentComponent::newOpenGLContextCreated()
 
     MessageManagerLock mml;
     grabKeyboardFocus();
+    
+    MotionDispatcher::instance().cursor->setEnabled(false);
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
