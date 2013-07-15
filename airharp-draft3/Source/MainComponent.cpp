@@ -295,17 +295,21 @@ void MainContentComponent::newOpenGLContextCreated()
 
     shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
                                                                                      GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
-    jassert(shaderId != 0);
-    if (shaderId == 0)
+    //jassert(shaderId != 0);
+    if (shaderId == 0) {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Shader Error", "failed to load testShader");
         Logger::writeToLog("ERROR: failed to load testShader");
+    }
 //    vsFile = resources.getChildFile("bloom.vs");
 //    fsFile = resources.getChildFile("bloom.fs");
 
     bloomShaderId = gltLoadShaderPairSrcWithAttributes(BinaryData::bloom_vs, BinaryData::bloom_fs, 2,
                                                        GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_TEXTURE0, "vTexCoord0");
-    jassert(bloomShaderId != 0);
-    if (shaderId == 0)
+    //jassert(bloomShaderId != 0);
+    if (bloomShaderId == 0) {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Shader Error", "failed to load bloom shader");
         Logger::writeToLog("ERROR: failed to load bloom shader");
+    }
 
     // setup the offscreen finger texture
     int imageW = 512;
