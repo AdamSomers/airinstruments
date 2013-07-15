@@ -43,6 +43,7 @@ SettingsScreen::SettingsScreen()
     scalesButton.setState(!chordMode);
 
     addChild(&keySelector);
+    addChild(&scaleEditor);
 }
 
 SettingsScreen::~SettingsScreen()
@@ -66,6 +67,12 @@ void SettingsScreen::setBounds(const HUDRect& b)
     scalesButton.setBounds(buttonRect);
     buttonRect.x = b.w / 2.f + 20.f;
     chordsButton.setBounds(buttonRect);
+    float scaleEditorWidth = 500.f;
+    float scaleEditorHeight = 160.f;
+    scaleEditor.setBounds(HUDRect(b.w / 2.f - scaleEditorWidth / 2.f,
+                                  buttonRect.y - scaleEditorHeight- 20,
+                                  scaleEditorWidth,
+                                  scaleEditorHeight));
 }
 
 void SettingsScreen::buttonStateChanged(HUDButton* b)

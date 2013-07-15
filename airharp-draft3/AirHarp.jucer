@@ -133,6 +133,8 @@
       <FILE id="sN5gM8" name="HarpHUD.h" compile="0" resource="0" file="Source/HarpHUD.h"/>
       <FILE id="XEYuIY" name="KeySelector.cpp" compile="1" resource="0" file="Source/KeySelector.cpp"/>
       <FILE id="myJ2gg" name="KeySelector.h" compile="0" resource="0" file="Source/KeySelector.h"/>
+      <FILE id="Q3coou" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/ScaleEditor.cpp"/>
+      <FILE id="gWghP5" name="ScaleEditor.h" compile="0" resource="0" file="Source/ScaleEditor.h"/>
       <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
             file="Source/SettingsScreen.cpp"/>
       <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"

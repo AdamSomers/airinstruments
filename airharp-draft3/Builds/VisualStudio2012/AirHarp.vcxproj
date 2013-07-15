@@ -180,6 +180,7 @@
     <ClCompile Include="..\..\Source\HarpView.cpp"/>
     <ClCompile Include="..\..\Source\HarpHUD.cpp"/>
     <ClCompile Include="..\..\Source\KeySelector.cpp"/>
+    <ClCompile Include="..\..\Source\ScaleEditor.cpp"/>
     <ClCompile Include="..\..\Source\SettingsScreen.cpp"/>
     <ClCompile Include="..\..\Source\StringView.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
@@ -1321,6 +1322,7 @@
     <ClInclude Include="..\..\Source\HarpView.h"/>
     <ClInclude Include="..\..\Source\HarpHUD.h"/>
     <ClInclude Include="..\..\Source\KeySelector.h"/>
+    <ClInclude Include="..\..\Source\ScaleEditor.h"/>
     <ClInclude Include="..\..\Source\SettingsScreen.h"/>
     <ClInclude Include="..\..\Source\StringView.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>

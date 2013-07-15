@@ -35,6 +35,7 @@ public:
     void setChord(int chordIndex);
     int getSelectedScale() const { return selectedScale; }
     bool checkIdle();
+    void setCustomScale(std::vector<std::string>& newCustomScale);
     
     // Leap Listener override
     void onFrame(const Leap::Controller&);

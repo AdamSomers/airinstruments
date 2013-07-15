@@ -155,7 +155,7 @@ void Harp::BuildDefaultScales()
     // Slendro?
     const std::string exotic1[] = { "1", "3", "4", "5", "7"};
     // Chinese mystery
-    const std::string exotic2[] = { "1", "3", "#4", "5", "7" };
+    const std::string custom[] = { "1", "3", "#4", "5", "7" };
     
     const std::string I[]     = { "1", "3", "5" };
     const std::string ii[]    = { "2", "4", "6" };
@@ -205,8 +205,8 @@ void Harp::BuildDefaultScales()
     scale.clear();
     
     for (int i = 0; i <  5; ++i)
-        scale.push_back(exotic2[i]);
-    scales.insert(std::make_pair("exotic2", scale));
+        scale.push_back(custom[i]);
+    scales.insert(std::make_pair("custom", scale));
     scale.clear();
     
     for (int i = 0; i < 3; ++i)
@@ -278,6 +278,17 @@ void Harp::BuildDefaultScales()
         scale.push_back(VI[i]);
     scales.insert(std::make_pair("VI", scale));
     scale.clear();
+    
+    String customScale = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("customScale", "1 M3 b5 P5 M7");
+    StringArray arr;
+    arr.addTokens(customScale, false);
+    std::vector<std::string> vec;
+    for (int i = 0; i < arr.size(); ++i)
+    {
+        vec.push_back(arr[i].toStdString());
+    }
+    setCustomScale(vec);
+
 }
 
 std::vector<std::string>& Harp::getScale()
@@ -364,7 +375,7 @@ void Harp::SetScale(int scaleIndex)
                 selectedScaleName = "exotic1";
                 break;
             case 6:
-                selectedScaleName = "exotic2";
+                selectedScaleName = "custom";
                 break;
             default:
                 break;
@@ -398,6 +409,15 @@ void Harp::SetScale(int scaleIndex)
             default:
                 break;
         }
+    }
+}
+
+void Harp::setCustomScale(std::vector<std::string>& newCustomScale)
+{
+    ScaleMap::iterator i = scales.find("custom");
+    if (i != scales.end())
+    {
+        (*i).second = newCustomScale;
     }
 }
 

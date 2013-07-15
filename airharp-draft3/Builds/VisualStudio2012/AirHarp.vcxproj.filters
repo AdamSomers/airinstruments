@@ -442,6 +442,9 @@
     <ClCompile Include="..\..\Source\KeySelector.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ScaleEditor.cpp">
+      <Filter>AirHarp\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SettingsScreen.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
@@ -1792,6 +1795,9 @@
       <Filter>AirHarp\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\KeySelector.h">
+      <Filter>AirHarp\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ScaleEditor.h">
       <Filter>AirHarp\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SettingsScreen.h">

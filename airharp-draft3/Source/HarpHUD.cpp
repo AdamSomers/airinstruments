@@ -202,7 +202,7 @@ void HarpToolbar::updateButtonText()
         arr.add("Tone");
         buttons.at(4)->setText(arr,arr);
         buttons.at(5)->setText(StringArray("Chinese"),StringArray("Chinese"));
-        buttons.at(6)->setText(StringArray("Exotic"),StringArray("Exotic"));
+        buttons.at(6)->setText(StringArray("Custom"),StringArray("Custom"));
     }
 }
 
