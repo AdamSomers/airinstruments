@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.6.0"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
+<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.7.0"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="sMkUgX" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
-      <FILE id="Dza7E4" name="testShader.fs" compile="0" resource="0" file="../common/testShader.fs"/>
-      <FILE id="RntTTZ" name="bloom.fs" compile="0" resource="0" file="../common/bloom.fs"/>
-      <FILE id="GDIyZb" name="bloom.vs" compile="0" resource="0" file="../common/bloom.vs"/>
-      <FILE id="NEjQJA" name="testShader.vs" compile="0" resource="0" file="../common/testShader.vs"/>
     </GROUP>
     <GROUP id="{F38A8F78-CE9E-8BF5-DD92-3E93393621E7}" name="common">
+      <FILE id="lSROfG" name="AudioSettingsDialog.cpp" compile="1" resource="0"
+            file="../common/AudioSettingsDialog.cpp"/>
+      <FILE id="r2Yy4i" name="AudioSettingsDialog.h" compile="0" resource="0"
+            file="../common/AudioSettingsDialog.h"/>
       <FILE id="RlyAyP" name="CursorView.cpp" compile="1" resource="0" file="../common/CursorView.cpp"/>
       <FILE id="J96Ifr" name="CursorView.h" compile="0" resource="0" file="../common/CursorView.h"/>
       <FILE id="ztLejZ" name="TextButton.cpp" compile="1" resource="0" file="../common/TextButton.cpp"/>
@@ -36,12 +37,10 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
-      <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
-            file="Source/SettingsScreen.cpp"/>
-      <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"
-            file="Source/SettingsScreen.h"/>
       <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
+      <FILE id="zr3p0P" name="TextLabel.cpp" compile="1" resource="0" file="../common/TextLabel.cpp"/>
+      <FILE id="QRONx0" name="TextLabel.h" compile="0" resource="0" file="../common/TextLabel.h"/>
       <FILE id="gsGUGS" name="TutorialSlide.cpp" compile="1" resource="0"
             file="../common/TutorialSlide.cpp"/>
       <FILE id="whakCI" name="TutorialSlide.h" compile="0" resource="0" file="../common/TutorialSlide.h"/>
@@ -88,6 +87,9 @@
         <FILE id="tS7Xgj" name="Interpolators.cpp" compile="1" resource="0"
               file="../../muskit/src/Interpolators.cpp"/>
         <FILE id="kncYmg" name="Interpolators.h" compile="0" resource="0" file="../../muskit/src/Interpolators.h"/>
+        <FILE id="CiQcV9" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
+        <FILE id="b0xfiq" name="MainMenu.cpp" compile="1" resource="0" file="Source/MainMenu.cpp"/>
+        <FILE id="Z4QKOu" name="MainMenu.h" compile="0" resource="0" file="Source/MainMenu.h"/>
         <FILE id="mor7ue" name="MathHelpers.h" compile="0" resource="0" file="../../muskit/src/MathHelpers.h"/>
         <FILE id="rSbZUg" name="MidiServer.h" compile="0" resource="0" file="../../muskit/src/MidiServer.h"/>
         <FILE id="VhEP3U" name="MidiServer.cpp" compile="1" resource="0" file="../../muskit/src/MidiServer.cpp"/>
@@ -122,17 +124,25 @@
     </GROUP>
     <GROUP id="{A5D98B66-6C20-48FC-AA1C-0AE702A65C11}" name="Source">
       <FILE id="QyjiF3" name="Harp.cpp" compile="1" resource="0" file="Source/Harp.cpp"/>
+      <FILE id="sqcx6p" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="B3eka9" name="Harp.h" compile="0" resource="0" file="Source/Harp.h"/>
       <FILE id="vaw2gZ" name="HarpView.cpp" compile="1" resource="0" file="Source/HarpView.cpp"/>
       <FILE id="J2gDfO" name="HarpView.h" compile="0" resource="0" file="Source/HarpView.h"/>
       <FILE id="NjKuIx" name="HarpHUD.cpp" compile="1" resource="0" file="Source/HarpHUD.cpp"/>
       <FILE id="sN5gM8" name="HarpHUD.h" compile="0" resource="0" file="Source/HarpHUD.h"/>
+      <FILE id="XEYuIY" name="KeySelector.cpp" compile="1" resource="0" file="Source/KeySelector.cpp"/>
+      <FILE id="myJ2gg" name="KeySelector.h" compile="0" resource="0" file="Source/KeySelector.h"/>
+      <FILE id="Q3coou" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/ScaleEditor.cpp"/>
+      <FILE id="gWghP5" name="ScaleEditor.h" compile="0" resource="0" file="Source/ScaleEditor.h"/>
+      <FILE id="ChI9sA" name="SettingsScreen.cpp" compile="1" resource="0"
+            file="Source/SettingsScreen.cpp"/>
+      <FILE id="gX9gZ2" name="SettingsScreen.h" compile="0" resource="0"
+            file="Source/SettingsScreen.h"/>
       <FILE id="frej1K" name="StringView.cpp" compile="1" resource="0" file="Source/StringView.cpp"/>
       <FILE id="ZMsN1N" name="StringView.h" compile="0" resource="0" file="Source/StringView.h"/>
       <FILE id="KOoxeY" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JeEtSL" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="lNNe7M" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
@@ -150,6 +160,7 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="../../juce/modules"
@@ -167,7 +178,7 @@
     </XCODE_MAC>
     <VS2012 targetFolder="Builds/VisualStudio2012" juceFolder="../../juce/modules"
             externalLibraries="Leap.lib&#10;" extraCompilerFlags="" extraDefs="__WINDOWS_MM__=1"
-            libraryType="1">
+            libraryType="1" bigIcon="sMkUgX">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="AirHarp_LM" headerPath="../../../LeapSDK/win/include&#10;../../../GLTools/include&#10;../../../common&#10;../../../asiosdk2.2/common&#10;../../../../muskit/src&#10;../../../../muskit/ThirdParty"

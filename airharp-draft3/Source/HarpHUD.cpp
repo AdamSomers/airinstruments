@@ -3,9 +3,12 @@
 #include "MotionServer.h"
 #include "GfxTools.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 HarpToolbar::HarpToolbar()
 {
+    setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     for (int i = 0; i < 7; ++i)
     {
         TextHUDButton* b = new TextHUDButton();
@@ -21,13 +24,22 @@ HarpToolbar::HarpToolbar()
     }
     
     settingsButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
-    settingsButton.setBackgroundColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, .8f),
+    settingsButton.setBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f),
                           Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
-    settingsButton.setTextColor(Colour::fromFloatRGBA(.2f, .2f, .2f, 1.f),
+    settingsButton.setTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f),
                     Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
     settingsButton.addListener(this);
     settingsButton.setText(StringArray("Settings"), StringArray("Settings"));
     addChild(&settingsButton);
+    
+    helpButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    helpButton.setBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f),
+                                      Colour::fromFloatRGBA(.3f, .3f, .3f, .5f));
+    helpButton.setTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f),
+                                Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f));
+    helpButton.addListener(this);
+    helpButton.setText(StringArray("Help"), StringArray("Help"));
+    addChild(&helpButton);
 }
 
 HarpToolbar::~HarpToolbar()
@@ -46,16 +58,12 @@ void HarpToolbar::setup()
 void HarpToolbar::layoutControls()
 {
     int numButtons = buttons.size();
-    float buttonWidth = 50;
-    float buttonHeight = 50;
+    float buttonWidth = 60;
+    float buttonHeight = 60;
     float xmin = 50;
     float xmax = 400;
-    float totalButtonWidth = numButtons * buttonWidth;
-    float emptySpace = (xmax - xmin) - totalButtonWidth;
-    float step = (emptySpace / (numButtons-1)) + buttonWidth;
-    if (step < buttonWidth + 1)
-        step = buttonWidth + 1;
-    float y = (bounds.h / 2.f + 10)- buttonHeight / 2.f;
+    float step = buttonWidth + 5;
+    float y = (bounds.h / 2.f + 15)- buttonHeight / 2.f;
     HUDRect r(xmin, y, buttonWidth, buttonHeight);
     for (TextHUDButton* b : buttons)
     {
@@ -63,10 +71,13 @@ void HarpToolbar::layoutControls()
         r.x += step;
     }
     
-    settingsButton.setBounds(HUDRect(getBounds().w - buttonWidth - 10,
-                                     y,
-                                     buttonWidth,
-                                     buttonHeight));
+    HUDRect buttonRect(getBounds().w - buttonWidth - 50,
+                       y,
+                       buttonWidth,
+                       buttonHeight);
+    settingsButton.setBounds(buttonRect);
+    buttonRect.x -= buttonWidth + 10;
+    helpButton.setBounds(buttonRect);
 }
 
 void HarpToolbar::draw()
@@ -96,16 +107,22 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
     
     if (b == &settingsButton)
         sendActionMessage("settingsMode");
+    else if (b == &helpButton)
+        sendActionMessage("showHelp");
     else
     {    
         Harp* h = HarpManager::instance().getHarp(0);
         
         if (h->getChordMode())
         {
-            if (state)
+            if (state) {
                 h->selectChord(b->getId());
-            else if (h->getNumSelectedChords() > 1)
+                AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordSelected"+String(b->getId()), true);
+            }
+            else if (h->getNumSelectedChords() > 1) {
                 h->deSelectChord(b->getId());
+                AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordSelected"+String(b->getId()), false);
+            }
         }
         else
         {
@@ -121,8 +138,10 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
                 b->setState(true, false);
             
             h->SetScale(b->getId());
+            AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedScale", b->getId());
         }
         sendChangeMessage();
+        sendActionMessage("scaleChanged");
     }
 }
 
@@ -184,13 +203,15 @@ void HarpToolbar::updateButtonText()
         arr.add("Tone");
         buttons.at(4)->setText(arr,arr);
         buttons.at(5)->setText(StringArray("Chinese"),StringArray("Chinese"));
-        buttons.at(6)->setText(StringArray("Exotic"),StringArray("Exotic"));
+        buttons.at(6)->setText(StringArray("Custom"),StringArray("Custom"));
     }
 }
 
 StatusBar::StatusBar()
 : indicator(HUDButton(0))
 {
+    setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     //indicator.setEditable(false)
     addChild(&indicator);
 }
@@ -221,7 +242,7 @@ void StatusBar::layoutControls()
 
 void StatusBar::setIndicatorTextures(TextureDescription on, TextureDescription off)
 {
-//    indicator.setTextures(on, off);
+    indicator.setTextures(on, off);
 }
 
 void StatusBar::draw()
@@ -250,9 +271,12 @@ void StatusBar::onDisconnect(const Leap::Controller& controller)
 ChordRegion::ChordRegion()
 : id(0)
 , isActive(false)
-, fade(0.f)
 {
-    
+    setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
+    setMultiplyAlpha(true);
+    addChild(&label);
+    GLfloat color[] = { 0.f, 0.f, 0.f, 0.f };
+    setDefaultColor(color);
 }
 
 ChordRegion::~ChordRegion()
@@ -260,61 +284,44 @@ ChordRegion::~ChordRegion()
     
 }
 
-void ChordRegion::setup()
-{    
-    M3DVector3f imageVerts[4] = {
-        0, bounds.y, 0.f,
-        bounds.h, bounds.y, 0.f,
-        0, bounds.y + bounds.h, 0.f,
-        bounds.h, bounds.y + bounds.h, 0.f
-    };
+void ChordRegion::setBounds(const HUDRect& r)
+{
+    HUDView::setBounds(r);
+    float labelHeight = jmin(r.h, 40.f);
     
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    imageBatch.CopyVertexData3f(imageVerts);
-    imageBatch.CopyTexCoordData2f(texCoords, 0);
-    if (!didSetup)
-        imageBatch.End();
-    
-    HUDView::setup();
+    label.setBounds(HUDRect(20,
+                            r.h / 2.f - labelHeight / 2.f,
+                            labelHeight,
+                            labelHeight));
 }
 
-void ChordRegion::draw()
+void ChordRegion::setId(int inId)
 {
-    GLfloat texColor[4] = { 1.f, 1.f, 1.f, fade };
-    
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glEnable(GL_BLEND);
-
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
-    glLineWidth(1.f);
-    imageBatch.Draw();
-
-    if (isActive && fade < 1.f)
+    id = inId;
+    String text;
+    switch (id)
     {
-        fade += 0.3f;
-        if (fade > .7f) fade = .7f;
+        case 0:
+            text = "I";
+            break;
+        case 1:
+            text = "II";
+            break;
+        case 2:
+            text = "III";
+            break;
+        case 3:
+            text = "IV";
+            break;
+        case 4:
+            text = "V";
+            break;
+        case 5:
+            text = "VI";
+            break;
+        case 6:
+            text = "VII";
+            break;
     }
-    if (!isActive && fade > 0.f)
-    {
-        fade -= 0.11f;
-        if (fade < 0.f) fade = 0.f;
-    }
-}
-
-void ChordRegion::loadTextures()
-{
-    textureID = SkinManager::instance().getSelectedSkin().getTexture(String(id+1)).textureId;
-}
-
-void ChordRegion::setActive(bool shouldBeActive)
-{
-    isActive = shouldBeActive;
+    label.setText(text);
 }

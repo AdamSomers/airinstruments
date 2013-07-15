@@ -8,124 +8,176 @@
   ==============================================================================
 */
 
-#include "MotionServer.h"
-#include "MainComponent.h"
+#include "Main.h"
 
-#include "../JuceLibraryCode/JuceHeader.h"
+void AirHarpApplication::initialise (const String& commandLine)
+{
+	PropertiesFile::Options options;
+	options.applicationName = "AirHarp";
+	options.filenameSuffix = ".settings";
+	options.folderName = "AirHarp";
+	options.osxLibrarySubFolder = "Application Support";
+	options.commonToAllUsers = "false";
+	options.ignoreCaseOfKeyNames = true;
+	options.millisecondsBeforeSaving = 1000;
+	options.storageFormat = PropertiesFile::storeAsXML;
+	properties.setStorageParameters(options);
+
+    mainWindow = new MainWindow();
+    
+    XmlElement* audioState = properties.getUserSettings()->getXmlValue(AudioSettingsDialog::getPropertiesName());
+    String audioStatus = audioDeviceManager.initialise (0, 2, audioState, true, String::empty, 0);
+	if (audioState != nullptr)
+		delete audioState;
+	if (audioStatus != "")
+    {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Audio device error", audioStatus);
+        quit();
+        return;
+    }
+
+    audioDeviceManager.addAudioCallback(this);
+    
+	mainMenu = new MainMenu();
+#if JUCE_WINDOWS
+    mainWindow->setMenuBar(mainMenu);
+#elif JUCE_MAC
+    MenuBarModel::setMacMainMenu(mainMenu);
+#endif
+    
+    commandManager.registerAllCommandsForTarget (mainWindow);
+    mainMenu->setApplicationCommandManagerToWatch (&commandManager);
+}
+
+void AirHarpApplication::shutdown()
+{
+    properties.saveIfNeeded();
+    
+	if (settingsDialog != nullptr)
+		delete settingsDialog;
+    
+#if JUCE_WINDOWS
+    mainWindow->setMenuBar(nullptr);
+#elif JUCE_MAC
+    MenuBarModel::setMacMainMenu(nullptr);
+#endif
+	delete mainMenu;
+    
+    Logger::writeToLog("AirBeats Shutdown");
+    Logger::setCurrentLogger(nullptr);
+
+    // Add your application's shutdown code here..
+
+    mainWindow = nullptr; // (deletes our window)
+    audioDeviceManager.removeAudioCallback(this);
+    MotionDispatcher::destruct();
+}
 
 //==============================================================================
-class AirHarpApplication  : public JUCEApplication
-                          , public AudioIODeviceCallback
+void AirHarpApplication::systemRequestedQuit()
 {
-public:
-    //==============================================================================
-    AirHarpApplication() {}
+    // This is called when the app is being asked to quit: you can ignore this
+    // request and let the app carry on running, or call quit() to allow the app to close.
+    quit();
+}
 
-    const String getApplicationName()       { return ProjectInfo::projectName; }
-    const String getApplicationVersion()    { return ProjectInfo::versionString; }
-    bool moreThanOneInstanceAllowed()       { return true; }
-
-    //==============================================================================
-    void initialise (const String& commandLine)
-    {
-        // This method is where you should put your application's initialisation code..
-
-        mainWindow = new MainWindow();
-        String audioStatus = audioDeviceManager.initialise (0, 2, 0, true, String::empty, 0);
-        if (audioStatus != "")
-        {
-            AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Audio device error", audioStatus);
-            quit();
-            return;
-        }
-        audioDeviceManager.addAudioCallback(this);
-    }
-
-    void shutdown()
-    {
-        // Add your application's shutdown code here..
-
-        mainWindow = nullptr; // (deletes our window)
-        audioDeviceManager.removeAudioCallback(this);
-        MotionDispatcher::destruct();
-    }
-
-    //==============================================================================
-    void systemRequestedQuit()
-    {
-        // This is called when the app is being asked to quit: you can ignore this
-        // request and let the app carry on running, or call quit() to allow the app to close.
-        quit();
-    }
-
-    void audioDeviceAboutToStart (AudioIODevice* device)
-    {
-        
-    }
-    void audioDeviceStopped()
-    {
-        
-    }
-    void audioDeviceIOCallback (const float** inputChannelData, int numInputChannels,
-                                float** outputChannelData, int numOutputChannels, int numSamples)
-    {
-        AudioServer::GetInstance()->SetInputChannels(numInputChannels);
-        AudioServer::GetInstance()->SetOutputChannels(numOutputChannels);
-        AudioServer::GetInstance()->AudioServerCallback(inputChannelData,
-														outputChannelData,
-														numSamples);
-    }
+void AirHarpApplication::audioDeviceAboutToStart (AudioIODevice* device)
+{
+    AudioServer::GetInstance()->SetFs(device->getCurrentSampleRate());
+}
+void AirHarpApplication::audioDeviceStopped()
+{
     
-    void anotherInstanceStarted (const String& commandLine)
+}
+void AirHarpApplication::audioDeviceIOCallback (const float** inputChannelData, int numInputChannels,
+                            float** outputChannelData, int numOutputChannels, int numSamples)
+{
+    AudioServer::GetInstance()->SetInputChannels(numInputChannels);
+    AudioServer::GetInstance()->SetOutputChannels(numOutputChannels);
+    AudioServer::GetInstance()->AudioServerCallback(inputChannelData,
+                                                    outputChannelData,
+                                                    numSamples);
+}
+
+void AirHarpApplication::anotherInstanceStarted (const String& commandLine)
+{
+    // When another instance of the app is launched while this one is running,
+    // this method is invoked, and the commandLine parameter tells you what
+    // the other instance's command-line arguments were.
+}
+
+void AirHarpApplication::showAudioSettingsDlg()
+{
+    settingsDialog = new AudioSettingsDialog(mainWindow, audioDeviceManager, properties);
+}
+
+AirHarpApplication::MainWindow::MainWindow()  : DocumentWindow ("AirHarp",
+                                Colours::lightgrey,
+                                DocumentWindow::allButtons)
+{
+    setContentOwned (new MainContentComponent(), true);
+
+    centreWithSize (getWidth(), getHeight());
+    setVisible (true);
+    setUsingNativeTitleBar(true);
+    setResizable(true, false);
+    setResizeLimits(800, 600, 3840, 1800);
+}
+
+void AirHarpApplication::MainWindow::closeButtonPressed()
+{
+    // This is called when the user tries to close this window. Here, we'll just
+    // ask the app to quit when this happens, but you can change this to do
+    // whatever you need.
+    JUCEApplication::getInstance()->systemRequestedQuit();
+}
+
+void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, ApplicationCommandInfo &result)
+{
+    switch (commandID)
     {
-        // When another instance of the app is launched while this one is running,
-        // this method is invoked, and the commandLine parameter tells you what
-        // the other instance's command-line arguments were.
+        case kAudioSettingsCmd:
+            result.setInfo ("Audio Settings", "Change audio configuration settings", "Options", 0);
+            result.setActive(true);
+            result.addDefaultKeypress (',', ModifierKeys::commandModifier);
+            break;
+        default:
+            break;
     }
+}
 
-    //==============================================================================
-    /*
-        This class implements the desktop window that contains an instance of
-        our MainContentComponent class.
-    */
-    class MainWindow    : public DocumentWindow
-    {
-    public:
-        MainWindow()  : DocumentWindow ("AirHarp",
-                                        Colours::lightgrey,
-                                        DocumentWindow::allButtons)
-        {
-            setContentOwned (new MainContentComponent(), true);
-
-            centreWithSize (getWidth(), getHeight());
-            setVisible (true);
-            setUsingNativeTitleBar(true);
-            setResizable(true, false);
-        }
-
-        void closeButtonPressed()
-        {
-            // This is called when the user tries to close this window. Here, we'll just
-            // ask the app to quit when this happens, but you can change this to do
-            // whatever you need.
-            JUCEApplication::getInstance()->systemRequestedQuit();
-        }
-
-        /* Note: Be careful if you override any DocumentWindow methods - the base
-           class uses a lot of them, so by overriding you might break its functionality.
-           It's best to do all your work in your content component instead, but if
-           you really have to override any DocumentWindow methods, make sure your
-           subclass also calls the superclass's method.
-        */
-
-    private:
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
+void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands)
+{
+    // this returns the set of all commands that this target can perform..
+    const CommandID ids[] = {
+        kAudioSettingsCmd
     };
+    
+    commands.addArray (ids, numElementsInArray (ids));
+}
 
-private:
-    ScopedPointer<MainWindow> mainWindow;
-    AudioDeviceManager audioDeviceManager;
-};
+bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
+{
+    switch(info.commandID)
+    {
+        default :
+        {
+            //jassertfalse;
+            break;
+        }
+            
+        case kAudioSettingsCmd :
+        {
+            if (AirHarpApplication::getInstance()->settingsDialog != nullptr)
+                break;
+            
+            AirHarpApplication::getInstance()->showAudioSettingsDlg();
+            
+            break;
+        }
+    }
+    return true;
+}
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.

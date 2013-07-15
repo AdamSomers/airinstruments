@@ -76,7 +76,6 @@ void HUDView::setVisible(bool shouldBeVisible, int fadeTimeMs /*= 500*/)
 
 void HUDView::mouseDown(float x, float y)
 {
-    y = Environment::instance().screenH - y;
     for (HUDView* child : children)
     {
         float localX = x - bounds.x;

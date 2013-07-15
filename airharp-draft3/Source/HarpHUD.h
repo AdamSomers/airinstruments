@@ -5,6 +5,7 @@
 #include "HUD.h"
 #include "Leap.h"
 #include "TextButton.h"
+#include "TextLabel.h"
 
 class HarpToolbar : public HUDView
                   , public HUDButton::Listener
@@ -33,6 +34,7 @@ private:
 
     std::vector<TextHUDButton*> buttons;
     TextHUDButton settingsButton;
+    TextHUDButton helpButton;
     //    HUDSlider s1;
     //    HUDSlider s2;
     //    HUDSwitch sw1;
@@ -72,19 +74,15 @@ public:
     ChordRegion();
     ~ChordRegion();
     // HUDView overrides
-    void setup();
-    void draw();
-    void loadTextures();
-    void setId(int inId) { id = inId; }
+    void setBounds(const HUDRect& r);
+
+    void setId(int inId);
     int getId() const { return id; }
-    void setActive(bool shouldBeActive);
 private:
-    GLBatch batch;
-    GLBatch imageBatch;
-    GLuint textureID;
+    HUDTextLabel label;
+
     int id;
     bool isActive;
-    float fade;
 };
 
 #endif /* defined(__AirHarp__HarpHUD__) */

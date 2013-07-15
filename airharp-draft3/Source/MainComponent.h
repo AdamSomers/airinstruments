@@ -28,8 +28,9 @@ class MainContentComponent   : public Component,
                                public OpenGLRenderer,
                                public ChangeListener,
                                public Leap::Listener,
-                               public Timer,
-                               public ActionListener
+                               public MultiTimer,
+                               public ActionListener,
+                               public MessageListener
 {
 public:
     //==============================================================================
@@ -56,36 +57,56 @@ public:
     
     void onFrame(const Leap::Controller&);
     
-    void timerCallback();
+    void timerCallback(int timeId);
     
+    enum TimerIds
+    {
+        kTimerShowTutorial = 0,
+        kTimerCheckLeapConnection
+    };
+
+    class InitGLMessage : public Message {};
+    
+    void handleMessage(const juce::Message &m);
+
     void actionListenerCallback(const String& message);
 private:
     void go2d();
     void go3d();
-    void setupBackground();
     void layoutStrings();
     void layoutChordRegions();
+    void showTutorial();
     bool chordRegionsNeedUpdate;
     
     void handleTapGesture(const Leap::Pointable& p);
     
-    TutorialSlide* slide;
+    OpenGLContext openGLContext;
+    
+    ScopedPointer<TutorialSlide> tutorial;
     HarpToolbar* toolbar;
     StatusBar* statusBar;
     SettingsScreen* settingsScreen;
+    HUDView* leapDisconnectedView;
+    View2d* backgroundView;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
     std::vector<HarpView*> inactiveHarps;
-    std::vector<HUDView*> views;    
-    
-    GLuint backgroundTextureId;
-    GLBatch backgroundBatch;
-    
+    std::vector<HUDView*> views;
+
     View2d fingersImage;
     int bloomShaderId;
     int shaderId;
     
     bool sizeChanged;
+    
+    Image splashBgImage;
+    Image splashTitleImage;
+    Image splashImage;
+    ScopedPointer<View2d> splashBgView;
+    ScopedPointer<View2d> splashTitleView;
+    
+    Time lastFrame;
+    Time startTime;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

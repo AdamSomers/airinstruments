@@ -12,6 +12,7 @@
 #include "GfxTools.h"
 #include "SkinManager.h"
 
+#define FADE_TIME 500
 #define NUM_SAMPLES 64
 static float gStringLineWidth = 0.015;
 
@@ -26,8 +27,35 @@ public:
     , stringHeight(2.f)
     , yScale(1)
     , fade(0.f)
+    , opacity(1.f)
+    , visible(true)
     {
         numSampleVerts = numSamples*2;
+
+        colors.add(Colour::fromRGB(174, 195, 158));  // 4
+        colors.add(Colour::fromRGB(252, 242, 138));  // 6
+        colors.add(Colour::fromRGB(231, 155, 196));  // 11
+        colors.add(Colour::fromRGB(255, 0, 154));    // 12
+        colors.add(Colour::fromRGB(255, 75, 99));    // 8
+        colors.add(Colour::fromRGB(255, 224, 235));  // 13
+        colors.add(Colour::fromRGB(247, 199, 122));  // 5
+        colors.add(Colour::fromRGB(255, 222, 207));  // 14
+        colors.add(Colour::fromRGB(68, 185, 198));   // 3
+        colors.add(Colour::fromRGB(0, 215, 255));    // 1
+        colors.add(Colour::fromRGB(0, 174, 234));    // 2
+
+
+//        colors.add(Colour::fromRGB(255, 165, 43));   // 7
+//        colors.add(Colour::fromRGB(187, 68, 130));   // 9
+//        colors.add(Colour::fromRGB(139, 75, 135));   // 10
+        
+        baseNotes.add(33);
+        baseNotes.add(35);
+        baseNotes.add(36);
+        baseNotes.add(38);
+        baseNotes.add(40);
+        baseNotes.add(41);
+        baseNotes.add(43);
     }
     void setup()
     {
@@ -169,6 +197,10 @@ public:
         bgBatch.CopyVertexData3f(verts);
     }
     
+    float lerp(float v0, float v1, float t) {
+        return v0+(v1-v0)*t;
+    }
+    
     void draw()
     {
         Environment::instance().modelViewMatrix.PushMatrix();
@@ -182,13 +214,32 @@ public:
         m3dScaleMatrix44(mScale, 1.f, yScale, 1.f);
         //Environment::instance().modelViewMatrix.MultMatrix(mScale);
         
-        GLfloat stringColor [] = { 1.f, 1.f, 1.f, 1.f };
-        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
-            stringColor[0] = 1.f;
-            stringColor[1] = 1.f;
-            stringColor[2] = .5f;
-            stringColor[3] = 1.f;
+        float colorIndex = (stringNum / float(HarpManager::instance().getHarp(0)->GetNumStrings())) * (float)colors.size();
+        Colour c1 = colors[colorIndex];
+        Colour c2 = colors[colorIndex];
+        if (colorIndex < colors.size()-1)
+            c2 = colors[colorIndex+1];
+        
+        float t = colorIndex - floor(colorIndex);
+        
+        GLfloat stringColor [] = { lerp(c1.getFloatRed(),c2.getFloatRed(), t),
+            lerp(c1.getFloatGreen(),c2.getFloatGreen(), t),
+            lerp(c1.getFloatBlue(),c2.getFloatBlue(), t),
+            opacity };
+        
+        if ((Time::getCurrentTime() - lastVisibilityChange).inMilliseconds() < FADE_TIME) {
+            opacity = (Time::getCurrentTime() - lastVisibilityChange).inMilliseconds() / (float)FADE_TIME;
+            if (!visible)
+                opacity = 1.f - opacity;
         }
+        else
+            opacity = (float)visible;
+//        if (stringNum % HarpManager::instance().getHarp(0)->getScale().size() == 0) {
+//            stringColor[0] = 1.f;
+//            stringColor[1] = 1.f;
+//            stringColor[2] = .5f;
+//            stringColor[3] = 1.f;
+//        }
         
         GLfloat bgRectColor [] = {0.7f, 0.7f, 1.f, fade * 0.5f };
         GLfloat bgTexColor [] = { 1.0f, 1.f, 1.f, fade * 0.25f };
@@ -256,6 +307,7 @@ public:
         // When finger is on string plane, we can strum
         if (point[2] <= center[2])
         {
+            inFingerView->setColor(Colour::fromRGB(66, 156, 224));
             // calculate collidion distance of previous finger ray with string
             M3DVector3f prevPoint;
             M3DVector3f prevRay;
@@ -279,16 +331,19 @@ public:
                 float pos = point[1];
                 pos += 1.f;
                 pos /= 2.f;
+                pos *= 1.1;
                 
                 Harp* h = HarpManager::instance().getHarp(harpNum);
                 if (h->getChordMode()) {
-                    int chordNum = pos * h->getNumSelectedChords();                    
+                    int chordNum = pos * h->getNumSelectedChords();
                     h->setChord(chordNum);
                     pos = 0.5;
                 }
                 pluck(pos, 1, direction);
             }
         }
+        else
+            inFingerView->setColor(Colour::fromRGB(248, 236, 129));
     }
     
     void tap(float velocity)
@@ -296,31 +351,15 @@ public:
         pluck(0.5f, velocity);
     }
     
-    void pluck(float position, float velocity = 1.f, int direction = 1)
+    void pluck(float position, float velocity = 1.f, int direction = 1);
+    
+    void setVisible(bool shouldBeVisible)
     {
-        Harp* harp = HarpManager::instance().getHarp(0);
-        std::vector<std::string>& scale = harp->getScale();
-        int idx = stringNum % scale.size();
-        int mult = (stringNum / (float)scale.size());
-        int octaveSpan = (ScaleDegrees::getChromatic(scale[scale.size()-1]) / 12) + 1;
-        int base = 32 + 12*octaveSpan*mult;
-        int note = base + ScaleDegrees::getChromatic(scale[idx]);
-        const int bufferSize = 512;
-        float buffer[bufferSize];
-        memset(buffer, 0, bufferSize);
-        int midpoint = position * bufferSize;
-        for (int x = 0; x < bufferSize; ++x)
+        if (visible != shouldBeVisible)
         {
-            if (x < midpoint)
-                buffer[x] = -x / (float)midpoint;
-            else
-                buffer[x] = -(1.f - (x - midpoint) / (float)(bufferSize - midpoint));
-
-            buffer[x] *= direction;
+            visible = shouldBeVisible;
+            lastVisibilityChange = Time::getCurrentTime();
         }
-
-        HarpManager::instance().getHarp(harpNum)->ExciteString(stringNum, note, 127.f * velocity, buffer, bufferSize);
-        //HarpManager::instance().getHarp(harpNum)->NoteOn(stringNum, note, 127.f * velocity);
     }
     
     GLFrame objectFrame;
@@ -341,8 +380,15 @@ private:
     int numSampleVerts;
     M3DVector3f* sampleVerts;
     SampleAccumulator::PeakSample prevSamp;
+    
+    Array<Colour> colors;
 
     float fade;
+    bool visible;
+    float opacity;
+    Time lastVisibilityChange;
+    
+    Array<int> baseNotes;
 };
 
 

@@ -19,6 +19,7 @@
 #include "MotionServer.h"
 #include "FingerView.h"
 #include "SkinManager.h"
+#include "Main.h"
 
 #include "MainComponent.h"
 
@@ -26,41 +27,103 @@
 
 #define BUFFER_SIZE 512
 #define TUTORIAL_TIMEOUT 30000
+#define SPLASH_FADE 1500
+#define MIN_SPLASH_DURATION 3000
 
 //RtAudioDriver driver(BUFFER_SIZE);
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
 : chordRegionsNeedUpdate(false)
-, slide(NULL)
 , toolbar(NULL)
 , statusBar(NULL)
 , settingsScreen(NULL)
+, leapDisconnectedView(NULL)
 , sizeChanged(false)
 {
-    Environment::openGLContext.setRenderer (this);
-    Environment::openGLContext.setComponentPaintingEnabled (true);
-    Environment::openGLContext.attachTo (*this);
-    //openGLContext.setSwapInterval(2);
-    setSize (800, 600);
+    startTime = Time::getCurrentTime();
+    setSize (1280, 690);
     setWantsKeyboardFocus(true);
+    startTimer(kTimerCheckLeapConnection, 500);
+
+    File special = File::getSpecialLocation(File::currentApplicationFile);
+#if JUCE_WINDOWS
+	File resourcesFile = special.getChildFile("../");
+#elif JUCE_MAC
+	File resourcesFile = special.getChildFile("Contents/Resources");
+#endif
+    File bgImageFile = resourcesFile.getChildFile("splash_bg.png");
+    File splashTitleImageFile = resourcesFile.getChildFile("splash_title.png");
+    
+    if (bgImageFile.exists())
+        splashBgImage = ImageFileFormat::loadFrom(bgImageFile);
+    else
+        Logger::writeToLog("ERROR: background_dark.png not found!");
+    
+    if (splashTitleImageFile.exists())
+        splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
+    else
+        Logger::writeToLog("ERROR: splash_title.png not found!");
+
 }
 
 MainContentComponent::~MainContentComponent()
 {
-    Environment::openGLContext.detach();
+    openGLContext.detach();
+    delete backgroundView;
     delete toolbar;
     delete statusBar;
     delete settingsScreen;
+    delete leapDisconnectedView;
+}
+
+void MainContentComponent::go2d()
+{
+    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
+	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+}
+
+void MainContentComponent::go3d()
+{
+    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
+	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    Environment::instance().modelViewMatrix.LoadIdentity();
 }
 
 void MainContentComponent::paint (Graphics& g)
 {
-    g.fillAll (Colour (0x00000ff));
-
+    static bool firstTime = true;
+    if (Environment::instance().ready)
+        return;
+    
+    splashImage = Image(Image::ARGB, getWidth(), getHeight(), true);
+    Graphics offscreen(splashImage);
+    g.fillAll (Colour (0x000000));
     g.setFont (Font (16.0f));
     g.setColour (Colours::black);
     g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
+    if (splashTitleImage.isValid()) {
+        float aspectRatio = splashTitleImage.getHeight() / (float)splashTitleImage.getWidth();
+        float w = getWidth() / 2.f;
+        float h = w * aspectRatio;
+        int x = (int)(getWidth() / 2.f - w / 2.f);
+        int y = (int)(getHeight() / 2.f - h / 2.f);
+        offscreen.drawImage(splashTitleImage, x, y, (int)w, (int)h, 0, 0, splashTitleImage.getWidth(), splashTitleImage.getHeight());
+        offscreen.setColour (Colour (0xffffffff));
+        Font f = Font(Environment::instance().getDefaultFont(), 16, Font::plain);
+        f.setExtraKerningFactor(1.5);
+        offscreen.setFont(f);
+        offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
+    }
+    if (splashBgImage.isValid())
+        g.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
+    g.drawImage(splashImage, 0, 0, getWidth(), getHeight(), 0, 0, splashImage.getWidth(), splashImage.getHeight());
+    
+    if (firstTime) {
+        Logger::writeToLog("painted once, sending InitGLMessage");
+        postMessage(new InitGLMessage);
+    }
+    firstTime = false;
 }
 
 void MainContentComponent::resized()
@@ -93,28 +156,6 @@ void MainContentComponent::focusLost(FocusChangeType cause)
 {
     Logger::outputDebugString("Focus Lost");
     MotionDispatcher::instance().pause();
-}
-
-void MainContentComponent::setupBackground()
-{
-    M3DVector3f verts[4] = {
-        0, 0, 0.f,
-        (float)Environment::instance().screenW, 0.f, 0.f,
-        0.f, (float)Environment::instance().screenH, 0.f,
-        (float)Environment::instance().screenW, (float)Environment::instance().screenH, 0.f
-    };
-    
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    backgroundBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    backgroundBatch.CopyVertexData3f(verts);
-    backgroundBatch.CopyTexCoordData2f(texCoords, 0);
-    backgroundBatch.End();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
@@ -151,6 +192,10 @@ void MainContentComponent::newOpenGLContextCreated()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         iter.second->setup();
     
+    backgroundView = new View2d;
+    backgroundView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("background_dark"));
+    GLfloat bgColor[4] = { 0.7f, 0.7f, 0.7f, 1.f };
+    backgroundView->setDefaultColor(bgColor);
 
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
@@ -164,11 +209,21 @@ void MainContentComponent::newOpenGLContextCreated()
     
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
+    
+    bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
 
-//    slide = new TutorialSlide;
-//    views.push_back(slide);
-//    slide->begin();
-//    startTimer(TUTORIAL_TIMEOUT);
+    int w = getWidth();
+    int h = getHeight();
+
+    splashBgView = new View2d;
+    splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
+    splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
+    if (!showTutorial)
+        splashBgView->setVisible(false, SPLASH_FADE);
+    splashTitleView = new View2d;
+    splashTitleView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
+    splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
+    splashTitleView->setVisible(false, SPLASH_FADE);
     
     HarpToolbar* tb = new HarpToolbar;
     views.push_back(tb);
@@ -182,40 +237,49 @@ void MainContentComponent::newOpenGLContextCreated()
     }
     
     StatusBar* sb = new StatusBar;
+    sb->setIndicatorTextures(SkinManager::instance().getSelectedSkin().getTexture("leapStatus_on"), SkinManager::instance().getSelectedSkin().getTexture("leapStatus_off"));
     views.push_back(sb);
     statusBar = sb;
-    
-    settingsScreen = new SettingsScreen;
-    settingsScreen->addActionListener(this);
-    settingsScreen->setVisible(false);
-    views.push_back(settingsScreen);
-    
+
     for (int i = 0; i < 7; ++i)
     {
         ChordRegion* cr = new ChordRegion;
         cr->setId(i);
+        cr->setVisible(false);
         chordRegions.push_back(cr);
-        cr->loadTextures();
+        views.push_back(cr);
     }
+    
+    settingsScreen = new SettingsScreen;
+    settingsScreen->addActionListener(this);
+    settingsScreen->getScaleEditor()->addActionListener(this);
+    settingsScreen->setVisible(false);
+    views.push_back(settingsScreen);
     
     for (HUDView* v : views)
         v->loadTextures();
-    
-    int w = getWidth();
-    int h = getHeight();
+
+    tutorial = new TutorialSlide;
+    tutorial->loadTextures();
+    tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
+    tutorial->setDotTextures(SkinManager::instance().getSelectedSkin().getTexture("dot_white"),
+                             SkinManager::instance().getSelectedSkin().getTexture("dot_black"));
+    tutorial->addActionListener(this);
+    tutorial->setVisible(false, 0);
+    if (showTutorial)
+        startTimer(kTimerShowTutorial, 500);
+
     toolbar->setBounds(HUDRect(0,h-70,w,70));
     statusBar->setBounds(HUDRect(0,0,w,35));
     
-    int yPos = 0;
-    int height = h/7;
+    float yPos = 20.f;
+    float height = (h-90)/7.f;
     for (ChordRegion* cr : chordRegions)
     {
         cr->setBounds(HUDRect(0,yPos, w, height));
         yPos += height;
     }
-    
-    setupBackground();
-    
+
 //    SkinManager::instance().getSkin();
 //    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
@@ -250,6 +314,10 @@ void MainContentComponent::newOpenGLContextCreated()
     td.texH = -1.f;
     fingersImage.setDefaultTexture(td);
     
+    leapDisconnectedView = new HUDView;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(false, 0);
+    
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     Environment::instance().ready = true;
         
@@ -257,7 +325,16 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
+
+    openGLContext.setSwapInterval(1);
+
+    MessageManagerLock mml;
+    grabKeyboardFocus();
     
+    MotionDispatcher::instance().cursor->setEnabled(false);
+    
+    actionListenerCallback("scaleChanged");
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
 
@@ -265,24 +342,46 @@ void MainContentComponent::renderOpenGL()
 {
     if (sizeChanged)
     {
-        if (slide)
-            slide->setBounds(HUDRect(Environment::instance().screenW / 2 - 500 / 2,
-                                     Environment::instance().screenH / 2 - 225 / 2,
-                                     500,
-                                     225));
+        const float tutorialWidth = 800.f;
+        const float tutorialHeight = 500.f;
+
+        if (backgroundView)
+            backgroundView->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
+
+        if (tutorial)
+            tutorial->setBounds(HUDRect((GLfloat) (Environment::instance().screenW / 2 - tutorialWidth / 2),
+                                        (GLfloat) (Environment::instance().screenH / 2 - tutorialHeight / 2),
+                                        tutorialWidth,
+                                        tutorialHeight));
+        
+        if (splashBgView)
+            splashBgView->setBounds(HUDRect(0.f,0.f,(GLfloat)Environment::instance().screenW,(GLfloat)Environment::instance().screenH));
+        
+        if (splashTitleView)
+            splashBgView->setBounds(HUDRect(0.f,0.f,(GLfloat)Environment::instance().screenW,(GLfloat)Environment::instance().screenH));
+
         if (toolbar)
-            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-70,Environment::instance().screenW,70));
+            toolbar->setBounds(HUDRect(0,Environment::instance().screenH-100,Environment::instance().screenW,100));
         if (statusBar)
             statusBar->setBounds(HUDRect(0,0,Environment::instance().screenW,35));
         if (settingsScreen)
-            settingsScreen->setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
-        
+            settingsScreen->setBounds(HUDRect(0,
+                                              20,
+                                              Environment::instance().screenW,
+                                              Environment::instance().screenH - 70 - 20));
+        if (leapDisconnectedView) {
+            TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected");
+            float aspectRatio = td.imageH / (float)td.imageW;
+            float w = Environment::instance().screenW / 2.f;
+            float h = w * aspectRatio;
+            leapDisconnectedView->setBounds(HUDRect(Environment::instance().screenW / 2.f - w / 2.f,
+                                                    Environment::instance().screenH / 2.f - h / 2.f,
+                                                    w,
+                                                    h));
+        }
         layoutStrings();
         chordRegionsNeedUpdate = true;
-        
-        if (Environment::instance().ready)
-            setupBackground();
-        
+
         fingersImage.setBounds(HUDRect(0,0,Environment::instance().screenW,Environment::instance().screenH));
         
         sizeChanged = false;
@@ -291,13 +390,6 @@ void MainContentComponent::renderOpenGL()
         layoutChordRegions();
         chordRegionsNeedUpdate = false;
     }
-
-    // Hack to move a particular slide.  This should be factored into the TutorialSlide class 
-    if (slide && slide->getSlideIndex() == 3)
-        slide->setBounds(HUDRect(80,
-                                 Environment::instance().screenH-80-225,
-                                 500,
-                                 225));
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
@@ -312,9 +404,7 @@ void MainContentComponent::renderOpenGL()
     glClearColor(0.f, 0.f, 0.f, 1.0f );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+	go3d();
 
     // Draw fingers to offscreen texture
     const TextureDescription& td = fingersImage.getDefaultTexture();
@@ -328,45 +418,46 @@ void MainContentComponent::renderOpenGL()
     glViewport(0,0,Environment::instance().screenW,Environment::instance().screenH);
 
 
-    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    go2d();
+
+    backgroundView->draw();
     
-    glBindTexture(GL_TEXTURE_2D, SkinManager::instance().getSelectedSkin().getTexture("background0").textureId);
-    GLfloat texColor[4] = { 1.f, 1.f, 1.f, 1.f };
-    glEnable(GL_BLEND);
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
-    backgroundBatch.Draw();
-    
-	Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+	go3d();
     
     glEnable(GL_DEPTH_TEST);
-    
+
     for (HarpView* hv : harps)
         hv->draw();
     
-	Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+	go2d();
     
     glDisable(GL_DEPTH_TEST);
     
     for (HUDView* v : views)
         v->draw();
-    
+
+    splashBgView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    splashBgView->draw();
+    splashTitleView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    splashTitleView->draw();
+
     glEnable(GL_DEPTH_TEST);
     
-    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
+    go3d();
     
     for (auto iter : MotionDispatcher::instance().handViews)
         if (iter.second->inUse)
-            iter.second->draw();
+            ;//iter.second->draw();
 
-    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
+    go2d();
+    
+    glDisable(GL_DEPTH_TEST);
 
+    tutorial->draw();
+    
+    leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    leapDisconnectedView->draw();
+    
     // Render the offscreen fingers image using bloom shader
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
     fingersImage.setDefaultBlendMode(GL_SRC_ALPHA,GL_ONE);
@@ -381,21 +472,10 @@ void MainContentComponent::renderOpenGL()
     glUniform1i(iTextureUnit, 0);
     fingersImage.defaultBatch.Draw();
     
-    Environment::instance().viewFrustum.SetPerspective(10.0f, float(Environment::instance().screenW)/float(Environment::instance().screenH), 0.01f, 500.0f);
-	Environment::instance().projectionMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    Environment::instance().modelViewMatrix.LoadIdentity();
-    
+    go3d();
     
     for (HarpView* hv : harps)
         hv->update();
-    
-    glDisable(GL_DEPTH_TEST);
-    
-    Environment::instance().viewFrustum.SetOrthographic(0, Environment::instance().screenW, 0.0f, Environment::instance().screenH, 800.0f, -800.0f);
-	Environment::instance().modelViewMatrix.LoadMatrix(Environment::instance().viewFrustum.GetProjectionMatrix());
-    
-    for (ChordRegion* cr : chordRegions)
-        cr->draw();
 
     //openGLContext.triggerRepaint();
 }
@@ -427,16 +507,26 @@ void MainContentComponent::layoutChordRegions()
     {
         if (h->isChordSelected(cr->getId())) {
             activeChordRegions.push_back(cr);
-            cr->setActive(true);
+            cr->setVisible(true);
         }
         else
-            cr->setActive(false);
+            cr->setVisible(false);
     }
+    
     int numActiveChords = std::max<int>(1, activeChordRegions.size());
-    int height = getHeight() / numActiveChords;
-    int yPos = 0;
-    for (ChordRegion* cr : activeChordRegions)
+    float height = (getHeight()-90) / (float)numActiveChords;
+    float yPos = 20.f;
+    
+    for (int i = 0; i < activeChordRegions.size(); ++i)
     {
+        ChordRegion* cr = activeChordRegions.at(i);
+        GLfloat color[] = {.3, .3, .3, .1};
+        if (i % 2 != 0) {
+            color[0] = .4;
+            color[1] = .4;
+            color[2] = .4;
+        }
+        cr->setDefaultColor(color);
         cr->setBounds(HUDRect(0,yPos, getWidth(), height));
         yPos += height;
     }
@@ -460,7 +550,10 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
     for (HUDView* v : views)
-        v->mouseDown(e.getPosition().x, e.getPosition().y);
+        v->mouseDown(e.getPosition().x, Environment::instance().screenH - e.getPosition().y);
+    
+    if (tutorial)
+        tutorial->mouseDown((float) e.getPosition().x, (float)Environment::instance().screenH - e.getPosition().y);
 }
 
 void MainContentComponent::mouseDrag(const MouseEvent& e)
@@ -476,37 +569,38 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     printf("%d\n", kp.getTextDescription().getIntValue());
     if (kp.getTextCharacter() == 'h')
     {
-//        slide->begin();
+        showTutorial();
         ret = true;
     }
     else if (kp.getTextCharacter() == 'a')
     {
-        for (HarpView* hv : harps)
-        {
-            hv->addString();
-        }
+//        for (HarpView* hv : harps)
+//        {
+//            hv->addString();
+//        }
         ret = true;
     }
     else if (kp.getTextCharacter() == 'z')
     {
-        for (HarpView* hv : harps)
-        {
-            hv->removeString();
-        }
+//        for (HarpView* hv : harps)
+//        {
+//            hv->removeString();
+//        }
         ret = true;
     }
     else if (kp.getTextCharacter() == 'c')
     {
-        Harp* h = HarpManager::instance().getHarp(0);
-        h->setChordMode(!h->getChordMode());
-        toolbar->updateButtons();
-        if (h->getChordMode()) {
-            chordRegionsNeedUpdate = true;
-        }
-        else {
-            for (ChordRegion* cr : chordRegions)
-                cr->setActive(false);
-        }
+//        Harp* h = HarpManager::instance().getHarp(0);
+//        h->setChordMode(!h->getChordMode());
+//        toolbar->updateButtons();
+//        if (h->getChordMode()) {
+//            chordRegionsNeedUpdate = true;
+//        }
+//        else {
+//            for (ChordRegion* cr : chordRegions)
+//                cr->setVisible(false);
+//        }
+//        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", h->getChordMode());
         
         
         ret = true;
@@ -529,6 +623,8 @@ void MainContentComponent::changeListenerCallback (ChangeBroadcaster* source)
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    lastFrame = Time::getCurrentTime();
+
     if (!Environment::instance().ready)
         return;
     
@@ -583,7 +679,7 @@ void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 //        slide->next();
 }
 
-void MainContentComponent::timerCallback()
+void MainContentComponent::timerCallback(int timerId)
 {
 //    Harp* h = HarpManager::instance().getHarp(0);
 //    if (h->checkIdle())
@@ -592,7 +688,51 @@ void MainContentComponent::timerCallback()
 //        stopTimer();
 //        startTimer(TUTORIAL_TIMEOUT);
 //    }
+    switch (timerId) {
+        case kTimerShowTutorial:
+            tutorial->setVisible(true, 2000);
+            stopTimer(kTimerShowTutorial);
+            for (HUDView* v : views)
+                v->setVisible(false);
+            for (HarpView* hv : harps)
+                hv->setVisible(false);
+            break;
+        case kTimerCheckLeapConnection:
+            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
+                if (hasKeyboardFocus(true))
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+                else
+                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+                leapDisconnectedView->setVisible(true);
+            }
+            else if (leapDisconnectedView)
+                leapDisconnectedView->setVisible(false);
+            break;
+            
+        default:
+            break;
+    }
 }
+
+void MainContentComponent::handleMessage(const juce::Message &m)
+{
+    Message* inMsg = const_cast<Message*>(&m);
+    
+    InitGLMessage* initGLMessage = dynamic_cast<InitGLMessage*>(inMsg);
+    if (initGLMessage)
+    {
+        if ((Time::getCurrentTime() - startTime).inMilliseconds() < MIN_SPLASH_DURATION) {
+            postMessage(new InitGLMessage);
+        }
+        else {
+            Logger::writeToLog("Got InitGLMessage");
+            openGLContext.setRenderer (this);
+            openGLContext.setComponentPaintingEnabled (true);
+            openGLContext.attachTo (*this);
+        }
+    }
+}
+
 
 void MainContentComponent::actionListenerCallback(const String& message)
 {
@@ -604,4 +744,60 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         settingsScreen->setVisible(true);
     }
+    else if (message == "tutorialDone")
+    {
+        splashBgView->setVisible(false, 1000);
+        for (HUDView* v : views)
+            v->setVisible(true);
+        for (ChordRegion* cr : chordRegions)
+            cr->setVisible(false);
+        chordRegionsNeedUpdate = true;
+        settingsScreen->setVisible(false, 0);
+        for (HarpView* hv : harps)
+            hv->setVisible(true);
+    }
+    else if (message == "disableTutorial")
+    {
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", false);
+    }
+    else if (message == "showHelp")
+    {
+        showTutorial();
+    }
+    else if (message == "chordMode")
+    {
+        Harp* h = HarpManager::instance().getHarp(0);
+        h->setChordMode(true);
+        toolbar->updateButtons();
+        chordRegionsNeedUpdate = true;
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", true);
+        harps.at(0)->setNumStrings(h->suggestedStringCount());
+    }
+    else if (message == "scaleMode")
+    {
+        Harp* h = HarpManager::instance().getHarp(0);
+        h->setChordMode(false);
+        int selectedScale = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedScale", 0);
+        h->SetScale(selectedScale);
+        toolbar->updateButtons();
+        for (ChordRegion* cr : chordRegions)
+            cr->setVisible(false);
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", false);
+        harps.at(0)->setNumStrings(h->suggestedStringCount());
+    }
+    else if (message == "scaleChanged")
+    {
+        harps.at(0)->setNumStrings(HarpManager::instance().getHarp(0)->suggestedStringCount());
+    }
+}
+
+void MainContentComponent::showTutorial()
+{
+    AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
+    tutorial->setVisible(true);
+    splashBgView->setVisible(true);
+    for (HUDView* v : views)
+        v->setVisible(false);
+    for (HarpView* hv : harps)
+        hv->setVisible(false);
 }

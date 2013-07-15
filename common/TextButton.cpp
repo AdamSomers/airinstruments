@@ -17,6 +17,7 @@ TextHUDButton::TextHUDButton(StringArray on /*= "on"*/, StringArray off /*= "off
 , offTextColor(Colour::fromFloatRGBA(1.f, 1.f, 1.f, 1.f))
 , onBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f))
 , offBackgroundColor(Colour::fromFloatRGBA(.3f, .3f, .3f, .5f))
+, uppercase(true)
 {
     
 }
@@ -57,7 +58,10 @@ void TextHUDButton::loadTextures()
         y += lineHeight / 2.f;
     for (int i = 0; i < onText.size(); ++i)
     {
-        gOn.drawText(onText[i].toUpperCase(), 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
+        String text = onText[i];
+        if (uppercase)
+            text = text.toUpperCase();
+        gOn.drawText(text, 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
         y += lineHeight;
     }
     
@@ -81,7 +85,10 @@ void TextHUDButton::loadTextures()
         y += lineHeight / 2.f;
     for (int i = 0; i < offText.size(); ++i)
     {
-        gOff.drawText(offText[i].toUpperCase(), 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
+        String text = offText[i];
+        if (uppercase)
+            text = text.toUpperCase();
+        gOff.drawText(text, 0, (int)y, imageW, (int)lineHeight, Justification::centred, false);
         y += lineHeight;
     }
     

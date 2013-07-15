@@ -101,6 +101,15 @@
     <Filter Include="Juce Modules\juce_audio_processors\scanning">
       <UniqueIdentifier>{EB8DD942-E2CB-869F-D381-E02A65BA790B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Juce Modules\juce_audio_utils">
+      <UniqueIdentifier>{B63F69FD-8A40-8E1E-E7ED-419B8DC1C12B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Juce Modules\juce_audio_utils\gui">
+      <UniqueIdentifier>{8167E753-09C7-5D1C-EF2B-32D297557443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Juce Modules\juce_audio_utils\players">
+      <UniqueIdentifier>{AEDCB7F7-7A36-5392-8E9A-715F5BDE35CB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Juce Modules\juce_core">
       <UniqueIdentifier>{95CA1506-2B94-0DEE-0C8D-85EDEBBC4E88}</UniqueIdentifier>
     </Filter>
@@ -325,6 +334,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\AudioSettingsDialog.cpp">
+      <Filter>AirHarp\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\CursorView.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
@@ -355,10 +367,10 @@
     <ClCompile Include="..\..\..\common\JuceReverbAudioClient.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\SettingsScreen.cpp">
+    <ClCompile Include="..\..\..\common\SkinManager.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\common\SkinManager.cpp">
+    <ClCompile Include="..\..\..\common\TextLabel.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp">
@@ -391,6 +403,9 @@
     <ClCompile Include="..\..\..\..\muskit\src\Interpolators.cpp">
       <Filter>AirHarp\muskit\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\MainMenu.cpp">
+      <Filter>AirHarp\muskit\src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\muskit\src\MidiServer.cpp">
       <Filter>AirHarp\muskit\src</Filter>
     </ClCompile>
@@ -418,19 +433,28 @@
     <ClCompile Include="..\..\Source\Harp.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Main.cpp">
+      <Filter>AirHarp\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\HarpView.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\HarpHUD.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\KeySelector.cpp">
+      <Filter>AirHarp\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ScaleEditor.cpp">
+      <Filter>AirHarp\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SettingsScreen.cpp">
+      <Filter>AirHarp\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\StringView.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
-      <Filter>AirHarp\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>AirHarp\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
@@ -654,6 +678,21 @@
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\scanning\juce_PluginListComponent.cpp">
       <Filter>Juce Modules\juce_audio_processors\scanning</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioDeviceSelectorComponent.cpp">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnail.cpp">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnailCache.cpp">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.cpp">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.cpp">
+      <Filter>Juce Modules\juce_audio_utils\players</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
@@ -1576,6 +1615,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_processors\juce_audio_processors.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_utils\juce_audio_utils.cpp">
+      <Filter>Juce Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
@@ -1605,6 +1647,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\AudioSettingsDialog.h">
+      <Filter>AirHarp\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\common\CursorView.h">
       <Filter>AirHarp\common</Filter>
     </ClInclude>
@@ -1638,10 +1683,10 @@
     <ClInclude Include="..\..\..\common\JuceReverbAudioClient.h">
       <Filter>AirHarp\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SettingsScreen.h">
+    <ClInclude Include="..\..\..\common\SkinManager.h">
       <Filter>AirHarp\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\common\SkinManager.h">
+    <ClInclude Include="..\..\..\common\TextLabel.h">
       <Filter>AirHarp\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\TutorialSlide.h">
@@ -1698,6 +1743,12 @@
     <ClInclude Include="..\..\..\..\muskit\src\Interpolators.h">
       <Filter>AirHarp\muskit\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Main.h">
+      <Filter>AirHarp\muskit\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainMenu.h">
+      <Filter>AirHarp\muskit\src</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\muskit\src\MathHelpers.h">
       <Filter>AirHarp\muskit\src</Filter>
     </ClInclude>
@@ -1747,6 +1798,15 @@
       <Filter>AirHarp\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\HarpHUD.h">
+      <Filter>AirHarp\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\KeySelector.h">
+      <Filter>AirHarp\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ScaleEditor.h">
+      <Filter>AirHarp\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SettingsScreen.h">
       <Filter>AirHarp\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StringView.h">
@@ -1973,6 +2033,27 @@
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_processors\juce_audio_processors.h">
       <Filter>Juce Modules\juce_audio_processors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioDeviceSelectorComponent.h">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnail.h">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnailBase.h">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_AudioThumbnailCache.h">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.h">
+      <Filter>Juce Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.h">
+      <Filter>Juce Modules\juce_audio_utils\players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_utils\juce_audio_utils.h">
+      <Filter>Juce Modules\juce_audio_utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.h">
       <Filter>Juce Modules\juce_core\text</Filter>
@@ -3035,19 +3116,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\icon.png">
+      <Filter>AirHarp\resources</Filter>
+    </None>
     <None Include="..\..\Resources\icon.icns">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\testShader.fs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\bloom.fs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\bloom.vs">
-      <Filter>AirHarp\resources</Filter>
-    </None>
-    <None Include="..\..\..\common\testShader.vs">
       <Filter>AirHarp\resources</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">
@@ -3061,6 +3133,9 @@
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_processors\juce_module_info">
       <Filter>Juce Modules\juce_audio_processors</Filter>
+    </None>
+    <None Include="..\..\JuceLibraryCode\modules\juce_audio_utils\juce_module_info">
+      <Filter>Juce Modules\juce_audio_utils</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_core\juce_module_info">
       <Filter>Juce Modules\juce_core</Filter>
@@ -3088,6 +3163,9 @@
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_video\juce_module_info">
       <Filter>Juce Modules\juce_video</Filter>
+    </None>
+    <None Include=".\icon.ico">
+      <Filter>Juce Library Code</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@
 #include "modules/juce_audio_devices/juce_audio_devices.h"
 #include "modules/juce_audio_formats/juce_audio_formats.h"
 #include "modules/juce_audio_processors/juce_audio_processors.h"
+#include "modules/juce_audio_utils/juce_audio_utils.h"
 #include "modules/juce_core/juce_core.h"
 #include "modules/juce_cryptography/juce_cryptography.h"
 #include "modules/juce_data_structures/juce_data_structures.h"
@@ -37,8 +38,8 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "AirHarp";
-    const char* const  versionString  = "0.6.0";
-    const int          versionNumber  = 0x600;
+    const char* const  versionString  = "0.7.0";
+    const int          versionNumber  = 0x700;
 }
 
 #endif   // __APPHEADERFILE_LSBNFZ__

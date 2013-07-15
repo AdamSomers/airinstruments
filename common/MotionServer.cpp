@@ -196,11 +196,10 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             auto iter = handViews.find(hand.id());
             if (iter == handViews.end())
             {
-                printf("Adding hand %d to map\n", hand.id());
+                Logger::outputDebugString("Adding hand " + String(hand.id()) + " to map");
                 SharedPtr<HandView> newHv(new HandView);
                 newHv->inUse = true;
                 newHv->invalid = false;
-                newHv->hand = hand;
                 newHv->id = hand.id();
                 handViews.insert(std::make_pair(hand.id(), newHv));
                 hv = newHv;
@@ -210,7 +209,6 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             else
             {
                 hv = (*iter).second;
-                hv->hand = hand;
                 if (!hv->inUse) {
                     hv->inUse = true;
                     inserted = true;
@@ -257,17 +255,29 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             //printf("%1.2f %1.2f %1.2f\n", scaledX,scaledY,scaledZ);
             
             // Check if the hand has any fingers
-            const Leap::FingerList& fingers = hand.fingers();
-            const size_t numFingers = fingers.count();
-            if (numFingers >= 1)
+            const Leap::PointableList& pointables = hand.pointables();
+            const size_t numPointables = pointables.count();
+            if (numPointables >= 1)
             {
                 // Calculate the hand's average finger tip position
                 Leap::Vector pos(0, 0, 0);
-                for (unsigned int i = 0; i < numFingers; ++i)
+                for (unsigned int i = 0; i < numPointables; ++i)
                 {
-                    const Leap::Finger& f = fingers[i];
-                    processFinger(f, frame);
+                    const Leap::Pointable& pointable = pointables[i];
+                    Pointer p;
+                    p.position = pointable.tipPosition();
+                    p.direction = pointable.direction();
+                    p.id = pointable.id();
+                    processFinger(p, frame);
                 }
+            }
+            else
+            {
+                Pointer p;
+                p.position = hand.palmPosition();
+                p.direction = hand.direction();
+                p.id = hand.id();
+                processFinger(p, frame);
             }
         }
     }
@@ -305,26 +315,24 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
     }
 }
 
-void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& frame)
+void MotionDispatcher::processFinger(const Pointer& pointer, const Leap::Frame& frame)
 {
     bool inserted = false;
     SharedPtr<FingerView> fv;
-    auto iter = fingerViews.find(f.id());
+    auto iter = fingerViews.find(pointer.id);
     if (iter == fingerViews.end())
     {
-        printf("Adding finger %d to map\n", f.id());
+        Logger::outputDebugString("Adding finger " + String(pointer.id) + " to map");
         SharedPtr<FingerView> newFv(new FingerView);
         newFv->inUse = true;
         newFv->invalid = false;
-        newFv->finger = f;
-        newFv->id = f.id();
-        fingerViews.insert(std::make_pair(f.id(), newFv));
+        newFv->id = pointer.id;
+        fingerViews.insert(std::make_pair(pointer.id, newFv));
         fv = newFv;
     }
     else
     {
         fv = (*iter).second;
-        fv->finger = f;
         if (!fv->inUse) {
             fv->inUse = true;
             inserted = true;
@@ -333,13 +341,13 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
         fv->invalid = false;
     }
     
-    float x = normalizedX(f.tipPosition().x);
-    float y = normalizedY(f.tipPosition().y);
-    float z = normalizedZ(f.tipPosition().z);
+    float x = normalizedX(pointer.position.x);
+    float y = normalizedY(pointer.position.y);
+    float z = normalizedZ(pointer.position.z);
     
-    float dirX = f.direction().x;
-    float dirY = f.direction().y;
-    float dirZ = f.direction().z;
+    float dirX = pointer.direction.x;
+    float dirY = pointer.direction.y;
+    float dirZ = pointer.direction.z;
     
     M3DVector3f prev;
     fv->objectFrame.GetForwardVector(prev);
@@ -349,7 +357,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
     
     fv->objectFrame.SetForwardVector(dirX,dirY,dirZ);
     float scaledX = x*2*(Environment::screenW/(float)Environment::screenH);
-    float scaledY = (y-.5f)*4;
+    float scaledY = (y-.5f)*8;
     if (z < zLimit) z = 0;
     float scaledZ = z*5-12;
     fv->objectFrame.SetOrigin(scaledX,scaledY,scaledZ);
@@ -399,7 +407,7 @@ void MotionDispatcher::processFinger(const Leap::Finger& f, const Leap::Frame& f
         for ( ; pIter != pIterEnd; ++pIter)
         {
             const Leap::Pointable& p = *pIter;
-            if (p.id() == f.id())
+            if (p.id() == pointer.id)
             {
                 switch (g.type())
                 {
@@ -455,7 +463,6 @@ void MotionDispatcher::spoof(float inX, float inY, float inZ)
     else
     {
         fv = (*iter).second;
-        fv->finger = fakeFinger;
         if (!fv->inUse) {
             fv->inUse = true;
             inserted = true;
