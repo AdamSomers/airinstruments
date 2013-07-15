@@ -13,6 +13,7 @@ public:
     void layoutStrings();
     void addString();
     void removeString();
+    void setNumStrings(int numStrings);
     void loadTextures();
     void setVisible(bool shouldBeVisible);
     

@@ -88,6 +88,16 @@ void HarpView::removeString()
     Environment::openGLContext.makeActive();
 }
 
+void HarpView::setNumStrings(int numStrings)
+{
+    if (numStrings > strings.size())
+        while (strings.size() < numStrings)
+            addString();
+    else
+        while (strings.size() > numStrings)
+            removeString();
+}
+
 void HarpView::loadTextures()
 {
     for (StringView* sv : strings)

@@ -252,6 +252,7 @@ void MainContentComponent::newOpenGLContextCreated()
     
     settingsScreen = new SettingsScreen;
     settingsScreen->addActionListener(this);
+    settingsScreen->getScaleEditor()->addActionListener(this);
     settingsScreen->setVisible(false);
     views.push_back(settingsScreen);
     
@@ -331,6 +332,8 @@ void MainContentComponent::newOpenGLContextCreated()
     grabKeyboardFocus();
     
     MotionDispatcher::instance().cursor->setEnabled(false);
+    
+    actionListenerCallback("scaleChanged");
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f );
 }
@@ -768,6 +771,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
         toolbar->updateButtons();
         chordRegionsNeedUpdate = true;
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", true);
+        harps.at(0)->setNumStrings(h->suggestedStringCount());
     }
     else if (message == "scaleMode")
     {
@@ -779,6 +783,11 @@ void MainContentComponent::actionListenerCallback(const String& message)
         for (ChordRegion* cr : chordRegions)
             cr->setVisible(false);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", false);
+        harps.at(0)->setNumStrings(h->suggestedStringCount());
+    }
+    else if (message == "scaleChanged")
+    {
+        harps.at(0)->setNumStrings(HarpManager::instance().getHarp(0)->suggestedStringCount());
     }
 }
 

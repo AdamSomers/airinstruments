@@ -96,4 +96,6 @@ void ScaleEditor::buttonStateChanged(HUDButton *b)
         arr.add(s);
     String setting = arr.joinIntoString(" ");
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("customScale", setting);
+    
+    sendActionMessage("scaleChanged");
 }

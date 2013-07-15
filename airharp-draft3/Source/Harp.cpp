@@ -521,6 +521,16 @@ bool Harp::checkIdle()
     return retVal;
 }
 
+int Harp::suggestedStringCount()
+{
+    int highNote = ScaleDegrees::getChromatic(getScale().back());
+    int numNotesInScale = getScale().size();
+    int maxNote = 99 - 33;
+    float numStrings = (float)maxNote / (12 / numNotesInScale);
+    numStrings = jmin(numStrings, 24.f);
+    return (int)numStrings;
+}
+
 HarpManager::HarpManager()
 {
     for (int i = 0; i < numHarps; ++i) {

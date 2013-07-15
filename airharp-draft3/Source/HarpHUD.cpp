@@ -141,6 +141,7 @@ void HarpToolbar::buttonStateChanged(HUDButton* b)
             AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedScale", b->getId());
         }
         sendChangeMessage();
+        sendActionMessage("scaleChanged");
     }
 }
 

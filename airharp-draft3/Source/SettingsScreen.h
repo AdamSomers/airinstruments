@@ -29,6 +29,8 @@ public:
     void setBounds(const HUDRect& r);
     
     void buttonStateChanged(HUDButton* b);
+    
+    ScaleEditor* getScaleEditor() { return &scaleEditor; }
 
 private:
     TextHUDButton playButton;
