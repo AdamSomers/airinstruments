@@ -3116,6 +3116,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\icon.png">
+      <Filter>AirHarp\resources</Filter>
+    </None>
     <None Include="..\..\Resources\icon.icns">
       <Filter>AirHarp\resources</Filter>
     </None>
@@ -3172,6 +3175,9 @@
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_video\juce_module_info">
       <Filter>Juce Modules\juce_video</Filter>
+    </None>
+    <None Include=".\icon.ico">
+      <Filter>Juce Library Code</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

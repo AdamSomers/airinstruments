@@ -1763,6 +1763,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\icon.png"/>
     <None Include="..\..\Resources\icon.icns"/>
     <None Include="..\..\..\common\testShader.fs"/>
     <None Include="..\..\..\common\bloom.fs"/>
@@ -1782,6 +1783,7 @@
     <None Include="..\..\JuceLibraryCode\modules\juce_gui_extra\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_opengl\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_video\juce_module_info"/>
+    <None Include=".\icon.ico"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>
