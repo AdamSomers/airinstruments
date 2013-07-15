@@ -574,33 +574,33 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     }
     else if (kp.getTextCharacter() == 'a')
     {
-        for (HarpView* hv : harps)
-        {
-            hv->addString();
-        }
+//        for (HarpView* hv : harps)
+//        {
+//            hv->addString();
+//        }
         ret = true;
     }
     else if (kp.getTextCharacter() == 'z')
     {
-        for (HarpView* hv : harps)
-        {
-            hv->removeString();
-        }
+//        for (HarpView* hv : harps)
+//        {
+//            hv->removeString();
+//        }
         ret = true;
     }
     else if (kp.getTextCharacter() == 'c')
     {
-        Harp* h = HarpManager::instance().getHarp(0);
-        h->setChordMode(!h->getChordMode());
-        toolbar->updateButtons();
-        if (h->getChordMode()) {
-            chordRegionsNeedUpdate = true;
-        }
-        else {
-            for (ChordRegion* cr : chordRegions)
-                cr->setVisible(false);
-        }
-        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", h->getChordMode());
+//        Harp* h = HarpManager::instance().getHarp(0);
+//        h->setChordMode(!h->getChordMode());
+//        toolbar->updateButtons();
+//        if (h->getChordMode()) {
+//            chordRegionsNeedUpdate = true;
+//        }
+//        else {
+//            for (ChordRegion* cr : chordRegions)
+//                cr->setVisible(false);
+//        }
+//        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", h->getChordMode());
         
         
         ret = true;
