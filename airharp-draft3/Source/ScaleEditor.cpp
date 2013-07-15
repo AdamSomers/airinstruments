@@ -91,8 +91,9 @@ void ScaleEditor::buttonStateChanged(HUDButton *b)
         if (b->getState())
             scale.push_back(b->getOnText()[0].toStdString());
     HarpManager::instance().getHarp(0)->setCustomScale(scale);
-    String setting;
+    StringArray arr;
     for (std::string s : scale)
-        setting += s + " ";
+        arr.add(s);
+    String setting = arr.joinIntoString(" ");
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("customScale", setting);
 }

@@ -196,7 +196,7 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
             auto iter = handViews.find(hand.id());
             if (iter == handViews.end())
             {
-                printf("Adding hand %d to map\n", hand.id());
+                Logger::outputDebugString("Adding hand " + String(hand.id()) + " to map");
                 SharedPtr<HandView> newHv(new HandView);
                 newHv->inUse = true;
                 newHv->invalid = false;
@@ -322,7 +322,7 @@ void MotionDispatcher::processFinger(const Pointer& pointer, const Leap::Frame& 
     auto iter = fingerViews.find(pointer.id);
     if (iter == fingerViews.end())
     {
-        printf("Adding finger %d to map\n", pointer.id);
+        Logger::outputDebugString("Adding finger " + String(pointer.id) + " to map");
         SharedPtr<FingerView> newFv(new FingerView);
         newFv->inUse = true;
         newFv->invalid = false;

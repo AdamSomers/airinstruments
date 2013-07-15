@@ -285,10 +285,10 @@ void Harp::BuildDefaultScales()
     std::vector<std::string> vec;
     for (int i = 0; i < arr.size(); ++i)
     {
+        Logger::outputDebugString(arr[i]);
         vec.push_back(arr[i].toStdString());
     }
     setCustomScale(vec);
-
 }
 
 std::vector<std::string>& Harp::getScale()
