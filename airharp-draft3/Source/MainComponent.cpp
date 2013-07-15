@@ -706,6 +706,7 @@ void MainContentComponent::timerCallback(int timerId)
                 v->setVisible(false);
             for (HarpView* hv : harps)
                 hv->setVisible(false);
+            HarpManager::instance().getHarp(0)->setEnabled(false);
             break;
         case kTimerCheckLeapConnection:
             if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
@@ -765,6 +766,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
         settingsScreen->setVisible(false, 0);
         for (HarpView* hv : harps)
             hv->setVisible(true);
+        HarpManager::instance().getHarp(0)->setEnabled(true);
     }
     else if (message == "disableTutorial")
     {
@@ -803,6 +805,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
 
 void MainContentComponent::showTutorial()
 {
+    HarpManager::instance().getHarp(0)->setEnabled(false);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
     tutorial->setVisible(true);
     splashBgView->setVisible(true);

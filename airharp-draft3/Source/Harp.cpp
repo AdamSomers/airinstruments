@@ -24,6 +24,7 @@ Harp::Harp()
 , active(false)
 , chordMode(false)
 , selectedScale(0)
+, enabled(true)
 {
     Init();
 }
@@ -344,6 +345,9 @@ void Harp::NoteOn(int num, int note, int velocity)
 
 void Harp::ExciteString(int num, int note, int velocity, float* buff, int bufferSize)
 {
+    if (!enabled)
+        return;
+
     ScopedLock sl(lock);
     
     strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
