@@ -19,6 +19,12 @@ SettingsScreen::SettingsScreen()
     playButton.setText(StringArray("Done"), StringArray("Done"));
     playButton.setRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
     playButton.addListener(this);
+    
+    addChild(&keyLabel);
+    keyLabel.setText("Key");
+    
+    addChild(&modeLabel);
+    modeLabel.setText("Mode");
 
     addChild(&scalesButton);
     scalesButton.setText(StringArray("Scales"), StringArray("Scales"));
@@ -53,21 +59,38 @@ SettingsScreen::~SettingsScreen()
 void SettingsScreen::setBounds(const HUDRect& b)
 {
     HUDView::setBounds(b);
+    
+    float maxWidth = 500.f;
+    
     float buttonWidth = 70.f;
-    HUDRect buttonRect(b.w / 2.f - buttonWidth / 2.f, buttonWidth / 2.f, buttonWidth, buttonWidth);
+    float buttonHeight = buttonWidth;
+    HUDRect buttonRect(b.w / 2.f - buttonWidth / 2.f, 10, buttonWidth, buttonWidth);
     playButton.setBounds(buttonRect);
+    
+    float labelHeight = 30.f;
+    keyLabel.setBounds(HUDRect(b.w / 2.f - maxWidth / 2.f,
+                               b.h - labelHeight - 10,
+                               maxWidth,
+                               labelHeight));
+
     float keySelectorHeight = 80;
     float keySelectorWidth = 400;
     keySelector.setBounds(HUDRect(b.w / 2.f - keySelectorWidth / 2.f,
-                                  b.h - keySelectorHeight - 50,
+                                  keyLabel.getBounds().y - keySelectorHeight - 10,
                                   keySelectorWidth,
                                   keySelectorHeight));
+    
+    modeLabel.setBounds(HUDRect(b.w / 2.f - maxWidth / 2.f,
+                                keySelector.getBounds().y - 30.f - 10.f,
+                                maxWidth,
+                                30.f));
+    
     buttonRect.x = b.w / 2.f - buttonWidth - 20.f;
-    buttonRect.y = keySelector.getBounds().y - 120;
+    buttonRect.y = modeLabel.getBounds().y - buttonHeight - 10.f;
     scalesButton.setBounds(buttonRect);
     buttonRect.x = b.w / 2.f + 20.f;
     chordsButton.setBounds(buttonRect);
-    float scaleEditorWidth = 500.f;
+    float scaleEditorWidth = maxWidth;
     float scaleEditorHeight = 160.f;
     scaleEditor.setBounds(HUDRect(b.w / 2.f - scaleEditorWidth / 2.f,
                                   buttonRect.y - scaleEditorHeight- 20,

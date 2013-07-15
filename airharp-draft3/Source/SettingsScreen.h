@@ -15,6 +15,7 @@
 #include "TextButton.h"
 #include "KeySelector.h"
 #include "ScaleEditor.h"
+#include "TextLabel.h"
 
 class SettingsScreen : public HUDView
                      , public HUDButton::Listener
@@ -35,6 +36,8 @@ private:
     TextHUDButton chordsButton;
     TextHUDButton scalesButton;
     ScaleEditor scaleEditor;
+    HUDTextLabel keyLabel;
+    HUDTextLabel modeLabel;
 };
 
 #endif /* defined(__AirHarp__SettingsScreen__) */

@@ -31,7 +31,7 @@ void HUDTextLabel::createTextImage()
     Graphics g (im);
     g.setColour(Colours::white);
     g.setFont(Font(Environment::instance().getDefaultFont(), (getBounds().h * .75f) * 4.0f, Font::plain));
-    g.drawText(text, 0, 0, (int) (getBounds().w*4), (int) (getBounds().h*4), Justification::left, true);
+    g.drawText(text.toUpperCase(), 0, 0, (int) (getBounds().w*4), (int) (getBounds().h*4), Justification::centred, true);
     if (getDefaultTexture().textureId != 0)
         glDeleteTextures(1, &getDefaultTexture().textureId);
     setDefaultTexture(GfxTools::loadTextureFromJuceImage(im));
