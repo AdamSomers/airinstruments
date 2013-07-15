@@ -62,14 +62,16 @@ void SettingsScreen::setBounds(const HUDRect& b)
     
     float maxWidth = 500.f;
     
+    float maxHeight = 530.f;
+    
     float buttonWidth = 70.f;
     float buttonHeight = buttonWidth;
-    HUDRect buttonRect(b.w / 2.f - buttonWidth / 2.f, 10, buttonWidth, buttonWidth);
-    playButton.setBounds(buttonRect);
-    
+    HUDRect buttonRect(b.w / 2.f - buttonWidth / 2.f, 0, buttonWidth, buttonWidth);
+
     float labelHeight = 30.f;
+    float initialY = jmin(b.h / 2.f + maxHeight / 2.f, b.h);
     keyLabel.setBounds(HUDRect(b.w / 2.f - maxWidth / 2.f,
-                               b.h - labelHeight - 10,
+                               initialY - labelHeight - 10,
                                maxWidth,
                                labelHeight));
 
@@ -96,6 +98,11 @@ void SettingsScreen::setBounds(const HUDRect& b)
                                   buttonRect.y - scaleEditorHeight- 20,
                                   scaleEditorWidth,
                                   scaleEditorHeight));
+    
+    playButton.setBounds(HUDRect(b.w / 2.f - buttonWidth / 2.f,
+                                 scaleEditor.getBounds().y - buttonHeight - 20,
+                                 buttonWidth,
+                                 buttonHeight));
 }
 
 void SettingsScreen::buttonStateChanged(HUDButton* b)
