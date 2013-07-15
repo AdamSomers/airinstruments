@@ -331,10 +331,11 @@ public:
                 float pos = point[1];
                 pos += 1.f;
                 pos /= 2.f;
+                pos *= 1.1;
                 
                 Harp* h = HarpManager::instance().getHarp(harpNum);
                 if (h->getChordMode()) {
-                    int chordNum = pos * h->getNumSelectedChords();                    
+                    int chordNum = pos * h->getNumSelectedChords();
                     h->setChord(chordNum);
                     pos = 0.5;
                 }

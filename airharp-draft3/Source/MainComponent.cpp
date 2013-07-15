@@ -240,19 +240,20 @@ void MainContentComponent::newOpenGLContextCreated()
     sb->setIndicatorTextures(SkinManager::instance().getSelectedSkin().getTexture("leapStatus_on"), SkinManager::instance().getSelectedSkin().getTexture("leapStatus_off"));
     views.push_back(sb);
     statusBar = sb;
+
+    for (int i = 0; i < 7; ++i)
+    {
+        ChordRegion* cr = new ChordRegion;
+        cr->setId(i);
+        cr->setVisible(false);
+        chordRegions.push_back(cr);
+        views.push_back(cr);
+    }
     
     settingsScreen = new SettingsScreen;
     settingsScreen->addActionListener(this);
     settingsScreen->setVisible(false);
     views.push_back(settingsScreen);
-    
-    for (int i = 0; i < 7; ++i)
-    {
-        ChordRegion* cr = new ChordRegion;
-        cr->setId(i);
-        chordRegions.push_back(cr);
-        cr->loadTextures();
-    }
     
     for (HUDView* v : views)
         v->loadTextures();
@@ -270,8 +271,8 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,h-70,w,70));
     statusBar->setBounds(HUDRect(0,0,w,35));
     
-    int yPos = 0;
-    int height = h/7;
+    float yPos = 20.f;
+    float height = (h-90)/7.f;
     for (ChordRegion* cr : chordRegions)
     {
         cr->setBounds(HUDRect(0,yPos, w, height));
@@ -472,12 +473,6 @@ void MainContentComponent::renderOpenGL()
     
     for (HarpView* hv : harps)
         hv->update();
-    
-    
-    go2d();
-    
-    for (ChordRegion* cr : chordRegions)
-        cr->draw();
 
     //openGLContext.triggerRepaint();
 }
@@ -509,16 +504,26 @@ void MainContentComponent::layoutChordRegions()
     {
         if (h->isChordSelected(cr->getId())) {
             activeChordRegions.push_back(cr);
-            cr->setActive(true);
+            cr->setVisible(true);
         }
         else
-            cr->setActive(false);
+            cr->setVisible(false);
     }
+    
     int numActiveChords = std::max<int>(1, activeChordRegions.size());
-    int height = getHeight() / numActiveChords;
-    int yPos = 0;
-    for (ChordRegion* cr : activeChordRegions)
+    float height = (getHeight()-90) / (float)numActiveChords;
+    float yPos = 20.f;
+    
+    for (int i = 0; i < activeChordRegions.size(); ++i)
     {
+        ChordRegion* cr = activeChordRegions.at(i);
+        GLfloat color[] = {.3, .3, .3, .1};
+        if (i % 2 != 0) {
+            color[0] = .4;
+            color[1] = .4;
+            color[2] = .4;
+        }
+        cr->setDefaultColor(color);
         cr->setBounds(HUDRect(0,yPos, getWidth(), height));
         yPos += height;
     }
@@ -590,8 +595,9 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         }
         else {
             for (ChordRegion* cr : chordRegions)
-                cr->setActive(false);
+                cr->setVisible(false);
         }
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", h->getChordMode());
         
         
         ret = true;
@@ -740,6 +746,9 @@ void MainContentComponent::actionListenerCallback(const String& message)
         splashBgView->setVisible(false, 1000);
         for (HUDView* v : views)
             v->setVisible(true);
+        for (ChordRegion* cr : chordRegions)
+            cr->setVisible(false);
+        chordRegionsNeedUpdate = true;
         settingsScreen->setVisible(false, 0);
         for (HarpView* hv : harps)
             hv->setVisible(true);
@@ -768,7 +777,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
         h->SetScale(selectedScale);
         toolbar->updateButtons();
         for (ChordRegion* cr : chordRegions)
-            cr->setActive(false);
+            cr->setVisible(false);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordMode", false);
     }
 }

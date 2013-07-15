@@ -270,9 +270,12 @@ void StatusBar::onDisconnect(const Leap::Controller& controller)
 ChordRegion::ChordRegion()
 : id(0)
 , isActive(false)
-, fade(0.f)
 {
-    
+    setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
+    setMultiplyAlpha(true);
+    addChild(&label);
+    GLfloat color[] = { 0.f, 0.f, 0.f, 0.f };
+    setDefaultColor(color);
 }
 
 ChordRegion::~ChordRegion()
@@ -280,61 +283,44 @@ ChordRegion::~ChordRegion()
     
 }
 
-void ChordRegion::setup()
-{    
-    M3DVector3f imageVerts[4] = {
-        0, bounds.y, 0.f,
-        bounds.h, bounds.y, 0.f,
-        0, bounds.y + bounds.h, 0.f,
-        bounds.h, bounds.y + bounds.h, 0.f
-    };
+void ChordRegion::setBounds(const HUDRect& r)
+{
+    HUDView::setBounds(r);
+    float labelHeight = jmin(r.h, 40.f);
     
-    M3DVector2f texCoords[4] = {
-        0.f, 1.f,
-        1.f, 1.f,
-        0.f, 0.f,
-        1.f, 0.f
-    };
-    
-    if (!didSetup)
-        imageBatch.Begin(GL_TRIANGLE_STRIP, 4, 1);
-    imageBatch.CopyVertexData3f(imageVerts);
-    imageBatch.CopyTexCoordData2f(texCoords, 0);
-    if (!didSetup)
-        imageBatch.End();
-    
-    HUDView::setup();
+    label.setBounds(HUDRect(20,
+                            r.h / 2.f - labelHeight / 2.f,
+                            labelHeight,
+                            labelHeight));
 }
 
-void ChordRegion::draw()
+void ChordRegion::setId(int inId)
 {
-    GLfloat texColor[4] = { 1.f, 1.f, 1.f, fade };
-    
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glEnable(GL_BLEND);
-
-    Environment::instance().shaderManager.UseStockShader(GLT_SHADER_TEXTURE_MODULATE, Environment::instance().transformPipeline.GetModelViewMatrix(), texColor, 0);
-    glLineWidth(1.f);
-    imageBatch.Draw();
-
-    if (isActive && fade < 1.f)
+    id = inId;
+    String text;
+    switch (id)
     {
-        fade += 0.3f;
-        if (fade > .7f) fade = .7f;
+        case 0:
+            text = "I";
+            break;
+        case 1:
+            text = "II";
+            break;
+        case 2:
+            text = "III";
+            break;
+        case 3:
+            text = "IV";
+            break;
+        case 4:
+            text = "V";
+            break;
+        case 5:
+            text = "VI";
+            break;
+        case 6:
+            text = "VII";
+            break;
     }
-    if (!isActive && fade > 0.f)
-    {
-        fade -= 0.11f;
-        if (fade < 0.f) fade = 0.f;
-    }
-}
-
-void ChordRegion::loadTextures()
-{
-    textureID = SkinManager::instance().getSelectedSkin().getTexture(String(id+1)).textureId;
-}
-
-void ChordRegion::setActive(bool shouldBeActive)
-{
-    isActive = shouldBeActive;
+    label.setText(text);
 }

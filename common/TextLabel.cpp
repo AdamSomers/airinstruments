@@ -9,6 +9,8 @@
 #include "TextLabel.h"
 
 HUDTextLabel::HUDTextLabel()
+: textChanged(false)
+, boundsSet(false)
 {
     setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -16,7 +18,9 @@ HUDTextLabel::HUDTextLabel()
 void HUDTextLabel::setBounds(const HUDRect& r)
 {
     HUDView::setBounds(r);
-    createTextImage();
+    if (!boundsSet)
+        createTextImage();
+    boundsSet = true;
 }
 
 void HUDTextLabel::setText(String newText)
@@ -35,4 +39,5 @@ void HUDTextLabel::createTextImage()
     if (getDefaultTexture().textureId != 0)
         glDeleteTextures(1, &getDefaultTexture().textureId);
     setDefaultTexture(GfxTools::loadTextureFromJuceImage(im));
+    textChanged = false;
 }

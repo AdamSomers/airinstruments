@@ -26,6 +26,7 @@ private:
     void createTextImage();
     String text;
     bool textChanged;
+    bool boundsSet;
 };
 
 #endif /* defined(__AirHarp__TextLabel__) */
