@@ -41,7 +41,6 @@ public:
     
     GLFrame objectFrame;
     GLFrame prevFrame;
-    Leap::Finger finger;
     bool inUse;
     int id;
     bool invalid;

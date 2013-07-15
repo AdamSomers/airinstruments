@@ -31,6 +31,13 @@ public:
 		}
 	}
     
+    struct Pointer
+    {
+        Leap::Vector position;
+        Leap::Vector direction;
+        int id;
+    };
+    
     void addListener(Leap::Listener& l);
     void removeListener(Leap::Listener& l);
     void pause();
@@ -59,7 +66,7 @@ public:
     Leap::Controller controller;
     static float zLimit;
 private:
-    void processFinger(const Leap::Finger& finger, const Leap::Frame& frame);
+    void processFinger(const Pointer& pointer, const Leap::Frame& frame);
     void processFinger(const Leap::Finger& finger, float x, float y, float z);
     inline float normalizedX(float x)
     {
