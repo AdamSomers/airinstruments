@@ -83,7 +83,7 @@ void AirHarpApplication::systemRequestedQuit()
 
 void AirHarpApplication::audioDeviceAboutToStart (AudioIODevice* device)
 {
-    
+    AudioServer::GetInstance()->SetFs(device->getCurrentSampleRate());
 }
 void AirHarpApplication::audioDeviceStopped()
 {
