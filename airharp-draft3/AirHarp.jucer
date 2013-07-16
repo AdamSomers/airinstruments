@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.7.0"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
+<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.7.2"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
+      <FILE id="VOcQxR" name="bloom.fs" compile="0" resource="1" file="../common/bloom.fs"/>
+      <FILE id="oUvFBo" name="bloom.vs" compile="0" resource="1" file="../common/bloom.vs"/>
+      <FILE id="D8NVO4" name="testShader.fs" compile="0" resource="1" file="../common/testShader.fs"/>
+      <FILE id="hlfB9s" name="testShader.vs" compile="0" resource="1" file="../common/testShader.vs"/>
       <FILE id="sMkUgX" name="icon.png" compile="0" resource="0" file="Resources/icon.png"/>
       <FILE id="C47bI4" name="icon.icns" compile="0" resource="0" file="Resources/icon.icns"/>
     </GROUP>

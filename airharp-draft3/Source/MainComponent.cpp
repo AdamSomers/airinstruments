@@ -284,24 +284,32 @@ void MainContentComponent::newOpenGLContextCreated()
 //    toolbar->setButtonTextures(SkinManager::instance().getSelectedSkin().getTexture("button_on0"), SkinManager::instance().getSelectedSkin().getTexture("button_off0"));
     
     // Load shaders for finger rendering
-    File special = File::getSpecialLocation(File::currentApplicationFile);
-#if JUCE_WINDOWS
-    File resources = special.getChildFile("..");
-#elif JUCE_MAC
-    File resources = special.getChildFile("Contents/Resources");
-#endif
-   File vsFile = resources.getChildFile("testShader.vs");
-   File fsFile = resources.getChildFile("testShader.fs");
+//    File special = File::getSpecialLocation(File::currentApplicationFile);
+//#if JUCE_WINDOWS
+//    File resources = special.getChildFile("..");
+//#elif JUCE_MAC
+//    File resources = special.getChildFile("Contents/Resources");
+//#endif
+//   File vsFile = resources.getChildFile("testShader.vs");
+//   File fsFile = resources.getChildFile("testShader.fs");
 
-    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+    shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
                                                                                      GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
-    jassert(shaderId != 0);
-    vsFile = resources.getChildFile("bloom.vs");
-    fsFile = resources.getChildFile("bloom.fs");
+    //jassert(shaderId != 0);
+    if (shaderId == 0) {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Shader Error", "failed to load testShader");
+        Logger::writeToLog("ERROR: failed to load testShader");
+    }
+//    vsFile = resources.getChildFile("bloom.vs");
+//    fsFile = resources.getChildFile("bloom.fs");
 
-    bloomShaderId = gltLoadShaderPairSrcWithAttributes(vsFile.loadFileAsString().toUTF8(), fsFile.loadFileAsString().toUTF8(), 2,
+    bloomShaderId = gltLoadShaderPairSrcWithAttributes(BinaryData::bloom_vs, BinaryData::bloom_fs, 2,
                                                        GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_TEXTURE0, "vTexCoord0");
-    jassert(bloomShaderId != 0);
+    //jassert(bloomShaderId != 0);
+    if (bloomShaderId == 0) {
+        AlertWindow::showMessageBox(AlertWindow::WarningIcon, "Shader Error", "failed to load bloom shader");
+        Logger::writeToLog("ERROR: failed to load bloom shader");
+    }
 
     // setup the offscreen finger texture
     int imageW = 512;
@@ -413,10 +421,12 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->drawWithShader(shaderId);
+
     glBindTexture(GL_TEXTURE_2D,td.textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, td.imageW, td.imageH, 0);
     glViewport(0,0,Environment::instance().screenW,Environment::instance().screenH);
-
 
     go2d();
 
@@ -430,9 +440,9 @@ void MainContentComponent::renderOpenGL()
         hv->draw();
     
 	go2d();
-    
+
     glDisable(GL_DEPTH_TEST);
-    
+
     for (HUDView* v : views)
         v->draw();
 
@@ -696,6 +706,7 @@ void MainContentComponent::timerCallback(int timerId)
                 v->setVisible(false);
             for (HarpView* hv : harps)
                 hv->setVisible(false);
+            HarpManager::instance().getHarp(0)->setEnabled(false);
             break;
         case kTimerCheckLeapConnection:
             if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
@@ -755,6 +766,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
         settingsScreen->setVisible(false, 0);
         for (HarpView* hv : harps)
             hv->setVisible(true);
+        HarpManager::instance().getHarp(0)->setEnabled(true);
     }
     else if (message == "disableTutorial")
     {
@@ -793,6 +805,7 @@ void MainContentComponent::actionListenerCallback(const String& message)
 
 void MainContentComponent::showTutorial()
 {
+    HarpManager::instance().getHarp(0)->setEnabled(false);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", true);
     tutorial->setVisible(true);
     splashBgView->setVisible(true);

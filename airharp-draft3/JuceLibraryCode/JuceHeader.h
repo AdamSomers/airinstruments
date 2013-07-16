@@ -28,6 +28,7 @@
 #include "modules/juce_gui_extra/juce_gui_extra.h"
 #include "modules/juce_opengl/juce_opengl.h"
 #include "modules/juce_video/juce_video.h"
+#include "BinaryData.h"
 
 #if ! DONT_SET_USING_JUCE_NAMESPACE
  // If your code uses a lot of JUCE classes, then this will obviously save you
@@ -38,8 +39,8 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "AirHarp";
-    const char* const  versionString  = "0.7.0";
-    const int          versionNumber  = 0x700;
+    const char* const  versionString  = "0.7.2";
+    const int          versionNumber  = 0x702;
 }
 
 #endif   // __APPHEADERFILE_LSBNFZ__

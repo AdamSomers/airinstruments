@@ -25,7 +25,7 @@ TutorialSlide::TutorialSlide()
     skipButton.setText(skipText, skipText);
     GLfloat color[4] = { 0.f, 0.f, 0.f, 0.f };
     setDefaultColor(color);
-    prevButton.setVisible(false);
+    prevButton.setVisible(false, 0);
 }
 
 TutorialSlide::~TutorialSlide()
