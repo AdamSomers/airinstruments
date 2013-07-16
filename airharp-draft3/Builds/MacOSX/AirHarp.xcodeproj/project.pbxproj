@@ -2240,13 +2240,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				SDKROOT = macosx10.7;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				SDKROOT_ppc = macosx10.5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_LDFLAGS = "-lLeap";
@@ -2264,13 +2262,11 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				SDKROOT = macosx10.7;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				SDKROOT_ppc = macosx10.5;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_LDFLAGS = "-lLeap";
