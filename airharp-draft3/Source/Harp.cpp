@@ -1,7 +1,7 @@
 #include "MotionServer.h"
 
 #include "Harp.h"
-
+#include "Main.h"
 
 #define MAX_STRINGS 30
 #define SAMPS_PER_PIXEL 6
@@ -24,6 +24,7 @@ Harp::Harp()
 , active(false)
 , chordMode(false)
 , selectedScale(0)
+, enabled(true)
 {
     Init();
 }
@@ -87,8 +88,20 @@ void Harp::Init()
     
     MotionDispatcher::instance().addListener(*this);
     
-    for (int i = 0; i < 7; ++i)
-        selectChord(i);
+    for (int i = 0; i < 7; ++i) {
+        bool chordSelected = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("chordSelected" + String(i), (i == 0 || i == 3 || i == 4 || i == 5) ? true : false);
+
+        if (chordSelected)
+            selectChord(i);
+        
+        // write the values back to initialize defaults
+        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("chordSelected" + String(i), chordSelected);
+    }
+    
+    setChordMode(AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("chordMode", false));
+    
+    int selectedScale = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedScale", 0);
+    SetScale(selectedScale);
 }
 
 void Harp::Cleanup()
@@ -143,7 +156,7 @@ void Harp::BuildDefaultScales()
     // Slendro?
     const std::string exotic1[] = { "1", "3", "4", "5", "7"};
     // Chinese mystery
-    const std::string exotic2[] = { "1", "3", "#4", "5", "7" };
+    const std::string custom[] = { "1", "3", "#4", "5", "7" };
     
     const std::string I[]     = { "1", "3", "5" };
     const std::string ii[]    = { "2", "4", "6" };
@@ -193,8 +206,8 @@ void Harp::BuildDefaultScales()
     scale.clear();
     
     for (int i = 0; i <  5; ++i)
-        scale.push_back(exotic2[i]);
-    scales.insert(std::make_pair("exotic2", scale));
+        scale.push_back(custom[i]);
+    scales.insert(std::make_pair("custom", scale));
     scale.clear();
     
     for (int i = 0; i < 3; ++i)
@@ -266,6 +279,17 @@ void Harp::BuildDefaultScales()
         scale.push_back(VI[i]);
     scales.insert(std::make_pair("VI", scale));
     scale.clear();
+    
+    String customScale = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("customScale", "1 M3 b5 P5 M7");
+    StringArray arr;
+    arr.addTokens(customScale, false);
+    std::vector<std::string> vec;
+    for (int i = 0; i < arr.size(); ++i)
+    {
+        Logger::outputDebugString(arr[i]);
+        vec.push_back(arr[i].toStdString());
+    }
+    setCustomScale(vec);
 }
 
 std::vector<std::string>& Harp::getScale()
@@ -321,6 +345,9 @@ void Harp::NoteOn(int num, int note, int velocity)
 
 void Harp::ExciteString(int num, int note, int velocity, float* buff, int bufferSize)
 {
+    if (!enabled)
+        return;
+
     ScopedLock sl(lock);
     
     strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
@@ -352,7 +379,7 @@ void Harp::SetScale(int scaleIndex)
                 selectedScaleName = "exotic1";
                 break;
             case 6:
-                selectedScaleName = "exotic2";
+                selectedScaleName = "custom";
                 break;
             default:
                 break;
@@ -386,6 +413,15 @@ void Harp::SetScale(int scaleIndex)
             default:
                 break;
         }
+    }
+}
+
+void Harp::setCustomScale(std::vector<std::string>& newCustomScale)
+{
+    ScaleMap::iterator i = scales.find("custom");
+    if (i != scales.end())
+    {
+        (*i).second = newCustomScale;
     }
 }
 
@@ -489,11 +525,21 @@ bool Harp::checkIdle()
     return retVal;
 }
 
+int Harp::suggestedStringCount()
+{
+    int highNote = ScaleDegrees::getChromatic(getScale().back());
+    int numNotesInScale = getScale().size();
+    int maxNote = 99 - 33;
+    float numStrings = (float)maxNote / (12 / numNotesInScale);
+    numStrings = jmin(numStrings, 24.f);
+    return (int)numStrings;
+}
+
 HarpManager::HarpManager()
 {
     for (int i = 0; i < numHarps; ++i) {
         harps.push_back(new Harp);
-        harps.back()->SetScale(i);
+        //harps.back()->SetScale(i);
     }
 }
 

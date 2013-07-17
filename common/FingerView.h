@@ -17,6 +17,7 @@ public:
     void setup();
     void draw();
     void getScreenPos(M3DVector2f& inVec);
+    void setColor(const Colour& c) { color = c; }
     
     void drawWithShader(int shaderId);
 
@@ -41,7 +42,6 @@ public:
     
     GLFrame objectFrame;
     GLFrame prevFrame;
-    Leap::Finger finger;
     bool inUse;
     int id;
     bool invalid;
@@ -51,6 +51,7 @@ private:
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
     M3DVector2f screenPos;
+    Colour color;
 };
 
 #endif // h_FingerView

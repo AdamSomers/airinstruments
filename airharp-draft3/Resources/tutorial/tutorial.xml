@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tutorial>
+    <slide image="fingers.png">
+        <line text="Welcome to AirHarp."/>
+        <line text="These are your fingers.  Reach in to strum the strings."/>
+    </slide>
+    <slide image="blue.png">
+        <line text="As you reach in, you can strum when your fingers turn blue."/>
+        <line text="The further in you reach, the more reverb is added."/>
+    </slide>
+    <slide image="scales.png">
+        <line text=""/>
+        <line text="Change the scale in the top row"/>
+    </slide>
+    <slide image="key.png">
+        <line text="Advanced settings are available at the top right."/>
+        <line text="You can change the key..."/>
+    </slide>
+    <slide image="custom.png">
+        <line text=""/>
+        <line text="... design your own custom scale ..."/>
+    </slide>
+    <slide image="mode.png">
+        <line text=""/>
+        <line text="... and switch to chords mode."/>
+    </slide>
+    <slide image="chords.png">
+        <line text="In chords mode, select a group of chords for your progression."/>
+        <line text="The chord changes with your vertical motion."/>
+    </slide>
+</Tutorial>

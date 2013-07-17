@@ -21,9 +21,13 @@ public:
     
     
     void setText(StringArray onText, StringArray offText);
+    StringArray getOnText() const { return onText; }
+    StringArray getOffText() const { return offText; }
     
     void setTextColor(const Colour& onColor, const Colour& offColour);
     void setBackgroundColor(const Colour& onColor, const Colour& offColour);
+    
+    void setUpperCase(bool shouldBeUpperCase) { uppercase = shouldBeUpperCase; }
 
 private:
     StringArray onText;
@@ -35,6 +39,7 @@ private:
     Colour offTextColor;
     Colour onBackgroundColor;
     Colour offBackgroundColor;
+    bool uppercase;
 };
 
 #endif /* defined(__AirBeats__TextButton__) */

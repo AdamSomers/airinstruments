@@ -35,7 +35,9 @@ public:
     void setChord(int chordIndex);
     int getSelectedScale() const { return selectedScale; }
     bool checkIdle();
-    
+    void setCustomScale(std::vector<std::string>& newCustomScale);
+    int suggestedStringCount();
+    void setEnabled(bool shouldBeEnabled) { enabled = shouldBeEnabled; }
     // Leap Listener override
     void onFrame(const Leap::Controller&);
     
@@ -75,6 +77,7 @@ private:
     std::string selectedScaleName;
     int selectedScale;
     bool idle;
+    bool enabled;
 };
 
 class HarpManager

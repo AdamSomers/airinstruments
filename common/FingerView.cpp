@@ -31,13 +31,13 @@ void FingerView::drawWithShader(int shaderId)
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);
     Environment::instance().modelViewMatrix.MultMatrix(mObjectFrame);
-    GLfloat color [] = { 0.f, 1.f, 0.f, 1.f };
+    GLfloat c[] = { color.getFloatRed(), color.getFloatGreen(), color.getFloatBlue(), 1.f };
     GLint iModelViewMatrix = glGetUniformLocation(shaderId, "mvMatrix");
     glUniformMatrix4fv(iModelViewMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetModelViewMatrix());
     GLint iProjMatrix = glGetUniformLocation(shaderId, "pMatrix");
     glUniformMatrix4fv(iProjMatrix, 1, GL_FALSE, Environment::instance().transformPipeline.GetProjectionMatrix());
     GLint iColor = glGetUniformLocation(shaderId, "vColor");
-    glUniform4fv(iColor, 1, color);
+    glUniform4fv(iColor, 1, c);
     GfxTools::drawBatch(&cylinderBatch);
     //GfxTools::drawBatch(&coneBatch);
     Environment::instance().modelViewMatrix.PopMatrix();
