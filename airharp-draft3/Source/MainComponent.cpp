@@ -64,7 +64,6 @@ MainContentComponent::MainContentComponent()
         splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
     else
         Logger::writeToLog("ERROR: splash_title.png not found!");
-
 }
 
 MainContentComponent::~MainContentComponent()
@@ -580,6 +579,19 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     if (kp.getTextCharacter() == 'h')
     {
         showTutorial();
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'f')
+    {
+        if (nullptr == Desktop::getInstance().getKioskModeComponent())
+            Desktop::getInstance().setKioskModeComponent(this->getParentComponent());
+        else
+            Desktop::getInstance().setKioskModeComponent(nullptr);
+        ret = true;
+    }
+    else if (kp.getTextCharacter() == 'q')
+    {
+        AirHarpApplication::getInstance()->quit();
         ret = true;
     }
     else if (kp.getTextCharacter() == 'a')

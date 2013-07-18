@@ -116,12 +116,13 @@ AirHarpApplication::MainWindow::MainWindow()  : DocumentWindow ("AirHarp",
                                 DocumentWindow::allButtons)
 {
     setContentOwned (new MainContentComponent(), true);
-
     centreWithSize (getWidth(), getHeight());
-    setVisible (true);
     setUsingNativeTitleBar(true);
     setResizable(true, false);
     setResizeLimits(800, 600, 3840, 1800);
+    getPeer()->setFullScreen(true);
+    setVisible (true);
+    Desktop::getInstance().setKioskModeComponent(this);
 }
 
 void AirHarpApplication::MainWindow::closeButtonPressed()
