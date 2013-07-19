@@ -159,6 +159,8 @@ void MainContentComponent::focusLost(FocusChangeType cause)
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+   if (Environment::instance().ready)
+      return;
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
@@ -583,10 +585,12 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     }
     else if (kp.getTextCharacter() == 'f')
     {
-        if (nullptr == Desktop::getInstance().getKioskModeComponent())
-            Desktop::getInstance().setKioskModeComponent(this->getParentComponent());
-        else
-            Desktop::getInstance().setKioskModeComponent(nullptr);
+        if (!AirHarpApplication::getInstance()->isFullscreen()) {
+             AirHarpApplication::getInstance()->enterFullscreenMode();
+        }
+        else {
+           AirHarpApplication::getInstance()->exitFullscreenMode();
+        }
         ret = true;
     }
     else if (kp.getTextCharacter() == 'q')

@@ -47,6 +47,10 @@ public:
     void anotherInstanceStarted (const String& commandLine);
     
     void showAudioSettingsDlg();
+
+    void enterFullscreenMode();
+    void exitFullscreenMode();
+    bool isFullscreen() const { return mainWindow->isFullScreen(); }
     
     //==============================================================================
     /*
