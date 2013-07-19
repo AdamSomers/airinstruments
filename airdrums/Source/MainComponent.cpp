@@ -941,10 +941,12 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
     }
     else if (kp.getTextCharacter() == 'f')
     {
-        if (nullptr == Desktop::getInstance().getKioskModeComponent())
-            Desktop::getInstance().setKioskModeComponent(this->getParentComponent());
-        else
-            Desktop::getInstance().setKioskModeComponent(nullptr);
+        if (!AirHarpApplication::getInstance()->isFullscreen()) {
+            AirHarpApplication::getInstance()->enterFullscreenMode();
+        }
+        else {
+            AirHarpApplication::getInstance()->exitFullscreenMode();
+        }
         ret = true;
     }
     else if (kp.getTextCharacter() == 'q')

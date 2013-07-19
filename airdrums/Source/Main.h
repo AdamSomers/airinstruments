@@ -40,6 +40,10 @@ public:
     void anotherInstanceStarted (const String& /*commandLine*/);
 
     void handleMessage(const juce::Message &m);
+    
+    void enterFullscreenMode();
+    void exitFullscreenMode();
+    bool isFullscreen() const;
 
     ApplicationCommandManager commandManager;
     
