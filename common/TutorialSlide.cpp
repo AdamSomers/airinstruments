@@ -60,7 +60,7 @@ void TutorialSlide::setBounds(const HUDRect &b)
     float dotSpacing = 30.f;
     float totalW = dotW * numDots + dotSpacing * (numDots - 2);
     float x = b.w / 2.f - totalW / 2.f;
-    float y = b.y - 100;
+    float y = 0.f;
     for (SharedPtr<HUDView> dot : offDots)
     {
         dot->setBounds(HUDRect(x, y, dotW, dotH));
