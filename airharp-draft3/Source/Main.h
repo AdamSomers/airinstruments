@@ -50,7 +50,7 @@ public:
 
     void enterFullscreenMode();
     void exitFullscreenMode();
-    bool isFullscreen() const { return mainWindow->isFullScreen(); }
+    bool isFullscreen() const;
     
     //==============================================================================
     /*
