@@ -160,6 +160,7 @@ void MainContentComponent::paint (Graphics& g)
         float h = w * aspectRatio;
         int x = getWidth() - w;
         int y = (int)(getHeight() - h);
+        offscreen.setOpacity(0.7f);
         offscreen.drawImage(splashLogoImage, x, y, (int)w, (int)h, 0, 0, splashLogoImage.getWidth(), splashLogoImage.getHeight());
     }
     if (splashBgImage.isValid())
