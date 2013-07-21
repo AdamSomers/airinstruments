@@ -44,12 +44,14 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kSavePatternAsCmd, "Save Pattern As...");
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kExportCmd, "Export Pattern...");
             menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kDeletePatternCmd);
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kMoreInfoCmd, "More Info...");
             
 			break;
         }
 		case kOptionsMenu :
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kUsePatternTempoCmd, "Use Pattern Tempo");
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kAudioSettingsCmd, "Audio Settings...");
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kFullscreenCmd, "Toggle Fullscreen Mode");
 			break;
 	}
 

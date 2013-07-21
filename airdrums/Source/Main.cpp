@@ -169,7 +169,9 @@ void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands
         kExportCmd,
         kNewPatternCmd,
         kSavePatternCmd,
-        kDeletePatternCmd
+        kDeletePatternCmd,
+        kMoreInfoCmd,
+        kFullscreenCmd
     };
     
     commands.addArray (ids, numElementsInArray (ids));
@@ -234,6 +236,14 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             result.setInfo ("Audio Settings", "Change audio configuration settings", "Options", 0);
             result.setActive(true);
             result.addDefaultKeypress (',', ModifierKeys::commandModifier);
+            break;
+        case kMoreInfoCmd:
+            result.setInfo ("More Info...", "Visit Handwavy Website", "File", 0);
+            result.setActive(true);
+            break;
+        case kFullscreenCmd:
+            result.setInfo ("Toggle Fullscreen Mode", "Toggle Fullscreen Mode", "Options", 0);
+            result.setActive(true);
             break;
 
     }
@@ -313,6 +323,19 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
             /*PatternManager::Status status =*/ mgr.DeletePattern();
             break;
         }
+        case kMoreInfoCmd:
+        {
+            URL url("http://handwavy.com");
+            url.launchInDefaultBrowser();
+            break;
+        }
+        case kFullscreenCmd:
+        {
+            if (AirHarpApplication::getInstance()->isFullscreen())
+                AirHarpApplication::getInstance()->exitFullscreenMode();
+            else
+                AirHarpApplication::getInstance()->enterFullscreenMode();
+        }
 	}
     
 //#if JUCE_MAC
@@ -366,6 +389,38 @@ void AirHarpApplication::handleMessage(const juce::Message& m)
     }
 }
 
+void AirHarpApplication::enterFullscreenMode()
+{
+    //On Windows, going to kiosk mode still shows toolbars and taskbar if the window is resizable.
+    //Changing resizability causes a crash because MainComponent doesn't properly handle a reset
+    // of the OpenGL context.  For now we will live with not-quite fullscreen
+    //mainWindow->setResizable(false,false);
+#if JUCE_MAC
+    Desktop::getInstance().setKioskModeComponent(mainWindow, false);
+#else
+    mainWindow->setFullScreen(true);
+#endif
+}
+
+void AirHarpApplication::exitFullscreenMode()
+{
+#if JUCE_MAC
+    Desktop::getInstance().setKioskModeComponent(nullptr);
+#else
+    mainWindow->setFullScreen(false);
+#endif
+    //mainWindow->setResizable(true,false);
+}
+
+bool AirHarpApplication::isFullscreen() const
+{
+#if JUCE_MAC
+    return Desktop::getInstance().getKioskModeComponent() != nullptr;
+#else
+    return mainWindow->isFullScreen();
+#endif
+}
+
 //==============================================================================
 AirHarpApplication::MainWindow::MainWindow()  :
 								DocumentWindow ("AirBeats",
@@ -373,12 +428,17 @@ AirHarpApplication::MainWindow::MainWindow()  :
                                 DocumentWindow::allButtons)
 {
     setContentOwned (new MainContentComponent(), true);
-
     centreWithSize (getWidth(), getHeight());
-    setVisible (true);
     setUsingNativeTitleBar(true);
     setResizable(true, false);
-    setResizeLimits(640, 480, 3840, 1800);
+    setResizeLimits(800, 600, 3840, 1800);
+    setVisible (true);
+#if JUCE_MAC
+    setFullScreen(true);
+    Desktop::getInstance().setKioskModeComponent(this, false);
+#else
+    setFullScreen(true);
+#endif
     addKeyListener (AirHarpApplication::getInstance()->commandManager.getKeyMappings());
 }
 

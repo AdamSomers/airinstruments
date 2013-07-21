@@ -54,7 +54,9 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 #define glBindVertexArray	glBindVertexArrayAPPLE
 #endif
 
-
+#if _WINDOWS // VAOs are not supported in Parallels VM so spoof OPENGL_ES on Windows
+    #define OPENGL_ES 1
+#endif
 ///////////////////////////////////////////////////////////
 // Constructor, does what constructors do... set everything to zero or NULL
 GLTriangleBatch::GLTriangleBatch(void)

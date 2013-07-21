@@ -80,6 +80,7 @@ MainContentComponent::MainContentComponent()
 #endif
     File bgImageFile = resourcesFile.getChildFile("splash_bg.png");
     File splashTitleImageFile = resourcesFile.getChildFile("splash_title.png");
+    File splashLogoImageFile = resourcesFile.getChildFile("logotype.png");
     
     if (bgImageFile.exists())
         splashBgImage = ImageFileFormat::loadFrom(bgImageFile);
@@ -90,6 +91,11 @@ MainContentComponent::MainContentComponent()
         splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
     else
         Logger::writeToLog("ERROR: splash_title.png not found!");
+    
+    if (splashLogoImageFile.exists())
+        splashLogoImage = ImageFileFormat::loadFrom(splashLogoImageFile);
+    else
+        Logger::writeToLog("ERROR: logotype.png not found!");
     
     startTimer(kTimerCheckLeapConnection, 500);
 }
@@ -146,6 +152,16 @@ void MainContentComponent::paint (Graphics& g)
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
+    }
+    if (splashLogoImage.isValid())
+    {
+        float aspectRatio = splashLogoImage.getHeight() / (float)splashLogoImage.getWidth();
+        float w = getWidth() / 4.f;
+        float h = w * aspectRatio;
+        int x = getWidth() - w;
+        int y = (int)(getHeight() - h);
+        offscreen.setOpacity(0.7f);
+        offscreen.drawImage(splashLogoImage, x, y, (int)w, (int)h, 0, 0, splashLogoImage.getWidth(), splashLogoImage.getHeight());
     }
     if (splashBgImage.isValid())
         g.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
@@ -939,18 +955,33 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
             v->setVisible(false);
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'm') {
-        Drums::instance().getTransportState().toggleMetronome();
+    else if (kp.getTextCharacter() == 'f')
+    {
+        if (!AirHarpApplication::getInstance()->isFullscreen()) {
+            AirHarpApplication::getInstance()->enterFullscreenMode();
+        }
+        else {
+            AirHarpApplication::getInstance()->exitFullscreenMode();
+        }
         ret = true;
     }
-    else if (kp.getKeyCode() == KeyPress::spaceKey) {
-        Drums::instance().getTransportState().togglePlayback();
+    else if (kp.getTextCharacter() == 'q')
+    {
+        AirHarpApplication::getInstance()->quit();
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'c') {
-        Drums::instance().clear();
-        ret = true;
-    }
+//    else if (kp.getTextCharacter() == 'm') {
+//        Drums::instance().getTransportState().toggleMetronome();
+//        ret = true;
+//    }
+//    else if (kp.getKeyCode() == KeyPress::spaceKey) {
+//        Drums::instance().getTransportState().togglePlayback();
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'c') {
+//        Drums::instance().clear();
+//        ret = true;
+//    }
 //    else if (kp.getTextCharacter() == '1') {
 //        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout2x1);
 //        sizeChanged = true;
@@ -971,54 +1002,54 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 //        sizeChanged = true;
 //        ret = true;
 //    }
-    else if (kp.getTextCharacter() == 'q') {
-        incPadAssociation(0, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'w') {
-        incPadAssociation(0, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'e') {
-        incPadAssociation(1, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'r') {
-        incPadAssociation(1, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 't') {
-        incPadAssociation(2, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'y') {
-        incPadAssociation(2, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'u') {
-        incPadAssociation(3, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'i') {
-        incPadAssociation(3, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'o') {
-        incPadAssociation(4, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'p') {
-        incPadAssociation(4, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == '[') {
-        incPadAssociation(5, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == ']') {
-        incPadAssociation(5, 1);
-        ret = true;
-    }
+//    else if (kp.getTextCharacter() == 'q') {
+//        incPadAssociation(0, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'w') {
+//        incPadAssociation(0, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'e') {
+//        incPadAssociation(1, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'r') {
+//        incPadAssociation(1, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 't') {
+//        incPadAssociation(2, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'y') {
+//        incPadAssociation(2, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'u') {
+//        incPadAssociation(3, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'i') {
+//        incPadAssociation(3, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'o') {
+//        incPadAssociation(4, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'p') {
+//        incPadAssociation(4, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == '[') {
+//        incPadAssociation(5, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == ']') {
+//        incPadAssociation(5, 1);
+//        ret = true;
+//    }
     else if (kp.getKeyCode() == KeyPress::leftKey)
     {
         tempoControl->increment(-1);

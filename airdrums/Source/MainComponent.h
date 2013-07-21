@@ -150,6 +150,7 @@ private:
     
     Image splashBgImage;
     Image splashTitleImage;
+    Image splashLogoImage;
     Image splashImage;
     Time lastRender;
 

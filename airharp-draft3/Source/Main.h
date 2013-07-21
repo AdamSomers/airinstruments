@@ -47,6 +47,10 @@ public:
     void anotherInstanceStarted (const String& commandLine);
     
     void showAudioSettingsDlg();
+
+    void enterFullscreenMode();
+    void exitFullscreenMode();
+    bool isFullscreen() const;
     
     //==============================================================================
     /*
@@ -63,7 +67,9 @@ public:
         
         enum CommandIDs
         {
-            kAudioSettingsCmd = 1
+            kAudioSettingsCmd = 1,
+            kMoreInfoCmd,
+            kFullscreenCmd,
         };
         
         void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);
