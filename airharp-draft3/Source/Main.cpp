@@ -175,6 +175,10 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             result.setActive(true);
             result.addDefaultKeypress (',', ModifierKeys::commandModifier);
             break;
+        case kMoreInfoCmd:
+            result.setInfo ("More Info...", "Visit Handwavy Website", "File", 0);
+            result.setActive(true);
+            break;
         default:
             break;
     }
@@ -184,7 +188,8 @@ void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands
 {
     // this returns the set of all commands that this target can perform..
     const CommandID ids[] = {
-        kAudioSettingsCmd
+        kAudioSettingsCmd,
+        kMoreInfoCmd
     };
     
     commands.addArray (ids, numElementsInArray (ids));
@@ -207,6 +212,13 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
             
             AirHarpApplication::getInstance()->showAudioSettingsDlg();
             
+            break;
+        }
+        
+        case kMoreInfoCmd:
+        {
+            URL url("http://handwavy.com");
+            url.launchInDefaultBrowser();
             break;
         }
     }

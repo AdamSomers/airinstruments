@@ -35,7 +35,8 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 		}
             
 		case kFileMenu :
-        {            
+        {
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kMoreInfoCmd, "More Info...");
 			break;
         }
 		case kOptionsMenu :

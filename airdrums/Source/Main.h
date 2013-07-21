@@ -77,7 +77,8 @@ public:
             kExportCmd = 5,
             kNewPatternCmd = 6,
             kSavePatternCmd = 7,
-            kDeletePatternCmd = 8
+            kDeletePatternCmd = 8,
+            kMoreInfoCmd
         };
         
         void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);

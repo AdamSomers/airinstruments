@@ -67,7 +67,8 @@ public:
         
         enum CommandIDs
         {
-            kAudioSettingsCmd = 1
+            kAudioSettingsCmd = 1,
+            kMoreInfoCmd,
         };
         
         void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);

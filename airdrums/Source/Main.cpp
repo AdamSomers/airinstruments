@@ -169,7 +169,8 @@ void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands
         kExportCmd,
         kNewPatternCmd,
         kSavePatternCmd,
-        kDeletePatternCmd
+        kDeletePatternCmd,
+        kMoreInfoCmd
     };
     
     commands.addArray (ids, numElementsInArray (ids));
@@ -234,6 +235,10 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             result.setInfo ("Audio Settings", "Change audio configuration settings", "Options", 0);
             result.setActive(true);
             result.addDefaultKeypress (',', ModifierKeys::commandModifier);
+            break;
+        case kMoreInfoCmd:
+            result.setInfo ("More Info...", "Visit Handwavy Website", "File", 0);
+            result.setActive(true);
             break;
 
     }
@@ -311,6 +316,12 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
         {
             PatternManager& mgr = PatternManager::GetInstance();
             /*PatternManager::Status status =*/ mgr.DeletePattern();
+            break;
+        }
+        case kMoreInfoCmd:
+        {
+            URL url("http://handwavy.com");
+            url.launchInDefaultBrowser();
             break;
         }
 	}

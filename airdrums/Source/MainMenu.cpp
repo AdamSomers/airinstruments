@@ -44,6 +44,7 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kSavePatternAsCmd, "Save Pattern As...");
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kExportCmd, "Export Pattern...");
             menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kDeletePatternCmd);
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kMoreInfoCmd, "More Info...");
             
 			break;
         }
