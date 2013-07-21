@@ -395,17 +395,19 @@ void AirHarpApplication::enterFullscreenMode()
     //Changing resizability causes a crash because MainComponent doesn't properly handle a reset
     // of the OpenGL context.  For now we will live with not-quite fullscreen
     //mainWindow->setResizable(false,false);
-    //mainWindow->setFullScreen(true);
 #if JUCE_MAC
     Desktop::getInstance().setKioskModeComponent(mainWindow, false);
+#else
+    mainWindow->setFullScreen(true);
 #endif
 }
 
 void AirHarpApplication::exitFullscreenMode()
 {
-    //mainWindow->setFullScreen(false);
 #if JUCE_MAC
     Desktop::getInstance().setKioskModeComponent(nullptr);
+#else
+    mainWindow->setFullScreen(false);
 #endif
     //mainWindow->setResizable(true,false);
 }
