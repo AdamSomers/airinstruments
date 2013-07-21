@@ -85,6 +85,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -131,6 +132,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalLibraryDirectories>../../../LeapSDK/win/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Leap.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -142,6 +144,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\AudioSettingsDialog.cpp"/>
     <ClCompile Include="..\..\..\common\CursorView.cpp"/>
     <ClCompile Include="..\..\..\common\HandView.cpp"/>
     <ClCompile Include="..\..\..\common\Environment.cpp"/>
@@ -160,7 +163,6 @@
     <ClCompile Include="..\..\..\GLTools\src\GLTriangleBatch.cpp"/>
     <ClCompile Include="..\..\..\GLTools\src\math3d.cpp"/>
     <ClCompile Include="..\..\Source\AudioExporter.cpp"/>
-    <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp"/>
     <ClCompile Include="..\..\Source\BeatCountView.cpp"/>
     <ClCompile Include="..\..\Source\ButtonBar.cpp"/>
     <ClCompile Include="..\..\Source\DrumItem.cpp">
@@ -1282,6 +1284,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_video\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\AudioSettingsDialog.h"/>
     <ClInclude Include="..\..\..\common\CursorView.h"/>
     <ClInclude Include="..\..\..\common\HandView.h"/>
     <ClInclude Include="..\..\..\common\Environment.h"/>
@@ -1309,7 +1312,6 @@
     <ClInclude Include="..\..\..\GLTools\include\math3d.h"/>
     <ClInclude Include="..\..\..\GLTools\include\StopWatch.h"/>
     <ClInclude Include="..\..\Source\AudioExporter.h"/>
-    <ClInclude Include="..\..\Source\AudioSettingsDialog.h"/>
     <ClInclude Include="..\..\Source\BeatCountView.h"/>
     <ClInclude Include="..\..\Source\ButtonBar.h"/>
     <ClInclude Include="..\..\Source\DrumItem.h"/>
