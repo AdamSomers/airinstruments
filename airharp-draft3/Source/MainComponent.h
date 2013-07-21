@@ -101,6 +101,7 @@ private:
     
     Image splashBgImage;
     Image splashTitleImage;
+    Image splashLogoImage;
     Image splashImage;
     ScopedPointer<View2d> splashBgView;
     ScopedPointer<View2d> splashTitleView;

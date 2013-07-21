@@ -54,16 +54,22 @@ MainContentComponent::MainContentComponent()
 #endif
     File bgImageFile = resourcesFile.getChildFile("splash_bg.png");
     File splashTitleImageFile = resourcesFile.getChildFile("splash_title.png");
+    File splashLogoImageFile = resourcesFile.getChildFile("logotype.png");
     
     if (bgImageFile.exists())
         splashBgImage = ImageFileFormat::loadFrom(bgImageFile);
     else
-        Logger::writeToLog("ERROR: background_dark.png not found!");
+        Logger::writeToLog("ERROR: splash_bg.png not found!");
     
     if (splashTitleImageFile.exists())
         splashTitleImage = ImageFileFormat::loadFrom(splashTitleImageFile);
     else
         Logger::writeToLog("ERROR: splash_title.png not found!");
+    
+    if (splashLogoImageFile.exists())
+        splashLogoImage = ImageFileFormat::loadFrom(splashLogoImageFile);
+    else
+        Logger::writeToLog("ERROR: logotype.png not found!");
 }
 
 MainContentComponent::~MainContentComponent()
@@ -113,6 +119,15 @@ void MainContentComponent::paint (Graphics& g)
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
+    }
+    if (splashLogoImage.isValid())
+    {
+        float aspectRatio = splashLogoImage.getHeight() / (float)splashLogoImage.getWidth();
+        float w = getWidth() / 4.f;
+        float h = w * aspectRatio;
+        int x = getWidth() - w;
+        int y = (int)(getHeight() - h);
+        offscreen.drawImage(splashLogoImage, x, y, (int)w, (int)h, 0, 0, splashLogoImage.getWidth(), splashLogoImage.getHeight());
     }
     if (splashBgImage.isValid())
         g.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
