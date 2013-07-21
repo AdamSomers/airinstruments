@@ -69,6 +69,7 @@ public:
         {
             kAudioSettingsCmd = 1,
             kMoreInfoCmd,
+            kFullscreenCmd,
         };
         
         void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);

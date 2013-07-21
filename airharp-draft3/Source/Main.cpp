@@ -152,6 +152,7 @@ AirHarpApplication::MainWindow::MainWindow()  : DocumentWindow ("AirHarp",
     setResizeLimits(800, 600, 3840, 1800);
     setVisible (true);
 #if JUCE_MAC
+    setFullScreen(true);
     Desktop::getInstance().setKioskModeComponent(this, false);
 #else
     setFullScreen(true);
@@ -179,6 +180,10 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             result.setInfo ("More Info...", "Visit Handwavy Website", "File", 0);
             result.setActive(true);
             break;
+        case kFullscreenCmd:
+            result.setInfo ("Toggle Fullscreen Mode", "Toggle Fullscreen Mode", "Options", 0);
+            result.setActive(true);
+            break;
         default:
             break;
     }
@@ -189,7 +194,8 @@ void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands
     // this returns the set of all commands that this target can perform..
     const CommandID ids[] = {
         kAudioSettingsCmd,
-        kMoreInfoCmd
+        kMoreInfoCmd,
+        kFullscreenCmd
     };
     
     commands.addArray (ids, numElementsInArray (ids));
@@ -220,6 +226,14 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
             URL url("http://handwavy.com");
             url.launchInDefaultBrowser();
             break;
+        }
+            
+        case kFullscreenCmd:
+        {
+            if (AirHarpApplication::getInstance()->isFullscreen())
+                AirHarpApplication::getInstance()->exitFullscreenMode();
+            else
+                AirHarpApplication::getInstance()->enterFullscreenMode();
         }
     }
     return true;

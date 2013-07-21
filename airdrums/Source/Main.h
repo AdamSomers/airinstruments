@@ -78,7 +78,8 @@ public:
             kNewPatternCmd = 6,
             kSavePatternCmd = 7,
             kDeletePatternCmd = 8,
-            kMoreInfoCmd
+            kMoreInfoCmd,
+            kFullscreenCmd
         };
         
         void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);
