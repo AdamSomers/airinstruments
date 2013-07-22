@@ -198,6 +198,9 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
+    if (!Environment::instance().ready)
+        return;
+
     Logger::writeToLog("Focus Gained");
     MotionDispatcher::instance().resume();
 }
@@ -897,6 +900,9 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
+    if (!Environment::instance().ready)
+        return;
+
     for (HUDView* v : views)
         v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y);
     
