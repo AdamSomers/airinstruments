@@ -429,12 +429,15 @@ AirHarpApplication::MainWindow::MainWindow()  :
 {
     setContentOwned (new MainContentComponent(), true);
     centreWithSize (getWidth(), getHeight());
+#if JUCE_WIN
     setVisible (true);
+#endif
     setFullScreen(true);
     setUsingNativeTitleBar(true);
     setResizable(true, false);
     setResizeLimits(800, 600, 3840, 1800);
 #if JUCE_MAC
+    setVisible (true);
     Desktop::getInstance().setKioskModeComponent(this, false);
 #endif
     addKeyListener (AirHarpApplication::getInstance()->commandManager.getKeyMappings());
