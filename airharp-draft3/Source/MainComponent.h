@@ -62,7 +62,8 @@ public:
     enum TimerIds
     {
         kTimerShowTutorial = 0,
-        kTimerCheckLeapConnection
+        kTimerCheckLeapConnection,
+        kFullscreenTipTimer
     };
 
     class InitGLMessage : public Message {};
@@ -70,6 +71,8 @@ public:
     void handleMessage(const juce::Message &m);
 
     void actionListenerCallback(const String& message);
+    
+    void showFullscreenTip();
 private:
     void go2d();
     void go3d();
@@ -87,6 +90,7 @@ private:
     StatusBar* statusBar;
     SettingsScreen* settingsScreen;
     HUDView* leapDisconnectedView;
+    ScopedPointer<HUDView> fullscreenTipView;
     View2d* backgroundView;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;

@@ -346,6 +346,11 @@ void MainContentComponent::newOpenGLContextCreated()
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
     
+    fullscreenTipView = new HUDView;
+    fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
+    fullscreenTipView->setVisible(false, 0);
+    showFullscreenTip();
+    
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     Environment::instance().ready = true;
         
@@ -406,6 +411,16 @@ void MainContentComponent::renderOpenGL()
                                                     Environment::instance().screenH / 2.f - h / 2.f,
                                                     w,
                                                     h));
+        }
+        if (fullscreenTipView) {
+            TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip");
+            float aspectRatio = td.imageH / (float)td.imageW;
+            float w = 327;
+            float h = w * aspectRatio;
+            fullscreenTipView->setBounds(HUDRect(20,
+                                                 Environment::instance().screenH - h - 20.f,
+                                                 w,
+                                                 h));
         }
         layoutStrings();
         chordRegionsNeedUpdate = true;
@@ -487,6 +502,8 @@ void MainContentComponent::renderOpenGL()
     
     leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     leapDisconnectedView->draw();
+    fullscreenTipView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    fullscreenTipView->draw();
     
     // Render the offscreen fingers image using bloom shader
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
@@ -615,7 +632,7 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         }
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'q')
+    else if (kp.isKeyCode(KeyPress::escapeKey))
     {
         AirHarpApplication::getInstance()->quit();
         ret = true;
@@ -757,7 +774,10 @@ void MainContentComponent::timerCallback(int timerId)
             else if (leapDisconnectedView)
                 leapDisconnectedView->setVisible(false);
             break;
-            
+        case kFullscreenTipTimer:
+            fullscreenTipView->setVisible(false, 2000);
+            stopTimer(kFullscreenTipTimer);
+            break;
         default:
             break;
     }
@@ -851,4 +871,11 @@ void MainContentComponent::showTutorial()
         v->setVisible(false);
     for (HarpView* hv : harps)
         hv->setVisible(false);
+    showFullscreenTip();
+}
+
+void MainContentComponent::showFullscreenTip()
+{
+    fullscreenTipView->setVisible(true, 2000);
+    startTimer(kFullscreenTipTimer, 2000 + 2000);
 }
