@@ -87,6 +87,7 @@ public:
     
     class TempoSourceChangedMessage : public Message {};
 
+    void showFullscreenTip();
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
@@ -103,7 +104,8 @@ private:
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap,
-        kTimerCheckLeapConnection
+        kTimerCheckLeapConnection,
+        kFullscreenTipTimer
     };
     
     class InitGLMessage : public Message {};
@@ -122,6 +124,7 @@ private:
     TempoControl* tempoControl;
     ButtonBar* buttonBar;
     HUDView* leapDisconnectedView;
+    ScopedPointer<HUDView> fullscreenTipView;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;

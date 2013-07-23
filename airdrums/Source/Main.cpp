@@ -400,6 +400,7 @@ void AirHarpApplication::enterFullscreenMode()
 #else
     mainWindow->setFullScreen(true);
 #endif
+    ((MainContentComponent*)mainWindow->getContentComponent())->showFullscreenTip();
 }
 
 void AirHarpApplication::exitFullscreenMode()
