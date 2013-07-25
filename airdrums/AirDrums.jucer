@@ -144,6 +144,8 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="Sq8qx7" name="SampleLayer.cpp" compile="1" resource="0" file="Source/SampleLayer.cpp"/>
       <FILE id="dj1uwR" name="SampleLayer.h" compile="0" resource="0" file="Source/SampleLayer.h"/>
+      <FILE id="nOoqZj" name="StickView.cpp" compile="1" resource="0" file="Source/StickView.cpp"/>
+      <FILE id="DF6pQQ" name="StickView.h" compile="0" resource="0" file="Source/StickView.h"/>
       <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"
             file="Source/StrikeDetector.cpp"/>
       <FILE id="Oira0u" name="StrikeDetector.h" compile="0" resource="0"

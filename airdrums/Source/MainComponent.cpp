@@ -265,11 +265,16 @@ void MainContentComponent::newOpenGLContextCreated()
         pv->setColor(Colour::fromString(color));
     }
     layoutPadsGrid();
+    
+    stick1 = new StickView;
+    stick1->setup();
+    stick2 = new StickView;
+    stick2->setup();
 #endif
     
     //Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
     //Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
-    PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-50), 1, 0, 0);
+    PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 
     glEnable(GL_DEPTH_TEST);
     Environment::instance().shaderManager.InitializeStockShaders();
@@ -793,6 +798,9 @@ void MainContentComponent::renderOpenGL()
         sortedPads[i]->draw();
     Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
     Environment::instance().modelViewMatrix.PopMatrix(); // camera
+
+    stick1->draw();
+    stick2->draw();
 #endif
     
     glEnable(GL_MULTISAMPLE);
@@ -875,6 +883,7 @@ void MainContentComponent::layoutPadsGrid()
     // Move the pads back -12
     //PadView::padSurfaceFrame.SetOrigin(0,0,-12);
     PadView::padSurfaceFrame.SetOrigin(.35f,-.40f,-10.f);
+    //PadView::padSurfaceFrame.SetOrigin(.35f,-.40f,-15.f);
 }
 
 void MainContentComponent::layoutPadsLinear()
@@ -1152,6 +1161,15 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
         pad->tap(midiNoteNumber);
 }
 
+Leap::Vector MainContentComponent::scaledLeapInputPosition(const Leap::Vector& v)
+{
+    Leap::Vector newVec;
+    newVec.x = (v.x / 400.f) * 2.f * (Environment::screenW/(float)Environment::screenH);
+    newVec.y = ((v.y / 500.f) -.5f)*4;
+    newVec.z = (v.z / 250.f) * 1.f - 10.f;
+    return newVec;
+}
+
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
     lastFrame = Time::getCurrentTime();
@@ -1182,8 +1200,43 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     
     std::set<int> hoveredNotes;
     
+    bool stick1Used = false;
+    bool stick2Used = false;
+    
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
+        
+        Leap::Vector v;
+        if (!hand.pointables().empty()) {
+            for (int i = 0; i < hand.pointables().count(); ++i) {
+                v += hand.pointables()[i].tipPosition();
+            }
+            v /= (float)hand.pointables().count();
+        }
+        else
+            v = hand.palmPosition();
+
+        Leap::Vector scaledVec = scaledLeapInputPosition(v);
+        if (h == 0) {
+            stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            stick1Used = true;
+        }
+        else {
+            stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            stick2Used = true;
+        }
+
+        //Logger::outputDebugString(String(y) + " " + String(z));
+//        float zSpan = 11.f - 9.3f;
+//        float normZ = fabs((z + 9.3f) / zSpan);
+//        float ySpan = .53f + .3f;
+//        float yMin = (ySpan * normZ) - .53f;
+//        y+=0.25f;
+//        Logger::outputDebugString(String(normZ) + " " + String(yMin));
+//        if (y < yMin)
+//            ;//y = yMin;
+        
+
         
         if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
         {
@@ -1210,6 +1263,16 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         const Leap::Pointable& pointable = pointables[p];
         if (!pointable.hand().isValid())
         {
+            Leap::Vector scaledVec = scaledLeapInputPosition(pointable.tipPosition());
+            if (!stick1Used) {
+                stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+                stick1Used = true;
+            }
+            else if (!stick2Used) {
+                stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+                stick2Used = true;
+            }
+
             if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
             {
                 std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
@@ -1233,6 +1296,21 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 toolStrikeDetectors.erase(iter);
         }
     }
+    
+    if (!stick1Used) {
+        stick1->objectFrame.SetOrigin(0,0,-100);
+    }
+    else if (!stick2Used) {
+        stick2->objectFrame.SetOrigin(0,0,-100);
+    }
+    
+//    for (PadView* pv : pads)
+//    {
+//        M3DVector3f p;
+//        stick1->objectFrame.GetOrigin(p);
+//        if (pv->hitTest(p))
+//            pv->triggerDisplay();
+//    }
 
     StrikeDetectorMap::iterator iter = strikeDetectors.begin();
     bool useCursor = true;

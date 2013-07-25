@@ -23,6 +23,7 @@
 #include "StrikeDetector.h"
 #include "CursorView.h"
 #include "ButtonBar.h"
+#include "stickView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -98,6 +99,7 @@ private:
     void populatePatternSelector();
     void selectCurrentPattern();
     void incPadAssociation(int padNumber, int inc);
+    Leap::Vector scaledLeapInputPosition(const Leap::Vector& v);
 
     enum TimerIds
     {
@@ -158,6 +160,9 @@ private:
     Time lastRender;
 
     Time lastFrame;
+    
+    ScopedPointer<StickView> stick1;
+    ScopedPointer<StickView> stick2;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

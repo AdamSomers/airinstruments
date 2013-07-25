@@ -457,6 +457,9 @@
     <ClCompile Include="..\..\Source\SampleLayer.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\StickView.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
@@ -1819,6 +1822,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SampleLayer.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StickView.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StrikeDetector.h">
