@@ -1261,7 +1261,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     const size_t numPointables = pointables.count();
     for (unsigned int p = 0; p < numPointables; ++p) {
         const Leap::Pointable& pointable = pointables[p];
-        if (!pointable.hand().isValid())
+        if (!pointable.hand().isValid() && pointable.tipPosition().z > 150.f)
         {
             Leap::Vector scaledVec = scaledLeapInputPosition(pointable.tipPosition());
             if (!stick1Used) {
