@@ -25,6 +25,7 @@ public:
     void setHovering(bool hover) { hovering = hover; }
     void getScreenPos(M3DVector2f& inVec);
     void tap(int midiNote);
+    bool hitTest(const M3DVector3f& point);
 
     GLFrame objectFrame;
     int padNum;
@@ -34,7 +35,6 @@ public:
     static GLFrame padSurfaceFrame;
     
 private:
-    bool hitTest(const M3DVector3f& point);
     
     int selectedMidiNote;
     int id;

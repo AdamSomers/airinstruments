@@ -26,7 +26,7 @@
 // Child HUDView objects can be added and their bounds set relative to the parent.
 //
 class HUDView : public View2d
-              , public FingerView::Listener
+              , public Pointer3d::Listener
               , public CursorView::Listener
 {
 public:
@@ -49,17 +49,17 @@ public:
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
     
-    // FingerView::Listener override
-    virtual void updatePointedState(FingerView* fv);
+    // Pointer3d::Listener override
+    virtual void updatePointedState(Pointer3d* fv);
     
     // CursorView::Listener override
     virtual void updateCursorState(float x, float y);
 
     // Multi-finger interaction methods in screen coords.
     // x, y are FingerView position cooreds projected to screen plane 
-    virtual void fingerMotion(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
-    virtual void fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
-    virtual void fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/) {}
+    virtual void fingerMotion(float /*x*/, float /*y*/, Pointer3d* /*fv*/) {}
+    virtual void fingerEntered(float /*x*/, float /*y*/, Pointer3d* /*fv*/) {}
+    virtual void fingerExited(float /*x*/, float /*y*/, Pointer3d* /*fv*/) {}
     
     virtual void cursorMoved(float /*x*/, float /*y*/) {}
     virtual void cursorEntered(float /*x*/, float /*y*/) {}
@@ -73,7 +73,7 @@ protected:
 private:
     std::vector<HUDView*> children;
     HUDView* parent;
-    std::vector<FingerView*> hoveringFingers;
+    std::vector<Pointer3d*> hoveringFingers;
 };
 
 class HUDButton : public HUDView, public Timer
@@ -112,9 +112,9 @@ public:
     void removeListener(Listener* l);
     
     // FingerView::Listener override
-    virtual void updatePointedState(FingerView* /*fv*/) {}
-    virtual void fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/);
-    virtual void fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/);
+    virtual void updatePointedState(Pointer3d* /*fv*/) {}
+    virtual void fingerEntered(float /*x*/, float /*y*/, Pointer3d* /*fv*/);
+    virtual void fingerExited(float /*x*/, float /*y*/, Pointer3d* /*fv*/);
 
     
     virtual void updateCursorState(float, float) {}

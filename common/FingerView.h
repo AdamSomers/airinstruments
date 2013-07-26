@@ -9,48 +9,26 @@
 #include "Environment.h"
 #include "View2d.h"
 #include "Leap.h"
+#include "Pointer3d.h"
 
-class FingerView
+class FingerView : public Pointer3d
 {
 public:
     FingerView();
     void setup();
     void draw();
-    void getScreenPos(M3DVector2f& inVec);
     void setColor(const Colour& c) { color = c; }
-    
-    void drawWithShader(int shaderId);
 
-    class Listener
-    {
-    public:
-        Listener();
-        ~Listener();
-        virtual void updatePointedState(FingerView* fv) = 0;
-        void tap(FingerView* fv, float velocity);
-        virtual void tap(float /*velocity*/) {}
-        void circleBack(FingerView* fv);
-        virtual void circleBack() {}
-        void reset();
-        bool needsReset;
-        std::vector<FingerView*> pointers;
-    protected:
-        void fingerPointing(FingerView* fv);
-        void fingerNotPointing(FingerView* fv);
-    private:
-    };
+    void drawWithShader(int shaderId);
     
-    GLFrame objectFrame;
     GLFrame prevFrame;
     bool inUse;
     int id;
     bool invalid;
     bool didSetup;
 private:
-    void updateScreenPos();
     GLTriangleBatch     coneBatch;
     GLTriangleBatch     cylinderBatch;
-    M3DVector2f screenPos;
     Colour color;
 };
 
