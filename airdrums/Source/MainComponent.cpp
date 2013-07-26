@@ -1273,23 +1273,23 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         
 
         
-        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-        {
-            std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
-            //if (insertResult.second)
-            //    Logger::writeToLog("Inserted detector for hand id " + String(hand.id()));
-            StrikeDetectorMap::iterator iter = insertResult.first;
-            StrikeDetector& detector = (*iter).second;
-            detector.handMotion(hand);
-            int midiNote = detector.getNoteForHand(hand);
-            int padNumber = detector.getPadNumberForHand(hand);
-            hoveredNotes.insert(midiNote);
-            for (int i = 0; i < NUM_PADS; ++i)
-            {
-                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                    pads.at(i)->setHovering(true);
-            }
-        }
+//        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+//        {
+//            std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
+//            //if (insertResult.second)
+//            //    Logger::writeToLog("Inserted detector for hand id " + String(hand.id()));
+//            StrikeDetectorMap::iterator iter = insertResult.first;
+//            StrikeDetector& detector = (*iter).second;
+//            detector.handMotion(hand);
+//            int midiNote = detector.getNoteForHand(hand);
+//            int padNumber = detector.getPadNumberForHand(hand);
+//            hoveredNotes.insert(midiNote);
+//            for (int i = 0; i < NUM_PADS; ++i)
+//            {
+//                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+//                    pads.at(i)->setHovering(true);
+//            }
+//        }
     }
 
     const Leap::PointableList& pointables = frame.pointables();
@@ -1312,21 +1312,21 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 stick2Used = true;
             }
 
-            if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-            {
-                std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
-                StrikeDetectorMap::iterator iter = insertResult.first;
-                StrikeDetector& detector = (*iter).second;
-                int midiNote = detector.getNoteForPointable(pointable);
-                int padNumber = detector.getPadNumberForPointable(pointable);
-                hoveredNotes.insert(midiNote);
-                for (int i = 0; i < NUM_PADS; ++i)
-                {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                        pads.at(i)->setHovering(true);
-                }
-                detector.pointableMotion(pointable);
-            }
+//            if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+//            {
+//                std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
+//                StrikeDetectorMap::iterator iter = insertResult.first;
+//                StrikeDetector& detector = (*iter).second;
+//                int midiNote = detector.getNoteForPointable(pointable);
+//                int padNumber = detector.getPadNumberForPointable(pointable);
+//                hoveredNotes.insert(midiNote);
+//                for (int i = 0; i < NUM_PADS; ++i)
+//                {
+//                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+//                        pads.at(i)->setHovering(true);
+//                }
+//                detector.pointableMotion(pointable);
+//            }
         }
         else
         {
@@ -1336,10 +1336,72 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         }
     }
     
-    if (!stick1Used) {
+    if (stick1Used) {
+        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+        {
+            if (stick1->pointableId != -1)
+            {
+                const Leap::Pointable& pointable = frame.pointable(stick1->pointableId);
+                int midiNote = strikeDetector1.getNoteForPointable(pointable);
+                int padNumber = strikeDetector1.getPadNumberForPointable(pointable);
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                        pads.at(i)->setHovering(true);
+                }
+                strikeDetector1.pointableMotion(pointable);
+            }
+            else if (stick1->handId != -1)
+            {
+                const Leap::Hand& hand = frame.hand(stick1->handId);
+                int midiNote = strikeDetector1.getNoteForHand(hand);
+                int padNumber = strikeDetector1.getPadNumberForHand(hand);
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                        pads.at(i)->setHovering(true);
+                }
+                strikeDetector1.handMotion(hand);
+            }
+        }
+    }
+    else {
         stick1->objectFrame.SetOrigin(0,0,-100);
     }
-    else if (!stick2Used) {
+    if (stick2Used) {
+        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+        {
+            if (stick2->pointableId != -1)
+            {
+                const Leap::Pointable& pointable = frame.pointable(stick2->pointableId);
+                int midiNote = strikeDetector2.getNoteForPointable(pointable);
+                int padNumber = strikeDetector2.getPadNumberForPointable(pointable);
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                        pads.at(i)->setHovering(true);
+                }
+                strikeDetector2.pointableMotion(pointable);
+            }
+            else if (stick2->handId != -1)
+            {
+                const Leap::Hand& hand = frame.hand(stick2->handId);
+                int midiNote = strikeDetector2.getNoteForHand(hand);
+                int padNumber = strikeDetector2.getPadNumberForHand(hand);
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                        pads.at(i)->setHovering(true);
+                }
+                strikeDetector2.handMotion(hand);
+            }
+        }
+    }
+    else {
         stick2->objectFrame.SetOrigin(0,0,-100);
     }
 
@@ -1376,6 +1438,11 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             useCursor = false;
         ++iter;
     }
+    
+    if (Time::getCurrentTime() < strikeDetector1.getLastStrikeTime() + RelativeTime::milliseconds(500))
+        useCursor = false;
+    if (Time::getCurrentTime() < strikeDetector2.getLastStrikeTime() + RelativeTime::milliseconds(500))
+        useCursor = false;
 
     if (useCursor)
     {

@@ -163,6 +163,9 @@ private:
     
     ScopedPointer<StickView> stick1;
     ScopedPointer<StickView> stick2;
+    StrikeDetector strikeDetector1;
+    StrikeDetector strikeDetector2;
+    
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
