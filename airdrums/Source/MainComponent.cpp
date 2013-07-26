@@ -1408,10 +1408,13 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     if (MotionDispatcher::instance().cursor->isEnabled())
     {
         M3DVector2f screenPos;
-        if (stick1Used)
+        if (stick1Used) {
             stick1->getScreenPos(screenPos);
-        MotionDispatcher::instance().cursor->setPosition(screenPos[0] - MotionDispatcher::instance().cursor->getBounds().w / 2.f,
+            MotionDispatcher::instance().cursor->setPosition(screenPos[0] - MotionDispatcher::instance().cursor->getBounds().w / 2.f,
                                                          Environment::instance().screenH - screenPos[1] -  MotionDispatcher::instance().cursor->getBounds().h / 2.f);
+        }
+        else
+            MotionDispatcher::instance().cursor->setEnabled(false);
     }
     
 //    for (PadView* pv : pads)
