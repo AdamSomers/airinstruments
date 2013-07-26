@@ -1203,26 +1203,61 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     bool stick1Used = false;
     bool stick2Used = false;
     
+    const::Leap::Pointable p1 = frame.pointable(stick1->pointableId);
+    if (p1.isValid())
+    {
+        Leap::Vector scaledVec = scaledLeapInputPosition(p1.tipPosition());
+        stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+        stick1Used = true;
+    }
+    else
+        stick1->pointableId = -1;
+
+    const::Leap::Pointable p2 = frame.pointable(stick2->pointableId);
+    if (p2.isValid())
+    {
+        Leap::Vector scaledVec = scaledLeapInputPosition(p2.tipPosition());
+        stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+        stick2Used = true;
+    }
+    else
+        stick2->pointableId = -1;
+    
+    if (p1.isValid() && p2.isValid())
+    {
+        if (p1.hand().isValid() && p2.hand().isValid() && p1.hand() == p2.hand())
+        {
+            stick2->pointableId = -1;
+            stick2Used = false;
+        }
+    }
+
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
         
         Leap::Vector v;
+        int pointableId = -1;
+        int handId = -1;
         if (!hand.pointables().empty()) {
-            for (int i = 0; i < hand.pointables().count(); ++i) {
-                v += hand.pointables()[i].tipPosition();
-            }
-            v /= (float)hand.pointables().count();
-        }
-        else
-            v = hand.palmPosition();
-
-        Leap::Vector scaledVec = scaledLeapInputPosition(v);
-        if (h == 0) {
-            stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-            stick1Used = true;
+            v = hand.pointables().frontmost().tipPosition();
+            pointableId = hand.pointables().frontmost().id();
         }
         else {
+            v = hand.palmPosition();
+            handId = hand.id();
+        }
+
+        Leap::Vector scaledVec = scaledLeapInputPosition(v);
+        if (h == 0 && !stick1Used) {
+            stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            stick1->pointableId = pointableId;
+            stick1->handId = handId;
+            stick1Used = true;
+        }
+        else if (h != 0 && !stick2Used) {
             stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            stick2->pointableId = pointableId;
+            stick2->handId = handId;
             stick2Used = true;
         }
 
@@ -1264,12 +1299,16 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         if (!pointable.hand().isValid())
         {
             Leap::Vector scaledVec = scaledLeapInputPosition(pointable.tipPosition());
-            if (!stick1Used) {
+            if (!stick1Used && pointable.id() != stick2->pointableId) {
                 stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+                stick1->pointableId = pointable.id();
+                stick1->handId = -1;
                 stick1Used = true;
             }
-            else if (!stick2Used) {
+            else if (!stick2Used && pointable.id() != stick1->pointableId) {
                 stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+                stick2->pointableId = pointable.id();
+                stick2->handId = -1;
                 stick2Used = true;
             }
 

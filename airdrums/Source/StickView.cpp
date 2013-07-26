@@ -14,6 +14,8 @@
 
 StickView::StickView()
 : fade(0.f)
+, pointableId(-1)
+, handId(-1)
 {
 }
 

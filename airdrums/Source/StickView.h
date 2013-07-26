@@ -21,7 +21,10 @@ public:
     void update();
     void draw();
 
-private:    
+    int pointableId;
+    int handId;
+
+private:
     int id;
     
     static const int numVerts = 36;
