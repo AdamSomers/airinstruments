@@ -1410,6 +1410,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         M3DVector2f screenPos;
         if (stick1Used) {
             stick1->getScreenPos(screenPos);
+            screenPos[0] = jmin(screenPos[0], Environment::instance().screenW - MotionDispatcher::instance().cursor->getBounds().w / 2.f);
+            screenPos[0] = jmax(screenPos[0], MotionDispatcher::instance().cursor->getBounds().w / 2.f);
             MotionDispatcher::instance().cursor->setPosition(screenPos[0] - MotionDispatcher::instance().cursor->getBounds().w / 2.f,
                                                          Environment::instance().screenH - screenPos[1] -  MotionDispatcher::instance().cursor->getBounds().h / 2.f);
         }
