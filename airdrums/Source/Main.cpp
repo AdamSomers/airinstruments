@@ -439,7 +439,7 @@ AirHarpApplication::MainWindow::MainWindow()  :
     setResizeLimits(800, 600, 3840, 1800);
 #if JUCE_MAC
     setVisible (true);
-    Desktop::getInstance().setKioskModeComponent(this, false);
+    //Desktop::getInstance().setKioskModeComponent(this, false);
 #endif
     addKeyListener (AirHarpApplication::getInstance()->commandManager.getKeyMappings());
 }

@@ -141,12 +141,12 @@ void MotionDispatcher::onFrame(const Leap::Controller& controller)
 
         
         if (!cursor->isEnabled())
-            x = y = 0.f;
+            cursor->setPosition(0, 0);
         
-        cursor->setPosition(x, y);
+        //cursor->setPosition(x, y);
 		ScopedLock lock(listenerLock);
         for (CursorView::Listener* l : cursorViewListeners)
-            l->updateCursorState(x + cursor->getBounds().w / 2.f, y + cursor->getBounds().h / 2.f);
+            l->updateCursorState(cursor->getBounds().x + cursor->getBounds().w / 2.f, cursor->getBounds().y + cursor->getBounds().h / 2.f);
     }
     else
     {

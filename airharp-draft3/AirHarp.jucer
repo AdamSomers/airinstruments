@@ -41,6 +41,8 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
+      <FILE id="pAIRQ6" name="Pointer3d.cpp" compile="1" resource="0" file="../common/Pointer3d.cpp"/>
+      <FILE id="slob8v" name="Pointer3d.h" compile="0" resource="0" file="../common/Pointer3d.h"/>
       <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="zr3p0P" name="TextLabel.cpp" compile="1" resource="0" file="../common/TextLabel.cpp"/>

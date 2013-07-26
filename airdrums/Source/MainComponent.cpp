@@ -798,10 +798,10 @@ void MainContentComponent::renderOpenGL()
         sortedPads[i]->draw();
     Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
     Environment::instance().modelViewMatrix.PopMatrix(); // camera
-
+#endif
+    
     stick1->draw();
     stick2->draw();
-#endif
     
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
@@ -844,7 +844,7 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
-    
+
     for (PadView* pv : pads)
         pv->update();
 }
@@ -1302,6 +1302,15 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     }
     else if (!stick2Used) {
         stick2->objectFrame.SetOrigin(0,0,-100);
+    }
+
+    if (MotionDispatcher::instance().cursor->isEnabled())
+    {
+        M3DVector2f screenPos;
+        if (stick1Used)
+            stick1->getScreenPos(screenPos);
+        MotionDispatcher::instance().cursor->setPosition(screenPos[0] - MotionDispatcher::instance().cursor->getBounds().w / 2.f,
+                                                         Environment::instance().screenH - screenPos[1] -  MotionDispatcher::instance().cursor->getBounds().h / 2.f);
     }
     
 //    for (PadView* pv : pads)

@@ -165,6 +165,8 @@ void StickView::update()
 
 void StickView::draw()
 {
+    updateScreenPos();
+
     Environment::instance().modelViewMatrix.PushMatrix();
     M3DMatrix44f mObjectFrame;
     objectFrame.GetMatrix(mObjectFrame);

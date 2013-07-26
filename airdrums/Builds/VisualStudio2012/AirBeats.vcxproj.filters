@@ -349,6 +349,9 @@
     <ClCompile Include="..\..\..\common\MotionServer.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\Pointer3d.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\SkinManager.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
@@ -1687,6 +1690,9 @@
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\MotionServer.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\Pointer3d.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\SkinManager.h">

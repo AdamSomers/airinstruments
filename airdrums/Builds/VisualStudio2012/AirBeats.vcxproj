@@ -152,6 +152,7 @@
     <ClCompile Include="..\..\..\common\GfxTools.cpp"/>
     <ClCompile Include="..\..\..\common\HUD.cpp"/>
     <ClCompile Include="..\..\..\common\MotionServer.cpp"/>
+    <ClCompile Include="..\..\..\common\Pointer3d.cpp"/>
     <ClCompile Include="..\..\..\common\SkinManager.cpp"/>
     <ClCompile Include="..\..\..\common\TutorialSlide.cpp"/>
     <ClCompile Include="..\..\..\common\TextButton.cpp"/>
@@ -1293,6 +1294,7 @@
     <ClInclude Include="..\..\..\common\GfxTools.h"/>
     <ClInclude Include="..\..\..\common\HUD.h"/>
     <ClInclude Include="..\..\..\common\MotionServer.h"/>
+    <ClInclude Include="..\..\..\common\Pointer3d.h"/>
     <ClInclude Include="..\..\..\common\SkinManager.h"/>
     <ClInclude Include="..\..\..\common\Types.h"/>
     <ClInclude Include="..\..\..\common\TutorialSlide.h"/>

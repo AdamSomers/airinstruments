@@ -10,8 +10,9 @@
 #define __AirBeats__StickView__
 
 #include "GfxTools.h"
+#include "Pointer3d.h"
 
-class StickView
+class StickView : public Pointer3d
 {
 public:
     StickView();
@@ -19,8 +20,6 @@ public:
     void setup();
     void update();
     void draw();
-    
-    GLFrame objectFrame;
 
 private:    
     int id;

@@ -32,6 +32,8 @@
       <FILE id="Fqy8p2" name="MotionServer.cpp" compile="1" resource="0"
             file="../common/MotionServer.cpp"/>
       <FILE id="uvkMVm" name="MotionServer.h" compile="0" resource="0" file="../common/MotionServer.h"/>
+      <FILE id="UB549a" name="Pointer3d.cpp" compile="1" resource="0" file="../common/Pointer3d.cpp"/>
+      <FILE id="gNyJ6T" name="Pointer3d.h" compile="0" resource="0" file="../common/Pointer3d.h"/>
       <FILE id="Ei28rZ" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="b3Jfhk" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="PPfLKm" name="Types.h" compile="0" resource="0" file="../common/Types.h"/>
