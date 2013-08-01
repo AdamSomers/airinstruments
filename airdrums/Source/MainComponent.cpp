@@ -30,6 +30,7 @@
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
 #define SPLASH_FADE 1500
+#define DISTANCE_THRESHOLD 0.2f
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -57,6 +58,8 @@ MainContentComponent::MainContentComponent()
 , setPriority(false)
 , lastDrumSelection(-1)
 , resizeCursor(false)
+, lastDist1(DISTANCE_THRESHOLD)
+, lastDist2(DISTANCE_THRESHOLD)
 {
     setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
@@ -266,9 +269,9 @@ void MainContentComponent::newOpenGLContextCreated()
     }
     layoutPadsGrid();
     
-    stick1 = new StickView;
+    stick1 = SharedPtr<StickView>(new StickView);
     stick1->setup();
-    stick2 = new StickView;
+    stick2 = SharedPtr<StickView>(new StickView);
     stick2->setup();
 #endif
     
@@ -1172,6 +1175,10 @@ Leap::Vector MainContentComponent::scaledLeapInputPosition(const Leap::Vector& v
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+    bool advancedMode = props.getUserSettings()->getBoolValue("advancedMode", false);
+    
     lastFrame = Time::getCurrentTime();
 
     if (!Environment::instance().ready)
@@ -1336,7 +1343,10 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         }
     }
     
-    if (stick1Used) {
+    if (stick1Used)
+    {
+        float dist = calcStickDistance(stick1);
+
         if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
         {
             if (stick1->pointableId != -1)
@@ -1347,30 +1357,57 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 hoveredNotes.insert(midiNote);
                 for (int i = 0; i < NUM_PADS; ++i)
                 {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
                         pads.at(i)->setHovering(true);
+                        if (!advancedMode && lastDist1 > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = lastDist1 - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
+                    }
                 }
-                strikeDetector1.pointableMotion(pointable);
+                if (advancedMode)
+                    strikeDetector1.pointableMotion(pointable);
             }
             else if (stick1->handId != -1)
             {
+                float dist = calcStickDistance(stick1);
+    
                 const Leap::Hand& hand = frame.hand(stick1->handId);
                 int midiNote = strikeDetector1.getNoteForHand(hand);
                 int padNumber = strikeDetector1.getPadNumberForHand(hand);
                 hoveredNotes.insert(midiNote);
                 for (int i = 0; i < NUM_PADS; ++i)
                 {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
                         pads.at(i)->setHovering(true);
+                        if (!advancedMode && lastDist1 > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = lastDist1 - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
+                    }
                 }
-                strikeDetector1.handMotion(hand);
+                if (advancedMode)
+                    strikeDetector1.handMotion(hand);
             }
         }
+        lastDist1 = dist;
     }
     else {
         stick1->objectFrame.SetOrigin(0,0,-100);
+        lastDist1 = DISTANCE_THRESHOLD;
     }
-    if (stick2Used) {
+    if (stick2Used)
+    {
+        float dist = calcStickDistance(stick2);
+
         if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
         {
             if (stick2->pointableId != -1)
@@ -1381,10 +1418,20 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 hoveredNotes.insert(midiNote);
                 for (int i = 0; i < NUM_PADS; ++i)
                 {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
                         pads.at(i)->setHovering(true);
+                        if (!advancedMode && lastDist2 > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = lastDist2 - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
+                    }
                 }
-                strikeDetector2.pointableMotion(pointable);
+                if (advancedMode)
+                    strikeDetector2.pointableMotion(pointable);
             }
             else if (stick2->handId != -1)
             {
@@ -1394,15 +1441,27 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                 hoveredNotes.insert(midiNote);
                 for (int i = 0; i < NUM_PADS; ++i)
                 {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
                         pads.at(i)->setHovering(true);
+                        if (!advancedMode && lastDist2 > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = lastDist2 - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
+                    }
                 }
-                strikeDetector2.handMotion(hand);
+                if (advancedMode)
+                    strikeDetector2.handMotion(hand);
             }
         }
+        lastDist2 = dist;
     }
     else {
         stick2->objectFrame.SetOrigin(0,0,-100);
+        lastDist2 = DISTANCE_THRESHOLD;
     }
 
     if (MotionDispatcher::instance().cursor->isEnabled())
@@ -1817,4 +1876,20 @@ void MainContentComponent::showFullscreenTip()
 {
     fullscreenTipView->setVisible(true, 2000);
     startTimer(kFullscreenTipTimer, 2000 + 2000);
+}
+
+float MainContentComponent::calcStickDistance(SharedPtr<StickView> stick)
+{
+    M3DVector3f pOrigin, pNormal, rOrigin, collisionPoint;
+    M3DVector3f rNormal = { 0.f, -1.f, 0.f };
+    PadView::padSurfaceFrame.GetUpVector(pNormal);
+    PadView::padSurfaceFrame.GetOrigin(pOrigin);
+    stick->objectFrame.GetOrigin(rOrigin);
+    M3DMatrix33f m;
+    M3DVector3f pNormalRot;
+    m3dRotationMatrix33(m, m3dDegToRad(90.f), 1.f, 0.f, 0.f);
+    m3dRotateVector(pNormalRot, pNormal, m);
+    GfxTools::collide(rOrigin, rNormal, pOrigin, pNormalRot, collisionPoint);
+    float dist = rOrigin[1] - collisionPoint[1];
+    return dist;
 }

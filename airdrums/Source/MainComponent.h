@@ -99,6 +99,7 @@ private:
     void populatePatternSelector();
     void selectCurrentPattern();
     void incPadAssociation(int padNumber, int inc);
+    float calcStickDistance(SharedPtr<StickView> stick);
     Leap::Vector scaledLeapInputPosition(const Leap::Vector& v);
 
     enum TimerIds
@@ -161,10 +162,11 @@ private:
 
     Time lastFrame;
     
-    ScopedPointer<StickView> stick1;
-    ScopedPointer<StickView> stick2;
+    SharedPtr<StickView> stick1;
+    SharedPtr<StickView> stick2;
     StrikeDetector strikeDetector1;
     StrikeDetector strikeDetector2;
+    float lastDist1, lastDist2;
     
 
     //==============================================================================
