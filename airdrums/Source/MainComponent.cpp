@@ -1178,7 +1178,7 @@ Leap::Vector MainContentComponent::scaledLeapInputPosition(const Leap::Vector& v
 {
     Leap::Vector newVec;
     newVec.x = (v.x / 400.f) * 2.f * (Environment::screenW/(float)Environment::screenH);
-    newVec.y = ((v.y / 500.f) -.5f)*4;
+    newVec.y = ((v.y / 500.f) -.4f)*3;
     newVec.z = (v.z / 250.f) * 1.f - 10.f;
     return newVec;
 }
@@ -1237,9 +1237,9 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     if (p2.isValid())
     {
         Leap::Vector scaledVec = scaledLeapInputPosition(p2.tipPosition());
-        stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
         M3DVector3f collisionPoint;
         calcCollisionPoint(stick2, collisionPoint);
+        stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
         shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
         stick2Used = true;
     }
