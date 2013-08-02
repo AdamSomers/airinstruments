@@ -30,7 +30,7 @@
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
 #define SPLASH_FADE 1500
-#define DISTANCE_THRESHOLD 0.2f
+#define DISTANCE_THRESHOLD 0.25f
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -273,6 +273,12 @@ void MainContentComponent::newOpenGLContextCreated()
     stick1->setup();
     stick2 = SharedPtr<StickView>(new StickView);
     stick2->setup();
+    shadow1 = SharedPtr<ShadowView>(new ShadowView);
+    shadow1->setup();
+    shadow1->objectFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
+    shadow2 = SharedPtr<ShadowView>(new ShadowView);
+    shadow2->setup();
+    shadow2->objectFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 #endif
     
     //Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
@@ -805,7 +811,11 @@ void MainContentComponent::renderOpenGL()
     
     stick1->draw();
     stick2->draw();
-    
+    if (calcStickDistance(stick1) > DISTANCE_THRESHOLD)
+        shadow1->draw();
+    if (calcStickDistance(stick2) > DISTANCE_THRESHOLD)
+        shadow2->draw();
+
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_POINT_SMOOTH);
@@ -1213,8 +1223,11 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     const::Leap::Pointable p1 = frame.pointable(stick1->pointableId);
     if (p1.isValid())
     {
+        M3DVector3f collisionPoint;
+        calcCollisionPoint(stick1, collisionPoint);
         Leap::Vector scaledVec = scaledLeapInputPosition(p1.tipPosition());
         stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+        shadow1->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
         stick1Used = true;
     }
     else
@@ -1225,6 +1238,9 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     {
         Leap::Vector scaledVec = scaledLeapInputPosition(p2.tipPosition());
         stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+        M3DVector3f collisionPoint;
+        calcCollisionPoint(stick2, collisionPoint);
+        shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
         stick2Used = true;
     }
     else
@@ -1257,12 +1273,19 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         Leap::Vector scaledVec = scaledLeapInputPosition(v);
         if (h == 0 && !stick1Used) {
             stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            shadow1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            M3DVector3f collisionPoint;
+            calcCollisionPoint(stick1, collisionPoint);
+            shadow1->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
             stick1->pointableId = pointableId;
             stick1->handId = handId;
             stick1Used = true;
         }
         else if (h != 0 && !stick2Used) {
             stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            M3DVector3f collisionPoint;
+            calcCollisionPoint(stick2, collisionPoint);
+            shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
             stick2->pointableId = pointableId;
             stick2->handId = handId;
             stick2Used = true;
@@ -1308,12 +1331,18 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             Leap::Vector scaledVec = scaledLeapInputPosition(pointable.tipPosition());
             if (!stick1Used && pointable.id() != stick2->pointableId) {
                 stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+                M3DVector3f collisionPoint;
+                calcCollisionPoint(stick1, collisionPoint);
+                shadow1->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
                 stick1->pointableId = pointable.id();
                 stick1->handId = -1;
                 stick1Used = true;
             }
             else if (!stick2Used && pointable.id() != stick1->pointableId) {
                 stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+                M3DVector3f collisionPoint;
+                calcCollisionPoint(stick2, collisionPoint);
+                shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
                 stick2->pointableId = pointable.id();
                 stick2->handId = -1;
                 stick2Used = true;
@@ -1402,6 +1431,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     }
     else {
         stick1->objectFrame.SetOrigin(0,0,-100);
+        shadow1->objectFrame.SetOrigin(0,0,-100);
         lastDist1 = DISTANCE_THRESHOLD;
     }
     if (stick2Used)
@@ -1461,6 +1491,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     }
     else {
         stick2->objectFrame.SetOrigin(0,0,-100);
+        shadow2->objectFrame.SetOrigin(0,0,-100);
         lastDist2 = DISTANCE_THRESHOLD;
     }
 
@@ -1878,9 +1909,9 @@ void MainContentComponent::showFullscreenTip()
     startTimer(kFullscreenTipTimer, 2000 + 2000);
 }
 
-float MainContentComponent::calcStickDistance(SharedPtr<StickView> stick)
+void MainContentComponent::calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint)
 {
-    M3DVector3f pOrigin, pNormal, rOrigin, collisionPoint;
+    M3DVector3f pOrigin, pNormal, rOrigin;
     M3DVector3f rNormal = { 0.f, -1.f, 0.f };
     PadView::padSurfaceFrame.GetUpVector(pNormal);
     PadView::padSurfaceFrame.GetOrigin(pOrigin);
@@ -1890,6 +1921,14 @@ float MainContentComponent::calcStickDistance(SharedPtr<StickView> stick)
     m3dRotationMatrix33(m, m3dDegToRad(90.f), 1.f, 0.f, 0.f);
     m3dRotateVector(pNormalRot, pNormal, m);
     GfxTools::collide(rOrigin, rNormal, pOrigin, pNormalRot, collisionPoint);
+}
+
+float MainContentComponent::calcStickDistance(SharedPtr<StickView> stick)
+{
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(stick, collisionPoint);
+    M3DVector3f rOrigin;
+    stick->objectFrame.GetOrigin(rOrigin);
     float dist = rOrigin[1] - collisionPoint[1];
     return dist;
 }

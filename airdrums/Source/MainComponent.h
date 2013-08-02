@@ -24,6 +24,7 @@
 #include "CursorView.h"
 #include "ButtonBar.h"
 #include "stickView.h"
+#include "ShadowView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -100,6 +101,8 @@ private:
     void selectCurrentPattern();
     void incPadAssociation(int padNumber, int inc);
     float calcStickDistance(SharedPtr<StickView> stick);
+    void calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint);
+    void setStickPosition(SharedPtr<StickView> stick, const Leap::Vector& v);
     Leap::Vector scaledLeapInputPosition(const Leap::Vector& v);
 
     enum TimerIds
@@ -167,6 +170,9 @@ private:
     StrikeDetector strikeDetector1;
     StrikeDetector strikeDetector2;
     float lastDist1, lastDist2;
+    
+    SharedPtr<ShadowView> shadow1;
+    SharedPtr<ShadowView> shadow2;
     
 
     //==============================================================================

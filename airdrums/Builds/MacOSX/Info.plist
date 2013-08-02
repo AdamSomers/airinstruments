@@ -22,6 +22,6 @@
     <key>NSHumanReadableCopyright</key>
     <string>Handwavy</string>
     <key>NSHighResolutionCapable</key>
-    <false/>
+    <true/>
   </dict>
 </plist>
