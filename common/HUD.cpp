@@ -124,7 +124,7 @@ void HUDView::passiveMotion(float x, float y)
     }
 }
 
-void HUDView::updatePointedState(FingerView* fv)
+void HUDView::updatePointedState(Pointer3d* fv)
 {
     M3DVector2f screenPos;
     fv->getScreenPos(screenPos);
@@ -400,7 +400,7 @@ void HUDButton::mouseDown(float /*x*/, float /*y*/)
 //    prevNumPointers = pointers.size();
 //}
 
-void HUDButton::fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/)
+void HUDButton::fingerEntered(float /*x*/, float /*y*/, Pointer3d* /*fv*/)
 {
 //    Logger::outputDebugString("FingerEntered");
     if (!isVisible())
@@ -409,7 +409,7 @@ void HUDButton::fingerEntered(float /*x*/, float /*y*/, FingerView* /*fv*/)
     startTimer(hoverTimeout);
 }
 
-void HUDButton::fingerExited(float /*x*/, float /*y*/, FingerView* /*fv*/)
+void HUDButton::fingerExited(float /*x*/, float /*y*/, Pointer3d* /*fv*/)
 {
 //    Logger::outputDebugString("FingerExited");
     if (!isVisible())

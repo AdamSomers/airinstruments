@@ -489,14 +489,15 @@ bool PadView::hitTest(const M3DVector3f& point)
     objectFrame.GetOrigin(center);
     M3DVector3f transformedCenter;
     M3DMatrix44f cameraMatrix;
-    Environment::instance().cameraFrame.GetMatrix(cameraMatrix);
+    //Environment::instance().cameraFrame.GetMatrix(cameraMatrix);
+    padSurfaceFrame.GetMatrix(cameraMatrix);
     m3dTransformVector3(transformedCenter, center, cameraMatrix);
     
     if (point[0] > transformedCenter[0] - padWidth / 2.f &&
         point[0] < transformedCenter[0] + padWidth / 2.f &&
-        point[1] > transformedCenter[1] - padHeight / 2.f &&
-        point[1] < transformedCenter[1] + padHeight / 2.f &&
-        point[2] <= transformedCenter[2])
+        //point[1] > transformedCenter[1] - padHeight &&
+        point[1] - .2f < transformedCenter[1] &&
+        point[2] <= transformedCenter[2] - padDepth*2)
         return true;
     else
         return false;

@@ -367,6 +367,9 @@
     <ClCompile Include="..\..\..\common\JuceReverbAudioClient.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\Pointer3d.cpp">
+      <Filter>AirHarp\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\SkinManager.cpp">
       <Filter>AirHarp\common</Filter>
     </ClCompile>
@@ -1684,6 +1687,9 @@
       <Filter>AirHarp\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\JuceReverbAudioClient.h">
+      <Filter>AirHarp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\Pointer3d.h">
       <Filter>AirHarp\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\SkinManager.h">

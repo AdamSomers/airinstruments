@@ -349,6 +349,9 @@
     <ClCompile Include="..\..\..\common\MotionServer.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\common\Pointer3d.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\SkinManager.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
@@ -455,6 +458,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SampleLayer.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StickView.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp">
@@ -1686,6 +1692,9 @@
     <ClInclude Include="..\..\..\common\MotionServer.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\common\Pointer3d.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\common\SkinManager.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
@@ -1819,6 +1828,9 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SampleLayer.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StickView.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StrikeDetector.h">

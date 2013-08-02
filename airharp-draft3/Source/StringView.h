@@ -275,8 +275,9 @@ public:
     {
     }
     
-    void updatePointedState(FingerView* inFingerView)
+    void updatePointedState(Pointer3d* inPointer3d)
     {
+        FingerView* inFingerView = static_cast<FingerView*>(inPointer3d);
         int numChords = HarpManager::instance().getHarp(0)->getNumSelectedChords();
         M3DVector3f point;
         M3DVector3f ray;
