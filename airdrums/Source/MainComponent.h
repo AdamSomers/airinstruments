@@ -137,10 +137,6 @@ private:
 
     View2d* splashBgView;
     View2d* splashTitleView;
-
-    typedef std::map<int, StrikeDetector> StrikeDetectorMap;
-    StrikeDetectorMap strikeDetectors;
-    StrikeDetectorMap toolStrikeDetectors;
     
     float prevMouseY;
     float prevMouseX;
@@ -164,15 +160,8 @@ private:
     Time lastRender;
 
     Time lastFrame;
-    
-    SharedPtr<StickView> stick1;
-    SharedPtr<StickView> stick2;
-    StrikeDetector strikeDetector1;
-    StrikeDetector strikeDetector2;
-    float lastDist1, lastDist2;
-    
-    SharedPtr<ShadowView> shadow1;
-    SharedPtr<ShadowView> shadow2;
+
+    std::vector<SharedPtr<StickView> > sticks;
     
 
     //==============================================================================

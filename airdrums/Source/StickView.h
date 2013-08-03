@@ -12,6 +12,7 @@
 #include "GfxTools.h"
 #include "Pointer3d.h"
 #include "ShadowView.h"
+#include "StrikeDetector.h"
 
 class StickView : public Pointer3d
 {
@@ -23,13 +24,17 @@ public:
     void draw();
 
     void setOrigin(float x, float y, float z);
-    
-    int pointableId;
-    int handId;
-
-private:
     void calcCollisionPoint(M3DVector3f collisionPoint);
     float calcStickDistance();
+
+    int pointableId;
+    int handId;
+    bool inUse;
+    float lastDist;
+    StrikeDetector strikeDetector;
+
+private:
+
     int id;
     
     static const int numVerts = 36;

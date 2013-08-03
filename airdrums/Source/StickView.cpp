@@ -18,6 +18,7 @@ StickView::StickView()
 : fade(0.f)
 , pointableId(-1)
 , handId(-1)
+, inUse(false)
 {
 }
 
@@ -148,7 +149,7 @@ void StickView::makePadMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 void StickView::setup()
 {
     
-    gltMakeSphere(stickBatch, .1f, 20, 20);
+    gltMakeSphere(stickBatch, .05f, 20, 20);
     M3DVector3f verts[numVerts];
     M3DVector3f normals[numVerts];
     makePadMesh(verts, normals);
@@ -200,7 +201,7 @@ void StickView::draw()
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Environment::instance().modelViewMatrix.PopMatrix();
     
-    //if (calcStickDistance(stick1) > DISTANCE_THRESHOLD)
+    if (calcStickDistance() > DISTANCE_THRESHOLD)
         shadow.draw();
 }
 
