@@ -1223,11 +1223,50 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         }
         else
             sv->pointableId = -1;
+        
+        const::Leap::Hand h = frame.hand(sv->handId);
+        if (h.isValid())
+        {
+            Leap::Vector scaledVec = scaledLeapInputPosition(h.palmPosition());
+            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            sv->inUse = true;
+        }
+        else
+            sv->handId = -1;
     }
-
+    
+    // find lonely hands
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
-        // TODO - Handle lonely hands
+        if (hand.pointables().empty())
+        {
+            bool found = false;
+            for (SharedPtr<StickView> sv : sticks) {
+                if (sv->inUse && sv->handId == hand.id()) {
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                for (SharedPtr<StickView> sv : sticks) {
+                    if (!sv->inUse) {
+                        sv->handId = hand.id();
+                        sv->inUse = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (SharedPtr<StickView> sv : sticks) {
+                if (sv->handId != -1) {
+                    sv->handId = -1;
+                    sv->inUse = false;
+                }
+            }
+        }
     }
 
     // find new pointables
@@ -1258,26 +1297,48 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     for (SharedPtr<StickView> sv : sticks) {
         if (sv->inUse) {
             float dist = sv->calcStickDistance();
-            const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
-            int midiNote = sv->strikeDetector.getNoteForPointable(pointable);
-            int padNumber = sv->strikeDetector.getPadNumberForPointable(pointable);
-            hoveredNotes.insert(midiNote);
-            for (int i = 0; i < NUM_PADS; ++i)
+            int midiNote = -1;
+            int padNumber = -1;
+            if (sv->pointableId != -1)
             {
-                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
-                    pads.at(i)->setHovering(true);
-                    if (!advancedMode && sv->lastDist > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
-                        pads.at(i)->tap(midiNote);
-                        float diff = sv->lastDist - fabsf(dist);
-                        float vel = diff * 4.f;
-                        vel = jmin(vel, 1.f);
-                        //Logger::outputDebugString("vel = " + String(vel));
-                        Drums::instance().NoteOn(midiNote, vel);
+                const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
+                midiNote = sv->strikeDetector.getNoteForPointable(pointable);
+                padNumber = sv->strikeDetector.getPadNumberForPointable(pointable);
+            }
+            else if (sv->handId != -1)
+            {
+                const Leap::Hand& hand = frame.hand(sv->handId);
+                midiNote = sv->strikeDetector.getNoteForHand(hand);
+                padNumber = sv->strikeDetector.getPadNumberForHand(hand);
+            }
+            
+            if (midiNote != -1)
+            {
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
+                        pads.at(i)->setHovering(true);
+                        if (!advancedMode && sv->lastDist > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = sv->lastDist - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            //Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
                     }
                 }
             }
             if (advancedMode) {
-                sv->strikeDetector.pointableMotion(pointable);	
+                if (sv->pointableId != -1) {
+                    const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
+                    sv->strikeDetector.pointableMotion(pointable);
+                }
+                else {
+                    const Leap::Hand& hand = frame.hand(sv->handId);
+                    sv->strikeDetector.handMotion(hand);
+                }
             }
             sv->lastDist = dist;
         }
