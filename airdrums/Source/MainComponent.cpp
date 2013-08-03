@@ -273,12 +273,6 @@ void MainContentComponent::newOpenGLContextCreated()
     stick1->setup();
     stick2 = SharedPtr<StickView>(new StickView);
     stick2->setup();
-    shadow1 = SharedPtr<ShadowView>(new ShadowView);
-    shadow1->setup();
-    shadow1->objectFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
-    shadow2 = SharedPtr<ShadowView>(new ShadowView);
-    shadow2->setup();
-    shadow2->objectFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 #endif
     
     //Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
@@ -811,10 +805,6 @@ void MainContentComponent::renderOpenGL()
     
     stick1->draw();
     stick2->draw();
-    if (calcStickDistance(stick1) > DISTANCE_THRESHOLD)
-        shadow1->draw();
-    if (calcStickDistance(stick2) > DISTANCE_THRESHOLD)
-        shadow2->draw();
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
@@ -1223,11 +1213,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     const::Leap::Pointable p1 = frame.pointable(stick1->pointableId);
     if (p1.isValid())
     {
-        M3DVector3f collisionPoint;
-        calcCollisionPoint(stick1, collisionPoint);
         Leap::Vector scaledVec = scaledLeapInputPosition(p1.tipPosition());
-        stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-        shadow1->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
+        stick1->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
         stick1Used = true;
     }
     else
@@ -1237,10 +1224,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     if (p2.isValid())
     {
         Leap::Vector scaledVec = scaledLeapInputPosition(p2.tipPosition());
-        M3DVector3f collisionPoint;
-        calcCollisionPoint(stick2, collisionPoint);
-        stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-        shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
+        stick2->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
         stick2Used = true;
     }
     else
@@ -1272,20 +1256,13 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
         Leap::Vector scaledVec = scaledLeapInputPosition(v);
         if (h == 0 && !stick1Used) {
-            stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-            shadow1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-            M3DVector3f collisionPoint;
-            calcCollisionPoint(stick1, collisionPoint);
-            shadow1->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
+            stick1->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
             stick1->pointableId = pointableId;
             stick1->handId = handId;
             stick1Used = true;
         }
         else if (h != 0 && !stick2Used) {
-            stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-            M3DVector3f collisionPoint;
-            calcCollisionPoint(stick2, collisionPoint);
-            shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
+            stick2->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
             stick2->pointableId = pointableId;
             stick2->handId = handId;
             stick2Used = true;
@@ -1330,19 +1307,13 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         {
             Leap::Vector scaledVec = scaledLeapInputPosition(pointable.tipPosition());
             if (!stick1Used && pointable.id() != stick2->pointableId) {
-                stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-                M3DVector3f collisionPoint;
-                calcCollisionPoint(stick1, collisionPoint);
-                shadow1->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
+                stick1->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
                 stick1->pointableId = pointable.id();
                 stick1->handId = -1;
                 stick1Used = true;
             }
             else if (!stick2Used && pointable.id() != stick1->pointableId) {
-                stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-                M3DVector3f collisionPoint;
-                calcCollisionPoint(stick2, collisionPoint);
-                shadow2->objectFrame.SetOrigin(scaledVec.x, collisionPoint[1] + 0.2f ,scaledVec.z);
+                stick2->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
                 stick2->pointableId = pointable.id();
                 stick2->handId = -1;
                 stick2Used = true;
@@ -1393,7 +1364,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                             float diff = lastDist1 - fabsf(dist);
                             float vel = diff * 4.f;
                             vel = jmin(vel, 1.f);
-                            Logger::outputDebugString("vel = " + String(vel));
+                            //Logger::outputDebugString("vel = " + String(vel));
                             Drums::instance().NoteOn(midiNote, vel);
                         }
                     }
@@ -1418,7 +1389,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
                             float diff = lastDist1 - fabsf(dist);
                             float vel = diff * 4.f;
                             vel = jmin(vel, 1.f);
-                            Logger::outputDebugString("vel = " + String(vel));
+                            //Logger::outputDebugString("vel = " + String(vel));
                             Drums::instance().NoteOn(midiNote, vel);
                         }
                     }
@@ -1430,8 +1401,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         lastDist1 = dist;
     }
     else {
-        stick1->objectFrame.SetOrigin(0,0,-100);
-        shadow1->objectFrame.SetOrigin(0,0,-100);
+        stick1->setOrigin(0,0,-100);
         lastDist1 = DISTANCE_THRESHOLD;
     }
     if (stick2Used)
@@ -1490,8 +1460,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         lastDist2 = dist;
     }
     else {
-        stick2->objectFrame.SetOrigin(0,0,-100);
-        shadow2->objectFrame.SetOrigin(0,0,-100);
+        stick2->setOrigin(0,0,-100);
         lastDist2 = DISTANCE_THRESHOLD;
     }
 

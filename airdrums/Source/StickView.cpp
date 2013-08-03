@@ -12,6 +12,8 @@
 
 #define FADE_TIME 300
 
+#define DISTANCE_THRESHOLD 0.25f
+
 StickView::StickView()
 : fade(0.f)
 , pointableId(-1)
@@ -154,6 +156,9 @@ void StickView::setup()
     padBatch.CopyVertexData3f(verts);
     padBatch.CopyNormalDataf(normals);
     padBatch.End();
+    
+    shadow.setup();
+    shadow.objectFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 }
 
 void StickView::update()
@@ -194,4 +199,40 @@ void StickView::draw()
     
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Environment::instance().modelViewMatrix.PopMatrix();
+    
+    //if (calcStickDistance(stick1) > DISTANCE_THRESHOLD)
+        shadow.draw();
+}
+
+void StickView::setOrigin(float x, float y, float z)
+{
+    objectFrame.SetOrigin(x,y,z);
+    shadow.objectFrame.SetOrigin(x,y,z);
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(collisionPoint);
+    shadow.objectFrame.SetOrigin(x, collisionPoint[1] + 0.2f ,z);
+}
+
+void StickView::calcCollisionPoint(M3DVector3f collisionPoint)
+{
+    M3DVector3f pOrigin, pNormal, rOrigin;
+    M3DVector3f rNormal = { 0.f, -1.f, 0.f };
+    PadView::padSurfaceFrame.GetUpVector(pNormal);
+    PadView::padSurfaceFrame.GetOrigin(pOrigin);
+    objectFrame.GetOrigin(rOrigin);
+    M3DMatrix33f m;
+    M3DVector3f pNormalRot;
+    m3dRotationMatrix33(m, m3dDegToRad(90.f), 1.f, 0.f, 0.f);
+    m3dRotateVector(pNormalRot, pNormal, m);
+    GfxTools::collide(rOrigin, rNormal, pOrigin, pNormalRot, collisionPoint);
+}
+
+float StickView::calcStickDistance()
+{
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(collisionPoint);
+    M3DVector3f rOrigin;
+    objectFrame.GetOrigin(rOrigin);
+    float dist = rOrigin[1] - collisionPoint[1];
+    return dist;
 }
