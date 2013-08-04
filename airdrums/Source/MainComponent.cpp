@@ -936,13 +936,15 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     if (!Environment::instance().ready)
         return;
 
+    bool handled = false;
     for (HUDView* v : views)
-        v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y);
+        if (v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y))
+            handled = true;
     
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
     
-    if (tutorial && !tutorial->isVisible())
+    if (tutorial && !tutorial->isVisible() && !handled)
     {
         for (PlayArea* pad : playAreas)
             if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
