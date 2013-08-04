@@ -23,7 +23,7 @@ public:
     void update();
     void draw();
 
-    void setOrigin(float x, float y, float z);
+    void setOrigin(float x, float y, float z, bool limitToPlane);
     void calcCollisionPoint(M3DVector3f collisionPoint);
     float calcStickDistance();
 
@@ -44,6 +44,7 @@ private:
     float fade;
     Time fadeStartTime;
     ShadowView shadow;
+    float ghostY;
 };
 
 #endif /* defined(__AirBeats__StickView__) */

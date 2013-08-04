@@ -205,12 +205,15 @@ void StickView::draw()
         shadow.draw();
 }
 
-void StickView::setOrigin(float x, float y, float z)
+void StickView::setOrigin(float x, float y, float z, bool limitToPlane)
 {
-    objectFrame.SetOrigin(x,y,z);
-    shadow.objectFrame.SetOrigin(x,y,z);
+    ghostY = y;
     M3DVector3f collisionPoint;
     calcCollisionPoint(collisionPoint);
+    if (limitToPlane)
+        objectFrame.SetOrigin(x,jmax(y, collisionPoint[1] + 0.2f),z);
+    else
+        objectFrame.SetOrigin(x,y,z);
     shadow.objectFrame.SetOrigin(x, collisionPoint[1] + 0.2f ,z);
 }
 
@@ -234,6 +237,6 @@ float StickView::calcStickDistance()
     calcCollisionPoint(collisionPoint);
     M3DVector3f rOrigin;
     objectFrame.GetOrigin(rOrigin);
-    float dist = rOrigin[1] - collisionPoint[1];
+    float dist = ghostY - collisionPoint[1];
     return dist;
 }

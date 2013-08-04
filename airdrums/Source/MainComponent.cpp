@@ -1207,6 +1207,8 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         pads.at(i)->setHovering(false);
     }
     
+    bool limitToPlane = !(kitSelector->isEnabled() || patternSelector->isEnabled());
+    
     std::set<int> hoveredNotes;
     
     for (SharedPtr<StickView> sv : sticks)
@@ -1218,7 +1220,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         if (p.isValid())
         {
             Leap::Vector scaledVec = scaledLeapInputPosition(p.tipPosition());
-            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z,limitToPlane);
             sv->inUse = true;
         }
         else
@@ -1228,7 +1230,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         if (h.isValid())
         {
             Leap::Vector scaledVec = scaledLeapInputPosition(h.palmPosition());
-            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
+            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z,limitToPlane);
             sv->inUse = true;
         }
         else
@@ -1343,7 +1345,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
             sv->lastDist = dist;
         }
         else {
-            sv->setOrigin(0,0,-100);
+            sv->setOrigin(0,-100,-100, false);
             sv->lastDist = DISTANCE_THRESHOLD;
         }
     }
@@ -1372,7 +1374,7 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
     bool useCursor = true;
 
-    if (Time::getCurrentTime() < Drums::instance().getLastNoteOnTime() + RelativeTime::milliseconds(500))
+    if (Time::getCurrentTime() < Drums::instance().getLastNoteOnTime() + RelativeTime::milliseconds(500) && limitToPlane)
         useCursor = false;
 
     if (useCursor)
