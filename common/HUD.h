@@ -45,7 +45,7 @@ public:
     void setParent(HUDView* p);
     HUDView* const getParent() { return parent; }
     
-    virtual void mouseDown(float x, float y);
+    virtual bool mouseDown(float x, float y);
     virtual void motion(float x, float y);
     virtual void passiveMotion(float x, float y);
     
@@ -82,7 +82,7 @@ public:
     HUDButton(int id = -1);
     void draw();
     void setup();
-    void mouseDown(float x, float y);
+    bool mouseDown(float x, float y);
     void setState(bool state, bool broadcast = false);
     bool getState() const { return state; }
     int getId() const { return buttonId; }

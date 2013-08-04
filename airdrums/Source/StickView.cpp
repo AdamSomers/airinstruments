@@ -12,10 +12,13 @@
 
 #define FADE_TIME 300
 
+#define DISTANCE_THRESHOLD 0.25f
+
 StickView::StickView()
 : fade(0.f)
 , pointableId(-1)
 , handId(-1)
+, inUse(false)
 {
 }
 
@@ -146,7 +149,7 @@ void StickView::makePadMesh(M3DVector3f* inVerts, M3DVector3f* inNorms)
 void StickView::setup()
 {
     
-    gltMakeSphere(stickBatch, .1f, 20, 20);
+    gltMakeSphere(stickBatch, .05f, 20, 20);
     M3DVector3f verts[numVerts];
     M3DVector3f normals[numVerts];
     makePadMesh(verts, normals);
@@ -154,6 +157,9 @@ void StickView::setup()
     padBatch.CopyVertexData3f(verts);
     padBatch.CopyNormalDataf(normals);
     padBatch.End();
+    
+    shadow.setup();
+    shadow.objectFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 }
 
 void StickView::update()
@@ -194,4 +200,43 @@ void StickView::draw()
     
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Environment::instance().modelViewMatrix.PopMatrix();
+    
+    if (calcStickDistance() > DISTANCE_THRESHOLD)
+        shadow.draw();
+}
+
+void StickView::setOrigin(float x, float y, float z, bool limitToPlane)
+{
+    ghostY = y;
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(collisionPoint);
+    if (limitToPlane)
+        objectFrame.SetOrigin(x,jmax(y, collisionPoint[1] + 0.2f),z);
+    else
+        objectFrame.SetOrigin(x,y,z);
+    shadow.objectFrame.SetOrigin(x, collisionPoint[1] + 0.2f ,z);
+}
+
+void StickView::calcCollisionPoint(M3DVector3f collisionPoint)
+{
+    M3DVector3f pOrigin, pNormal, rOrigin;
+    M3DVector3f rNormal = { 0.f, -1.f, 0.f };
+    PadView::padSurfaceFrame.GetUpVector(pNormal);
+    PadView::padSurfaceFrame.GetOrigin(pOrigin);
+    objectFrame.GetOrigin(rOrigin);
+    M3DMatrix33f m;
+    M3DVector3f pNormalRot;
+    m3dRotationMatrix33(m, m3dDegToRad(90.f), 1.f, 0.f, 0.f);
+    m3dRotateVector(pNormalRot, pNormal, m);
+    GfxTools::collide(rOrigin, rNormal, pOrigin, pNormalRot, collisionPoint);
+}
+
+float StickView::calcStickDistance()
+{
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(collisionPoint);
+    M3DVector3f rOrigin;
+    objectFrame.GetOrigin(rOrigin);
+    float dist = ghostY - collisionPoint[1];
+    return dist;
 }

@@ -24,6 +24,7 @@
 #include "CursorView.h"
 #include "ButtonBar.h"
 #include "stickView.h"
+#include "ShadowView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -99,6 +100,9 @@ private:
     void populatePatternSelector();
     void selectCurrentPattern();
     void incPadAssociation(int padNumber, int inc);
+    float calcStickDistance(SharedPtr<StickView> stick);
+    void calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint);
+    void setStickPosition(SharedPtr<StickView> stick, const Leap::Vector& v);
     Leap::Vector scaledLeapInputPosition(const Leap::Vector& v);
 
     enum TimerIds
@@ -133,10 +137,6 @@ private:
 
     View2d* splashBgView;
     View2d* splashTitleView;
-
-    typedef std::map<int, StrikeDetector> StrikeDetectorMap;
-    StrikeDetectorMap strikeDetectors;
-    StrikeDetectorMap toolStrikeDetectors;
     
     float prevMouseY;
     float prevMouseX;
@@ -160,11 +160,8 @@ private:
     Time lastRender;
 
     Time lastFrame;
-    
-    ScopedPointer<StickView> stick1;
-    ScopedPointer<StickView> stick2;
-    StrikeDetector strikeDetector1;
-    StrikeDetector strikeDetector2;
+
+    std::vector<SharedPtr<StickView> > sticks;
     
 
     //==============================================================================

@@ -28,7 +28,8 @@ AirHarpApplication::AirHarpApplication()
 #endif
     fileLogger = FileLogger::createDateStampedLogger("AirBeats", "AirBeats", ".txt", "AirBeats Log - please send this file to info@handwavy.co if you have encountered an error.  Thanks!");
     Logger::setCurrentLogger(fileLogger);
-    Logger::writeToLog("AirHarpApplication instantiated");
+    Logger::writeToLog("Application instantiated");
+    Logger::writeToLog("AirBeats version " + getApplicationVersion());
 }
 
 
@@ -171,7 +172,8 @@ void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands
         kSavePatternCmd,
         kDeletePatternCmd,
         kMoreInfoCmd,
-        kFullscreenCmd
+        kFullscreenCmd,
+        kAdvancedModeCmd
     };
     
     commands.addArray (ids, numElementsInArray (ids));
@@ -180,6 +182,8 @@ void AirHarpApplication::MainWindow::getAllCommands (Array< CommandID>& commands
 
 void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, ApplicationCommandInfo &result)
 {
+    AirHarpApplication* app = AirHarpApplication::getInstance();
+    ApplicationProperties& props = app->getProperties();
     switch (commandID)
     {
         case kNewPatternCmd:
@@ -221,8 +225,6 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
         {
             result.setInfo ("Use Pattern Tempo", "Use BPM from pattern file, or global tempo", "Options", 0);
             result.setActive(true);
-            AirHarpApplication* app = AirHarpApplication::getInstance();
-            ApplicationProperties& props = app->getProperties();
             bool tick = false;
             if (props.getUserSettings()->getBoolValue("tempoSource", Drums::kGlobalTempo) != Drums::kGlobalTempo)
                 tick = true;
@@ -245,12 +247,25 @@ void AirHarpApplication::MainWindow::getCommandInfo (CommandID commandID, Applic
             result.setInfo ("Toggle Fullscreen Mode", "Toggle Fullscreen Mode", "Options", 0);
             result.setActive(true);
             break;
+        case kAdvancedModeCmd:
+        {
+            result.setInfo ("Advanced Mode", "Toggle Advanced Mode", "Options", 0);
+            result.setActive(true);
+            bool tick = false;
+            if (props.getUserSettings()->getBoolValue("advancedMode", false))
+                tick = true;
+            result.setTicked(tick);
+        }
+            break;
 
     }
 }
 
 bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
 {
+    AirHarpApplication* app = AirHarpApplication::getInstance();
+    ApplicationProperties& props = app->getProperties();
+
     switch(info.commandID)
 	{
 		default :
@@ -289,8 +304,6 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
 		}
 		case kUsePatternTempoCmd :
 		{
-            AirHarpApplication* app = AirHarpApplication::getInstance();
-            ApplicationProperties& props = app->getProperties();
             bool usePatternTempo = !(props.getUserSettings()->getBoolValue("tempoSource", Drums::kGlobalTempo) != Drums::kGlobalTempo);
 			PatternManager& mgr = PatternManager::GetInstance();
 			/*PatternManager::Status status =*/ mgr.UsePatternTempo(usePatternTempo);
@@ -336,6 +349,12 @@ bool AirHarpApplication::MainWindow::perform (const InvocationInfo &info)
             else
                 AirHarpApplication::getInstance()->enterFullscreenMode();
         }
+        case kAdvancedModeCmd:
+        {
+            bool advancedMode = props.getUserSettings()->getBoolValue("advancedMode", false);
+            props.getUserSettings()->setValue("advancedMode", !advancedMode);
+        }
+            break;
 	}
     
 //#if JUCE_MAC
