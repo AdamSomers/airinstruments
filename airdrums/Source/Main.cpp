@@ -28,7 +28,8 @@ AirHarpApplication::AirHarpApplication()
 #endif
     fileLogger = FileLogger::createDateStampedLogger("AirBeats", "AirBeats", ".txt", "AirBeats Log - please send this file to info@handwavy.co if you have encountered an error.  Thanks!");
     Logger::setCurrentLogger(fileLogger);
-    Logger::writeToLog("AirHarpApplication instantiated");
+    Logger::writeToLog("Application instantiated");
+    Logger::writeToLog("AirBeats version " + getApplicationVersion());
 }
 
 
