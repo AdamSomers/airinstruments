@@ -698,17 +698,17 @@ void MainContentComponent::renderOpenGL()
         
         if (buttonBar)
             buttonBar->setBounds(HUDRect((GLfloat) 0,
-                                         (GLfloat) (statusBarHeight + 10),
+                                         (GLfloat) (drumSelector->getBounds().y - 110),
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat)100));
         
-        float height = drumSelector->getBounds().y - (buttonBar->getBounds().y + buttonBar->getBounds().h) - 50;
+        float height = buttonBar->getBounds().y - (statusBar->getBounds().y + statusBar->getBounds().h) - 100;
         float width = (GLfloat) Environment::instance().screenW / 6.f;
         float hiddenX = -width;
         float shownX = 0;
         if (kitSelector) {
             kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? shownX : hiddenX,
-                                           (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                           (GLfloat) (statusBar->getBounds().y + statusBar->getBounds().h + 100),
                                            width,
                                            height));
             kitSelector->setXRange(shownX, hiddenX);
@@ -739,7 +739,7 @@ void MainContentComponent::renderOpenGL()
         shownX = Environment::instance().screenW - width;
         if (patternSelector) {
             patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
-                                               (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                               (GLfloat) (statusBar->getBounds().y + statusBar->getBounds().h + 100),
                                                width,
                                                height));
             patternSelector->setXRange(shownX, hiddenX);
