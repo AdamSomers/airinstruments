@@ -805,8 +805,10 @@ void MainContentComponent::renderOpenGL()
     //stick1->draw();
     //stick2->draw();
     
-    for (SharedPtr<StickView> sv : sticks)
-        sv->draw();
+    for (SharedPtr<StickView> sv : sticks) {
+        if (sv->inUse)
+            sv->draw();
+    }
 
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
