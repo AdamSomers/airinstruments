@@ -42,7 +42,8 @@ SkinManager::~SkinManager()
 }
 
 void SkinManager::loadResources()
-{    
+{
+    Logger::writeToLog("loadResources begin");
     File special = File::getSpecialLocation(File::currentApplicationFile);
 #if JUCE_WINDOWS
 	File resourcesFile = special.getChildFile("../");
@@ -50,19 +51,24 @@ void SkinManager::loadResources()
 	File resourcesFile = special.getChildFile("Contents/Resources");
 #endif
     
-    //printf("SkinManager::loadResources - skins:\n");
-    DirectoryIterator iter(resourcesFile.getChildFile("skins"), false, "*", File::findDirectories);
+    Logger::writeToLog("resources file: " + resourcesFile.getFullPathName());
+    File skinsFile = resourcesFile.getChildFile("skins");
+    Logger::writeToLog("skins file: " + skinsFile.getFullPathName());
+    Logger::writeToLog("skins file existence: " + String(skinsFile.exists()));
+    DirectoryIterator iter(skinsFile, false, "*", File::findDirectories);
     while(iter.next())
     {
         File skinDir = iter.getFile();
         String skinName = skinDir.getFileName();
         Skin s(skinName);
-        //Logger::writeToLog("\t" + skinName);
+        Logger::writeToLog("skin: " + skinName);
         DirectoryIterator skinImagesIter(skinDir, true, "*.png", File::findFiles);
         while (skinImagesIter.next())
         {
             File imageFile = skinImagesIter.getFile();
+            Logger::writeToLog("\tfile: " + imageFile.getFullPathName());
             Image image = ImageFileFormat::loadFrom (imageFile);
+            Logger::writeToLog("\timage validity: " + String(image.isValid()));
             TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(image);
             String imageName = imageFile.getFileNameWithoutExtension();
             File atlasXml = imageFile.getParentDirectory().getChildFile(imageName + ".xml");
@@ -81,10 +87,10 @@ void SkinManager::loadResources()
             {
                 s.addTexture(imageName, textureDesc);
             }
-            //Logger::writeToLog("\t\t" + imageName);
         }
         skins.insert(std::make_pair(skinName, s));
     }
+    Logger::writeToLog("loadResources end");
 }
 
 const Skin& SkinManager::getSkin(String name) const
