@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="1.0.3"
+<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="1.0.4"
               bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
