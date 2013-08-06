@@ -194,7 +194,16 @@ int StrikeDetector::getPadNumberForHand(const Leap::Hand& hand)
 
 int StrikeDetector::getPadNumberForPointable(const Leap::Pointable& pointable)
 {
-    return getPadNumberForPosition(pointable.tipPosition().x,
+    float x = pointable.tipPosition().x;
+    const Leap::Hand hand = pointable.hand();
+    if (hand.isValid()) {
+        Leap::Vector handVec = hand.palmPosition();
+        if (handVec.x < x)
+            x -= (x - handVec.x) / 2.f;
+        else
+            x += (handVec.x - x) / 2.f;
+    }
+    return getPadNumberForPosition(x,
                                    pointable.tipPosition().y,
                                    pointable.tipPosition().z);
 }

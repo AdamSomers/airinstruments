@@ -1247,8 +1247,18 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         const::Leap::Pointable p = frame.pointable(sv->pointableId);
         if (p.isValid())
         {
+            float x = 0.f;
             Leap::Vector scaledVec = scaledLeapInputPosition(p.tipPosition());
-            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z,limitToPlane);
+            x = scaledVec.x;
+            const Leap::Hand hand = p.hand();
+            if (hand.isValid()) {
+                Leap::Vector handVec = scaledLeapInputPosition(hand.palmPosition());
+                if (handVec.x < x)
+                    x -= (x - handVec.x) / 2.f;
+                else
+                    x += (handVec.x - x) / 2.f;
+            }
+            sv->setOrigin(x,scaledVec.y,scaledVec.z,limitToPlane);
             sv->inUse = true;
         }
         else
