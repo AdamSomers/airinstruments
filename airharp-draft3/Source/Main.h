@@ -22,7 +22,7 @@ class AirHarpApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    AirHarpApplication() {}
+    AirHarpApplication();
     
     const String getApplicationName()       { return ProjectInfo::projectName; }
     const String getApplicationVersion()    { return ProjectInfo::versionString; }

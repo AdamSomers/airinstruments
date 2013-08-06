@@ -55,14 +55,19 @@ public:
     // ChangeListener override
     void changeListenerCallback (ChangeBroadcaster* source);
     
-    void onFrame(const Leap::Controller&);
+    // Leap::Listener override
+    virtual void onFrame(const Leap::Controller&);
+    virtual void onConnect(const Leap::Controller&);
+    virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFocusGained (const Leap::Controller &);
+    virtual void onFocusLost (const Leap::Controller &);
     
     void timerCallback(int timeId);
     
     enum TimerIds
     {
         kTimerShowTutorial = 0,
-        kTimerCheckLeapConnection,
+        kTimerWaitingForConnection,
         kFullscreenTipTimer
     };
 
@@ -112,6 +117,9 @@ private:
     
     Time lastFrame;
     Time startTime;
+    
+    bool connected;
+
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

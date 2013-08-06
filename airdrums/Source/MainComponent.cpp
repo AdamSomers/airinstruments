@@ -58,6 +58,7 @@ MainContentComponent::MainContentComponent()
 , setPriority(false)
 , lastDrumSelection(-1)
 , resizeCursor(false)
+, connected(false)
 {
     setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
@@ -97,8 +98,6 @@ MainContentComponent::MainContentComponent()
         splashLogoImage = ImageFileFormat::loadFrom(splashLogoImageFile);
     else
         Logger::writeToLog("ERROR: logotype.png not found!");
-    
-    startTimer(kTimerCheckLeapConnection, 500);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -202,38 +201,34 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
-    if (!Environment::instance().ready)
-        return;
-
-    Logger::writeToLog("Focus Gained");
-    MotionDispatcher::instance().resume();
 }
 
 void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
-    Logger::writeToLog("Focus Lost");
-    MotionDispatcher::instance().pause();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    Logger::writeToLog("newOpenGLContextCreated()");
+    Logger::writeToLog("glewInit");
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
     else
         Logger::writeToLog("VAOs Not Supported");
-
-    Logger::writeToLog("newOpenGLContextCreated()");
     
     Drums::instance().playbackState.addListener(this);
     Drums::instance().registerTempoSlider(&tempoSlider);
     tempoSlider.addListener(&Drums::instance());
-
+    
+    Logger::writeToLog("loading skins");
     SkinManager::instance().loadResources();
+    Logger::writeToLog("Loading kit textures");
     KitManager::GetInstance().LoadTextures();
     //String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
     //SkinManager::instance().setSelectedSkin(skinSetting);
     
+    Logger::writeToLog("setting GL parameters");
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     
@@ -252,8 +247,10 @@ void MainContentComponent::newOpenGLContextCreated()
     const String defaultPadColors[6] = { "ff8080ff", "ffff8080", "ff080ff80", "ff80ffff", "ffff80ff", "ffffff80" };
 
 #if 1
+    Logger::writeToLog("instantiating pads");
     for (int i = 0; i < NUM_PADS; ++i)
     {
+        Logger::writeToLog("p" + String(i));
         PadView* pv = new PadView;
         pv->setup();
         pv->padNum = i;
@@ -268,8 +265,10 @@ void MainContentComponent::newOpenGLContextCreated()
         
         pv->setColor(Colour::fromString(color));
     }
+    Logger::writeToLog("layout pads");
     layoutPadsGrid();
     
+    Logger::writeToLog("instantiating sticks");
     for (int i = 0; i < 20; ++i) {
         SharedPtr<StickView> sv(new StickView);
         sticks.push_back(sv);
@@ -282,16 +281,20 @@ void MainContentComponent::newOpenGLContextCreated()
     PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 
     glEnable(GL_DEPTH_TEST);
+    Logger::writeToLog("init shaders");
     Environment::instance().shaderManager.InitializeStockShaders();
 
+    Logger::writeToLog("init MainView");
     mainView = new MainView;
     views.push_back(mainView);
     mainView->addActionListener(this);
     
+    Logger::writeToLog("init Toolbar");
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
 
+    Logger::writeToLog("init StatusBar");
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
@@ -299,12 +302,15 @@ void MainContentComponent::newOpenGLContextCreated()
     int layout = StrikeDetector::kLayout3x2;//AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", layout);
     
+    Logger::writeToLog("init DrumSelector");
     drumSelector = new DrumSelector;
     drumSelector->addActionListener(this);
     views.push_back(drumSelector);
 
+    Logger::writeToLog("init PlayAreas");
     for (int i = 0; i < 6; ++i)
     {
+        Logger::writeToLog("pa" + String(i));
         PlayArea* pad = new PlayArea(i);
         int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNote" + String(i), i);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
@@ -322,9 +328,11 @@ void MainContentComponent::newOpenGLContextCreated()
         drumSelector->setPadAssociation(midiNote, i);
     }
 
+    Logger::writeToLog("init TrigViewBank");
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
+    Logger::writeToLog("init Kit Selector");
     kitSelector = new ListSelector("Kits", true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
@@ -338,6 +346,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     views.push_back(kitSelector);
     
+    Logger::writeToLog("init Pattern Selector");
     patternSelector = new ListSelector("Patterns");
     populatePatternSelector();
     
@@ -367,6 +376,7 @@ void MainContentComponent::newOpenGLContextCreated()
     kitSelector->setSelection(selectedKitIndex);
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
 
+    Logger::writeToLog("init TempoControl");
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
     if (tempo < 30) {
@@ -384,6 +394,7 @@ void MainContentComponent::newOpenGLContextCreated()
         tempoControl->setTempo(Drums::instance().getTempo());
     views.push_back(tempoControl);
     
+    Logger::writeToLog("init ButtonBar");
     buttonBar = new ButtonBar;
     buttonBar->addActionListener(this);
     GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -392,10 +403,12 @@ void MainContentComponent::newOpenGLContextCreated()
     
     bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
     
+    Logger::writeToLog("load view textures");
     for (HUDView* v : views) {
         v->loadTextures();
     }
     
+    Logger::writeToLog("init tutorial");
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
@@ -411,6 +424,7 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
     
+    Logger::writeToLog("init splash");
     splashBgView = new View2d;
     splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
@@ -421,15 +435,19 @@ void MainContentComponent::newOpenGLContextCreated()
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
     splashTitleView->setVisible(false, SPLASH_FADE);
     
+    Logger::writeToLog("init disconnect message");
     leapDisconnectedView = new HUDView;
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
+    startTimer(kTimerWaitingForConnection, 1000);
     
+    Logger::writeToLog("init fullscreen tip");
     fullscreenTipView = new HUDView;
     fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
     fullscreenTipView->setVisible(false, 0);
     showFullscreenTip();
 
+    Logger::writeToLog("Add motion listener");
     MotionDispatcher::instance().addListener(*this);
     
 #if 0 // disabled all gestures in favor of buttons
@@ -439,14 +457,17 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
 #endif
 
+    Logger::writeToLog("set matrix stacks");
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 
+    Logger::writeToLog("setSwapInterval");
     openGLContext.setSwapInterval(1);
     
+    Logger::writeToLog("grabKeyboardFocus");
     MessageManagerLock mml;
     grabKeyboardFocus();
 
@@ -1226,8 +1247,18 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         const::Leap::Pointable p = frame.pointable(sv->pointableId);
         if (p.isValid())
         {
+            float x = 0.f;
             Leap::Vector scaledVec = scaledLeapInputPosition(p.tipPosition());
-            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z,limitToPlane);
+            x = scaledVec.x;
+            const Leap::Hand hand = p.hand();
+            if (hand.isValid()) {
+                Leap::Vector handVec = scaledLeapInputPosition(hand.palmPosition());
+                if (handVec.x < x)
+                    x -= (x - handVec.x) / 2.f;
+                else
+                    x += (handVec.x - x) / 2.f;
+            }
+            sv->setOrigin(x,scaledVec.y,scaledVec.z,limitToPlane);
             sv->inUse = true;
         }
         else
@@ -1401,10 +1432,37 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::onConnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setVisible(false);
+    connected = true;
 }
 
 void MainContentComponent::onDisconnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(true);
+    connected = false;
+}
+
+void MainContentComponent::onFocusGained (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    if (connected)
+        leapDisconnectedView->setVisible(false);
+    else
+        leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+}
+
+void MainContentComponent::onFocusLost (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+    leapDisconnectedView->setVisible(true);
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
@@ -1545,16 +1603,11 @@ void MainContentComponent::timerCallback(int timerId)
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
             break;
-        case kTimerCheckLeapConnection:
-            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
-                if (hasKeyboardFocus(true))
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
-                else
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+        case kTimerWaitingForConnection:
+            if (!connected)
                 leapDisconnectedView->setVisible(true);
-            }
-            else if (leapDisconnectedView)
-                leapDisconnectedView->setVisible(false);
+            else
+                stopTimer(kTimerWaitingForConnection);
             break;
         case kFullscreenTipTimer:
             fullscreenTipView->setVisible(false, 2000);
