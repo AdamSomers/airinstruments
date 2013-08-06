@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="1.1"
+<JUCERPROJECT id="LSBnFZ" name="AirBeats" projectType="guiapp" version="1.2.1"
               bundleIdentifier="com.handwavy.AirBeats" jucerVersion="3.1.0"
               companyName="Handwavy" defines="">
   <MAINGROUP id="qE7qno" name="AirBeats">
@@ -146,6 +146,8 @@
       <FILE id="onff5B" name="PlayArea.h" compile="0" resource="0" file="Source/PlayArea.h"/>
       <FILE id="Sq8qx7" name="SampleLayer.cpp" compile="1" resource="0" file="Source/SampleLayer.cpp"/>
       <FILE id="dj1uwR" name="SampleLayer.h" compile="0" resource="0" file="Source/SampleLayer.h"/>
+      <FILE id="OlEptg" name="ShadowView.cpp" compile="1" resource="0" file="Source/ShadowView.cpp"/>
+      <FILE id="xO92LB" name="ShadowView.h" compile="0" resource="0" file="Source/ShadowView.h"/>
       <FILE id="nOoqZj" name="StickView.cpp" compile="1" resource="0" file="Source/StickView.cpp"/>
       <FILE id="DF6pQQ" name="StickView.h" compile="0" resource="0" file="Source/StickView.h"/>
       <FILE id="HiMl6k" name="StrikeDetector.cpp" compile="1" resource="0"

@@ -24,6 +24,7 @@
 #include "CursorView.h"
 #include "ButtonBar.h"
 #include "stickView.h"
+#include "ShadowView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -76,6 +77,8 @@ public:
     virtual void onFrame(const Leap::Controller&);
     virtual void onConnect(const Leap::Controller&);
     virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFocusGained (const Leap::Controller &);
+    virtual void onFocusLost (const Leap::Controller &);
     
     // MultiTimer override
     void timerCallback(int timerId);
@@ -99,6 +102,9 @@ private:
     void populatePatternSelector();
     void selectCurrentPattern();
     void incPadAssociation(int padNumber, int inc);
+    float calcStickDistance(SharedPtr<StickView> stick);
+    void calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint);
+    void setStickPosition(SharedPtr<StickView> stick, const Leap::Vector& v);
     Leap::Vector scaledLeapInputPosition(const Leap::Vector& v);
 
     enum TimerIds
@@ -106,7 +112,7 @@ private:
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap,
-        kTimerCheckLeapConnection,
+        kTimerWaitingForConnection,
         kFullscreenTipTimer
     };
     
@@ -133,10 +139,6 @@ private:
 
     View2d* splashBgView;
     View2d* splashTitleView;
-
-    typedef std::map<int, StrikeDetector> StrikeDetectorMap;
-    StrikeDetectorMap strikeDetectors;
-    StrikeDetectorMap toolStrikeDetectors;
     
     float prevMouseY;
     float prevMouseX;
@@ -160,13 +162,10 @@ private:
     Time lastRender;
 
     Time lastFrame;
-    
-    ScopedPointer<StickView> stick1;
-    ScopedPointer<StickView> stick2;
-    StrikeDetector strikeDetector1;
-    StrikeDetector strikeDetector2;
-    
 
+    std::vector<SharedPtr<StickView> > sticks;
+    
+    bool connected;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

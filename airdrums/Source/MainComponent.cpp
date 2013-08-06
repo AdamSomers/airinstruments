@@ -30,6 +30,7 @@
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
 #define SPLASH_FADE 1500
+#define DISTANCE_THRESHOLD 0.25f
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -57,6 +58,7 @@ MainContentComponent::MainContentComponent()
 , setPriority(false)
 , lastDrumSelection(-1)
 , resizeCursor(false)
+, connected(false)
 {
     setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
@@ -96,8 +98,6 @@ MainContentComponent::MainContentComponent()
         splashLogoImage = ImageFileFormat::loadFrom(splashLogoImageFile);
     else
         Logger::writeToLog("ERROR: logotype.png not found!");
-    
-    startTimer(kTimerCheckLeapConnection, 500);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -152,6 +152,9 @@ void MainContentComponent::paint (Graphics& g)
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
+        f.setExtraKerningFactor(0);
+        offscreen.setFont(f);
+        offscreen.drawText("v" + AirHarpApplication::getInstance()->getApplicationVersion(), x, y + (int)h + 20 + 35, (int)w, 12, Justification::centred, false);
     }
     if (splashLogoImage.isValid())
     {
@@ -198,38 +201,34 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
-    if (!Environment::instance().ready)
-        return;
-
-    Logger::writeToLog("Focus Gained");
-    MotionDispatcher::instance().resume();
 }
 
 void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
-    Logger::writeToLog("Focus Lost");
-    MotionDispatcher::instance().pause();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    Logger::writeToLog("newOpenGLContextCreated()");
+    Logger::writeToLog("glewInit");
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
     else
         Logger::writeToLog("VAOs Not Supported");
-
-    Logger::writeToLog("newOpenGLContextCreated()");
     
     Drums::instance().playbackState.addListener(this);
     Drums::instance().registerTempoSlider(&tempoSlider);
     tempoSlider.addListener(&Drums::instance());
-
+    
+    Logger::writeToLog("loading skins");
     SkinManager::instance().loadResources();
+    Logger::writeToLog("Loading kit textures");
     KitManager::GetInstance().LoadTextures();
     //String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
     //SkinManager::instance().setSelectedSkin(skinSetting);
     
+    Logger::writeToLog("setting GL parameters");
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     
@@ -248,8 +247,10 @@ void MainContentComponent::newOpenGLContextCreated()
     const String defaultPadColors[6] = { "ff8080ff", "ffff8080", "ff080ff80", "ff80ffff", "ffff80ff", "ffffff80" };
 
 #if 1
+    Logger::writeToLog("instantiating pads");
     for (int i = 0; i < NUM_PADS; ++i)
     {
+        Logger::writeToLog("p" + String(i));
         PadView* pv = new PadView;
         pv->setup();
         pv->padNum = i;
@@ -264,12 +265,15 @@ void MainContentComponent::newOpenGLContextCreated()
         
         pv->setColor(Colour::fromString(color));
     }
+    Logger::writeToLog("layout pads");
     layoutPadsGrid();
     
-    stick1 = new StickView;
-    stick1->setup();
-    stick2 = new StickView;
-    stick2->setup();
+    Logger::writeToLog("instantiating sticks");
+    for (int i = 0; i < 20; ++i) {
+        SharedPtr<StickView> sv(new StickView);
+        sticks.push_back(sv);
+        sv->setup();
+    }
 #endif
     
     //Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
@@ -277,16 +281,20 @@ void MainContentComponent::newOpenGLContextCreated()
     PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 
     glEnable(GL_DEPTH_TEST);
+    Logger::writeToLog("init shaders");
     Environment::instance().shaderManager.InitializeStockShaders();
 
+    Logger::writeToLog("init MainView");
     mainView = new MainView;
     views.push_back(mainView);
     mainView->addActionListener(this);
     
+    Logger::writeToLog("init Toolbar");
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
 
+    Logger::writeToLog("init StatusBar");
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
@@ -294,12 +302,15 @@ void MainContentComponent::newOpenGLContextCreated()
     int layout = StrikeDetector::kLayout3x2;//AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", layout);
     
+    Logger::writeToLog("init DrumSelector");
     drumSelector = new DrumSelector;
     drumSelector->addActionListener(this);
     views.push_back(drumSelector);
 
+    Logger::writeToLog("init PlayAreas");
     for (int i = 0; i < 6; ++i)
     {
+        Logger::writeToLog("pa" + String(i));
         PlayArea* pad = new PlayArea(i);
         int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNote" + String(i), i);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
@@ -317,9 +328,11 @@ void MainContentComponent::newOpenGLContextCreated()
         drumSelector->setPadAssociation(midiNote, i);
     }
 
+    Logger::writeToLog("init TrigViewBank");
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
+    Logger::writeToLog("init Kit Selector");
     kitSelector = new ListSelector("Kits", true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
@@ -333,6 +346,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     views.push_back(kitSelector);
     
+    Logger::writeToLog("init Pattern Selector");
     patternSelector = new ListSelector("Patterns");
     populatePatternSelector();
     
@@ -362,6 +376,7 @@ void MainContentComponent::newOpenGLContextCreated()
     kitSelector->setSelection(selectedKitIndex);
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
 
+    Logger::writeToLog("init TempoControl");
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
     if (tempo < 30) {
@@ -379,6 +394,7 @@ void MainContentComponent::newOpenGLContextCreated()
         tempoControl->setTempo(Drums::instance().getTempo());
     views.push_back(tempoControl);
     
+    Logger::writeToLog("init ButtonBar");
     buttonBar = new ButtonBar;
     buttonBar->addActionListener(this);
     GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -387,10 +403,12 @@ void MainContentComponent::newOpenGLContextCreated()
     
     bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
     
+    Logger::writeToLog("load view textures");
     for (HUDView* v : views) {
         v->loadTextures();
     }
     
+    Logger::writeToLog("init tutorial");
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
@@ -406,6 +424,7 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
     
+    Logger::writeToLog("init splash");
     splashBgView = new View2d;
     splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
@@ -416,15 +435,19 @@ void MainContentComponent::newOpenGLContextCreated()
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
     splashTitleView->setVisible(false, SPLASH_FADE);
     
+    Logger::writeToLog("init disconnect message");
     leapDisconnectedView = new HUDView;
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
+    startTimer(kTimerWaitingForConnection, 1000);
     
+    Logger::writeToLog("init fullscreen tip");
     fullscreenTipView = new HUDView;
     fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
     fullscreenTipView->setVisible(false, 0);
     showFullscreenTip();
 
+    Logger::writeToLog("Add motion listener");
     MotionDispatcher::instance().addListener(*this);
     
 #if 0 // disabled all gestures in favor of buttons
@@ -434,14 +457,17 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
 #endif
 
+    Logger::writeToLog("set matrix stacks");
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 
+    Logger::writeToLog("setSwapInterval");
     openGLContext.setSwapInterval(1);
     
+    Logger::writeToLog("grabKeyboardFocus");
     MessageManagerLock mml;
     grabKeyboardFocus();
 
@@ -696,17 +722,17 @@ void MainContentComponent::renderOpenGL()
         
         if (buttonBar)
             buttonBar->setBounds(HUDRect((GLfloat) 0,
-                                         (GLfloat) (statusBarHeight + 10),
+                                         (GLfloat) (drumSelector->getBounds().y - 110),
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat)100));
         
-        float height = drumSelector->getBounds().y - (buttonBar->getBounds().y + buttonBar->getBounds().h) - 50;
+        float height = buttonBar->getBounds().y - (statusBar->getBounds().y + statusBar->getBounds().h) - 100;
         float width = (GLfloat) Environment::instance().screenW / 6.f;
         float hiddenX = -width;
         float shownX = 0;
         if (kitSelector) {
             kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? shownX : hiddenX,
-                                           (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                           (GLfloat) (statusBar->getBounds().y + statusBar->getBounds().h + 100),
                                            width,
                                            height));
             kitSelector->setXRange(shownX, hiddenX);
@@ -737,7 +763,7 @@ void MainContentComponent::renderOpenGL()
         shownX = Environment::instance().screenW - width;
         if (patternSelector) {
             patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
-                                               (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                               (GLfloat) (statusBar->getBounds().y + statusBar->getBounds().h + 100),
                                                width,
                                                height));
             patternSelector->setXRange(shownX, hiddenX);
@@ -799,10 +825,15 @@ void MainContentComponent::renderOpenGL()
     Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
     Environment::instance().modelViewMatrix.PopMatrix(); // camera
 #endif
+
+    //stick1->draw();
+    //stick2->draw();
     
-    stick1->draw();
-    stick2->draw();
-    
+    for (SharedPtr<StickView> sv : sticks) {
+        if (sv->inUse)
+            sv->draw();
+    }
+
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_POINT_SMOOTH);
@@ -929,13 +960,15 @@ void MainContentComponent::mouseDown(const MouseEvent& e)
     if (!Environment::instance().ready)
         return;
 
+    bool handled = false;
     for (HUDView* v : views)
-        v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y);
+        if (v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y))
+            handled = true;
     
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
     
-    if (tutorial && !tutorial->isVisible())
+    if (tutorial && !tutorial->isVisible() && !handled)
     {
         for (PlayArea* pad : playAreas)
             if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
@@ -1165,13 +1198,17 @@ Leap::Vector MainContentComponent::scaledLeapInputPosition(const Leap::Vector& v
 {
     Leap::Vector newVec;
     newVec.x = (v.x / 400.f) * 2.f * (Environment::screenW/(float)Environment::screenH);
-    newVec.y = ((v.y / 500.f) -.5f)*4;
+    newVec.y = ((v.y / 500.f) -.4f)*3;
     newVec.z = (v.z / 250.f) * 1.f - 10.f;
     return newVec;
 }
 
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+    bool advancedMode = props.getUserSettings()->getBoolValue("advancedMode", false);
+    
     lastFrame = Time::getCurrentTime();
 
     if (!Environment::instance().ready)
@@ -1198,255 +1235,184 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         pads.at(i)->setHovering(false);
     }
     
+    bool limitToPlane = !(kitSelector->isEnabled() || patternSelector->isEnabled());
+    
     std::set<int> hoveredNotes;
     
-    bool stick1Used = false;
-    bool stick2Used = false;
+    for (SharedPtr<StickView> sv : sticks)
+        sv->inUse = false;
     
-    const::Leap::Pointable p1 = frame.pointable(stick1->pointableId);
-    if (p1.isValid())
+    for (SharedPtr<StickView> sv : sticks)
     {
-        Leap::Vector scaledVec = scaledLeapInputPosition(p1.tipPosition());
-        stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-        stick1Used = true;
-    }
-    else
-        stick1->pointableId = -1;
-
-    const::Leap::Pointable p2 = frame.pointable(stick2->pointableId);
-    if (p2.isValid())
-    {
-        Leap::Vector scaledVec = scaledLeapInputPosition(p2.tipPosition());
-        stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-        stick2Used = true;
-    }
-    else
-        stick2->pointableId = -1;
-    
-    if (p1.isValid() && p2.isValid())
-    {
-        if (p1.hand().isValid() && p2.hand().isValid() && p1.hand() == p2.hand())
+        const::Leap::Pointable p = frame.pointable(sv->pointableId);
+        if (p.isValid())
         {
-            stick2->pointableId = -1;
-            stick2Used = false;
+            float x = 0.f;
+            Leap::Vector scaledVec = scaledLeapInputPosition(p.tipPosition());
+            x = scaledVec.x;
+            const Leap::Hand hand = p.hand();
+            if (hand.isValid()) {
+                Leap::Vector handVec = scaledLeapInputPosition(hand.palmPosition());
+                if (handVec.x < x)
+                    x -= (x - handVec.x) / 2.f;
+                else
+                    x += (handVec.x - x) / 2.f;
+            }
+            sv->setOrigin(x,scaledVec.y,scaledVec.z,limitToPlane);
+            sv->inUse = true;
         }
+        else
+            sv->pointableId = -1;
+        
+        const::Leap::Hand h = frame.hand(sv->handId);
+        if (h.isValid())
+        {
+            Leap::Vector scaledVec = scaledLeapInputPosition(h.palmPosition());
+            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z,limitToPlane);
+            sv->inUse = true;
+        }
+        else
+            sv->handId = -1;
     }
-
+    
+    // find lonely hands
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
-        
-        Leap::Vector v;
-        int pointableId = -1;
-        int handId = -1;
-        if (!hand.pointables().empty()) {
-            v = hand.pointables().frontmost().tipPosition();
-            pointableId = hand.pointables().frontmost().id();
+        if (hand.pointables().empty())
+        {
+            bool found = false;
+            for (SharedPtr<StickView> sv : sticks) {
+                if (sv->inUse && sv->handId == hand.id()) {
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                for (SharedPtr<StickView> sv : sticks) {
+                    if (!sv->inUse) {
+                        sv->handId = hand.id();
+                        sv->inUse = true;
+                        break;
+                    }
+                }
+            }
         }
-        else {
-            v = hand.palmPosition();
-            handId = hand.id();
+        else
+        {
+            for (SharedPtr<StickView> sv : sticks) {
+                if (sv->handId != -1) {
+                    sv->handId = -1;
+                    sv->inUse = false;
+                }
+            }
         }
-
-        Leap::Vector scaledVec = scaledLeapInputPosition(v);
-        if (h == 0 && !stick1Used) {
-            stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-            stick1->pointableId = pointableId;
-            stick1->handId = handId;
-            stick1Used = true;
-        }
-        else if (h != 0 && !stick2Used) {
-            stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-            stick2->pointableId = pointableId;
-            stick2->handId = handId;
-            stick2Used = true;
-        }
-
-        //Logger::outputDebugString(String(y) + " " + String(z));
-//        float zSpan = 11.f - 9.3f;
-//        float normZ = fabs((z + 9.3f) / zSpan);
-//        float ySpan = .53f + .3f;
-//        float yMin = (ySpan * normZ) - .53f;
-//        y+=0.25f;
-//        Logger::outputDebugString(String(normZ) + " " + String(yMin));
-//        if (y < yMin)
-//            ;//y = yMin;
-        
-
-        
-//        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-//        {
-//            std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
-//            //if (insertResult.second)
-//            //    Logger::writeToLog("Inserted detector for hand id " + String(hand.id()));
-//            StrikeDetectorMap::iterator iter = insertResult.first;
-//            StrikeDetector& detector = (*iter).second;
-//            detector.handMotion(hand);
-//            int midiNote = detector.getNoteForHand(hand);
-//            int padNumber = detector.getPadNumberForHand(hand);
-//            hoveredNotes.insert(midiNote);
-//            for (int i = 0; i < NUM_PADS; ++i)
-//            {
-//                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-//                    pads.at(i)->setHovering(true);
-//            }
-//        }
     }
 
+    // find new pointables
     const Leap::PointableList& pointables = frame.pointables();
     const size_t numPointables = pointables.count();
     for (unsigned int p = 0; p < numPointables; ++p) {
         const Leap::Pointable& pointable = pointables[p];
-        if (!pointable.hand().isValid())
-        {
-            Leap::Vector scaledVec = scaledLeapInputPosition(pointable.tipPosition());
-            if (!stick1Used && pointable.id() != stick2->pointableId) {
-                stick1->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-                stick1->pointableId = pointable.id();
-                stick1->handId = -1;
-                stick1Used = true;
-            }
-            else if (!stick2Used && pointable.id() != stick1->pointableId) {
-                stick2->objectFrame.SetOrigin(scaledVec.x,scaledVec.y,scaledVec.z);
-                stick2->pointableId = pointable.id();
-                stick2->handId = -1;
-                stick2Used = true;
-            }
 
-//            if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-//            {
-//                std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
-//                StrikeDetectorMap::iterator iter = insertResult.first;
-//                StrikeDetector& detector = (*iter).second;
-//                int midiNote = detector.getNoteForPointable(pointable);
-//                int padNumber = detector.getPadNumberForPointable(pointable);
-//                hoveredNotes.insert(midiNote);
-//                for (int i = 0; i < NUM_PADS; ++i)
-//                {
-//                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-//                        pads.at(i)->setHovering(true);
-//                }
-//                detector.pointableMotion(pointable);
-//            }
+        bool found = false;
+        for (SharedPtr<StickView> sv : sticks) {
+            if (sv->inUse && sv->pointableId == pointable.id()) {
+                found = true;
+                break;
+            }
         }
-        else
-        {
-            StrikeDetectorMap::iterator iter = toolStrikeDetectors.find(pointable.id());
-            if (iter != toolStrikeDetectors.end())
-                toolStrikeDetectors.erase(iter);
+        
+        if (!found) {
+            for (SharedPtr<StickView> sv : sticks) {
+                if (!sv->inUse) {
+                    sv->pointableId = pointable.id();
+                    sv->inUse = true;
+                    break;
+                }
+            }
         }
     }
     
-    if (stick1Used) {
-        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-        {
-            if (stick1->pointableId != -1)
+    for (SharedPtr<StickView> sv : sticks) {
+        if (sv->inUse) {
+            float dist = sv->calcStickDistance();
+            int midiNote = -1;
+            int padNumber = -1;
+            if (sv->pointableId != -1)
             {
-                const Leap::Pointable& pointable = frame.pointable(stick1->pointableId);
-                int midiNote = strikeDetector1.getNoteForPointable(pointable);
-                int padNumber = strikeDetector1.getPadNumberForPointable(pointable);
+                const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
+                midiNote = sv->strikeDetector.getNoteForPointable(pointable);
+                padNumber = sv->strikeDetector.getPadNumberForPointable(pointable);
+            }
+            else if (sv->handId != -1)
+            {
+                const Leap::Hand& hand = frame.hand(sv->handId);
+                midiNote = sv->strikeDetector.getNoteForHand(hand);
+                padNumber = sv->strikeDetector.getPadNumberForHand(hand);
+            }
+            
+            if (midiNote != -1)
+            {
                 hoveredNotes.insert(midiNote);
                 for (int i = 0; i < NUM_PADS; ++i)
                 {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
                         pads.at(i)->setHovering(true);
+                        if (!advancedMode && sv->lastDist > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = sv->lastDist - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            //Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
+                    }
                 }
-                strikeDetector1.pointableMotion(pointable);
             }
-            else if (stick1->handId != -1)
-            {
-                const Leap::Hand& hand = frame.hand(stick1->handId);
-                int midiNote = strikeDetector1.getNoteForHand(hand);
-                int padNumber = strikeDetector1.getPadNumberForHand(hand);
-                hoveredNotes.insert(midiNote);
-                for (int i = 0; i < NUM_PADS; ++i)
-                {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                        pads.at(i)->setHovering(true);
+            if (advancedMode) {
+                if (sv->pointableId != -1) {
+                    const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
+                    sv->strikeDetector.pointableMotion(pointable);
                 }
-                strikeDetector1.handMotion(hand);
+                else {
+                    const Leap::Hand& hand = frame.hand(sv->handId);
+                    sv->strikeDetector.handMotion(hand);
+                }
             }
+            sv->lastDist = dist;
+        }
+        else {
+            sv->setOrigin(0,-100,-100, false);
+            sv->lastDist = DISTANCE_THRESHOLD;
         }
     }
-    else {
-        stick1->objectFrame.SetOrigin(0,0,-100);
-    }
-    if (stick2Used) {
-        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-        {
-            if (stick2->pointableId != -1)
-            {
-                const Leap::Pointable& pointable = frame.pointable(stick2->pointableId);
-                int midiNote = strikeDetector2.getNoteForPointable(pointable);
-                int padNumber = strikeDetector2.getPadNumberForPointable(pointable);
-                hoveredNotes.insert(midiNote);
-                for (int i = 0; i < NUM_PADS; ++i)
-                {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                        pads.at(i)->setHovering(true);
-                }
-                strikeDetector2.pointableMotion(pointable);
-            }
-            else if (stick2->handId != -1)
-            {
-                const Leap::Hand& hand = frame.hand(stick2->handId);
-                int midiNote = strikeDetector2.getNoteForHand(hand);
-                int padNumber = strikeDetector2.getPadNumberForHand(hand);
-                hoveredNotes.insert(midiNote);
-                for (int i = 0; i < NUM_PADS; ++i)
-                {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                        pads.at(i)->setHovering(true);
-                }
-                strikeDetector2.handMotion(hand);
-            }
-        }
-    }
-    else {
-        stick2->objectFrame.SetOrigin(0,0,-100);
-    }
-
+    
     if (MotionDispatcher::instance().cursor->isEnabled())
     {
         M3DVector2f screenPos;
-        if (stick1Used) {
-            stick1->getScreenPos(screenPos);
+        SharedPtr<StickView> cursorStick;
+        float minZ = 100.f;
+        for (SharedPtr<StickView> sv : sticks) {
+            if (sv->inUse && sv->objectFrame.GetOriginZ() < minZ) {
+                cursorStick = sv;
+                minZ = sv->objectFrame.GetOriginZ();
+            }
+        }
+        if (cursorStick != nullptr) {
+            cursorStick->getScreenPos(screenPos);
             screenPos[0] = jmin(screenPos[0], Environment::instance().screenW - MotionDispatcher::instance().cursor->getBounds().w / 2.f);
             screenPos[0] = jmax(screenPos[0], MotionDispatcher::instance().cursor->getBounds().w / 2.f);
             MotionDispatcher::instance().cursor->setPosition(screenPos[0] - MotionDispatcher::instance().cursor->getBounds().w / 2.f,
-                                                         Environment::instance().screenH - screenPos[1] -  MotionDispatcher::instance().cursor->getBounds().h / 2.f);
+                                                             Environment::instance().screenH - screenPos[1] -  MotionDispatcher::instance().cursor->getBounds().h / 2.f);
         }
         else
             MotionDispatcher::instance().cursor->setEnabled(false);
     }
-    
-//    for (PadView* pv : pads)
-//    {
-//        M3DVector3f p;
-//        stick1->objectFrame.GetOrigin(p);
-//        if (pv->hitTest(p))
-//            pv->triggerDisplay();
-//    }
 
-    StrikeDetectorMap::iterator iter = strikeDetectors.begin();
     bool useCursor = true;
-    while (iter != strikeDetectors.end())
-    {
-        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
-            useCursor = false;
-        ++iter;
-    }
-    
-    iter = toolStrikeDetectors.begin();
-    while (iter != toolStrikeDetectors.end())
-    {
-        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
-            useCursor = false;
-        ++iter;
-    }
-    
-    if (Time::getCurrentTime() < strikeDetector1.getLastStrikeTime() + RelativeTime::milliseconds(500))
-        useCursor = false;
-    if (Time::getCurrentTime() < strikeDetector2.getLastStrikeTime() + RelativeTime::milliseconds(500))
+
+    if (Time::getCurrentTime() < Drums::instance().getLastNoteOnTime() + RelativeTime::milliseconds(500) && limitToPlane)
         useCursor = false;
 
     if (useCursor)
@@ -1466,10 +1432,37 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::onConnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setVisible(false);
+    connected = true;
 }
 
 void MainContentComponent::onDisconnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(true);
+    connected = false;
+}
+
+void MainContentComponent::onFocusGained (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    if (connected)
+        leapDisconnectedView->setVisible(false);
+    else
+        leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+}
+
+void MainContentComponent::onFocusLost (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+    leapDisconnectedView->setVisible(true);
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
@@ -1610,16 +1603,11 @@ void MainContentComponent::timerCallback(int timerId)
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
             break;
-        case kTimerCheckLeapConnection:
-            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
-                if (hasKeyboardFocus(true))
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
-                else
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+        case kTimerWaitingForConnection:
+            if (!connected)
                 leapDisconnectedView->setVisible(true);
-            }
-            else if (leapDisconnectedView)
-                leapDisconnectedView->setVisible(false);
+            else
+                stopTimer(kTimerWaitingForConnection);
             break;
         case kFullscreenTipTimer:
             fullscreenTipView->setVisible(false, 2000);
@@ -1817,4 +1805,28 @@ void MainContentComponent::showFullscreenTip()
 {
     fullscreenTipView->setVisible(true, 2000);
     startTimer(kFullscreenTipTimer, 2000 + 2000);
+}
+
+void MainContentComponent::calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint)
+{
+    M3DVector3f pOrigin, pNormal, rOrigin;
+    M3DVector3f rNormal = { 0.f, -1.f, 0.f };
+    PadView::padSurfaceFrame.GetUpVector(pNormal);
+    PadView::padSurfaceFrame.GetOrigin(pOrigin);
+    stick->objectFrame.GetOrigin(rOrigin);
+    M3DMatrix33f m;
+    M3DVector3f pNormalRot;
+    m3dRotationMatrix33(m, m3dDegToRad(90.f), 1.f, 0.f, 0.f);
+    m3dRotateVector(pNormalRot, pNormal, m);
+    GfxTools::collide(rOrigin, rNormal, pOrigin, pNormalRot, collisionPoint);
+}
+
+float MainContentComponent::calcStickDistance(SharedPtr<StickView> stick)
+{
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(stick, collisionPoint);
+    M3DVector3f rOrigin;
+    stick->objectFrame.GetOrigin(rOrigin);
+    float dist = rOrigin[1] - collisionPoint[1];
+    return dist;
 }

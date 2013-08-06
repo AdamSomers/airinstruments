@@ -10,6 +10,14 @@
 
 #include "Main.h"
 
+AirHarpApplication::AirHarpApplication()
+{
+    fileLogger = FileLogger::createDateStampedLogger("AirHarp", "AirHarp", ".txt", "AirHarp Log - please send this file to info@handwavy.co if you have encountered an error.  Thanks!");
+    Logger::setCurrentLogger(fileLogger);
+    Logger::writeToLog("Application instantiated");
+    Logger::writeToLog("AirHarp version " + getApplicationVersion());
+}
+
 void AirHarpApplication::initialise (const String& commandLine)
 {
 	PropertiesFile::Options options;
