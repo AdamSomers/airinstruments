@@ -209,13 +209,13 @@ void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    Logger::writeToLog("newOpenGLContextCreated()");
+    Logger::writeToLog("glewInit");
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
     else
         Logger::writeToLog("VAOs Not Supported");
-
-    Logger::writeToLog("newOpenGLContextCreated()");
     
     Drums::instance().playbackState.addListener(this);
     Drums::instance().registerTempoSlider(&tempoSlider);

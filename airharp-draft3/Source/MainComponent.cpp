@@ -173,6 +173,9 @@ void MainContentComponent::newOpenGLContextCreated()
 {
    if (Environment::instance().ready)
       return;
+    
+    Logger::writeToLog("newOpenGLContextCreated()");
+    Logger::writeToLog("glewInit");
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
@@ -181,9 +184,12 @@ void MainContentComponent::newOpenGLContextCreated()
 
     MotionDispatcher::instance().setUseHandsAndFingers(true);
 
+    Logger::writeToLog("loading skins");
     SkinManager::instance().loadResources();
+    Logger::writeToLog("set skin 0");
     SkinManager::instance().setSelectedSkin("skin0");
     
+    Logger::writeToLog("setting GL parameters");
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     
@@ -202,14 +208,17 @@ void MainContentComponent::newOpenGLContextCreated()
     
     //Environment::instance().cameraFrame.MoveForward(-15.0f);
     
+    Logger::writeToLog("init finger views");
     for (auto iter : MotionDispatcher::instance().fingerViews)
         iter.second->setup();
     
+    Logger::writeToLog("init bg");
     backgroundView = new View2d;
     backgroundView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("background_dark"));
     GLfloat bgColor[4] = { 0.7f, 0.7f, 0.7f, 1.f };
     backgroundView->setDefaultColor(bgColor);
 
+    Logger::writeToLog("init harps");
     for (int i = 0; i < HarpManager::instance().getNumHarps(); ++i)
     {
         HarpView* hv = new HarpView(i);
@@ -218,9 +227,11 @@ void MainContentComponent::newOpenGLContextCreated()
         harps.push_back(hv);
     }
     
+    Logger::writeToLog("layout strings");
     layoutStrings();
     
     glEnable(GL_DEPTH_TEST);
+    Logger::writeToLog("init shaders");
     Environment::instance().shaderManager.InitializeStockShaders();
     
     bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
@@ -228,6 +239,7 @@ void MainContentComponent::newOpenGLContextCreated()
     int w = getWidth();
     int h = getHeight();
 
+    Logger::writeToLog("init splash");
     splashBgView = new View2d;
     splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
@@ -238,6 +250,7 @@ void MainContentComponent::newOpenGLContextCreated()
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
     splashTitleView->setVisible(false, SPLASH_FADE);
     
+    Logger::writeToLog("init toolbar");
     HarpToolbar* tb = new HarpToolbar;
     views.push_back(tb);
     toolbar = tb;
@@ -249,11 +262,13 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->addChangeListener(this);
     }
     
+    Logger::writeToLog("init statusbar");
     StatusBar* sb = new StatusBar;
     sb->setIndicatorTextures(SkinManager::instance().getSelectedSkin().getTexture("leapStatus_on"), SkinManager::instance().getSelectedSkin().getTexture("leapStatus_off"));
     views.push_back(sb);
     statusBar = sb;
 
+    Logger::writeToLog("init chord regions");
     for (int i = 0; i < 7; ++i)
     {
         ChordRegion* cr = new ChordRegion;
@@ -263,15 +278,18 @@ void MainContentComponent::newOpenGLContextCreated()
         views.push_back(cr);
     }
     
+    Logger::writeToLog("init settings screen");
     settingsScreen = new SettingsScreen;
     settingsScreen->addActionListener(this);
     settingsScreen->getScaleEditor()->addActionListener(this);
     settingsScreen->setVisible(false);
     views.push_back(settingsScreen);
     
+    Logger::writeToLog("load view textures");
     for (HUDView* v : views)
         v->loadTextures();
 
+    Logger::writeToLog("init tutorial");
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
@@ -284,7 +302,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     toolbar->setBounds(HUDRect(0,h-70,w,70));
     statusBar->setBounds(HUDRect(0,0,w,35));
-    
+
     float yPos = 20.f;
     float height = (h-90)/7.f;
     for (ChordRegion* cr : chordRegions)
@@ -306,6 +324,7 @@ void MainContentComponent::newOpenGLContextCreated()
 //   File vsFile = resources.getChildFile("testShader.vs");
 //   File fsFile = resources.getChildFile("testShader.fs");
 
+    Logger::writeToLog("load shader test");
     shaderId = Environment::instance().shaderManager.LoadShaderPairSrcWithAttributes("test", BinaryData::testShader_vs, BinaryData::testShader_fs, 2,
                                                                                      GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_NORMAL, "vNormal");
     //jassert(shaderId != 0);
@@ -316,6 +335,7 @@ void MainContentComponent::newOpenGLContextCreated()
 //    vsFile = resources.getChildFile("bloom.vs");
 //    fsFile = resources.getChildFile("bloom.fs");
 
+    Logger::writeToLog("load shader bloom");
     bloomShaderId = gltLoadShaderPairSrcWithAttributes(BinaryData::bloom_vs, BinaryData::bloom_fs, 2,
                                                        GLT_ATTRIBUTE_VERTEX, "vVertex", GLT_ATTRIBUTE_TEXTURE0, "vTexCoord0");
     //jassert(bloomShaderId != 0);
@@ -324,6 +344,7 @@ void MainContentComponent::newOpenGLContextCreated()
         Logger::writeToLog("ERROR: failed to load bloom shader");
     }
 
+    Logger::writeToLog("setup offscreen");
     // setup the offscreen finger texture
     int imageW = 512;
     int imageH = 512;
@@ -335,24 +356,29 @@ void MainContentComponent::newOpenGLContextCreated()
     td.texH = -1.f;
     fingersImage.setDefaultTexture(td);
     
+    Logger::writeToLog("init disconnect message");
     leapDisconnectedView = new HUDView;
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
     startTimer(kTimerWaitingForConnection, 1000);
     
+    Logger::writeToLog("init fullscreen tip");
     fullscreenTipView = new HUDView;
     fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
     fullscreenTipView->setVisible(false, 0);
     showFullscreenTip();
     
+    Logger::writeToLog("set matrix stacks");
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     Environment::instance().ready = true;
-        
+    
+    Logger::writeToLog("enable gestures");
     MotionDispatcher::instance().addListener(*this);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
 
+    Logger::writeToLog("setSwapInterval");
     openGLContext.setSwapInterval(1);
 
     MessageManagerLock mml;
