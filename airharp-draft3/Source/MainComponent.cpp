@@ -119,6 +119,9 @@ void MainContentComponent::paint (Graphics& g)
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
+        f.setExtraKerningFactor(0);
+        offscreen.setFont(f);
+        offscreen.drawText("v" + AirHarpApplication::getInstance()->getApplicationVersion(), x, y + (int)h + 20 + 35, (int)w, 12, Justification::centred, false);
     }
     if (splashLogoImage.isValid())
     {
