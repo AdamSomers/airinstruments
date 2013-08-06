@@ -112,6 +112,7 @@ private:
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap,
+        kTimerWaitingForConnection,
         kFullscreenTipTimer
     };
     
