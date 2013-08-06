@@ -67,6 +67,7 @@ public:
     enum TimerIds
     {
         kTimerShowTutorial = 0,
+        kTimerWaitingForConnection,
         kFullscreenTipTimer
     };
 

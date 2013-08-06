@@ -57,6 +57,7 @@ MainContentComponent::MainContentComponent()
 , setPriority(false)
 , lastDrumSelection(-1)
 , resizeCursor(false)
+, connected(false)
 {
     setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
@@ -405,6 +406,7 @@ void MainContentComponent::newOpenGLContextCreated()
     leapDisconnectedView = new HUDView;
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
+    startTimer(kTimerWaitingForConnection, 1000);
     
     fullscreenTipView = new HUDView;
     fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
@@ -1429,6 +1431,12 @@ void MainContentComponent::timerCallback(int timerId)
             break;
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
+            break;
+        case kTimerWaitingForConnection:
+            if (!connected)
+                leapDisconnectedView->setVisible(true);
+            else
+                stopTimer(kTimerWaitingForConnection);
             break;
         case kFullscreenTipTimer:
             fullscreenTipView->setVisible(false, 2000);

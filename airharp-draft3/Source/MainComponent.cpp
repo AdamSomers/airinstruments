@@ -40,6 +40,7 @@ MainContentComponent::MainContentComponent()
 , settingsScreen(NULL)
 , leapDisconnectedView(NULL)
 , sizeChanged(false)
+, connected(false)
 {
     startTime = Time::getCurrentTime();
     setSize (1280, 690);
@@ -340,6 +341,7 @@ void MainContentComponent::newOpenGLContextCreated()
     leapDisconnectedView = new HUDView;
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
+    startTimer(kTimerWaitingForConnection, 1000);
     
     fullscreenTipView = new HUDView;
     fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
@@ -794,6 +796,12 @@ void MainContentComponent::timerCallback(int timerId)
             for (HarpView* hv : harps)
                 hv->setVisible(false);
             HarpManager::instance().getHarp(0)->setEnabled(false);
+            break;
+        case kTimerWaitingForConnection:
+            if (!connected)
+                leapDisconnectedView->setVisible(true);
+            else
+                stopTimer(kTimerWaitingForConnection);
             break;
         case kFullscreenTipTimer:
             fullscreenTipView->setVisible(false, 2000);
