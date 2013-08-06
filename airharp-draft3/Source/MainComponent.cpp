@@ -44,7 +44,6 @@ MainContentComponent::MainContentComponent()
     startTime = Time::getCurrentTime();
     setSize (1280, 690);
     setWantsKeyboardFocus(true);
-    startTimer(kTimerCheckLeapConnection, 500);
 
     File special = File::getSpecialLocation(File::currentApplicationFile);
 #if JUCE_WINDOWS
@@ -163,17 +162,10 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType cause)
 {
-    if (!Environment::instance().ready)
-        return;
-
-    Logger::outputDebugString("Focus Gained");
-    MotionDispatcher::instance().resume();
 }
 
 void MainContentComponent::focusLost(FocusChangeType cause)
 {
-    Logger::outputDebugString("Focus Lost");
-    MotionDispatcher::instance().pause();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
@@ -738,6 +730,43 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
     }
 }
 
+
+void MainContentComponent::onConnect(const Leap::Controller&)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setVisible(false);
+    connected = true;
+}
+
+void MainContentComponent::onDisconnect(const Leap::Controller&)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(true);
+    connected = false;
+}
+
+void MainContentComponent::onFocusGained (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    if (connected)
+        leapDisconnectedView->setVisible(false);
+    else
+        leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+}
+
+void MainContentComponent::onFocusLost (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+    leapDisconnectedView->setVisible(true);
+}
+
+
 void MainContentComponent::handleTapGesture(const Leap::Pointable &p)
 {
 //    if (!slide->isDone())
@@ -762,17 +791,6 @@ void MainContentComponent::timerCallback(int timerId)
             for (HarpView* hv : harps)
                 hv->setVisible(false);
             HarpManager::instance().getHarp(0)->setEnabled(false);
-            break;
-        case kTimerCheckLeapConnection:
-            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
-                if (hasKeyboardFocus(true))
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
-                else
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
-                leapDisconnectedView->setVisible(true);
-            }
-            else if (leapDisconnectedView)
-                leapDisconnectedView->setVisible(false);
             break;
         case kFullscreenTipTimer:
             fullscreenTipView->setVisible(false, 2000);

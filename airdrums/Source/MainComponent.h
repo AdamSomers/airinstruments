@@ -75,6 +75,8 @@ public:
     virtual void onFrame(const Leap::Controller&);
     virtual void onConnect(const Leap::Controller&);
     virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFocusGained (const Leap::Controller &);
+    virtual void onFocusLost (const Leap::Controller &);
     
     // MultiTimer override
     void timerCallback(int timerId);
@@ -104,7 +106,6 @@ private:
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap,
-        kTimerCheckLeapConnection,
         kFullscreenTipTimer
     };
     
@@ -159,6 +160,7 @@ private:
 
     Time lastFrame;
 
+    bool connected;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

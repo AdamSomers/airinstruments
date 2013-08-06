@@ -96,8 +96,6 @@ MainContentComponent::MainContentComponent()
         splashLogoImage = ImageFileFormat::loadFrom(splashLogoImageFile);
     else
         Logger::writeToLog("ERROR: logotype.png not found!");
-    
-    startTimer(kTimerCheckLeapConnection, 500);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -198,17 +196,10 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
-    if (!Environment::instance().ready)
-        return;
-
-    Logger::writeToLog("Focus Gained");
-    MotionDispatcher::instance().resume();
 }
 
 void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
-    Logger::writeToLog("Focus Lost");
-    MotionDispatcher::instance().pause();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
@@ -1268,10 +1259,37 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::onConnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setVisible(false);
+    connected = true;
 }
 
 void MainContentComponent::onDisconnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(true);
+    connected = false;
+}
+
+void MainContentComponent::onFocusGained (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    if (connected)
+        leapDisconnectedView->setVisible(false);
+    else
+        leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+}
+
+void MainContentComponent::onFocusLost (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+    leapDisconnectedView->setVisible(true);
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
@@ -1411,17 +1429,6 @@ void MainContentComponent::timerCallback(int timerId)
             break;
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
-            break;
-        case kTimerCheckLeapConnection:
-            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
-                if (hasKeyboardFocus(true))
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
-                else
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
-                leapDisconnectedView->setVisible(true);
-            }
-            else if (leapDisconnectedView)
-                leapDisconnectedView->setVisible(false);
             break;
         case kFullscreenTipTimer:
             fullscreenTipView->setVisible(false, 2000);
