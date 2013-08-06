@@ -325,6 +325,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\common\AudioSettingsDialog.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\common\CursorView.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
@@ -344,6 +347,9 @@
       <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\MotionServer.cpp">
+      <Filter>AirBeats\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\Pointer3d.cpp">
       <Filter>AirBeats\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\SkinManager.cpp">
@@ -377,9 +383,6 @@
       <Filter>AirBeats\GLTools\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\AudioExporter.cpp">
-      <Filter>AirBeats\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\AudioSettingsDialog.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\BeatCountView.cpp">
@@ -455,6 +458,12 @@
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SampleLayer.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ShadowView.cpp">
+      <Filter>AirBeats\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StickView.cpp">
       <Filter>AirBeats\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\StrikeDetector.cpp">
@@ -1662,6 +1671,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\AudioSettingsDialog.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\common\CursorView.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
@@ -1681,6 +1693,9 @@
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\MotionServer.h">
+      <Filter>AirBeats\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\Pointer3d.h">
       <Filter>AirBeats\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\SkinManager.h">
@@ -1741,9 +1756,6 @@
       <Filter>AirBeats\GLTools\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\AudioExporter.h">
-      <Filter>AirBeats\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\AudioSettingsDialog.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\BeatCountView.h">
@@ -1819,6 +1831,12 @@
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SampleLayer.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ShadowView.h">
+      <Filter>AirBeats\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StickView.h">
       <Filter>AirBeats\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StrikeDetector.h">

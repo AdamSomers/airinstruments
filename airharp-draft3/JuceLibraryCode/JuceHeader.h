@@ -39,8 +39,8 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "AirHarp";
-    const char* const  versionString  = "0.7.2";
-    const int          versionNumber  = 0x702;
+    const char* const  versionString  = "1.0.4";
+    const int          versionNumber  = 0x10004;
 }
 
 #endif   // __APPHEADERFILE_LSBNFZ__

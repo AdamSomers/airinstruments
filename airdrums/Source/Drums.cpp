@@ -57,6 +57,8 @@ void Drums::NoteOn(int note, float velocity)
         return;
     else
         triggerTimes[note] = Time::getCurrentTime();
+    
+    lastNoteOnTime = Time::getCurrentTime();
 
     midiBufferLock.enter();
     if (transportState.recording && transportState.playing) {

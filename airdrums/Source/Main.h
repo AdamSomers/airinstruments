@@ -40,6 +40,10 @@ public:
     void anotherInstanceStarted (const String& /*commandLine*/);
 
     void handleMessage(const juce::Message &m);
+    
+    void enterFullscreenMode();
+    void exitFullscreenMode();
+    bool isFullscreen() const;
 
     ApplicationCommandManager commandManager;
     
@@ -73,7 +77,10 @@ public:
             kExportCmd = 5,
             kNewPatternCmd = 6,
             kSavePatternCmd = 7,
-            kDeletePatternCmd = 8
+            kDeletePatternCmd = 8,
+            kMoreInfoCmd,
+            kFullscreenCmd,
+            kAdvancedModeCmd
         };
         
         void getCommandInfo (CommandID commandID, ApplicationCommandInfo &result);

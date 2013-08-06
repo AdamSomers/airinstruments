@@ -62,7 +62,7 @@ void SettingsScreen::setBounds(const HUDRect& b)
     
     float maxWidth = 500.f;
     
-    float maxHeight = 530.f;
+    float maxHeight = jmax(530.f, Environment::instance().screenH - 150.f);
     
     float buttonWidth = 70.f;
     float buttonHeight = buttonWidth;
@@ -70,6 +70,7 @@ void SettingsScreen::setBounds(const HUDRect& b)
 
     float labelHeight = 30.f;
     float initialY = jmin(b.h / 2.f + maxHeight / 2.f, b.h);
+    float yOffset = jmax(30.f, maxHeight * .055f);
     keyLabel.setBounds(HUDRect(b.w / 2.f - maxWidth / 2.f,
                                initialY - labelHeight - 10,
                                maxWidth,
@@ -83,7 +84,7 @@ void SettingsScreen::setBounds(const HUDRect& b)
                                   keySelectorHeight));
     
     modeLabel.setBounds(HUDRect(b.w / 2.f - maxWidth / 2.f,
-                                keySelector.getBounds().y - 30.f - 10.f,
+                                keySelector.getBounds().y - yOffset - 10.f,
                                 maxWidth,
                                 30.f));
     
@@ -95,12 +96,12 @@ void SettingsScreen::setBounds(const HUDRect& b)
     float scaleEditorWidth = maxWidth;
     float scaleEditorHeight = 160.f;
     scaleEditor.setBounds(HUDRect(b.w / 2.f - scaleEditorWidth / 2.f,
-                                  buttonRect.y - scaleEditorHeight- 20,
+                                  buttonRect.y - scaleEditorHeight- yOffset,
                                   scaleEditorWidth,
                                   scaleEditorHeight));
     
     playButton.setBounds(HUDRect(b.w / 2.f - buttonWidth / 2.f,
-                                 scaleEditor.getBounds().y - buttonHeight - 20,
+                                 scaleEditor.getBounds().y - buttonHeight - yOffset,
                                  buttonWidth,
                                  buttonHeight));
 }

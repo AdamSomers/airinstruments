@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:d409ca0eda7c1fdd955b5021dd96c04f$ -->
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:076cb93eb7c3d2f325ca4eac3c7b7e8f$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -13,21 +13,21 @@ oW => sprite's original width (only available if trimmed)
 oH => sprite's original height (only available if trimmed)
 r => 'y' only set if sprite is rotated
 -->
-<TextureAtlas imagePath="kitsAtlas.png" width="512" height="1024">
-    <sprite n="Acoustic 1.png" x="2" y="2" w="330" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="Acoustic 2.png" x="2" y="50" w="348" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="AnalogDub.png" x="2" y="98" w="406" h="46" oX="0" oY="2" oW="536" oH="50"/>
-    <sprite n="DrumNBass 1.png" x="2" y="146" w="434" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="DrumNBass 2.png" x="2" y="194" w="452" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="Dub.png" x="2" y="242" w="130" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="DubStep.png" x="134" y="242" w="252" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="Electro.png" x="2" y="290" w="238" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="HipHop Analog.png" x="2" y="338" w="290" h="46" oX="0" oY="2" oW="536" oH="50"/>
-    <sprite n="HipHop World.png" x="2" y="386" w="306" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="HipHop Acoustic.png" x="2" y="434" w="270" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="IDM.png" x="274" y="434" w="112" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="Industrial.png" x="2" y="482" w="342" h="46" oX="1" oY="2" oW="536" oH="50"/>
-    <sprite n="Techno 1.png" x="2" y="530" w="276" h="46" oX="0" oY="2" oW="536" oH="50"/>
-    <sprite n="Techno 2.png" x="2" y="578" w="294" h="46" oX="0" oY="2" oW="536" oH="50"/>
-    <sprite n="Trance.png" x="2" y="626" w="228" h="46" oX="1" oY="2" oW="536" oH="50"/>
+<TextureAtlas imagePath="kitsAtlas.png" width="1024" height="1024">
+    <sprite n="Acoustic 1.png" x="2" y="2" w="536" h="50"/>
+    <sprite n="Acoustic 2.png" x="2" y="54" w="536" h="50"/>
+    <sprite n="AnalogDub.png" x="2" y="106" w="536" h="50"/>
+    <sprite n="DrumNBass 1.png" x="2" y="158" w="536" h="50"/>
+    <sprite n="DrumNBass 2.png" x="2" y="210" w="536" h="50"/>
+    <sprite n="Dub.png" x="2" y="262" w="536" h="50"/>
+    <sprite n="DubStep.png" x="2" y="314" w="536" h="50"/>
+    <sprite n="Electro.png" x="2" y="366" w="536" h="50"/>
+    <sprite n="HipHop Acoustic.png" x="2" y="418" w="536" h="50"/>
+    <sprite n="HipHop Analog.png" x="2" y="470" w="536" h="50"/>
+    <sprite n="HipHop World.png" x="2" y="522" w="536" h="50"/>
+    <sprite n="IDM.png" x="2" y="574" w="536" h="50"/>
+    <sprite n="Industrial.png" x="2" y="626" w="536" h="50"/>
+    <sprite n="Techno 1.png" x="2" y="678" w="536" h="50"/>
+    <sprite n="Techno 2.png" x="2" y="730" w="536" h="50"/>
+    <sprite n="Trance.png" x="2" y="782" w="536" h="50"/>
 </TextureAtlas>

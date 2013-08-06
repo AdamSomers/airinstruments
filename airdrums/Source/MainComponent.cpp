@@ -30,6 +30,7 @@
 #define TUTORIAL_TIMEOUT 30000
 #define TAP_TIMEOUT 50
 #define SPLASH_FADE 1500
+#define DISTANCE_THRESHOLD 0.25f
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -57,6 +58,7 @@ MainContentComponent::MainContentComponent()
 , setPriority(false)
 , lastDrumSelection(-1)
 , resizeCursor(false)
+, connected(false)
 {
     setSize (1280, 690);
     MotionDispatcher::zLimit = -100;
@@ -80,6 +82,7 @@ MainContentComponent::MainContentComponent()
 #endif
     File bgImageFile = resourcesFile.getChildFile("splash_bg.png");
     File splashTitleImageFile = resourcesFile.getChildFile("splash_title.png");
+    File splashLogoImageFile = resourcesFile.getChildFile("logotype.png");
     
     if (bgImageFile.exists())
         splashBgImage = ImageFileFormat::loadFrom(bgImageFile);
@@ -91,7 +94,10 @@ MainContentComponent::MainContentComponent()
     else
         Logger::writeToLog("ERROR: splash_title.png not found!");
     
-    startTimer(kTimerCheckLeapConnection, 500);
+    if (splashLogoImageFile.exists())
+        splashLogoImage = ImageFileFormat::loadFrom(splashLogoImageFile);
+    else
+        Logger::writeToLog("ERROR: logotype.png not found!");
 }
 
 MainContentComponent::~MainContentComponent()
@@ -146,6 +152,19 @@ void MainContentComponent::paint (Graphics& g)
         f.setExtraKerningFactor(1.5);
         offscreen.setFont(f);
         offscreen.drawText("LOADING", x, y + (int)h + 20, (int)w, 12, Justification::centred, false);
+        f.setExtraKerningFactor(0);
+        offscreen.setFont(f);
+        offscreen.drawText("v" + AirHarpApplication::getInstance()->getApplicationVersion(), x, y + (int)h + 20 + 35, (int)w, 12, Justification::centred, false);
+    }
+    if (splashLogoImage.isValid())
+    {
+        float aspectRatio = splashLogoImage.getHeight() / (float)splashLogoImage.getWidth();
+        float w = getWidth() / 4.f;
+        float h = w * aspectRatio;
+        int x = getWidth() - w;
+        int y = (int)(getHeight() - h);
+        offscreen.setOpacity(0.7f);
+        offscreen.drawImage(splashLogoImage, x, y, (int)w, (int)h, 0, 0, splashLogoImage.getWidth(), splashLogoImage.getHeight());
     }
     if (splashBgImage.isValid())
         g.drawImage(splashBgImage, 0, 0, getWidth(), getHeight(), 0, 0, splashBgImage.getWidth(), splashBgImage.getHeight());
@@ -182,35 +201,34 @@ void MainContentComponent::resized()
 
 void MainContentComponent::focusGained(FocusChangeType /*cause*/)
 {
-    Logger::writeToLog("Focus Gained");
-    MotionDispatcher::instance().resume();
 }
 
 void MainContentComponent::focusLost(FocusChangeType /*cause*/)
 {
-    Logger::writeToLog("Focus Lost");
-    MotionDispatcher::instance().pause();
 }
 
 void MainContentComponent::newOpenGLContextCreated()
 {
+    Logger::writeToLog("newOpenGLContextCreated()");
+    Logger::writeToLog("glewInit");
     glewInit();
     if (GLEW_ARB_vertex_array_object || GLEW_APPLE_vertex_array_object)
         Logger::writeToLog("VAOs Supported");
     else
         Logger::writeToLog("VAOs Not Supported");
-
-    Logger::writeToLog("newOpenGLContextCreated()");
     
     Drums::instance().playbackState.addListener(this);
     Drums::instance().registerTempoSlider(&tempoSlider);
     tempoSlider.addListener(&Drums::instance());
-
+    
+    Logger::writeToLog("loading skins");
     SkinManager::instance().loadResources();
+    Logger::writeToLog("Loading kit textures");
     KitManager::GetInstance().LoadTextures();
     //String skinSetting = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getValue("skin", "Default");
     //SkinManager::instance().setSelectedSkin(skinSetting);
     
+    Logger::writeToLog("setting GL parameters");
     //glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     
@@ -229,8 +247,10 @@ void MainContentComponent::newOpenGLContextCreated()
     const String defaultPadColors[6] = { "ff8080ff", "ffff8080", "ff080ff80", "ff80ffff", "ffff80ff", "ffffff80" };
 
 #if 1
+    Logger::writeToLog("instantiating pads");
     for (int i = 0; i < NUM_PADS; ++i)
     {
+        Logger::writeToLog("p" + String(i));
         PadView* pv = new PadView;
         pv->setup();
         pv->padNum = i;
@@ -245,24 +265,36 @@ void MainContentComponent::newOpenGLContextCreated()
         
         pv->setColor(Colour::fromString(color));
     }
+    Logger::writeToLog("layout pads");
     layoutPadsGrid();
+    
+    Logger::writeToLog("instantiating sticks");
+    for (int i = 0; i < 20; ++i) {
+        SharedPtr<StickView> sv(new StickView);
+        sticks.push_back(sv);
+        sv->setup();
+    }
 #endif
     
     //Environment::instance().cameraFrame.TranslateWorld(0, .6, 0);
     //Environment::instance().cameraFrame.TranslateWorld(6, 0, 0);
-    PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-50), 1, 0, 0);
+    PadView::padSurfaceFrame.RotateWorld((float) m3dDegToRad(-60), 1, 0, 0);
 
     glEnable(GL_DEPTH_TEST);
+    Logger::writeToLog("init shaders");
     Environment::instance().shaderManager.InitializeStockShaders();
 
+    Logger::writeToLog("init MainView");
     mainView = new MainView;
     views.push_back(mainView);
     mainView->addActionListener(this);
     
+    Logger::writeToLog("init Toolbar");
     DrumsToolbar* tb = new DrumsToolbar;
     views.push_back(tb);
     toolbar = tb;
 
+    Logger::writeToLog("init StatusBar");
     StatusBar* sb = new StatusBar;
     views.push_back(sb);
     statusBar = sb;
@@ -270,12 +302,15 @@ void MainContentComponent::newOpenGLContextCreated()
     int layout = StrikeDetector::kLayout3x2;//AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("layout", StrikeDetector::kLayout3x2);
     AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", layout);
     
+    Logger::writeToLog("init DrumSelector");
     drumSelector = new DrumSelector;
     drumSelector->addActionListener(this);
     views.push_back(drumSelector);
 
+    Logger::writeToLog("init PlayAreas");
     for (int i = 0; i < 6; ++i)
     {
+        Logger::writeToLog("pa" + String(i));
         PlayArea* pad = new PlayArea(i);
         int midiNote = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getIntValue("selectedNote" + String(i), i);
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("selectedNote" + String(i), midiNote);
@@ -293,9 +328,11 @@ void MainContentComponent::newOpenGLContextCreated()
         drumSelector->setPadAssociation(midiNote, i);
     }
 
+    Logger::writeToLog("init TrigViewBank");
     trigViewBank = new TrigViewBank;
     views.push_back(trigViewBank);
     
+    Logger::writeToLog("init Kit Selector");
     kitSelector = new ListSelector("Kits", true);
     int numKits = KitManager::GetInstance().GetItemCount();
     for (int i = 0; i < numKits; ++i)
@@ -309,6 +346,7 @@ void MainContentComponent::newOpenGLContextCreated()
 
     views.push_back(kitSelector);
     
+    Logger::writeToLog("init Pattern Selector");
     patternSelector = new ListSelector("Patterns");
     populatePatternSelector();
     
@@ -338,6 +376,7 @@ void MainContentComponent::newOpenGLContextCreated()
     kitSelector->setSelection(selectedKitIndex);
     Drums::instance().setDrumKit(KitManager::GetInstance().GetItem(selectedKitIndex));
 
+    Logger::writeToLog("init TempoControl");
     tempoControl = new TempoControl;
     float tempo = (float) AirHarpApplication::getInstance()->getProperties().getUserSettings()->getDoubleValue("tempo", (double) DrumPattern::kDefaultTempo);
     if (tempo < 30) {
@@ -355,6 +394,7 @@ void MainContentComponent::newOpenGLContextCreated()
         tempoControl->setTempo(Drums::instance().getTempo());
     views.push_back(tempoControl);
     
+    Logger::writeToLog("init ButtonBar");
     buttonBar = new ButtonBar;
     buttonBar->addActionListener(this);
     GLfloat transparent[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -363,10 +403,12 @@ void MainContentComponent::newOpenGLContextCreated()
     
     bool showTutorial = AirHarpApplication::getInstance()->getProperties().getUserSettings()->getBoolValue("showTutorial", true);
     
+    Logger::writeToLog("load view textures");
     for (HUDView* v : views) {
         v->loadTextures();
     }
     
+    Logger::writeToLog("init tutorial");
     tutorial = new TutorialSlide;
     tutorial->loadTextures();
     tutorial->setButtonRingTexture(SkinManager::instance().getSelectedSkin().getTexture("ring"));
@@ -382,6 +424,7 @@ void MainContentComponent::newOpenGLContextCreated()
     toolbar->setBounds(HUDRect(0,(GLfloat) h-50,(GLfloat) w,50));
     statusBar->setBounds(HUDRect(0,0,(GLfloat) w,20));
     
+    Logger::writeToLog("init splash");
     splashBgView = new View2d;
     splashBgView->setBounds(HUDRect(0,0,(GLfloat)w,(GLfloat)h));
     splashBgView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashBgImage));
@@ -392,10 +435,19 @@ void MainContentComponent::newOpenGLContextCreated()
     splashTitleView->setDefaultTexture(GfxTools::loadTextureFromJuceImage(splashImage));
     splashTitleView->setVisible(false, SPLASH_FADE);
     
+    Logger::writeToLog("init disconnect message");
     leapDisconnectedView = new HUDView;
     leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
     leapDisconnectedView->setVisible(false, 0);
+    startTimer(kTimerWaitingForConnection, 1000);
+    
+    Logger::writeToLog("init fullscreen tip");
+    fullscreenTipView = new HUDView;
+    fullscreenTipView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip"));
+    fullscreenTipView->setVisible(false, 0);
+    showFullscreenTip();
 
+    Logger::writeToLog("Add motion listener");
     MotionDispatcher::instance().addListener(*this);
     
 #if 0 // disabled all gestures in favor of buttons
@@ -405,14 +457,17 @@ void MainContentComponent::newOpenGLContextCreated()
     MotionDispatcher::instance().controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
 #endif
 
+    Logger::writeToLog("set matrix stacks");
     Environment::instance().transformPipeline.SetMatrixStacks(Environment::instance().modelViewMatrix, Environment::instance().projectionMatrix);
     
     MotionDispatcher::instance().setCursorTexture(SkinManager::instance().getSelectedSkin().getTexture("cursor"));
 
     glClearColor(0.f, 0.f, 0.f, 1.0f );
 
+    Logger::writeToLog("setSwapInterval");
     openGLContext.setSwapInterval(1);
     
+    Logger::writeToLog("grabKeyboardFocus");
     MessageManagerLock mml;
     grabKeyboardFocus();
 
@@ -667,17 +722,17 @@ void MainContentComponent::renderOpenGL()
         
         if (buttonBar)
             buttonBar->setBounds(HUDRect((GLfloat) 0,
-                                         (GLfloat) (statusBarHeight + 10),
+                                         (GLfloat) (drumSelector->getBounds().y - 110),
                                          (GLfloat) Environment::instance().screenW,
                                          (GLfloat)100));
         
-        float height = drumSelector->getBounds().y - (buttonBar->getBounds().y + buttonBar->getBounds().h) - 50;
+        float height = buttonBar->getBounds().y - (statusBar->getBounds().y + statusBar->getBounds().h) - 100;
         float width = (GLfloat) Environment::instance().screenW / 6.f;
         float hiddenX = -width;
         float shownX = 0;
         if (kitSelector) {
             kitSelector->setBounds(HUDRect(kitSelector->isEnabled() ? shownX : hiddenX,
-                                           (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                           (GLfloat) (statusBar->getBounds().y + statusBar->getBounds().h + 100),
                                            width,
                                            height));
             kitSelector->setXRange(shownX, hiddenX);
@@ -693,12 +748,22 @@ void MainContentComponent::renderOpenGL()
                                                     w,
                                                     h));
         }
+        if (fullscreenTipView) {
+            TextureDescription td = SkinManager::instance().getSelectedSkin().getTexture("fullscreenTip");
+            float aspectRatio = td.imageH / (float)td.imageW;
+            float w = 327;
+            float h = w * aspectRatio;
+            fullscreenTipView->setBounds(HUDRect(20,
+                                                 Environment::instance().screenH - h - 20.f,
+                                                 w,
+                                                 h));
+        }
         
         hiddenX = (float)Environment::instance().screenW;
         shownX = Environment::instance().screenW - width;
         if (patternSelector) {
             patternSelector->setBounds(HUDRect(patternSelector->isEnabled() ? shownX : hiddenX,
-                                               (GLfloat) (buttonBar->getBounds().y + buttonBar->getBounds().h),
+                                               (GLfloat) (statusBar->getBounds().y + statusBar->getBounds().h + 100),
                                                width,
                                                height));
             patternSelector->setXRange(shownX, hiddenX);
@@ -760,7 +825,15 @@ void MainContentComponent::renderOpenGL()
     Environment::instance().modelViewMatrix.PopMatrix(); // pad plane
     Environment::instance().modelViewMatrix.PopMatrix(); // camera
 #endif
+
+    //stick1->draw();
+    //stick2->draw();
     
+    for (SharedPtr<StickView> sv : sticks) {
+        if (sv->inUse)
+            sv->draw();
+    }
+
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_POINT_SMOOTH);
@@ -787,6 +860,8 @@ void MainContentComponent::renderOpenGL()
     
     leapDisconnectedView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     leapDisconnectedView->draw();
+    fullscreenTipView->setDefaultBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    fullscreenTipView->draw();
     
     MotionDispatcher::instance().cursor->draw();
     
@@ -800,7 +875,7 @@ void MainContentComponent::renderOpenGL()
     for (auto iter : MotionDispatcher::instance().fingerViews)
         if (iter.second->inUse)
             iter.second->draw();
-    
+
     for (PadView* pv : pads)
         pv->update();
 }
@@ -839,6 +914,7 @@ void MainContentComponent::layoutPadsGrid()
     // Move the pads back -12
     //PadView::padSurfaceFrame.SetOrigin(0,0,-12);
     PadView::padSurfaceFrame.SetOrigin(.35f,-.40f,-10.f);
+    //PadView::padSurfaceFrame.SetOrigin(.35f,-.40f,-15.f);
 }
 
 void MainContentComponent::layoutPadsLinear()
@@ -881,13 +957,18 @@ void MainContentComponent::mouseMove(const MouseEvent& e)
 
 void MainContentComponent::mouseDown(const MouseEvent& e)
 {
+    if (!Environment::instance().ready)
+        return;
+
+    bool handled = false;
     for (HUDView* v : views)
-        v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y);
+        if (v->mouseDown((float) e.getPosition().x, (float) Environment::instance().screenH - e.getPosition().y))
+            handled = true;
     
     prevMouseY = (float) e.getPosition().y;
     prevMouseX = (float) e.getPosition().x;
     
-    if (tutorial && !tutorial->isVisible())
+    if (tutorial && !tutorial->isVisible() && !handled)
     {
         for (PlayArea* pad : playAreas)
             if (pad->getBounds().contains((GLfloat) e.getPosition().x, (GLfloat) Environment::instance().screenH - e.getPosition().y))
@@ -937,20 +1018,36 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
         splashBgView->setVisible(true);
         for (HUDView* v : views)
             v->setVisible(false);
+        showFullscreenTip();
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'm') {
-        Drums::instance().getTransportState().toggleMetronome();
+    else if (kp.getTextCharacter() == 'f')
+    {
+        if (!AirHarpApplication::getInstance()->isFullscreen()) {
+            AirHarpApplication::getInstance()->enterFullscreenMode();
+        }
+        else {
+            AirHarpApplication::getInstance()->exitFullscreenMode();
+        }
         ret = true;
     }
-    else if (kp.getKeyCode() == KeyPress::spaceKey) {
-        Drums::instance().getTransportState().togglePlayback();
+    else if (kp.isKeyCode(KeyPress::escapeKey))
+    {
+        AirHarpApplication::getInstance()->quit();
         ret = true;
     }
-    else if (kp.getTextCharacter() == 'c') {
-        Drums::instance().clear();
-        ret = true;
-    }
+//    else if (kp.getTextCharacter() == 'm') {
+//        Drums::instance().getTransportState().toggleMetronome();
+//        ret = true;
+//    }
+//    else if (kp.getKeyCode() == KeyPress::spaceKey) {
+//        Drums::instance().getTransportState().togglePlayback();
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'c') {
+//        Drums::instance().clear();
+//        ret = true;
+//    }
 //    else if (kp.getTextCharacter() == '1') {
 //        AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("layout", StrikeDetector::kLayout2x1);
 //        sizeChanged = true;
@@ -971,54 +1068,54 @@ bool MainContentComponent::keyPressed(const KeyPress& kp)
 //        sizeChanged = true;
 //        ret = true;
 //    }
-    else if (kp.getTextCharacter() == 'q') {
-        incPadAssociation(0, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'w') {
-        incPadAssociation(0, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'e') {
-        incPadAssociation(1, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'r') {
-        incPadAssociation(1, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 't') {
-        incPadAssociation(2, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'y') {
-        incPadAssociation(2, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'u') {
-        incPadAssociation(3, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'i') {
-        incPadAssociation(3, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'o') {
-        incPadAssociation(4, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == 'p') {
-        incPadAssociation(4, 1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == '[') {
-        incPadAssociation(5, -1);
-        ret = true;
-    }
-    else if (kp.getTextCharacter() == ']') {
-        incPadAssociation(5, 1);
-        ret = true;
-    }
+//    else if (kp.getTextCharacter() == 'q') {
+//        incPadAssociation(0, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'w') {
+//        incPadAssociation(0, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'e') {
+//        incPadAssociation(1, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'r') {
+//        incPadAssociation(1, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 't') {
+//        incPadAssociation(2, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'y') {
+//        incPadAssociation(2, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'u') {
+//        incPadAssociation(3, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'i') {
+//        incPadAssociation(3, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'o') {
+//        incPadAssociation(4, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == 'p') {
+//        incPadAssociation(4, 1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == '[') {
+//        incPadAssociation(5, -1);
+//        ret = true;
+//    }
+//    else if (kp.getTextCharacter() == ']') {
+//        incPadAssociation(5, 1);
+//        ret = true;
+//    }
     else if (kp.getKeyCode() == KeyPress::leftKey)
     {
         tempoControl->increment(-1);
@@ -1097,8 +1194,21 @@ void MainContentComponent::handleNoteOn(MidiKeyboardState* /*source*/, int /*mid
         pad->tap(midiNoteNumber);
 }
 
+Leap::Vector MainContentComponent::scaledLeapInputPosition(const Leap::Vector& v)
+{
+    Leap::Vector newVec;
+    newVec.x = (v.x / 400.f) * 2.f * (Environment::screenW/(float)Environment::screenH);
+    newVec.y = ((v.y / 500.f) -.4f)*3;
+    newVec.z = (v.z / 250.f) * 1.f - 10.f;
+    return newVec;
+}
+
 void MainContentComponent::onFrame(const Leap::Controller& controller)
 {
+    AirHarpApplication* app = AirHarpApplication::getInstance();
+	ApplicationProperties& props = app->getProperties();
+    bool advancedMode = props.getUserSettings()->getBoolValue("advancedMode", false);
+    
     lastFrame = Time::getCurrentTime();
 
     if (!Environment::instance().ready)
@@ -1125,76 +1235,185 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
         pads.at(i)->setHovering(false);
     }
     
+    bool limitToPlane = !(kitSelector->isEnabled() || patternSelector->isEnabled());
+    
     std::set<int> hoveredNotes;
     
+    for (SharedPtr<StickView> sv : sticks)
+        sv->inUse = false;
+    
+    for (SharedPtr<StickView> sv : sticks)
+    {
+        const::Leap::Pointable p = frame.pointable(sv->pointableId);
+        if (p.isValid())
+        {
+            float x = 0.f;
+            Leap::Vector scaledVec = scaledLeapInputPosition(p.tipPosition());
+            x = scaledVec.x;
+            const Leap::Hand hand = p.hand();
+            if (hand.isValid()) {
+                Leap::Vector handVec = scaledLeapInputPosition(hand.palmPosition());
+                if (handVec.x < x)
+                    x -= (x - handVec.x) / 2.f;
+                else
+                    x += (handVec.x - x) / 2.f;
+            }
+            sv->setOrigin(x,scaledVec.y,scaledVec.z,limitToPlane);
+            sv->inUse = true;
+        }
+        else
+            sv->pointableId = -1;
+        
+        const::Leap::Hand h = frame.hand(sv->handId);
+        if (h.isValid())
+        {
+            Leap::Vector scaledVec = scaledLeapInputPosition(h.palmPosition());
+            sv->setOrigin(scaledVec.x,scaledVec.y,scaledVec.z,limitToPlane);
+            sv->inUse = true;
+        }
+        else
+            sv->handId = -1;
+    }
+    
+    // find lonely hands
     for (unsigned int h = 0; h < numHands; ++h) {
         const Leap::Hand& hand = hands[h];
-        
-        if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
+        if (hand.pointables().empty())
         {
-            std::pair<StrikeDetectorMap::iterator, bool> insertResult = strikeDetectors.insert(std::make_pair(hand.id(), StrikeDetector()));
-            //if (insertResult.second)
-            //    Logger::writeToLog("Inserted detector for hand id " + String(hand.id()));
-            StrikeDetectorMap::iterator iter = insertResult.first;
-            StrikeDetector& detector = (*iter).second;
-            detector.handMotion(hand);
-            int midiNote = detector.getNoteForHand(hand);
-            int padNumber = detector.getPadNumberForHand(hand);
-            hoveredNotes.insert(midiNote);
-            for (int i = 0; i < NUM_PADS; ++i)
-            {
-                if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                    pads.at(i)->setHovering(true);
-            }
-        }
-    }
-
-    const Leap::PointableList& pointables = frame.pointables();
-    const size_t numPointables = pointables.count();
-    for (unsigned int p = 0; p < numPointables; ++p) {
-        const Leap::Pointable& pointable = pointables[p];
-        if (!pointable.hand().isValid())
-        {
-            if (tutorial && (tutorial->getSlideIndex() != 0 || !tutorial->isVisible()))
-            {
-                std::pair<StrikeDetectorMap::iterator, bool> insertResult = toolStrikeDetectors.insert(std::make_pair(pointable.id(), StrikeDetector()));
-                StrikeDetectorMap::iterator iter = insertResult.first;
-                StrikeDetector& detector = (*iter).second;
-                int midiNote = detector.getNoteForPointable(pointable);
-                int padNumber = detector.getPadNumberForPointable(pointable);
-                hoveredNotes.insert(midiNote);
-                for (int i = 0; i < NUM_PADS; ++i)
-                {
-                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber)
-                        pads.at(i)->setHovering(true);
+            bool found = false;
+            for (SharedPtr<StickView> sv : sticks) {
+                if (sv->inUse && sv->handId == hand.id()) {
+                    found = true;
+                    break;
                 }
-                detector.pointableMotion(pointable);
+            }
+            
+            if (!found) {
+                for (SharedPtr<StickView> sv : sticks) {
+                    if (!sv->inUse) {
+                        sv->handId = hand.id();
+                        sv->inUse = true;
+                        break;
+                    }
+                }
             }
         }
         else
         {
-            StrikeDetectorMap::iterator iter = toolStrikeDetectors.find(pointable.id());
-            if (iter != toolStrikeDetectors.end())
-                toolStrikeDetectors.erase(iter);
+            for (SharedPtr<StickView> sv : sticks) {
+                if (sv->handId != -1) {
+                    sv->handId = -1;
+                    sv->inUse = false;
+                }
+            }
         }
     }
 
-    StrikeDetectorMap::iterator iter = strikeDetectors.begin();
-    bool useCursor = true;
-    while (iter != strikeDetectors.end())
-    {
-        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
-            useCursor = false;
-        ++iter;
+    // find new pointables
+    const Leap::PointableList& pointables = frame.pointables();
+    const size_t numPointables = pointables.count();
+    for (unsigned int p = 0; p < numPointables; ++p) {
+        const Leap::Pointable& pointable = pointables[p];
+
+        bool found = false;
+        for (SharedPtr<StickView> sv : sticks) {
+            if (sv->inUse && sv->pointableId == pointable.id()) {
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            for (SharedPtr<StickView> sv : sticks) {
+                if (!sv->inUse) {
+                    sv->pointableId = pointable.id();
+                    sv->inUse = true;
+                    break;
+                }
+            }
+        }
     }
     
-    iter = toolStrikeDetectors.begin();
-    while (iter != toolStrikeDetectors.end())
-    {
-        if (Time::getCurrentTime() < (*iter).second.getLastStrikeTime() + RelativeTime::milliseconds(500))
-            useCursor = false;
-        ++iter;
+    for (SharedPtr<StickView> sv : sticks) {
+        if (sv->inUse) {
+            float dist = sv->calcStickDistance();
+            int midiNote = -1;
+            int padNumber = -1;
+            if (sv->pointableId != -1)
+            {
+                const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
+                midiNote = sv->strikeDetector.getNoteForPointable(pointable);
+                padNumber = sv->strikeDetector.getPadNumberForPointable(pointable);
+            }
+            else if (sv->handId != -1)
+            {
+                const Leap::Hand& hand = frame.hand(sv->handId);
+                midiNote = sv->strikeDetector.getNoteForHand(hand);
+                padNumber = sv->strikeDetector.getPadNumberForHand(hand);
+            }
+            
+            if (midiNote != -1)
+            {
+                hoveredNotes.insert(midiNote);
+                for (int i = 0; i < NUM_PADS; ++i)
+                {
+                    if (pads.at(i)->getSelectedMidiNote() == midiNote && i == padNumber) {
+                        pads.at(i)->setHovering(true);
+                        if (!advancedMode && sv->lastDist > DISTANCE_THRESHOLD && dist < DISTANCE_THRESHOLD) {
+                            pads.at(i)->tap(midiNote);
+                            float diff = sv->lastDist - fabsf(dist);
+                            float vel = diff * 4.f;
+                            vel = jmin(vel, 1.f);
+                            //Logger::outputDebugString("vel = " + String(vel));
+                            Drums::instance().NoteOn(midiNote, vel);
+                        }
+                    }
+                }
+            }
+            if (advancedMode) {
+                if (sv->pointableId != -1) {
+                    const Leap::Pointable& pointable = frame.pointable(sv->pointableId);
+                    sv->strikeDetector.pointableMotion(pointable);
+                }
+                else {
+                    const Leap::Hand& hand = frame.hand(sv->handId);
+                    sv->strikeDetector.handMotion(hand);
+                }
+            }
+            sv->lastDist = dist;
+        }
+        else {
+            sv->setOrigin(0,-100,-100, false);
+            sv->lastDist = DISTANCE_THRESHOLD;
+        }
     }
+    
+    if (MotionDispatcher::instance().cursor->isEnabled())
+    {
+        M3DVector2f screenPos;
+        SharedPtr<StickView> cursorStick;
+        float minZ = 100.f;
+        for (SharedPtr<StickView> sv : sticks) {
+            if (sv->inUse && sv->objectFrame.GetOriginZ() < minZ) {
+                cursorStick = sv;
+                minZ = sv->objectFrame.GetOriginZ();
+            }
+        }
+        if (cursorStick != nullptr) {
+            cursorStick->getScreenPos(screenPos);
+            screenPos[0] = jmin(screenPos[0], Environment::instance().screenW - MotionDispatcher::instance().cursor->getBounds().w / 2.f);
+            screenPos[0] = jmax(screenPos[0], MotionDispatcher::instance().cursor->getBounds().w / 2.f);
+            MotionDispatcher::instance().cursor->setPosition(screenPos[0] - MotionDispatcher::instance().cursor->getBounds().w / 2.f,
+                                                             Environment::instance().screenH - screenPos[1] -  MotionDispatcher::instance().cursor->getBounds().h / 2.f);
+        }
+        else
+            MotionDispatcher::instance().cursor->setEnabled(false);
+    }
+
+    bool useCursor = true;
+
+    if (Time::getCurrentTime() < Drums::instance().getLastNoteOnTime() + RelativeTime::milliseconds(500) && limitToPlane)
+        useCursor = false;
 
     if (useCursor)
     {
@@ -1213,10 +1432,37 @@ void MainContentComponent::onFrame(const Leap::Controller& controller)
 
 void MainContentComponent::onConnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setVisible(false);
+    connected = true;
 }
 
 void MainContentComponent::onDisconnect(const Leap::Controller&)
 {
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+    leapDisconnectedView->setVisible(true);
+    connected = false;
+}
+
+void MainContentComponent::onFocusGained (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    if (connected)
+        leapDisconnectedView->setVisible(false);
+    else
+        leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
+}
+
+void MainContentComponent::onFocusLost (const Leap::Controller &)
+{
+    if (!leapDisconnectedView)
+        return;
+    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+    leapDisconnectedView->setVisible(true);
 }
 
 void MainContentComponent::handleGestures(const Leap::GestureList& gestures)
@@ -1357,16 +1603,15 @@ void MainContentComponent::timerCallback(int timerId)
         case kTimerRightHandTap:
             stopTimer(kTimerRightHandTap);
             break;
-        case kTimerCheckLeapConnection:
-            if (leapDisconnectedView && (Time::getCurrentTime() - lastFrame).inMilliseconds() > 500) {
-                if (hasKeyboardFocus(true))
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("LeapDisconnected"));
-                else
-                    leapDisconnectedView->setDefaultTexture(SkinManager::instance().getSelectedSkin().getTexture("AppInBackground"));
+        case kTimerWaitingForConnection:
+            if (!connected)
                 leapDisconnectedView->setVisible(true);
-            }
-            else if (leapDisconnectedView)
-                leapDisconnectedView->setVisible(false);
+            else
+                stopTimer(kTimerWaitingForConnection);
+            break;
+        case kFullscreenTipTimer:
+            fullscreenTipView->setVisible(false, 2000);
+            stopTimer(kFullscreenTipTimer);
             break;
             
         default:
@@ -1554,4 +1799,34 @@ void MainContentComponent::actionListenerCallback(const String& message)
     {
         AirHarpApplication::getInstance()->getProperties().getUserSettings()->setValue("showTutorial", false);
     }
+}
+
+void MainContentComponent::showFullscreenTip()
+{
+    fullscreenTipView->setVisible(true, 2000);
+    startTimer(kFullscreenTipTimer, 2000 + 2000);
+}
+
+void MainContentComponent::calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint)
+{
+    M3DVector3f pOrigin, pNormal, rOrigin;
+    M3DVector3f rNormal = { 0.f, -1.f, 0.f };
+    PadView::padSurfaceFrame.GetUpVector(pNormal);
+    PadView::padSurfaceFrame.GetOrigin(pOrigin);
+    stick->objectFrame.GetOrigin(rOrigin);
+    M3DMatrix33f m;
+    M3DVector3f pNormalRot;
+    m3dRotationMatrix33(m, m3dDegToRad(90.f), 1.f, 0.f, 0.f);
+    m3dRotateVector(pNormalRot, pNormal, m);
+    GfxTools::collide(rOrigin, rNormal, pOrigin, pNormalRot, collisionPoint);
+}
+
+float MainContentComponent::calcStickDistance(SharedPtr<StickView> stick)
+{
+    M3DVector3f collisionPoint;
+    calcCollisionPoint(stick, collisionPoint);
+    M3DVector3f rOrigin;
+    stick->objectFrame.GetOrigin(rOrigin);
+    float dist = rOrigin[1] - collisionPoint[1];
+    return dist;
 }

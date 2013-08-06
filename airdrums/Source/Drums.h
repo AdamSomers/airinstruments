@@ -84,6 +84,8 @@ public:
     void removeTransportListener(ChangeListener* listener);
     TransportState& getTransportState() { return transportState; }
     
+    const Time& getLastNoteOnTime() const { return lastNoteOnTime; }
+    
 private:
 	void AdjustMidiBuffers(void);	// Moves events in the midi buffers due to changes in sample rate or tempo
 	void setTempoSlider(float tempo);
@@ -105,6 +107,7 @@ private:
 	Slider* tempoSlider;
     
     Time triggerTimes[128];
+    Time lastNoteOnTime;
 };
 
 #endif

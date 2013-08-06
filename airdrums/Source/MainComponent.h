@@ -23,6 +23,8 @@
 #include "StrikeDetector.h"
 #include "CursorView.h"
 #include "ButtonBar.h"
+#include "stickView.h"
+#include "ShadowView.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -75,6 +77,8 @@ public:
     virtual void onFrame(const Leap::Controller&);
     virtual void onConnect(const Leap::Controller&);
     virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFocusGained (const Leap::Controller &);
+    virtual void onFocusLost (const Leap::Controller &);
     
     // MultiTimer override
     void timerCallback(int timerId);
@@ -87,6 +91,7 @@ public:
     
     class TempoSourceChangedMessage : public Message {};
 
+    void showFullscreenTip();
 private:
     void layoutPadsGrid();
     void layoutPadsLinear();
@@ -97,13 +102,18 @@ private:
     void populatePatternSelector();
     void selectCurrentPattern();
     void incPadAssociation(int padNumber, int inc);
+    float calcStickDistance(SharedPtr<StickView> stick);
+    void calcCollisionPoint(SharedPtr<StickView> stick, M3DVector3f collisionPoint);
+    void setStickPosition(SharedPtr<StickView> stick, const Leap::Vector& v);
+    Leap::Vector scaledLeapInputPosition(const Leap::Vector& v);
 
     enum TimerIds
     {
         kTimerShowTutorial = 0,
         kTimerLeftHandTap,
         kTimerRightHandTap,
-        kTimerCheckLeapConnection
+        kTimerWaitingForConnection,
+        kFullscreenTipTimer
     };
     
     class InitGLMessage : public Message {};
@@ -122,16 +132,13 @@ private:
     TempoControl* tempoControl;
     ButtonBar* buttonBar;
     HUDView* leapDisconnectedView;
+    ScopedPointer<HUDView> fullscreenTipView;
     std::vector<PadView*> pads;
     std::vector<HUDView*> views;
 	Slider tempoSlider;
 
     View2d* splashBgView;
     View2d* splashTitleView;
-
-    typedef std::map<int, StrikeDetector> StrikeDetectorMap;
-    StrikeDetectorMap strikeDetectors;
-    StrikeDetectorMap toolStrikeDetectors;
     
     float prevMouseY;
     float prevMouseX;
@@ -150,11 +157,15 @@ private:
     
     Image splashBgImage;
     Image splashTitleImage;
+    Image splashLogoImage;
     Image splashImage;
     Time lastRender;
 
     Time lastFrame;
 
+    std::vector<SharedPtr<StickView> > sticks;
+    
+    bool connected;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

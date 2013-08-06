@@ -55,14 +55,20 @@ public:
     // ChangeListener override
     void changeListenerCallback (ChangeBroadcaster* source);
     
-    void onFrame(const Leap::Controller&);
+    // Leap::Listener override
+    virtual void onFrame(const Leap::Controller&);
+    virtual void onConnect(const Leap::Controller&);
+    virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFocusGained (const Leap::Controller &);
+    virtual void onFocusLost (const Leap::Controller &);
     
     void timerCallback(int timeId);
     
     enum TimerIds
     {
         kTimerShowTutorial = 0,
-        kTimerCheckLeapConnection
+        kTimerWaitingForConnection,
+        kFullscreenTipTimer
     };
 
     class InitGLMessage : public Message {};
@@ -70,6 +76,8 @@ public:
     void handleMessage(const juce::Message &m);
 
     void actionListenerCallback(const String& message);
+    
+    void showFullscreenTip();
 private:
     void go2d();
     void go3d();
@@ -87,6 +95,7 @@ private:
     StatusBar* statusBar;
     SettingsScreen* settingsScreen;
     HUDView* leapDisconnectedView;
+    ScopedPointer<HUDView> fullscreenTipView;
     View2d* backgroundView;
     std::vector<ChordRegion*> chordRegions;
     std::vector<HarpView*> harps;
@@ -101,12 +110,16 @@ private:
     
     Image splashBgImage;
     Image splashTitleImage;
+    Image splashLogoImage;
     Image splashImage;
     ScopedPointer<View2d> splashBgView;
     ScopedPointer<View2d> splashTitleView;
     
     Time lastFrame;
     Time startTime;
+    
+    bool connected;
+
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

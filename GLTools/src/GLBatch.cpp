@@ -52,6 +52,10 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 #define glUnmapBuffer   glUnmapBufferOES
 #endif
 
+#if _WINDOWS // VAOs are not supported in Parallels VM so spoof OPENGL_ES on Windows
+    #define OPENGL_ES 1
+#endif
+
 GLBatch::GLBatch(void): nNumTextureUnits(0), nNumVerts(0), pVerts(NULL), pNormals(NULL), pColors(NULL), pTexCoords(NULL), uiVertexArray(0),
 	uiNormalArray(0), uiColorArray(0), vertexArrayObject(0), bBatchDone(false), nVertsBuilding(0), uiTextureCoordArray(NULL)
 	{

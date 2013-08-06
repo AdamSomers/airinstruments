@@ -35,11 +35,13 @@ PopupMenu  MainMenu::getMenuForIndex (int topLevelMenuIndex, const String& /*men
 		}
             
 		case kFileMenu :
-        {            
+        {
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kMoreInfoCmd, "More Info...");
 			break;
         }
 		case kOptionsMenu :
 			menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kAudioSettingsCmd, "Audio Settings...");
+            menu.addCommandItem(mgr, AirHarpApplication::MainWindow::kFullscreenCmd, "Toggle Fullscreen Mode");
 			break;
 	}
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="0.7.2"
-              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.0.0"
+<JUCERPROJECT id="LSBnFZ" name="AirHarp" projectType="guiapp" version="1.0.4"
+              bundleIdentifier="com.handwavy.AirHarp" jucerVersion="3.1.0"
               companyName="Handwavy">
   <MAINGROUP id="qE7qno" name="AirHarp">
     <GROUP id="{22FEF808-561B-AE89-1D00-034DE23800A5}" name="resources">
@@ -41,6 +41,8 @@
             file="../common/JuceReverbAudioClient.cpp"/>
       <FILE id="YY5vWF" name="JuceReverbAudioClient.h" compile="0" resource="0"
             file="../common/JuceReverbAudioClient.h"/>
+      <FILE id="pAIRQ6" name="Pointer3d.cpp" compile="1" resource="0" file="../common/Pointer3d.cpp"/>
+      <FILE id="slob8v" name="Pointer3d.h" compile="0" resource="0" file="../common/Pointer3d.h"/>
       <FILE id="GPBWeX" name="SkinManager.cpp" compile="1" resource="0" file="../common/SkinManager.cpp"/>
       <FILE id="kU9C5G" name="SkinManager.h" compile="0" resource="0" file="../common/SkinManager.h"/>
       <FILE id="zr3p0P" name="TextLabel.cpp" compile="1" resource="0" file="../common/TextLabel.cpp"/>
