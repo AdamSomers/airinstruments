@@ -70,6 +70,11 @@ void SkinManager::loadResources()
             Image image = ImageFileFormat::loadFrom (imageFile);
             Logger::writeToLog("\timage validity: " + String(image.isValid()));
             TextureDescription textureDesc = GfxTools::loadTextureFromJuceImage(image);
+            Logger::writeToLog("\ttex id: " + String(textureDesc.textureId) +
+                               " iw " + String(textureDesc.imageW) +
+                               " ih " + String(textureDesc.imageH) +
+                               " tw " + String(textureDesc.texW) +
+                               " th " + String(textureDesc.texH));
             String imageName = imageFile.getFileNameWithoutExtension();
             File atlasXml = imageFile.getParentDirectory().getChildFile(imageName + ".xml");
             if (atlasXml.exists())
