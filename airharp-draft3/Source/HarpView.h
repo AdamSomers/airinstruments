@@ -8,6 +8,7 @@ class HarpView
 {
 public:
     HarpView(int num);
+    ~HarpView();
     void draw();
     void update();
     void layoutStrings();

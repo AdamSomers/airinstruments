@@ -21,6 +21,14 @@ HarpView::HarpView(int num)
         HarpManager::instance().getHarp(harpNum)->AddString();
 }
 
+HarpView::~HarpView()
+{
+    for (StringView* sv : strings)
+        delete sv;
+    for (StringView* sv : inactiveStrings)
+        delete sv;
+}
+
 void HarpView::draw()
 {
     stringLock.lock();
