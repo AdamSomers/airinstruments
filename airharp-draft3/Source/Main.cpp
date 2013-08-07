@@ -79,6 +79,8 @@ void AirHarpApplication::shutdown()
     mainWindow = nullptr; // (deletes our window)
     audioDeviceManager.removeAudioCallback(this);
     MotionDispatcher::destruct();
+    HarpManager::destruct();
+    AudioServer::Destruct();
 }
 
 //==============================================================================

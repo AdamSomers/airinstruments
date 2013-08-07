@@ -8,6 +8,9 @@
 #define FILTER_FREQ 20.f
 #define FILTER_RES 0.f
 
+HarpManager* HarpManager::s_instance = nullptr;
+
+
 Harp::Harp()
 : numStrings(1)
 , mixer(NULL)

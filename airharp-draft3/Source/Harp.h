@@ -89,9 +89,18 @@ public:
 
     static HarpManager& instance( void )
     {
-        static HarpManager s_instance;
-        return s_instance;
+		if (s_instance == nullptr)
+	        s_instance = new HarpManager;
+        return *s_instance;
     }
+	static void destruct( void )
+	{
+		if (s_instance != nullptr)
+		{
+			delete s_instance;
+			s_instance = nullptr;
+		}
+	}
     
     int getNumHarps() const { return harps.size(); }
     int getNumActiveHarps();
@@ -103,6 +112,8 @@ private:
     
     std::vector<Harp*> harps;
     static const int numHarps = 1;
+    
+    static HarpManager* s_instance;
 
 };
 
