@@ -57,6 +57,12 @@ public:
         baseNotes.add(41);
         baseNotes.add(43);
     }
+
+    ~StringView()
+    {
+        delete[] sampleVerts;
+    }
+
     void setup()
     {
         M3DVector3f verts[4] = {
