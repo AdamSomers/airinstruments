@@ -80,6 +80,10 @@ MainContentComponent::~MainContentComponent()
     delete statusBar;
     delete settingsScreen;
     delete leapDisconnectedView;
+    for (ChordRegion* cr : chordRegions)
+        delete cr;
+    for (HarpView* hv : harps)
+        delete hv;
 }
 
 void MainContentComponent::go2d()
@@ -852,7 +856,9 @@ void MainContentComponent::handleMessage(const juce::Message &m)
             Logger::writeToLog("Got InitGLMessage");
             openGLContext.setRenderer (this);
             openGLContext.setComponentPaintingEnabled (true);
+            Logger::writeToLog("Attaching");
             openGLContext.attachTo (*this);
+            Logger::writeToLog("Done processing InitGLMessage");
         }
     }
 }
